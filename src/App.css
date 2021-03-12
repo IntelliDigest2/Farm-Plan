@@ -1,0 +1,758 @@
+.warning{
+  color: rgb(204, 37, 37);
+  font-size: 16px;
+}
+
+
+.user-account-page-container{
+  padding: 10%;
+  margin: auto;
+  text-align: center;
+}
+
+.user-account-page-container .user-acc-title{
+  font-size: 30px;
+}
+
+.user-account-page-container .user-acc-details{
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+
+.user-account-page-container .email-colour{
+  color: rgb(43, 66, 42);
+}
+
+.user-acc-options{
+  padding: 20px 10px 20px 10px;
+  background-color: #e6e6e6;
+  width: 20%;
+  margin: auto;
+  margin-bottom: 40px;
+  border-radius: 20px;
+}
+
+.user-acc-options p{
+  font-size: 20px;
+ }
+
+ .user-acc-options a, .user-acc-options a:visited{
+   color: #071850;
+ }
+
+ .user-acc-options a:hover{
+  color: #030d2b;
+ }
+
+.main-div-layout{
+  text-align: center;
+  padding-top: 11%; 
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 15%;
+}
+
+.not-found{
+  width: 35%;
+  margin: auto;
+  border-radius: 15px;
+  margin-top: 3%;
+  background-color: rgb(240, 240, 240);
+  padding: 40px 10px 40px 10px;
+}
+
+.page-not-found-title{
+  font-size: 140px;
+  color: #8f971d;
+  margin-top: -30px;
+}
+
+.page-not-found{
+  font-size: 45px;
+  text-align: center;
+  margin-top: -110px;
+  color: #a6af28;
+}
+
+.not-found-message{
+  font-size: 18px;
+  color: #333333;
+}
+
+.recycle-logo, .contact-logo{
+  font-size: 85px;
+  text-align: center;
+  color:#a6af24;
+  padding: 12px 12px 12px 12x; 
+}
+
+.contact-logo{
+  /*color: rgb(81, 117, 79);*/
+  color:#aab41e;
+  font-size: 60px;
+  padding-top: 10px;
+}
+
+.signup-logo{
+  font-size: 50px;
+  padding-top: 15px;
+  color: #333333;
+}
+
+.textbox-div-layout, .welcome-div-layout, .contact-form, .contact-text-layout, .login-form, .signup-form, .frg-password-form, .change-password-form{
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  /*border: 1px solid black;
+  border-radius: 5px;
+  background-color: #bae2ab;*/
+  width: 65%;
+  height: auto;
+  margin: 0 auto;
+  margin-top:10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  position: relative;
+
+}
+
+.welcome-div-layout{
+  padding-top: 65px;
+  padding-bottom: 90px;
+}
+
+.textbox-heading, .welcome-heading{
+  font-size: 23px;
+}
+
+.textbox-text, .welcome-text{
+  text-align: justify;
+  font-size: 18px;
+  padding: 20px 20px;
+}
+
+.welcome-text{
+  text-align: center;
+}
+
+.alerts-form{
+  display: inline-block;
+}
+
+.form-layout{
+  display: inline;
+}
+.contact-text-layout{
+  width: 54%;
+  text-align: justify;
+  margin-bottom: 0px;
+  color: #161804;
+}
+
+.contact-container{
+  padding-top: 5.5%; 
+  padding-bottom: 5%;
+}
+
+.contact-header{
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  padding: 10px 0 2px 0;
+}
+
+.text-lg{
+  color: rgb(55, 85, 54);
+  /*color:rgb(163, 163, 163);*/
+  font-size: 20px;
+}
+
+.signup-header{
+  text-align: center;
+}
+
+.contact-text{
+  font-size: 14px;
+  color: rgb(43, 66, 42);
+  /*color: rgb(92, 92, 92);*/
+}
+
+.contact-form{
+  width: 54%;
+  /*background-color:rgb(228, 228, 228);
+  border: 1px solid rgb(37, 37, 37); 
+  border-radius: 5px;*/
+
+}
+.contact-form label, .login-form label, .signup-form label, .frg-password-form label, .change-password-form label{
+  font-size: 16px;
+  text-align: left;
+  color: grey;
+}
+
+.contact-form label, input, textarea, .login-form label, input, .signup-form label, input, .frg-password-form label, input, .change-password-form label, input{
+  display: block;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.signup-form label{
+  padding-left: 15px;
+}
+
+.login-form label{
+  padding-left: 9px;
+}
+
+.contact-form input, textarea, .login-form input, .alerts-form input, .signup-form input, .frg-password-form input, .change-password-form input{
+  width: 95%;
+  border: 1px solid #62680a;
+  /*border: 1px solid rgb(163, 163, 163);*/
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 18px;
+  resize: vertical;
+  /*font-family: Arial, Helvetica, sans-serif;*/
+  /*font-family: 'Roboto', sans-serif;*/
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.contact-form .main-details-containter{
+  width: 101.1%;
+  margin-left: -5px;
+}
+
+.contact-form .contact-details{
+  width: 45.25%;
+  display: inline;
+  margin: 8px 16px 18px 16px;
+}
+
+.signup-form .fullname-container{
+  width: 103.5%;
+  margin-left: -12.5px;
+}
+
+.fullname-container label{
+  padding-left: 8px;
+}
+
+.signup-form .name, .signup-form .surname{
+  width: 45%;
+  display: inline-block;
+  margin: 0px 12.15px 0px 12.15px;
+  padding: 0px 1.15px 0px 1.15px;
+}
+
+.text-lg{
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.contact-title{
+  font-size: 25px;
+}
+
+.contact-form textarea{
+  height: 250px;
+}
+
+.contact-footer{
+  width: 50%;
+  margin: auto;
+  padding-top: 90px;
+  padding-bottom: 30px;
+}
+
+.contact-footer-layout{
+  display: inline-block;
+  margin: auto 13px 0 13px;
+  padding: 50px 10px 50px 10px;
+  width: 27%;
+  background-color: #e9e8e8;
+  border: 1px solid rgb(226, 226, 226);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.contact-footer-layout:hover{
+  background-color: #cccccc;
+}
+
+.contact-footer-layout p{
+  font-size: 13px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+
+.contact-footer-icon{
+  font-size: 40px;
+  color: #272727;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.telephone, .email{
+  padding-top: 57px;
+  padding-bottom: 51px;
+}
+
+.contact-form .btn, .login-form .btn, .alerts-form .btn, .signup-form .btn, .frg-password-form .btn, .user-acc-logout-btn, .change-password-form .btn{
+  margin-top: 6px;
+  margin-bottom: 16px;
+  font-size: 15px;
+  border: 1px solid #03091d;
+  border-radius: 4px;
+  padding: 10px 11px 10px 11px;
+  background-color:  #071850;
+  color:whitesmoke;
+  cursor: pointer;
+}
+
+.contact-form .btn:hover, .login-form .btn:hover, .alerts-form .btn:hover, .signup-form .btn:hover, .frg-password-form .btn:hover, .change-password-form .btn:hover, .user-acc-logout-btn:hover{
+  background-color: #030d2b;
+}
+
+.signup-form{
+  width: 80%;
+  /*background-color:rgb(228, 228, 228);*/
+  /*background-color: rgb(236, 235, 235); actual background*/ 
+  /*border: 1px solid rgb(204, 204, 204); */
+  /*border: 1px solid rgb(101, 151, 103);*/
+  border-radius: 5px;
+  padding: 2px 35px 10px 35px;
+  /*box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2);*/
+}
+
+.login-form{
+  width: 50%;
+  padding: 40px 35px 40px 35px;
+}
+
+.login-form-content{
+  margin-top: -15px;
+}
+
+.alerts-form input{
+  width: 60%;
+  border-radius:0;
+  padding: 10px 11px 10px 11px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.alerts-form .btn{
+  border-radius: 0;
+  padding: 10px 11px 10px 11px;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.alerts-form label{
+  font-size: 15px;
+}
+
+.text-h1{
+  font-size: 18px;
+}
+
+.text-p{
+  font-size: 17px;
+  padding-top: 60px;
+}
+
+.login-form button{
+  float:left;
+}
+
+.contact-form .btn, .signup-form .btn{
+  float: right;
+  margin-bottom: 0px;
+  margin-right: 20px;
+}
+
+
+.contact-form .btn{
+  margin-right: 23px;
+}
+
+.signup-form .btn{
+  margin-right: 18px;
+}
+
+.login-form .btn{
+  margin-left: 10px;
+}
+
+.frg-password{
+  display: inline;
+  float: right;
+  align-items: center;
+  justify-content: space-around;
+  padding: 17px 5px;
+}
+
+.password{
+  font-size: 15px;
+  /*color: rgb(103, 124, 138);*/
+  color: rgb(90, 91, 92);
+  margin-right: 5px;
+}
+
+.register{
+  /*color: #bec929;*/
+  color:  #aab41e;
+  font-weight: 600;
+}
+
+.member{
+  margin: 80px 5px 5px 5px;
+}
+
+.terms{
+  font-size: 15px;
+}
+
+.termcond{
+  color: #757c0e;
+}
+
+/* about page */
+
+.about-page-container{
+  margin:auto;
+  padding: 5% 5px 100px 5px;
+}
+
+.about-page{
+  width: 75%;
+  margin: auto;
+  padding: 10px 14px 300px 14px;
+  background-color: rgb(236, 235, 235);
+  border-radius: 15px;
+}
+
+.about-page-header h1{
+  font-size: 40px;
+  margin-left: 40px;
+  color: #333333;
+}
+
+.about-page img{
+  width: 30%;
+}
+
+.about-page .about-intellidigest img, .about-page .about-id-text, .about-page .benefits-text, .about-page .user-benefits img{
+ display: inline;
+ float: left;
+}
+
+.about-page .user-benefits{
+  margin-top: -230px;
+}
+
+.about-page .about-id-text, .about-page .about-it-text, .about-page .benefits-text{
+  width: 63%;
+  font-size: 16px;
+  padding: 0px 25px 70px 36px;
+  text-align: justify;
+  float: left;
+}
+
+.about-page .about-it-text{
+  float: left;
+}
+
+.about-it-text h1, .about-id-text h1, .benefits-text h1{
+  font-size: 25px;
+  color: rgb(55, 85, 54);
+}
+
+
+.about-intellidigest, .about-itracker, .user-benefits{
+  padding: 10px 40px 0px 40px;
+}
+
+.about-itracker{
+  padding-bottom: 20%;
+}
+
+
+/*
+.main-layout{
+  display:inline-block;
+  width: 35%;
+  background-color:rgb(228, 228, 228);
+  border: 1px solid rgb(204, 204, 204); 
+  border-radius: 5px;
+  padding: 0px 35px 40px 35px;
+  margin: 0px 5px 10px 5px;
+}
+
+.img{
+  width: 25%;
+  padding: 10px 10px 10px 10px;
+}
+
+.img-logo, .img-placeholder{
+  width: 100%;
+}
+
+
+.text{
+  font-size: 14px;
+  padding: 1px 10px 1px 10px;
+  text-align: justify;
+}
+
+*/
+
+/* login container */
+
+.login-header, .frg-password-header,.change-password-header{
+  text-align: center;
+}
+ 
+.login-container{
+  width: 43%;
+  height: 100%;
+  display: inline;
+  float: left;
+  padding: 15% 0px 20px 0px;
+}
+
+.login-graphic{
+  width: 57%;
+  height: 70%;
+  /*background-color: rgb(158, 172, 158);*/
+  background-color: rgb(218, 218, 218);
+  background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("images/robot-backgroung.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-position: center;
+  display: inline;
+  float: right;
+  padding: 30% 0 30% 0;
+
+}
+
+/* sign up container */
+
+.signup-page-containter{
+  background-color:  rgb(236, 235, 235);
+}
+
+.signup-container{
+  width: 48%;
+  height: 100%;
+  display: inline;
+  float: left;
+  padding: 11% 0px 20px 0px;
+}
+
+.signup-graphic{
+  width: 52%;
+  height: 100%;
+  /*background-color: rgb(158, 172, 158);*/
+  background-color: rgb(218, 218, 218);
+  background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("images/signup3.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; 
+  display: inline;
+  float: right;
+  padding: 30% 0 30% 0;
+}
+
+/* forgot password page + change password from user account page */
+
+.frg-password-page-container,.change-password-page-container{
+  width: 70%;
+  margin: auto;
+  padding: 14% 0px 20px 0px;
+}
+
+
+.frg-password-container, .change-password-container{
+  /*background-color: rgb(240, 238, 238);*/
+  background-color:  rgb(240, 240, 240);
+  padding: 30px 10px 30px 10px;
+  width: 50%;
+  margin: auto;
+  border-radius: 15px;
+}
+
+.change-password-container{
+  padding-bottom: 10px;
+}
+
+
+.frg-password-form{
+  width: 80%;
+}
+
+.change-password-form{
+  width: 85%;
+}
+
+.frg-password-form label, .change-password-form label{
+  padding-left: 15px;
+}
+
+.frg-password-form .btn{
+  margin-right: 13px;
+}
+
+
+.frg-password-login{
+  padding-top: 80px;
+  font-size: 15px;
+  padding-bottom: 0%;
+}
+
+.back-to-acc{
+  padding-top: 70px;
+  font-size: 18px;
+
+}
+
+.no-acc{
+  margin-top: 10px;
+  padding-top: 10px;
+  font-size: 16px;
+}
+
+.frg-login, .back-to-acc{
+  color: rgb(55, 85, 54);
+  font-weight: 600;
+}
+
+.change-password-form .btn{
+  margin-right: 14px;
+}
+
+@media all and (max-width: 800px){
+  .textbox-div-layout, .welcome-div-layout{
+    width: 80%;
+  }
+
+  .recycle-logo{
+    font-size: 35px;
+    padding: 2px 2px 2px 2x; 
+  }
+
+  .textbox-heading, .welcome-heading{
+    font-size: 10px;
+  }
+  
+  .textbox-text, .welcome-text{
+    font-size: 14px;
+    padding: 2px 2px;
+  }
+
+  .welcome-div-layout{
+    padding-top: 35px;
+
+  }
+  .alerts-form label, .login-form label, .contact-form label, input, .signup-form label, input{
+    font-size: 12px;
+  }
+  .alerts-form input{
+    font-size: 12px;
+    width: 90%;
+    padding: 5px 5px 5px 5px;
+    margin-top: 15px;
+    margin-bottom: 1px;
+  }
+
+  .alerts-form .btn{
+    margin-top: 4px;
+    padding: 5px 5px 5px 5px;
+    font-size: 12px;
+  }
+
+  .main-layout{
+    display: block;
+    width: 90%;
+  }
+
+
+.small-screen{
+  width: 95%;
+  padding: 5px 5px 5px 5px;
+}  
+
+.img{
+  width: 95%;
+}
+  .img-logo{
+    width: 60%;
+  }
+  
+  .img-placeholder{
+    width: 60%;
+    border: 1px solid black;
+  }
+  
+  .text{
+    font-size: 13px;
+    width: 95%;
+    padding: 1px 10px 1px 10px;
+    text-align: justify;
+  }
+
+  .login-form, .signup-form{
+     width: 60%;
+  }
+
+  .login-form .btn, .signup-form .btn, .contact-form .btn{
+    padding: 10px 10px 10px 10px;
+    font-size: 12px;
+  }
+  .signup-form .btn{
+    float: none;
+  }
+
+  .frg-password{
+    display: block;
+    align-items: center;
+    justify-content: space-around;
+    padding: 17px 5px;
+    font-size: 13px;
+  }
+
+  .text-h1{
+    font-size: 15px;
+  }
+
+  .login-margin{
+    margin-top: 40px;
+  }
+
+  .contact-text-layout{
+    width: 70%;
+    text-align: justify;
+  }
+  
+  .text-lg{
+    font-size: 13px;
+  }
+
+  .contact-text, .text-p, .terms, .member{
+    font-size: 12px;
+  }
+
+  .contact-form{
+    width: 70%;
+  }
+
+  .contact-logo, .signup-logo{
+    font-size: 40px;
+  }
+
+}
