@@ -10,7 +10,7 @@
 
 # production
 /build
-/.firebaserc
+.firebaserc
 firebase.json
 .firebase/
 
