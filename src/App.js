@@ -2,7 +2,7 @@ import React from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./App.css";
 import "./index.css";
-import Narbar from "./components/Navbar/Narbar";
+import Narbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home";  
 import About from "./pages/About";
