@@ -68,7 +68,7 @@ function Contact() {
         <Card>
           <Card.Body>
             <Card.Title>Telephone</Card.Title>
-             <Card.Text className="mb-lg-4">
+             <Card.Text >
               <i className="fa fa-phone contact-footer-icon"></i>
               <p>07795523201</p>
              </Card.Text>
@@ -81,7 +81,7 @@ function Contact() {
         <Card>
           <Card.Body>
             <Card.Title>Email</Card.Title>
-             <Card.Text className="mb-lg-4">
+             <Card.Text >
                 <i className="fa fa-envelope-o contact-footer-icon"></i>
                 <p>INFO@INTELLIDIGEST.COM</p>
              </Card.Text>
@@ -95,7 +95,7 @@ function Contact() {
         <Card>
           <Card.Body>
             <Card.Title>Address</Card.Title>
-             <Card.Text className="mb-lg-1 mb-xl-n1">
+             <Card.Text>
              <i className="fa fa-location-arrow contact-footer-icon"></i>
         <p>Edinburgh Business School, Heriot Watt University, Currie, EH14 4AS</p>
              </Card.Text>
