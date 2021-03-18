@@ -11,6 +11,19 @@ body{
   font-size: 16px;
 }
 
+/* page not found */
+
+.not-found .page-not-found{
+  font-size: 45px;
+  font-weight: 600;
+  color: rgb(55, 85, 54);
+}
+
+.not-found .not-found-message{
+  font-size: 23px;
+  padding-top: 10px;
+}
+
 
 /* home page */
 
