@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "../App.css";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import "./Pages.css"
+import styled from "styled-components";
+import { Row, Col, Button } from "react-bootstrap";
 
 
 function Account() {
@@ -21,18 +24,56 @@ function Account() {
     }
   
     return (
-      <div className="user-account-page-container">
-        <h1 className="user-acc-title">My Account</h1>
+      <React.Fragment>
+        <Row className="ml-0 mr-0 user-acc">
+          <Col className="mt-3 pt-3 mt-lg-5 pt-lg-5" xs={12}></Col>
+          <Col className="mt-3 pt-3 mt-lg-5 pt-lg-5" xs={12}></Col>
+
+          <Col className="mt-4 pt-4 mt-lg-5 pt-lg-5" xs={12} lg={3}></Col>
+          <Col className="" xs={12} lg={6}>
+          <h1 className="user-acc-title text-center">My Account</h1>
         {<h1 className="warning">{error}</h1>}
-        <h1 className="user-acc-details">Account email: <span className="email-colour">{currentUser.email}</span></h1>
-        <div className="user-acc-options">
-          <p className="user-acc-opt"><Link to="/change-password">Change Password</Link></p>
-          <p className="user-acc-opt"><Link to="#">SMART Bin Details</Link></p>
-          <p className="user-acc-opt"><Link to="#">View Food Waste</Link></p>
+          <h1 className="text-center">Account email: <span >{currentUser.email}</span></h1>
+        <div className="acc-options text-center">
+          <p><Link className="user-acc-opt" to="/change-password">Change Password</Link></p>
+          <p><Link className="user-acc-opt" to="#">SMART Bin Details</Link></p>
+          <p><Link className="user-acc-opt" to="#">View Food Waste</Link></p>
+          <ButtonStyle>
+
+          <Button variant="dark" type="submit" onClick={handleLogout}> Logout </Button>
+          </ButtonStyle>
         </div>
-        <button className="user-acc-logout-btn" type="submit" onClick={handleLogout}>Logout</button>
-      </div>
+
+          </Col>
+          <Col xs={12} lg={3}></Col>
+
+          <Col className="mt-lg-5 pt-lg-5" xs={12}></Col>
+          <Col className="mt-lg-5 pt-lg-5" xs={12}></Col>
+        </Row>
+
+      </React.Fragment>
   );
 }
+
+
+const ButtonStyle = styled.div`
+    .btn-dark{
+      background-color:  #071850;
+      color:whitesmoke;
+      border: 1px solid #03091d;
+      margin-top:20px;
+
+      &:hover{
+        background-color: #030d2b;
+        border: 1px solid #03091d;
+      }
+
+      &:active{
+        background-color: #030d2b;
+        border: 1px solid #03091d;
+      }
+    }
+
+`
 
 export default Account;

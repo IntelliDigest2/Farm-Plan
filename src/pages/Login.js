@@ -1,7 +1,9 @@
 import React,  { useRef, useState } from "react";
 import { Link, useHistory} from "react-router-dom";
-import "../App.css";
 import { useAuth } from "../contexts/AuthContext";
+import "./Pages.css"
+import styled from "styled-components";
+import { Row, Col, Form, Button } from "react-bootstrap";
 
 function Login() {
   const emailRef = useRef();
@@ -28,30 +30,65 @@ function Login() {
   }
 
   return (
-      <div className="login-page-container">
-        <div className="login-container">
-          <div className="login-header">
-          <h1 className="text-h1">Login to your account</h1>
-          {<h1 className="warning">{error}</h1>}
-          </div>
-          <div className="login-form-content">
-          <form onSubmit={handleSubmit} className="login-form">
-                  <label htmlFor="username">Email</label>
-                  <input type="text" id="username" name="username" placeholder="Email" ref={emailRef}  required/>
-                  <label htmlFor="password">Password</label>
-                  <input type="password" id="password" name="password" placeholder="Password" ref={passwordRef} required/>
-                  <button disabled={loading} className="btn frg-password" type="submit">Login</button>
+    <React.Fragment>
+        <Row className="mr-0 ml-0 justify-content-center align-items-center login">
+            <Col className="d-block mt-5 pt-5 mt-lg-0 pt-lg-0" sm={12} md={12} lg={5}>
+              <FormStyle>
+              <h1 className="text-center">Login to your account</h1>
+              {<h1 className="warning">{error}</h1>}
+              <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" placeholder="Email" ref={emailRef}  required/>
+              </Form.Group>
 
-                  <Link to="/forgot-password" className="frg-password password">Forgot your password?</Link>
-                  <br/>
-                  <p className="text-p">Not got an account? <Link to="/signup" className="register">Click here</Link> to sign up today!</p>
-                </form>
-          </div>
-        </div>
-        <div className="login-graphic">
-        </div>
-      </div>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" ref={passwordRef} required/>
+              </Form.Group>
+              <Form.Group controlId="formActions">
+              <Button variant="dark" type="submit" disabled={loading}>
+                Login
+              </Button>
+              <Link to="/forgot-password" className="forgot-password">Forgot your password?</Link>
+              </Form.Group>
+              </Form>
+              <p className="text-center">Not got an account? <Link to="/signup" className="register">Click here</Link> to sign up today!</p>
+              </FormStyle>
+            </Col>
+            <Col className="bg-image login-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7}></Col>
+        </Row>
+    </React.Fragment>
   );
 }
+
+const FormStyle = styled.div`
+    form{
+      width:55%;
+      margin:auto;
+      padding:10px;
+    }
+
+    input{
+      border: 1px solid #62680a;
+    }
+
+    .btn-dark{
+      background-color:#071850;
+      color:whitesmoke;
+      border: 1px solid #03091d;
+
+      &:hover{
+        background-color: #030d2b;
+        border: 1px solid #03091d;
+      }
+
+      &:active{
+        background-color: #030d2b;
+        border: 1px solid #03091d;
+      }
+    }
+
+`
 
 export default Login;

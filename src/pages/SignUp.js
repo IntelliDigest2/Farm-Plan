@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
-import "../App.css";
 import { Link, useHistory} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import "./Pages.css"
+import styled from "styled-components";
+import { Row, Col, Form, Button } from "react-bootstrap";
+
+
 
 function SignUp() {
   const emailRef = useRef();
@@ -36,52 +40,78 @@ function SignUp() {
   }
 
   return (
-    <div className="signup-page-containter">
-        <div className="signup-container">
-        <form onSubmit={handleSubmit} className="signup-form">
-      <i className="fa fa-user-circle-o signup-logo"></i>
-      <div className="">
-        <h1 className="text-lg signup-header"> Sign Up to iTracker</h1>
-        {<h1 className="warning">{error}</h1>}
-       <br/>
-      </div>
+    <React.Fragment>
+    <Row className="mr-0 ml-0 justify-content-center align-items-center signup">
+            <Col className="d-block mt-5 pt-5 mt-lg-0 pt-lg-0" sm={12} md={12} lg={5}>
+              <FormStyle>
+                <div className="text-center">
 
-      {/*<div className="fullname-container">
-      <div className="name">
-        <label className="" htmlFor="fName">Name</label>
-        <input className="" type="text" id="fName" name="fName" placeholder="Name"/>
-        </div>
+              <i className="fa fa-user-circle-o signup-logo"></i>
+                </div>
+              <h1 className="text-center header">Sign Up to iTracker</h1>
 
-        <div className="surname">
-        <label  className="" htmlFor="lName">Surname</label>
-        <input className="" type="text" id="lName" name="lName" placeholder="Surname"/>
-        </div>
-        </div> */}
+              {<h1 className="warning">{error}</h1>}
+              <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" placeholder="Email" ref={emailRef} required/>
+              </Form.Group>
 
-        <label htmlFor="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Email" ref={emailRef} required/>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" ref={passwordRef} required/>
+              </Form.Group>
 
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Password" ref={passwordRef} required/>
+              <Form.Group controlId="formBasicRepeatPassword">
+                <Form.Label>Repeat Password</Form.Label>
+                <Form.Control type="password" placeholder="Repeat Password" ref={repeatPasswordRef} required/>
+              </Form.Group>
+              <p className="text-center terms">By creating an account you agree to our <Link to="/termsandprivacy" className="termcond">Terms and Conditions</Link>, and <Link to="/termsandprivacy" className="termcond">Privacy Policy</Link>.</p>
 
-        <label htmlFor="repeat">Repeat Password</label>
-        <input type="password" id="repeat" name="repeat" placeholder="Repeat Password" ref={repeatPasswordRef} required/>
-
-        <p className="terms">By creating an account you agree to our <Link to="/termsandprivacy" className="termcond">Terms and Conditions</Link>, and <Link to="/termsandprivacy" className="termcond">Privacy Policy</Link>.</p>
-
-        <button disabled={loading} className="btn" type="submit">Sign Up</button>
-
-        <p className="terms member">Already a member? <Link to="/login" className="register">Login</Link> to your account.</p>
-
-      </form> 
-
-
-        </div>
-        <div className="signup-graphic"></div>
-
-    </div>
-   
+              <Form.Group controlId="formActions">
+              <Button variant="dark" type="submit" disabled={loading}>
+                Sign Up
+              </Button>
+              </Form.Group>
+              </Form>
+              <p className="text-center terms">Already a member? <Link to="/login" className="register">Login</Link> to your account.</p>
+              </FormStyle>
+            </Col>
+            <Col className="bg-image signup-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7}></Col>
+        </Row>
+</React.Fragment>
   );
 }
+
+const FormStyle = styled.div`
+    form{
+      width:80%;
+      margin:auto;
+      padding:10px;
+    }
+
+    input{
+      border: 1px solid #62680a;
+    }
+    
+    .btn-dark{
+      background-color:  #071850;
+      color:whitesmoke;
+      border: 1px solid #03091d;
+      float:right;
+
+      &:hover{
+        background-color: #030d2b;
+        border: 1px solid #03091d;
+      }
+
+      &:active{
+        background-color: #030d2b;
+        border: 1px solid #03091d;
+      }
+    }
+
+`
+
 
 export default SignUp;

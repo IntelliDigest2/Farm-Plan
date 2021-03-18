@@ -1,62 +1,157 @@
 import React from "react";
-import "../App.css";
+import "./Pages.css"
+import styled from "styled-components";
+import { Row, Col, Form, Button, Card } from "react-bootstrap";
 
 function Contact() {
   return (
-    <div className="main-div-layout contact-container">
-      <div className="contact-header">
+    <React.Fragment>
+
+      <Row className="mt-1 mr-0 ml-0 justify-content-center align-items-center contact">
+        <Col xs={12} className="mt-5 pt-5 header">
+        <div className="contact-header">
+
+          <div className="text-center">
+
       <i className="fa fa-group contact-logo"></i>
       <h1 className="contact-title">Contact Us</h1>
+          </div>
 
       </div>
       <div className="contact-text-layout">
-        <h1 className="text-lg">If you are interested in this scheme and would like to request a SMART bin or have any enquiries, please complete the contact form below. We aim to respond to you via e-mail as soon as possilbe.</h1>
-      </div>  
-      <form action="#" className="contact-form">
+        <h1>If you are interested in this scheme and would like to request a SMART bin or have any enquiries, please complete the contact form below. We aim to respond to you via e-mail as soon as possilbe.</h1>
+      </div> 
+        </Col>
+        <Col xs={12} className="mt-4">
+          <FormStyle>
 
-        <div className="main-details-containter">
-           {/*<label htmlFor="name">Name</label>*/}
-        <input className="contact-details" type="text" id="name" name="name" placeholder="Name" required/>
+        <Form onSubmit="#">
+    <Form.Row>
+      <Form.Group as={Col} controlId="contactFormName">
+        <Form.Control type="text" placeholder="Name" required/>
+      </Form.Group>
+  
+      <Form.Group as={Col} controlId="contactFormEmail">
+        <Form.Control type="email" placeholder="Email" required />
+      </Form.Group>
+    </Form.Row>
+  
+    <Form.Group controlId="contactFormSubject">
+      <Form.Control placeholder="Subject" required/>
+    </Form.Group>
+  
+    <Form.Group controlId="contactFormMessage">
+    <Form.Control as="textarea" rows={12} placeholder="Message" required />
+  </Form.Group>
 
-{/*<label htmlFor="email">Email</label>*/}
-<input className="contact-details" type="email" id="email" name="email" placeholder="Email Address" required/>
+  <Form.Group controlId="formActions">
 
-        </div>
-        {/*<label htmlFor="email">Subject</label>*/}
-        <input type="text" id="subject" name="subject" placeholder="Subject" required/>
+    <Button variant="dark" type="submit">
+      Submit
+    </Button>
+  </Form.Group>
+  </Form>
+          </FormStyle>
+        </Col>
+      </Row>
+      <Row className="mr-0 ml-0 pt-5 details text-center"> 
+        <Col>
+          <h1 className="more-details-header">More Contact Details</h1>
+        </Col>
+      </Row>
+      <Row className="mr-0 ml-0 pt-1 mb-5 pb-5 justify-content-top align-items-top text-center details">
+        <Col xs={12} lg={3}></Col>
 
-        {/*<label htmlFor="message">Message</label>*/}
-        <textarea id="message" name="message" placeholder="Message" required></textarea>
-        <button className="btn" type="submit">Submit</button>
+        <Col xs={12} lg={2}>
+          <CardStyle>
 
-      </form> 
-      <div className="contact-footer">
-        <div className="contact-footer-layout telephone">
-          <i className="fa fa-phone contact-footer-icon"></i>
-          <div>
-          <p>07795523201</p>
-          <br/>
-            <br/>
-          </div>
-        </div>
-        <div className="contact-footer-layout email">
-        <i className="fa fa-envelope-o contact-footer-icon"></i>
-        <div>
-            <p>INFO@INTELLIDIGEST.COM</p>
-            <br/>
-            <br/>
-        </div>
-        </div>
-        <div className="contact-footer-layout address">
-        <i className="fa fa-location-arrow contact-footer-icon"></i>
-            <p>Edinburgh Business School</p>
-            <p>Heriot Watt University</p>
-            <p>Currie, EH14 4AS</p>
-        </div>
+        <Card>
+          <Card.Body>
+            <Card.Title>Telephone</Card.Title>
+             <Card.Text className="pb-lg-4">
+              <i className="fa fa-phone contact-footer-icon"></i>
+              <p>07795523201</p>
+             </Card.Text>
+            </Card.Body>
+        </Card>
+          </CardStyle>
+        </Col>
+        <Col xs={12} lg={2}>
+          <CardStyle>
+        <Card>
+          <Card.Body>
+            <Card.Title>Email</Card.Title>
+             <Card.Text className="pb-lg-4">
+                <i className="fa fa-envelope-o contact-footer-icon"></i>
+                <p>INFO@INTELLIDIGEST.COM</p>
+             </Card.Text>
+            </Card.Body>
+        </Card>
+            </CardStyle>    
+        </Col>
+        <Col xs={12} lg={2}>
+        <CardStyle>
 
-      </div>
-    </div>
+        <Card>
+          <Card.Body>
+            <Card.Title>Address</Card.Title>
+             <Card.Text>
+             <i className="fa fa-location-arrow contact-footer-icon"></i>
+        <p>Edinburgh Business School, Heriot Watt University, Currie, EH14 4AS</p>
+             </Card.Text>
+            </Card.Body>
+        </Card>
+        </CardStyle>
+        </Col>
+        <Col xs={12} lg={3}></Col>
+      </Row>
+    </React.Fragment>
   );
 }
+
+const FormStyle = styled.div`
+
+    form{
+      width:55%;
+      margin:auto;
+      padding:10px;
+    }
+
+    input, textarea{
+      border: 1px solid #62680a;
+    }
+    
+    .btn-dark{
+      background-color:  #071850;
+      color:whitesmoke;
+      border: 1px solid #03091d;
+      float:right;
+
+      &:hover{
+        background-color: #030d2b;
+        border: 1px solid #03091d;
+      }
+
+      &:active{
+        background-color: #030d2b;
+        border: 1px solid #03091d;
+      }
+    }
+
+`
+const CardStyle = styled.div`
+.card{
+  margin-top: 5px;
+  color: rgb(59, 59, 59);
+  background-color: rgb(238, 238, 238);
+  border: 1px solid rgb(77, 109, 77);
+
+  &:hover{
+    background-color:rgb(207, 207, 207);
+  }
+}
+
+`
+
 
 export default Contact;

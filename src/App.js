@@ -2,7 +2,8 @@ import React from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./App.css";
 import "./index.css";
-import Narbar from "./components/Navbar/Navbar";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NarBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home";  
 import About from "./pages/About";
@@ -21,9 +22,11 @@ import PrivateRoute from "./components/PrivateRoute";
 function App() {
   return (
     
+    <React.Fragment>
+
         <Router>
         <AuthProvider>
-        <Narbar />
+        <NarBar />
         <Switch>
           <Route path="/" exact component={Home}/>
           <Route path="/about" exact component={About}/>
@@ -39,6 +42,7 @@ function App() {
         </AuthProvider>
         <Footer />
     </Router>
+    </React.Fragment>
   );
 }
 

@@ -1,11 +1,11 @@
-import React, {useState} from "react";
-import {NavLink, useHistory} from "react-router-dom";
-import "./Navbar.css"
 import { useAuth } from "../../contexts/AuthContext";
+import React, { useState} from 'react';
+import { Navbar, Nav, Container } from "react-bootstrap";
+import styled from "styled-components";
+import { NavLink, useHistory } from "react-router-dom";
 
-function Navbar() {
-const [open, setOpen] = useState(false);
-
+function NavBar() {
+// eslint-disable-next-line
 const [error, setError] = useState("");
 const {currentUser, logout} = useAuth();
 const history = useHistory();
@@ -22,24 +22,78 @@ const history = useHistory();
   }
 
   return (
-    <nav>
-        <h3 className="logo">IntelliDigest - iTracker</h3>
-        <ul className="nav-items" style={{transform: open ? "translateX(0px)" : ""}}>
-            <NavLink to="/" activeClassName="active" exact={true}><li>Home</li></NavLink>
-            <NavLink to="/about" activeClassName="active" exact={true}><li >About</li></NavLink>
-            {currentUser ? 
+    <NavStyle>
+      <Navbar fixed="top" expand="md" className="mr-0 ml-0">
+        <Container>
+          <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/">IntelliDigest - iTracker</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/" activeClassName="active" exact={true}>Home</NavLink></Nav.Link>
+              <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/about" activeClassName="active" exact={true}>About</NavLink></Nav.Link>
+              {currentUser ?
               <>
-                <NavLink to="/account" activeClassName="active" exact={true}><li >My Account</li></NavLink>
-                <NavLink to="/" className="logout" onClick={handleLogout}><li>Logout</li></NavLink>
-              </>
-              :
-              <NavLink to="/login" activeClassName="active" exact={true}><li >Login</li></NavLink>
+                <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"> <NavLink to="/account" activeClassName="active" exact={true}>My Account</NavLink></Nav.Link>
+                <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/" className="logout" onClick={handleLogout}>Logout</NavLink></Nav.Link>
+              </> 
+            :
+            <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/login" activeClassName="active" exact={true}>Login</NavLink></Nav.Link>
             }
-            <NavLink to="/contact" activeClassName="active" exact={true}><li className="last-item">Contact Us</li></NavLink>
-        </ul>
-        <i onClick={() => setOpen(!open)}  style={{color: open ? "#AFBA15" : "whitesmoke"}} className="fa fa-bars menu"></i>
-    </nav>
+              <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/contact" activeClassName="active" exact={true}>Contact</NavLink></Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+    </Navbar>
+    </NavStyle>
   );
 }
 
-export default Navbar;
+const NavStyle = styled.div`
+    .navbar{
+      background-color:#030227;
+      color: whitesmoke;
+      box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2);
+      padding: .5rem;
+    }
+
+    .container .navbar-brand{
+      font-weight: 700;
+    color: #AFBA15;
+    font-size: 20px;
+    font-family: 'Rajdhani', sans-serif;
+
+    &:hover{
+      color: #AFBA15;
+    }
+    }
+
+    .container a{
+      font-size: 18px;
+    color: whitesmoke;
+    font-weight: 500;
+    font-family: 'Source Sans Pro', sans-serif;
+      text-decoration: none;
+      justify-content: space-between;  
+
+
+        &:hover{
+          color:#c5d118;
+        }
+    }
+
+    .container .active{
+      color:#d8e61a;
+  
+  }
+  .container .logout{
+    color: whitesmoke;
+  }
+  .navbar-toggler{
+    background-color: #AFBA15;
+    padding: 5px 8px 5px 8px;
+    color: white;
+    size:10px;
+  }
+`;
+
+export default NavBar;

@@ -1,42 +1,30 @@
-import React from "react";
-import "../App.css";
+import React from 'react';
+import '../App.css';
+import "./Pages.css"
+import { Row, Col } from "react-bootstrap";
+import { Layout } from "../components/Layout/Layout"
 import logo from "../images/intellidigest-logo.png";
 import placeholder from "../images/fruit.jpg";
 import benefits from "../images/help.jpg";
 
 function About() {
   return (
-    <div className="about-page-container">
-      <div className="about-page small-screen">
+    <React.Fragment>
+        <Layout>
+          <Row>
+            <Col className="pt-5 mt-5 ml-3 text-left"> 
+              <h1>About Us</h1>
+            </Col>
+          </Row>
 
-        <div className="about-page-header">
-          <h1>About Us</h1>
-        </div>
-        <div className="about-intellidigest">
-        <img src={logo} alt="Intelliigest Logo"  className="img-logo"/>
-        <div className="about-id-text">
-        <h1>IntelliDigest</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <Row className="pb-5 mt-3 mr-0 ml-0 text-justify about">
+            <Col className="d-flex justify-content-center"sm={12} md={12} lg={4}>
+            <img src={logo} alt="Intelliigest Logo"  className="img-fluid rounded fix-image"/>
+
+            </Col>
+            <Col  className=" d-block justify-content-center" sm={12} md={12} lg={8}>
+            <h1>IntelliDigest</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-        </div>
-
-        </div>
-
-        <div className="about-itracker">
-          <div className="about-it-text">
-          <h1>iTracker</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -48,13 +36,34 @@ function About() {
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-          <img src={placeholder} alt="Placeholder" className="img-placeholder"/>
-        </div>
+            </Col>
+        </Row>
+        <Row className="pb-5 mr-0 ml-0 text-justify about">
+            <Col className="d-block justify-content-center"sm={12} md={12} lg={8}>
+            <h1>iTracker</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </Col>
+            <Col  className=" d-flex justify-content-center" sm={12} md={12} lg={4}>
+            <img src={placeholder} alt="Placeholder"  className="img-fluid rounded fix-image"/>
 
-        <div className="user-benefits">
-        <img src={benefits} alt="Help"  className="img-benefits"/>
-          <div className="benefits-text">
+            </Col>
+        </Row>
+        <Row className="pb-5 mb-5 mr-0 ml-0 text-justify about">
+            <Col className="d-flex justify-content-center"sm={12} md={12} lg={4}>
+            <img src={benefits} alt="Help"  className="img-fluid rounded fix-image"/>
+            </Col>
+            <Col  className=" d-block justify-content-center" sm={12} md={12} lg={8}>
             <h1>User Benefits</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
@@ -64,10 +73,10 @@ function About() {
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Col>
+        </Row>
+        </Layout>
+    </React.Fragment>
   );
 }
 

@@ -1,0 +1,208 @@
+html {
+  background-color: whitesmoke;
+}
+
+body{
+  background-color: whitesmoke;
+}
+
+.warning{
+  color: rgb(204, 37, 37);
+  font-size: 16px;
+}
+
+
+/* home page */
+
+.home-welcome{
+  font-size: 40px;
+  width: 60%;
+}
+
+.update-text{
+  font-size: 18px;
+}
+
+/* about page */
+.about h1{
+    font-size: 28px;
+}
+
+.about p{
+    font-size: 15px;
+}
+
+.about{
+  margin: auto;
+}
+
+/* login page and signup page */
+
+.login-graphic,  .signup-graphic{
+    background-color: rgb(218, 218, 218);
+    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../images/robot-backgroung.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center;
+    height: 100vh;
+  }
+
+  .signup-graphic{
+    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../images/signup3.jpg");
+  }
+
+  .fix-image{
+    width: 100% \9;
+  }
+
+  .signup .signup-logo{
+    font-size: 50px;
+    color: #333333;
+    padding: 10px 10px 10px 10px;
+  }
+
+  .login p, .signup p{
+    padding-top: 30px;
+    font-size: 17px;
+  }
+  
+  .login h1, .signup h1{
+    padding-top: 5px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  
+  .signup .header{
+    color: rgb(55, 85, 54);
+
+  }
+
+  .login .forgot-password{
+    font-size: 16px;
+    margin-top: 5px;
+    float: right;
+    text-decoration: none;
+    color: rgb(90, 91, 92);
+  }
+
+  .login .register, .signup .register, .frg-pass .register{
+    color:  #aab41e;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .signup .terms{
+    font-size: 15px;
+    text-decoration: none;
+  }
+  
+  .signup .termcond{
+    color: #757c0e;
+    text-decoration: none;
+  }
+  
+
+  /* contact page */
+  .contact .contact-logo{
+    /*color: rgb(81, 117, 79);*/
+    color:#aab41e;
+    font-size: 60px;
+    padding: 15px 15px 15px 15px; 
+  }
+  
+  .contact h1{
+    font-size: 20px;
+    color: rgb(55, 85, 54);
+  }
+  .contact .contact-title{
+      font-size: 25px;
+      font-weight: 700;
+      color: black;
+    }
+.contact-text-layout{
+  width: 55%;
+  margin: auto;
+  padding-top: 30px;
+}
+
+.contact .contact-header{
+  background-color: white;
+  padding: 15px 0 10px 0;
+  margin: auto;
+}
+
+.details .contact-footer-icon{
+  font-size: 45px;
+  color: rgb(55, 85, 54);
+  padding: 5px 10px 10px 10px;
+}
+
+.details p{
+  font-size: 16px;
+  padding-top: 10px;
+}
+
+
+.details .other-contact-details{
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+.details .more-details-header{
+  font-size: 20px;
+}
+
+/* forgot password page and change password page */
+
+.frg-pass h1, .change-password h1{
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.frg-pass .remember-password, .change-password .cancel{
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(55, 85, 54);
+  text-decoration: none;
+}
+
+.frg-pass .rmb-pass, .change-password .back-to-acc{
+  padding-top: 50px;
+}
+
+.frg-pass .no-acc{
+  padding-top: 28px;
+}
+
+.user-acc h1{
+  font-size: 20px;
+  padding-bottom: 20px;
+}
+
+.user-acc .user-acc-title{
+  font-size: 30px;
+  margin-bottom: -15px;
+  font-weight: 600;
+}
+
+.user-acc span{
+  color: rgb(55, 85, 54);
+}
+
+.user-acc p{
+  font-size: 17px;
+}
+
+.user-acc .user-acc-opt{
+  color: rgb(7, 7, 77);
+  text-decoration: none;
+}
+
+.user-acc .user-acc-opt:hover{
+  color: rgb(0, 0, 0);
+}
+
+.user-acc .user-acc-opt:visited{
+  color: rgb(7, 7, 77);
+}
+
