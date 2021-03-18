@@ -53,7 +53,7 @@ const NavStyle = styled.div`
       background-color:#030227;
       color: whitesmoke;
       box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2);
-      padding: .5rem;
+      padding: 6px;
     }
 
     .container .navbar-brand{

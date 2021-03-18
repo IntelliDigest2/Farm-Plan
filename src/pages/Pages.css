@@ -69,9 +69,9 @@ body{
   }
 
   .signup .signup-logo{
-    font-size: 50px;
+    font-size: 38px;
     color: #333333;
-    padding: 10px 10px 10px 10px;
+    padding: 2px 5px 10px 5px;
   }
 
   .login p, .signup p{

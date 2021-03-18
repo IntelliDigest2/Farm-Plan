@@ -19,7 +19,7 @@ function Contact() {
 
       </div>
       <div className="contact-text-layout">
-        <h1>If you are interested in this scheme and would like to request a SMART bin or have any enquiries, please complete the contact form below. We aim to respond to you via e-mail as soon as possilbe.</h1>
+        <h1>If you are interested in this scheme and would like to request a SMART bin or have any enquiries, please complete the contact form below. We aim to respond to you via e-mail as soon as possible.</h1>
       </div> 
         </Col>
         <Col xs={12} className="mt-4">
@@ -65,7 +65,7 @@ function Contact() {
         <Col xs={12} lg={2}>
           <CardStyle>
 
-        <Card>
+        <Card >
           <Card.Body>
             <Card.Title>Telephone</Card.Title>
              <Card.Text >
