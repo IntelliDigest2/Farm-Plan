@@ -43,8 +43,9 @@ function ChangePassword() {
   return (
     <React.Fragment>
   <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex change-password">
-  <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-5 pt-lg-5 mb-lg-5 pb-lg-5" xs={12}></Col>
-    <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
+  <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
+  <Col className="mt-5 pt-5" xs={12}></Col>
+    <Col className="" xs={12} lg={4}></Col>
       <Col className=" justify-content-center align-items-center d-block mt-5 pt-5 mt-lg-0 pt-lg-0" xs={12} lg={4}>
         <CardStyle>
 
@@ -85,6 +86,8 @@ function ChangePassword() {
 
       </Col>
       <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
+      <Col className="mt-5 pt-5" xs={12}></Col>
+      <Col className="mt-5 pt-5" xs={12}></Col>
   </Row>
 </React.Fragment>
 

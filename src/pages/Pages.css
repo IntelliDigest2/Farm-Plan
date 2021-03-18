@@ -132,14 +132,14 @@ body{
 }
 
 .details .contact-footer-icon{
-  font-size: 45px;
+  font-size: 30px;
   color: rgb(55, 85, 54);
   padding: 5px 10px 10px 10px;
 }
 
 .details p{
-  font-size: 16px;
-  padding-top: 10px;
+  font-size: 13px;
+  padding-top: 5px;
 }
 
 
@@ -152,7 +152,7 @@ body{
   font-size: 20px;
 }
 
-/* forgot password page and change password page */
+/* forgot password page and change password page and user account page */
 
 .frg-pass h1, .change-password h1{
   font-size: 18px;

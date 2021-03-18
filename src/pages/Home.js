@@ -8,8 +8,10 @@ function Home() {
     return (
         <React.Fragment>
 
-            <Row className="mr-0 ml-0 mt-5 pt-5 home justify-content-center align-items-center d-flex">
-            <Col className="mt-5 pt-5" xs={12}></Col>
+<Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex home">
+  <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-3 pt-lg-3" xs={12}></Col>
+  <Col className="" xs={12}></Col>
+    <Col className="" xs={12} lg={4}></Col>
           <Col className="mt-2 pt-2" xs={12}></Col>
                 <Col className="justify-content-center align-items-center d-flex mt-5 pt-5" xs={12}>
             <p className="home-welcome text-center">This website is currently under constuction, please come back soon to find out what it's all about!</p>
@@ -37,6 +39,8 @@ function Home() {
               </Form>
                 </FormStyle>
                 </Col>
+      <Col className="mt-5 pt-5" xs={12}></Col>
+      <Col className="mt-5 pt-5" xs={12}></Col>
             </Row>
         </React.Fragment>
     );
