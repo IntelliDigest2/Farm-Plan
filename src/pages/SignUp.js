@@ -66,7 +66,7 @@ function SignUp() {
                 <Form.Label>Repeat Password</Form.Label>
                 <Form.Control type="password" placeholder="Repeat Password" ref={repeatPasswordRef} required/>
               </Form.Group>
-              <p className="text-center terms">By creating an account you agree to our <Link to="/termsandprivacy" className="termcond">Terms and Conditions</Link>, and <Link to="/termsandprivacy" className="termcond">Privacy Policy</Link>.</p>
+              <p className="text-center terms">By creating an account you agree to our <Link to="/terms-and-privacy" className="termcond">Terms and Conditions</Link>, and <Link to="/terms-and-privacy" className="termcond">Privacy Policy</Link>.</p>
 
               <Form.Group controlId="formActions">
               <Button variant="dark" type="submit" disabled={loading}>

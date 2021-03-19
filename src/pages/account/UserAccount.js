@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "../App.css";
+import "../../App.css";
 import { Link, useHistory } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import "./Pages.css"
+import { useAuth } from "../../contexts/AuthContext";
+import "../Pages.css"
 import styled from "styled-components";
 import { Row, Col, Button } from "react-bootstrap";
 
@@ -36,6 +36,7 @@ function Account() {
           <h1 className="text-center">Account email: <span >{currentUser.email}</span></h1>
         <div className="acc-options text-center">
           <p><Link className="user-acc-opt" to="/change-password">Change Password</Link></p>
+          <p><Link className="user-acc-opt" to="/view-map">View Map</Link></p>
           <p><Link className="user-acc-opt" to="#">SMART Bin Details</Link></p>
           <p><Link className="user-acc-opt" to="#">View Food Waste</Link></p>
           <ButtonStyle>

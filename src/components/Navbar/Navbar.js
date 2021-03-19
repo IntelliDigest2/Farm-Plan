@@ -29,17 +29,17 @@ const history = useHistory();
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/" activeClassName="active" exact={true}>Home</NavLink></Nav.Link>
-              <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/about" activeClassName="active" exact={true}>About</NavLink></Nav.Link>
+              <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/" activeClassName="active" exact={true}>Home</NavLink></Nav.Link>
+              <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/about" activeClassName="active" exact={true}>About</NavLink></Nav.Link>
               {currentUser ?
               <>
-                <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"> <NavLink to="/account" activeClassName="active" exact={true}>My Account</NavLink></Nav.Link>
-                <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/" className="logout" onClick={handleLogout}>Logout</NavLink></Nav.Link>
+                <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"> <NavLink to="/account" activeClassName="active" exact={true}>My Account</NavLink></Nav.Link>
+                <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/" className="logout" onClick={handleLogout}>Logout</NavLink></Nav.Link>
               </> 
             :
-            <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/login" activeClassName="active" exact={true}>Login</NavLink></Nav.Link>
+            <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/login" activeClassName="active" exact={true}>Login</NavLink></Nav.Link>
             }
-              <Nav.Link className="pl-sm-0 pl-0 pl-md-5 navbar-items"><NavLink to="/contact" activeClassName="active" exact={true}>Contact</NavLink></Nav.Link>
+              <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/contact" activeClassName="active" exact={true}>Contact</NavLink></Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -14,10 +14,10 @@ import NotFound from "./pages/NotFound";
 import TermsAndPrivacy from "./pages/TermsAndPrivacy";
 import ForgotPassword from "./pages/ForgotPassword";
 import { AuthProvider} from "./contexts/AuthContext";
-import Account from "./pages/UserAccount";
-import ChangePassword from "./pages/ChangePassword";
 import PrivateRoute from "./components/PrivateRoute";
-
+import Account from "./pages/account/UserAccount";
+import ChangePassword from "./pages/account/ChangePassword";
+import Map from "./pages/account/MapData";
 
 function App() {
   return (
@@ -33,10 +33,11 @@ function App() {
           <Route path="/login" exact component={Login}/>
           <Route path="/signup" exact component={SignUp}/>
           <Route path="/contact" exact component={Contact}/>
-          <Route path="/termsandprivacy" exact component={TermsAndPrivacy}/>
+          <Route path="/terms-and-privacy" exact component={TermsAndPrivacy}/>
           <Route path="/forgot-password" exact component={ForgotPassword}/>
           <PrivateRoute path="/account" exact component={Account}/>
           <PrivateRoute path="/change-password" exact component={ChangePassword}/>
+          <PrivateRoute path="/view-map" exact component={Map}/>
           <Route component={NotFound} />
         </Switch>
         </AuthProvider>
