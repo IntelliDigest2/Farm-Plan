@@ -66,6 +66,7 @@ body{
 
   .fix-image{
     width: 100% \9;
+    object-fit: scale-down;
   }
 
   .signup .signup-logo{

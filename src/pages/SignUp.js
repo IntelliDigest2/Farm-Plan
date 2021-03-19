@@ -42,7 +42,7 @@ function SignUp() {
   return (
     <React.Fragment>
     <Row className="mr-0 ml-0 justify-content-center align-items-center signup">
-            <Col className="d-block mt-5 pt-5 mt-lg-0 pt-lg-0" sm={12} md={12} lg={5}>
+            <Col className="d-block mt-5 pt-5 pb-5 mb-5 pb-lg-0 mb-lg-0 mt-lg-0 pt-lg-0" sm={12} md={12} lg={5}>
               <FormStyle>
                 <div className="text-center">
 
