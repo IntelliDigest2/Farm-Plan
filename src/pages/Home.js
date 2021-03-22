@@ -8,7 +8,7 @@ function Home() {
     return (
         <React.Fragment>
 
-<Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex home">
+<Row className="mr-0 ml-0 mt-0 pt-0 justify-content-center align-items-center d-flex home">
   <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-3 pt-lg-3" xs={12}></Col>
   <Col className="" xs={12}></Col>
     <Col className="" xs={12} lg={4}></Col>
@@ -18,7 +18,7 @@ function Home() {
                 </Col>
                 <Col className="mt-0 pt-0 d-block justify-content-center align-items-center" xs={12}>
 
-                <p className="text-center update-text"> For updates, please sign up to the newsletter bellow.</p>
+                <p className="text-center update-text"> For updates, please sign up to the newsletter below.</p>
 
                 <FormStyle>
 
@@ -53,6 +53,10 @@ form{
     margin: auto;
   }
 
+  form .col{
+    background:none;
+  }
+
   input, textarea{
     border: 1px solid #62680a;
   }
@@ -71,6 +75,22 @@ form{
       background-color: #030d2b;
       border: 1px solid #03091d;
     }
+  }
+
+  
+  @media (max-width: 576px) {
+
+    form{
+      width:100%;
+      display:block;
+    }
+  }
+
+  @media (max-width: 768px) { 
+    form{
+      width: 100%;
+    }
+
   }
 `
 
