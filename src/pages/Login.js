@@ -21,7 +21,6 @@ function Login() {
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value )
       history.push("/account")
-      console.log("login worked")
     }
     catch{
       setError("Failed to login (e.g. an account with this email does not exist or username or password is wrong). Please try again.")

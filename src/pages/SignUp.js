@@ -29,7 +29,6 @@ function SignUp() {
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value )
       history.push("/account")
-      console.log("sign up worked")
     }
     catch{
       setError("Failed to create an account, for example an account with this email already exists. Please also make sure that" +

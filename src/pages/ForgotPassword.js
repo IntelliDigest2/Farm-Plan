@@ -22,7 +22,6 @@ function ForgotPassword() {
       setLoading(true)
       await resetPassword(emailRef.current.value)
       setMessage("Password reset request successful, please check your email for further instructions.")
-      console.log("reset password works")
     }
     catch{
       setError("Failed to reset password.")

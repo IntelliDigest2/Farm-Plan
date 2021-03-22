@@ -1,4 +1,3 @@
-
 import React,  { useRef, useState } from "react";
 import { Link, useHistory} from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -18,7 +17,6 @@ function ChangePassword() {
     e.preventDefault()
 
     if(passwordRef.current.value !== repeatPasswordRef.current.value){
-        console.log("checking passwords")
         return setError("Passwords do not match! Please retype your password.");
       }
       
