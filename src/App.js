@@ -5,19 +5,19 @@ import "./index.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NarBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import Home from "./pages/Home";  
-import About from "./pages/About";
-import Login from "./pages/Login";
-import Contact from "./pages/Contact";
-import SignUp from "./pages/SignUp";
-import NotFound from "./pages/NotFound";
-import TermsAndPrivacy from "./pages/TermsAndPrivacy";
-import ForgotPassword from "./pages/ForgotPassword";
+import Home from "./components/Pages/Home";  
+import About from "./components/Pages/About";
+import Login from "./components/Pages/Auth/Login";
+import Contact from "./components/Pages/Contact";
+import SignUp from "./components/Pages/Auth/SignUp";
+import NotFound from "./components/Pages/NotFound";
+import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
+import ForgotPassword from "./components/Pages/ForgotPassword";
 import { AuthProvider} from "./contexts/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
-import Account from "./pages/account/UserAccount";
-import ChangePassword from "./pages/account/ChangePassword";
-import Map from "./pages/account/MapData";
+import Account from "./components/Pages/Account/UserAccount";
+import ChangePassword from "./components/Pages/Account/ChangePassword";
+import Map from "./components/Pages/Account/MapData";
 
 function App() {
   return (

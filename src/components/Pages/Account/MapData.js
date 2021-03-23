@@ -2,7 +2,7 @@ import React from "react";
 import "../Pages.css"
 import { Row, Col} from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import syntheticData from "../../data/data.json";
+import syntheticData from "../../../data/data.json";
 
 function Map() {
   return (

@@ -1,7 +1,7 @@
 import React,  { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import "../App.css";
-import { useAuth } from "../contexts/AuthContext";
+import "../../App.css";
+import { useAuth } from "../../contexts/AuthContext";
 import "./Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";

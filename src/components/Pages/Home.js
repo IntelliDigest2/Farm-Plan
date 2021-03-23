@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+import "../../App.css";
 import "./Pages.css"
 import { Row, Col, Form, Button } from "react-bootstrap";
 import styled from "styled-components";

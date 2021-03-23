@@ -1,43 +1,36 @@
-import React, { useRef, useState } from "react";
+import React, { Component, useRef, useState } from "react";
 import { Link, useHistory} from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import "./Pages.css"
+import { useAuth } from "../../../contexts/AuthContext";
+import "../Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button } from "react-bootstrap";
 
 
-
-function SignUp() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const repeatPasswordRef = useRef();
-  const {signup} = useAuth();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const history = useHistory();
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-
-    if(passwordRef.current.value !== repeatPasswordRef.current.value){
-      console.log("checking passwords")
-      return setError("Passwords do not match! Please retype your password.");
-    }
-
-    try{
-      setError("")
-      setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value )
-      history.push("/account")
-    }
-    catch{
-      setError("Failed to create an account, for example an account with this email already exists. Please also make sure that" +
-      " your password is alphanumeric.")
-    }
-
-    setLoading(false)
+class SignUp extends Component {
+  
+  state ={
+    email: "",
+    password: "",
+    repeatPassword:"",
+    firstName:"",
+    lastName:"",
+    address:""
   }
 
+  handleChange = (e) =>{
+    this.setState({
+      [e.target.id] : e.target.value
+    })
+  }
+
+  handleSubmit = (e) =>{
+    e.preventDefault();
+    console.log(this.state)
+  }
+
+render(){
+
+  
   return (
     <React.Fragment>
     <Row className="mr-0 ml-0 justify-content-center align-items-center signup">
@@ -48,27 +41,45 @@ function SignUp() {
               <i className="fa fa-user-circle-o signup-logo"></i>
                 </div>
               <h1 className="text-center header">Sign Up to iTracker</h1>
+              <Form onSubmit={this.handleSubmit}>
 
-              {<h1 className="warning">{error}</h1>}
-              <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formBasicEmail">
+              <Form.Row>
+              <Form.Group as={Col}>
+              <Form.Label>Name</Form.Label>
+                <Form.Control type="text" id="firstName" placeholder="Name" required onChange={this.handleChange}/>
+              </Form.Group>
+          
+              <Form.Group as={Col}>
+              <Form.Label>Surname</Form.Label>
+                <Form.Control type="text" id="lastName" placeholder="Surname" required onChange={this.handleChange}/>
+              </Form.Group>
+            </Form.Row>
+
+            <Form.Group>
+                <Form.Label>Address (including Postcode)</Form.Label>
+                <Form.Control type="text" id="address" placeholder="Address" required onChange={this.handleChange}/>
+              </Form.Group>
+              
+
+              <Form.Group >
                 <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Email" ref={emailRef} required/>
+                <Form.Control type="email" id="email" placeholder="Email" required onChange={this.handleChange}/>
               </Form.Group>
 
-              <Form.Group controlId="formBasicPassword">
+
+              <Form.Group >
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" ref={passwordRef} required/>
+                <Form.Control type="password" id="password" placeholder="Password" required onChange={this.handleChange}/>
               </Form.Group>
 
-              <Form.Group controlId="formBasicRepeatPassword">
+              <Form.Group>
                 <Form.Label>Repeat Password</Form.Label>
-                <Form.Control type="password" placeholder="Repeat Password" ref={repeatPasswordRef} required/>
+                <Form.Control type="password" id="repeatPassword" placeholder="Repeat Password"  required onChange={this.handleChange}/>
               </Form.Group>
               <p className="text-center terms">By creating an account you agree to our <Link to="/terms-and-privacy" className="termcond">Terms and Conditions</Link>, and <Link to="/terms-and-privacy" className="termcond">Privacy Policy</Link>.</p>
 
               <Form.Group controlId="formActions">
-              <Button variant="dark" type="submit" disabled={loading}>
+              <Button variant="dark" type="submit" >
                 Sign Up
               </Button>
               </Form.Group>
@@ -80,6 +91,7 @@ function SignUp() {
         </Row>
 </React.Fragment>
   );
+}
 }
 
 const FormStyle = styled.div`
