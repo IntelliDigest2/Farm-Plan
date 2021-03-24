@@ -1,45 +1,24 @@
-import React,  { useRef, useState } from "react";
-import { Link, useHistory} from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import React, { Component } from "react";
+import {connect} from 'react-redux';
+import { compose } from 'redux';
+import { Redirect, Link } from 'react-router-dom';
 import "../Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 
-function ChangePassword() {
-  const passwordRef = useRef();
-  const repeatPasswordRef = useRef();
-  const {updatePassword} = useAuth();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const history = useHistory();
+class ChangePassword extends Component {
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  render(){
+    const {user, products, auth} = this.props;
+    console.log(user);
+    console.log(products);
+  
+    if (!auth.uid) return <Redirect to= '/login'/>
 
-    if(passwordRef.current.value !== repeatPasswordRef.current.value){
-        return setError("Passwords do not match! Please retype your password.");
-      }
-      
-      const promises = []
-      setLoading(true)
-      setError("")
 
-    if(passwordRef.current.value){
-        promises.push(updatePassword(passwordRef.current.value))
-    }
-
-    Promise.all(promises).then(() =>{
-        history.push("/account")
-    }).catch(() => {
-        setError("Failed to update account")
-    }).finally(() =>{
-        setLoading(false)
-    })
-  }
-
- 
-  return (
-    <React.Fragment>
+    
+    return (
+      <React.Fragment>
   <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex change-password">
   <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
   <Col className="mt-5 pt-5" xs={12}></Col>
@@ -55,22 +34,20 @@ function ChangePassword() {
                 <div className="text-center">
                 </div>
               <h1 className="text-center">Change Password</h1>
-
-              {<h1 className="warning">{error}</h1>}
-              <Form onSubmit={handleSubmit}>
+              <Form>
 
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" ref={passwordRef} required/>
+                <Form.Control type="password" placeholder="Password" required/>
               </Form.Group>
 
               <Form.Group controlId="formBasicRepeatPassword">
                 <Form.Label>Repeat New Password</Form.Label>
-                <Form.Control type="password" placeholder="Repeat Password" ref={repeatPasswordRef} required/>
+                <Form.Control type="password" placeholder="Repeat Password"  required/>
               </Form.Group>
 
               <Form.Group controlId="formActions">
-              <Button variant="dark" type="submit" disabled={loading}>
+              <Button variant="dark" type="submit" >
                 Change Password
               </Button>
               </Form.Group>
@@ -91,6 +68,7 @@ function ChangePassword() {
 
 
 );
+}
 }
 
 
@@ -135,5 +113,12 @@ padding:10px 0 10px 0;
 }
 
 `
+const mapStateToProps = (state) => { 
+  console.log(state);
+  return{
+      auth: state.firebase.auth
+  }
+}
 
-export default ChangePassword;
+
+export default compose(connect(mapStateToProps, null))(ChangePassword);

@@ -1,12 +1,23 @@
-import React from "react";
+import React, { Component } from "react";
 import "../Pages.css"
 import { Row, Col} from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import syntheticData from "../../../data/data.json";
+import {connect} from 'react-redux';
+import { compose } from 'redux';
+import { Redirect } from 'react-router-dom';
 
-function Map() {
-  return (
-    <React.Fragment>
+class Map extends Component {
+
+  render(){
+      const {user, products, auth} = this.props;
+      console.log(user);
+      console.log(products);
+    
+      if (!auth.uid) return <Redirect to= '/login'/>
+
+    return (
+      <React.Fragment>
       <Row className="ml-0 mr-0 mt-1 pt-1 justify-content-center align-items-center d-flex">
         <Col className="mt-4" xs={12}></Col>
         <Col className="mt-5" xs={12}></Col>
@@ -17,11 +28,11 @@ function Map() {
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> IntelliDigest - iTracker'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+              />
             {syntheticData.map(data =>(
               <Marker
-                key={data.Name}
-                position={[data.Location.Latitude, data.Location.Longitude]}>
+              key={data.Name}
+              position={[data.Location.Latitude, data.Location.Longitude]}>
                 
                 <Popup
                 position={[data.Location.Latitude, data.Location.Longitude]}>
@@ -43,6 +54,14 @@ function Map() {
     </React.Fragment>
   );
 }
+}
+
+const mapStateToProps = (state) => { 
+  console.log(state);
+  return{
+      auth: state.firebase.auth
+  }
+}
 
 
-export default Map;
+export default compose(connect(mapStateToProps, null))(Map);

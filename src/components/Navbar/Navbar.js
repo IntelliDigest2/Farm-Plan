@@ -1,25 +1,12 @@
-import { useAuth } from "../../contexts/AuthContext";
-import React, { useState} from 'react';
+import React from 'react';
 import { Navbar, Nav, Container } from "react-bootstrap";
 import styled from "styled-components";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import {connect} from 'react-redux'
+import {signOut} from '../../store/actions/authActions'
 
-function NavBar() {
-// eslint-disable-next-line
-const [error, setError] = useState("");
-const {currentUser, logout} = useAuth();
-const history = useHistory();
-
-  async function handleLogout(){
-      setError("")
-
-      try {
-          await logout()
-          history.push("/login")
-      } catch {
-          setError("Failed to log out")
-      }
-  }
+const NavBar = (props) => {
+  const {auth } = props;
 
   return (
     <NavStyle>
@@ -29,17 +16,18 @@ const history = useHistory();
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/" activeClassName="active" exact={true}>Home</NavLink></Nav.Link>
-              <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/about" activeClassName="active" exact={true}>About</NavLink></Nav.Link>
-              {currentUser ?
-              <>
-                <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"> <NavLink to="/account" activeClassName="active" exact={true}>My Account</NavLink></Nav.Link>
-                <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/" className="logout" onClick={handleLogout}>Logout</NavLink></Nav.Link>
-              </> 
-            :
-            <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/login" activeClassName="active" exact={true}>Login</NavLink></Nav.Link>
-            }
-              <Nav.Link className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 navbar-items"><NavLink to="/contact" activeClassName="active" exact={true}>Contact</NavLink></Nav.Link>
+              <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/" activeClassName="active" exact={true}>Home</NavLink>
+              <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/about" activeClassName="active" exact={true}>About</NavLink>
+                {(auth.uid)? 
+                <>
+                <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/account" activeClassName="active" exact={true}>My Account</NavLink>
+                <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link logout" to="/login" onClick={props.signOut}>Logout</NavLink>
+                </>
+               : 
+                
+                <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/login" activeClassName="active" exact={true}>Login</NavLink>
+              }
+              <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/contact" activeClassName="active" exact={true}>Contact</NavLink>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -67,8 +55,8 @@ const NavStyle = styled.div`
     }
     }
 
-    .container a{
-      font-size: 18px;
+    .container .nav-link {
+    font-size: 18px;
     color: whitesmoke;
     font-weight: 500;
     font-family: 'Source Sans Pro', sans-serif;
@@ -79,12 +67,17 @@ const NavStyle = styled.div`
         &:hover{
           color:#c5d118;
         }
+
     }
 
-    .container .active{
+    .navbar-light .navbar-nav .nav-link.active{
       color:#d8e61a;
+
+      &:hover{
+        color:#c5d118;
+      }
+    }
   
-  }
   .container .logout{
     color: whitesmoke;
   }
@@ -96,4 +89,18 @@ const NavStyle = styled.div`
   }
 `;
 
-export default NavBar;
+const mapDispatchToProps = (dispatch) => {
+  return{
+      signOut: () => dispatch(signOut())
+  }
+}
+
+const mapStateToProps = (state) => {
+  console.log(state);
+  return{
+      auth: state.firebase.auth
+  }
+  
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

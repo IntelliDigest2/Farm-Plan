@@ -1,6 +1,7 @@
-import React,  { Component, useRef, useState } from "react";
-import { Link, useHistory} from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { signIn } from '../../../store/actions/authActions';
+import { Redirect, Link} from 'react-router-dom';
 import "../Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button } from "react-bootstrap";
@@ -12,18 +13,20 @@ class Login extends Component{
     password: ""
   }
 
-  handleChange = (e) =>{
+  handleChange = (e) => {
     this.setState({
-      [e.target.id] : e.target.value
+        [e.target.id]: e.target.value
     })
-  }
+}
 
-  handleSubmit = (e) =>{
+handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
-  }
+    this.props.signIn(this.state)
+}
 
   render() {
+    const {authError, auth} = this.props;
+    if(auth.uid) return <Redirect to='/account'/>
 
     return(
       <React.Fragment>
@@ -50,6 +53,7 @@ class Login extends Component{
               </Form.Group>
               </Form>
               <p className="text-center">Not got an account? <Link to="/signup" className="register">Click here</Link> to sign up today!</p>
+              <div>{authError ? <p> {authError}</p> : null}</div>
               </FormStyle>
             </Col>
             <Col className="bg-image login-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7}></Col>
@@ -89,4 +93,16 @@ const FormStyle = styled.div`
 
 `
 
-export default Login;
+const mapStateToProps = (state) => {
+  return{
+      authError: state.auth.authError,
+      auth: state.firebase.auth
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return{
+      signIn: (creds) => dispatch(signIn(creds))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

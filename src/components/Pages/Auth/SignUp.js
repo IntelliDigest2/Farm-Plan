@@ -1,6 +1,7 @@
-import React, { Component, useRef, useState } from "react";
-import { Link, useHistory} from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { Redirect, Link } from 'react-router-dom';
+import { signUp } from '../../../store/actions/authActions';
 import "../Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button } from "react-bootstrap";
@@ -11,24 +12,25 @@ class SignUp extends Component {
   state ={
     email: "",
     password: "",
-    repeatPassword:"",
     firstName:"",
     lastName:"",
-    address:""
+    postcode:""
   }
 
-  handleChange = (e) =>{
+  handleChange = (e) => {
     this.setState({
-      [e.target.id] : e.target.value
+        [e.target.id]: e.target.value
     })
-  }
+}
 
-  handleSubmit = (e) =>{
+handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
-  }
+   this.props.signUp(this.state);
+}
 
 render(){
+  const { auth, authError } = this.props;
+  if (auth.uid) return <Redirect to='/account'/>
 
   
   return (
@@ -56,8 +58,8 @@ render(){
             </Form.Row>
 
             <Form.Group>
-                <Form.Label>Address (including Postcode)</Form.Label>
-                <Form.Control type="text" id="address" placeholder="Address" required onChange={this.handleChange}/>
+                <Form.Label>Postcode</Form.Label>
+                <Form.Control type="text" id="postcode" placeholder="Postcode" required onChange={this.handleChange}/>
               </Form.Group>
               
 
@@ -72,10 +74,6 @@ render(){
                 <Form.Control type="password" id="password" placeholder="Password" required onChange={this.handleChange}/>
               </Form.Group>
 
-              <Form.Group>
-                <Form.Label>Repeat Password</Form.Label>
-                <Form.Control type="password" id="repeatPassword" placeholder="Repeat Password"  required onChange={this.handleChange}/>
-              </Form.Group>
               <p className="text-center terms">By creating an account you agree to our <Link to="/terms-and-privacy" className="termcond">Terms and Conditions</Link>, and <Link to="/terms-and-privacy" className="termcond">Privacy Policy</Link>.</p>
 
               <Form.Group controlId="formActions">
@@ -85,6 +83,7 @@ render(){
               </Form.Group>
               </Form>
               <p className="text-center terms">Already a member? <Link to="/login" className="register">Login</Link> to your account.</p>
+              <p>{ authError? <h5 variant='blue'> <strong>{authError}</strong> </h5> : null} </p>
               </FormStyle>
             </Col>
             <Col className="bg-image signup-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7}></Col>
@@ -123,6 +122,17 @@ const FormStyle = styled.div`
     }
 
 `
+const mapStateToProps = (state) => {
+  return{
+      auth: state.firebase.auth,
+      authError: state.auth.authError
+  }
+}
 
+const mapDispatchToProps = (dispatch) => {
+  return{
+      signUp: (newUser) => dispatch(signUp(newUser))
+  }
+}
 
-export default SignUp;
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

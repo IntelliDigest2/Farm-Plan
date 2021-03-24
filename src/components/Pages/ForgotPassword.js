@@ -1,34 +1,11 @@
-import React,  { useRef, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "../../App.css";
-import { useAuth } from "../../contexts/AuthContext";
 import "./Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 
 function ForgotPassword() {
-  const emailRef = useRef();
-  const {resetPassword} = useAuth();
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-
-    try{
-      setError("")
-      setMessage("")
-      setLoading(true)
-      await resetPassword(emailRef.current.value)
-      setMessage("Password reset request successful, please check your email for further instructions.")
-    }
-    catch{
-      setError("Failed to reset password.")
-    }
-
-    setLoading(false)
-  }
 
   return (
           <React.Fragment>
@@ -45,14 +22,13 @@ function ForgotPassword() {
             
              <FormStyle>
               <h1 className="text-center">Reset Password</h1>
-              {<h1 className="warning">{error} {message}</h1>}
-              <Form onSubmit={handleSubmit}>
+              <Form>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Email" ref={emailRef}  required/>
+                <Form.Control type="email" placeholder="Email"   required/>
               </Form.Group>
               <Form.Group controlId="formActions">
-              <Button variant="dark" type="submit" disabled={loading}>
+              <Button variant="dark" type="submit" >
                 Reset Password
               </Button>
               </Form.Group>

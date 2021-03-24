@@ -19,7 +19,7 @@ function About() {
 
         <Row className="pb-5 mt-3 mr-0 ml-0 text-justify about">
             <Col className="d-flex justify-content-center"sm={12} md={12} lg={4}>
-            <img src={logo} alt="Intelliigest Logo"  className="img-fluid rounded fix-image"/>
+            <img src={logo} alt="IntelliDigest Logo"  className="img-fluid rounded fix-image"/>
 
             </Col>
             <Col  className=" d-block justify-content-center" sm={12} md={12} lg={8}>
