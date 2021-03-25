@@ -26,7 +26,7 @@ class ForgotPassword extends Component {
   }
 
   render(){
-    const {authError, auth} = this.props;
+    const { authError, auth } = this.props;
     if(auth.uid) return <Redirect to='/account'/>
     
     return (

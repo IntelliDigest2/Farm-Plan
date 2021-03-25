@@ -3,7 +3,7 @@ import "../Pages.css"
 import { Row, Col} from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import syntheticData from "../../../data/data.json";
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 

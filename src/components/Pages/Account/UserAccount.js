@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../../../App.css";
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import "../Pages.css"
 import { Row, Col } from "react-bootstrap";
@@ -9,7 +9,7 @@ import { Row, Col } from "react-bootstrap";
 class Account extends Component {
 
   render(){
-  const {auth, profile} = this.props;
+  const { auth, profile } = this.props;
   console.log(profile);
 
   if (!auth.uid) return <Redirect to= '/login'/>
