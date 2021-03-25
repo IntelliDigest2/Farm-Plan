@@ -38,7 +38,9 @@ class Map extends Component {
                 position={[data.Location.Latitude, data.Location.Longitude]}>
                   <div>
                     <p className="popup-data popup-name">{data.Name} </p>
-                    <p className="popup-data">{data.Address}</p>
+                    <p className="popup-data">Estimated Volume of Food Waste: {data.EstimatedVolumeOfFoodWaste}</p>
+                    <p className="popup-data">Actual Volume of Food Waste: {data.VolumeOfFoodWaste}kg</p>
+                    <p className="popup-data">Building Function: {data.SourceOfFoodWaste}</p>
 
                   </div>
                 </Popup>

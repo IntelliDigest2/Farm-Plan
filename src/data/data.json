@@ -1,182 +1,382 @@
 [
     {
-        "Name": "Some Bar 739426",
-        "Building Type": "bar",
-        "Address": "415 Some Street, EH5 3XX",
+        "Name": "Bar 739426",
+        "BuildingType": "bar",
+        "Address": "415 Street, EH5 3XX",
         "Location": {
             "Latitude": 55.93018511895573,
             "Longitude": -3.0750980073917775
+        },
+        "SourceOfFoodWaste": "bar",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 482,
+        "FrequencyOfProcessedFoodWasteCollection": 12.05,
+        "NutrientComposition": {
+            "FattyAcids": 7,
+            "AminoAcids": 20,
+            "OrganicAcids": 53,
+            "Sugars": 20
         }
     },
     {
-        "Name": "Some Bar 942500",
-        "Building Type": "bar",
-        "Address": "436 Some Street, EH6 6XX",
+        "Name": "Bar 942500",
+        "BuildingType": "bar",
+        "Address": "436 Street, EH6 6XX",
         "Location": {
             "Latitude": 55.91860096494329,
             "Longitude": -3.58739900626993
+        },
+        "SourceOfFoodWaste": "bar",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 182,
+        "FrequencyOfProcessedFoodWasteCollection": 4.55,
+        "NutrientComposition": {
+            "FattyAcids": 9,
+            "AminoAcids": 24,
+            "OrganicAcids": 42,
+            "Sugars": 25
         }
     },
     {
-        "Name": "Some Bus Station 455262",
-        "Building Type": "bus_station",
-        "Address": "162 Some Street, EH5 4XX",
+        "Name": "Bus Station 455262",
+        "BuildingType": "bus_station",
+        "Address": "162 Street, EH5 4XX",
         "Location": {
             "Latitude": 55.79167214539324,
             "Longitude": -3.2809709389531228
+        },
+        "SourceOfFoodWaste": "bus_station",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 451,
+        "FrequencyOfProcessedFoodWasteCollection": 11.275,
+        "NutrientComposition": {
+            "FattyAcids": 14,
+            "AminoAcids": 18,
+            "OrganicAcids": 43,
+            "Sugars": 25
         }
     },
     {
-        "Name": "Some Convenience Store 907343",
-        "Building Type": "convenience_store",
-        "Address": "267 Some Street, EH3 1XX",
+        "Name": "Convenience Store 907343",
+        "BuildingType": "convenience_store",
+        "Address": "267 Street, EH3 1XX",
         "Location": {
             "Latitude": 55.833149356805755,
             "Longitude": -3.2225941568866796
+        },
+        "SourceOfFoodWaste": "convenience_store",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 233,
+        "FrequencyOfProcessedFoodWasteCollection": 5.825,
+        "NutrientComposition": {
+            "FattyAcids": 10,
+            "AminoAcids": 16,
+            "OrganicAcids": 50,
+            "Sugars": 24
         }
     },
     {
-        "Name": "Some Convenience Store 14723",
-        "Building Type": "convenience_store",
-        "Address": "48 Some Street, EH6 7XX",
+        "Name": "Convenience Store 14723",
+        "BuildingType": "convenience_store",
+        "Address": "48 Street, EH6 7XX",
         "Location": {
             "Latitude": 55.85747794615226,
             "Longitude": -3.030135609338603
+        },
+        "SourceOfFoodWaste": "convenience_store",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 121,
+        "FrequencyOfProcessedFoodWasteCollection": 3.0250000000000004,
+        "NutrientComposition": {
+            "FattyAcids": 5,
+            "AminoAcids": 9,
+            "OrganicAcids": 74,
+            "Sugars": 12
         }
     },
     {
-        "Name": "Some Lodging 655638",
-        "Building Type": "lodging",
-        "Address": "1 Some Street, EH5 8XX",
+        "Name": "Lodging 655638",
+        "BuildingType": "lodging",
+        "Address": "1 Street, EH5 8XX",
         "Location": {
             "Latitude": 55.82723615643372,
             "Longitude": -3.3981280577054873
+        },
+        "SourceOfFoodWaste": "lodging",
+        "EstimatedVolumeOfFoodWaste": "1-5kg",
+        "VolumeOfFoodWaste": 5,
+        "FrequencyOfProcessedFoodWasteCollection": 1.0,
+        "NutrientComposition": {
+            "FattyAcids": 13,
+            "AminoAcids": 17,
+            "OrganicAcids": 45,
+            "Sugars": 25
         }
     },
     {
-        "Name": "Some Meal Delivery 765752",
-        "Building Type": "meal_delivery",
-        "Address": "167 Some Street, EH6 2XX",
+        "Name": "Meal Delivery 765752",
+        "BuildingType": "meal_delivery",
+        "Address": "167 Street, EH6 2XX",
         "Location": {
             "Latitude": 55.91075307761134,
             "Longitude": -3.207276003912587
+        },
+        "SourceOfFoodWaste": "meal_delivery",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 411,
+        "FrequencyOfProcessedFoodWasteCollection": 10.275,
+        "NutrientComposition": {
+            "FattyAcids": 13,
+            "AminoAcids": 22,
+            "OrganicAcids": 42,
+            "Sugars": 23
         }
     },
     {
-        "Name": "Some Restaurant 250206",
-        "Building Type": "restaurant",
-        "Address": "412 Some Street, EH2 9XX",
+        "Name": "Restaurant 250206",
+        "BuildingType": "restaurant",
+        "Address": "412 Street, EH2 9XX",
         "Location": {
             "Latitude": 55.92480621101249,
             "Longitude": -3.6038929699526703
+        },
+        "SourceOfFoodWaste": "restaurant",
+        "VolumeOfFoodWaste": 208,
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "FrequencyOfProcessedFoodWasteCollection": 5.2,
+        "Nutrient Composition": {
+            "FattyAcids": 2,
+            "AminoAcids": 25,
+            "OrganicAcids": 48,
+            "Sugars": 25
         }
     },
     {
-        "Name": "Some Restaurant 335601",
-        "Building Type": "restaurant",
-        "Address": "449 Some Street, EH5 8XX",
+        "Name": "Restaurant 335601",
+        "BuildingType": "restaurant",
+        "Address": "449 Street, EH5 8XX",
         "Location": {
             "Latitude": 55.95471434590029,
             "Longitude": -3.2205030815084643
+        },
+        "SourceOfFoodWaste": "restaurant",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 485,
+        "FrequencyOfProcessedFoodWasteCollection": 12.125,
+        "NutrientComposition": {
+            "FattyAcids": 11,
+            "AminoAcids": 16,
+            "OrganicAcids": 50,
+            "Sugars": 23
         }
     },
     {
-        "Name": "Some School 740883",
-        "Building Type": "school",
-        "Address": "64 Some Street, EH5 6XX",
+        "Name": "School 740883",
+        "BuildingType": "school",
+        "Address": "64 Street, EH5 6XX",
         "Location": {
             "Latitude": 55.83072635619311,
             "Longitude": -3.229447058844065
+        },
+        "SourceOfFoodWaste": "school",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 336,
+        "FrequencyOfProcessedFoodWasteCollection": 8.4,
+        "NutrientComposition": {
+            "FattyAcids": 2,
+            "AminoAcids": 13,
+            "OrganicAcids": 66,
+            "Sugars": 19
         }
     },
     {
-        "Name": "Some Shopping Mall 838260",
-        "Building Type": "shopping_mall",
-        "Address": "309 Some Street, EH5 5XX",
+        "Name": "Shopping Mall 838260",
+        "BuildingType": "shopping_mall",
+        "Address": "309 Street, EH5 5XX",
         "Location": {
             "Latitude": 55.92557131695507,
             "Longitude": -3.1838436086128765
+        },
+        "SourceOfFoodWaste": "shopping_mall",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 211,
+        "FrequencyOfProcessedFoodWasteCollection": 5.275,
+        "NutrientComposition": {
+            "FattyAcids": 10,
+            "AminoAcids": 16,
+            "OrganicAcids": 50,
+            "Sugars": 24
         }
     },
     {
-        "Name": "Some Store 403598",
-        "Building Type": "store",
-        "Address": "163 Some Street, EH5 4XX",
+        "Name": "Store 403598",
+        "BuildingType": "store",
+        "Address": "163 Street, EH5 4XX",
         "Location": {
             "Latitude": 55.965272416733214,
             "Longitude": -3.515178641158188
+        },
+        "SourceOfFoodWaste": "store",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 294,
+        "FrequencyOfProcessedFoodWasteCollection": 7.3500000000000005,
+        "NutrientComposition": {
+            "FattyAcids": 8,
+            "AminoAcids": 24,
+            "OrganicAcids": 43,
+            "Sugars": 25
         }
     },
     {
-        "Name": "Some Store 195800",
-        "Building Type": "store",
-        "Address": "17 Some Street, EH5 5XX",
+        "Name": "Store 195800",
+        "BuildingType": "store",
+        "Address": "17 Street, EH5 5XX",
         "Location": {
             "Latitude": 55.91747449435119,
             "Longitude": -3.596256022678428
+        },
+        "SourceOfFoodWaste": "store",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 81,
+        "FrequencyOfProcessedFoodWasteCollection": 2.025,
+        "NutrientComposition": {
+            "FattyAcids": 13,
+            "AminoAcids": 21,
+            "OrganicAcids": 45,
+            "Sugars": 21
         }
     },
     {
-        "Name": "Some Subway Station 794405",
-        "Building Type": "subway_station",
-        "Address": "67 Some Street, EH2 1XX",
+        "Name": "Subway Station 794405",
+        "BuildingType": "subway_station",
+        "Address": "67 Street, EH2 1XX",
         "Location": {
             "Latitude": 55.82354046071991,
             "Longitude": -2.9380176272782794
+        },
+        "SourceOfFoodWaste": "subway_station",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 97,
+        "FrequencyOfProcessedFoodWasteCollection": 2.4250000000000003,
+        "NutrientComposition": {
+            "FattyAcids": 12,
+            "AminoAcids": 25,
+            "OrganicAcids": 38,
+            "Sugars": 25
         }
     },
     {
-        "Name": "Some Supermarket 967922",
-        "Building Type": "supermarket",
-        "Address": "425 Some Street, EH5 7XX",
+        "Name": "Supermarket 967922",
+        "BuildingType": "supermarket",
+        "Address": "425 Street, EH5 7XX",
         "Location": {
             "Latitude": 55.824719995144406,
             "Longitude": -3.242239441381031
+        },
+        "SourceOfFoodWaste": "supermarket",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 413,
+        "FrequencyOfProcessedFoodWasteCollection": 10.325000000000001,
+        "NutrientComposition": {
+            "FattyAcids": 14,
+            "AminoAcids": 24,
+            "OrganicAcids": 38,
+            "Sugars": 24
         }
     },
     {
-        "Name": "Some Supermarket 547136",
-        "Building Type": "supermarket",
-        "Address": "416 Some Street, EH2 4XX",
+        "Name": "Supermarket 547136",
+        "BuildingType": "supermarket",
+        "Address": "416 Street, EH2 4XX",
         "Location": {
             "Latitude": 55.81004349706157,
             "Longitude": -3.1891248962505765
+        },
+        "SourceOfFoodWaste": "supermarket",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 363,
+        "FrequencyOfProcessedFoodWasteCollection": 9.075000000000001,
+        "NutrientComposition": {
+            "FattyAcids": 8,
+            "AminoAcids": 18,
+            "OrganicAcids": 53,
+            "Sugars": 21
         }
     },
     {
-        "Name": "Some Train Station 995900",
-        "Building Type": "train_station",
-        "Address": "215 Some Street, EH5 5XX",
+        "Name": "Train Station 995900",
+        "BuildingType": "train_station",
+        "Address": "215 Street, EH5 5XX",
         "Location": {
             "Latitude": 55.92414045052778,
             "Longitude": -3.131762188187789
+        },
+        "SourceOfFoodWaste": "train_station",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 423,
+        "FrequencyOfProcessedFoodWasteCollection": 10.575000000000001,
+        "NutrientComposition": {
+            "FattyAcids": 6,
+            "AminoAcids": 8,
+            "OrganicAcids": 72,
+            "Sugars": 14
         }
     },
     {
-        "Name": "Some Train Station 734239",
-        "Building Type": "train_station",
-        "Address": "470 Some Street, EH7 6XX",
+        "Name": "Train Station 734239",
+        "BuildingType": "train_station",
+        "Address": "470 Street, EH7 6XX",
         "Location": {
             "Latitude": 55.82414045052778,
             "Longitude": -3.006743607565348
+        },
+        "SourceOfFoodWaste": "train_station",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 340,
+        "FrequencyOfProcessedFoodWasteCollection": 8.5,
+        "NutrientComposition": {
+            "FattyAcids": 4,
+            "AminoAcids": 11,
+            "OrganicAcids": 62,
+            "Sugars": 23
         }
     },
     {
-        "Name": "Some Transit Station 510073",
-        "Building Type": "transit_station",
-        "Address": "301 Some Street, EH6 6XX",
+        "Name": "Transit Station 510073",
+        "BuildingType": "transit_station",
+        "Address": "301 Street, EH6 6XX",
         "Location": {
             "Latitude": 55.82286858632512,
             "Longitude": -3.4714960929550305
+        },
+        "SourceOfFoodWaste": "transit_station",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 122,
+        "FrequencyOfProcessedFoodWasteCollection": 3.0500000000000003,
+        "NutrientComposition": {
+            "FattyAcids": 13,
+            "AminoAcids": 21,
+            "OrganicAcids": 42,
+            "Sugars": 24
         }
     },
     {
-        "Name": "Some University 767022",
-        "Building Type": "university",
-        "Address": "139 Some Street, EH1 4XX",
+        "Name": "University 767022",
+        "BuildingType": "university",
+        "Address": "139 Street, EH1 4XX",
         "Location": {
             "Latitude": 55.94429214843609,
             "Longitude": -3.5305766916693435
+        },
+        "SourceOfFoodWaste": "university",
+        "EstimatedVolumeOfFoodWaste": "50-500kg",
+        "VolumeOfFoodWaste": 96,
+        "FrequencyOfProcessedFoodWasteCollection": 2.4000000000000004,
+        "NutrientComposition": {
+            "FattyAcids": 2,
+            "AminoAcids": 12,
+            "OrganicAcids": 66,
+            "Sugars": 20
         }
     }
 ]

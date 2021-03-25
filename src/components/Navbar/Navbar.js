@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {signOut} from '../../store/actions/authActions'
 
 const NavBar = (props) => {
-  const {auth } = props;
+  const { auth } = props;
 
   return (
     <NavStyle>
