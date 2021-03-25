@@ -24,6 +24,37 @@ export const signIn = (credentials) => {
         });
     };
   };
+
+  export const updatePassword = (credentials) => {
+    return (dispatch, getState, { getFirebase }) => {
+      const firebase = getFirebase();      
+      firebase
+      .auth()
+      .currentUser
+      .updatePassword(credentials.password)
+      .then(() => {
+        dispatch({ type: "CHANGE_SUCCESS"});
+      })
+      .catch((err) => {
+        dispatch({ type: "CHANGE_ERROR", err });
+      });
+    }
+  }
+
+  export const resetPassword = (credentials) => {
+    return (dispatch, getState, { getFirebase }) => {
+      const firebase = getFirebase();
+      firebase
+      .auth()
+      .sendPasswordResetEmail(credentials.email)
+      .then(() => {
+        dispatch({ type: "RESET_SUCCESS" });
+      })
+      .catch((err) => {
+        dispatch({ type: "RESET_ERROR", err });
+      });
+    }
+  }
   
   export const signUp = (newUser) => {
     return (dispatch, getState, { getFirebase }) => {

@@ -83,7 +83,7 @@ render(){
               </Form.Group>
               </Form>
               <p className="text-center terms">Already a member? <Link to="/login" className="register">Login</Link> to your account.</p>
-              <p>{ authError? <h5 variant='blue'> <strong>{authError}</strong> </h5> : null} </p>
+              <div className="auth-error">{authError ? <p> {authError}</p> : null}</div>
               </FormStyle>
             </Col>
             <Col className="bg-image signup-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7}></Col>

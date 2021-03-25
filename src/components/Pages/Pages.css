@@ -276,6 +276,13 @@ body{
 }
 
 
+.auth-error{
+  color: red;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
 @media (max-width: 576px) {
   .home{
     background-image: none;

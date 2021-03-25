@@ -1,21 +1,32 @@
 import React, { Component } from "react";
-import {connect} from 'react-redux';
-import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import "../Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
+import { updatePassword } from '../../../store/actions/authActions';
 
 class ChangePassword extends Component {
 
+  state ={
+    password: ""
+  }
+
+  handleChange = (e) => {
+    this.setState({
+        [e.target.id]: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+      e.preventDefault();
+      this.props.updatePassword(this.state)
+
+  }
+
   render(){
-    const {user, products, auth} = this.props;
-    console.log(user);
-    console.log(products);
-  
+    const {auth, authError} = this.props;
     if (!auth.uid) return <Redirect to= '/login'/>
-
-
     
     return (
       <React.Fragment>
@@ -34,16 +45,11 @@ class ChangePassword extends Component {
                 <div className="text-center">
                 </div>
               <h1 className="text-center">Change Password</h1>
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
 
-              <Form.Group controlId="formBasicPassword">
+              <Form.Group>
                 <Form.Label>New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" required/>
-              </Form.Group>
-
-              <Form.Group controlId="formBasicRepeatPassword">
-                <Form.Label>Repeat New Password</Form.Label>
-                <Form.Control type="password" placeholder="Repeat Password"  required/>
+                <Form.Control type="password" id="password" placeholder="New Password" required onChange={this.handleChange}/>
               </Form.Group>
 
               <Form.Group controlId="formActions">
@@ -53,6 +59,7 @@ class ChangePassword extends Component {
               </Form.Group>
               </Form>
               <p className="text-center back-to-acc"><Link to="/account" className="cancel">Cancel</Link></p>
+              <div className="auth-error">{authError ? <p> {authError}</p> : null}</div>
               </FormStyle>
        </Card.Text>
       </Card.Body>
@@ -65,7 +72,6 @@ class ChangePassword extends Component {
       <Col className="mt-5 pt-5" xs={12}></Col>
   </Row>
 </React.Fragment>
-
 
 );
 }
@@ -113,12 +119,17 @@ padding:10px 0 10px 0;
 }
 
 `
-const mapStateToProps = (state) => { 
-  console.log(state);
+
+const mapStateToProps = (state) => {
   return{
+      authError: state.auth.authError,
       auth: state.firebase.auth
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return{
+      updatePassword: (creds) => dispatch(updatePassword(creds))
+  }
+}
 
-
-export default compose(connect(mapStateToProps, null))(ChangePassword);
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);

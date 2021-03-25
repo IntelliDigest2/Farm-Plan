@@ -1,14 +1,36 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import { Link, Redirect } from "react-router-dom";
 import "../../App.css";
 import "./Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
+import { connect } from 'react-redux';
+import { resetPassword } from '../../store/actions/authActions';
 
-function ForgotPassword() {
+class ForgotPassword extends Component {
 
-  return (
-          <React.Fragment>
+  state ={
+    email: ""
+  }
+
+  handleChange = (e) => {
+    this.setState({
+        [e.target.id]: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+      e.preventDefault();
+      this.props.resetPassword(this.state)
+
+  }
+
+  render(){
+    const {authError, auth} = this.props;
+    if(auth.uid) return <Redirect to='/account'/>
+    
+    return (
+      <React.Fragment>
   <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex frg-pass">
   <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
   <Col className="mt-5 pt-5" xs={12}></Col>
@@ -22,10 +44,10 @@ function ForgotPassword() {
             
              <FormStyle>
               <h1 className="text-center">Reset Password</h1>
-              <Form>
-              <Form.Group controlId="formBasicEmail">
+              <Form onSubmit={this.handleSubmit}>
+              <Form.Group>
                 <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Email"   required/>
+                <Form.Control type="email" id="email" placeholder="Email" required onChange={this.handleChange}/>
               </Form.Group>
               <Form.Group controlId="formActions">
               <Button variant="dark" type="submit" >
@@ -38,6 +60,7 @@ function ForgotPassword() {
               <Link to="/login" className="remember-password">I remember my password.</Link>
               </p>
               <p className="text-center no-acc">Not got an account? <Link to="/signup" className="register">Click here</Link> to sign up today!</p>
+              <div className="auth-error">{authError ? <p> {authError}</p> : null}</div>
               </FormStyle>
              </Card.Text>
             </Card.Body>
@@ -52,9 +75,9 @@ function ForgotPassword() {
     </React.Fragment>
 
 
-  );
+);
 }
-
+}
 
 const FormStyle = styled.div`
     form{
@@ -98,4 +121,19 @@ const CardStyle = styled.div`
 
 `
 
-export default ForgotPassword;
+
+const mapStateToProps = (state) => {
+  return{
+      authError: state.auth.authError,
+      auth: state.firebase.auth
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return{
+      resetPassword: (creds) => dispatch(resetPassword(creds))
+  }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
