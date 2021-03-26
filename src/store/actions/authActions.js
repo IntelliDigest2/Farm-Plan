@@ -75,6 +75,12 @@ export const signIn = (credentials) => {
             });
         })
         .then(() => {
+          firebase
+          .auth()
+          .currentUser
+          .sendEmailVerification();
+        })
+        .then(() => {
           dispatch({ type: "SIGNUP_SUCCESS" });
         })
         .catch((err) => {
