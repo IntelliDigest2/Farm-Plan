@@ -71,6 +71,7 @@ export const signIn = (credentials) => {
               firstName: newUser.firstName,
               lastName: newUser.lastName,
               initials: newUser.firstName[0] + newUser.lastName[0],
+              email: newUser.email,
               postcode: newUser.postcode,
             });
         })

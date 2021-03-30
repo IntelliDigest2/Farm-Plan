@@ -1,11 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 import "./Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 
-function Contact() {
-  return (
-    <React.Fragment>
+class Contact extends Component {
+
+  render(){
+
+    return (
+      <React.Fragment>
 
       <Row className="mt-1 mr-0 ml-0 justify-content-center align-items-center contact">
         <Col xs={12} className="mt-5 pt-5 header">
@@ -27,21 +30,21 @@ function Contact() {
 
         <Form onSubmit="#">
     <Form.Row>
-      <Form.Group as={Col} controlId="contactFormName">
-        <Form.Control type="text" placeholder="Name" required/>
+      <Form.Group as={Col}>
+        <Form.Control type="text" placeholder="Name" id="name" required />
       </Form.Group>
   
-      <Form.Group as={Col} controlId="contactFormEmail">
-        <Form.Control type="email" placeholder="Email" required />
+      <Form.Group as={Col}>
+        <Form.Control type="email" placeholder="Email" id="email" required />
       </Form.Group>
     </Form.Row>
   
-    <Form.Group controlId="contactFormSubject">
-      <Form.Control placeholder="Subject" required/>
+    <Form.Group>
+      <Form.Control placeholder="Subject" id="subject" required />
     </Form.Group>
   
-    <Form.Group controlId="contactFormMessage">
-    <Form.Control as="textarea" rows={12} placeholder="Message" required />
+    <Form.Group>
+    <Form.Control as="textarea" rows={12} placeholder="Message" id="message" required />
   </Form.Group>
 
   <Form.Group controlId="formActions">
@@ -108,10 +111,11 @@ function Contact() {
     </React.Fragment>
   );
 }
+}
 
 const FormStyle = styled.div`
 
-    form{
+form{
       width:55%;
       margin:auto;
       padding:10px;

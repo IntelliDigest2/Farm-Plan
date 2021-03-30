@@ -36,7 +36,7 @@ function About() {
         <Row className="pb-5 mr-0 ml-0 text-justify about">
             <Col className="d-block justify-content-center"sm={12} md={12} lg={8}>
             <h1>iTracker</h1>
-            <p>The biggest threat faced by our planet today is derived from the way that we produce and consumer food. Every year 1.3billion tonnes of 
+            <p>The biggest threat faced by our planet today is derived from the way that we produce and consume food. Every year 1.3billion tonnes of 
               food is wasted resulting in 3.3 Gtonnes of carbon dioxide entering the atmosphere. Alarmingly, 70% of food wastage across the 
               world comes from household waste.</p>
             <p>IntelliDigest have used innovative research and technology to tackle the problem of household waste by developing the iTracker. 
@@ -56,7 +56,7 @@ function About() {
             <h1>User Benefits</h1>
             <p>IntelliDigest believes that you cannot manage what you cannot measure – iTracker is an innovative solution to support our fight against ending food 
               wastage. iTracker is able to track household food wastage and allows households to anonymously compare wastage with neighbours’ 
-              other households through an online virtual map. 
+              households through an online virtual map. 
               Eradicating food waste allows households to save money – currently over £800 billion is lost in the UK alone through food wastage.</p>
             <p>iTracker’s innovative technology allows waste managers to have a better-quality food wastage programme collection procedure. 
               Food wastage is a challenge by governments across the globe – iTracker allows government policy makers to gather anonymous data on food wastage 

@@ -27,7 +27,7 @@ class Account extends Component {
             <p className="">{profile.initials}</p>
           </div>
           <h1 className="text-center">Welcome, <span>{profile.firstName}  {profile.lastName}</span>!</h1>
-          <h1 className="text-center">Account email: <span >{auth.email}</span></h1>
+          <h1 className="text-center">Account email: <span >{profile.email}</span></h1>
           <h1 className="text-center">Postcode: <span >{profile.postcode}</span></h1>
         <div className="acc-options text-center">
           <p><Link className="user-acc-opt" to="/change-password">Change Password</Link></p>
