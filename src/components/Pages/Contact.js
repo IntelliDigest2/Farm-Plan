@@ -86,7 +86,7 @@ class Contact extends Component {
             <Card.Title>Telephone</Card.Title>
              <Card.Text >
               <i className="fa fa-phone contact-footer-icon"></i>
-              <p>07795523201</p>
+              <p>0333 242 0822</p>
              </Card.Text>
             </Card.Body>
         </Card>
