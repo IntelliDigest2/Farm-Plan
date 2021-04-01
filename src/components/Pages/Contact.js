@@ -2,8 +2,21 @@ import React, { Component } from "react";
 import "./Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
+import emailjs from 'emailjs-com';
 
 class Contact extends Component {
+  sendEmail(e) {
+    e.preventDefault();
+    emailjs.sendForm(process.env.REACT_APP_EMAIL_SERVICE, process.env.REACT_APP_EMAIL_TEMPLATE, e.target, process.env.REACT_APP_EMAIL_ID)
+      .then((result) => {
+          console.log(result.text);
+          alert("Your Message has been sent successfully!");
+      }, (error) => {
+          console.log(error.text);
+          alert("There has been an error while sending your message. Please refresh the page and try again.");
+      });
+      e.target.reset();
+  }
 
   render(){
 
@@ -28,23 +41,23 @@ class Contact extends Component {
         <Col xs={12} className="mt-4">
           <FormStyle>
 
-        <Form onSubmit="#">
+        <Form onSubmit={this.sendEmail}>
     <Form.Row>
       <Form.Group as={Col}>
-        <Form.Control type="text" placeholder="Name" id="name" required />
+        <Form.Control type="text" placeholder="Name" id="name" name="name" required />
       </Form.Group>
   
       <Form.Group as={Col}>
-        <Form.Control type="email" placeholder="Email" id="email" required />
+        <Form.Control type="email" placeholder="Email" id="email" name="email" required />
       </Form.Group>
     </Form.Row>
   
     <Form.Group>
-      <Form.Control placeholder="Subject" id="subject" required />
+      <Form.Control placeholder="Subject" id="subject" name="subject" required />
     </Form.Group>
   
     <Form.Group>
-    <Form.Control as="textarea" rows={12} placeholder="Message" id="message" required />
+    <Form.Control as="textarea" rows={12} placeholder="Message" id="message" name="message" required />
   </Form.Group>
 
   <Form.Group controlId="formActions">
