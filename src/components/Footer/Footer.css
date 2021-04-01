@@ -10,6 +10,17 @@
     color: whitesmoke;
 }
 
+.social-media{
+    padding: 0px 10px 0px 10px;
+    color: #b0bb1b;
+    font-size: 20px;
+}
+
+
+.social-media:hover{
+    color: #ceda2a;
+}
+
 .footer-div{
     /*padding-top: 140px;*/
     text-align: center;
