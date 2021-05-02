@@ -15,7 +15,12 @@ import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import Account from "./components/Pages/Account/UserAccount";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
-import Map from "./components/Pages/Account/MapData";
+import MapData from "./components/Pages/Account/MapData";
+import AddData from "./components/Pages/Account/AddData";
+import Chart1 from "./components/Pages/Account/ChartYear";
+import Chart2 from "./components/Pages/Account/ChartMonth";
+import Chart3 from "./components/Pages/Account/ChartWeek";
+import Chart4 from "./components/Pages/Account/ChartDay";
 
 function App() {
   return (
@@ -23,6 +28,7 @@ function App() {
     <React.Fragment>
         <Router>
         <NarBar />
+        <div>
         <Switch>
           <Route path="/" exact component={Home}/>
           <Route path="/about" exact component={About}/>
@@ -33,9 +39,15 @@ function App() {
           <Route path="/forgot-password" exact component={ForgotPassword}/>
           <Route path="/account" exact component={Account}/>
           <Route path="/change-password" exact component={ChangePassword}/>
-          <Route path="/view-map" exact component={Map}/>
+          <Route path="/view-map" exact component={MapData}/>
+          <Route path="/add-data" exact component={AddData}/>
+          <Route path="/chart/year" exact component={Chart1} />
+          <Route path="/chart/month" exact component={Chart2} />
+          <Route path="/chart/week" exact component={Chart3} />
+          <Route path="/chart/day" exact component={Chart4} />
           <Route component={NotFound} />
         </Switch>
+        </div>
         <Footer />
     </Router>
     </React.Fragment>

@@ -73,6 +73,12 @@ export const signIn = (credentials) => {
               initials: newUser.firstName[0] + newUser.lastName[0],
               email: newUser.email,
               postcode: newUser.postcode,
+              address: newUser.address,
+              buildingFunction: newUser.function,
+              organisation: newUser.organisation,
+              city: newUser.city,
+              country: newUser.country,
+              type: "user"
             });
         })
         .then(() => {

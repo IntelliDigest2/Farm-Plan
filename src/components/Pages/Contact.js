@@ -3,8 +3,22 @@ import "./Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import emailjs from 'emailjs-com';
+import { connect } from "react-redux";
+import { compose } from "redux";
 
 class Contact extends Component {
+  state = {
+    email: !this.props.auth.uid ? "" : this.props.auth.email,
+    name: !this.props.profile.lastName ? "" : this.props.profile.firstName + " " + this.props.profile.lastName,
+  }
+
+  handleChange = (e) => {
+    console.log(e);
+    this.setState({
+        [e.target.id]: e.target.value
+    })
+}
+
   sendEmail(e) {
     e.preventDefault();
     emailjs.sendForm(process.env.REACT_APP_EMAIL_SERVICE, process.env.REACT_APP_EMAIL_TEMPLATE, e.target, process.env.REACT_APP_EMAIL_ID)
@@ -44,11 +58,11 @@ class Contact extends Component {
         <Form onSubmit={this.sendEmail}>
     <Form.Row>
       <Form.Group as={Col}>
-        <Form.Control type="text" placeholder="Name" id="name" name="name" required />
+        <Form.Control type="text" placeholder="Name" id="name" name="name" onChange={this.handleChange} value={this.state.name} required />
       </Form.Group>
   
       <Form.Group as={Col}>
-        <Form.Control type="email" placeholder="Email" id="email" name="email" required />
+        <Form.Control type="email" placeholder="Email" id="email" name="email" onChange={this.handleChange} value={this.state.email} required />
       </Form.Group>
     </Form.Row>
   
@@ -180,5 +194,13 @@ const CardStyle = styled.div`
 
 `
 
+const mapStateToProps = (state) => {
+  console.log(state);
+  return{
+      auth: state.firebase.auth,
+      user: state.firebase.profile,
+      profile: state.firebase.profile,
+  }
+}
 
-export default Contact;
+export default compose(connect(mapStateToProps))(Contact);

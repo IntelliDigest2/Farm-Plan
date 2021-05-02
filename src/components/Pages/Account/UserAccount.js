@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import "../Pages.css"
 import { Row, Col } from "react-bootstrap";
-
+import ButtonModal from './ButtonModalChart'
 
 class Account extends Component {
 
@@ -32,6 +32,10 @@ class Account extends Component {
         <div className="acc-options text-center">
           <p><Link className="user-acc-opt" to="/change-password">Change Password</Link></p>
           <p><Link className="user-acc-opt" to="/view-map">View Food Waste Map</Link></p>
+          <p><Link className="user-acc-opt" to="/add-data">Update your food waste & food surplus</Link></p>
+          <p>
+            <ButtonModal/>
+          </p>
         </div>
 
           </Col>

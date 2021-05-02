@@ -6,6 +6,8 @@ import { Layout } from "../Layout/Layout"
 import logo from "../../images/intellidigest-logo.png";
 import placeholder from "../../images/help2.jpg";
 import benefits from "../../images/help.jpg";
+import surplus from "../../images/surplus.jpeg";
+import waste from "../../images/waste.jpeg";
 
 function About() {
   return (
@@ -41,10 +43,33 @@ function About() {
               world comes from household waste.</p>
             <p>IntelliDigest have used innovative research and technology to tackle the problem of household waste by developing the iTracker. 
               iTracker is an easy-to-use online platform whereby signing up allows 
-              households to connect their smart bin to the platform. iTracker then observes how much food is wasted each day, week and month from a single household.</p>
+              households to connect their smart bin to the platform. iTracker then observes how much food is wasted each day, week and month from a single household and presents it as food surplus and food waste.</p>
             </Col>
             <Col  className=" d-flex justify-content-center" sm={12} md={12} lg={4}>
             <img src={placeholder} alt="Placeholder"  className="img-fluid rounded fix-image"/>
+
+            </Col>
+        </Row>
+        <Row className="pb-5 mb-5 mr-0 ml-0 text-justify about">
+            <Col className="d-flex justify-content-center"sm={12} md={12} lg={4}>
+            <img src={surplus} alt="Help"  className="img-fluid rounded fix-image"/>
+            </Col>
+            <Col  className=" d-block justify-content-center" sm={12} md={12} lg={8}>
+            <h1>Food Surplus</h1>
+            <p>Surplus food can arise at different stages of food production processes, from ordering to quality control, 
+              and can include ambient, chilled and frozen foods. Food surpluses can arise for several reasons, including: 
+              An excess of products that are close to their 'best-before' or 'use-by' date.</p>
+            </Col>
+        </Row>
+        <Row className="pb-5 mr-0 ml-0 text-justify about">
+            <Col className="d-block justify-content-center"sm={12} md={12} lg={8}>
+            <h1>Food Waste</h1>
+            <p>Food waste or food loss is food that is not eaten. The causes of food waste or loss 
+              are numerous and occur throughout the food system, during production, processing, distribution, 
+              retail and consumption.</p>
+            </Col>
+            <Col  className=" d-flex justify-content-center" sm={12} md={12} lg={4}>
+            <img src={waste} alt="Placeholder"  className="img-fluid rounded fix-image"/>
 
             </Col>
         </Row>
@@ -54,7 +79,7 @@ function About() {
             </Col>
             <Col  className=" d-block justify-content-center" sm={12} md={12} lg={8}>
             <h1>User Benefits</h1>
-            <p>IntelliDigest believes that you cannot manage what you cannot measure – iTracker is an innovative solution to support our fight against ending food 
+            <p>You cannot manage what you cannot measure – iTracker is an innovative solution to support our fight to end food 
               wastage. iTracker is able to track household food wastage and allows households to anonymously compare wastage with neighbours’ 
               households through an online virtual map. 
               Eradicating food waste allows households to save money – currently over £800 billion is lost in the UK alone through food wastage.</p>

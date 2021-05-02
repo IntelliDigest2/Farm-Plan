@@ -303,3 +303,25 @@ body{
   }
 
 }
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 576px) {
+  .card-design {
+    width: 203px;
+    height: 300px;
+  }
+}
+
+.card-design {
+  width: "261px";
+  height:'400px';
+}
