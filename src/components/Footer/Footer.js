@@ -1,6 +1,8 @@
 import React from "react";
 import "./Footer.css"
 
+// check new branch creation worked properly
+
 function Footer({title,message}) {
   return (
     <div  className="footer-div">
