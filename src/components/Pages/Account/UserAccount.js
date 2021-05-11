@@ -33,10 +33,11 @@ class Account extends Component {
           <p><Link className="user-acc-opt" to="/change-password">Change Password</Link></p>
           <p><Link className="user-acc-opt" to="/view-map">View Food Waste Map</Link></p>
           <p><Link className="user-acc-opt" to="/add-data">Update your food waste & food surplus</Link></p>
-          <p><Link className="user-acc-opt" to="/food-reduction">Food Waste Reduction Tips</Link></p>
+          
           <p>
             <ButtonModal/>
           </p>
+          <p><Link className="user-acc-opt" to="/food-reduction">Food Waste Reduction Tips</Link></p>
         </div>
 
           </Col>
