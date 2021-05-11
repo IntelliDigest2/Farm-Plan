@@ -16,7 +16,7 @@ While you might not think food waste affects you, think again.
 <br/><br/>
 Tossing edible food doesn’t just waste money. Discarded food is sent to landfills, where it rots and produces methane gas, which is the second most common greenhouse gas. In other words, throwing out your food contributes to climate change.
 <br/><br/>
-It wastes a huge amount of water, too. According to the World Resources Institute, 24% of all the water used for agriculture is lost through food waste every year. That’s 45 trillion gallons (about 170 trillion liters).<br/><br/> These things will help to reduce food waste:</p>
+It wastes a huge amount of water, too. According to the World Resources Institute, 24% of all the water used for agriculture is lost through food waste every year. That’s 45 trillion gallons (about 170 trillion liters).<br/><br/> These things will help to reduce food waste:npm </p>
 <p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}>1. Shop Smart - Most people tend to buy more food than they need.
 
 Though buying in bulk may be convenient, research has shown that this shopping method leads to more food waste.
