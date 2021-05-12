@@ -21,6 +21,7 @@ import Chart1 from "./components/Pages/Account/ChartYear";
 import Chart2 from "./components/Pages/Account/ChartMonth";
 import Chart3 from "./components/Pages/Account/ChartWeek";
 import Chart4 from "./components/Pages/Account/ChartDay";
+import FoodReduction from "./components/Pages/FoodReduction";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/chart/month" exact component={Chart2} />
           <Route path="/chart/week" exact component={Chart3} />
           <Route path="/chart/day" exact component={Chart4} />
+          <Route path="/food-reduction" component={FoodReduction} />
           <Route component={NotFound} />
         </Switch>
         </div>
