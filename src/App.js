@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./App.css";
 import "./index.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NarBar from "./components/Navbar/Navbar";
+import NavBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./components/Pages/Home";  
 import About from "./components/Pages/About";
@@ -27,7 +27,7 @@ function App() {
     
     <React.Fragment>
         <Router>
-        <NarBar />
+        <NavBar />
         <div>
         <Switch>
           <Route path="/" exact component={Home}/>

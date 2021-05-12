@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Button, Card, Col, Row} from 'react-bootstrap';
+import {Form, Button, Card, Col, Row, InputGroup} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { startData, createFoodSurplusData, createFoodWasteData } from '../../../store/actions/dataActions';
 import { Redirect } from 'react-router-dom';
@@ -128,37 +128,51 @@ class AddData extends Component {
             <Form className= "form-layout" onSubmit={this.handleFoodWasteSubmit} style={{padding: "10px"}}>  
                 <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste</h5>
                 <div>
-                <div style={{padding: "0 10% 0 10%"}}>Weight</div>
-                <Form.Group className= "form-layout" 
-                style={{
-                    padding: "0 10% 0 10%", 
-                    display: "flex", 
-                    justifyContent: 'space-around'}} 
-                >
-                    <Form.Control type="number" id="weightOfFoodWaste" placeholder="Enter weight of food waste" onChange={this.handleFoodWasteChange} width="100%" value={this.state.weightOfFoodWaste}/>kg
-                </Form.Group>
-                <div style={{padding: "0 10% 0 10%"}}>GHG</div>
-                <Form.Group 
-                style={{
-                    padding: "0 10% 0 10%", 
-                    display: "flex"
-                    }}>
-                    <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.GHG} width="100%"/><p style={{width:'100px'}}>kg co2</p>
-                </Form.Group>
-                {/* <div style={{padding: "0 10% 0 10%"}}>Daily</div>
-                <Form.Group 
-                style={{
-                    padding: "0 10% 0 10%",
-                    width: "90%",
-                    display: "flex"
-                    }}>
-                     <Form.Control type="number" id="dailyFoodWaste" placeholder="Enter daily food waste value" onChange={this.handleChange} width="100%" value={this.state.dailyFoodWaste}/>kg
-                </Form.Group> */}
 
-                <Button style={{margin: "0 10% 0 10%"}} variant="secondary" type="submit">
-                    Update
-                </Button>
-            </div>
+                    <div style={{padding: "0 10% 0 10%"}}>Weight</div>
+                    <Form.Group className= "form-layout" 
+                        style={{
+                            padding: "0 10% 0 10%", 
+                            display: "flex", 
+                            justifyContent: 'space-around'}} 
+                    >
+                    <InputGroup>
+                        <Form.Control type="number" id="weightOfFoodWaste" placeholder="Enter weight of food waste" onChange={this.handleFoodWasteChange} width="100%" value={this.state.weightOfFoodWaste}/>{/*kg*/}
+                        <InputGroup.Append>
+                            <InputGroup.Text>kg</InputGroup.Text>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    </Form.Group>
+
+                    <div style={{padding: "0 10% 0 10%"}}>GHG</div>
+                    <Form.Group 
+                        style={{
+                            padding: "0 10% 0 10%", 
+                            display: "flex"}}
+                    >
+                    <InputGroup>
+                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.GHG} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
+                        <InputGroup.Append>
+                            <InputGroup.Text>kg co2</InputGroup.Text>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    </Form.Group>
+
+                    {/* <div style={{padding: "0 10% 0 10%"}}>Daily</div>
+                    <Form.Group 
+                    style={{
+                        padding: "0 10% 0 10%",
+                        width: "90%",
+                        display: "flex"
+                        }}>
+                        <Form.Control type="number" id="dailyFoodWaste" placeholder="Enter daily food waste value" onChange={this.handleChange} width="100%" value={this.state.dailyFoodWaste}/>kg
+                    </Form.Group> */}
+
+                    <Button style={{margin: "0 10% 0 10%"}} variant="secondary" type="submit">
+                        Update
+                    </Button>
+
+                </div>
             </Form> 
             </Card>
             <Card
@@ -171,22 +185,36 @@ class AddData extends Component {
                 <h5 className="text-center" style={{margin: "30px", fontSize: "32px",fontWeight: "600",}}>Food Surplus</h5>
 
                 <div>
-                <div style={{padding: "0 10% 0 10%"}}>Weight</div>
-                <Form.Group className= "form-layout" style={{padding: "0 10% 0 10%", display: "flex", justifyContent: 'space-around'}} >
-                    <Form.Control type="number" id="weightOfFoodSurplus" placeholder="Enter weight of food surplus" onChange={this.handleFoodSurplusChange} value={this.state.weightOfFoodSurplus}/>kg
-                </Form.Group>
-                <div style={{padding: "0 10% 0 10%"}}>Cost</div>
-                <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
-                <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={this.state.costOfFoodSurplus}/>pounds
-                </Form.Group>
-                {/* <div style={{padding: "0 10% 0 10%"}}>Daily</div>
-                <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
-                    <Form.Control type="number" id="dailyFoodSurplus" placeholder="Enter daily food surplus value" onChange={this.handleChange} value={this.state.dailyFoodSurplus}/>kg
-                </Form.Group> */}
 
-                <Button style={{margin: "0 10% 0 10%"}} variant="secondary" type="submit">
-                    Update
-                </Button>
+                    <div style={{padding: "0 10% 0 10%"}}>Weight</div>
+                    <Form.Group className= "form-layout" style={{padding: "0 10% 0 10%", display: "flex", justifyContent: 'space-around'}} >
+                    <InputGroup>
+                        <Form.Control type="number" id="weightOfFoodSurplus" placeholder="Enter weight of food surplus" onChange={this.handleFoodSurplusChange} value={this.state.weightOfFoodSurplus}/>{/*kg*/}
+                        <InputGroup.Append>
+                            <InputGroup.Text>kg</InputGroup.Text>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    </Form.Group>
+
+                    <div style={{padding: "0 10% 0 10%"}}>Cost</div>
+                    <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                    <InputGroup>
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>£</InputGroup.Text>
+                        </InputGroup.Prepend>
+                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={this.state.costOfFoodSurplus}/>{/*pounds*/}
+                    </InputGroup>
+                    </Form.Group>
+
+                    {/* <div style={{padding: "0 10% 0 10%"}}>Daily</div>
+                    <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                        <Form.Control type="number" id="dailyFoodSurplus" placeholder="Enter daily food surplus value" onChange={this.handleChange} value={this.state.dailyFoodSurplus}/>kg
+                    </Form.Group> */}
+
+                    <Button style={{margin: "0 10% 0 10%"}} variant="secondary" type="submit">
+                        Update
+                    </Button>
+
                 </div>
             </Form> 
             </Card>

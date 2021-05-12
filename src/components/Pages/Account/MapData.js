@@ -84,7 +84,10 @@ class MapData extends Component {
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> IntelliDigest - iTracker'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-            {/* {syntheticData.map(data =>(
+
+            {/*comment out below to toggle map markers*/}
+
+            {syntheticData.map(data =>(
               <Marker
               key={data.Name}
               position={[data.Location.Latitude, data.Location.Longitude]}>
@@ -100,7 +103,10 @@ class MapData extends Component {
                   </div>
                 </Popup>
                 </Marker>
-            ))} */}
+            ))}
+
+            {/* ^^^^ */}  
+
           </MapContainer>
         </Col>
         <Col className="" xs={12} lg={1}></Col>
