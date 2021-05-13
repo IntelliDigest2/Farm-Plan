@@ -242,7 +242,7 @@ class AddData extends Component {
 
                         </DropdownButton>
 
-                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={this.state.costOfFoodSurplus*this.state.currencyMultiplier.toFixed(2)}/>{/*pounds*/}
+                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={(this.state.costOfFoodSurplus*this.state.currencyMultiplier).toFixed(2)}/>{/*pounds*/}
                     </InputGroup>
                     </Form.Group>
 

@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import "../Pages.css"
 // import styled from "styled-components";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Dropdown } from "react-bootstrap";
 import ButtonModal from './ButtonModalChart'
+import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
+import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 class Account extends Component {
 
@@ -35,9 +38,23 @@ class Account extends Component {
           <p><Link className="user-acc-opt" to="/view-map">View Food Waste Map</Link></p>
           <p><Link className="user-acc-opt" to="/add-data">Update your food waste & food surplus</Link></p>
           
-          <p>
+          {/* <p>
             <ButtonModal/>
-          </p>
+          </p> */}
+
+          <Dropdown>
+
+            <DropdownToggle variant="success" id="dropdown-basic">View Chart</DropdownToggle>
+
+            <DropdownMenu>
+              <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
+              <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
+              <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
+              <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
+            </DropdownMenu>
+
+          </Dropdown>
+
           <p><Link className="user-acc-opt" to="/food-reduction">Food Waste Reduction Tips</Link></p>
         </div>
 
