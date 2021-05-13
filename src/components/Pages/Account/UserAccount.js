@@ -3,6 +3,7 @@ import "../../../App.css";
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import "../Pages.css"
+// import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
 import ButtonModal from './ButtonModalChart'
 
@@ -52,6 +53,12 @@ class Account extends Component {
   }
 
 }
+
+// const View = styled.div`
+//   .view{
+//     flex: 1;
+//   }
+// `;
 
 const mapStateToProps = (state) => { 
   console.log(state);

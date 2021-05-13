@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Button, Card, Col, Row, InputGroup} from 'react-bootstrap';
+import {Form, Button, Card, Col, Row, InputGroup, DropdownButton} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { startData, createFoodSurplusData, createFoodWasteData } from '../../../store/actions/dataActions';
 import { Redirect } from 'react-router-dom';
@@ -9,6 +9,7 @@ import styled from "styled-components";
 // import { getFirebase} from 'react-redux-firebase'
 // import DisplayError from '../pages/DisplayError'
 import moment from "moment"
+import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
 const time = moment().format("MMMM Do YYYY, h:mm:ss a")
 class AddData extends Component {
@@ -24,6 +25,16 @@ class AddData extends Component {
         GHG: 0,
         dailyFoodSurplus: 0,
         costOfFoodSurplus: 0,
+        dropDownValue: "Select Currency",
+        currencyMultiplier: 0,
+    }
+
+    changeValue(text) {
+        this.setState({dropDownValue: text})
+    }
+
+    changeMultiplier(value) {
+        this.setState({currencyMultiplier: value})
     }
 
     handleChange = (e) => {
@@ -199,10 +210,39 @@ class AddData extends Component {
                     <div style={{padding: "0 10% 0 10%"}}>Cost</div>
                     <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
                     <InputGroup>
-                        <InputGroup.Prepend>
+
+                        {/* <InputGroup.Prepend>
                             <InputGroup.Text>£</InputGroup.Text>
-                        </InputGroup.Prepend>
-                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={this.state.costOfFoodSurplus}/>{/*pounds*/}
+                        </InputGroup.Prepend> */}
+
+                        <DropdownButton
+                            as={InputGroup.Prepend}
+                            variant="outline-secondary"
+                            title={this.state.dropDownValue}
+                            id="input-group-dropdown-1"
+                        >
+
+                            <DropdownItem as="button">
+                                <div onClick={(e) => {this.changeValue(e.target.textContent); this.changeMultiplier(1)}}>
+                                    GBP (£)
+                                </div>
+                            </DropdownItem>
+
+                            <DropdownItem as="button">
+                                <div onClick={(e) => {this.changeValue(e.target.textContent); this.changeMultiplier(1.404)}}>
+                                    USD ($)
+                                </div>
+                            </DropdownItem>
+
+                            <DropdownItem>
+                                <div onClick={(e) => {this.changeValue(e.target.textContent); this.changeMultiplier(1.161)}}>
+                                    EUR (€)
+                                </div>    
+                            </DropdownItem>
+
+                        </DropdownButton>
+
+                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={this.state.costOfFoodSurplus*this.state.currencyMultiplier.toFixed(2)}/>{/*pounds*/}
                     </InputGroup>
                     </Form.Group>
 

@@ -198,6 +198,11 @@ body{
   padding-top: 28px;
 }
 
+/* .user-acc {
+  overflow-x: hidden;
+  overflow-y: scroll;
+} */
+
 .user-acc h1{
   font-size: 20px;
   padding-bottom: 15px;
@@ -231,6 +236,7 @@ body{
 .user-acc .user-acc-opt{
   color: rgb(7, 7, 77);
   text-decoration: none;
+  padding-bottom: 20px;
 }
 
 .user-acc .user-acc-opt:hover{
