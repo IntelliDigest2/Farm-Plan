@@ -198,10 +198,10 @@ body{
   padding-top: 28px;
 }
 
-/* .user-acc {
+.user-acc {
   overflow-x: hidden;
   overflow-y: scroll;
-} */
+}
 
 .user-acc h1{
   font-size: 20px;
@@ -230,7 +230,11 @@ body{
 
 .user-acc p:first-of-type{
   font-size: 17px;
-  padding-top: 20px;
+  padding-top: 30px;
+}
+
+.user-acc p:last-of-type{
+  padding-bottom: 45px;
 }
 
 .user-acc .user-acc-opt{
@@ -260,6 +264,11 @@ body{
 .user-acc .initials-logo p{
   color: whitesmoke;
   font-size: 30px;
+}
+
+.user-acc .chart-menu{
+  /* color: rgb(9, 16, 51); */
+  padding-bottom: 15px;
 }
 
 /* map page */

@@ -42,9 +42,10 @@ class Account extends Component {
             <ButtonModal/>
           </p> */}
 
-          <Dropdown>
+          <Dropdown className="chart-menu">
 
-            <DropdownToggle variant="success" id="dropdown-basic">View Chart</DropdownToggle>
+            {/* 'variant' value changes colour, not css(?) */}
+            <DropdownToggle variant="info">View Chart</DropdownToggle>
 
             <DropdownMenu>
               <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
