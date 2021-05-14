@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Chart} from "react-google-charts"
+import styled from "styled-components"
 // import { Row, Col } from 'react-bootstrap';
 
 export default class Chart1 extends Component {
@@ -24,7 +25,8 @@ export default class Chart1 extends Component {
                 </Card.Body>
               </Card>
             </CardStyle> */}
-            <Chart
+
+            {/* <Chart
             className="row"
             style={{width:'1684px', height:'650px'}}
               chartType="AreaChart"
@@ -66,8 +68,71 @@ export default class Chart1 extends Component {
               }}
               // For tests
               rootProps={{ 'data-testid': '1' }}
-            />
+            /> */}
+
+          <ChartStyle>
+
             <Chart
+              className="bar-chart"
+              width={450}
+              height={700}
+              chartType="ColumnChart"
+              loader={<div>Loading Chart</div>}
+              data={[
+                ['Day', 'Food Wastage'],
+                ['Mon', 20],
+                ['Tue', 29],
+                ['Wed', 11],
+                ['Thu', 27],
+                ['Fri', 36],
+                ['Sat', 41],
+                ['Sun', 19],
+              ]}
+              options={{
+                title: 'Daily Food Wastage Performance (Column)',
+                chartArea: { width: '30%' },
+                hAxis: {
+                  title: 'Day of the Week',
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: 'Weight of Food Wastage (kg)',
+                },
+              }}
+              legendToggle
+            />
+
+            <Chart 
+              className="area-chart"
+              width={600}
+              height={500}
+              chartType="AreaChart"
+              loader={<div>Loading Chart</div>}
+              data = {[
+                ['Day', 'Food Wastage'],
+                ['Mon', 20],
+                ['Tue', 29],
+                ['Wed', 11],
+                ['Thu', 27],
+                ['Fri', 36],
+                ['Sat', 41],
+                ['Sun', 19],
+              ]}
+              options={{
+                title: 'Daily Food Wastage Performance (Line)',
+                chartArea: {width: '50%', height: '70%'},
+                hAxis: {
+                  title: 'Day of the Week', titleTextStyle: {color: '#333'}
+                },
+                vAxis: {
+                  minValue: 0, title: 'Weight of Food Wastage (kg)'
+                }
+              }}
+            />  
+
+          </ChartStyle>
+
+            {/* <Chart
             className="row"
             style={{width:'1684px', height:'650px', alignItems:'center', justifyContent:'center', display:'flex'}}
               chartType="AreaChart"
@@ -109,7 +174,7 @@ export default class Chart1 extends Component {
               }}
               // For tests
               rootProps={{ 'data-testid': '1' }}
-            />
+            /> */}
 
           {/* </Col>
           <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
@@ -124,3 +189,13 @@ export default class Chart1 extends Component {
     )
   }
 }
+
+const ChartStyle = styled.div`
+  .bar-chart{
+    padding: 10px;
+  }
+
+  .area-chart{
+    padding: 10px;
+  }
+`;
