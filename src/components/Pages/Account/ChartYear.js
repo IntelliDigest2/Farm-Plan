@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Chart} from "react-google-charts"
+import styled from "styled-components"
 // import { Row, Col } from 'react-bootstrap';
 
 export default class Chart1 extends Component {
@@ -24,7 +25,8 @@ export default class Chart1 extends Component {
                 </Card.Body>
               </Card>
             </CardStyle> */}
-            <Chart
+
+            {/* <Chart
             className="row"
             style={{width:'1684px', height:'650px'}}
               chartType="AreaChart"
@@ -66,8 +68,67 @@ export default class Chart1 extends Component {
               }}
               // For tests
               rootProps={{ 'data-testid': '1' }}
-            />
+            /> */}
+
+          <ChartStyle>
+
             <Chart
+              className="bar-chart"
+              width={550}
+              height={500}
+              chartType="ColumnChart"
+              loader={<div>Loading Chart</div>}
+
+              data={[
+                ['Year', 'Food Wastage'],
+                ['2021', 12501],
+                ['2022', 10997],
+                ['2023', 9410],
+              ]}
+
+              // data={chartData}
+
+              options={{
+                title: 'Yearly Food Wastage Performance (Column)',
+                chartArea: { width: '30%' },
+                hAxis: {
+                  title: 'Year',
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: 'Weight of Food Wastage (kg)',
+                },
+              }}
+              legendToggle
+            />
+
+            <Chart 
+              className="area-chart"
+              width={550}
+              height={500}
+              chartType="AreaChart"
+              loader={<div>Loading Chart</div>}
+              data = {[
+                ['Year', 'Food Wastage'],
+                ['2021', 12501],
+                ['2022', 10997],
+                ['2023', 9410],
+              ]}
+              options={{
+                title: 'Yearly Food Wastage Performance (Line)',
+                chartArea: {width: '50%', height: '70%'},
+                hAxis: {
+                  title: 'Year', titleTextStyle: {color: '#333'}
+                },
+                vAxis: {
+                  minValue: 0, title: 'Weight of Food Wastage (kg)'
+                }
+              }}
+            />  
+
+          </ChartStyle>
+
+            {/* <Chart
             className="row"
             style={{width:'1684px', height:'650px', alignItems:'center', justifyContent:'center', display:'flex'}}
               chartType="AreaChart"
@@ -109,7 +170,7 @@ export default class Chart1 extends Component {
               }}
               // For tests
               rootProps={{ 'data-testid': '1' }}
-            />
+            /> */}
 
           {/* </Col>
           <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
@@ -124,3 +185,13 @@ export default class Chart1 extends Component {
     )
   }
 }
+
+const ChartStyle = styled.div`
+  .bar-chart{
+    padding: 10px;
+  }
+
+  .area-chart{
+    padding: 10px;
+  }
+`;

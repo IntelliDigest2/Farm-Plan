@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Chart} from "react-google-charts"
 import styled from "styled-components"
+// import chartData from "../../../data/chart-data.json";
 // import { Row, Col } from 'react-bootstrap';
 
 export default class Chart1 extends Component {
@@ -78,6 +79,7 @@ export default class Chart1 extends Component {
               height={700}
               chartType="ColumnChart"
               loader={<div>Loading Chart</div>}
+
               data={[
                 ['Day', 'Food Wastage'],
                 ['Mon', 20],
@@ -88,6 +90,9 @@ export default class Chart1 extends Component {
                 ['Sat', 41],
                 ['Sun', 19],
               ]}
+
+              // data={chartData}
+
               options={{
                 title: 'Daily Food Wastage Performance (Column)',
                 chartArea: { width: '30%' },

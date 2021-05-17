@@ -12,7 +12,7 @@ import moment from "moment"
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
 const time = moment().format("MMMM Do YYYY, h:mm:ss a")
-class AddData extends Component {
+class FoodLoss extends Component {
 
     state = {
         name: this.props.user.firstName,
@@ -22,19 +22,31 @@ class AddData extends Component {
         weightOfFoodSurplus: 0,
         weightOfFoodWaste: 0,
         dailyFoodWaste: 0,
-        GHG: 0,
+        EdibleGHG: 0,
+        InedibleGHG: 0,
         dailyFoodSurplus: 0,
-        costOfFoodSurplus: 0,
-        dropDownValue: "Select Currency",
-        currencyMultiplier: 0,
+        costOfEdibleFoodWaste: 0,
+        costOfInedibleFoodWaste: 0,
+        dropDownValueEFW: "Select Currency",
+        dropDownValueIFW: "Select Currency",
+        currencyMultiplierEFW: 0,
+        currencyMultiplierIFW: 0,
     }
 
-    changeValue(text) {
-        this.setState({dropDownValue: text})
+    changeEFWCurrency(text) {
+        this.setState({dropDownValueEFW: text})
     }
 
-    changeMultiplier(value) {
-        this.setState({currencyMultiplier: value})
+    changeIFWCurrency(text) {
+        this.setState({dropDownValueIFW: text})
+    }
+
+    changeMultiplierEFW(value) {
+        this.setState({currencyMultiplierEFW: value})
+    }
+
+    changeMultiplierIFW(value) {
+        this.setState({currencyMultiplierIFW: value})
     }
 
     handleChange = (e) => {
@@ -44,19 +56,36 @@ class AddData extends Component {
         })
     }
 
-    handleFoodWasteChange = (e) => {
+    handleEdibleFoodWasteGHGChange = (e) => {
         console.log(e);
         this.setState({
             [e.target.id]: e.target.value,
-            GHG: Number(e.target.value) * 2.5,
+            EdibleGHG: Number(e.target.value) * 2.5,
         })
     }
 
-    handleFoodSurplusChange = (e) => {
+    handleInedibleFoodWasteGHGChange = (e) => {
         console.log(e);
         this.setState({
             [e.target.id]: e.target.value,
-            costOfFoodSurplus: Number(e.target.value) * 0.85
+            InedibleGHG: Number(e.target.value) * 2.5,
+        })
+    }
+
+    handleEdibleFoodCostChange = (e) => {
+        console.log(e);
+        this.setState({
+            [e.target.id]: e.target.value,
+            costOfEdibleFoodWaste: Number(e.target.value) * 0.85
+        })
+
+    }
+
+    handleInedibleFoodCostChange = (e) => {
+        console.log(e);
+        this.setState({
+            [e.target.id]: e.target.value,
+            costOfInedibleFoodWaste: Number(e.target.value) * 0.85
         })
 
     }
@@ -128,16 +157,18 @@ class AddData extends Component {
               </Row> 
               : 
               <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%", height: "100vh" }}>
+
             <Card 
             style={{
                 // width: "90%", 
                 width: "261px", 
                 // height: "100%"
-                height:'400px'
+                height:'450px'
             }}
             >
+                
             <Form className= "form-layout" onSubmit={this.handleFoodWasteSubmit} style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Edible Food Waste (FL)</h5>
                 <div>
 
                     <div style={{padding: "0 10% 0 10%"}}>Weight</div>
@@ -148,7 +179,7 @@ class AddData extends Component {
                             justifyContent: 'space-around'}} 
                     >
                     <InputGroup>
-                        <Form.Control type="number" id="weightOfFoodWaste" placeholder="Enter weight of food waste" onChange={this.handleFoodWasteChange} width="100%" value={this.state.weightOfFoodWaste}/>{/*kg*/}
+                        <Form.Control type="number" id="weightOfFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfFoodWaste}/>{/*kg*/}
                         <InputGroup.Append>
                             <InputGroup.Text>kg</InputGroup.Text>
                         </InputGroup.Append>
@@ -162,10 +193,49 @@ class AddData extends Component {
                             display: "flex"}}
                     >
                     <InputGroup>
-                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.GHG} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
+                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.EdibleGHG} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
                         <InputGroup.Append>
                             <InputGroup.Text>kg co2</InputGroup.Text>
                         </InputGroup.Append>
+                    </InputGroup>
+                    </Form.Group>
+
+                    <div style={{padding: "0 10% 0 10%"}}>Cost</div>
+                    <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                    <InputGroup>
+
+                        {/* <InputGroup.Prepend>
+                            <InputGroup.Text>£</InputGroup.Text>
+                        </InputGroup.Prepend> */}
+
+                        <DropdownButton
+                            as={InputGroup.Prepend}
+                            variant="outline-secondary"
+                            title={this.state.dropDownValueEFW}
+                            id="input-group-dropdown-1"
+                        >
+
+                            <DropdownItem as="button">
+                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1)}}>
+                                    GBP (£)
+                                </div>
+                            </DropdownItem>
+
+                            <DropdownItem as="button">
+                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1.404)}}>
+                                    USD ($)
+                                </div>
+                            </DropdownItem>
+
+                            <DropdownItem>
+                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1.161)}}>
+                                    EUR (€)
+                                </div>    
+                            </DropdownItem>
+
+                        </DropdownButton>
+
+                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={(this.state.costOfEdibleFoodWaste*this.state.currencyMultiplierEFW).toFixed(2)}/>{/*pounds*/}
                     </InputGroup>
                     </Form.Group>
 
@@ -186,23 +256,38 @@ class AddData extends Component {
                 </div>
             </Form> 
             </Card>
+
             <Card
             style={{
                 // width: "90%", 
                 width: "261px", 
-                height:'400px'
+                height:'450px'
             }}>
             <Form className= "form-layout" onSubmit={this.handleFoodSurplusSubmit} style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "32px",fontWeight: "600",}}>Food Surplus</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "32px",fontWeight: "600",}}>Inedible Food Waste</h5>
 
                 <div>
 
                     <div style={{padding: "0 10% 0 10%"}}>Weight</div>
                     <Form.Group className= "form-layout" style={{padding: "0 10% 0 10%", display: "flex", justifyContent: 'space-around'}} >
                     <InputGroup>
-                        <Form.Control type="number" id="weightOfFoodSurplus" placeholder="Enter weight of food surplus" onChange={this.handleFoodSurplusChange} value={this.state.weightOfFoodSurplus}/>{/*kg*/}
+                        <Form.Control type="number" id="weightOfFoodSurplus" placeholder="Enter weight of food surplus" onChange={(e) => {this.handleInedibleFoodWasteGHGChange(e); this.handleInedibleFoodCostChange(e)}} value={this.state.weightOfFoodSurplus}/>{/*kg*/}
                         <InputGroup.Append>
                             <InputGroup.Text>kg</InputGroup.Text>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    </Form.Group>
+
+                    <div style={{padding: "0 10% 0 10%"}}>GHG</div>
+                    <Form.Group 
+                        style={{
+                            padding: "0 10% 0 10%", 
+                            display: "flex"}}
+                    >
+                    <InputGroup>
+                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.InedibleGHG} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
+                        <InputGroup.Append>
+                            <InputGroup.Text>kg co2</InputGroup.Text>
                         </InputGroup.Append>
                     </InputGroup>
                     </Form.Group>
@@ -218,31 +303,31 @@ class AddData extends Component {
                         <DropdownButton
                             as={InputGroup.Prepend}
                             variant="outline-secondary"
-                            title={this.state.dropDownValue}
+                            title={this.state.dropDownValueIFW}
                             id="input-group-dropdown-1"
                         >
 
                             <DropdownItem as="button">
-                                <div onClick={(e) => {this.changeValue(e.target.textContent); this.changeMultiplier(1)}}>
+                                <div onClick={(e) => {this.changeIFWCurrency(e.target.textContent); this.changeMultiplierIFW(1)}}>
                                     GBP (£)
                                 </div>
                             </DropdownItem>
 
                             <DropdownItem as="button">
-                                <div onClick={(e) => {this.changeValue(e.target.textContent); this.changeMultiplier(1.404)}}>
+                                <div onClick={(e) => {this.changeIFWCurrency(e.target.textContent); this.changeMultiplierIFW(1.404)}}>
                                     USD ($)
                                 </div>
                             </DropdownItem>
 
                             <DropdownItem>
-                                <div onClick={(e) => {this.changeValue(e.target.textContent); this.changeMultiplier(1.161)}}>
+                                <div onClick={(e) => {this.changeIFWCurrency(e.target.textContent); this.changeMultiplierIFW(1.161)}}>
                                     EUR (€)
                                 </div>    
                             </DropdownItem>
 
                         </DropdownButton>
 
-                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={(this.state.costOfFoodSurplus*this.state.currencyMultiplier).toFixed(2)}/>{/*pounds*/}
+                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={(this.state.costOfInedibleFoodWaste*this.state.currencyMultiplierIFW).toFixed(2)}/>{/*pounds*/}
                     </InputGroup>
                     </Form.Group>
 
@@ -300,4 +385,4 @@ const CardStyle = styled.div`
 
       `
 
-export default compose(connect(mapStateToProps, mapDispatchToProps),firestoreConnect([{ collection: "data" }]))(AddData);
+export default compose(connect(mapStateToProps, mapDispatchToProps),firestoreConnect([{ collection: "data" }]))(FoodLoss);

@@ -16,7 +16,8 @@ import ForgotPassword from "./components/Pages/ForgotPassword";
 import Account from "./components/Pages/Account/UserAccount";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import MapData from "./components/Pages/Account/MapData";
-import AddData from "./components/Pages/Account/AddData";
+import FoodWaste from "./components/Pages/Account/FoodWaste";
+import FoodLoss from "./components/Pages/Account/FoodLoss";
 import Chart1 from "./components/Pages/Account/ChartYear";
 import Chart2 from "./components/Pages/Account/ChartMonth";
 import Chart3 from "./components/Pages/Account/ChartWeek";
@@ -41,7 +42,8 @@ function App() {
           <Route path="/account" exact component={Account}/>
           <Route path="/change-password" exact component={ChangePassword}/>
           <Route path="/view-map" exact component={MapData}/>
-          <Route path="/add-data" exact component={AddData}/>
+          <Route path="/food-waste" exact component={FoodWaste}/>
+          <Route path="/food-loss" exact component={FoodLoss}/>
           <Route path="/chart/year" exact component={Chart1} />
           <Route path="/chart/month" exact component={Chart2} />
           <Route path="/chart/week" exact component={Chart3} />

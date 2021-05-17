@@ -1,0 +1,9 @@
+[
+    {"id" : "1", "Day" : "Mon", "Food Wastage" : 20},
+    {"id" : "2", "Day" : "Tue", "Food Wastage" : 29},
+    {"id" : "3", "Day" : "Wed", "Food Wastage" : 11},
+    {"id" : "4", "Day" : "Thu", "Food Wastage" : 27},
+    {"id" : "5", "Day" : "Fri", "Food Wastage" : 36},
+    {"id" : "6", "Day" : "Sat", "Food Wastage" : 41},
+    {"id" : "7", "Day" : "Sun", "Food Wastage" : 19}
+]

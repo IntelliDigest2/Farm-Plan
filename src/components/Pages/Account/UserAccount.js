@@ -36,7 +36,8 @@ class Account extends Component {
         <div className="acc-options text-center">
           <p><Link className="user-acc-opt" to="/change-password">Change Password</Link></p>
           <p><Link className="user-acc-opt" to="/view-map">View Food Waste Map</Link></p>
-          <p><Link className="user-acc-opt" to="/add-data">Update your food waste & food surplus</Link></p>
+          <p><Link className="user-acc-opt" to="/food-waste">Update food waste</Link></p>
+          <p><Link className="user-acc-opt" to="/food-loss">Update food loss</Link></p>
           
           {/* <p>
             <ButtonModal/>
