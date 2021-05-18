@@ -19,8 +19,8 @@ class FoodLoss extends Component {
         email: this.props.auth.email,
         uid: this.props.auth.uid,
         filteredData: [],
-        weightOfFoodSurplus: 0,
-        weightOfFoodWaste: 0,
+        weightOfInedibleFoodWaste: 0,
+        weightOfEdibleFoodWaste: 0,
         dailyFoodWaste: 0,
 
         edibleFoodWasteType: "Select Type",
@@ -202,7 +202,7 @@ class FoodLoss extends Component {
                             justifyContent: 'space-around'}} 
                     >
                     <InputGroup>
-                        <Form.Control type="number" id="weightOfFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfFoodWaste}/>{/*kg*/}
+                        <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>{/*kg*/}
                         <InputGroup.Append>
                             <InputGroup.Text>kg</InputGroup.Text>
                         </InputGroup.Append>
@@ -257,7 +257,7 @@ class FoodLoss extends Component {
                             justifyContent: 'space-around'}}                      
                     >
                     <InputGroup>
-                        <Form.Control type="number" id="edibleMoisture" placeholder="Enter moisture content of food waste" onChange={(e) => {this.handleEdibleMoistureChange(e)}} width="100%" value={this.state.edibleMoisture}/>
+                        <Form.Control type="number" pattern="[0-100]*" min={0} max={100} id="edibleMoisture" placeholder="Enter moisture content of food waste" onChange={(e) => {this.handleEdibleMoistureChange(e)}} width="100%" value={this.state.edibleMoisture}/>
                         <InputGroup.Append>
                             <InputGroup.Text>%</InputGroup.Text>
                         </InputGroup.Append>
@@ -349,7 +349,7 @@ class FoodLoss extends Component {
                     <div style={{padding: "0 10% 0 10%"}}>Weight</div>
                     <Form.Group className= "form-layout" style={{padding: "0 10% 0 10%", display: "flex", justifyContent: 'space-around'}} >
                     <InputGroup>
-                        <Form.Control type="number" id="weightOfFoodSurplus" placeholder="Enter weight of food surplus" onChange={(e) => {this.handleInedibleFoodWasteGHGChange(e); this.handleInedibleFoodCostChange(e)}} value={this.state.weightOfFoodSurplus}/>{/*kg*/}
+                        <Form.Control type="number" id="weightOfInedibleFoodWaste" placeholder="Enter weight of food surplus" onChange={(e) => {this.handleInedibleFoodWasteGHGChange(e); this.handleInedibleFoodCostChange(e)}} value={this.state.weightOfInedibleFoodWaste}/>{/*kg*/}
                         <InputGroup.Append>
                             <InputGroup.Text>kg</InputGroup.Text>
                         </InputGroup.Append>
@@ -404,7 +404,7 @@ class FoodLoss extends Component {
                             justifyContent: 'space-around'}}                      
                     >
                     <InputGroup>
-                        <Form.Control type="number" id="inedibleMoisture" placeholder="Enter moisture content of food waste" onChange={(e) => {this.handleInedibleMoistureChange(e)}} width="100%" value={this.state.inedibleMoisture}/>
+                        <Form.Control type="number" pattern="[0-100]*" min={0} max={100} id="inedibleMoisture" placeholder="Enter moisture content of food waste" onChange={(e) => {this.handleInedibleMoistureChange(e)}} width="100%" value={this.state.inedibleMoisture}/>
                         <InputGroup.Append>
                             <InputGroup.Text>%</InputGroup.Text>
                         </InputGroup.Append>
