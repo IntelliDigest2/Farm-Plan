@@ -40,7 +40,30 @@ class FoodWaste extends Component {
         dropDownValueIFW: "Select Currency",
         currencyMultiplierEFW: 0,
         currencyMultiplierIFW: 0,
+
+        // chart experiment below
+
+        // dataChart: {
+        //     datasets: [{
+        //         data: [0]
+        //     }],
+        // },
     }
+
+    // handleChartSubmit = () => {
+    //     const {dataChart} = this.state;
+    //     this.setState({
+    //         dataChart: {
+    //             ...dataChart,
+    //             datasets: [{
+    //                 data: [...dataChart.datasets[0].data,
+    //                 this.state.weightOfEdibleFoodWaste]
+    //             }]
+    //         }
+    //     })
+    // }
+
+        // chart experiment above
 
     changeEFWCurrency(text) {
         this.setState({dropDownValueEFW: text})
@@ -481,7 +504,7 @@ class FoodWaste extends Component {
             </div>
               }
 
-              <Chart 
+              {/* <Chart 
                 className="bar-chart"
                 width={500}
                 height={700}
@@ -490,7 +513,7 @@ class FoodWaste extends Component {
 
                 data={[
                     ['Food Wastage Type', 'Food Wastage Weight'],
-                    ['Carbohydrates', parseInt(this.state.weightOfEdibleFoodWaste)],
+                    [this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)],
                     ['Protein', 11],
                     ['Fat', 2],
                     ['Fibre', 5],
@@ -510,7 +533,7 @@ class FoodWaste extends Component {
                     },
                 }}
                 legendToggle              
-              />
+              /> */}
             
             </div>
         )

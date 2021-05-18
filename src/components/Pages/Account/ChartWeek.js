@@ -72,28 +72,26 @@ export default class Chart1 extends Component {
 
           <ChartStyle>
 
-            <Chart
-              className="bar-chart"
-              width={600}
-              height={550}
+            <Chart className='bar-chart'
+              width={1100}
+              height={500}
               chartType="ColumnChart"
               loader={<div>Loading Chart</div>}
-
               data={[
-                ['Week', 'Food Wastage'],
-                ['03/05 - 09/05', 250],
-                ['10/05 - 16/05', 189],
-                ['17/05 - 23/05', 221],
-                ['24/05 - 30/05', 273],
+                ['Day', 'Food Wastage Weight'],
+                ['Monday', 15],
+                ['Tuesday', 19],
+                ['Wednesday', 7],
+                ['Thursday', 10],
+                ['Friday', 9],
+                ['Saturday', 20],
+                ['Sunday', 5],
               ]}
-
-              // data={chartData}
-
               options={{
-                title: 'Weekly Food Wastage Performance (Column)',
+                title: 'This week\'s Food Wastage Performance (Mon 17/05- Sun 23/05)',
                 chartArea: { width: '30%' },
                 hAxis: {
-                  title: 'Week',
+                  title: 'Day of the Week',
                   minValue: 0,
                 },
                 vAxis: {
@@ -103,7 +101,7 @@ export default class Chart1 extends Component {
               legendToggle
             />
 
-            <Chart 
+            {/* <Chart 
               className="area-chart"
               width={600}
               height={500}
@@ -126,7 +124,7 @@ export default class Chart1 extends Component {
                   minValue: 0, title: 'Weight of Food Wastage (kg)'
                 }
               }}
-            />  
+            />   */}
 
           </ChartStyle>
 
@@ -190,7 +188,8 @@ export default class Chart1 extends Component {
 
 const ChartStyle = styled.div`
   .bar-chart{
-    padding: 10px;
+    position: absolute;
+    left: 14%;
   }
 
   .area-chart{

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../Pages.css"
 import { Row, Col} from "react-bootstrap";
 import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
-// import syntheticData from "../../../data/data.json";
 import syntheticData from "../../../data/data.json";
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -17,8 +16,8 @@ class MapData extends Component {
   }
   render(){
       const {products, auth, profile} = this.props;
-      console.log(this.props.google);
-      console.log(products);
+      // console.log(this.props.google);
+      // console.log(products);
       console.log(profile);
       if (!auth.uid) return <Redirect to= '/login'/>
 
@@ -26,24 +25,25 @@ class MapData extends Component {
       let homeLng = null;
       Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
       Geocode.setLocationType("ROOFTOP");
-      if (profile) {
-      Geocode.fromAddress("10 Harlaw March").then(
-        (response) => {
-          console.log(response)
-          const { lat, lng } = response.results[0].geometry.location;
-          console.log(lat, lng);
-          const homeLat = lat;
-          const homeLng = lng
-          this.setState({
-            longitude: homeLng,
-            latitude: homeLat
-          })
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    }
+
+    //   if (profile) {
+    //   Geocode.fromAddress("10 Harlaw March").then(
+    //     (response) => {
+    //       console.log(response)
+    //       const { lat, lng } = response.results[0].geometry.location;
+    //       // console.log(lat, lng);
+    //       const homeLat = lat;
+    //       const homeLng = lng
+    //       this.setState({
+    //         longitude: homeLng,
+    //         latitude: homeLat
+    //       })
+    //     },
+    //     (error) => {
+    //       console.error(error);
+    //     }
+    //   );
+    // }
       
 
       const mapStyles = {

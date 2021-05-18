@@ -72,27 +72,31 @@ export default class Chart1 extends Component {
 
           <ChartStyle>
 
-            <Chart
-              className="bar-chart"
-              width={550}
-              height={500}
+            <Chart className='bar-chart'
+              width={1100}
+              height={550}
               chartType="ColumnChart"
               loader={<div>Loading Chart</div>}
-
               data={[
-                ['Year', 'Food Wastage'],
-                ['2021', 12501],
-                ['2022', 10997],
-                ['2023', 9410],
+                ['Month', 'Food Wastage Weight'],
+                ['January', 250],
+                ['February', 189],
+                ['March', 201],
+                ['April', 190],
+                ['May', 268],
+                ['June', 275],
+                ['July', 204],
+                ['August', 305],
+                ['September', 178],
+                ['October', 285],
+                ['November', 214],
+                ['December', 343],
               ]}
-
-              // data={chartData}
-
               options={{
-                title: 'Yearly Food Wastage Performance (Column)',
-                chartArea: { width: '30%' },
+                title: 'This year\'s Food Wastage Performance (2021)',
+                chartArea: { width: '75%' },
                 hAxis: {
-                  title: 'Year',
+                  title: 'Month of 2021',
                   minValue: 0,
                 },
                 vAxis: {
@@ -102,7 +106,7 @@ export default class Chart1 extends Component {
               legendToggle
             />
 
-            <Chart 
+            {/* <Chart 
               className="area-chart"
               width={550}
               height={500}
@@ -124,7 +128,7 @@ export default class Chart1 extends Component {
                   minValue: 0, title: 'Weight of Food Wastage (kg)'
                 }
               }}
-            />  
+            />   */}
 
           </ChartStyle>
 
@@ -188,7 +192,8 @@ export default class Chart1 extends Component {
 
 const ChartStyle = styled.div`
   .bar-chart{
-    padding: 10px;
+    position: absolute;
+    left: 14%;
   }
 
   .area-chart{

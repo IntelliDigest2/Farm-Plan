@@ -73,31 +73,23 @@ export default class Chart1 extends Component {
 
           <ChartStyle>
 
-            <Chart
-              className="bar-chart"
-              width={450}
-              height={700}
+            <Chart className='bar-chart'
+              width={1100}
+              height={500}
               chartType="ColumnChart"
               loader={<div>Loading Chart</div>}
-
               data={[
-                ['Day', 'Food Wastage'],
-                ['Mon', 20],
-                ['Tue', 29],
-                ['Wed', 11],
-                ['Thu', 27],
-                ['Fri', 36],
-                ['Sat', 41],
-                ['Sun', 19],
+                ['Food Wastage Type', 'Food Wastage Weight'],
+                ['Carbohydrates', 7],
+                ['Protein', 11],
+                ['Fat', 2],
+                ['Fibre', 5],
               ]}
-
-              // data={chartData}
-
               options={{
-                title: 'Daily Food Wastage Performance (Column)',
+                title: 'Today\'s Food Wastage Performance (18/05)',
                 chartArea: { width: '30%' },
                 hAxis: {
-                  title: 'Day of the Week',
+                  title: 'Food Wastage Type',
                   minValue: 0,
                 },
                 vAxis: {
@@ -107,7 +99,9 @@ export default class Chart1 extends Component {
               legendToggle
             />
 
-            <Chart 
+        </ChartStyle>
+
+            {/* <Chart 
               className="area-chart"
               width={600}
               height={500}
@@ -133,9 +127,7 @@ export default class Chart1 extends Component {
                   minValue: 0, title: 'Weight of Food Wastage (kg)'
                 }
               }}
-            />  
-
-          </ChartStyle>
+            />   */}
 
             {/* <Chart
             className="row"
@@ -197,7 +189,8 @@ export default class Chart1 extends Component {
 
 const ChartStyle = styled.div`
   .bar-chart{
-    padding: 10px;
+    position: absolute;
+    left: 14%;
   }
 
   .area-chart{
