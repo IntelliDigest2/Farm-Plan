@@ -43,25 +43,26 @@ class FoodWaste extends Component {
 
         // chart experiment below
 
-        // dataChart: {
-        //     datasets: [{
-        //         data: [0]
-        //     }],
-        // },
+        dataChart: [['Food Wastage Type', 'Food Wastage Weight']],
     }
 
-    // handleChartSubmit = () => {
-    //     const {dataChart} = this.state;
-    //     this.setState({
-    //         dataChart: {
-    //             ...dataChart,
-    //             datasets: [{
-    //                 data: [...dataChart.datasets[0].data,
-    //                 this.state.weightOfEdibleFoodWaste]
-    //             }]
-    //         }
-    //     })
-    // }
+    handleChartSubmit(label, column){
+        this.setState((prevState) => ({
+            dataChart: [...prevState.dataChart, [label, column]],
+        }));
+    }
+
+    clearEFWForm = () => {
+        this.setState({
+            weightOfEdibleFoodWaste: 0,
+            edibleFoodWasteType: "Select Currency",
+            edibleMoisture: 0,
+            EdibleGHG: 0,
+            costOfEdibleFoodWaste: 0,
+            dropDownValueEFW: "Select Currency",
+            currencyMultiplierEFW: 0
+        });
+    }
 
         // chart experiment above
 
@@ -352,7 +353,7 @@ class FoodWaste extends Component {
                         <Form.Control type="number" id="dailyFoodWaste" placeholder="Enter daily food waste value" onChange={this.handleChange} width="100%" value={this.state.dailyFoodWaste}/>kg
                     </Form.Group> */}
 
-                    <Button style={{margin: "0 10% 0 10%"}} variant="secondary" type="submit">
+                    <Button style={{margin: "0 10% 0 10%"}} onClick={(e) => {this.handleChartSubmit(this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)); this.clearEFWForm()}} variant="secondary" type="submit">
                         Update
                     </Button>
 
@@ -504,36 +505,38 @@ class FoodWaste extends Component {
             </div>
               }
 
-              {/* <Chart 
-                className="bar-chart"
-                width={500}
-                height={700}
-                chartType="ColumnChart"
-                loader={<div>Loading Chart</div>}
+            <ChartStyle>
+                <Chart 
+                    className="chart"
+                    width={500}
+                    height={700}
+                    chartType="ColumnChart"
+                    loader={<div>Loading Chart</div>}
 
-                data={[
-                    ['Food Wastage Type', 'Food Wastage Weight'],
-                    [this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)],
-                    ['Protein', 11],
-                    ['Fat', 2],
-                    ['Fibre', 5],
-                ]}
+                    // data={[
+                    //     ['Food Wastage Type', 'Food Wastage Weight'],
+                    //     [this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)],
+                    //     ['Protein', 11],
+                    //     ['Fat', 2],
+                    //     ['Fibre', 5],
+                    // ]}
 
-                // data={chartData}
+                    data={this.state.dataChart}
 
-                options={{
-                    title: 'Todays Food Wastage Performance (Column)',
-                    chartArea: { width: '30%' },
-                    hAxis: {
-                    title: 'Food Wastage Type',
-                    minValue: 0,
-                    },
-                    vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
-                    },
-                }}
-                legendToggle              
-              /> */}
+                    options={{
+                        title: 'Todays Food Wastage Performance (Column)',
+                        chartArea: { width: '30%' },
+                        hAxis: {
+                        title: 'Food Wastage Type',
+                        minValue: 0,
+                        },
+                        vAxis: {
+                        title: 'Weight of Food Wastage (kg)',
+                        },
+                    }}
+                    legendToggle              
+                />
+            </ChartStyle>   
             
             </div>
         )
@@ -572,6 +575,13 @@ const CardStyle = styled.div`
           height:200px;
       }
 
-      `
+`;
+
+const ChartStyle = styled.div`
+    .chart{
+        position: absolute;
+        left: 17%;
+    }
+`;
 
 export default compose(connect(mapStateToProps, mapDispatchToProps),firestoreConnect([{ collection: "data" }]))(FoodWaste);
