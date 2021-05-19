@@ -43,12 +43,12 @@ class FoodWaste extends Component {
 
         // chart experiment below
 
-        dataChart: [['Food Wastage Type', 'Food Wastage Weight']],
+        dataChartEFW: [['Food Wastage Type', 'Food Wastage Weight']],
     }
 
     handleChartSubmit(label, column){
         this.setState((prevState) => ({
-            dataChart: [...prevState.dataChart, [label, column]],
+            dataChartEFW: [...prevState.dataChartEFW, [label, column]],
         }));
     }
 
@@ -188,16 +188,17 @@ class FoodWaste extends Component {
         <Col className="mt-5 pt-5" xs={12}></Col>
           <Col className="" xs={12} lg={4}></Col>
                   <Col className=" justify-content-center align-items-center d-block mt-5 pt-5 mt-lg-0 pt-lg-0" xs={12} lg={4}>
-                    <CardStyle>
-                  <Card>
-                <Card.Body>
+
+            <CardStyle>
+                <Card>
+                    <Card.Body>
                    <Card.Text className="text-center">
                    <h1 style={{fontSize: "33px",fontWeight: "600", color: "rgb(55, 85, 54)",}}>Start tracking your food waste and food surplus now</h1>
-                 <button onClick={this.pressButton} style={{outline: 'none', border: 'none'}}>Start now</button>
+                    <button onClick={this.pressButton} style={{outline: 'none', border: 'none'}}>Start now</button>
                    </Card.Text> 
                   </Card.Body>
-              </Card>
-                    </CardStyle>
+                </Card>
+            </CardStyle>
       
                   </Col>
                   <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
@@ -213,6 +214,7 @@ class FoodWaste extends Component {
                 width: "261px", 
                 // height: "100%"
                 height:'575px'
+                // backgroundColor: 'lightgray'
             }}
             >
                 
@@ -246,6 +248,7 @@ class FoodWaste extends Component {
                             variant="outline-secondary"
                             title={this.state.edibleFoodWasteType}
                             id="igdd"
+                            // style ={{backgroundColor: 'white'}}
                         >
                             <DropdownItem as="button">
                                 <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
@@ -317,6 +320,7 @@ class FoodWaste extends Component {
                             variant="outline-secondary"
                             title={this.state.dropDownValueEFW}
                             id="input-group-dropdown-1"
+                            // style ={{backgroundColor: 'white'}}
                         >
 
                             <DropdownItem as="button">
@@ -366,6 +370,7 @@ class FoodWaste extends Component {
                 // width: "90%", 
                 width: "261px", 
                 height:'575px'
+                // backgroundColor: 'lightgray'
             }}>
             <Form className= "form-layout" onSubmit={this.handleFoodSurplusSubmit} style={{padding: "10px"}}>  
                 <h5 className="text-center" style={{margin: "30px", fontSize: "32px",fontWeight: "600",}}>Inedible Food Waste</h5>
@@ -393,6 +398,7 @@ class FoodWaste extends Component {
                             variant="outline-secondary"
                             title={this.state.inedibleFoodWasteType}
                             id="igdd"
+                            // style ={{backgroundColor: 'white'}}
                         >
                             <DropdownItem as="button">
                                 <div onClick={(e) => {this.handleInedibleFoodTypeChange(e.target.textContent)}}>
@@ -464,6 +470,7 @@ class FoodWaste extends Component {
                             variant="outline-secondary"
                             title={this.state.dropDownValueIFW}
                             id="input-group-dropdown-1"
+                            // style ={{backgroundColor: 'white'}}
                         >
 
                             <DropdownItem as="button">
@@ -521,7 +528,7 @@ class FoodWaste extends Component {
                     //     ['Fibre', 5],
                     // ]}
 
-                    data={this.state.dataChart}
+                    data={this.state.dataChartEFW}
 
                     options={{
                         title: 'Todays Food Wastage Performance (Column)',

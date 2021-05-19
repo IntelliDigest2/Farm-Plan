@@ -93,6 +93,7 @@ export default class Chart1 extends Component {
                 ['December', 343],
               ]}
               options={{
+                // backgroundColor: 'lightgray',
                 title: 'This year\'s Food Wastage Performance (2021)',
                 chartArea: { width: '75%' },
                 hAxis: {

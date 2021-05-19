@@ -10,24 +10,24 @@ const NavBar = (props) => {
 
   return (
     <NavStyle>
-      <Navbar fixed="top" expand="md" className="mr-0 ml-0">
+      <Navbar fixed="top" collapseOnSelect expand="md" className="mr-0 ml-0">
         <Container>
           <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/">IntelliDigest - iTracker</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/" activeClassName="active" exact={true}>Home</NavLink>
-              <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/about" activeClassName="active" exact={true}>About</NavLink>
+              <Nav.Link as={NavLink} eventKey="1" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/" activeClassName="active" exact={true}>Home</Nav.Link>
+              <Nav.Link as={NavLink} eventKey="2" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/about" activeClassName="active" exact={true}>About</Nav.Link>
                 {(auth.uid)? 
                 <>
-                <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/account" activeClassName="active" exact={true}>My Account</NavLink>
-                <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link logout" to="/login" onClick={props.signOut}>Logout</NavLink>
+                <Nav.Link as={NavLink} eventKey="3" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/account" activeClassName="active" exact={true}>My Account</Nav.Link>
+                <Nav.Link as={NavLink} eventKey="4" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link logout" to="/login" onClick={props.signOut}>Logout</Nav.Link>
                 </>
                : 
                 
-                <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/login" activeClassName="active" exact={true}>Login</NavLink>
+                <Nav.Link as={NavLink} eventKey="5" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/login" activeClassName="active" exact={true}>Login</Nav.Link>
               }
-              <NavLink className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/contact" activeClassName="active" exact={true}>Contact</NavLink>
+              <Nav.Link as={NavLink} eventKey="6" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/contact" activeClassName="active" exact={true}>Contact</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -88,6 +88,7 @@ export default class Chart1 extends Component {
                 ['Sunday', 5],
               ]}
               options={{
+                // backgroundColor: 'lightgray',
                 title: 'This week\'s Food Wastage Performance (Mon 17/05- Sun 23/05)',
                 chartArea: { width: '30%' },
                 hAxis: {

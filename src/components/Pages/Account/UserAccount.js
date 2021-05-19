@@ -46,7 +46,7 @@ class Account extends Component {
           <Dropdown className="chart-menu">
 
             {/* 'variant' value changes colour, not css(?) */}
-            <DropdownToggle variant="info">View Chart</DropdownToggle>
+            <DropdownToggle variant="info">View Food Waste Performance Chart</DropdownToggle>
 
             <DropdownMenu>
               <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>

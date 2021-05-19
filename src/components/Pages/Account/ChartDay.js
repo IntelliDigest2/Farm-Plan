@@ -86,6 +86,7 @@ export default class Chart1 extends Component {
                 ['Fibre', 5],
               ]}
               options={{
+                // backgroundColor: 'lightgray',
                 title: 'Today\'s Food Wastage Performance (18/05)',
                 chartArea: { width: '30%' },
                 hAxis: {

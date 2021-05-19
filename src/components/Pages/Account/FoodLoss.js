@@ -187,6 +187,7 @@ class FoodLoss extends Component {
                 width: "261px", 
                 // height: "100%"
                 height:'575px'
+                // backgroundColor: 'lightgray'
             }}
             >
                 
@@ -220,6 +221,7 @@ class FoodLoss extends Component {
                             variant="outline-secondary"
                             title={this.state.edibleFoodWasteType}
                             id="igdd"
+                            // style ={{backgroundColor: 'white'}}
                         >
                             <DropdownItem as="button">
                                 <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
@@ -291,6 +293,7 @@ class FoodLoss extends Component {
                             variant="outline-secondary"
                             title={this.state.dropDownValueEFW}
                             id="input-group-dropdown-1"
+                            // style ={{backgroundColor: 'white'}}
                         >
 
                             <DropdownItem as="button">
@@ -340,6 +343,7 @@ class FoodLoss extends Component {
                 // width: "90%", 
                 width: "261px", 
                 height:'575px'
+                // backgroundColor: 'lightgray'
             }}>
             <Form className= "form-layout" onSubmit={this.handleFoodSurplusSubmit} style={{padding: "10px"}}>  
                 <h5 className="text-center" style={{margin: "30px", fontSize: "32px",fontWeight: "600",}}>Inedible Food Waste</h5>
@@ -367,6 +371,7 @@ class FoodLoss extends Component {
                             variant="outline-secondary"
                             title={this.state.inedibleFoodWasteType}
                             id="igdd"
+                            // style ={{backgroundColor: 'white'}}
                         >
                             <DropdownItem as="button">
                                 <div onClick={(e) => {this.handleInedibleFoodTypeChange(e.target.textContent)}}>
@@ -438,6 +443,7 @@ class FoodLoss extends Component {
                             variant="outline-secondary"
                             title={this.state.dropDownValueIFW}
                             id="input-group-dropdown-1"
+                            // style ={{backgroundColor: 'white'}}
                         >
 
                             <DropdownItem as="button">

@@ -85,6 +85,7 @@ export default class Chart1 extends Component {
                 ['22/05-31/05', 81],
               ]}
               options={{
+                // backgroundColor: 'lightgray',
                 title: 'This month\'s Food Wastage Performance (May 2021)',
                 chartArea: { width: '30%' },
                 hAxis: {
