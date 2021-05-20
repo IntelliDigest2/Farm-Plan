@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../Pages.css"
 import { Row, Col} from "react-bootstrap";
-import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet';
 import syntheticData from "../../../data/data.json";
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -14,17 +14,61 @@ class MapData extends Component {
     longitude: 0,
     latitude: 0,
   }
+
+  // componentDidMount() {
+  //   const {products, auth, profile} = this.props;
+  //   // console.log(this.props.google);
+  //   // console.log(products);
+  //   console.log(profile);
+  //   // console.log(profile.postcode)
+  //   if (!auth.uid) return <Redirect to= '/login'/>
+
+  //   let homeLat = null;
+  //   let homeLng = null;
+  //   Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
+  //   Geocode.setLocationType("ROOFTOP");
+
+  //   var address = profile.address;
+
+  //   Geocode.fromAddress(address).then( (response) => {
+  //     const {lat, lng} = response.results[0].geometry.location;
+  //     this.setState({
+  //       latitude: lat,
+  //       longitude: lng
+  //     })
+  //     console.log(this.state.longitude, this.state.latitude)
+  //   },
+  //   error => {
+  //     console.error(error);
+  //   });
+  // }
+
   render(){
       const {products, auth, profile} = this.props;
       // console.log(this.props.google);
       // console.log(products);
       console.log(profile);
+      // console.log(profile.postcode)
       if (!auth.uid) return <Redirect to= '/login'/>
 
       let homeLat = null;
       let homeLng = null;
       Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
       Geocode.setLocationType("ROOFTOP");
+
+      var address = profile.address;
+
+      Geocode.fromAddress(address).then( (response) => {
+        const {lat, lng} = response.results[0].geometry.location;
+        this.setState({
+          latitude: lat,
+          longitude: lng
+        })
+        // console.log(this.state.longitude, this.state.latitude)
+      },
+      error => {
+        console.error(error);
+      });
 
     //   if (profile) {
     //   Geocode.fromAddress("10 Harlaw March").then(
@@ -45,6 +89,11 @@ class MapData extends Component {
     //   );
     // }
       
+      function ChangeView({center, zoom}){
+        const map = useMap();
+        map.setView(center, zoom);
+        return null;
+      }
 
       const mapStyles = {
         width: '100%',
@@ -79,7 +128,8 @@ class MapData extends Component {
 
         <Col className="" xs={12} lg={1}></Col>
         <Col className="justify-content-center align-items-center d-flex" xs={12} lg={10}>
-          <MapContainer className="map-data" center={[55.953251, -3.188267]} zoom={11} scrollWheelZoom={true}>
+          <MapContainer className="map-data" center={[0,0]} zoom={11} scrollWheelZoom={true}>
+            <ChangeView center={[this.state.latitude, this.state.longitude]} zoom={11} />
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> IntelliDigest - iTracker'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

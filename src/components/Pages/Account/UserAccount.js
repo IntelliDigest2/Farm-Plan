@@ -5,7 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 import "../Pages.css"
 // import styled from "styled-components";
 import { Row, Col, Dropdown } from "react-bootstrap";
-import ButtonModal from './ButtonModalChart'
+// import ButtonModal from './ButtonModalChart'
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
