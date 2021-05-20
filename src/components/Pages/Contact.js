@@ -32,6 +32,16 @@ class Contact extends Component {
       e.target.reset();
   }
 
+  openEmail() {
+    console.log("Email card clicked");
+    window.open('mailto:info@intellidigest.com?subject=Subject&body=Body%20goes%20here');
+  }
+
+  openTel() {
+    console.log("Tel card clicked");
+    window.open('tel:03332420822');
+  }
+
   render(){
 
     return (
@@ -95,7 +105,7 @@ class Contact extends Component {
         <Col xs={12} lg={2}>
           <CardStyle>
 
-        <Card >
+        <Card onClick={(e) => this.openTel()}>
           <Card.Body>
             <Card.Title>Telephone</Card.Title>
              <Card.Text >
@@ -108,7 +118,7 @@ class Contact extends Component {
         </Col>
         <Col xs={12} lg={2}>
           <CardStyle>
-        <Card>
+        <Card onClick={(e) => this.openEmail()}>
           <Card.Body>
             <Card.Title>Email</Card.Title>
              <Card.Text >

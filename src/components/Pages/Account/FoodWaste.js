@@ -52,10 +52,28 @@ class FoodWaste extends Component {
         }));
     }
 
+    // handleChartSubmit(label, column){
+    //     this.state.dataChartEFW.forEach((element) => {
+    //         if (element[0] === label){
+    //             const newDataChartEFW = this.state.dataChartEFW.slice()
+    //             let index = newDataChartEFW.findIndex(el => el[0] === label);
+    //             newDataChartEFW[index] = [label, parseInt(element[1]+column)]
+    //             // newDataChartEFW. = [label, parseInt(element[1]+column)]
+    //             console.log(newDataChartEFW)
+    //             this.setState({dataChartEFW: newDataChartEFW})
+    //         } else {
+    //             console.log(this.state.dataChartEFW)
+    //             this.setState((prevState) => ({
+    //                 dataChartEFW: [...prevState.dataChartEFW, [label, column]],
+    //             }));
+    //         }
+    //     });
+    // }
+
     clearEFWForm = () => {
         this.setState({
             weightOfEdibleFoodWaste: 0,
-            edibleFoodWasteType: "Select Currency",
+            edibleFoodWasteType: "Select Type",
             edibleMoisture: 0,
             EdibleGHG: 0,
             costOfEdibleFoodWaste: 0,
