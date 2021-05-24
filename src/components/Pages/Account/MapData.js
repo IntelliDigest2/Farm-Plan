@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useCallback, useState, useEffect } from "react";
 import "../Pages.css"
 import { Row, Col} from "react-bootstrap";
 import { MapContainer, TileLayer, Popup, Marker, useMap } from 'react-leaflet';
@@ -47,12 +47,10 @@ class MapData extends Component {
       const {products, auth, profile} = this.props;
       // console.log(this.props.google);
       // console.log(products);
-      console.log(profile);
+      // console.log(profile);
       // console.log(profile.postcode)
       if (!auth.uid) return <Redirect to= '/login'/>
-
-      let homeLat = null;
-      let homeLng = null;
+      
       Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
       Geocode.setLocationType("ROOFTOP");
 
@@ -89,9 +87,9 @@ class MapData extends Component {
     //   );
     // }
       
-      function ChangeView({center, zoom}){
+      function ChangeView({center}){
         const map = useMap();
-        map.setView(center, zoom);
+        map.setView(center);
         return null;
       }
 
@@ -128,8 +126,8 @@ class MapData extends Component {
 
         <Col className="" xs={12} lg={1}></Col>
         <Col className="justify-content-center align-items-center d-flex" xs={12} lg={10}>
-          <MapContainer className="map-data" center={[0,0]} zoom={11} scrollWheelZoom={true}>
-            <ChangeView center={[this.state.latitude, this.state.longitude]} zoom={11} />
+          <MapContainer className="map-data" center={[0,0]} zoom={10} scrollWheelZoom={true}>
+            <ChangeView center={[this.state.latitude, this.state.longitude]} />
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> IntelliDigest - iTracker'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
