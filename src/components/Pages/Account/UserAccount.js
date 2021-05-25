@@ -3,8 +3,8 @@ import "../../../App.css";
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import "../Pages.css"
-// import styled from "styled-components";
-import { Row, Col, Dropdown } from "react-bootstrap";
+import styled from "styled-components";
+import { Row, Col, Dropdown, Button } from "react-bootstrap";
 // import ButtonModal from './ButtonModalChart'
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
@@ -33,51 +33,71 @@ class Account extends Component {
           <h1 className="text-center">Welcome, <span>{profile.firstName}  {profile.lastName}</span>!</h1>
           <h1 className="text-center">Account email: <span >{profile.email}</span></h1>
           <h1 className="text-center">Postcode: <span >{profile.postcode}</span></h1>
-        <div className="acc-options text-center">
-          <p><Link className="user-acc-opt" to="/change-password">Change Password</Link></p>
-          <p><Link className="user-acc-opt" to="/view-map">View Food Waste Map</Link></p>
-          <p><Link className="user-acc-opt" to="/food-waste">Update food waste</Link></p>
-          <p><Link className="user-acc-opt" to="/food-loss">Update food loss</Link></p>
+
+          <div>
+
+            <BGroup>
+              <BStyle><Button variant="info" as={Link} to="/change-password">Change Password</Button></BStyle>
+              <BStyle><Button variant="info" as={Link} to="/view-map">View Food Waste Map</Button></BStyle>
+              <BStyle><Button variant="info" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
+            </BGroup>
           
-          {/* <p>
-            <ButtonModal/>
-          </p> */}
+            <BGroup> 
+              <BStyle><Button variant="info" as={Link} to="/food-loss">Update Food Loss</Button></BStyle>
+            
+              {/* <p>
+                <ButtonModal/>
+              </p> */}
 
-          <Dropdown className="chart-menu">
+              <BStyle><Button variant="info" as={Link} to="/food-reduction">Food Waste Reduction Tips</Button></BStyle>
+            </BGroup>
 
-            {/* 'variant' value changes colour, not css(?) */}
-            <DropdownToggle variant="info">View Food Waste Performance Chart</DropdownToggle>
+            <BGroup>
+              <DDStyle><Dropdown>
 
-            <DropdownMenu>
-              <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
-              <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
-              <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
-              <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
-            </DropdownMenu>
+                {/* 'variant' value changes colour, not css(?) */}
+                <DropdownToggle variant="info">View Food Waste Performance Chart</DropdownToggle>
 
-          </Dropdown>
+                <DropdownMenu>
+                  <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
+                  <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
+                  <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
+                  <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
+                </DropdownMenu>
 
-          <p><Link className="user-acc-opt" to="/food-reduction">Food Waste Reduction Tips</Link></p>
-        </div>
+              </Dropdown></DDStyle>
+            </BGroup>
+          </div>
 
           </Col>
+
           <Col xs={12} lg={3}></Col>
 
           <Col className="mt-lg-5 pt-lg-5" xs={12}></Col>
           <Col className="mt-lg-5 pt-lg-5" xs={12}></Col>
-        </Row>
 
+          </Row>
       </React.Fragment>
-  );
+    );
   }
 
 }
 
-// const View = styled.div`
-//   .view{
-//     flex: 1;
-//   }
-// `;
+const BGroup = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+`;
+
+const BStyle = styled.div`
+  padding: 10px;
+  width: 145px;
+`;
+
+const DDStyle = styled.div`
+  padding: 10px;
+  margin-bottom: 35px;
+`;
 
 const mapStateToProps = (state) => { 
   console.log(state);

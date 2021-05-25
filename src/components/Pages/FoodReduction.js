@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import styled from "styled-components";
 
 class FoodReduction extends Component {
   render() {
@@ -8,7 +9,7 @@ class FoodReduction extends Component {
         <h1>Food Waste Reduction Tips</h1>
         <p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}>Food waste is a bigger problem than many people realize.
 <br/><br/>
-In fact, nearly one-third of all food produced in the world is discarded or wasted for various reasons. That equates to nearly 1.3 billion tons every year.
+In fact, nearly one-third of all food produced in the world is discarded or wasted for various reasons. That equates to nearly <b>1.3 billion tons</b> every year.
 <br/><br/>
 Not surprisingly, industrialized countries like the United States waste more food than developing nations. In 2010, the average American generated about 219 pounds (99 kg) of food waste, according to the US Environmental Protection Agency (EPA).
 <br/><br/>
@@ -17,7 +18,7 @@ While you might not think food waste affects you, think again.
 Tossing edible food doesn’t just waste money. Discarded food is sent to landfills, where it rots and produces methane gas, which is the second most common greenhouse gas. In other words, throwing out your food contributes to climate change.
 <br/><br/>
 It wastes a huge amount of water, too. According to the World Resources Institute, 24% of all the water used for agriculture is lost through food waste every year. That’s 45 trillion gallons (about 170 trillion liters).<br/><br/> These things will help to reduce food waste:npm </p>
-<p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}>1. Shop Smart - Most people tend to buy more food than they need.
+<p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}> <h3>1. Shop Smart:-</h3> Most people tend to buy more food than they need.
 
 Though buying in bulk may be convenient, research has shown that this shopping method leads to more food waste.
 
@@ -26,7 +27,7 @@ To avoid buying more food than you need, make frequent trips to the grocery stor
 Make a point to use up all the food you purchased during the last trip to the market before buying more groceries.
 
 Additionally, try making a list of items that you need to buy and stick to that list. This will help you reduce impulse buying and reduce food waste as well</p>
-<p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}>2. Store Food Correctly - Improper storage leads to a massive amount of food waste.
+<p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}> <h3>2. Store Food Correctly:-</h3> Improper storage leads to a massive amount of food waste.
 
 According to the Natural Resource Defense Council, about two-thirds of household waste in the United Kingdom is due to food spoilage.
 
@@ -36,7 +37,7 @@ For instance, potatoes, tomatoes, garlic, cucumbers and onions should never be r
 
 Separating foods that produce more ethylene gas from those that don’t is another great way to reduce food spoilage. Ethylene promotes ripening in foods and could lead to spoilage.</p>
 
-<p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}>3. Learn to Preserve - While you might think fermenting and pickling are new fads, food preservation techniques like these have been used for thousands of years.
+<p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}><h3>3. Learn to Preserve:-</h3> While you might think fermenting and pickling are new fads, food preservation techniques like these have been used for thousands of years.
 
 Pickling, a type of preservation method using brine or vinegar, may have been used as far back as 2400 BC.
 
@@ -46,7 +47,7 @@ Not only will these methods shrink your carbon footprint, they will save you mon
 
 For example, canning an excess of ripe apples and turning them into applesauce, or pickling fresh carrots from the market will provide you with a delicious and long-lasting treat that even kids will enjoy.</p>
 
-<p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}>4. Don’t Be a Perfectionist - Did you know that rummaging through a bin of apples until you find the most perfect-looking one contributes to food waste?
+<p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}><h3>4. Don’t Be a Perfectionist:-</h3> Did you know that rummaging through a bin of apples until you find the most perfect-looking one contributes to food waste?
 
 Though identical in taste and nutrition, so-called “ugly” fruits and vegetables get passed up for produce that is more pleasing to the eye.
 
@@ -58,7 +59,7 @@ Do your part by choosing slightly imperfect produce at the grocery store, or bet
 
 </p>
 
-<p style={{textAlign: 'left', padding: '10px 20% 50px 20%'}}>5. Keep Your Fridge Clutter-Free - You’ve probably heard the saying, “out of sight, out of mind.” This rings especially true when it comes to food.
+<p style={{textAlign: 'left', padding: '10px 20% 50px 20%'}}><h3>5. Keep Your Fridge Clutter-Free:-</h3> You’ve probably heard the saying, “out of sight, out of mind.” This rings especially true when it comes to food.
 
 While having a well-stocked fridge can be a good thing, an overly filled fridge can be bad when it comes to food waste.
 
