@@ -3,8 +3,9 @@ import {Chart} from "react-google-charts"
 import styled from "styled-components"
 // import chartData from "../../../data/chart-data.json";
 // import { Row, Col } from 'react-bootstrap';
+import {BrowserView, MobileView} from "react-device-detect"
 
-export default class Chart1 extends Component {
+export default class Chart4 extends Component {
   render(){
     return (
       <React.Fragment className="row">
@@ -71,36 +72,72 @@ export default class Chart1 extends Component {
               rootProps={{ 'data-testid': '1' }}
             /> */}
 
-          <ChartStyle>
+          <BrowserView>
+            <ChartStyle>
 
+              <Chart className='bar-chart'
+                width={1100}
+                height={500}
+                chartType="ColumnChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ['Food Wastage Type', 'Food Wastage Weight'],
+                  ['Carbohydrates', 7],
+                  ['Protein', 11],
+                  ['Fat', 2],
+                  ['Fibre', 5],
+                ]}
+                options={{
+                  // backgroundColor: 'lightgray',
+                  title: 'Today\'s Food Wastage Performance (18/05)',
+                  chartArea: { width: '30%' },
+                  colors: ['#aab41e'],
+                  hAxis: {
+                    title: 'Food Wastage Type',
+                    minValue: 0,
+                  },
+                  vAxis: {
+                    title: 'Weight of Food Wastage (kg)',
+                  },
+                }}
+                legendToggle
+              />
+
+            </ChartStyle>
+         </BrowserView>
+
+         <MobileView>
+           <ChartStyle>
             <Chart className='bar-chart'
-              width={1100}
-              height={500}
-              chartType="ColumnChart"
-              loader={<div>Loading Chart</div>}
-              data={[
-                ['Food Wastage Type', 'Food Wastage Weight'],
-                ['Carbohydrates', 7],
-                ['Protein', 11],
-                ['Fat', 2],
-                ['Fibre', 5],
-              ]}
-              options={{
-                // backgroundColor: 'lightgray',
-                title: 'Today\'s Food Wastage Performance (18/05)',
-                chartArea: { width: '30%' },
-                hAxis: {
-                  title: 'Food Wastage Type',
-                  minValue: 0,
-                },
-                vAxis: {
-                  title: 'Weight of Food Wastage (kg)',
-                },
-              }}
-              legendToggle
-            />
-
-        </ChartStyle>
+                width={300}
+                height={600}
+                chartType="ColumnChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ['Food Wastage Type', ' Weight '],
+                  ['Carbs', 7],
+                  ['Protein', 11],
+                  ['Fat', 2],
+                  ['Fibre', 5],
+                ]}
+                options={{
+                  // backgroundColor: 'lightgray',
+                  title: 'Today\'s Food Wastage Performance (18/05)',
+                  chartArea: { width: '50%' },
+                  colors: ['#aab41e'],
+                  legend: 'none',
+                  hAxis: {
+                    title: 'Food Wastage Type',
+                    minValue: 0,
+                  },
+                  vAxis: {
+                    title: 'Weight of Food Wastage (kg)',
+                  },
+                }}
+                // legendToggle
+              />
+           </ChartStyle>
+         </MobileView>
 
             {/* <Chart 
               className="area-chart"

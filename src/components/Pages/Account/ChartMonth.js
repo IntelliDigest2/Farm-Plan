@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
+import { BrowserView, MobileView } from 'react-device-detect'
 import {Chart} from "react-google-charts"
 import styled from "styled-components"
 // import { Row, Col } from 'react-bootstrap';
 
-export default class Chart1 extends Component {
+export default class Chart2 extends Component {
   render(){
     return (
       <React.Fragment className="row">
@@ -69,71 +70,105 @@ export default class Chart1 extends Component {
               // For tests
               rootProps={{ 'data-testid': '1' }}
             /> */}
+          <BrowserView>
+            <ChartStyle>
 
-          <ChartStyle>
+              <Chart className='bar-chart'
+                width={1100}
+                height={500}
+                chartType="ColumnChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ['Week/Period', 'Food Wastage Weight'],
+                  ['01/05-07/05', 60],
+                  ['08/05-14/05', 66],
+                  ['15/05-21/05', 54],
+                  ['22/05-31/05', 81],
+                ]}
+                options={{
+                  // backgroundColor: 'lightgray',
+                  title: 'This month\'s Food Wastage Performance (May 2021)',
+                  chartArea: { width: '30%' },
+                  colors: ['#aab41e'],
+                  hAxis: {
+                    title: 'Week/Period of May',
+                    minValue: 0,
+                  },
+                  vAxis: {
+                    title: 'Weight of Food Wastage (kg)',
+                  },
+                }}
+                legendToggle
+              />
 
-            <Chart className='bar-chart'
-              width={1100}
-              height={500}
-              chartType="ColumnChart"
-              loader={<div>Loading Chart</div>}
-              data={[
-                ['Week/Period', 'Food Wastage Weight'],
-                ['01/05-07/05', 60],
-                ['08/05-14/05', 66],
-                ['15/05-21/05', 54],
-                ['22/05-31/05', 81],
-              ]}
-              options={{
-                // backgroundColor: 'lightgray',
-                title: 'This month\'s Food Wastage Performance (May 2021)',
-                chartArea: { width: '30%' },
-                hAxis: {
-                  title: 'Week/Period of May',
-                  minValue: 0,
-                },
-                vAxis: {
-                  title: 'Weight of Food Wastage (kg)',
-                },
-              }}
-              legendToggle
-            />
+              {/* <Chart 
+                className="area-chart"
+                width={1000}
+                height={500}
+                chartType="AreaChart"
+                loader={<div>Loading Chart</div>}
+                data = {[
+                  ['Month', 'Food Wastage'],
+                  ['Jan', 1189],
+                  ['Feb', 691],
+                  ['Mar', 777],
+                  ['Apr', 1001],
+                  ['May', 913],
+                  ['Jun', 1492],
+                  ['Jul', 900],
+                  ['Aug', 1067],
+                  ['Sep', 588],
+                  ['Oct', 710],
+                  ['Nov', 955],
+                  ['Dec', 1888],
+                ]}
+                options={{
+                  title: 'Monthly Food Wastage Performance (Line)',
+                  chartArea: {width: '50%', height: '70%'},
+                  hAxis: {
+                    title: 'Month', titleTextStyle: {color: '#333'}
+                  },
+                  vAxis: {
+                    minValue: 0, title: 'Weight of Food Wastage (kg)'
+                  }
+                }}
+              />   */}
 
-            {/* <Chart 
-              className="area-chart"
-              width={1000}
-              height={500}
-              chartType="AreaChart"
-              loader={<div>Loading Chart</div>}
-              data = {[
-                ['Month', 'Food Wastage'],
-                ['Jan', 1189],
-                ['Feb', 691],
-                ['Mar', 777],
-                ['Apr', 1001],
-                ['May', 913],
-                ['Jun', 1492],
-                ['Jul', 900],
-                ['Aug', 1067],
-                ['Sep', 588],
-                ['Oct', 710],
-                ['Nov', 955],
-                ['Dec', 1888],
-              ]}
-              options={{
-                title: 'Monthly Food Wastage Performance (Line)',
-                chartArea: {width: '50%', height: '70%'},
-                hAxis: {
-                  title: 'Month', titleTextStyle: {color: '#333'}
-                },
-                vAxis: {
-                  minValue: 0, title: 'Weight of Food Wastage (kg)'
-                }
-              }}
-            />   */}
+            </ChartStyle>
+          </BrowserView>
 
-          </ChartStyle>
-
+          <MobileView>
+            <ChartStyle>
+              <Chart className='bar-chart'
+                width={300}
+                height={600}
+                chartType="ColumnChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ['Week/Period', 'Weight '],
+                  ['01-07', 60],
+                  ['08-14', 66],
+                  ['15-25', 54],
+                  ['22-31', 81],
+                ]}
+                options={{
+                  // backgroundColor: 'lightgray',
+                  title: 'Food Wastage Performance (May 2021)',
+                  chartArea: { width: '50%' },
+                  legend: 'none',
+                  colors: ['#aab41e'],
+                  hAxis: {
+                    title: 'Week/Period of May',
+                    minValue: 0,
+                  },
+                  vAxis: {
+                    title: 'Weight of Food Wastage (kg)',
+                  },
+                }}
+                // legendToggle
+              />
+            </ChartStyle>
+          </MobileView>
             {/* <Chart
             className="row"
             style={{width:'1684px', height:'650px', alignItems:'center', justifyContent:'center', display:'flex'}}

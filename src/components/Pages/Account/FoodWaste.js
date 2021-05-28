@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {Form, Button, Card, Col, Row, InputGroup, DropdownButton} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { startData, createFoodSurplusData, createFoodWasteData } from '../../../store/actions/dataActions';
@@ -8,12 +8,12 @@ import { firestoreConnect } from 'react-redux-firebase';
 import styled from "styled-components";
 // import { getFirebase} from 'react-redux-firebase'
 // import DisplayError from '../pages/DisplayError'
-import moment from "moment"
+// import moment from "moment"
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
-import {Chart} from "react-google-charts"
+// import {Chart} from "react-google-charts"
 
-const time = moment().format("MMMM Do YYYY, h:mm:ss a")
+// const time = moment().format("MMMM Do YYYY, h:mm:ss a")
 class FoodWaste extends Component {
 
     state = {
@@ -31,8 +31,8 @@ class FoodWaste extends Component {
         edibleMoisture: 0,
         inedibleMoisture: 0,
 
-        EdibleGHG: 0,
-        InedibleGHG: 0,
+        edibleGHG: 0,
+        inedibleGHG: 0,
         dailyFoodSurplus: 0,
         costOfEdibleFoodWaste: 0,
         costOfInedibleFoodWaste: 0,
@@ -40,6 +40,17 @@ class FoodWaste extends Component {
         dropDownValueIFW: "Select Currency",
         currencyMultiplierEFW: 0,
         currencyMultiplierIFW: 0,
+
+        // formSubmissionEFW: {},
+
+        // formSubmissionEFW: {
+        //     weightOfEdibleFoodWaste,
+        //     edibleFoodWasteType,
+        //     edibleMoisture,
+        //     EdibleGHG,
+        //     dropDownValueEFW,
+        //     costOfEdibleFoodWaste
+        // },
 
         // chart experiment below
 
@@ -84,6 +95,48 @@ class FoodWaste extends Component {
 
         // chart experiment above
 
+
+
+    // // json-server experiment below
+
+    // // fetch db.json data
+    // fetchData = async () => {
+    //     const res = await fetch('http://localhost:5000/edible-food-waste-data')
+    //     const data = await res.json();
+
+    //     console.log(data)
+    //     // return data
+    // }
+
+    // fetchDataItem = async (id) => {
+    //     const res = await fetch(`http://localhost:5000/edible-food-waste-data/${id}`)
+    //     const data = await res.json();
+
+    //     console.log(data)
+    //     // return data
+    // }
+
+    // // add form data to db.json file
+    // addData = async (formData) => {
+    //     const res = await fetch('http://localhost:5000/edible-food-waste-data', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-type': 'application/json'
+    //         },
+    //         body: JSON.stringify(formData)
+    //     })
+
+    //     const data = await res.json()
+
+    //     // setData([...posts, data])
+    // }
+
+    // updateFormSubmission(value){
+    //     this.setState({formSubmissionEFW: {...formSubmissionEFW, value}})
+    // }
+
+    // json-server experiment above
+
     changeEFWCurrency(text) {
         this.setState({dropDownValueEFW: text})
     }
@@ -124,23 +177,23 @@ class FoodWaste extends Component {
     }
 
     handleEdibleFoodWasteGHGChange = (e) => {
-        console.log(e);
+        //console.log(e);
         this.setState({
             [e.target.id]: e.target.value,
-            EdibleGHG: Number(e.target.value) * 2.5,
+            edibleGHG: Number(e.target.value) * 2.5,
         })
     }
 
     handleInedibleFoodWasteGHGChange = (e) => {
-        console.log(e);
+        //console.log(e);
         this.setState({
             [e.target.id]: e.target.value,
-            InedibleGHG: Number(e.target.value) * 2.5,
+            inedibleGHG: Number(e.target.value) * 2.5,
         })
     }
 
     handleEdibleFoodCostChange = (e) => {
-        console.log(e);
+        //console.log(e);
         this.setState({
             [e.target.id]: e.target.value,
             costOfEdibleFoodWaste: Number(e.target.value) * 0.85
@@ -149,7 +202,7 @@ class FoodWaste extends Component {
     }
 
     handleInedibleFoodCostChange = (e) => {
-        console.log(e);
+        //console.log(e);
         this.setState({
             [e.target.id]: e.target.value,
             costOfInedibleFoodWaste: Number(e.target.value) * 0.85
@@ -184,18 +237,46 @@ class FoodWaste extends Component {
     // }
 
     render() {
+
+        // const AddFormData = ({onAdd}) => {
+
+        //     const[weight, setWeight] = useState([])
+        //     const[type, setType] = useState([])
+        //     const[moisture, setMoisture] = useState([])
+        //     const[ghg, setGHG] = useState([])
+        //     const[currency, setCurrency] = useState([])
+        //     const[cost, setCost] = useState([])
+
+        //     const onSubmit = (e) => {
+        //         e.preventDefault()
+
+        //         onAdd({weight, type, moisture, ghg, currency, cost})
+        //     }
+        // }
+
+        // const jID = "\"id\": "
+        // const jWeight = "\"weight\": "
+        // const jType = "\"type\": "
+        // const jMoisture = "\"moisture\": "
+        // const jGHG = "\"ghg\": "
+        // const jCurrency = "\"currency\": "
+        // const jCost = "\"cost\": "
+        
+
+        // const id = Math.floor(Math.random() * 10000) + 1
+
         const {data, auth} = this.props;
         // console.log(data.[auth.uid].writtenFoodWasteData);
-        console.log(time);
-        console.log(Date(time));
+        // console.log(time);
+        // console.log(Date(time));
         const {foodWaste, foodSurplus} = this.state
         if(!auth.uid) return <Redirect to='/login' />
         if (data) {
         const filteredData = data && data.filter((datas) => 
             datas.email === auth.email
         )
-        console.log(foodWaste);
-        console.log(foodSurplus);
+        // console.log(foodWaste);
+        // console.log(foodSurplus);
         return(
             <div 
                 // className="container"
@@ -318,7 +399,7 @@ class FoodWaste extends Component {
                             display: "flex"}}
                     >
                     <InputGroup>
-                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.EdibleGHG} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
+                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.edibleGHG} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
                         <InputGroup.Append>
                             <InputGroup.Text>kg co2</InputGroup.Text>
                         </InputGroup.Append>
@@ -375,7 +456,9 @@ class FoodWaste extends Component {
                         <Form.Control type="number" id="dailyFoodWaste" placeholder="Enter daily food waste value" onChange={this.handleChange} width="100%" value={this.state.dailyFoodWaste}/>kg
                     </Form.Group> */}
 
-                    <Button style={{margin: "0 10% 0 10%"}} onClick={(e) => {this.handleChartSubmit(this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)); this.clearEFWForm()}} variant="secondary" type="submit">
+                    {/* this.addData([id, this.state.weightOfEdibleFoodWaste, this.state.edibleFoodWasteType, this.state.edibleMoisture, this.state.edibleGHG, this.state.dropDownValueEFW, this.state.costOfEdibleFoodWaste]) */}
+
+                    <Button style={{margin: "0 10% 0 10%"}} onClick={(e) => {this.clearEFWForm()}} variant="secondary" type="submit">
                         Update
                     </Button>
 
@@ -468,7 +551,7 @@ class FoodWaste extends Component {
                             display: "flex"}}
                     >
                     <InputGroup>
-                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.InedibleGHG} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
+                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={this.state.inedibleGHG} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
                         <InputGroup.Append>
                             <InputGroup.Text>kg co2</InputGroup.Text>
                         </InputGroup.Append>
@@ -530,7 +613,7 @@ class FoodWaste extends Component {
             </div>
               }
 
-            <ChartStyle>
+            {/* <ChartStyle>
                 <Chart 
                     className="chart"
                     width={500}
@@ -561,7 +644,7 @@ class FoodWaste extends Component {
                     }}
                     legendToggle              
                 />
-            </ChartStyle>   
+            </ChartStyle>    */}
             
             </div>
         )

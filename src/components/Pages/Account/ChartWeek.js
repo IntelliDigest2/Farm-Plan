@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import {Chart} from "react-google-charts"
 import styled from "styled-components"
 // import { Row, Col } from 'react-bootstrap';
+import {BrowserView, MobileView} from "react-device-detect"
 
-export default class Chart1 extends Component {
+export default class Chart3 extends Component {
   render(){
     return (
       <React.Fragment className="row">
@@ -69,66 +70,103 @@ export default class Chart1 extends Component {
               // For tests
               rootProps={{ 'data-testid': '1' }}
             /> */}
+          <MobileView>
+            <ChartStyle>
 
-          <ChartStyle>
+              <Chart className='bar-chart'
+                width={300}
+                height={600}
+                chartType="ColumnChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ['Day', 'Weight '],
+                  ['Mon', 15],
+                  ['Tue', 19],
+                  ['Wed', 7],
+                  ['Thu', 10],
+                  ['Fri', 9],
+                  ['Sat', 20],
+                  ['Sun', 5],
+                ]}
+                options={{
+                  // backgroundColor: 'lightgray',
+                  title: 'Food Wastage Performance (Mon 17/05- Sun 23/05)',
+                  chartArea: { width: '50%' },
+                  colors: ['#aab41e'],
+                  legend: 'none',
+                  hAxis: {
+                    title: 'Day',
+                    minValue: 0,
+                  },
+                  vAxis: {
+                    title: 'Weight of Food Wastage (kg)',
+                  },
+                }}
+                // legendToggle='false'
+              />
 
-            <Chart className='bar-chart'
-              width={1100}
-              height={500}
-              chartType="ColumnChart"
-              loader={<div>Loading Chart</div>}
-              data={[
-                ['Day', 'Food Wastage Weight'],
-                ['Monday', 15],
-                ['Tuesday', 19],
-                ['Wednesday', 7],
-                ['Thursday', 10],
-                ['Friday', 9],
-                ['Saturday', 20],
-                ['Sunday', 5],
-              ]}
-              options={{
-                // backgroundColor: 'lightgray',
-                title: 'This week\'s Food Wastage Performance (Mon 17/05- Sun 23/05)',
-                chartArea: { width: '30%' },
-                hAxis: {
-                  title: 'Day of the Week',
-                  minValue: 0,
-                },
-                vAxis: {
-                  title: 'Weight of Food Wastage (kg)',
-                },
-              }}
-              legendToggle
-            />
+              {/* <Chart 
+                className="area-chart"
+                width={600}
+                height={500}
+                chartType="AreaChart"
+                loader={<div>Loading Chart</div>}
+                data = {[
+                  ['Week', 'Food Wastage'],
+                  ['03/05 - 09/05', 250],
+                  ['10/05 - 16/05', 189],
+                  ['17/05 - 23/05', 221],
+                  ['24/05 - 30/05', 273],
+                ]}
+                options={{
+                  title: 'Weekly Food Wastage Performance (Line)',
+                  chartArea: {width: '50%', height: '70%'},
+                  hAxis: {
+                    title: 'Week', titleTextStyle: {color: '#333'}
+                  },
+                  vAxis: {
+                    minValue: 0, title: 'Weight of Food Wastage (kg)'
+                  }
+                }}
+              />   */}
 
-            {/* <Chart 
-              className="area-chart"
-              width={600}
-              height={500}
-              chartType="AreaChart"
-              loader={<div>Loading Chart</div>}
-              data = {[
-                ['Week', 'Food Wastage'],
-                ['03/05 - 09/05', 250],
-                ['10/05 - 16/05', 189],
-                ['17/05 - 23/05', 221],
-                ['24/05 - 30/05', 273],
-              ]}
-              options={{
-                title: 'Weekly Food Wastage Performance (Line)',
-                chartArea: {width: '50%', height: '70%'},
-                hAxis: {
-                  title: 'Week', titleTextStyle: {color: '#333'}
-                },
-                vAxis: {
-                  minValue: 0, title: 'Weight of Food Wastage (kg)'
-                }
-              }}
-            />   */}
+            </ChartStyle>
+          </MobileView>
 
-          </ChartStyle>
-
+          <BrowserView>
+              <ChartStyle>
+                <Chart className='bar-chart'
+                width={1100}
+                height={500}
+                chartType="ColumnChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ['Day', 'Food Wastage Weight'],
+                  ['Monday', 15],
+                  ['Tuesday', 19],
+                  ['Wednesday', 7],
+                  ['Thursday', 10],
+                  ['Friday', 9],
+                  ['Saturday', 20],
+                  ['Sunday', 5],
+                ]}
+                options={{
+                  // backgroundColor: 'lightgray',
+                  title: 'This week\'s Food Wastage Performance (Mon 17/05- Sun 23/05)',
+                  chartArea: { width: '30%' },
+                  colors: ['#aab41e'],
+                  hAxis: {
+                    title: 'Day of the Week',
+                    minValue: 0,
+                  },
+                  vAxis: {
+                    title: 'Weight of Food Wastage (kg)',
+                  },
+                }}
+                legendToggle
+                />
+              </ChartStyle>
+          </BrowserView>
             {/* <Chart
             className="row"
             style={{width:'1684px', height:'650px', alignItems:'center', justifyContent:'center', display:'flex'}}

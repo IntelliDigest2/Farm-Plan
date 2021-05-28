@@ -7,13 +7,22 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 // import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
-import Geocode from "react-geocode";
+// import Geocode from "react-geocode";
 
 class MapData extends Component {
   state = {
     longitude: 0,
     latitude: 0,
+    userName: "",
+    userEstimatedVolumeOfFoodWaste: 0,
+    userVolumeOfFoodWaste: 0,
+    userSourceOfFoodWaste: "",
+    usersInArea: syntheticData.length+1,
   }
+
+  // updateUsersInArea(users) {
+  //   this.setState({usersInArea: usersInArea+users})
+  // }
 
   // componentDidMount() {
   //   const {products, auth, profile} = this.props;
@@ -51,22 +60,33 @@ class MapData extends Component {
       // console.log(profile.postcode)
       if (!auth.uid) return <Redirect to= '/login'/>
       
-      Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
-      Geocode.setLocationType("ROOFTOP");
+      // Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
+      // Geocode.setLocationType("ROOFTOP");
 
-      var address = profile.address;
+      // var address = profile.address;
 
-      Geocode.fromAddress(address).then( (response) => {
-        const {lat, lng} = response.results[0].geometry.location;
-        this.setState({
-          latitude: lat,
-          longitude: lng
-        })
-        // console.log(this.state.longitude, this.state.latitude)
-      },
-      error => {
-        console.error(error);
-      });
+      // Geocode.fromLatLng("48.8583701", "2.2922926").then( (response) => {
+      //   const testAddress = response.results[0].formatted_address;
+      //   console.log(testAddress)
+      // })
+
+      // Geocode.fromAddress(address).then( (response) => {
+      //   const {lat, lng} = response.results[0].geometry.location;
+      //   this.setState({
+      //     latitude: lat,
+      //     longitude: lng,
+      //     userName: profile.firstName + " " + profile.lastName + " (Me)",
+      //     userEstimatedVolumeOfFoodWaste: 0,
+      //     userVolumeOfFoodWaste: 0,
+      //     userSourceOfFoodWaste: profile.buildingFunction,
+      //     usersInArea: 1
+      //   })
+      //   // console.log(this.state.longitude, this.state.latitude, this.state.userName, this.state.userSourceOfFoodWaste)
+      //   // console.log(this.state.usersInArea)
+      // },
+      // error => {
+      //   console.error(error);
+      // });
 
     //   if (profile) {
     //   Geocode.fromAddress("10 Harlaw March").then(
@@ -87,16 +107,17 @@ class MapData extends Component {
     //   );
     // }
       
-      function ChangeView({center}){
-        const map = useMap();
-        map.setView(center);
-        return null;
-      }
+      // function ChangeView({center}){
+      //   const map = useMap();
+      //   map.setView(center);
+      //   return null;
+      // }
 
       const mapStyles = {
         width: '100%',
         height: '80vh',
       };
+
     return (
       <React.Fragment>
         {/* <Row className="ml-0 mr-0 mt-1 pt-1 justify-content-center align-items-center d-flex">
@@ -126,12 +147,30 @@ class MapData extends Component {
 
         <Col className="" xs={12} lg={1}></Col>
         <Col className="justify-content-center align-items-center d-flex" xs={12} lg={10}>
-          <MapContainer className="map-data" center={[0,0]} zoom={10} scrollWheelZoom={true}>
-            <ChangeView center={[this.state.latitude, this.state.longitude]} />
+          <MapContainer  className="map-data" center={[55.9096461, -3.32042]} zoom={9} scrollWheelZoom={true}>
+            {/* <ChangeView center={[this.state.latitude, this.state.longitude]} /> */}
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> IntelliDigest - iTracker'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
+
+            <Popup position={[56.0306461, -3.32042]}>
+              <div>
+                <p>Users in Edinburgh: {this.state.usersInArea}</p>
+              </div>
+            </Popup>
+
+            {/* CHANGE MARKER APPEARANCE MORE SIGNIFICANTLY */}
+            <Marker position={[55.9096461, -3.32042]} opacity={0.7}>
+              <Popup position={[55.9096461, -3.32042]}>
+                <div>
+                  <p className="popup-data popup-name">{this.state.userName} </p>
+                  <p className="popup-data">Estimated Volume of Food Waste: {this.state.userEstimatedVolumeOfFoodWaste}kg</p>
+                  <p className="popup-data">Actual Volume of Food Waste: {this.state.userVolumeOfFoodWaste}kg</p>
+                  <p className="popup-data">Building Function: {this.state.userSourceOfFoodWaste}</p>
+                </div>
+              </Popup>
+            </Marker>            
 
             {/*comment out below to toggle map markers*/}
 
@@ -144,14 +183,16 @@ class MapData extends Component {
                 position={[data.Location.Latitude, data.Location.Longitude]}>
                   <div>
                     <p className="popup-data popup-name">{data.Name} </p>
-                    <p className="popup-data">Estimated Volume of Food Waste: {data.EstimatedVolumeOfFoodWaste}</p>
+                    <p className="popup-data">Estimated Volume of Food Waste: {data.EstimatedVolumeOfFoodWaste}kg</p>
                     <p className="popup-data">Actual Volume of Food Waste: {data.VolumeOfFoodWaste}kg</p>
                     <p className="popup-data">Building Function: {data.SourceOfFoodWaste}</p>
 
                   </div>
                 </Popup>
-                </Marker>
+              </Marker>
             ))}
+
+            {}
 
             {/* ^^^^ */}  
 
@@ -162,6 +203,9 @@ class MapData extends Component {
         <Col className="mt-5" xs={12}></Col>
         <Col className="mt-4" xs={12}></Col>
       </Row>
+
+      {/*console.log(this.state.usersInArea)*/}
+
     </React.Fragment>
   );
 }

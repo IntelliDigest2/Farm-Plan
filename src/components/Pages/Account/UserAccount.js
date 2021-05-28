@@ -37,7 +37,7 @@ class Account extends Component {
           <div>
 
             <BGroup>
-              <BStyle><Button variant="info" as={Link} to="/change-password">Change Password</Button></BStyle>
+              <BStyle><Button variant="info" as={Link} to="/change-password">Change Your Password</Button></BStyle>
               <BStyle><Button variant="info" as={Link} to="/view-map">View Food Waste Map</Button></BStyle>
               <BStyle><Button variant="info" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
             </BGroup>
