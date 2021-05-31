@@ -37,26 +37,15 @@ class Account extends Component {
           <div>
 
             <BGroup>
-              <BStyle><Button variant="info" as={Link} to="/change-password">Change Your Password</Button></BStyle>
-              <BStyle><Button variant="info" as={Link} to="/view-map">View Food Waste Map</Button></BStyle>
-              <BStyle><Button variant="info" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
-            </BGroup>
-          
-            <BGroup> 
-              <BStyle><Button variant="info" as={Link} to="/food-loss">Update Food Loss</Button></BStyle>
-            
-              {/* <p>
-                <ButtonModal/>
-              </p> */}
-
-              <BStyle><Button variant="info" as={Link} to="/food-reduction">Food Waste Reduction Tips</Button></BStyle>
+              <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
+              <BStyle><Button className="custom-btn" as={Link} to="/food-loss">Update Food Loss</Button></BStyle>
             </BGroup>
 
             <BGroup>
               <DDStyle><Dropdown>
 
                 {/* 'variant' value changes colour, not css(?) */}
-                <DropdownToggle variant="info">View Food Waste Performance Chart</DropdownToggle>
+                <DropdownToggle className="custom-btn">View Food Waste Performance Chart</DropdownToggle>
 
                 <DropdownMenu>
                   <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
@@ -67,6 +56,22 @@ class Account extends Component {
 
               </Dropdown></DDStyle>
             </BGroup>
+          
+            <BGroup> 
+            
+              {/* <p>
+                <ButtonModal/>
+              </p> */}
+
+              <BStyle><Button className="custom-btn" as={Link} to="/view-map">View Food Waste Map</Button></BStyle>
+              <BStyle><Button className="custom-btn" as={Link} to="/food-reduction">Food Waste Reduction Tips</Button></BStyle>
+            </BGroup>
+
+            <BGroup>
+              <PWBStyle><Button className="custom-btn" as={Link} to="/change-password">Change Your Password</Button></PWBStyle>
+            </BGroup>
+
+
           </div>
 
           </Col>
@@ -92,10 +97,16 @@ const BGroup = styled.div`
 const BStyle = styled.div`
   padding: 10px;
   width: 145px;
+  color: #aab41e
 `;
 
 const DDStyle = styled.div`
   padding: 10px;
+`;
+
+const PWBStyle = styled.div`
+  padding: 10px;
+  width: 145px;
   margin-bottom: 35px;
 `;
 

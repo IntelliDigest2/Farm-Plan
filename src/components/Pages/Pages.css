@@ -280,6 +280,10 @@ body{
   padding: 1px;
 } */
 
+.custom-btn {
+  background-color: rgb(13, 27, 92);
+}
+
 /* map page */
 .map-data{
   width: 100%;
