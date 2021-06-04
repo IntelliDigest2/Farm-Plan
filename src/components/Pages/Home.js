@@ -14,7 +14,7 @@ function Home() {
     <Col className="" xs={12} lg={4}></Col>
           <Col className="mt-2 pt-2" xs={12}></Col>
                 <Col className="justify-content-center align-items-center d-flex mt-5 pt-5" xs={12}>
-            <p className="home-welcome text-center">iTracker - Food Waste Tracking Platform</p>
+            <p className="home-welcome text-center">The Global Food Waste & Loss Tracker</p>
                 </Col>
                 <Col className="mt-0 pt-0 d-block justify-content-center align-items-center" xs={12}>
 

@@ -53,7 +53,7 @@ render(){
 
               <i className="fa fa-user-circle-o signup-logo"></i>
                 </div>
-              <h1 className="text-center header">Sign Up to iTracker</h1>
+              <h1 className="text-center header">Sign Up to The Global Food Waste & Loss Tracker</h1>
               <Form onSubmit={this.handleSubmit}>
 
               <Form.Row>

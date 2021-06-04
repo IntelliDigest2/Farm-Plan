@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import {connect} from 'react-redux'
 import {signOut} from '../../store/actions/authActions'
+import {MobileView, BrowserView} from 'react-device-detect'
 
 const NavBar = (props) => {
   const { auth } = props;
@@ -12,7 +13,15 @@ const NavBar = (props) => {
     <NavStyle>
       <Navbar fixed="top" collapseOnSelect expand="md" className="mr-0 ml-0">
         <Container>
-          <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/">IntelliDigest - iTracker</Navbar.Brand>
+
+          <BrowserView>
+            <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/">IntelliDigest - The Global Food Waste & Loss Tracker</Navbar.Brand>
+          </BrowserView>
+
+          <MobileView>
+            <Navbar.Brand className="navbar-brand-mobile" href="/">IntelliDigest - The Global Food Waste & Loss Tracker</Navbar.Brand>
+          </MobileView>
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
@@ -46,13 +55,24 @@ const NavStyle = styled.div`
 
     .container .navbar-brand{
       font-weight: 700;
-    color: #AFBA15;
-    font-size: 20px;
-    font-family: 'Rajdhani', sans-serif;
-
-    &:hover{
       color: #AFBA15;
+      font-size: 20px;
+      font-family: 'Rajdhani', sans-serif;
+
+      &:hover{
+        color: #AFBA15;
+      }
     }
+
+    .container .navbar-brand-mobile{
+      font-weight: 700;
+      color: #AFBA15;
+      font-size: 12px;
+      font-family: 'Rajdhani', sans-serif;
+
+      &:hover{
+        color: #AFBA15;
+      }
     }
 
     .container .nav-link {

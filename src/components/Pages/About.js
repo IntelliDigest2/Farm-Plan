@@ -32,18 +32,18 @@ function About() {
               food waste at food production, retail, and household level can provide numerous benefits for both the planet and our communities.</p>
             <p>Through our research and consulting facilities, IntelliDigest is continuously working on helping governments and the public 
               understand the true scale of the food waste issue and the consequences of inadequate food waste handling. Advocating for increased awareness 
-              about measuring food waste inspired our iTracker system, designed to allow households to monitor their efforts and save money through reducing food waste.</p>
+              about measuring food waste inspired our Global Food Waste & Loss Tracker system, designed to allow households to monitor their efforts and save money through reducing food waste.</p>
             </Col>
         </Row>
         <Row className="pb-5 mr-0 ml-0 text-justify about">
             <Col className="d-block justify-content-center"sm={12} md={12} lg={8}>
-            <h1>iTracker</h1>
+            <h1>The Global Food Waste & Loss Tracker</h1>
             <p>The biggest threat faced by our planet today is derived from the way that we produce and consume food. Every year 1.3billion tonnes of 
               food is wasted resulting in 3.3 Gtonnes of carbon dioxide entering the atmosphere. Alarmingly, 70% of food wastage across the 
               world comes from household waste.</p>
-            <p>IntelliDigest have used innovative research and technology to tackle the problem of household waste by developing the iTracker. 
-              iTracker is an easy-to-use online platform whereby signing up allows 
-              households to connect their smart bin to the platform. iTracker then observes how much food is wasted each day, week and month from a single household and presents it as food surplus and food waste.</p>
+            <p>IntelliDigest have used innovative research and technology to tackle the problem of household waste by developing the Global Food Waste & Loss Tracker. 
+            Global Food Waste & Loss Tracker is an easy-to-use online platform whereby signing up allows 
+              households to connect their smart bin to the platform. The Global Food Waste & Loss Tracker then observes how much food is wasted each day, week and month from a single household and presents it as food surplus and food waste.</p>
             </Col>
             <Col  className=" d-flex justify-content-center" sm={12} md={12} lg={4}>
             <img src={placeholder} alt="Placeholder"  className="img-fluid rounded fix-image"/>
@@ -79,15 +79,15 @@ function About() {
             </Col>
             <Col  className=" d-block justify-content-center" sm={12} md={12} lg={8}>
             <h1>User Benefits</h1>
-            <p>You cannot manage what you cannot measure – iTracker is an innovative solution to support our fight to end food 
-              wastage. iTracker is able to track household food wastage and allows households to anonymously compare wastage with neighbours’ 
+            <p>You cannot manage what you cannot measure – The Global Food Waste & Loss Tracker is an innovative solution to support our fight to end food 
+              wastage. The Global Food Waste & Loss Tracker is able to track household food wastage and allows households to anonymously compare wastage with neighbours’ 
               households through an online virtual map. 
               Eradicating food waste allows households to save money – currently over £800 billion is lost in the UK alone through food wastage.</p>
-            <p>iTracker’s innovative technology allows waste managers to have a better-quality food wastage programme collection procedure. 
-              Food wastage is a challenge by governments across the globe – iTracker allows government policy makers to gather anonymous data on food wastage 
+            <p>The Global Food Waste & Loss Tracker’s innovative technology allows waste managers to have a better-quality food wastage programme collection procedure. 
+              Food wastage is a challenge by governments across the globe – The Global Food Waste & Loss Tracker allows government policy makers to gather anonymous data on food wastage 
               across the country. 
               This is significant to allow governments to develop a strong call to action on ending food waste. </p>
-              <p>IntelliDigest believes iTracker will assist in meeting Sustainable Development Goal 12 by 2030 – creating responsible consumption and production. 
+              <p>IntelliDigest believes The Global Food Waste & Loss Tracker will assist in meeting Sustainable Development Goal 12 by 2030 – creating responsible consumption and production. 
                 By meeting this goal and ending food wastage, we can empower global food sustainability and create sustainable food impacts for future generations. </p>
             </Col>
         </Row>
