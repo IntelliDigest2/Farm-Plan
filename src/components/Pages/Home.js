@@ -3,18 +3,19 @@ import "../../App.css";
 import "./Pages.css"
 import { Row, Col, Form, Button } from "react-bootstrap";
 import styled from "styled-components";
+import {BrowserView, MobileView} from 'react-device-detect';
 
 function Home() {
     return (
         <React.Fragment>
 
-<Row className="mr-0 ml-0 mt-0 pt-0 justify-content-center align-items-center d-flex home">
+<BrowserView><Row className="mr-0 ml-0 mt-0 pt-0 justify-content-center align-items-center d-flex home">
   <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-3 pt-lg-3" xs={12}></Col>
   <Col className="" xs={12}></Col>
     <Col className="" xs={12} lg={4}></Col>
           <Col className="mt-2 pt-2" xs={12}></Col>
                 <Col className="justify-content-center align-items-center d-flex mt-5 pt-5" xs={12}>
-            <p className="home-welcome text-center">The Global Food Waste & Loss Tracker</p>
+            <p className="home-welcome text-center">The Global Food Loss & Waste Tracker</p>
                 </Col>
                 <Col className="mt-0 pt-0 d-block justify-content-center align-items-center" xs={12}>
 
@@ -41,7 +42,45 @@ function Home() {
                 </Col>
       <Col className="mt-5 pt-5" xs={12}></Col>
       <Col className="mt-5 pt-5" xs={12}></Col>
+            </Row></BrowserView>
+
+        <MobileView>
+        <Row className="mr-0 ml-0 mt-0 pt-0 justify-content-center align-items-center d-flex home-mobile">
+  <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-3 pt-lg-3" xs={12}></Col>
+  <Col className="" xs={12}></Col>
+    <Col className="" xs={12} lg={4}></Col>
+          <Col className="mt-2 pt-2" xs={12}></Col>
+                <Col className="justify-content-center align-items-center d-flex mt-5 pt-5" xs={12}>
+            <p className="home-text-mobile text-center">The Global Food Loss & Waste Tracker</p>
+                </Col>
+                <Col className="mt-0 pt-0 d-block justify-content-center align-items-center" xs={12}>
+
+                <p className="home-update-text-mobile text-center"> For updates, please sign up to the newsletter below.</p>
+
+                <FormStyle>
+
+                <Form>
+                <Form.Row>
+
+                <Form.Group as={Col} controlId="homeFormEmail">
+        <Form.Control type="email" placeholder="Email" required/>
+
+      </Form.Group>
+      <Form.Group>
+          
+        <Button variant="dark" type="submit">
+                Sign Up
+              </Button>
+      </Form.Group>
+                </Form.Row>
+              </Form>
+                </FormStyle>
+                </Col>
+      <Col className="mt-5 pt-5" xs={12}></Col>
+      <Col className="mt-5 pt-5" xs={12}></Col>
             </Row>
+        </MobileView>
+
         </React.Fragment>
     );
 }

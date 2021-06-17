@@ -15,11 +15,11 @@ const NavBar = (props) => {
         <Container>
 
           <BrowserView>
-            <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/">IntelliDigest - The Global Food Waste & Loss Tracker</Navbar.Brand>
+            <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/">IntelliDigest - The Global Food Loss & Waste Tracker</Navbar.Brand>
           </BrowserView>
 
           <MobileView>
-            <Navbar.Brand className="navbar-brand-mobile" href="/">IntelliDigest - The Global Food Waste & Loss Tracker</Navbar.Brand>
+            <Navbar.Brand className="navbar-brand-mobile" href="/">IntelliDigest - The Global Food Loss & Waste Tracker</Navbar.Brand>
           </MobileView>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -116,7 +116,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return{
       auth: state.firebase.auth
   }

@@ -13,7 +13,7 @@ class Contact extends Component {
   }
 
   handleChange = (e) => {
-    console.log(e);
+    // console.log(e);
     this.setState({
         [e.target.id]: e.target.value
     })
@@ -23,22 +23,22 @@ class Contact extends Component {
     e.preventDefault();
     emailjs.sendForm(process.env.REACT_APP_EMAIL_SERVICE, process.env.REACT_APP_EMAIL_TEMPLATE, e.target, process.env.REACT_APP_EMAIL_ID)
       .then((result) => {
-          console.log(result.text);
+          // console.log(result.text);
           alert("Your Message has been sent successfully!");
       }, (error) => {
-          console.log(error.text);
+          // console.log(error.text);
           alert("There has been an error while sending your message. Please refresh the page and try again.");
       });
       e.target.reset();
   }
 
   openEmail() {
-    console.log("Email card clicked");
+    // console.log("Email card clicked");
     window.open('mailto:info@intellidigest.com?subject=Subject&body=Body%20goes%20here');
   }
 
   openTel() {
-    console.log("Tel card clicked");
+    // console.log("Tel card clicked");
     window.open('tel:03332420822');
   }
 
@@ -205,7 +205,7 @@ const CardStyle = styled.div`
 `
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return{
       auth: state.firebase.auth,
       user: state.firebase.profile,

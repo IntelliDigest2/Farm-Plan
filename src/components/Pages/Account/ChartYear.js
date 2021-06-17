@@ -4,7 +4,197 @@ import {Chart} from "react-google-charts"
 import styled from "styled-components"
 // import { Row, Col } from 'react-bootstrap';
 
-export default class Chart1 extends Component {
+import moment from "moment"
+
+import { connect } from 'react-redux';
+import {fs} from "../../../config/fbConfig"
+
+const time = moment().format("YYYY")
+
+class Chart1 extends Component {
+
+  state = {
+    uid: this.props.auth.uid,
+    janWeight: 0,
+    febWeight: 0,
+    marWeight: 0,
+    aprWeight: 0,
+    mayWeight: 0,
+    junWeight: 0,
+    julWeight: 0,
+    augWeight: 0,
+    sepWeight: 0,
+    octWeight: 0,
+    novWeight: 0,
+    decWeight: 0,
+  }
+
+    // fetch db.json data
+    fetchData = async () => {
+      // const res = await fetch('http://localhost:5000/edible-food-waste-data')
+      // const data = await res.json();
+
+      // data.forEach(efw => {
+      //   if (efw.year === time && efw.month === "Jan"){
+      //     this.setState ( (prevState) => ({
+      //       janWeight: prevState.janWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Feb"){
+      //     this.setState ( (prevState) => ({
+      //       febWeight: prevState.febWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Mar"){
+      //     this.setState ( (prevState) => ({
+      //       marWeight: prevState.marWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Apr"){
+      //     this.setState ( (prevState) => ({
+      //       aprWeight: prevState.aprWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "May"){
+      //     this.setState ( (prevState) => ({
+      //       mayWeight: prevState.mayWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Jun"){
+      //     this.setState ( (prevState) => ({
+      //       junWeight: prevState.junWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Jul"){
+      //     this.setState ( (prevState) => ({
+      //       julWeight: prevState.julWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Aug"){
+      //     this.setState ( (prevState) => ({
+      //       augWeight: prevState.augWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Sep"){
+      //     this.setState ( (prevState) => ({
+      //       sepWeight: prevState.sepWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Oct"){
+      //     this.setState ( (prevState) => ({
+      //       octWeight: prevState.octWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Nov"){
+      //     this.setState ( (prevState) => ({
+      //       novWeight: prevState.novWeight += efw.weight
+      //     }));
+      //   } else if (efw.year === time && efw.month === "Dec"){
+      //     this.setState ( (prevState) => ({
+      //       decWeight: prevState.decWeight += efw.weight
+      //     }));
+      //   }
+      // })
+
+      fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+        .get()
+        .then( snapshot => {
+          snapshot.forEach(doc => {
+
+            var year = doc.data().YEAR
+            var month = doc.data().MONTH
+            var weight = doc.data().weight
+            var wu = doc.data().WEIGHTUNIT
+
+            var newWeight = 0
+  
+            if (wu === "kg"){
+              newWeight = Number(weight * 1)
+              // console.log(newWeight)
+            } else if (wu === "g"){
+              newWeight = Number((weight * 0.001).toFixed(3))
+              // console.log(newWeight)
+            } else if (wu === "oz"){
+              newWeight = Number((weight * 0.028).toFixed(3))
+              // console.log(newWeight)
+            } else if (wu === "lbs"){
+              newWeight = Number((weight * 0.454).toFixed(3))
+              // console.log(newWeight)
+            }
+
+            var carbCon = doc.data().CARBSCONTENT
+            var proCon = doc.data().PROTEINCONTENT
+            var fatCon = doc.data().FATCONTENT
+            var fibCon = doc.data().FIBRECONTENT
+
+            if (year === time && month === "Jan" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                janWeight: prevState.janWeight += newWeight
+              }));
+            } else if (year === time && month === "Feb" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                febWeight: prevState.febWeight += newWeight
+              }));
+            } else if (year === time && month === "Mar" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                marWeight: prevState.marWeight += newWeight
+              }));
+            } else if (year === time && month === "Apr" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                aprWeight: prevState.aprWeight += newWeight
+              }));
+            } else if (year === time && month === "May" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                mayWeight: prevState.mayWeight += newWeight
+              }));
+            } else if (year === time && month === "Jun" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                junWeight: prevState.junWeight += newWeight
+              }));
+            } else if (year === time && month === "Jul" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                julWeight: prevState.julWeight += newWeight
+              }));
+            } else if (year === time && month === "Aug" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                augWeight: prevState.augWeight += newWeight
+              }));
+            } else if (year === time && month === "Sep" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                sepWeight: prevState.sepWeight += newWeight
+              }));
+            } else if (year === time && month === "Oct" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                octWeight: prevState.octWeight += newWeight
+              }));
+            } else if (year === time && month === "Nov" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                novWeight: prevState.novWeight += newWeight
+              }));
+            } else if (year === time && month === "Dec" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              this.setState( (prevState) => ({
+                decWeight: prevState.decWeight += newWeight
+              }));
+            }
+
+          })
+        })
+        .catch(error => console.log(error))
+
+      // var weekNo1 = moment("01-06-2021", "DD-MM-YYYY").week(); // 23
+      // var weekNo2 = moment("14-06-2021", "DD-MM-YYYY").week(); // 25
+      // var weekNo3 = moment("20-06-2021", "DD-MM-YYYY").week(); // 26
+      // var weekNo4 = moment("30-06-2021", "DD-MM-YYYY").week(); // 27
+      // var weekNo5 = moment("06-06-2021", "DD-MM-YYYY").week(); // 24
+      // var weekNo6 = moment("07-06-2021", "DD-MM-YYYY").week(); // 24
+      // var weekNo7 = moment("08-06-2021", "DD-MM-YYYY").week(); // 24
+
+      // console.log(weekNo1, weekNo2, weekNo3, weekNo4, weekNo5, weekNo6, weekNo7)
+      // return data
+    }
+  
+    componentDidMount(){
+      this.fetchData();
+    }
+
+    // fetchDataItem = async (id) => {
+    //     const res = await fetch(`http://localhost:5000/edible-food-waste-data/${id}`)
+    //     const data = await res.json();
+
+    //     console.log(data)
+    //     // return data
+    // }
+
   render(){
     return (
       <React.Fragment className="row">
@@ -80,22 +270,22 @@ export default class Chart1 extends Component {
                 loader={<div>Loading Chart</div>}
                 data={[
                   ['Month', 'Food Wastage Weight'],
-                  ['January', 250],
-                  ['February', 189],
-                  ['March', 201],
-                  ['April', 190],
-                  ['May', 268],
-                  ['June', 275],
-                  ['July', 204],
-                  ['August', 305],
-                  ['September', 178],
-                  ['October', 285],
-                  ['November', 214],
-                  ['December', 343],
+                  ['January', this.state.janWeight],
+                  ['February', this.state.febWeight],
+                  ['March', this.state.marWeight],
+                  ['April', this.state.aprWeight],
+                  ['May', this.state.mayWeight],
+                  ['June', this.state.junWeight],
+                  ['July', this.state.julWeight],
+                  ['August', this.state.augWeight],
+                  ['September', this.state.sepWeight],
+                  ['October', this.state.octWeight],
+                  ['November', this.state.novWeight],
+                  ['December', this.state.decWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'This year\'s Food Wastage Performance (2021)',
+                  title: 'This year\'s Food Wastage Performance (' + time + ')',
                   chartArea: { width: '75%' },
                   colors: ['#aab41e'],
                   hAxis: {
@@ -145,23 +335,23 @@ export default class Chart1 extends Component {
                 loader={<div>Loading Chart</div>}
                 data={[
                   ['Month', 'Weight '],
-                  ['Jan', 250],
-                  ['Feb', 189],
-                  ['Mar', 201],
-                  ['Apr', 190],
-                  ['May', 268],
-                  ['Jun', 275],
-                  ['Jul', 204],
-                  ['Aug', 305],
-                  ['Sep', 178],
-                  ['Oct', 285],
-                  ['Nov', 214],
-                  ['Dec', 343],
+                  ['Jan', this.state.janWeight],
+                  ['Feb', this.state.febWeight],
+                  ['Mar', this.state.marWeight],
+                  ['Apr', this.state.aprWeight],
+                  ['May', this.state.mayWeight],
+                  ['Jun', this.state.junWeight],
+                  ['Jul', this.state.julWeight],
+                  ['Aug', this.state.augWeight],
+                  ['Sep', this.state.sepWeight],
+                  ['Oct', this.state.octWeight],
+                  ['Nov', this.state.novWeight],
+                  ['Dec', this.state.decWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'Food Wastage Performance (2021)',
-                  chartArea: { width: '65%' },
+                  title: 'Food Wastage Performance (' + time + ')',
+                  chartArea: { width: '60%' },
                   legend: 'none',
                   colors: ['#aab41e'],
                   hAxis: {
@@ -248,3 +438,11 @@ const ChartStyle = styled.div`
     padding: 10px;
   }
 `;
+
+const mapStateToProps = (state) => { 
+  return{
+      auth: state.firebase.auth,
+  }
+}
+
+export default connect(mapStateToProps, null)(Chart1);

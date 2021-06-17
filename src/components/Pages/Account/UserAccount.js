@@ -12,9 +12,21 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 class Account extends Component {
 
+  state = {
+    isFarm: false
+  }
+
   render(){
   const { auth, profile } = this.props;
-  console.log(profile);
+  // console.log(profile.buildingFunction);
+
+  // var buttonDisplay;
+
+  // if (profile.buildingFunction === "Farm"){
+  //   this.setState({isFarm: true})
+  // } else {
+  //   this.setState({isFarm: false})
+  // }
 
   if (!auth.uid) return <Redirect to= '/login'/>
 
@@ -31,46 +43,45 @@ class Account extends Component {
             <p className="">{profile.initials}</p>
           </div>
           <h1 className="text-center">Welcome, <span>{profile.firstName}  {profile.lastName}</span>!</h1>
-          <h1 className="text-center">Account email: <span >{profile.email}</span></h1>
-          <h1 className="text-center">Postcode: <span >{profile.postcode}</span></h1>
+          {/* <h1 className="text-center">Account email: <span >{profile.email}</span></h1>
+          <h1 className="text-center">Postcode: <span >{profile.postcode}</span></h1> */}
 
           <div>
+              <BGroup>
+                <DDStyle><Dropdown>
 
-            <BGroup>
-              <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
-              <BStyle><Button className="custom-btn" as={Link} to="/food-loss">Update Food Loss</Button></BStyle>
-            </BGroup>
+                  {/* 'variant' value changes colour, not css(?) */}
+                  <DropdownToggle className="custom-btn">View Food Waste Performance Chart</DropdownToggle>
 
-            <BGroup>
-              <DDStyle><Dropdown>
+                  <DropdownMenu>
+                    <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
+                  </DropdownMenu>
 
-                {/* 'variant' value changes colour, not css(?) */}
-                <DropdownToggle className="custom-btn">View Food Waste Performance Chart</DropdownToggle>
+                </Dropdown></DDStyle>
+              </BGroup>
 
-                <DropdownMenu>
-                  <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
-                  <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
-                  <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
-                  <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
-                </DropdownMenu>
-
-              </Dropdown></DDStyle>
-            </BGroup>
-          
-            <BGroup> 
+              {/* <BStyle>{profile.buildingFunction === "Farm" ? <Button className="custom-btn" as={Link} to="/food-loss">Update Food Loss</Button> : <Button className="custom-btn" variant="secondary" disabled={true}>Update Food Loss</Button>}</BStyle> */}
+              <BGroup>
+                <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
+                <BStyle>{profile.buildingFunction === "Farm" ? <Button className="custom-btn" as={Link} to="/food-loss">Update Food Loss</Button> : <Button className="custom-btn" variant="secondary" disabled={true}>Update Food Loss</Button>}</BStyle>
+              </BGroup>
             
-              {/* <p>
-                <ButtonModal/>
-              </p> */}
+              <BGroup> 
+              
+                {/* <p>
+                  <ButtonModal/>
+                </p> */}
 
-              <BStyle><Button className="custom-btn" as={Link} to="/view-map">View Food Waste Map</Button></BStyle>
-              <BStyle><Button className="custom-btn" as={Link} to="/food-reduction">Food Waste Reduction Tips</Button></BStyle>
-            </BGroup>
+                <BStyle><Button className="custom-btn" as={Link} to="/view-map">View Food Waste Map</Button></BStyle>
+                <BStyle><Button className="custom-btn" as={Link} to="/food-reduction">Food Waste Reduction Tips</Button></BStyle>
+              </BGroup>
 
-            <BGroup>
-              <PWBStyle><Button className="custom-btn" as={Link} to="/change-password">Change Your Password</Button></PWBStyle>
-            </BGroup>
-
+              <BGroup>
+                <PWBStyle><Button className="custom-btn" as={Link} to="/change-password">Change Your Password</Button></PWBStyle>
+              </BGroup>
 
           </div>
 
@@ -111,7 +122,7 @@ const PWBStyle = styled.div`
 `;
 
 const mapStateToProps = (state) => { 
-  console.log(state);
+  // console.log(state);
   return{
       auth: state.firebase.auth,
       profile: state.firebase.profile

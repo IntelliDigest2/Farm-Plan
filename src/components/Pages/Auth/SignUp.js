@@ -43,7 +43,7 @@ render(){
   const { auth, authError } = this.props;
   if (auth.uid) return <Redirect to='/account'/>
 
-  console.log(this.state.function);
+  // console.log(this.state.function);
   return (
     <React.Fragment>
     <Row className="mr-0 ml-0 justify-content-center align-items-center signup">
@@ -53,7 +53,7 @@ render(){
 
               <i className="fa fa-user-circle-o signup-logo"></i>
                 </div>
-              <h1 className="text-center header">Sign Up to The Global Food Waste & Loss Tracker</h1>
+              <h1 className="text-center header">Sign Up to The Global Food Loss & Waste Tracker</h1>
               <Form onSubmit={this.handleSubmit}>
 
               <Form.Row>

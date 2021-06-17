@@ -1,14 +1,157 @@
-import React, {Component} from 'react'
+import React, {Component, useState, useEffect} from 'react'
 import {Chart} from "react-google-charts"
 import styled from "styled-components"
 // import chartData from "../../../data/chart-data.json";
 // import { Row, Col } from 'react-bootstrap';
 import {BrowserView, MobileView} from "react-device-detect"
+import moment from "moment"
 
-export default class Chart4 extends Component {
+import { connect } from 'react-redux';
+import {fs} from "../../../config/fbConfig"
+
+const time = moment().format("ddd MMM Do YYYY")
+
+// const [fwData, setFwData] = useState([])
+
+class Chart4 extends Component {
+
+    state = {
+      uid: this.props.auth.uid,
+      totalCarbsWeight: 0,
+      totalProteinWeight: 0,
+      totalFatWeight: 0,
+      totalFibreWeight: 0,
+      efwData: [],
+    }
+
+
+  // useEffect ( () => {
+  //   fetchFwData();
+  // }, [])
+
+  // http://localhost:5000/edible-food-waste-data
+
+  // fetch db.json data
+  fetchData = async () => {
+
+    fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+      .get()
+      .then( snapshot => {
+        // var tempFwTypes = []
+        // var tempFullDates = []
+        snapshot.forEach(doc => {
+
+          // var fwt = doc.data().FWTYPE
+          var fd = doc.data().FULLDATE
+          var weight = doc.data().weight
+          var wu = doc.data().WEIGHTUNIT
+
+          var newWeight = 0
+
+          if (wu === "kg" || wu === "l"){
+            newWeight = Number(weight * 1)
+          } else if (wu === "g" || wu === "ml"){
+            newWeight = Number((weight * 0.001).toFixed(3))
+          } else if (wu === "oz"){
+            newWeight = Number((weight * 0.028).toFixed(3))
+          } else if (wu === "lbs"){
+            newWeight = Number((weight * 0.454).toFixed(3))
+          }
+
+          // if (fwt === "Carbohydrates" && fd === time){
+          //   this.setState( (prevState) => ({
+          //     totalCarbsWeight: prevState.totalCarbsWeight += newWeight
+          //   }));
+          // } else if (fwt === "Protein" && fd === time){
+          //   this.setState( (prevState) => ({
+          //     totalProteinWeight: prevState.totalProteinWeight += newWeight
+          //   }));
+          // } else if (fwt === "Fat" && fd === time){
+          //   this.setState( (prevState) => ({
+          //     totalFatWeight: prevState.totalFatWeight += newWeight
+          //   }));
+          // } else if (fwt === "Fibre" && fd === time){
+          //   this.setState( (prevState) => ({
+          //     totalFibreWeight: prevState.totalFibreWeight += newWeight
+          //   }));
+          // }
+
+          var carbCon = doc.data().CARBSCONTENT
+          var proCon = doc.data().PROTEINCONTENT
+          var fatCon = doc.data().FATCONTENT
+          var fibCon = doc.data().FIBRECONTENT
+
+          // if (fd === time && (carbCon >= 0 && carbCon <= 100)){
+          //   this.setState( (prevState) => ({
+          //     totalCarbsWeight: prevState.totalCarbsWeight += Number((newWeight*(carbCon/100)).toFixed(3))
+          //   }));
+          // } else if (fd === time && (proCon >= 0 && proCon <= 100)){
+          //   this.setState( (prevState) => ({
+          //     totalProteinWeight: prevState.totalProteinWeight += Number((newWeight*(proCon/100)).toFixed(3))
+          //   }));
+          // } else if (fd === time && (fatCon >= 0 && fatCon <= 100)){
+          //   this.setState( (prevState) => ({
+          //     totalFatWeight: prevState.totalFatWeight += Number((newWeight*(fatCon/100)).toFixed(3))
+          //   }));
+          // } else if (fd === time && (fibCon >= 0 && fibCon <= 100)){
+          //   this.setState( (prevState) => ({
+          //     totalFibreWeight: prevState.totalFibreWeight += Number((newWeight*(fibCon/100)).toFixed(3))
+          //   }));
+          // }
+
+          if (fd === time && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            this.setState( (prevState) => ({
+              totalCarbsWeight: prevState.totalCarbsWeight += Number((newWeight*(carbCon/100)).toFixed(3)),
+              totalProteinWeight: prevState.totalProteinWeight += Number((newWeight*(proCon/100)).toFixed(3)),
+              totalFatWeight: prevState.totalFatWeight += Number((newWeight*(fatCon/100)).toFixed(3)),
+              totalFibreWeight: prevState.totalFibreWeight += Number((newWeight*(fibCon/100)).toFixed(3))
+            }))
+          }
+
+          // tempFwTypes.push(fwt)
+          // tempFullDates.push(fd)
+        })
+        // console.log(tempFwTypes)
+        // console.log(tempFullDates)
+      })
+      .catch(error => console.log(error))
+
+  }
+
+  componentDidMount(){
+
+    // console.log(this.state.uid)
+
+    // fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+    //   .get()
+    //   .then( snapshot => {
+    //     var tempData = []
+    //     snapshot.forEach(doc => {
+    //       var dt = doc.data()
+    //       tempData.push(dt)
+    //     })
+    //     console.log(tempData)
+    //   })
+    //   .catch(error => console.log(error))
+
+    this.fetchData();
+  }
+
+  fetchDataItem = async (id) => {
+      const res = await fetch(`http://localhost:5000/edible-food-waste-data/${id}`)
+      const data = await res.json();
+
+      // console.log(data)
+      // return data
+  }
+
   render(){
+
+    const {auth} = this.props;
+
     return (
       <React.Fragment className="row">
+        {/* {this.fetchData()} */}
         <br/>
         <br/>
         <br/>
@@ -82,14 +225,14 @@ export default class Chart4 extends Component {
                 loader={<div>Loading Chart</div>}
                 data={[
                   ['Food Wastage Type', 'Food Wastage Weight'],
-                  ['Carbohydrates', 7],
-                  ['Protein', 11],
-                  ['Fat', 2],
-                  ['Fibre', 5],
+                  ['Carbohydrates', this.state.totalCarbsWeight],
+                  ['Protein', this.state.totalProteinWeight],
+                  ['Fat', this.state.totalFatWeight],
+                  ['Fibre', this.state.totalFibreWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'Today\'s Food Wastage Performance (18/05)',
+                  title: 'Today\'s Food Wastage Performance (' + time + ')',
                   chartArea: { width: '30%' },
                   colors: ['#aab41e'],
                   hAxis: {
@@ -115,14 +258,14 @@ export default class Chart4 extends Component {
                 loader={<div>Loading Chart</div>}
                 data={[
                   ['Food Wastage Type', ' Weight '],
-                  ['Carbs', 7],
-                  ['Protein', 11],
-                  ['Fat', 2],
-                  ['Fibre', 5],
+                  ['Carbs', this.state.totalCarbsWeight],
+                  ['Protein', this.state.totalProteinWeight],
+                  ['Fat', this.state.totalFatWeight],
+                  ['Fibre', this.state.totalFibreWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'Today\'s Food Wastage Performance (18/05)',
+                  title: 'Today\'s Food Wastage Performance (' + time + ')',
                   chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   legend: 'none',
@@ -235,3 +378,11 @@ const ChartStyle = styled.div`
     padding: 10px;
   }
 `;
+
+const mapStateToProps = (state) => { 
+  return{
+      auth: state.firebase.auth,
+  }
+}
+
+export default connect(mapStateToProps, null)(Chart4);

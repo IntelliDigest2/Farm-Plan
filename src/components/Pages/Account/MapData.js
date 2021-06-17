@@ -6,8 +6,11 @@ import syntheticData from "../../../data/data.json";
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
+
+import {fs} from "../../../config/fbConfig"
+
 // import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
-// import Geocode from "react-geocode";
+import Geocode from "react-geocode";
 
 class MapData extends Component {
   state = {
@@ -18,47 +21,128 @@ class MapData extends Component {
     userVolumeOfFoodWaste: 0,
     userSourceOfFoodWaste: "",
     usersInArea: syntheticData.length+1,
+    // usersLocations: [],
+    usersGeolocations: [],
+    usersNames: [],
+    usersBuildingFunctions: [],
   }
 
   // updateUsersInArea(users) {
   //   this.setState({usersInArea: usersInArea+users})
   // }
 
-  // componentDidMount() {
-  //   const {products, auth, profile} = this.props;
-  //   // console.log(this.props.google);
-  //   // console.log(products);
-  //   console.log(profile);
-  //   // console.log(profile.postcode)
-  //   if (!auth.uid) return <Redirect to= '/login'/>
+  fetchLocationData = async () => {
 
-  //   let homeLat = null;
-  //   let homeLng = null;
-  //   Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
-  //   Geocode.setLocationType("ROOFTOP");
+    // RE-ADD HTTP RESTRICTIONS ON GCP!!!!!!!!!!!!!!!!!
 
-  //   var address = profile.address;
+    // console.log(myAddress)
 
-  //   Geocode.fromAddress(address).then( (response) => {
-  //     const {lat, lng} = response.results[0].geometry.location;
-  //     this.setState({
-  //       latitude: lat,
-  //       longitude: lng
-  //     })
-  //     console.log(this.state.longitude, this.state.latitude)
-  //   },
-  //   error => {
-  //     console.error(error);
-  //   });
-  // }
+    //   Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
+    //   Geocode.setLocationType("ROOFTOP");
+
+    //   Geocode.fromAddress(myAddress).then( (response) => {
+    //     const {lat, lng} = response.results[0].geometry.location;
+    //  //    this.setState( (prevState) => ({
+    //  //      usersGeolocations: [...prevState.usersGeolcations, {lat, lng}]
+    //  //    }))
+    //     console.log({lat, lng})
+    //  },
+    //  error => {
+    //     console.error(error)
+    //  });
+  
+    fs.collection('users').get().then( snapshot => {
+      snapshot.forEach( doc => {
+        // console.log(doc.data().address)
+
+        this.setState( (prevState) => ({
+          // usersLocations: [...prevState.usersLocations, doc.data().address],
+          usersNames: [...prevState.usersNames, doc.data().firstName],
+          usersBuildingFunctions: [...prevState.usersBuildingFunctions, doc.data().buildingFunction]
+        }))
+
+        Geocode.fromAddress(doc.data().address).then( (response) => {
+          const {lat, lng} = response.results[0].geometry.location;
+           this.setState( (prevState) => ({
+             usersGeolocations: [...prevState.usersGeolocations, {lat, lng}]
+           }))
+          // console.log({lat, lng})
+        },
+        error => {
+          console.error(error)
+        });
+
+      })
+    })
+    .catch(error => console.log(error))
+  }
+
+  componentDidMount() {
+    const {products, auth, profile} = this.props;
+    // // console.log(this.props.google);
+    // // console.log(products);
+    // console.log(profile);
+    // // console.log(profile.postcode)
+    // if (!auth.uid) return <Redirect to= '/login'/>
+
+    // let homeLat = null;
+    // let homeLng = null;
+
+
+
+
+    Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
+    Geocode.setLocationType("ROOFTOP");
+
+
+
+
+    // var address = profile.address;
+
+    // Geocode.fromAddress(address).then( (response) => {
+    //   const {lat, lng} = response.results[0].geometry.location;
+    //   this.setState({
+    //     latitude: lat,
+    //     longitude: lng
+    //   })
+    //   console.log(this.state.longitude, this.state.latitude)
+    // },
+    // error => {
+    //   console.error(error);
+    // });
+
+
+
+
+    // Geocode.fromAddress(profile.address).then( (response) => {
+    //     const {lat, lng} = response.results[0].geometry.location;
+    //     this.setState( (prevState) => ({
+    //       usersGeolocations: [...prevState.usersGeolcations, {lat, lng}]
+    //     }))
+    //     console.log({lat, lng})
+    //  },
+    //  error => {
+    //     console.error(error)
+    //  });
+
+
+
+
+    this.fetchLocationData();
+  }
 
   render(){
+    // NO GEOCODE CODE IN HERE!!!!!!!!!!!!!!!!!!!!!!!
+
       const {products, auth, profile} = this.props;
       // console.log(this.props.google);
       // console.log(products);
       // console.log(profile);
       // console.log(profile.postcode)
       if (!auth.uid) return <Redirect to= '/login'/>
+
+      // console.log(this.state.usersLocations)
+      // console.log(this.state.usersGeolocations)
       
       // Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
       // Geocode.setLocationType("ROOFTOP");
@@ -154,14 +238,14 @@ class MapData extends Component {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
-            <Popup position={[56.0306461, -3.32042]}>
+            {/* <Popup position={[56.0306461, -3.32042]}>
               <div>
                 <p>Users in Edinburgh: {this.state.usersInArea}</p>
               </div>
-            </Popup>
+            </Popup> */}
 
             {/* CHANGE MARKER APPEARANCE MORE SIGNIFICANTLY */}
-            <Marker position={[55.9096461, -3.32042]} opacity={0.7}>
+            {/* <Marker position={[55.9096461, -3.32042]} opacity={0.7}>
               <Popup position={[55.9096461, -3.32042]}>
                 <div>
                   <p className="popup-data popup-name">{this.state.userName} </p>
@@ -170,11 +254,11 @@ class MapData extends Component {
                   <p className="popup-data">Building Function: {this.state.userSourceOfFoodWaste}</p>
                 </div>
               </Popup>
-            </Marker>            
+            </Marker> */}
 
             {/*comment out below to toggle map markers*/}
 
-            {syntheticData.map(data =>(
+            {/* {syntheticData.map(data =>(
               <Marker
               key={data.Name}
               position={[data.Location.Latitude, data.Location.Longitude]}>
@@ -190,11 +274,22 @@ class MapData extends Component {
                   </div>
                 </Popup>
               </Marker>
+            ))} */}
+
+            {/* ^^^^ */}
+
+            {this.state.usersGeolocations.map(loc => (
+              <Marker
+              position={loc}>
+
+                <Popup>
+                  <div>
+                    <p>Building Function: {this.state.usersBuildingFunctions[this.state.usersGeolocations.indexOf(loc)]}</p>
+                  </div>
+                </Popup>
+                
+              </Marker>
             ))}
-
-            {}
-
-            {/* ^^^^ */}  
 
           </MapContainer>
         </Col>
@@ -212,7 +307,7 @@ class MapData extends Component {
 }
 
 const mapStateToProps = (state) => { 
-  console.log(state);
+  // console.log(state);
   return{
       auth: state.firebase.auth,
       profile: state.firebase.profile,

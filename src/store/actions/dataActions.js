@@ -45,7 +45,27 @@ export const createFoodWasteData =  (data) => {
     return(dispatch, getState,  {getFirebase} ) => {
         const profile = getState().firebase.profile;
         const auth = getState().firebase.auth;
-        const GHG = Number(data.weightOfFoodWaste) * 2.5;
+
+        const FOODNAME = data.foodName;
+        const EDIBLEORINEDIBLE = data.edibleOrInedible;
+        const LOCALORNOT = data.producedLocally;
+        const GHG = data.edibleGHG*data.weightMultiplier;
+        const WDAY = data.chartSubmissionDay;
+        const WEEK = data.chartSubmissionWeek;
+        const MONTH = data.chartSubmissionMonth;
+        const MDATE = data.chartSubmissionDate;
+        const YEAR = data.chartSubmissionYear;
+        const FULLDATE = data.chartSubmissionFullDate;
+        const CARBSCONTENT = data.carbsContent;
+        const PROTEINCONTENT = data.proteinContent;
+        const FATCONTENT = data.fatContent;
+        const FIBRECONTENT = data.fibreContent;
+        // const FWTYPE = data.edibleFoodWasteType;
+        // const MOISTURE = data.edibleMoisture;
+        const CURRENCY = data.dropDownValueEFW;
+        const COST = (data.costOfEdibleFoodWaste*data.weightMultiplier*data.currencyMultiplierEFW).toFixed(2);
+        const WEIGHTUNIT = data.weightType;
+
         const date = new Date();
     const DATE = moment(date).format(
       // "hh:mm"
@@ -1459,6 +1479,9 @@ export const createFoodWasteData =  (data) => {
     }
     // console.log(data.foodWaste);
     // console.log(data.foodSurplus);
+
+    // here
+
     getFirebase()
       .firestore()
       .collection("data")
@@ -1467,8 +1490,26 @@ export const createFoodWasteData =  (data) => {
       .add({
         date: DATE,
         GHG: GHG,
-        weight: Number(data.weightOfFoodWaste),
+        weight: Number(data.weightOfEdibleFoodWaste),
         type: t,
+        FOODNAME: FOODNAME,
+        EDIBLEORINEDIBLE: EDIBLEORINEDIBLE,
+        LOCALORNOT: LOCALORNOT,
+        WDAY: WDAY,
+        WEEK: WEEK,
+        MONTH: MONTH,
+        MDATE: MDATE,
+        YEAR: YEAR,
+        FULLDATE: FULLDATE,
+        CARBSCONTENT: Number(CARBSCONTENT),
+        PROTEINCONTENT: Number(PROTEINCONTENT),
+        FATCONTENT: Number(FATCONTENT),
+        FIBRECONTENT: Number(FIBRECONTENT),
+        // FWTYPE: FWTYPE,
+        // MOISTURE: MOISTURE,
+        CURRENCY: CURRENCY,
+        COST: Number(COST),
+        WEIGHTUNIT: WEIGHTUNIT,
       })
       .then(() => {
         dispatch({ type: "CREATE_DATA" });

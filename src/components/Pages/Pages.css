@@ -57,7 +57,7 @@ body{
 
 /* login page and signup page */
 
-.login-graphic,  .signup-graphic, .home{
+.login-graphic,  .signup-graphic, .home, .home-mobile{
     background-color: rgb(218, 218, 218);
     background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
     background-repeat: no-repeat;
@@ -72,6 +72,21 @@ body{
 
   .home{
     background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/connectivity.png");
+  }
+
+  .home-mobile{
+    background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/connectivity.png");
+  }
+
+  .home-text-mobile{
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(218, 218, 218);
+  }
+
+  .home-update-text-mobile{
+    font-size: 15px;
+    color: rgb(218, 218, 218);
   }
 
   .fix-image{

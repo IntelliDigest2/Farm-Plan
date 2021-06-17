@@ -4,7 +4,154 @@ import styled from "styled-components"
 // import { Row, Col } from 'react-bootstrap';
 import {BrowserView, MobileView} from "react-device-detect"
 
-export default class Chart3 extends Component {
+import moment from "moment"
+
+import { connect } from 'react-redux';
+import {fs} from "../../../config/fbConfig"
+
+const time = moment().format("W")
+
+class Chart3 extends Component {
+
+  state = {
+    uid: this.props.auth.uid,
+    mondayWeight: 0,
+    tuesdayWeight: 0,
+    wednesdayWeight: 0,
+    thursdayWeight: 0,
+    fridayWeight: 0,
+    saturdayWeight: 0,
+    sundayWeight: 0,
+    weekBeginning: "",
+    weekEnding: "",
+  }
+
+      // fetch db.json data
+      fetchData = async () => {
+        // const res = await fetch('http://localhost:5000/edible-food-waste-data')
+        // const data = await res.json();
+
+        // data.forEach(efw => {
+        //   if (efw.week === time && efw.day === "Mon"){
+
+        //     this.setState({weekBeginning: efw.month + " " + efw.date})
+
+        //     this.setState( (prevState) => ({
+        //       mondayWeight: prevState.mondayWeight += efw.weight
+        //     }));
+        //   } else if (efw.week === time && efw.day === "Tue"){
+        //     this.setState( (prevState) => ({
+        //       tuesdayWeight: prevState.tuesdayWeight += efw.weight
+        //     }));
+        //   } else if (efw.week === time && efw.day === "Wed"){
+        //     this.setState( (prevState) => ({
+        //       wednesdayWeight: prevState.wednesdayWeight += efw.weight
+        //     }));
+        //   } else if (efw.week === time && efw.day === "Thu"){
+        //     this.setState( (prevState) => ({
+        //       thursdayWeight: prevState.thursdayWeight += efw.weight
+        //     }));
+        //   } else if (efw.week === time && efw.day === "Fri"){
+        //     this.setState( (prevState) => ({
+        //       fridayWeight: prevState.fridayWeight += efw.weight
+        //     }));
+        //   } else if (efw.week === time && efw.day === "Sat"){
+        //     this.setState( (prevState) => ({
+        //       saturdayWeight: prevState.saturdayWeight += efw.weight
+        //     }));
+        //   } else if (efw.week === time && efw.day === "Sun"){
+        //     this.setState( (prevState) => ({
+        //       sundayWeight: prevState.sundayWeight += efw.weight
+        //     }));
+        //   }
+        // })
+
+        fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+          .get()
+          .then( snapshot => {
+            snapshot.forEach(doc => {
+
+              // var fwt = doc.data().FWTYPE
+              var week = doc.data().WEEK
+              var day = doc.data().WDAY
+              var month = doc.data().MONTH
+              var mdate = doc.data().MDATE
+              var weight = doc.data().weight
+              var wu = doc.data().WEIGHTUNIT
+
+              var newWeight = 0
+    
+              if (wu === "kg"){
+                newWeight = Number(weight * 1)
+                // console.log(newWeight)
+              } else if (wu === "g"){
+                newWeight = Number((weight * 0.001).toFixed(3))
+                // console.log(newWeight)
+              } else if (wu === "oz"){
+                newWeight = Number((weight * 0.028).toFixed(3))
+                // console.log(newWeight)
+              } else if (wu === "lbs"){
+                newWeight = Number((weight * 0.454).toFixed(3))
+                // console.log(newWeight)
+              }
+
+              var carbCon = doc.data().CARBSCONTENT
+              var proCon = doc.data().PROTEINCONTENT
+              var fatCon = doc.data().FATCONTENT
+              var fibCon = doc.data().FIBRECONTENT
+
+              if (week === time && day === "Mon" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                this.setState({weekBeginning: month + " " + mdate})
+
+                this.setState( (prevState) => ({
+                  mondayWeight: prevState.mondayWeight += newWeight
+                }));
+              } else if (week === time && day === "Tue" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                this.setState( (prevState) => ({
+                  tuesdayWeight: prevState.tuesdayWeight += newWeight
+                })); 
+              } else if (week === time && day === "Wed" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                this.setState( (prevState) => ({
+                  wednesdayWeight: prevState.wednesdayWeight += newWeight
+                }));
+              } else if (week === time && day === "Thu" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                this.setState( (prevState) => ({
+                  thursdayWeight: prevState.thursdayWeight += newWeight
+                }));
+              } else if (week === time && day === "Fri" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                this.setState( (prevState) => ({
+                  fridayWeight: prevState.fridayWeight += newWeight
+                }));
+              } else if (week === time && day === "Sat" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                this.setState( (prevState) => ({
+                  saturdayWeight: prevState.saturdayWeight += newWeight
+                }));
+              } else if (week === time && day === "Sun" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                this.setState( (prevState) => ({
+                  sundayWeight: prevState.sundayWeight += newWeight
+                }));
+              }
+
+            })
+          })
+          .catch(error => console.log(error))
+
+        // console.log(data)
+        // return data
+    }
+
+    componentDidMount(){
+      this.fetchData();
+    }
+
+    // fetchDataItem = async (id) => {
+    //     const res = await fetch(`http://localhost:5000/edible-food-waste-data/${id}`)
+    //     const data = await res.json();
+
+    //     console.log(data)
+    //     // return data
+    // }
+
   render(){
     return (
       <React.Fragment className="row">
@@ -80,17 +227,17 @@ export default class Chart3 extends Component {
                 loader={<div>Loading Chart</div>}
                 data={[
                   ['Day', 'Weight '],
-                  ['Mon', 15],
-                  ['Tue', 19],
-                  ['Wed', 7],
-                  ['Thu', 10],
-                  ['Fri', 9],
-                  ['Sat', 20],
-                  ['Sun', 5],
+                  ['Mon', this.state.mondayWeight],
+                  ['Tue', this.state.tuesdayWeight],
+                  ['Wed', this.state.wednesdayWeight],
+                  ['Thu', this.state.thursdayWeight],
+                  ['Fri', this.state.fridayWeight],
+                  ['Sat', this.state.saturdayWeight],
+                  ['Sun', this.state.sundayWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'Food Wastage Performance (Mon 17/05- Sun 23/05)',
+                  title: 'This week\'s Food Wastage Performance',
                   chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   legend: 'none',
@@ -142,17 +289,17 @@ export default class Chart3 extends Component {
                 loader={<div>Loading Chart</div>}
                 data={[
                   ['Day', 'Food Wastage Weight'],
-                  ['Monday', 15],
-                  ['Tuesday', 19],
-                  ['Wednesday', 7],
-                  ['Thursday', 10],
-                  ['Friday', 9],
-                  ['Saturday', 20],
-                  ['Sunday', 5],
+                  ['Monday', this.state.mondayWeight],
+                  ['Tuesday', this.state.tuesdayWeight],
+                  ['Wednesday', this.state.wednesdayWeight],
+                  ['Thursday', this.state.thursdayWeight],
+                  ['Friday', this.state.fridayWeight],
+                  ['Saturday', this.state.saturdayWeight],
+                  ['Sunday', this.state.sundayWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'This week\'s Food Wastage Performance (Mon 17/05- Sun 23/05)',
+                  title: 'This week\'s Food Wastage Performance',
                   chartArea: { width: '30%' },
                   colors: ['#aab41e'],
                   hAxis: {
@@ -235,3 +382,11 @@ const ChartStyle = styled.div`
     padding: 10px;
   }
 `;
+
+const mapStateToProps = (state) => { 
+  return{
+      auth: state.firebase.auth,
+  }
+}
+
+export default connect(mapStateToProps, null)(Chart3);
