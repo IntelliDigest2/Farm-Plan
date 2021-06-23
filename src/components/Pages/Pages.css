@@ -79,14 +79,21 @@ body{
   }
 
   .home-text-mobile{
-    font-size: 25px;
+    font-size: 3.5vh;
     font-weight: bold;
     color: rgb(218, 218, 218);
   }
 
   .home-update-text-mobile{
-    font-size: 15px;
+    font-size: 2vh;
     color: rgb(218, 218, 218);
+  }
+
+  .home-play-store-link{
+    color: #aab41e;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
   }
 
   .fix-image{

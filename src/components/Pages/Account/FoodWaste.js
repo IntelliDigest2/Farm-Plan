@@ -10,7 +10,7 @@ import styled from "styled-components";
 // import DisplayError from '../pages/DisplayError'
 import moment from "moment"
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
-import { BrowserView, MobileView } from 'react-device-detect';
+import { BrowserView, MobileView, isMobile, isBrowser } from 'react-device-detect';
 import {fs} from "../../../config/fbConfig"
 import {BsQuestionCircle, BsFillQuestionCircleFill} from "react-icons/bs"
 
@@ -76,6 +76,8 @@ class FoodWaste extends Component {
         showMoisture: false, 
 
         dataChartEFW: [['Food Wastage Type', 'Food Wastage Weight']],
+
+        formWidth: ""
     }
 
     // handleChartSubmit(label, column){
@@ -255,10 +257,14 @@ class FoodWaste extends Component {
     //     this.props.history.push('/products')
     // }
 
-    // componentDidMount() {
-    //     // console.log(this.state.uid)
-    //     this.fetchData();
-    // }
+    componentDidMount() {
+        if (isMobile){
+            this.setState({formWidth: "72vw"})
+        }
+        else if (isBrowser){
+            this.setState({formWidth: "261px"})
+        }
+    }
 
     render() {
 
@@ -274,12 +280,14 @@ class FoodWaste extends Component {
         )
         // console.log(foodWaste);
         // console.log(foodSurplus);
+
+        // 284 - paddingBottom:
         return(
             <div 
                 // className="container"
                 style={{width: "100%", height: "100%" }}
             >
-            <h4 style={{paddingTop: '60px', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible & Inedible Food Waste</h4>
+            <h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible & Inedible Food Waste</h4>
 
                 {filteredData.length === 0 ? <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
         <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
@@ -305,17 +313,17 @@ class FoodWaste extends Component {
               </Row> 
               : 
 
-              <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%", height: "100vh"}}>
+              <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%", height: "190%"}}>
 
-            <BrowserView>
+            {/* <BrowserView> */}
 
                 <Card 
                 style={{
                     // width: "90%", 
-                    width: "261px", 
+                    width: this.state.formWidth, 
                     // height: "100%"
-                    height:'1075px',
-                    marginBottom: '200px'
+                    height:'1095px',
+                    marginBottom: '10vh'
                     // backgroundColor: 'lightgray'
                 }}
                 >
@@ -711,7 +719,7 @@ class FoodWaste extends Component {
 
                         </DropdownButton>
 
-                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={(this.state.costOfEdibleFoodWaste*this.state.currencyMultiplierEFW*this.state.weightMultiplier).toFixed(2)}/>{/*pounds*/}
+                    <Form.Control type="number" id="costOfEdibleFoodWaste" placeholder="Enter cost of food surplus" value={(this.state.costOfEdibleFoodWaste*this.state.currencyMultiplierEFW*this.state.weightMultiplier).toFixed(2)}/>{/*pounds*/}
                     </InputGroup>
                     </Form.Group>
 
@@ -728,444 +736,14 @@ class FoodWaste extends Component {
                     {/* this.addData([id, this.state.weightOfEdibleFoodWaste, this.state.edibleFoodWasteType, this.state.edibleMoisture, this.state.edibleGHG, this.state.dropDownValueEFW, this.state.costOfEdibleFoodWaste]) */}
                     {/* this.handleChartSubmit(this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)); */}
 
-                    <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e'}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
+                    <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
                         Update
                     </Button>
 
                 </div>
             </Form> 
             </Card>
-            </BrowserView>
-
-            <MobileView>
-            <Card 
-                style={{
-                    // width: "90%", 
-                    width: "261px", 
-                    // height: "100%"
-                    height:'1075px',
-                    marginBottom: '60px'
-                    // backgroundColor: 'lightgray'
-                }}
-                >
-                
-                {/* onSubmit={this.handleFoodWasteSubmit}     */}
-            <Form className= "form-layout" style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste</h5>
-                
-                <div>
-
-                    <div style={{padding: "0 10% 0 10%"}}>Food Name <div style={{fontSize: "11px"}}>(e.g. Bread, Milk, Spaghetti, ...)</div></div>
-                        <Form.Group
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex"
-                            }}>
-                        <InputGroup>
-                        <Form.Control id="foodName" placeholder="Enter food name" onChange={(e) => {this.handleChange(e)}} width="100%" value={this.state.foodName}/>
-                        </InputGroup>
-
-                        </Form.Group>
-                    
-                    {/* <BsFillQuestionCircleFill onClick={() => this.setState({showEdibleOrInedible: true})} style={{marginLeft: '5px'}}/> */}
-                    <div style={{padding: "0 10% 0 10%"}}>Edible or Inedible?</div>
-                    <Form.Group
-                        style={{
-                            padding: "0 10% 0 10%",
-                            display: "flex"
-                        }}>
-                        <InputGroup>
-                            <DropdownButton
-                                variant="outline-secondary"
-                                title={this.state.edibleOrInedible}
-                                id="eidd"
-                            >
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => this.handleEdibleOrInedibleChange(e.target.textContent)}>
-                                        Edible
-                                    </div>
-                                </DropdownItem>
-
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => this.handleEdibleOrInedibleChange(e.target.textContent)}>
-                                        Inedible
-                                    </div>
-                                </DropdownItem>
-
-                            </DropdownButton>
-                        </InputGroup>
-                    </Form.Group>
-
-                    {/* <Modal show={this.state.showEdibleOrInedible} onHide={() => this.setState({showEdibleOrInedible: !this.state.showEdibleOrInedible})}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Edible & Inedible Food Waste Guide</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <li>Edible Food Waste examples: ...</li>
-                            <li>Inedible Food Waste examples: ...</li>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={() => this.setState({showEdibleOrInedible: false})}>Close</Button>
-                        </Modal.Footer>
-                    </Modal> */}
-
-                <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
-                    <Form.Group className= "form-layout" 
-                        style={{
-                            padding: "0 10% 0 10%", 
-                            display: "flex", 
-                            justifyContent: 'space-around'}} 
-                    >
-                    <InputGroup>
-                        <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
-                        {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
-                        <InputGroup.Append>
-                            <InputGroup.Text>kg</InputGroup.Text>
-                        </InputGroup.Append> */}
-
-                        <DropdownButton
-                            as={InputGroup.Append}
-                            variant="outline-secondary"
-                            title={this.state.weightType}
-                            id="wtdd"
-                        >
-
-                            <Dropdown.Header>Weight (Solids)</Dropdown.Header>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(1)}}>
-                                    kg
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.001)}}>
-                                    g
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.028)}}>
-                                    oz
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.454)}}>
-                                    lbs
-                                </div>
-                            </DropdownItem>
-
-                            <Dropdown.Divider />
-
-                            <Dropdown.Header>Volume (Liquids)</Dropdown.Header>
-
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(1)}}>
-                                    l
-                                </div>
-                            </DropdownItem>
-
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.001)}}>
-                                    ml
-                                </div>
-                            </DropdownItem>
-
-                        </DropdownButton>
-
-                    </InputGroup>
-                    </Form.Group>
-
-                    <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
-                    <Form.Group 
-                        style={{
-                            padding: "0 10% 0 10%",
-                            display: "flex"
-                        }}>
-                        <InputGroup>
-                            <DropdownButton
-                                variant="outline-secondary"
-                                title={this.state.producedLocally}
-                                id="lnldd"
-                            >
-                                <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
-                                        Local Produce
-                                    </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
-                                        Non-local Produce
-                                    </div>
-                                </DropdownItem>
-
-                            </DropdownButton>
-                        </InputGroup>
-
-                    </Form.Group>
-
-                    {/* <div style={{padding: "0 10% 0 10%"}}>Food Waste Type</div>  
-                    <Form.Group
-                        style={{
-                            padding: "0 10% 0 10%", 
-                            display: "flex"}}                    
-                    >
-                    <InputGroup>
-                        <DropdownButton
-                            variant="outline-secondary"
-                            title={this.state.edibleFoodWasteType}
-                            id="igdd"
-                            // style ={{backgroundColor: 'white'}}
-                        >
-
-                            
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
-                                    Carbohydrates
-                                </div>
-                            </DropdownItem>
-
-                            
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
-                                    Protein
-                                </div>
-                            </DropdownItem>
-
-                            
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
-                                    Fat
-                                </div>
-                            </DropdownItem>
-
-                            
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
-                                    Fibre
-                                </div>
-                            </DropdownItem>                                                        
-
-                        </DropdownButton>
-                    </InputGroup>
-                    </Form.Group> */}
-
-                    <div>
-                        <div style={{padding: "0 10% 0 10%", fontWeight: "bold"}}>Food Waste Composition<BsFillQuestionCircleFill onClick={() => this.setState({showComposition: true})} style={{marginLeft: '5px'}}/></div>
-
-                        <Modal show={this.state.showComposition} onHide={() => this.setState({showComposition: !this.state.showComposition})}>
-                            <Modal.Header closeButton>
-                                <Modal.Title>Food Waste Composition Guide</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <p>For help with filling out this section of the form as accurately as possible,
-                                    consult the 'About' page for further info on Food Waste, Macronutrients, etc.
-                                </p>
-                                <p>Note: make sure your entries total to 100</p>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="secondary" onClick={() => this.setState({showComposition: false})}>Close</Button>
-                            </Modal.Footer>
-                        </Modal>
-
-                        <div style={{padding: "0 10% 0 10%"}}>Carbohydrate Content</div>
-                        <Form.Group className="form-layout"
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                        <InputGroup>
-                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.fatContent - this.state.fibreContent} id="carbsContent" placeholder="Enter carbohydrate content of food waste" onChange={(e) => this.handleCarbsContentChange(e)} width="100%" value={this.state.carbsContent}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>%</InputGroup.Text>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        </Form.Group>
-
-                        <div style={{padding: "0 10% 0 10%"}}>Protein Content</div>
-                        <Form.Group className="form-layout"
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                        <InputGroup>
-                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.carbsContent - this.state.fatContent - this.state.fibreContent} id="proteinContent" placeholder="Enter protein content of food waste" onChange={(e) => this.handleProteinContentChange(e)} width="100%" value={this.state.proteinContent}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>%</InputGroup.Text>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        </Form.Group>
-
-                        <div style={{padding: "0 10% 0 10%"}}>Fat Content</div>
-                        <Form.Group className="form-layout"
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                        <InputGroup>
-                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.carbsContent - this.state.fibreContent} id="fatContent" placeholder="Enter fat content of food waste" onChange={(e) => this.handleFatContentChange(e)} width="100%" value={this.state.fatContent}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>%</InputGroup.Text>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        </Form.Group>
-
-                        <div style={{padding: "0 10% 0 10%"}}>Fibre Content</div>
-                        <Form.Group className="form-layout"
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                        <InputGroup>
-                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.carbsContent - this.state.fatContent} id="fibreContent" placeholder="Enter fibre content of food waste" onChange={(e) => this.handleFibreContentChange(e)} width="100%" value={this.state.fibreContent}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>%</InputGroup.Text>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        </Form.Group>
-
-                        <div style={{padding: "0 10% 0 10%"}}>TOTAL</div>
-                        <Form.Group className="form-layout"
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                        <InputGroup>
-                            <Form.Control id="totalContent" placeholder="Total content" width="100%" value={Number(this.state.carbsContent)+Number(this.state.proteinContent)+Number(this.state.fatContent)+Number(this.state.fibreContent) + "/100"}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>%</InputGroup.Text>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        </Form.Group>
-
-                    </div>
-
-                    <div style={{padding: "0 10% 0 10%"}}>Moisture Content<BsFillQuestionCircleFill onClick={() => this.setState({showMoisture: true})} style={{marginLeft: '5px'}}/></div>
-
-                    <Modal show={this.state.showMoisture} onHide={() => this.setState({showMoisture: !this.state.showMoisture})}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Moisture Content Guide</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <li>Banana: 10%</li>
-                            <li>Bread: 0%</li>
-                            <li>...</li>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={() => this.setState({showMoisture: false})}>Close</Button>
-                        </Modal.Footer>
-                    </Modal>
-
-                    <Form.Group className="form-layout"
-                        style={{
-                            padding: "0 10% 0 10%", 
-                            display: "flex",
-                            justifyContent: 'space-around'}}                      
-                    >
-                    <InputGroup>
-                        <Form.Control type="number" pattern="[0-100]*" min={0} max={100} id="edibleMoisture" placeholder="Enter moisture content of food waste" onChange={(e) => {this.handleEdibleMoistureChange(e)}} width="100%" value={this.state.edibleMoisture}/>
-                        <InputGroup.Append>
-                            <InputGroup.Text>%</InputGroup.Text>
-                        </InputGroup.Append>
-                    </InputGroup>
-                    </Form.Group>         
-
-                    <div style={{padding: "0 10% 0 10%"}}>GHG</div>
-                    <Form.Group 
-                        style={{
-                            padding: "0 10% 0 10%", 
-                            display: "flex"}}
-                    >
-                    <InputGroup>
-                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={(this.state.edibleGHG*this.state.weightMultiplier).toFixed(2)} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
-                        <InputGroup.Append>
-                            <InputGroup.Text>kg co2</InputGroup.Text>
-                        </InputGroup.Append>
-                    </InputGroup>
-                    </Form.Group>
-
-                    <div style={{padding: "0 10% 0 10%"}}>Cost</div>
-                    <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
-                    <InputGroup>
-
-                        {/* <InputGroup.Prepend>
-                            <InputGroup.Text>£</InputGroup.Text>
-                        </InputGroup.Prepend> */}
-
-                        <DropdownButton
-                            as={InputGroup.Prepend}
-                            variant="outline-secondary"
-                            title={this.state.dropDownValueEFW}
-                            id="input-group-dropdown-1"
-                            // style ={{backgroundColor: 'white'}}
-                        >
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1)}}>
-                                    GBP (£)
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1.404)}}>
-                                    USD ($)
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1.161)}}>
-                                    EUR (€)
-                                </div>    
-                            </DropdownItem>
-
-                        </DropdownButton>
-
-                    <Form.Control type="number" id="costOfFoodSurplus" placeholder="Enter cost of food surplus" value={(this.state.costOfEdibleFoodWaste*this.state.currencyMultiplierEFW*this.state.weightMultiplier).toFixed(2)}/>{/*pounds*/}
-                    </InputGroup>
-                    </Form.Group>
-
-                    {/* <div style={{padding: "0 10% 0 10%"}}>Daily</div>
-                    <Form.Group 
-                    style={{
-                        padding: "0 10% 0 10%",
-                        width: "90%",
-                        display: "flex"
-                        }}>
-                        <Form.Control type="number" id="dailyFoodWaste" placeholder="Enter daily food waste value" onChange={this.handleChange} width="100%" value={this.state.dailyFoodWaste}/>kg
-                    </Form.Group> */}
-
-                    {/* this.addData([id, this.state.weightOfEdibleFoodWaste, this.state.edibleFoodWasteType, this.state.edibleMoisture, this.state.edibleGHG, this.state.dropDownValueEFW, this.state.costOfEdibleFoodWaste]) */}
-                    {/* this.handleChartSubmit(this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)); */}
-
-                    <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e'}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
-                        Update
-                    </Button>
-
-                </div>
-            </Form> 
-            </Card>
-            </MobileView>
+            {/* </BrowserView> */}
 
             {/* <BrowserView>
             <Card
@@ -1519,6 +1097,15 @@ const CardStyle = styled.div`
           height:200px;
       }
 
+`;
+
+const FormStyle = styled.div`
+      .form{
+          display: flex;
+          align-items: center;
+          top: 50%;
+          transform: translateY(20%)
+      }
 `;
 
 const ChartStyle = styled.div`

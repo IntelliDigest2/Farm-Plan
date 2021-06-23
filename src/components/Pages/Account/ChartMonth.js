@@ -253,8 +253,8 @@ class Chart2 extends Component {
             <ChartStyle>
 
               <Chart className='bar-chart'
-                width={1100}
-                height={500}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -267,7 +267,7 @@ class Chart2 extends Component {
                 options={{
                   // backgroundColor: 'lightgray',
                   title: 'This month\'s Food Wastage Performance (' + fullMonth + ' 2021)',
-                  chartArea: { width: '30%' },
+                  chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   hAxis: {
                     title: 'Week/Period of ' + fullMonth,
@@ -319,8 +319,8 @@ class Chart2 extends Component {
           <MobileView>
             <ChartStyle>
               <Chart className='bar-chart'
-                width={300}
-                height={600}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -407,10 +407,13 @@ class Chart2 extends Component {
 }
 
 const ChartStyle = styled.div`
-  .bar-chart{
-    position: absolute;
-    left: 14%;
-  }
+.bar-chart{
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 
   .area-chart{
     padding: 10px;

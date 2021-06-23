@@ -219,8 +219,8 @@ class Chart4 extends Component {
             <ChartStyle>
 
               <Chart className='bar-chart'
-                width={1100}
-                height={500}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -233,7 +233,7 @@ class Chart4 extends Component {
                 options={{
                   // backgroundColor: 'lightgray',
                   title: 'Today\'s Food Wastage Performance (' + time + ')',
-                  chartArea: { width: '30%' },
+                  chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   hAxis: {
                     title: 'Food Wastage Type',
@@ -242,6 +242,7 @@ class Chart4 extends Component {
                   vAxis: {
                     title: 'Weight of Food Wastage (kg)',
                   },
+                  
                 }}
                 legendToggle
               />
@@ -252,8 +253,8 @@ class Chart4 extends Component {
          <MobileView>
            <ChartStyle>
             <Chart className='bar-chart'
-                width={300}
-                height={600}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -368,10 +369,16 @@ class Chart4 extends Component {
   }
 }
 
+// position: absolute;
+// left: 14%;
+
 const ChartStyle = styled.div`
   .bar-chart{
     position: absolute;
-    left: 14%;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .area-chart{

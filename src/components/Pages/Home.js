@@ -4,6 +4,7 @@ import "./Pages.css"
 import { Row, Col, Form, Button } from "react-bootstrap";
 import styled from "styled-components";
 import {BrowserView, MobileView} from 'react-device-detect';
+// import googleplaylogo from '../../images/google-play-logo.png'
 
 function Home() {
     return (
@@ -39,6 +40,10 @@ function Home() {
                 </Form.Row>
               </Form>
                 </FormStyle>
+
+                <p className="text-center update-text"><a className="home-play-store-link" href="https://play.google.com/store/apps/details?id=com.IntelliDigest.TheGlobalFoodLossandWasteTracker" target="_blank" rel="noopener noreferrer">Click here </a>to view/download The Global Food Loss & Waste Tracker Android app from the Google Play Store</p>
+                {/* <img src={googleplaylogo} alt="googleplaylogo" className="img-fluid rounded fix-image" /> */}
+
                 </Col>
       <Col className="mt-5 pt-5" xs={12}></Col>
       <Col className="mt-5 pt-5" xs={12}></Col>

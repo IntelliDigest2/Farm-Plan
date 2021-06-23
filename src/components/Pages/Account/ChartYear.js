@@ -264,8 +264,8 @@ class Chart1 extends Component {
             <ChartStyle>
 
               <Chart className='bar-chart'
-                width={1100}
-                height={550}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -328,9 +328,9 @@ class Chart1 extends Component {
             
           <MobileView>
             <ChartStyle>
-              <Chart className='bar-chart-mobile'
-                width={350}
-                height={600}
+              <Chart className='bar-chart'
+                width={'95%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -425,10 +425,13 @@ class Chart1 extends Component {
 }
 
 const ChartStyle = styled.div`
-  .bar-chart{
-    position: absolute;
-    left: 14%;
-  }
+.bar-chart{
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 
   .bar-chart.mobile{
     left: 4%
