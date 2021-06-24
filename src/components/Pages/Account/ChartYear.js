@@ -289,7 +289,7 @@ class Chart1 extends Component {
                   chartArea: { width: '75%' },
                   colors: ['#aab41e'],
                   hAxis: {
-                    title: 'Month of 2021',
+                    title: 'Month of ' + time,
                     minValue: 0,
                   },
                   vAxis: {
@@ -355,7 +355,7 @@ class Chart1 extends Component {
                   legend: 'none',
                   colors: ['#aab41e'],
                   hAxis: {
-                    title: 'Month of 2021',
+                    title: 'Month of ' + time,
                     minValue: 0,
                   },
                   vAxis: {

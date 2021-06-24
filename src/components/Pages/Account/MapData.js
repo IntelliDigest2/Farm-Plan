@@ -10,7 +10,7 @@ import { Redirect } from 'react-router-dom';
 import {fs} from "../../../config/fbConfig"
 
 // import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
-// import Geocode from "react-geocode";
+import Geocode from "react-geocode";
 
 class MapData extends Component {
   state = {
@@ -51,30 +51,30 @@ class MapData extends Component {
     //     console.error(error)
     //  });
   
-    // fs.collection('users').get().then( snapshot => {
-    //   snapshot.forEach( doc => {
-    //     // console.log(doc.data().address)
+    fs.collection('users').get().then( snapshot => {
+      snapshot.forEach( doc => {
+        // console.log(doc.data().address)
 
-    //     this.setState( (prevState) => ({
-    //       // usersLocations: [...prevState.usersLocations, doc.data().address],
-    //       usersNames: [...prevState.usersNames, doc.data().firstName],
-    //       usersBuildingFunctions: [...prevState.usersBuildingFunctions, doc.data().buildingFunction]
-    //     }))
+        this.setState( (prevState) => ({
+          // usersLocations: [...prevState.usersLocations, doc.data().address],
+          usersNames: [...prevState.usersNames, doc.data().firstName],
+          usersBuildingFunctions: [...prevState.usersBuildingFunctions, doc.data().buildingFunction]
+        }))
 
-    //     Geocode.fromAddress(doc.data().address).then( (response) => {
-    //       const {lat, lng} = response.results[0].geometry.location;
-    //        this.setState( (prevState) => ({
-    //          usersGeolocations: [...prevState.usersGeolocations, {lat, lng}]
-    //        }))
-    //       // console.log({lat, lng})
-    //     },
-    //     error => {
-    //       console.error(error)
-    //     });
+        Geocode.fromAddress(doc.data().address).then( (response) => {
+          const {lat, lng} = response.results[0].geometry.location;
+           this.setState( (prevState) => ({
+             usersGeolocations: [...prevState.usersGeolocations, {lat, lng}]
+           }))
+          // console.log({lat, lng})
+        },
+        error => {
+          console.error(error)
+        });
 
-    //   })
-    // })
-    // .catch(error => console.log(error))
+      })
+    })
+    .catch(error => console.log(error))
   }
 
   componentDidMount() {
@@ -91,8 +91,8 @@ class MapData extends Component {
 
 
 
-    // Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
-    // Geocode.setLocationType("ROOFTOP");
+    Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
+    Geocode.setLocationType("ROOFTOP");
 
 
 
@@ -128,7 +128,7 @@ class MapData extends Component {
 
 
 
-    // this.fetchLocationData();
+    this.fetchLocationData();
   }
 
   render(){
@@ -278,7 +278,7 @@ class MapData extends Component {
 
             {/* ^^^^ */}
 
-            {/* {this.state.usersGeolocations.map(loc => (
+            {this.state.usersGeolocations.map(loc => (
               <Marker
               position={loc}>
 
@@ -289,7 +289,7 @@ class MapData extends Component {
                 </Popup>
                 
               </Marker>
-            ))} */}
+            ))}
 
           </MapContainer>
         </Col>

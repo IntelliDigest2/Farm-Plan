@@ -169,7 +169,7 @@ render(){
                 <Form.Control type="password" id="password" placeholder="Password" required onChange={this.handleChange}/>
               </Form.Group>
 
-              <p className="text-center terms">By creating an account you agree to our <Link to="/terms-and-privacy" className="termcond">Terms and Conditions</Link>, and <Link to="/terms-and-privacy" className="termcond">Privacy Policy</Link>.</p>
+              <p className="text-center terms">By creating an account you agree to our <a className="terms-link" href="https://intellidigest.com/terms-conditions/?doing_wp_cron=1624534322.2405810356140136718750" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>, and <a className="privacy-link" href="https://intellidigest.com/privacy-policy/?doing_wp_cron=1624534455.5444190502166748046875" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
 
               <Form.Group controlId="formActions"  style={{display: "flex", justifyContent: "center"}}>
               <Button variant="dark" type="submit">

@@ -337,7 +337,7 @@ class Chart2 extends Component {
                   legend: 'none',
                   colors: ['#aab41e'],
                   hAxis: {
-                    title: 'Week/Period of May',
+                    title: 'Week/Period of ' + fullMonth,
                     minValue: 0,
                   },
                   vAxis: {

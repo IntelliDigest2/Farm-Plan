@@ -146,7 +146,13 @@ body{
     color: #757c0e;
     text-decoration: none;
   }
-  
+
+  .terms-link, .privacy-link{
+    color: #aab41e;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+  }  
 
   /* contact page */
   .contact .contact-logo{
