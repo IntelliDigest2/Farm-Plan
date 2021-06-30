@@ -15,17 +15,17 @@ const NavBar = (props) => {
         <Container>
 
           <BrowserView>
-            <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/">IntelliDigest - The Global Food Loss & Waste Tracker</Navbar.Brand>
+            <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/home">IntelliDigest - The Global Food Loss & Waste Tracker</Navbar.Brand>
           </BrowserView>
 
           <MobileView>
-            <Navbar.Brand className="navbar-brand-mobile" href="/">IntelliDigest - The Global Food Loss & Waste Tracker</Navbar.Brand>
+            <Navbar.Brand className="navbar-brand-mobile" href="/home">IntelliDigest - The Global Food Loss & Waste Tracker</Navbar.Brand>
           </MobileView>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link as={NavLink} eventKey="1" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/" activeClassName="active" exact={true}>Home</Nav.Link>
+              <Nav.Link as={NavLink} eventKey="1" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/home" activeClassName="active" exact={true}>Home</Nav.Link>
               <Nav.Link as={NavLink} eventKey="2" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/about" activeClassName="active" exact={true}>About</Nav.Link>
                 {(auth.uid)? 
                 <>
