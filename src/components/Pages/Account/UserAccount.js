@@ -144,7 +144,7 @@ class Account extends Component {
             <BGroup>
               <DDStyle>
                 <Dropdown>
-                  <DropdownToggle className="custom-btn">View Food Waste GHG Performance Chart</DropdownToggle>
+                  <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food Waste GHG Performance Chart</DropdownToggle>
                   <DropdownMenu>
                     <DropdownItem as={Link} to="/chart/dayGHG">Daily</DropdownItem>
                     <DropdownItem as={Link} to="/chart/weekGHG">Weekly</DropdownItem>
@@ -158,7 +158,7 @@ class Account extends Component {
             <BGroup>
               <DDStyle>
                 <Dropdown>
-                  <DropdownToggle className="custom-btn">View Food Waste Cost Performance Chart</DropdownToggle>
+                  <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food Waste Cost Performance Chart</DropdownToggle>
                   <DropdownMenu>
                     <DropdownItem as={Link} to="/chart/dayCost">Daily</DropdownItem>
                     <DropdownItem as={Link} to="/chart/weekCost">Weekly</DropdownItem>
