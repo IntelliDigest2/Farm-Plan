@@ -38,7 +38,7 @@ class FoodWaste extends Component {
         weightOfEdibleFoodWaste: 0,
         dailyFoodWaste: 0,
 
-        edibleOrInedible: "Select Edible or Inedible",
+        edibleOrInedible: "Select",
 
         // edibleFoodWasteType: "Select Type",
         // inedibleFoodWasteType: "Select Type",
@@ -97,7 +97,7 @@ class FoodWaste extends Component {
     clearEFWForm = () => {
         this.setState({
             foodName: "",
-            edibleOrInedible: "Select Edible or Inedible",
+            edibleOrInedible: "Select",
             weightOfEdibleFoodWaste: 0,
             weightType: "Select Unit",
             producedLocally: "Select Local or Non-local",
@@ -256,10 +256,10 @@ class FoodWaste extends Component {
     }
 
     handleFormHeight(text){
-        if (text === "Select edible or inedible" || text === "Edible"){
-            this.setState({formHeight: "1275px"})
+        if (text === "Select" || text === "Edible" || text === "Surplus"){
+            this.setState({formHeight: "1210px"})
         } else if (text === "Inedible"){
-            this.setState({formHeight: "740px"})
+            this.setState({formHeight: "685px"})
         }
     }
 
@@ -279,10 +279,10 @@ class FoodWaste extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "1275px"})
+            this.setState({formWidth: "72vw", formHeight: "1210px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "1275px"})
+            this.setState({formWidth: "261px", formHeight: "1210px"})
         }
     }
 
@@ -307,7 +307,8 @@ class FoodWaste extends Component {
                 // className="container"
                 style={{width: "100%", height: "100%" }}
             >
-            <h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible & Inedible Food Waste</h4>
+            <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste & Food Surplus</h6></MobileView>
+            <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste & Food Surplus</h4></BrowserView>
 
                 {filteredData.length === 0 ? <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
         <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
@@ -397,7 +398,7 @@ class FoodWaste extends Component {
 
                     <Divider />
 
-                    <div style={{padding: "0 10% 0 10%", paddingTop: "25px"}}>Food Name <div style={{fontSize: "11px"}}>(e.g. Bread, Milk, Spaghetti, ...)</div></div>
+                    {/* <div style={{padding: "0 10% 0 10%", paddingTop: "25px"}}>Food Name <div style={{fontSize: "11px"}}>(e.g. Bread, Milk, Spaghetti, ...)</div></div>
                     <Form.Group
                         style={{
                             padding: "0 10% 0 10%",
@@ -407,36 +408,44 @@ class FoodWaste extends Component {
                     <Form.Control id="foodName" placeholder="Enter food name" onChange={(e) => {this.handleChange(e)}} width="100%" value={this.state.foodName}/>
                     </InputGroup>
 
-                    </Form.Group>
+                    </Form.Group> */}
 
                     {/* <BsFillQuestionCircleFill onClick={() => this.setState({showEdibleOrInedible: true})} style={{marginLeft: '5px'}}/> */}
-                    <div style={{padding: "0 10% 0 10%"}}>Edible or Inedible?</div>
+                    <div style={{padding: "0 10% 0 10%", paddingTop: "25px"}}>Edible, Inedible or Surplus?</div>
                     <Form.Group
                         style={{
                             padding: "0 10% 0 10%",
                             display: "flex"
                         }}>
                         <InputGroup>
-                            <DropdownButton
-                                variant="outline-secondary"
-                                title={this.state.edibleOrInedible}
-                                id="eidd"
-                            >
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => {this.handleEdibleOrInedibleChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
-                                        Edible
-                                    </div>
-                                </DropdownItem>
+                            <DDMenuStyle>
+                                <Dropdown>
+                                    <DropdownToggle variant="secondary" style={{width: "190px"}} className="dd">{this.state.edibleOrInedible}</DropdownToggle>
+                                    <DropdownMenu>
 
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => {this.handleEdibleOrInedibleChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
-                                        Inedible
-                                    </div>
-                                </DropdownItem>
+                                        {/* as="button" */}
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => {this.handleEdibleOrInedibleChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
+                                                Edible
+                                            </div>
+                                        </DropdownItem>
 
-                            </DropdownButton>
+                                        {/* as="button" */}
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => {this.handleEdibleOrInedibleChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
+                                                Inedible
+                                            </div>
+                                        </DropdownItem>
+
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => {this.handleEdibleOrInedibleChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
+                                                Surplus
+                                            </div>
+                                        </DropdownItem>
+
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </DDMenuStyle>
                         </InputGroup>
                     </Form.Group>
 
@@ -453,7 +462,7 @@ class FoodWaste extends Component {
                         </Modal.Footer>
                     </Modal> */}
 
-                <div>{this.state.edibleOrInedible === "Edible" || this.state.edibleOrInedible === "Select Edible or Inedible" ? 
+                <div>{this.state.edibleOrInedible === "Edible" || this.state.edibleOrInedible === "Select" || this.state.edibleOrInedible === "Surplus" ? 
                     <div>
                         <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
                         <Form.Group className= "form-layout" 
@@ -565,7 +574,7 @@ class FoodWaste extends Component {
                             }}
                         >
                         <InputGroup>
-                            <Form.Control id="expiryDate" placeholder="DD/MM/YYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
+                            <Form.Control id="expiryDate" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
                         </InputGroup>
                         </Form.Group>
 
