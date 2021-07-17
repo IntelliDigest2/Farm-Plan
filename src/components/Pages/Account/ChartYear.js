@@ -95,6 +95,7 @@ class Chart1 extends Component {
             var month = doc.data().MONTH
             var weight = doc.data().weight
             var wu = doc.data().WEIGHTUNIT
+            var isSurplus = doc.data().EDIBLEORINEDIBLE
 
             var newWeight = 0
   
@@ -112,58 +113,108 @@ class Chart1 extends Component {
               // console.log(newWeight)
             }
 
-            var carbCon = doc.data().CARBSCONTENT
-            var proCon = doc.data().PROTEINCONTENT
-            var fatCon = doc.data().FATCONTENT
-            var fibCon = doc.data().FIBRECONTENT
+            // var carbCon = doc.data().CARBSCONTENT
+            // var proCon = doc.data().PROTEINCONTENT
+            // var fatCon = doc.data().FATCONTENT
+            // var fibCon = doc.data().FIBRECONTENT
 
-            if (year === time && month === "Jan" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            if (year === time && month === "Jan" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 janWeight: prevState.janWeight += newWeight
               }));
-            } else if (year === time && month === "Feb" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Feb" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 febWeight: prevState.febWeight += newWeight
               }));
-            } else if (year === time && month === "Mar" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Mar" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 marWeight: prevState.marWeight += newWeight
               }));
-            } else if (year === time && month === "Apr" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Apr" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 aprWeight: prevState.aprWeight += newWeight
               }));
-            } else if (year === time && month === "May" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "May" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 mayWeight: prevState.mayWeight += newWeight
               }));
-            } else if (year === time && month === "Jun" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Jun" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 junWeight: prevState.junWeight += newWeight
               }));
-            } else if (year === time && month === "Jul" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Jul" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 julWeight: prevState.julWeight += newWeight
               }));
-            } else if (year === time && month === "Aug" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Aug" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 augWeight: prevState.augWeight += newWeight
               }));
-            } else if (year === time && month === "Sep" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Sep" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 sepWeight: prevState.sepWeight += newWeight
               }));
-            } else if (year === time && month === "Oct" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Oct" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 octWeight: prevState.octWeight += newWeight
               }));
-            } else if (year === time && month === "Nov" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Nov" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 novWeight: prevState.novWeight += newWeight
               }));
-            } else if (year === time && month === "Dec" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+            } else if (year === time && month === "Dec" && isSurplus !== "Surplus"){
               this.setState( (prevState) => ({
                 decWeight: prevState.decWeight += newWeight
+              }));
+            }
+            
+            else if (year === time && month === "Jan" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                janWeight: prevState.janWeight -= newWeight
+              }));
+            } else if (year === time && month === "Feb" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                febWeight: prevState.febWeight -= newWeight
+              }));
+            } else if (year === time && month === "Mar" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                marWeight: prevState.marWeight -= newWeight
+              }));
+            } else if (year === time && month === "Apr" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                aprWeight: prevState.aprWeight -= newWeight
+              }));
+            } else if (year === time && month === "May" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                mayWeight: prevState.mayWeight -= newWeight
+              }));
+            } else if (year === time && month === "Jun" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                junWeight: prevState.junWeight -= newWeight
+              }));
+            } else if (year === time && month === "Jul" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                julWeight: prevState.julWeight -= newWeight
+              }));
+            } else if (year === time && month === "Aug" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                augWeight: prevState.augWeight -= newWeight
+              }));
+            } else if (year === time && month === "Sep" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                sepWeight: prevState.sepWeight -= newWeight
+              }));
+            } else if (year === time && month === "Oct" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                octWeight: prevState.octWeight -= newWeight
+              }));
+            } else if (year === time && month === "Nov" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                novWeight: prevState.novWeight -= newWeight
+              }));
+            } else if (year === time && month === "Dec" && isSurplus === "Surplus"){
+              this.setState( (prevState) => ({
+                decWeight: prevState.decWeight -= newWeight
               }));
             }
 

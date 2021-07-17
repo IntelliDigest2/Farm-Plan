@@ -107,6 +107,7 @@ class Account extends Component {
               
               <div><BGroup>
                 <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
+                {/* <BStyle><Button className="custom-btn" as={Link} to="/browse-products">Browse Products</Button></BStyle> */}
               </BGroup>
               
               <BGroup>

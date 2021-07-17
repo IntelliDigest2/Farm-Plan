@@ -35,6 +35,8 @@ import Chart12 from "./components/Pages/Account/ChartDayCost";
 
 import FoodReduction from "./components/Pages/FoodReduction";
 
+// import BrowseProducts from "./components/Pages/Account/BrowseProducts";
+
 import { connect } from 'react-redux';
 import { auth } from "./config/fbConfig";
 import { BrowserView, MobileView, isMobile, isBrowser } from 'react-device-detect';
@@ -109,6 +111,9 @@ class App extends Component {
             <Route path="/chart/dayCost" exact component={Chart12} />
 
             <Route path="/food-reduction" component={FoodReduction} />
+
+            {/* <Route path="/browse-products" component={BrowseProducts} /> */}
+
             <Route component={NotFound} />
           </Switch>
           </div>

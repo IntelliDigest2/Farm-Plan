@@ -1,5 +1,5 @@
-import React, {Component, useState, useEffect} from 'react';
-import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Modal, Dropdown, ButtonGroup} from 'react-bootstrap';
+import React, {Component} from 'react';
+import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Modal, Dropdown} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { startData, createFoodSurplusData, createFoodWasteData } from '../../../store/actions/dataActions';
 import { Redirect } from 'react-router-dom';
@@ -11,11 +11,13 @@ import styled from "styled-components";
 import moment from "moment"
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import { BrowserView, MobileView, isMobile, isBrowser } from 'react-device-detect';
-import {fs} from "../../../config/fbConfig"
-import {BsQuestionCircle, BsFillQuestionCircleFill} from "react-icons/bs"
+// import {fs} from "../../../config/fbConfig"
+import {BsFillQuestionCircleFill} from "react-icons/bs"
 import { Divider } from '@material-ui/core';
 import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
+// import {Autocomplete} from '@material-ui/lab';
+// import {TextField} from '@material-ui/core';
 
 // import {Chart} from "react-google-charts"
 
@@ -85,7 +87,11 @@ class FoodWaste extends Component {
 
         meal: "Select Meal",
 
-        expiryDate: ""
+        expiryDate: "",
+
+        // autocompleteEntries: [
+        //     {}
+        // ]
     }
 
     // handleChartSubmit(label, column){
@@ -96,11 +102,13 @@ class FoodWaste extends Component {
 
     clearEFWForm = () => {
         this.setState({
+            meal: "Select Meal",
             foodName: "",
             edibleOrInedible: "Select",
             weightOfEdibleFoodWaste: 0,
             weightType: "Select Unit",
             producedLocally: "Select Local or Non-local",
+            expiryDate: "",
             // edibleFoodWasteType: "Select Type",
             carbsContent: 0,
             proteinContent: 0,
@@ -110,7 +118,8 @@ class FoodWaste extends Component {
             edibleGHG: 0,
             costOfEdibleFoodWaste: 0,
             dropDownValueEFW: "Select Currency",
-            currencyMultiplierEFW: 0
+            currencyMultiplierEFW: 0,
+            formHeight: "805px"
         });
     }
 
@@ -257,11 +266,23 @@ class FoodWaste extends Component {
 
     handleFormHeight(text){
         if (text === "Select" || text === "Edible" || text === "Surplus"){
-            this.setState({formHeight: "1210px"})
+            this.setState({formHeight: "805px"})
         } else if (text === "Inedible"){
-            this.setState({formHeight: "685px"})
+            this.setState({formHeight: "670px"})
         }
     }
+
+    // handleFoodNameEntry(text){
+    //     this.setState({
+    //         foodName: text
+    //     })
+    // }
+
+    // handleAutoCompleteValueEntry(text){
+    //     this.setState( (prevState) => ({
+    //         autocompleteEntries: {...prevState.autocompleteEntries, text}
+    //     }));
+    // }
 
     // handleFoodWasteSubmitMobile = (e) => {
     //     e.preventDefault();
@@ -279,10 +300,10 @@ class FoodWaste extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "1210px"})
+            this.setState({formWidth: "72vw", formHeight: "805px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "1210px"})
+            this.setState({formWidth: "261px", formHeight: "805px"})
         }
     }
 
@@ -395,6 +416,20 @@ class FoodWaste extends Component {
                     </InputGroup>
 
                     </Form.Group>
+
+                    {/* <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
+                    <Form.Group style={{padding: "0 10% 0 10%", paddingBottom: "20px", display: "flex"}}>
+                        <Autocomplete
+                            freeSolo 
+                            id="free-solo-demo"
+                            options={foodOptions}
+                            // getOptionLabel={(option) => option.name}
+                            style={{width: "100%"}}
+                            size="small"
+                            // onChange={(e) => this.handleFoodNameEntry(e.textContent)}
+                            renderInput={(params) => <TextField {...params} label="Enter Food Name" variant="outlined" />}
+                        />
+                    </Form.Group> */}
 
                     <Divider />
 
@@ -623,7 +658,7 @@ class FoodWaste extends Component {
                             </DropdownButton>
                         </InputGroup>
                         </Form.Group> */}
-                        <div>
+                        {/* <div>
                             <div style={{padding: "0 10% 0 10%", fontWeight: "bold"}}>Food Waste Composition<BsFillQuestionCircleFill onClick={() => this.setState({showComposition: true})} style={{marginLeft: '5px'}}/></div>
 
                             <Modal show={this.state.showComposition} onHide={() => this.setState({showComposition: !this.state.showComposition})}>
@@ -721,7 +756,7 @@ class FoodWaste extends Component {
                             </InputGroup>
                             </Form.Group>
 
-                        </div>
+                        </div> */}
 
                         <div style={{padding: "0 10% 0 10%"}}>Moisture Content<BsFillQuestionCircleFill onClick={() => this.setState({showMoisture: true})} style={{marginLeft: '5px'}}/></div>
 
@@ -973,7 +1008,7 @@ class FoodWaste extends Component {
                             </InputGroup.Append>
                         </InputGroup>
                         </Form.Group>
-
+                        {/* this.handleFoodWasteSubmit(e); this.handleAutoCompleteValueEntry(this.state.foodName);*/}
                         <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
                             Update
                         </Button>
@@ -1308,6 +1343,14 @@ class FoodWaste extends Component {
         }
     }
 }
+
+const foodOptions = [
+    "Cereal",
+    "Bacon",
+    "Baked Beans",
+    "Porridge",
+    "Pancake"
+]
 
 const mapStateToProps = (state) => {
     return{

@@ -12,10 +12,13 @@ class Chart8 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        totalCarbsGHG: 0,
-        totalProteinGHG: 0,
-        totalFatGHG: 0,
-        totalFibreGHG: 0,
+        // totalCarbsGHG: 0,
+        // totalProteinGHG: 0,
+        // totalFatGHG: 0,
+        // totalFibreGHG: 0,
+        totalBreakfastGHG: 0,
+        totalLunchGHG: 0,
+        totalDinnerGHG: 0,
     }
 
     fetchData = async () => {
@@ -27,19 +30,49 @@ class Chart8 extends Component {
 
                 var fd = doc.data().FULLDATE
                 var ghg = doc.data().GHG
+                var meal = doc.data().MEAL
+                var isSurplus = doc.data().EDIBLEORINEDIBLE
 
-                var carbCon = doc.data().CARBSCONTENT
-                var proCon = doc.data().PROTEINCONTENT
-                var fatCon = doc.data().FATCONTENT
-                var fibCon = doc.data().FIBRECONTENT 
+                // var carbCon = doc.data().CARBSCONTENT
+                // var proCon = doc.data().PROTEINCONTENT
+                // var fatCon = doc.data().FATCONTENT
+                // var fibCon = doc.data().FIBRECONTENT 
 
-                if (fd === time && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                // if (fd === time && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                //     this.setState( (prevState) => ({
+                //         totalCarbsGHG: prevState.totalCarbsGHG += Number((ghg*(carbCon/100)).toFixed(3)),
+                //         totalProteinGHG: prevState.totalProteinGHG += Number((ghg*(proCon/100)).toFixed(3)),
+                //         totalFatGHG: prevState.totalFatGHG += Number((ghg*(fatCon/100)).toFixed(3)),
+                //         totalFibreGHG: prevState.totalFibreGHG += Number((ghg*(fibCon/100)).toFixed(3)),
+                //     }))
+                // }
+
+                if (fd === time && meal === "Breakfast" && isSurplus !== "Surplus"){
                     this.setState( (prevState) => ({
-                        totalCarbsGHG: prevState.totalCarbsGHG += Number((ghg*(carbCon/100)).toFixed(3)),
-                        totalProteinGHG: prevState.totalProteinGHG += Number((ghg*(proCon/100)).toFixed(3)),
-                        totalFatGHG: prevState.totalFatGHG += Number((ghg*(fatCon/100)).toFixed(3)),
-                        totalFibreGHG: prevState.totalFibreGHG += Number((ghg*(fibCon/100)).toFixed(3)),
-                    }))
+                        totalBreakfastGHG: prevState.totalBreakfastGHG += ghg
+                    }));
+                } else if (fd === time && meal === "Lunch" && isSurplus !== "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalLunchGHG: prevState.totalLunchGHG += ghg
+                    }));
+                } else if (fd === time && meal === "Dinner" && isSurplus !== "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalDinnerGHG: prevState.totalDinnerGHG += ghg
+                    }));
+                } 
+                
+                else if (fd === time && meal === "Breakfast" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalBreakfastGHG: prevState.totalBreakfastGHG -= ghg
+                    }));
+                } else if (fd === time && meal === "Lunch" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalLunchGHG: prevState.totalLunchGHG -= ghg
+                    }));
+                } else if (fd === time && meal === "Dinner" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalDinnerGHG: prevState.totalDinnerGHG -= ghg
+                    }));
                 }
             })
 
@@ -70,18 +103,17 @@ class Chart8 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Food Wastage Type', 'Food Wastage GHG'],
-                                ['Carbohydrates', this.state.totalCarbsGHG],
-                                ['Protein', this.state.totalProteinGHG],
-                                ['Fat', this.state.totalFatGHG],
-                                ['Fibre', this.state.totalFibreGHG],
+                                ['Meal of the Day', 'Food Wastage GHG'],
+                                ['Breakfast', this.state.totalBreakfastGHG],
+                                ['Lunch', this.state.totalLunchGHG],
+                                ['Dinner', this.state.totalDinnerGHG],
                             ]}
                             options={{
                                 title: 'Today\'s Food Wastage GHG Performance (' + time + ')',
                                 chartArea: {width: '50%'},
                                 colors: ['#aab41e'],
                                 hAxis: {
-                                    title: 'Food Wastage Type',
+                                    title: 'Meal of the Day',
                                     minValue: 0,
                                 },
                                 vAxis: {
@@ -101,11 +133,10 @@ class Chart8 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Food Wastage Type', 'GHG '],
-                                ['Carbs', this.state.totalCarbsGHG],
-                                ['Protein', this.state.totalProteinGHG],
-                                ['Fat', this.state.totalFatGHG],
-                                ['Fibre', this.state.totalFibreGHG],
+                                ['Meal of the Day', 'GHG '],
+                                ['Breakfast', this.state.totalBreakfastGHG],
+                                ['Lunch', this.state.totalLunchGHG],
+                                ['Dinner', this.state.totalDinnerGHG],
                             ]}
                             options={{
                                 title: 'Today\'s Food Wastage GHG Performance (' + time + ')',
@@ -113,7 +144,7 @@ class Chart8 extends Component {
                                 colors: ['#aab41e'],
                                 legend: "none",
                                 hAxis: {
-                                    title: 'Food Wastage Type',
+                                    title: 'Meal of the Day',
                                     minValue: 0,
                                 },
                                 vAxis: {

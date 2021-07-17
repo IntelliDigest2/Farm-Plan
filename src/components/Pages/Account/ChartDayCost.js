@@ -12,10 +12,13 @@ class Chart12 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        totalCarbsCost: 0,
-        totalProteinCost: 0,
-        totalFatCost: 0,
-        totalFibreCost: 0,
+        // totalCarbsCost: 0,
+        // totalProteinCost: 0,
+        // totalFatCost: 0,
+        // totalFibreCost: 0,
+        totalBreakfastCost: 0,
+        totalLunchCost: 0,
+        totalDinnerCost: 0,
     }
 
     fetchData = async () => {
@@ -28,6 +31,8 @@ class Chart12 extends Component {
                 var fd = doc.data().FULLDATE
                 var cost = doc.data().COST
                 var curr = doc.data().CURRENCY
+                var meal = doc.data().MEAL
+                var isSurplus = doc.data().EDIBLEORINEDIBLE
 
                 var newCost = 0;
 
@@ -39,18 +44,46 @@ class Chart12 extends Component {
                     newCost = Number((cost/1.161).toFixed(2))
                 }
 
-                var carbCon = doc.data().CARBSCONTENT
-                var proCon = doc.data().PROTEINCONTENT
-                var fatCon = doc.data().FATCONTENT
-                var fibCon = doc.data().FIBRECONTENT 
+                // var carbCon = doc.data().CARBSCONTENT
+                // var proCon = doc.data().PROTEINCONTENT
+                // var fatCon = doc.data().FATCONTENT
+                // var fibCon = doc.data().FIBRECONTENT 
 
-                if (fd === time && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                // if (fd === time && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                //     this.setState( (prevState) => ({
+                //         totalCarbsCost: prevState.totalCarbsCost += Number((newCost*(carbCon/100)).toFixed(2)),
+                //         totalProteinCost: prevState.totalProteinCost += Number((newCost*(proCon/100)).toFixed(2)),
+                //         totalFatCost: prevState.totalFatCost += Number((newCost*(fatCon/100)).toFixed(2)),
+                //         totalFibreCost: prevState.totalFibreCost += Number((newCost*(fibCon/100)).toFixed(2)),
+                //     }))
+                // }
+
+                if (fd === time && meal === "Breakfast" && isSurplus === "Edible"){
                     this.setState( (prevState) => ({
-                        totalCarbsCost: prevState.totalCarbsCost += Number((newCost*(carbCon/100)).toFixed(2)),
-                        totalProteinCost: prevState.totalProteinCost += Number((newCost*(proCon/100)).toFixed(2)),
-                        totalFatCost: prevState.totalFatCost += Number((newCost*(fatCon/100)).toFixed(2)),
-                        totalFibreCost: prevState.totalFibreCost += Number((newCost*(fibCon/100)).toFixed(2)),
-                    }))
+                        totalBreakfastCost: prevState.totalBreakfastCost += newCost
+                    }));
+                } else if (fd === time && meal === "Lunch" && isSurplus === "Edible"){
+                    this.setState( (prevState) => ({
+                        totalLunchCost: prevState.totalLunchCost += newCost
+                    }));
+                } else if (fd === time && meal === "Dinner" && isSurplus === "Edible"){
+                    this.setState( (prevState) => ({
+                        totalDinnerCost: prevState.totalDinnerCost += newCost
+                    }));
+                }
+
+                else if (fd === time && meal === "Breakfast" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalBreakfastCost: prevState.totalBreakfastCost -= newCost
+                    }));
+                } else if (fd === time && meal === "Lunch" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalLunchCost: prevState.totalLunchCost -= newCost
+                    }));
+                } else if (fd === time && meal === "Dinner" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalDinnerCost: prevState.totalDinnerCost -= newCost
+                    }));
                 }
             })
 
@@ -81,18 +114,17 @@ class Chart12 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Food Wastage Type', 'Food Wastage Cost'],
-                                ['Carbohydrates', this.state.totalCarbsCost],
-                                ['Protein', this.state.totalProteinCost],
-                                ['Fat', this.state.totalFatCost],
-                                ['Fibre', this.state.totalFibreCost],
+                                ['Meal of the Day', 'Food Wastage Cost'],
+                                ['Breakfast', this.state.totalBreakfastCost],
+                                ['Lunch', this.state.totalLunchCost],
+                                ['Dinner', this.state.totalDinnerCost],
                             ]}
                             options={{
                                 title: 'Today\'s Food Wastage Cost Performance (' + time + ')',
                                 chartArea: {width: '50%'},
                                 colors: ['#aab41e'],
                                 hAxis: {
-                                    title: 'Food Wastage Type',
+                                    title: 'Meal of the Day',
                                     minValue: 0,
                                 },
                                 vAxis: {
@@ -112,11 +144,10 @@ class Chart12 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Food Wastage Type', 'Cost '],
-                                ['Carbs', this.state.totalCarbsCost],
-                                ['Protein', this.state.totalProteinCost],
-                                ['Fat', this.state.totalFatCost],
-                                ['Fibre', this.state.totalFibreCost],
+                                ['Meal of the Day', 'Cost '],
+                                ['Breakfast', this.state.totalBreakfastCost],
+                                ['Lunch', this.state.totalLunchCost],
+                                ['Dinner', this.state.totalDinnerCost],
                             ]}
                             options={{
                                 title: 'Today\'s Food Wastage Cost Performance (' + time + ')',
@@ -124,7 +155,7 @@ class Chart12 extends Component {
                                 colors: ['#aab41e'],
                                 legend: "none",
                                 hAxis: {
-                                    title: 'Food Wastage Type',
+                                    title: 'Meal of the Day',
                                     minValue: 0,
                                 },
                                 vAxis: {

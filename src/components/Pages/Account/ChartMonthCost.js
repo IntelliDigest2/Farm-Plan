@@ -31,6 +31,7 @@ class Chart10 extends Component {
                 var mdate = doc.data().MDATE
                 var cost = doc.data().COST
                 var curr = doc.data().CURRENCY
+                var isSurplus = doc.data().EDIBLEORINEDIBLE
 
                 var newCost = 0;
 
@@ -42,30 +43,44 @@ class Chart10 extends Component {
                     newCost = Number((cost/1.161).toFixed(2))
                 }
 
-                var carbCon = doc.data().CARBSCONTENT
-                var proCon = doc.data().PROTEINCONTENT
-                var fatCon = doc.data().FATCONTENT
-                var fibCon = doc.data().FIBRECONTENT
+                // var carbCon = doc.data().CARBSCONTENT
+                // var proCon = doc.data().PROTEINCONTENT
+                // var fatCon = doc.data().FATCONTENT
+                // var fibCon = doc.data().FIBRECONTENT
 
-                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th")
-                && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Edible"){
                   this.setState( (prevState) => ({
                     week1Cost: prevState.week1Cost += newCost
                   }));
-                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th")
-                && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Edible"){
                   this.setState( (prevState) => ({
                     week2Cost: prevState.week2Cost += newCost
                   }));
-                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st")
-                && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Edible"){
                   this.setState( (prevState) => ({
                     week3Cost: prevState.week3Cost += newCost
                   }));
-                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st")
-                && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Edible"){
                   this.setState( (prevState) => ({
                     week4Cost: prevState.week4Cost += newCost
+                  }));
+                }
+
+                else if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Surplus"){
+                  this.setState( (prevState) => ({
+                    week1Cost: prevState.week1Cost -= newCost
+                  }));
+                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Surplus"){
+                  this.setState( (prevState) => ({
+                    week2Cost: prevState.week2Cost -= newCost
+                  }));
+                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Surplus"){
+                  this.setState( (prevState) => ({
+                    week3Cost: prevState.week3Cost -= newCost
+                  }));
+                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Surplus"){
+                  this.setState( (prevState) => ({
+                    week4Cost: prevState.week4Cost -= newCost
                   }));
                 }
             })

@@ -33,39 +33,70 @@ class Chart7 extends Component {
                 var month = doc.data().MONTH
                 var mdate = doc.data().MDATE
                 var ghg = doc.data().GHG
+                var isSurplus = doc.data().EDIBLEORINEDIBLE
 
-                var carbCon = doc.data().CARBSCONTENT
-                var proCon = doc.data().PROTEINCONTENT
-                var fatCon = doc.data().FATCONTENT
-                var fibCon = doc.data().FIBRECONTENT
+                // var carbCon = doc.data().CARBSCONTENT
+                // var proCon = doc.data().PROTEINCONTENT
+                // var fatCon = doc.data().FATCONTENT
+                // var fibCon = doc.data().FIBRECONTENT
 
-                if (week === time && day === "Mon" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                if (week === time && day === "Mon" && isSurplus !== "Surplus"){
                     this.setState( (prevState) => ({
                         mondayGHG: prevState.mondayGHG += ghg
                     }));
-                } else if (week === time && day === "Tue" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (week === time && day === "Tue" && isSurplus !== "Surplus"){
                     this.setState( (prevState) => ({
                         tuesdayGHG: prevState.tuesdayGHG += ghg
                     }));
-                } else if (week === time && day === "Wed" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (week === time && day === "Wed" && isSurplus !== "Surplus"){
                     this.setState( (prevState) => ({
                         wednesdayGHG: prevState.wednesdayGHG += ghg
                     }));
-                } else if (week === time && day === "Thu" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (week === time && day === "Thu" && isSurplus !== "Surplus"){
                     this.setState( (prevState) => ({
                         thursdayGHG: prevState.thursdayGHG += ghg
                     }));
-                } else if (week === time && day === "Fri" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (week === time && day === "Fri" && isSurplus !== "Surplus"){
                     this.setState( (prevState) => ({
                         fridayGHG: prevState.fridayGHG += ghg
                     }));
-                } else if (week === time && day === "Sat" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (week === time && day === "Sat" && isSurplus !== "Surplus"){
                     this.setState( (prevState) => ({
                         saturdayGHG: prevState.saturdayGHG += ghg
                     }));
-                } else if (week === time && day === "Sun" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+                } else if (week === time && day === "Sun" && isSurplus !== "Surplus"){
                     this.setState( (prevState) => ({
                         sundayGHG: prevState.sundayGHG += ghg
+                    }));
+                }
+
+                else if (week === time && day === "Mon" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        mondayGHG: prevState.mondayGHG -= ghg
+                    }));
+                } else if (week === time && day === "Tue" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        tuesdayGHG: prevState.tuesdayGHG -= ghg
+                    }));
+                } else if (week === time && day === "Wed" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        wednesdayGHG: prevState.wednesdayGHG -= ghg
+                    }));
+                } else if (week === time && day === "Thu" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        thursdayGHG: prevState.thursdayGHG -= ghg
+                    }));
+                } else if (week === time && day === "Fri" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        fridayGHG: prevState.fridayGHG -= ghg
+                    }));
+                } else if (week === time && day === "Sat" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        saturdayGHG: prevState.saturdayGHG -= ghg
+                    }));
+                } else if (week === time && day === "Sun" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        sundayGHG: prevState.sundayGHG -= ghg
                     }));
                 }
             })

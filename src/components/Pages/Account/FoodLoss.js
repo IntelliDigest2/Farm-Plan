@@ -54,9 +54,6 @@ class FoodLoss extends Component {
         weightType: "Select Unit",
         weightMultiplier: 0,
 
-        weightType: "Select Unit",
-        weightMultiplier: 0,
-
         showComposition: false,
         showMoisture: false,
 

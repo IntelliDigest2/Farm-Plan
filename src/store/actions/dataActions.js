@@ -46,7 +46,10 @@ export const createFoodWasteData =  (data) => {
         const profile = getState().firebase.profile;
         const auth = getState().firebase.auth;
 
-        const FOODNAME = data.foodName;
+        const MEAL = data.meal;
+
+        // const FOODNAME = data.foodName;
+
         const EDIBLEORINEDIBLE = data.edibleOrInedible;
         const LOCALORNOT = data.producedLocally;
         const GHG = data.edibleGHG*data.weightMultiplier;
@@ -56,12 +59,16 @@ export const createFoodWasteData =  (data) => {
         const MDATE = data.chartSubmissionDate;
         const YEAR = data.chartSubmissionYear;
         const FULLDATE = data.chartSubmissionFullDate;
-        const CARBSCONTENT = data.carbsContent;
-        const PROTEINCONTENT = data.proteinContent;
-        const FATCONTENT = data.fatContent;
-        const FIBRECONTENT = data.fibreContent;
+
+        // const CARBSCONTENT = data.carbsContent;
+        // const PROTEINCONTENT = data.proteinContent;
+        // const FATCONTENT = data.fatContent;
+        // const FIBRECONTENT = data.fibreContent;
+
         // const FWTYPE = data.edibleFoodWasteType;
-        // const MOISTURE = data.edibleMoisture;
+
+        const EXPIRYDATE = data.expiryDate;
+        const MOISTURE = data.edibleMoisture;
         const CURRENCY = data.dropDownValueEFW;
         const COST = (data.costOfEdibleFoodWaste*data.weightMultiplier*data.currencyMultiplierEFW).toFixed(2);
         const WEIGHTUNIT = data.weightType;
@@ -1492,7 +1499,10 @@ export const createFoodWasteData =  (data) => {
         GHG: GHG,
         weight: Number(data.weightOfEdibleFoodWaste),
         type: t,
-        FOODNAME: FOODNAME,
+
+        // FOODNAME: FOODNAME,
+
+        MEAL: MEAL,
         EDIBLEORINEDIBLE: EDIBLEORINEDIBLE,
         LOCALORNOT: LOCALORNOT,
         WDAY: WDAY,
@@ -1501,12 +1511,16 @@ export const createFoodWasteData =  (data) => {
         MDATE: MDATE,
         YEAR: YEAR,
         FULLDATE: FULLDATE,
-        CARBSCONTENT: Number(CARBSCONTENT),
-        PROTEINCONTENT: Number(PROTEINCONTENT),
-        FATCONTENT: Number(FATCONTENT),
-        FIBRECONTENT: Number(FIBRECONTENT),
+
+        // CARBSCONTENT: Number(CARBSCONTENT),
+        // PROTEINCONTENT: Number(PROTEINCONTENT),
+        // FATCONTENT: Number(FATCONTENT),
+        // FIBRECONTENT: Number(FIBRECONTENT),
+
         // FWTYPE: FWTYPE,
-        // MOISTURE: MOISTURE,
+
+        EXPIRYDATE: EXPIRYDATE,
+        MOISTURE: MOISTURE,
         CURRENCY: CURRENCY,
         COST: Number(COST),
         WEIGHTUNIT: WEIGHTUNIT,
