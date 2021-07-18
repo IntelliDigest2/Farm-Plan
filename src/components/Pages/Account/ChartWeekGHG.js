@@ -70,35 +70,6 @@ class Chart7 extends Component {
                     }));
                 }
 
-                else if (week === time && day === "Mon" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        mondayGHG: prevState.mondayGHG -= ghg
-                    }));
-                } else if (week === time && day === "Tue" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        tuesdayGHG: prevState.tuesdayGHG -= ghg
-                    }));
-                } else if (week === time && day === "Wed" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        wednesdayGHG: prevState.wednesdayGHG -= ghg
-                    }));
-                } else if (week === time && day === "Thu" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        thursdayGHG: prevState.thursdayGHG -= ghg
-                    }));
-                } else if (week === time && day === "Fri" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        fridayGHG: prevState.fridayGHG -= ghg
-                    }));
-                } else if (week === time && day === "Sat" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        saturdayGHG: prevState.saturdayGHG -= ghg
-                    }));
-                } else if (week === time && day === "Sun" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        sundayGHG: prevState.sundayGHG -= ghg
-                    }));
-                }
             })
 
           })

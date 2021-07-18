@@ -132,36 +132,6 @@ class Chart3 extends Component {
                   sundayWeight: prevState.sundayWeight += newWeight
                 }));
               } 
-              
-              else if (week === time && day === "Mon" && isSurplus === "Surplus"){
-                this.setState( (prevState) => ({
-                  mondayWeight: prevState.mondayWeight -= newWeight
-                }));
-              } else if (week === time && day === "Tue" && isSurplus === "Surplus"){
-                this.setState( (prevState) => ({
-                  tuesdayWeight: prevState.tuesdayWeight -= newWeight
-                }));
-              } else if (week === time && day === "Wed" && isSurplus === "Surplus"){
-                this.setState( (prevState) => ({
-                  wednesdayWeight: prevState.wednesdayWeight -= newWeight
-                }));
-              } else if (week === time && day === "Thu" && isSurplus === "Surplus"){
-                this.setState( (prevState) => ({
-                  thursdayWeight: prevState.thursdayWeight -= newWeight
-                })); 
-              } else if (week === time && day === "Fri" && isSurplus === "Surplus"){
-                this.setState( (prevState) => ({
-                  fridayWeight: prevState.fridayWeight -= newWeight
-                }));
-              } else if (week === time && day === "Sat" && isSurplus === "Surplus"){
-                this.setState( (prevState) => ({
-                  saturdayWeight: prevState.saturdayWeight -= newWeight
-                }));
-              } else if (week === time && day === "Sun" && isSurplus === "Surplus"){
-                this.setState( (prevState) => ({
-                  sundayWeight: prevState.sundayWeight -= newWeight
-                }));
-              }
 
             })
           })

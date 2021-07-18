@@ -92,56 +92,7 @@ class Chart5 extends Component {
                       decGHG: prevState.decGHG += ghg
                     }));
                   }
-
-                  else if (year === time && month === "Jan" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      janGHG: prevState.janGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Feb" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      febGHG: prevState.febGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Mar" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      marGHG: prevState.marGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Apr" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      aprGHG: prevState.aprGHG -= ghg
-                    }));
-                  } else if (year === time && month === "May" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      mayGHG: prevState.mayGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Jun" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      junGHG: prevState.junGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Jul" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      julGHG: prevState.julGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Aug" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      augGHG: prevState.augGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Sep" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      sepGHG: prevState.sepGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Oct" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      octGHG: prevState.octGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Nov" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      novGHG: prevState.novGHG -= ghg
-                    }));
-                  } else if (year === time && month === "Dec" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      decGHG: prevState.decGHG -= ghg
-                    }));
-                  }
+                  
             })
 
           })

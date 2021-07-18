@@ -8,7 +8,7 @@ import { fs } from '../../../config/fbConfig'
 
 const time = moment().format("ddd MMM Do YYYY")
 
-class Chart12 extends Component {
+class Chart24 extends Component {
 
     state = {
         uid: this.props.auth.uid,
@@ -16,9 +16,9 @@ class Chart12 extends Component {
         // totalProteinCost: 0,
         // totalFatCost: 0,
         // totalFibreCost: 0,
-        totalBreakfastCost: 0,
-        totalLunchCost: 0,
-        totalDinnerCost: 0,
+        totalBreakfastSurplusCost: 0,
+        totalLunchSurplusCost: 0,
+        totalDinnerSurplusCost: 0,
     }
 
     fetchData = async () => {
@@ -58,20 +58,33 @@ class Chart12 extends Component {
                 //     }))
                 // }
 
-                if (fd === time && meal === "Breakfast" && isSurplus === "Edible"){
+                // if (fd === time && meal === "Breakfast" && isSurplus === "Edible"){
+                //     this.setState( (prevState) => ({
+                //         totalBreakfastCost: prevState.totalBreakfastCost += newCost
+                //     }));
+                // } else if (fd === time && meal === "Lunch" && isSurplus === "Edible"){
+                //     this.setState( (prevState) => ({
+                //         totalLunchCost: prevState.totalLunchCost += newCost
+                //     }));
+                // } else if (fd === time && meal === "Dinner" && isSurplus === "Edible"){
+                //     this.setState( (prevState) => ({
+                //         totalDinnerCost: prevState.totalDinnerCost += newCost
+                //     }));
+                // }
+
+                if (fd === time && meal === "Breakfast" && isSurplus === "Surplus"){
                     this.setState( (prevState) => ({
-                        totalBreakfastCost: prevState.totalBreakfastCost += newCost
+                        totalBreakfastSurplusCost: prevState.totalBreakfasSurplusCost += newCost
                     }));
-                } else if (fd === time && meal === "Lunch" && isSurplus === "Edible"){
+                } else if (fd === time && meal === "Lunch" && isSurplus === "Surplus"){
                     this.setState( (prevState) => ({
-                        totalLunchCost: prevState.totalLunchCost += newCost
+                        totalLunchSurplusCost: prevState.totalLunchSurplusCost += newCost
                     }));
-                } else if (fd === time && meal === "Dinner" && isSurplus === "Edible"){
+                } else if (fd === time && meal === "Dinner" && isSurplus === "Surplus"){
                     this.setState( (prevState) => ({
-                        totalDinnerCost: prevState.totalDinnerCost += newCost
+                        totalDinnerSurplusCost: prevState.totalDinnerSurplusCost += newCost
                     }));
                 }
-
             })
 
           })
@@ -101,13 +114,13 @@ class Chart12 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Meal of the Day', 'Food Wastage Cost'],
-                                ['Breakfast', this.state.totalBreakfastCost],
-                                ['Lunch', this.state.totalLunchCost],
-                                ['Dinner', this.state.totalDinnerCost],
+                                ['Meal of the Day', 'Food Surplus Costs Saved'],
+                                ['Breakfast', this.state.totalBreakfastSurplusCost],
+                                ['Lunch', this.state.totalLunchSurplusCost],
+                                ['Dinner', this.state.totalDinnerSurplusCost],
                             ]}
                             options={{
-                                title: 'Today\'s Food Wastage Cost Performance (' + time + ')',
+                                title: 'Today\'s Food Surplus Costs Saved Performance (' + time + ')',
                                 chartArea: {width: '50%'},
                                 colors: ['#aab41e'],
                                 hAxis: {
@@ -115,7 +128,7 @@ class Chart12 extends Component {
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Cost of Food Wastage (GBP (£))'
+                                    title: 'Costs Saved from Food Surplus (GBP (£))'
                                 }
                             }}
                             legendToggle
@@ -131,13 +144,13 @@ class Chart12 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Meal of the Day', 'Cost '],
-                                ['Breakfast', this.state.totalBreakfastCost],
-                                ['Lunch', this.state.totalLunchCost],
-                                ['Dinner', this.state.totalDinnerCost],
+                                ['Meal of the Day', 'Costs Saved '],
+                                ['Breakfast', this.state.totalBreakfastSurplusCost],
+                                ['Lunch', this.state.totalLunchSurplusCost],
+                                ['Dinner', this.state.totalDinnerSurplusCost],
                             ]}
                             options={{
-                                title: 'Today\'s Food Wastage Cost Performance (' + time + ')',
+                                title: 'Today\'s Food Surplus Costs Saved Performance (' + time + ')',
                                 chartArea: {width: '50%'},
                                 colors: ['#aab41e'],
                                 legend: "none",
@@ -146,7 +159,7 @@ class Chart12 extends Component {
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Cost of Food Wastage (GBP (£))'
+                                    title: 'Costs Saved from Food Surplus (GBP (£))'
                                 }
                             }}
                         />
@@ -180,4 +193,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart12);
+export default connect(mapStateToProps, null)(Chart24);

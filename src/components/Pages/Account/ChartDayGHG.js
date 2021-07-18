@@ -61,19 +61,6 @@ class Chart8 extends Component {
                     }));
                 } 
                 
-                else if (fd === time && meal === "Breakfast" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        totalBreakfastGHG: prevState.totalBreakfastGHG -= ghg
-                    }));
-                } else if (fd === time && meal === "Lunch" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        totalLunchGHG: prevState.totalLunchGHG -= ghg
-                    }));
-                } else if (fd === time && meal === "Dinner" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        totalDinnerGHG: prevState.totalDinnerGHG -= ghg
-                    }));
-                }
             })
 
           })

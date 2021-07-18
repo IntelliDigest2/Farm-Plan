@@ -79,35 +79,6 @@ class Chart11 extends Component {
                     }));
                 }
 
-                else if (week === time && day === "Mon" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        mondayCost: prevState.mondayCost -= newCost
-                    }));
-                } else if (week === time && day === "Tue" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        tuesdayCost: prevState.tuesdayCost -= newCost
-                    }));
-                } else if (week === time && day === "Wed" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        wednesdayCost: prevState.wednesdayCost -= newCost
-                    }));
-                } else if (week === time && day === "Thu" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        thursdayCost: prevState.thursdayCost -= newCost
-                    }));
-                } else if (week === time && day === "Fri" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        fridayCost: prevState.fridayCost -= newCost
-                    }));
-                } else if (week === time && day === "Sat" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        saturdayCost: prevState.saturdayCost -= newCost
-                    }));
-                } else if (week === time && day === "Sun" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                        sundayCost: prevState.sundayCost -= newCost
-                    }));
-                }
             })
 
           })

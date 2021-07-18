@@ -104,55 +104,6 @@ class Chart9 extends Component {
                     }));
                   }
 
-                  else if (year === time && month === "Jan" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      janCost: prevState.janCost -= newCost
-                    }));
-                  } else if (year === time && month === "Feb" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      febCost: prevState.febCost -= newCost
-                    }));
-                  } else if (year === time && month === "Mar" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      marCost: prevState.marCost -= newCost
-                    }));
-                  } else if (year === time && month === "Apr" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      aprCost: prevState.aprCost -= newCost
-                    }));
-                  } else if (year === time && month === "May" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      mayCost: prevState.mayCost -= newCost
-                    }));
-                  } else if (year === time && month === "Jun" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      junCost: prevState.junCost -= newCost
-                    }));
-                  } else if (year === time && month === "Jul" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      julCost: prevState.julCost -= newCost
-                    }));
-                  } else if (year === time && month === "Aug" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      augCost: prevState.augCost -= newCost
-                    }));
-                  } else if (year === time && month === "Sep" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      sepCost: prevState.sepCost -= newCost
-                    }));
-                  } else if (year === time && month === "Oct" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      octCost: prevState.octCost -= newCost
-                    }));
-                  } else if (year === time && month === "Nov" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      novCost: prevState.novCost -= newCost
-                    }));
-                  } else if (year === time && month === "Dec" && isSurplus === "Surplus"){
-                    this.setState( (prevState) => ({
-                      decCost: prevState.decCost -= newCost
-                    }));
-                  }
             })
 
           })

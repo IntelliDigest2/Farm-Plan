@@ -9,14 +9,14 @@ import { fs } from '../../../config/fbConfig'
 const time = moment().format("MMM")
 const fullMonth = moment().format("MMMM")
 
-class Chart10 extends Component {
+class Chart18 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        week1Cost: 0,
-        week2Cost: 0,
-        week3Cost: 0,
-        week4Cost: 0,
+        week1SurplusGHG: 0,
+        week2SurplusGHG: 0,
+        week3SurplusGHG: 0,
+        week4SurplusGHG: 0,
         monthEnd: ""
     }
 
@@ -29,43 +29,49 @@ class Chart10 extends Component {
 
                 var month = doc.data().MONTH
                 var mdate = doc.data().MDATE
-                var cost = doc.data().COST
-                var curr = doc.data().CURRENCY
+                var ghg = doc.data().GHG
                 var isSurplus = doc.data().EDIBLEORINEDIBLE
-
-                var newCost = 0;
-
-                if (curr === "GBP (£)"){
-                    newCost = Number(cost*1)
-                } else if (curr === "USD ($)"){
-                    newCost = Number((cost/1.404).toFixed(2))
-                } else if (curr === "EUR (€)"){
-                    newCost = Number((cost/1.161).toFixed(2))
-                }
 
                 // var carbCon = doc.data().CARBSCONTENT
                 // var proCon = doc.data().PROTEINCONTENT
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Edible"){
+                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Surplus"){
                   this.setState( (prevState) => ({
-                    week1Cost: prevState.week1Cost += newCost
+                    week1SurplusGHG: prevState.week1SurplusGHG += ghg
                   }));
-                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Edible"){
+                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Surplus"){
                   this.setState( (prevState) => ({
-                    week2Cost: prevState.week2Cost += newCost
+                    week2SurplusGHG: prevState.week2SurplusGHG += ghg
                   }));
-                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Edible"){
+                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Surplus"){
                   this.setState( (prevState) => ({
-                    week3Cost: prevState.week3Cost += newCost
+                    week3SurplusGHG: prevState.week3SurplusGHG += ghg
                   }));
-                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Edible"){
+                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Surplus"){
                   this.setState( (prevState) => ({
-                    week4Cost: prevState.week4Cost += newCost
+                    week4SurplusGHG: prevState.week4SurplusGHG += ghg
                   }));
-                }
+                } 
 
+                // else if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Surplus"){
+                //   this.setState( (prevState) => ({
+                //     week1GHG: prevState.week1GHG -= ghg
+                //   }));
+                // } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Surplus"){
+                //   this.setState( (prevState) => ({
+                //     week2GHG: prevState.week2GHG -= ghg
+                //   }));
+                // } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Surplus"){
+                //   this.setState( (prevState) => ({
+                //     week3GHG: prevState.week3GHG -= ghg
+                //   }));
+                // } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Surplus"){
+                //   this.setState( (prevState) => ({
+                //     week4GHG: prevState.week4GHG -= ghg
+                //   }));
+                // }
             })
 
           })
@@ -103,14 +109,14 @@ class Chart10 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Week/Period', 'Food Wastage Cost'],
-                                ['1st-7th', this.state.week1Cost],
-                                ['8th-14th', this.state.week2Cost],
-                                ['15th-21st', this.state.week3Cost],
-                                ['22nd-'+this.state.monthEnd, this.state.week4Cost],
+                                ['Week/Period', 'Food Surplus GHG Saved'],
+                                ['1st-7th', this.state.week1SurplusGHG],
+                                ['8th-14th', this.state.week2SurplusGHG],
+                                ['15th-21st', this.state.week3SurplusGHG],
+                                ['22nd-'+this.state.monthEnd, this.state.week4SurplusGHG],
                             ]}
                             options={{
-                                title: 'This month\'s Food Wastage Cost Performance (' + fullMonth + ' 2021)',
+                                title: 'This month\'s Food Surplus GHG Saved Performance (' + fullMonth + ' 2021)',
                                 chartArea: {width: '50%'},
                                 colors: ['#aab41e'],
                                 hAxis: {
@@ -118,7 +124,7 @@ class Chart10 extends Component {
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Cost of Food Wastage (GBP (£))'
+                                    title: 'GHG Emissions Saved from Food Surplus (kg co2)'
                                 }
                             }}
                             legendToggle
@@ -134,14 +140,14 @@ class Chart10 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Week/Period', 'Cost '],
-                                ['1st-7th', this.state.week1Cost],
-                                ['8th-14th', this.state.week2Cost],
-                                ['15th-21st', this.state.week3Cost],
-                                ['22nd-'+this.state.monthEnd, this.state.week4Cost],
+                                ['Week/Period', 'GHG Saved '],
+                                ['1st-7th', this.state.week1SurplusGHG],
+                                ['8th-14th', this.state.week2SurplusGHG],
+                                ['15th-21st', this.state.week3SurplusGHG],
+                                ['22nd-'+this.state.monthEnd, this.state.week4SurplusGHG],
                             ]}
                             options={{
-                                title: 'Food Wastage Cost Performance (' + fullMonth + ' 2021)',
+                                title: 'Food Surplus GHG Saved Performance (' + fullMonth + ' 2021)',
                                 chartArea: {width: '50%'},
                                 colors: ['#aab41e'],
                                 legend: "none",
@@ -150,7 +156,7 @@ class Chart10 extends Component {
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Cost of Food Wastage (GBP (£))'
+                                    title: 'GHG Emissions Saved from Food Surplus (kg co2)'
                                 }
                             }}
                         />
@@ -184,4 +190,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart10);
+export default connect(mapStateToProps, null)(Chart18);

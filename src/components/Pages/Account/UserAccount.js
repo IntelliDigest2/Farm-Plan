@@ -114,13 +114,22 @@ class Account extends Component {
               <DDStyle><Dropdown>
 
                 {/* 'variant' value changes colour, not css(?) */}
-                <DropdownToggle className="custom-btn">View Food Waste Weight Performance Chart</DropdownToggle>
+                <DropdownToggle className="custom-btn">View Food Weight Performance Chart</DropdownToggle>
 
                 <DropdownMenu>
+                  <Dropdown.Header>Food Waste</Dropdown.Header>
                   <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
                   <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
                   <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
                   <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
+
+                  <Dropdown.Divider />
+
+                  <Dropdown.Header>Food Surplus</Dropdown.Header>
+                  <DropdownItem as={Link} to="/chart/daySurplus">Daily</DropdownItem>
+                  <DropdownItem as={Link} to="/chart/weekSurplus">Weekly</DropdownItem>
+                  <DropdownItem as={Link} to="/chart/monthSurplus">Monthly</DropdownItem>
+                  <DropdownItem as={Link} to="/chart/yearSurplus">Yearly</DropdownItem>
 
                     {/* <Dropdown.Divider />
 
@@ -145,12 +154,21 @@ class Account extends Component {
             <BGroup>
               <DDStyle>
                 <Dropdown>
-                  <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food Waste GHG Performance Chart</DropdownToggle>
+                  <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food GHG Performance Chart</DropdownToggle>
                   <DropdownMenu>
+                    <Dropdown.Header>Food Waste</Dropdown.Header>
                     <DropdownItem as={Link} to="/chart/dayGHG">Daily</DropdownItem>
                     <DropdownItem as={Link} to="/chart/weekGHG">Weekly</DropdownItem>
                     <DropdownItem as={Link} to="/chart/monthGHG">Monthly</DropdownItem>
                     <DropdownItem as={Link} to="/chart/yearGHG">Yearly</DropdownItem>
+
+                    <Dropdown.Divider />
+
+                    <Dropdown.Header>Food Surplus</Dropdown.Header>
+                    <DropdownItem as={Link} to="/chart/daySurplusGHG">Daily</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/weekSurplusGHG">Weekly</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/monthSurplusGHG">Monthly</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/yearSurplusGHG">Yearly</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </DDStyle>
@@ -159,12 +177,21 @@ class Account extends Component {
             <BGroup>
               <DDStyle>
                 <Dropdown>
-                  <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food Waste Cost Performance Chart</DropdownToggle>
+                  <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food Cost Performance Chart</DropdownToggle>
                   <DropdownMenu>
+                    <Dropdown.Header>Food Waste</Dropdown.Header>
                     <DropdownItem as={Link} to="/chart/dayCost">Daily</DropdownItem>
                     <DropdownItem as={Link} to="/chart/weekCost">Weekly</DropdownItem>
                     <DropdownItem as={Link} to="/chart/monthCost">Monthly</DropdownItem>
                     <DropdownItem as={Link} to="/chart/yearCost">Yearly</DropdownItem>
+
+                    <Dropdown.Divider />
+
+                    <Dropdown.Header>Food Surplus</Dropdown.Header>
+                    <DropdownItem as={Link} to="/chart/daySurplusCost">Daily</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/weekSurplusCost">Weekly</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/monthSurplusCost">Monthly</DropdownItem>
+                    <DropdownItem as={Link} to="/chart/yearSurplusCost">Yearly</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </DDStyle>

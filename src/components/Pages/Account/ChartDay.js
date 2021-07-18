@@ -126,20 +126,6 @@ class Chart4 extends Component {
               totalDinnerWeight: prevState.totalDinnerWeight += newWeight
             }));
           } 
-          
-          else if (fd === time && meal === "Breakfast" && isSurplus === "Surplus"){
-            this.setState( (prevState) => ({
-              totalBreakfastWeight: prevState.totalBreakfastWeight -= newWeight
-            }));
-          } else if (fd === time && meal === "Lunch" && isSurplus === "Surplus"){
-            this.setState( (prevState) => ({
-              totalLunchWeight: prevState.totalLunchWeight -= newWeight
-            }));
-          } else if (fd === time && meal === "Dinner" && isSurplus === "Surplus"){
-            this.setState( (prevState) => ({
-              totalDinnerWeight: prevState.totalDinnerWeight -= newWeight
-            }));
-          }
 
           // tempFwTypes.push(fwt)
           // tempFullDates.push(fd)

@@ -8,17 +8,13 @@ import { fs } from '../../../config/fbConfig'
 
 const time = moment().format("ddd MMM Do YYYY")
 
-class Chart12 extends Component {
+class Chart16 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        // totalCarbsCost: 0,
-        // totalProteinCost: 0,
-        // totalFatCost: 0,
-        // totalFibreCost: 0,
-        totalBreakfastCost: 0,
-        totalLunchCost: 0,
-        totalDinnerCost: 0,
+        totalBreakfastSurplus: 0,
+        totalLunchSurplus: 0,
+        totalDinnerSurplus: 0
     }
 
     fetchData = async () => {
@@ -29,19 +25,21 @@ class Chart12 extends Component {
             snapshot.forEach(doc => {
 
                 var fd = doc.data().FULLDATE
-                var cost = doc.data().COST
-                var curr = doc.data().CURRENCY
+                var weight = doc.data().weight
+                var wu = doc.data().WEIGHTUNIT
                 var meal = doc.data().MEAL
                 var isSurplus = doc.data().EDIBLEORINEDIBLE
 
-                var newCost = 0;
+                var newWeight = 0
 
-                if (curr === "GBP (£)"){
-                    newCost = Number(cost*1)
-                } else if (curr === "USD ($)"){
-                    newCost = Number((cost/1.404).toFixed(2))
-                } else if (curr === "EUR (€)"){
-                    newCost = Number((cost/1.161).toFixed(2))
+                if (wu === "kg" || wu === "l"){
+                  newWeight = Number(weight * 1)
+                } else if (wu === "g" || wu === "ml"){
+                  newWeight = Number((weight * 0.001).toFixed(3))
+                } else if (wu === "oz"){
+                  newWeight = Number((weight * 0.028).toFixed(3))
+                } else if (wu === "lbs"){
+                  newWeight = Number((weight * 0.454).toFixed(3))
                 }
 
                 // var carbCon = doc.data().CARBSCONTENT
@@ -58,20 +56,33 @@ class Chart12 extends Component {
                 //     }))
                 // }
 
-                if (fd === time && meal === "Breakfast" && isSurplus === "Edible"){
+                if (fd === time && meal === "Breakfast" && isSurplus === "Surplus"){
                     this.setState( (prevState) => ({
-                        totalBreakfastCost: prevState.totalBreakfastCost += newCost
+                        totalBreakfastSurplus: prevState.totalBreakfastSurplus += newWeight
                     }));
-                } else if (fd === time && meal === "Lunch" && isSurplus === "Edible"){
+                } else if (fd === time && meal === "Lunch" && isSurplus === "Surplus"){
                     this.setState( (prevState) => ({
-                        totalLunchCost: prevState.totalLunchCost += newCost
+                        totalLunchSurplus: prevState.totalLunchSurplus += newWeight
                     }));
-                } else if (fd === time && meal === "Dinner" && isSurplus === "Edible"){
+                } else if (fd === time && meal === "Dinner" && isSurplus === "Surplus"){
                     this.setState( (prevState) => ({
-                        totalDinnerCost: prevState.totalDinnerCost += newCost
+                        totalDinnerSurplus: prevState.totalDinnerSurplus += newWeight
                     }));
                 }
 
+                // else if (fd === time && meal === "Breakfast" && isSurplus === "Surplus"){
+                //     this.setState( (prevState) => ({
+                //         totalBreakfastCost: prevState.totalBreakfastCost -= newCost
+                //     }));
+                // } else if (fd === time && meal === "Lunch" && isSurplus === "Surplus"){
+                //     this.setState( (prevState) => ({
+                //         totalLunchCost: prevState.totalLunchCost -= newCost
+                //     }));
+                // } else if (fd === time && meal === "Dinner" && isSurplus === "Surplus"){
+                //     this.setState( (prevState) => ({
+                //         totalDinnerCost: prevState.totalDinnerCost -= newCost
+                //     }));
+                // }
             })
 
           })
@@ -83,7 +94,7 @@ class Chart12 extends Component {
     }
 
     render(){
-        
+
         const {auth} = this.props;
 
         return(
@@ -101,13 +112,13 @@ class Chart12 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Meal of the Day', 'Food Wastage Cost'],
-                                ['Breakfast', this.state.totalBreakfastCost],
-                                ['Lunch', this.state.totalLunchCost],
-                                ['Dinner', this.state.totalDinnerCost],
+                                ['Meal of the day', 'Food Surplus Weight Saved'],
+                                ['Breakfast', this.state.totalBreakfastSurplus],
+                                ['Lunch', this.state.totalLunchSurplus],
+                                ['Dinner', this.state.totalDinnerSurplus],
                             ]}
                             options={{
-                                title: 'Today\'s Food Wastage Cost Performance (' + time + ')',
+                                title: 'Today\'s Food Surplus Weight Saved Performance (' + time + ')',
                                 chartArea: {width: '50%'},
                                 colors: ['#aab41e'],
                                 hAxis: {
@@ -115,7 +126,7 @@ class Chart12 extends Component {
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Cost of Food Wastage (GBP (£))'
+                                    title: 'Weight of Food Saved (kg)'
                                 }
                             }}
                             legendToggle
@@ -131,13 +142,13 @@ class Chart12 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Meal of the Day', 'Cost '],
-                                ['Breakfast', this.state.totalBreakfastCost],
-                                ['Lunch', this.state.totalLunchCost],
-                                ['Dinner', this.state.totalDinnerCost],
+                                ['Meal of the day', 'Weight Saved '],
+                                ['Breakfast', this.state.totalBreakfastSurplus],
+                                ['Lunch', this.state.totalLunchSurplus],
+                                ['Dinner', this.state.totalDinnerSurplus],
                             ]}
                             options={{
-                                title: 'Today\'s Food Wastage Cost Performance (' + time + ')',
+                                title: 'Today\'s Food Surplus Weight Saved Performance (' + time + ')',
                                 chartArea: {width: '50%'},
                                 colors: ['#aab41e'],
                                 legend: "none",
@@ -146,7 +157,7 @@ class Chart12 extends Component {
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Cost of Food Wastage (GBP (£))'
+                                    title: 'Weight of Food Saved (kg)'
                                 }
                             }}
                         />
@@ -180,4 +191,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart12);
+export default connect(mapStateToProps, null)(Chart16);
