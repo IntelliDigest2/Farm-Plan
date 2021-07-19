@@ -13,11 +13,11 @@ import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import { BrowserView, MobileView, isMobile, isBrowser } from 'react-device-detect';
 // import {fs} from "../../../config/fbConfig"
 import {BsFillQuestionCircleFill} from "react-icons/bs"
-import { Divider } from '@material-ui/core';
+import { Divider, FormControlLabel } from '@material-ui/core';
 import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
-// import {Autocomplete} from '@material-ui/lab';
-// import {TextField} from '@material-ui/core';
+import {Autocomplete} from '@material-ui/lab';
+import {TextField, Checkbox} from '@material-ui/core';
 
 // import {Chart} from "react-google-charts"
 
@@ -89,6 +89,10 @@ class FoodWaste extends Component {
 
         expiryDate: "",
 
+        checkedA: false,
+        checkedB: false,
+        eatingInOrOut: ""
+
         // autocompleteEntries: [
         //     {}
         // ]
@@ -104,6 +108,9 @@ class FoodWaste extends Component {
         this.setState({
             meal: "Select Meal",
             foodName: "",
+            checkedA: false,
+            checkedB: false,
+            eatingInOrOut: "",
             edibleOrInedible: "Select",
             weightOfEdibleFoodWaste: 0,
             weightType: "Select Unit",
@@ -119,7 +126,7 @@ class FoodWaste extends Component {
             costOfEdibleFoodWaste: 0,
             dropDownValueEFW: "Select Currency",
             currencyMultiplierEFW: 0,
-            formHeight: "805px"
+            formHeight: "1000px"
         });
     }
 
@@ -266,9 +273,25 @@ class FoodWaste extends Component {
 
     handleFormHeight(text){
         if (text === "Select" || text === "Edible" || text === "Surplus"){
-            this.setState({formHeight: "805px"})
+            this.setState({formHeight: "1000px"})
         } else if (text === "Inedible"){
-            this.setState({formHeight: "670px"})
+            this.setState({formHeight: "860px"})
+        }
+    }
+
+    handleCheckboxTick = (e) => {
+        if (e.target.name === "checkedA"){
+            this.setState({ 
+                [e.target.name]: e.target.checked,
+                checkedB: !e.target.checked,
+                eatingInOrOut: "Eating In"
+            });
+        } else if (e.target.name === "checkedB"){
+            this.setState({
+                [e.target.name]: e.target.checked,
+                checkedA: !e.target.checked,
+                eatingInOrOut: "Eating Out"
+            })
         }
     }
 
@@ -300,10 +323,10 @@ class FoodWaste extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "805px"})
+            this.setState({formWidth: "72vw", formHeight: "1000px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "805px"})
+            this.setState({formWidth: "261px", formHeight: "1000px"})
         }
     }
 
@@ -323,6 +346,7 @@ class FoodWaste extends Component {
         // console.log(foodSurplus);
 
         // 284 - paddingBottom:
+
         return(
             <div 
                 // className="container"
@@ -380,7 +404,7 @@ class FoodWaste extends Component {
                     <Form.Group
                         style={{
                             padding: "0 10% 0 10%",
-                            paddingBottom: "20px",
+                            // paddingBottom: "20px",
                             display: "flex"
                         }}>
                     <InputGroup>
@@ -417,19 +441,20 @@ class FoodWaste extends Component {
 
                     </Form.Group>
 
-                    {/* <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
+                    <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
                     <Form.Group style={{padding: "0 10% 0 10%", paddingBottom: "20px", display: "flex"}}>
                         <Autocomplete
                             freeSolo 
-                            id="free-solo-demo"
+                            id="foodName"
                             options={foodOptions}
                             // getOptionLabel={(option) => option.name}
                             style={{width: "100%"}}
                             size="small"
-                            // onChange={(e) => this.handleFoodNameEntry(e.textContent)}
-                            renderInput={(params) => <TextField {...params} label="Enter Food Name" variant="outlined" />}
+                            onChange={(e) => this.setState({ foodName: e.target.textContent })}
+                            onInputChange={(e) => this.handleChange(e)}
+                            renderInput={(params) => ( <TextField {...params} label="Enter Food Name" variant="outlined" /> )}
                         />
-                    </Form.Group> */}
+                    </Form.Group>
 
                     <Divider />
 
@@ -499,6 +524,15 @@ class FoodWaste extends Component {
 
                 <div>{this.state.edibleOrInedible === "Edible" || this.state.edibleOrInedible === "Select" || this.state.edibleOrInedible === "Surplus" ? 
                     <div>
+
+                        <div style={{padding: "0 10% 0 10%"}}>Eating In or Out?</div>
+                        <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedA} name="checkedA" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating In" />
+                        </Form.Group>
+                        <Form.Group style={{padding: "0 10% 0 10%", marginTop: "-25px", display: "flex"}}>
+                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedB} name="checkedB" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating Out" />
+                        </Form.Group>
+
                         <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
                         <Form.Group className= "form-layout" 
                             style={{
@@ -507,7 +541,7 @@ class FoodWaste extends Component {
                                 justifyContent: 'space-around'}} 
                         >
                         <InputGroup>
-                            <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
+                            <Form.Control  type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
                             {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
                             <InputGroup.Append>
                                 <InputGroup.Text>kg</InputGroup.Text>
@@ -864,6 +898,15 @@ class FoodWaste extends Component {
                     </div> : 
                     
                     <div>
+
+                        <div style={{padding: "0 10% 0 10%"}}>Eating In or Out?</div>
+                        <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedA} name="checkedA" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating In" />
+                        </Form.Group>
+                        <Form.Group style={{padding: "0 10% 0 10%", marginTop: "-25px", display: "flex"}}>
+                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedB} name="checkedB" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating Out" />
+                        </Form.Group>
+
                         <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
                         <Form.Group className= "form-layout" 
                             style={{
@@ -1349,7 +1392,24 @@ const foodOptions = [
     "Bacon",
     "Baked Beans",
     "Porridge",
-    "Pancake"
+    "Pancake", 
+    "Beef",
+    "Chicken",
+    "Pork",
+    "Apple",
+    "Banana",
+    "Orange",
+    "Pear",
+    "Grapes",
+    "Chocolate",
+    "Crisps",
+    "Pasta",
+    "Bolognese",
+    "Potato",
+    "Chips",
+    "Milk",
+    "Fruit Juice",
+    "Onion",
 ]
 
 const mapStateToProps = (state) => {

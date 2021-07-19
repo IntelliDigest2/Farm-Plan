@@ -47,8 +47,8 @@ export const createFoodWasteData =  (data) => {
         const auth = getState().firebase.auth;
 
         const MEAL = data.meal;
-
-        // const FOODNAME = data.foodName;
+        const FOODNAME = data.foodName;
+        const EATINGINOROUT = data.eatingInOrOut
 
         const EDIBLEORINEDIBLE = data.edibleOrInedible;
         const LOCALORNOT = data.producedLocally;
@@ -1503,6 +1503,8 @@ export const createFoodWasteData =  (data) => {
         // FOODNAME: FOODNAME,
 
         MEAL: MEAL,
+        FOODNAME: FOODNAME,
+        EATINGINOROUT: EATINGINOROUT,
         EDIBLEORINEDIBLE: EDIBLEORINEDIBLE,
         LOCALORNOT: LOCALORNOT,
         WDAY: WDAY,
