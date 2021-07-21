@@ -129,7 +129,7 @@ class Chart22 extends Component {
                             options={{
                                 title: 'This month\'s Food Surplus Costs Saved Performance (' + fullMonth + ' 2021)',
                                 chartArea: {width: '50%'},
-                                colors: ['#aab41e'],
+                                colors: ['rgb(13, 27, 92)'],
                                 hAxis: {
                                     title: 'Week/Period of ' + fullMonth,
                                     minValue: 0,
@@ -160,7 +160,7 @@ class Chart22 extends Component {
                             options={{
                                 title: 'Food Surplus Costs Saved Performance (' + fullMonth + ' 2021)',
                                 chartArea: {width: '50%'},
-                                colors: ['#aab41e'],
+                                colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
                                 hAxis: {
                                     title: 'Week/Period of ' + fullMonth,

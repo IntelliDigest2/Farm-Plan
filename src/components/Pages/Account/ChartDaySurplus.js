@@ -120,7 +120,7 @@ class Chart16 extends Component {
                             options={{
                                 title: 'Today\'s Food Surplus Weight Saved Performance (' + time + ')',
                                 chartArea: {width: '50%'},
-                                colors: ['#aab41e'],
+                                colors: ['rgb(13, 27, 92)'],
                                 hAxis: {
                                     title: 'Meal of the Day',
                                     minValue: 0,
@@ -150,7 +150,7 @@ class Chart16 extends Component {
                             options={{
                                 title: 'Today\'s Food Surplus Weight Saved Performance (' + time + ')',
                                 chartArea: {width: '50%'},
-                                colors: ['#aab41e'],
+                                colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
                                 hAxis: {
                                     title: 'Meal of the Day',

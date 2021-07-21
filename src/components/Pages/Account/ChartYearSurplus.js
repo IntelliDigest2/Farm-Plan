@@ -338,7 +338,7 @@ class Chart13 extends Component {
                   // backgroundColor: 'lightgray',
                   title: 'This year\'s Food Surplus Weight Saved Performance (' + time + ')',
                   chartArea: { width: '75%' },
-                  colors: ['#aab41e'],
+                  colors: ['rgb(13, 27, 92)'],
                   hAxis: {
                     title: 'Month of ' + time,
                     minValue: 0,
@@ -404,7 +404,7 @@ class Chart13 extends Component {
                   title: 'Food Surplus Weight Saved Performance (' + time + ')',
                   chartArea: { width: '60%' },
                   legend: 'none',
-                  colors: ['#aab41e'],
+                  colors: ['rgb(13, 27, 92)'],
                   hAxis: {
                     title: 'Month of ' + time,
                     minValue: 0,

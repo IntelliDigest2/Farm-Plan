@@ -199,7 +199,7 @@ class Chart21 extends Component {
                             options={{
                                 title: 'This year\'s Food Surplus Costs Saved Performance (' + time + ')',
                                 chartArea: {width: '75%'},
-                                colors: ['#aab41e'],
+                                colors: ['rgb(13, 27, 92)'],
                                 hAxis: {
                                     title: 'Month of ' + time,
                                     minValue: 0,
@@ -238,7 +238,7 @@ class Chart21 extends Component {
                             options={{
                                 title: 'Food Surplus Costs Saved Performance (' + time + ')',
                                 chartArea: {width: '60%'},
-                                colors: ['#aab41e'],
+                                colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
                                 hAxis: {
                                     title: 'Month of ' + time,

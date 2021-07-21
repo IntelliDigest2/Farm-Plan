@@ -148,7 +148,7 @@ class Chart15 extends Component {
                             options={{
                                 title: 'This week\'s Food Surplus Weight Saved Performance (' + time + ')',
                                 chartArea: {width: '50%'},
-                                colors: ['#aab41e'],
+                                colors: ['rgb(13, 27, 92)'],
                                 hAxis: {
                                     title: 'Day of the Week',
                                     minValue: 0,
@@ -182,7 +182,7 @@ class Chart15 extends Component {
                             options={{
                                 title: 'This week\'s Food Surplus Weight Saved Performance (' + time + ')',
                                 chartArea: {width: '50%'},
-                                colors: ['#aab41e'],
+                                colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
                                 hAxis: {
                                     title: 'Day of the Week',

@@ -87,7 +87,7 @@ class Account extends Component {
             </BGroup>
 
               <BGroup>
-                <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
+                <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste & Surplus</Button></BStyle>
                 <BStyle><Button className="custom-btn" as={Link} to="/food-loss">Update Food Loss</Button></BStyle>
               </BGroup>
             
@@ -106,7 +106,7 @@ class Account extends Component {
               </BGroup></div> : 
               
               <div><BGroup>
-                <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste</Button></BStyle>
+                <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste & Surplus</Button></BStyle>
                 {/* <BStyle><Button className="custom-btn" as={Link} to="/browse-products">Browse Products</Button></BStyle> */}
               </BGroup>
               

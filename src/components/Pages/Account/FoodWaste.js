@@ -126,7 +126,7 @@ class FoodWaste extends Component {
             costOfEdibleFoodWaste: 0,
             dropDownValueEFW: "Select Currency",
             currencyMultiplierEFW: 0,
-            formHeight: "1000px"
+            formHeight: "1015px"
         });
     }
 
@@ -273,9 +273,9 @@ class FoodWaste extends Component {
 
     handleFormHeight(text){
         if (text === "Select" || text === "Edible" || text === "Surplus"){
-            this.setState({formHeight: "1000px"})
+            this.setState({formHeight: "1015px"})
         } else if (text === "Inedible"){
-            this.setState({formHeight: "860px"})
+            this.setState({formHeight: "875px"})
         }
     }
 
@@ -323,10 +323,10 @@ class FoodWaste extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "1000px"})
+            this.setState({formWidth: "72vw", formHeight: "1015px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "1000px"})
+            this.setState({formWidth: "261px", formHeight: "1015px"})
         }
     }
 
@@ -396,7 +396,7 @@ class FoodWaste extends Component {
                 
                 {/* onSubmit={this.handleFoodWasteSubmit}     */}
             <Form className= "form-layout" style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste & Surplus</h5>
                 
                 <div>
 
@@ -442,7 +442,7 @@ class FoodWaste extends Component {
                     </Form.Group>
 
                     <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
-                    <Form.Group style={{padding: "0 10% 0 10%", paddingBottom: "20px", display: "flex"}}>
+                    <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
                         <Autocomplete
                             freeSolo 
                             id="foodName"
@@ -455,6 +455,14 @@ class FoodWaste extends Component {
                             renderInput={(params) => ( <TextField {...params} label="Enter Food Name" variant="outlined" /> )}
                         />
                     </Form.Group>
+
+                    <div style={{padding: "0 10% 0 10%"}}>Eating In or Out?</div>
+                        <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedA} name="checkedA" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating In" />
+                        </Form.Group>
+                        <Form.Group style={{padding: "0 10% 0 10%", marginTop: "-25px", display: "flex"}}>
+                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedB} name="checkedB" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating Out" />
+                        </Form.Group>
 
                     <Divider />
 
@@ -524,14 +532,6 @@ class FoodWaste extends Component {
 
                 <div>{this.state.edibleOrInedible === "Edible" || this.state.edibleOrInedible === "Select" || this.state.edibleOrInedible === "Surplus" ? 
                     <div>
-
-                        <div style={{padding: "0 10% 0 10%"}}>Eating In or Out?</div>
-                        <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
-                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedA} name="checkedA" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating In" />
-                        </Form.Group>
-                        <Form.Group style={{padding: "0 10% 0 10%", marginTop: "-25px", display: "flex"}}>
-                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedB} name="checkedB" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating Out" />
-                        </Form.Group>
 
                         <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
                         <Form.Group className= "form-layout" 
@@ -892,20 +892,14 @@ class FoodWaste extends Component {
                         {/* this.addData([id, this.state.weightOfEdibleFoodWaste, this.state.edibleFoodWasteType, this.state.edibleMoisture, this.state.edibleGHG, this.state.dropDownValueEFW, this.state.costOfEdibleFoodWaste]) */}
                         {/* this.handleChartSubmit(this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)); */}
 
+                        {/* this.handleFoodWasteSubmit(e); */}
+
                         <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
                             Update
                         </Button>
                     </div> : 
                     
                     <div>
-
-                        <div style={{padding: "0 10% 0 10%"}}>Eating In or Out?</div>
-                        <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
-                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedA} name="checkedA" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating In" />
-                        </Form.Group>
-                        <Form.Group style={{padding: "0 10% 0 10%", marginTop: "-25px", display: "flex"}}>
-                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedB} name="checkedB" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating Out" />
-                        </Form.Group>
 
                         <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
                         <Form.Group className= "form-layout" 
