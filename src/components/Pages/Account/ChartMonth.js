@@ -68,6 +68,7 @@ class Chart2 extends Component {
           var mdate = doc.data().MDATE
           var weight = doc.data().weight
           var wu = doc.data().WEIGHTUNIT
+          var isSurplus = doc.data().EDIBLEORINEDIBLE
 
           var newWeight = 0
 
@@ -85,32 +86,28 @@ class Chart2 extends Component {
             // console.log(newWeight)
           }
 
-          var carbCon = doc.data().CARBSCONTENT
-          var proCon = doc.data().PROTEINCONTENT
-          var fatCon = doc.data().FATCONTENT
-          var fibCon = doc.data().FIBRECONTENT
+          // var carbCon = doc.data().CARBSCONTENT
+          // var proCon = doc.data().PROTEINCONTENT
+          // var fatCon = doc.data().FATCONTENT
+          // var fibCon = doc.data().FIBRECONTENT
 
-          if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th")
-          && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+          if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus !== "Surplus"){
             this.setState( (prevState) => ({
               week1Weight: prevState.week1Weight += newWeight
             }));
-          } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th")
-          && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+          } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus !== "Surplus"){
             this.setState( (prevState) => ({
               week2Weight: prevState.week2Weight += newWeight
             }));
-          } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st")
-          && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+          } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus !== "Surplus"){
             this.setState( (prevState) => ({
               week3Weight: prevState.week3Weight += newWeight
             }));
-          } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st")
-          && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+          } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus !== "Surplus"){
             this.setState( (prevState) => ({
               week4Weight: prevState.week4Weight += newWeight
             }));
-          }
+          } 
 
         })
       })
@@ -253,8 +250,8 @@ class Chart2 extends Component {
             <ChartStyle>
 
               <Chart className='bar-chart'
-                width={1100}
-                height={500}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -267,7 +264,7 @@ class Chart2 extends Component {
                 options={{
                   // backgroundColor: 'lightgray',
                   title: 'This month\'s Food Wastage Performance (' + fullMonth + ' 2021)',
-                  chartArea: { width: '30%' },
+                  chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   hAxis: {
                     title: 'Week/Period of ' + fullMonth,
@@ -319,8 +316,8 @@ class Chart2 extends Component {
           <MobileView>
             <ChartStyle>
               <Chart className='bar-chart'
-                width={300}
-                height={600}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -337,7 +334,7 @@ class Chart2 extends Component {
                   legend: 'none',
                   colors: ['#aab41e'],
                   hAxis: {
-                    title: 'Week/Period of May',
+                    title: 'Week/Period of ' + fullMonth,
                     minValue: 0,
                   },
                   vAxis: {
@@ -407,10 +404,13 @@ class Chart2 extends Component {
 }
 
 const ChartStyle = styled.div`
-  .bar-chart{
-    position: absolute;
-    left: 14%;
-  }
+.bar-chart{
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 
   .area-chart{
     padding: 10px;

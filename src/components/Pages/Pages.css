@@ -68,7 +68,15 @@ body{
 
   .signup-graphic{
     background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/signup3.jpg");
+    height: 140vh;
   }
+
+  /* .signup-graphic-confirm{
+    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/signup3.jpg");
+    height: 100vh;
+    margin-top: 0%;
+    margin-bottom: 0%;
+  } */
 
   .home{
     background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/connectivity.png");
@@ -79,14 +87,21 @@ body{
   }
 
   .home-text-mobile{
-    font-size: 25px;
+    font-size: 3.5vh;
     font-weight: bold;
     color: rgb(218, 218, 218);
   }
 
   .home-update-text-mobile{
-    font-size: 15px;
+    font-size: 2vh;
     color: rgb(218, 218, 218);
+  }
+
+  .home-play-store-link{
+    color: #aab41e;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
   }
 
   .fix-image{
@@ -139,7 +154,18 @@ body{
     color: #757c0e;
     text-decoration: none;
   }
-  
+
+  /* .signup .confirm-btn{
+    background-color: rgb(13, 27, 92);
+    justify-content: center;
+  } */
+
+  .terms-link, .privacy-link{
+    color: #aab41e;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+  }  
 
   /* contact page */
   .contact .contact-logo{

@@ -78,6 +78,7 @@ class Chart3 extends Component {
               var mdate = doc.data().MDATE
               var weight = doc.data().weight
               var wu = doc.data().WEIGHTUNIT
+              var isSurplus = doc.data().EDIBLEORINEDIBLE
 
               var newWeight = 0
     
@@ -95,42 +96,42 @@ class Chart3 extends Component {
                 // console.log(newWeight)
               }
 
-              var carbCon = doc.data().CARBSCONTENT
-              var proCon = doc.data().PROTEINCONTENT
-              var fatCon = doc.data().FATCONTENT
-              var fibCon = doc.data().FIBRECONTENT
+              // var carbCon = doc.data().CARBSCONTENT
+              // var proCon = doc.data().PROTEINCONTENT
+              // var fatCon = doc.data().FATCONTENT
+              // var fibCon = doc.data().FIBRECONTENT
 
-              if (week === time && day === "Mon" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              if (week === time && day === "Mon" && isSurplus !== "Surplus"){
                 this.setState({weekBeginning: month + " " + mdate})
 
                 this.setState( (prevState) => ({
                   mondayWeight: prevState.mondayWeight += newWeight
                 }));
-              } else if (week === time && day === "Tue" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              } else if (week === time && day === "Tue" && isSurplus !== "Surplus"){
                 this.setState( (prevState) => ({
                   tuesdayWeight: prevState.tuesdayWeight += newWeight
                 })); 
-              } else if (week === time && day === "Wed" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              } else if (week === time && day === "Wed" && isSurplus !== "Surplus"){
                 this.setState( (prevState) => ({
                   wednesdayWeight: prevState.wednesdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Thu" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              } else if (week === time && day === "Thu" && isSurplus !== "Surplus"){
                 this.setState( (prevState) => ({
                   thursdayWeight: prevState.thursdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Fri" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              } else if (week === time && day === "Fri" && isSurplus !== "Surplus"){
                 this.setState( (prevState) => ({
                   fridayWeight: prevState.fridayWeight += newWeight
                 }));
-              } else if (week === time && day === "Sat" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              } else if (week === time && day === "Sat" && isSurplus !== "Surplus"){
                 this.setState( (prevState) => ({
                   saturdayWeight: prevState.saturdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Sun" && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+              } else if (week === time && day === "Sun" && isSurplus !== "Surplus"){
                 this.setState( (prevState) => ({
                   sundayWeight: prevState.sundayWeight += newWeight
                 }));
-              }
+              } 
 
             })
           })
@@ -221,8 +222,8 @@ class Chart3 extends Component {
             <ChartStyle>
 
               <Chart className='bar-chart'
-                width={300}
-                height={600}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -283,8 +284,8 @@ class Chart3 extends Component {
           <BrowserView>
               <ChartStyle>
                 <Chart className='bar-chart'
-                width={1100}
-                height={500}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -300,7 +301,7 @@ class Chart3 extends Component {
                 options={{
                   // backgroundColor: 'lightgray',
                   title: 'This week\'s Food Wastage Performance',
-                  chartArea: { width: '30%' },
+                  chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   hAxis: {
                     title: 'Day of the Week',
@@ -373,10 +374,13 @@ class Chart3 extends Component {
 }
 
 const ChartStyle = styled.div`
-  .bar-chart{
-    position: absolute;
-    left: 14%;
-  }
+.bar-chart{
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 
   .area-chart{
     padding: 10px;

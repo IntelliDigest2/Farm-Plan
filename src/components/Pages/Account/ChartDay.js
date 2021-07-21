@@ -17,10 +17,13 @@ class Chart4 extends Component {
 
     state = {
       uid: this.props.auth.uid,
-      totalCarbsWeight: 0,
-      totalProteinWeight: 0,
-      totalFatWeight: 0,
-      totalFibreWeight: 0,
+      // totalCarbsWeight: 0,
+      // totalProteinWeight: 0,
+      // totalFatWeight: 0,
+      // totalFibreWeight: 0,
+      totalBreakfastWeight: 0,
+      totalLunchWeight: 0,
+      totalDinnerWeight: 0,
       efwData: [],
     }
 
@@ -45,6 +48,8 @@ class Chart4 extends Component {
           var fd = doc.data().FULLDATE
           var weight = doc.data().weight
           var wu = doc.data().WEIGHTUNIT
+          var meal = doc.data().MEAL
+          var isSurplus = doc.data().EDIBLEORINEDIBLE
 
           var newWeight = 0
 
@@ -76,10 +81,10 @@ class Chart4 extends Component {
           //   }));
           // }
 
-          var carbCon = doc.data().CARBSCONTENT
-          var proCon = doc.data().PROTEINCONTENT
-          var fatCon = doc.data().FATCONTENT
-          var fibCon = doc.data().FIBRECONTENT
+          // var carbCon = doc.data().CARBSCONTENT
+          // var proCon = doc.data().PROTEINCONTENT
+          // var fatCon = doc.data().FATCONTENT
+          // var fibCon = doc.data().FIBRECONTENT
 
           // if (fd === time && (carbCon >= 0 && carbCon <= 100)){
           //   this.setState( (prevState) => ({
@@ -99,14 +104,28 @@ class Chart4 extends Component {
           //   }));
           // }
 
-          if (fd === time && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+          // if (fd === time && (carbCon >= 0 && carbCon <= 100) && (proCon >= 0 && proCon <= 100) && (fatCon >= 0 && fatCon <= 100) && (fibCon >= 0 && fibCon <= 100)){
+          //   this.setState( (prevState) => ({
+          //     totalCarbsWeight: prevState.totalCarbsWeight += Number((newWeight*(carbCon/100)).toFixed(3)),
+          //     totalProteinWeight: prevState.totalProteinWeight += Number((newWeight*(proCon/100)).toFixed(3)),
+          //     totalFatWeight: prevState.totalFatWeight += Number((newWeight*(fatCon/100)).toFixed(3)),
+          //     totalFibreWeight: prevState.totalFibreWeight += Number((newWeight*(fibCon/100)).toFixed(3))
+          //   }))
+          // }
+
+          if (fd === time && meal === "Breakfast" && isSurplus !== "Surplus"){
             this.setState( (prevState) => ({
-              totalCarbsWeight: prevState.totalCarbsWeight += Number((newWeight*(carbCon/100)).toFixed(3)),
-              totalProteinWeight: prevState.totalProteinWeight += Number((newWeight*(proCon/100)).toFixed(3)),
-              totalFatWeight: prevState.totalFatWeight += Number((newWeight*(fatCon/100)).toFixed(3)),
-              totalFibreWeight: prevState.totalFibreWeight += Number((newWeight*(fibCon/100)).toFixed(3))
-            }))
-          }
+              totalBreakfastWeight: prevState.totalBreakfastWeight += newWeight
+            }));
+          } else if (fd === time && meal === "Lunch" && isSurplus !== "Surplus"){
+            this.setState( (prevState) => ({
+              totalLunchWeight: prevState.totalLunchWeight += newWeight
+            }));
+          } else if (fd === time && meal === "Dinner" && isSurplus !== "Surplus"){
+            this.setState( (prevState) => ({
+              totalDinnerWeight: prevState.totalDinnerWeight += newWeight
+            }));
+          } 
 
           // tempFwTypes.push(fwt)
           // tempFullDates.push(fd)
@@ -137,13 +156,13 @@ class Chart4 extends Component {
     this.fetchData();
   }
 
-  fetchDataItem = async (id) => {
-      const res = await fetch(`http://localhost:5000/edible-food-waste-data/${id}`)
-      const data = await res.json();
+  // fetchDataItem = async (id) => {
+  //     const res = await fetch(`http://localhost:5000/edible-food-waste-data/${id}`)
+  //     const data = await res.json();
 
-      // console.log(data)
-      // return data
-  }
+  //     // console.log(data)
+  //     // return data
+  // }
 
   render(){
 
@@ -219,29 +238,29 @@ class Chart4 extends Component {
             <ChartStyle>
 
               <Chart className='bar-chart'
-                width={1100}
-                height={500}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
-                  ['Food Wastage Type', 'Food Wastage Weight'],
-                  ['Carbohydrates', this.state.totalCarbsWeight],
-                  ['Protein', this.state.totalProteinWeight],
-                  ['Fat', this.state.totalFatWeight],
-                  ['Fibre', this.state.totalFibreWeight],
+                  ['Meal of the Day', 'Food Wastage Weight'],
+                  ['Breakfast', this.state.totalBreakfastWeight],
+                  ['Lunch', this.state.totalLunchWeight],
+                  ['Dinner', this.state.totalDinnerWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
                   title: 'Today\'s Food Wastage Performance (' + time + ')',
-                  chartArea: { width: '30%' },
+                  chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   hAxis: {
-                    title: 'Food Wastage Type',
+                    title: 'Meal of the Day',
                     minValue: 0,
                   },
                   vAxis: {
                     title: 'Weight of Food Wastage (kg)',
                   },
+                  
                 }}
                 legendToggle
               />
@@ -252,16 +271,15 @@ class Chart4 extends Component {
          <MobileView>
            <ChartStyle>
             <Chart className='bar-chart'
-                width={300}
-                height={600}
+                width={'85%'}
+                height={'85%'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
-                  ['Food Wastage Type', ' Weight '],
-                  ['Carbs', this.state.totalCarbsWeight],
-                  ['Protein', this.state.totalProteinWeight],
-                  ['Fat', this.state.totalFatWeight],
-                  ['Fibre', this.state.totalFibreWeight],
+                  ['Meal of the Day', ' Weight '],
+                  ['Breakfast', this.state.totalBreakfastWeight],
+                  ['Lunch', this.state.totalLunchWeight],
+                  ['Dinner', this.state.totalDinnerWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
@@ -270,7 +288,7 @@ class Chart4 extends Component {
                   colors: ['#aab41e'],
                   legend: 'none',
                   hAxis: {
-                    title: 'Food Wastage Type',
+                    title: 'Meal of the Day',
                     minValue: 0,
                   },
                   vAxis: {
@@ -368,10 +386,16 @@ class Chart4 extends Component {
   }
 }
 
+// position: absolute;
+// left: 14%;
+
 const ChartStyle = styled.div`
   .bar-chart{
     position: absolute;
-    left: 14%;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .area-chart{
