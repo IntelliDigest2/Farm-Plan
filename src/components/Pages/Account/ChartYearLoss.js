@@ -11,7 +11,7 @@ import {fs} from "../../../config/fbConfig"
 
 const time = moment().format("YYYY")
 
-class Chart1 extends Component {
+class Chart28 extends Component {
 
   state = {
     uid: this.props.auth.uid,
@@ -29,64 +29,9 @@ class Chart1 extends Component {
     decWeight: 0,
   }
 
-    // fetch db.json data
     fetchData = async () => {
-      // const res = await fetch('http://localhost:5000/edible-food-waste-data')
-      // const data = await res.json();
 
-      // data.forEach(efw => {
-      //   if (efw.year === time && efw.month === "Jan"){
-      //     this.setState ( (prevState) => ({
-      //       janWeight: prevState.janWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Feb"){
-      //     this.setState ( (prevState) => ({
-      //       febWeight: prevState.febWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Mar"){
-      //     this.setState ( (prevState) => ({
-      //       marWeight: prevState.marWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Apr"){
-      //     this.setState ( (prevState) => ({
-      //       aprWeight: prevState.aprWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "May"){
-      //     this.setState ( (prevState) => ({
-      //       mayWeight: prevState.mayWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Jun"){
-      //     this.setState ( (prevState) => ({
-      //       junWeight: prevState.junWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Jul"){
-      //     this.setState ( (prevState) => ({
-      //       julWeight: prevState.julWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Aug"){
-      //     this.setState ( (prevState) => ({
-      //       augWeight: prevState.augWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Sep"){
-      //     this.setState ( (prevState) => ({
-      //       sepWeight: prevState.sepWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Oct"){
-      //     this.setState ( (prevState) => ({
-      //       octWeight: prevState.octWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Nov"){
-      //     this.setState ( (prevState) => ({
-      //       novWeight: prevState.novWeight += efw.weight
-      //     }));
-      //   } else if (efw.year === time && efw.month === "Dec"){
-      //     this.setState ( (prevState) => ({
-      //       decWeight: prevState.decWeight += efw.weight
-      //     }));
-      //   }
-      // })
-
-      fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+      fs.collection('data').doc(this.state.uid).collection('writtenFoodSurplusData')
         .get()
         .then( snapshot => {
           snapshot.forEach(doc => {
@@ -95,7 +40,7 @@ class Chart1 extends Component {
             var month = doc.data().MONTH
             var weight = doc.data().weight
             var wu = doc.data().WEIGHTUNIT
-            var isSurplus = doc.data().EDIBLEORINEDIBLE
+            // var isSurplus = doc.data().EDIBLEORINEDIBLE
 
             var newWeight = 0
   
@@ -118,51 +63,51 @@ class Chart1 extends Component {
             // var fatCon = doc.data().FATCONTENT
             // var fibCon = doc.data().FIBRECONTENT
 
-            if (year === time && month === "Jan" && isSurplus !== "Surplus"){
+            if (year === time && month === "Jan"){
               this.setState( (prevState) => ({
                 janWeight: prevState.janWeight += newWeight
               }));
-            } else if (year === time && month === "Feb" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Feb"){
               this.setState( (prevState) => ({
                 febWeight: prevState.febWeight += newWeight
               }));
-            } else if (year === time && month === "Mar" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Mar"){
               this.setState( (prevState) => ({
                 marWeight: prevState.marWeight += newWeight
               }));
-            } else if (year === time && month === "Apr" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Apr"){
               this.setState( (prevState) => ({
                 aprWeight: prevState.aprWeight += newWeight
               }));
-            } else if (year === time && month === "May" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "May"){
               this.setState( (prevState) => ({
                 mayWeight: prevState.mayWeight += newWeight
               }));
-            } else if (year === time && month === "Jun" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Jun"){
               this.setState( (prevState) => ({
                 junWeight: prevState.junWeight += newWeight
               }));
-            } else if (year === time && month === "Jul" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Jul"){
               this.setState( (prevState) => ({
                 julWeight: prevState.julWeight += newWeight
               }));
-            } else if (year === time && month === "Aug" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Aug"){
               this.setState( (prevState) => ({
                 augWeight: prevState.augWeight += newWeight
               }));
-            } else if (year === time && month === "Sep" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Sep"){
               this.setState( (prevState) => ({
                 sepWeight: prevState.sepWeight += newWeight
               }));
-            } else if (year === time && month === "Oct" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Oct"){
               this.setState( (prevState) => ({
                 octWeight: prevState.octWeight += newWeight
               }));
-            } else if (year === time && month === "Nov" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Nov"){
               this.setState( (prevState) => ({
                 novWeight: prevState.novWeight += newWeight
               }));
-            } else if (year === time && month === "Dec" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Dec"){
               this.setState( (prevState) => ({
                 decWeight: prevState.decWeight += newWeight
               }));
@@ -202,65 +147,7 @@ class Chart1 extends Component {
         <br/>
         <br/>
         <br/>
-        {/* <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
-          <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
-          <Col className="mt-5 pt-5" xs={12}></Col> 
-          <Col className="" xs={12} lg={4}></Col>
-          <Col className=" justify-content-center display-flex align-items-center d-block mt-5 pt-5 mt-lg-0 pt-lg-0 center text-center" xs={90} lg={4}> */}
-            {/* <CardStyle>
-              <Card>
-                <Card.Body>
-                  <Card.Text className="text-center">
-                    <h1 className="page-not-found">404 - Page Not Found</h1>
-                    <h1 className="not-found-message">The page you were looking for does not exist.</h1>
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </CardStyle> */}
 
-            {/* <Chart
-            className="row"
-            style={{width:'1684px', height:'650px'}}
-              chartType="AreaChart"
-              loader={<div>Loading Chart</div>}
-              data={[
-                ['Year', 'Sales', 'Expenses'],
-                ['2013', 0, 400],
-                ['2014', 1170, 460],
-                ['2015', 660, 1120],
-                ['2016', 546  , 540],
-                ['2013', 1000, 400],
-                ['2014', 57, 460],
-                ['2015', 660, 1120],
-                ['2016', 1030, 8],
-                ['2013', 1000, 400],
-                ['2014', 1170, 460],
-                ['2015', 197, 1120],
-                ['2016', 47, 789],
-                ['2013', 0, 400],
-                ['2014', 1170, 460],
-                ['2015', 660, 1120],
-                ['2016', 546  , 540],
-                ['2013', 1000, 400],
-                ['2014', 57, 460],
-                ['2015', 660, 1120],
-                ['2016', 1030, 8],
-                ['2013', 1000, 400],
-                ['2014', 1170, 460],
-                ['2015', 197, 1120],
-                ['2016', 47, 789],
-              ]}
-              options={{
-                title: 'My Yearly Food Waste Performance',
-                hAxis: { title: 'Year', titleTextStyle: { color: '#333' } },
-                vAxis: { title:'hi', minValue: 0 },
-                // For the legend to fit, we make the chart area smaller
-                chartArea: { width: '50%', height: '70%' },
-                // lineWidth: 25
-              }}
-              // For tests
-              rootProps={{ 'data-testid': '1' }}
-            /> */}
           <BrowserView>
             <ChartStyle>
 
@@ -270,7 +157,7 @@ class Chart1 extends Component {
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
-                  ['Month', 'Food Wastage Weight'],
+                  ['Month', 'Food Loss Weight'],
                   ['January', this.state.janWeight],
                   ['February', this.state.febWeight],
                   ['March', this.state.marWeight],
@@ -286,7 +173,7 @@ class Chart1 extends Component {
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'This year\'s Food Wastage Performance (' + time + ')',
+                  title: 'This year\'s Food Loss Weight Performance (' + time + ')',
                   chartArea: { width: '75%' },
                   colors: ['#aab41e'],
                   hAxis: {
@@ -294,35 +181,11 @@ class Chart1 extends Component {
                     minValue: 0,
                   },
                   vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
+                    title: 'Weight of Food Loss (kg)',
                   },
                 }}
                 legendToggle
               />
-
-              {/* <Chart 
-                className="area-chart"
-                width={550}
-                height={500}
-                chartType="AreaChart"
-                loader={<div>Loading Chart</div>}
-                data = {[
-                  ['Year', 'Food Wastage'],
-                  ['2021', 12501],
-                  ['2022', 10997],
-                  ['2023', 9410],
-                ]}
-                options={{
-                  title: 'Yearly Food Wastage Performance (Line)',
-                  chartArea: {width: '50%', height: '70%'},
-                  hAxis: {
-                    title: 'Year', titleTextStyle: {color: '#333'}
-                  },
-                  vAxis: {
-                    minValue: 0, title: 'Weight of Food Wastage (kg)'
-                  }
-                }}
-              />   */}
 
             </ChartStyle>
           </BrowserView>
@@ -351,7 +214,7 @@ class Chart1 extends Component {
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'Food Wastage Performance (' + time + ')',
+                  title: 'Food Loss Weight Performance (' + time + ')',
                   chartArea: { width: '60%' },
                   legend: 'none',
                   colors: ['#aab41e'],
@@ -360,10 +223,9 @@ class Chart1 extends Component {
                     minValue: 0,
                   },
                   vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
+                    title: 'Weight of Food Loss (kg)',
                   },
                 }}
-                legendToggle
               />
             </ChartStyle>
           </MobileView>
@@ -449,4 +311,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart1);
+export default connect(mapStateToProps, null)(Chart28);

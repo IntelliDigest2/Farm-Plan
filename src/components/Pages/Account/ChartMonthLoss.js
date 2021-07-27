@@ -12,19 +12,19 @@ import {fs} from "../../../config/fbConfig"
 const time = moment().format("MMM")
 const fullMonth = moment().format("MMMM")
 
-class Chart14 extends Component {
+class Chart29 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        week1Surplus: 0,
-        week2Surplus: 0,
-        week3Surplus: 0,
-        week4Surplus: 0,
+        week1Weight: 0,
+        week2Weight: 0,
+        week3Weight: 0,
+        week4Weight: 0,
         monthEnd: ""
     }
 
     fetchData = async () => {
-        fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+        fs.collection('data').doc(this.state.uid).collection('writtenFoodSurplusData')
         .get()
         .then( snapshot => {
           snapshot.forEach(doc => {
@@ -33,7 +33,7 @@ class Chart14 extends Component {
             var mdate = doc.data().MDATE
             var weight = doc.data().weight
             var wu = doc.data().WEIGHTUNIT
-            var isSurplus = doc.data().EDIBLEORINEDIBLE
+            // var isSurplus = doc.data().EDIBLEORINEDIBLE
   
             var newWeight = 0
   
@@ -51,21 +51,21 @@ class Chart14 extends Component {
               // console.log(newWeight)
             }
 
-            if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Surplus"){
+            if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th")){
                 this.setState( (prevState) => ({
-                  week1Surplus: prevState.week1Surplus += newWeight
+                  week1Weight: prevState.week1Weight += newWeight
                 }));
-              } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th")){
                 this.setState( (prevState) => ({
-                  week2Surplus: prevState.week2Surplus += newWeight
+                  week2Weight: prevState.week2Weight += newWeight
                 }));
-              } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st")){
                 this.setState( (prevState) => ({
-                  week3Surplus: prevState.week3Surplus += newWeight
+                  week3Weight: prevState.week3Weight += newWeight
                 }));
-              } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st")){
                 this.setState( (prevState) => ({
-                  week4Surplus: prevState.week4Surplus += newWeight
+                  week4Weight: prevState.week4Weight += newWeight
                 }));
               }
 
@@ -105,22 +105,22 @@ class Chart14 extends Component {
                         chartType="ColumnChart"
                         loader={<div>Loading Chart</div>}
                         data={[
-                            ['Week/Period', 'Food Surplus Weight Saved'],
-                            ['1st-7th', this.state.week1Surplus],
-                            ['8th-14th', this.state.week2Surplus],
-                            ['15th-21st', this.state.week3Surplus],
-                            ['22nd-'+this.state.monthEnd, this.state.week4Surplus],
+                            ['Week/Period', 'Food Loss Weight'],
+                            ['1st-7th', this.state.week1Weight],
+                            ['8th-14th', this.state.week2Weight],
+                            ['15th-21st', this.state.week3Weight],
+                            ['22nd-'+this.state.monthEnd, this.state.week4Weight],
                         ]}
                         options={{
-                            title: 'This month\'s Food Surplus Weight Saved Performance (' + fullMonth + ' 2021)',
+                            title: 'This month\'s Food Loss Weight Performance (' + fullMonth + ' 2021)',
                             chartArea: {width: '50%'},
-                            colors: ['rgb(13, 27, 92)'],
+                            colors: ['#aab41e'],
                             hAxis: {
                                 title: 'Week/Period of ' + fullMonth,
                                 minValue: 0,
                             },
                             vAxis: {
-                                title: 'Weight of Food Saved (kg)'
+                                title: 'Weight of Food Loss (kg)'
                             }
                         }}
                         legendToggle
@@ -136,23 +136,23 @@ class Chart14 extends Component {
                         chartType="ColumnChart"
                         loader={<div>Loading Chart</div>}
                         data={[
-                            ['Week/Period', 'Weight Saved '],
-                            ['1st-7th', this.state.week1Surplus],
-                            ['8th-14th', this.state.week2Surplus],
-                            ['15th-21st', this.state.week3Surplus],
-                            ['22nd-'+this.state.monthEnd, this.state.week4Surplus],
+                            ['Week/Period', 'Weight '],
+                            ['1st-7th', this.state.week1Weight],
+                            ['8th-14th', this.state.week2Weight],
+                            ['15th-21st', this.state.week3Weight],
+                            ['22nd-'+this.state.monthEnd, this.state.week4Weight],
                         ]}
                         options={{
-                            title: 'Food Surplus Weight Saved Performance (' + fullMonth + ' 2021)',
+                            title: 'Food Loss Weight Performance (' + fullMonth + ' 2021)',
                             chartArea: {width: '50%'},
-                            colors: ['rgb(13, 27, 92)'],
+                            colors: ['#aab41e'],
                             legend: "none",
                             hAxis: {
                                 title: 'Week/Period of ' + fullMonth,
                                 minValue: 0,
                             },
                             vAxis: {
-                                title: 'Weight of Food Saved (kg)'
+                                title: 'Weight of Food Loss (kg)'
                             }
                         }}
                     />
@@ -184,4 +184,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart14);
+export default connect(mapStateToProps, null)(Chart29);

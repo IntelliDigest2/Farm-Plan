@@ -12,60 +12,42 @@ import {fs} from "../../../config/fbConfig"
 const time = moment().format("MMM")
 const fullMonth = moment().format("MMMM")
 
-class Chart14 extends Component {
+class Chart33 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        week1Surplus: 0,
-        week2Surplus: 0,
-        week3Surplus: 0,
-        week4Surplus: 0,
+        week1GHG: 0,
+        week2GHG: 0,
+        week3GHG: 0,
+        week4GHG: 0,
         monthEnd: ""
     }
 
     fetchData = async () => {
-        fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+        fs.collection('data').doc(this.state.uid).collection('writtenFoodSurplusData')
         .get()
         .then( snapshot => {
           snapshot.forEach(doc => {
   
             var month = doc.data().MONTH
             var mdate = doc.data().MDATE
-            var weight = doc.data().weight
-            var wu = doc.data().WEIGHTUNIT
-            var isSurplus = doc.data().EDIBLEORINEDIBLE
-  
-            var newWeight = 0
-  
-            if (wu === "kg" || wu === "l"){
-              newWeight = Number(weight * 1)
-              // console.log(newWeight)
-            } else if (wu === "g" || wu === "ml"){
-              newWeight = Number((weight * 0.001).toFixed(3))
-              // console.log(newWeight)
-            } else if (wu === "oz"){
-              newWeight = Number((weight * 0.028).toFixed(3))
-              // console.log(newWeight)
-            } else if (wu === "lbs"){
-              newWeight = Number((weight * 0.454).toFixed(3))
-              // console.log(newWeight)
-            }
+            var ghg = doc.data().GHG
 
-            if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Surplus"){
+            if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th")){
                 this.setState( (prevState) => ({
-                  week1Surplus: prevState.week1Surplus += newWeight
+                  week1GHG: prevState.week1GHG += ghg
                 }));
-              } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th")){
                 this.setState( (prevState) => ({
-                  week2Surplus: prevState.week2Surplus += newWeight
+                  week2GHG: prevState.week2GHG += ghg
                 }));
-              } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st")){
                 this.setState( (prevState) => ({
-                  week3Surplus: prevState.week3Surplus += newWeight
+                  week3GHG: prevState.week3GHG += ghg
                 }));
-              } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st")){
                 this.setState( (prevState) => ({
-                  week4Surplus: prevState.week4Surplus += newWeight
+                  week4GHG: prevState.week4GHG += ghg
                 }));
               }
 
@@ -105,22 +87,22 @@ class Chart14 extends Component {
                         chartType="ColumnChart"
                         loader={<div>Loading Chart</div>}
                         data={[
-                            ['Week/Period', 'Food Surplus Weight Saved'],
-                            ['1st-7th', this.state.week1Surplus],
-                            ['8th-14th', this.state.week2Surplus],
-                            ['15th-21st', this.state.week3Surplus],
-                            ['22nd-'+this.state.monthEnd, this.state.week4Surplus],
+                            ['Week/Period', 'Food Loss GHG'],
+                            ['1st-7th', this.state.week1GHG],
+                            ['8th-14th', this.state.week2GHG],
+                            ['15th-21st', this.state.week3GHG],
+                            ['22nd-'+this.state.monthEnd, this.state.week4GHG],
                         ]}
                         options={{
-                            title: 'This month\'s Food Surplus Weight Saved Performance (' + fullMonth + ' 2021)',
+                            title: 'This month\'s Food Loss GHG Performance (' + fullMonth + ' 2021)',
                             chartArea: {width: '50%'},
-                            colors: ['rgb(13, 27, 92)'],
+                            colors: ['#aab41e'],
                             hAxis: {
                                 title: 'Week/Period of ' + fullMonth,
                                 minValue: 0,
                             },
                             vAxis: {
-                                title: 'Weight of Food Saved (kg)'
+                                title: 'GHG of Food Loss (kg co2)'
                             }
                         }}
                         legendToggle
@@ -136,23 +118,23 @@ class Chart14 extends Component {
                         chartType="ColumnChart"
                         loader={<div>Loading Chart</div>}
                         data={[
-                            ['Week/Period', 'Weight Saved '],
-                            ['1st-7th', this.state.week1Surplus],
-                            ['8th-14th', this.state.week2Surplus],
-                            ['15th-21st', this.state.week3Surplus],
-                            ['22nd-'+this.state.monthEnd, this.state.week4Surplus],
+                            ['Week/Period', 'GHG '],
+                            ['1st-7th', this.state.week1GHG],
+                            ['8th-14th', this.state.week2GHG],
+                            ['15th-21st', this.state.week3GHG],
+                            ['22nd-'+this.state.monthEnd, this.state.week4GHG],
                         ]}
                         options={{
-                            title: 'Food Surplus Weight Saved Performance (' + fullMonth + ' 2021)',
+                            title: 'Food Loss GHG Performance (' + fullMonth + ' 2021)',
                             chartArea: {width: '50%'},
-                            colors: ['rgb(13, 27, 92)'],
+                            colors: ['#aab41e'],
                             legend: "none",
                             hAxis: {
                                 title: 'Week/Period of ' + fullMonth,
                                 minValue: 0,
                             },
                             vAxis: {
-                                title: 'Weight of Food Saved (kg)'
+                                title: 'GHG of Food Loss (kg co2)'
                             }
                         }}
                     />
@@ -184,4 +166,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart14);
+export default connect(mapStateToProps, null)(Chart33);

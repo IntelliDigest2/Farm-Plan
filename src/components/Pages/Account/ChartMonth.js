@@ -72,10 +72,10 @@ class Chart2 extends Component {
 
           var newWeight = 0
 
-          if (wu === "kg"){
+          if (wu === "kg" || wu === "l"){
             newWeight = Number(weight * 1)
             // console.log(newWeight)
-          } else if (wu === "g"){
+          } else if (wu === "g" || wu === "ml"){
             newWeight = Number((weight * 0.001).toFixed(3))
             // console.log(newWeight)
           } else if (wu === "oz"){

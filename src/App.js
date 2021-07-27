@@ -16,8 +16,10 @@ import ForgotPassword from "./components/Pages/ForgotPassword";
 import Account from "./components/Pages/Account/UserAccount";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import MapData from "./components/Pages/Account/MapData";
+
 import FoodWaste from "./components/Pages/Account/FoodWaste";
 import FoodLoss from "./components/Pages/Account/FoodLoss";
+import FoodWasteBusiness from "./components/Pages/Account/FoodWasteBusiness";
 
 import Chart1 from "./components/Pages/Account/ChartYear";
 import Chart2 from "./components/Pages/Account/ChartMonth";
@@ -48,6 +50,27 @@ import Chart21 from "./components/Pages/Account/ChartYearSurplusCost";
 import Chart22 from "./components/Pages/Account/ChartMonthSurplusCost";
 import Chart23 from "./components/Pages/Account/ChartWeekSurplusCost";
 import Chart24 from "./components/Pages/Account/ChartDaySurplusCost";
+
+import Chart25 from "./components/Pages/Account/ChartDayBusiness";
+import Chart26 from "./components/Pages/Account/ChartDayCostBusiness";
+import Chart27 from "./components/Pages/Account/ChartDayGHGBusiness";
+
+import Chart28 from "./components/Pages/Account/ChartYearLoss";
+import Chart29 from "./components/Pages/Account/ChartMonthLoss";
+import Chart30 from "./components/Pages/Account/ChartWeekLoss";
+import Chart31 from "./components/Pages/Account/ChartDayLoss";
+
+import Chart32 from "./components/Pages/Account/ChartYearLossGHG";
+import Chart33 from "./components/Pages/Account/ChartMonthLossGHG";
+import Chart34 from "./components/Pages/Account/ChartWeekLossGHG";
+import Chart35 from "./components/Pages/Account/ChartDayLossGHG";
+
+import Chart36 from "./components/Pages/Account/ChartYearLossCost";
+import Chart37 from "./components/Pages/Account/ChartMonthLossCost";
+import Chart38 from "./components/Pages/Account/ChartWeekLossCost";
+import Chart39 from "./components/Pages/Account/ChartDayLossCost";
+
+import Chart40 from "./components/Pages/Account/NutrientGapChart";
 
 import FoodReduction from "./components/Pages/FoodReduction";
 
@@ -109,8 +132,10 @@ class App extends Component {
             <Route path="/account" exact component={Account}/>
             <Route path="/change-password" exact component={ChangePassword}/>
             <Route path="/view-map" exact component={MapData}/>
+
             <Route path="/food-waste" exact component={FoodWaste}/>
             <Route path="/food-loss" exact component={FoodLoss}/>
+            <Route path="/food-wasteBusiness" exact component={FoodWasteBusiness}/>
             
             <Route path="/chart/year" exact component={Chart1} />
             <Route path="/chart/month" exact component={Chart2} />
@@ -141,6 +166,27 @@ class App extends Component {
             <Route path="/chart/monthSurplusCost" exact component={Chart22} />
             <Route path="/chart/weekSurplusCost" exact component={Chart23} />
             <Route path="/chart/daySurplusCost" exact component={Chart24} />
+
+            <Route path="/chart/dayBusiness" exact component={Chart25} />
+            <Route path="/chart/dayBusinessCost" exact component={Chart26} />
+            <Route path="/chart/dayBusinessGHG" exact component={Chart27} />
+
+            <Route path="/chart/yearLoss" exact component={Chart28} />
+            <Route path="/chart/monthLoss" exact component={Chart29} />
+            <Route path="/chart/weekLoss" exact component={Chart30} />
+            <Route path="/chart/dayLoss" exact component={Chart31} />
+
+            <Route path="/chart/yearLossGHG" exact component={Chart32} />
+            <Route path="/chart/monthLossGHG" exact component={Chart33} />
+            <Route path="/chart/weekLossGHG" exact component={Chart34} />
+            <Route path="/chart/dayLossGHG" exact component={Chart35} />
+
+            <Route path="/chart/yearLossCost" exact component={Chart36} />
+            <Route path="/chart/monthLossCost" exact component={Chart37} />
+            <Route path="/chart/weekLossCost" exact component={Chart38} />
+            <Route path="/chart/dayLossCost" exact component={Chart39} />
+
+            <Route path="/chart/nutrientGap" exact component={Chart40} />
 
             <Route path="/food-reduction" component={FoodReduction} />
 
