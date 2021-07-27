@@ -11,22 +11,22 @@ import {fs} from "../../../config/fbConfig"
 
 const time = moment().format("YYYY")
 
-class Chart1 extends Component {
+class Chart13 extends Component {
 
   state = {
     uid: this.props.auth.uid,
-    janWeight: 0,
-    febWeight: 0,
-    marWeight: 0,
-    aprWeight: 0,
-    mayWeight: 0,
-    junWeight: 0,
-    julWeight: 0,
-    augWeight: 0,
-    sepWeight: 0,
-    octWeight: 0,
-    novWeight: 0,
-    decWeight: 0,
+    janSurplus: 0,
+    febSurplus: 0,
+    marSurplus: 0,
+    aprSurplus: 0,
+    maySurplus: 0,
+    junSurplus: 0,
+    julSurplus: 0,
+    augSurplus: 0,
+    sepSurplus: 0,
+    octSurplus: 0,
+    novSurplus: 0,
+    decSurplus: 0,
   }
 
     // fetch db.json data
@@ -118,55 +118,105 @@ class Chart1 extends Component {
             // var fatCon = doc.data().FATCONTENT
             // var fibCon = doc.data().FIBRECONTENT
 
-            if (year === time && month === "Jan" && isSurplus !== "Surplus"){
+            if (year === time && month === "Jan" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                janWeight: prevState.janWeight += newWeight
+                janSurplus: prevState.janSurplus += newWeight
               }));
-            } else if (year === time && month === "Feb" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Feb" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                febWeight: prevState.febWeight += newWeight
+                febSurplus: prevState.febSurplus += newWeight
               }));
-            } else if (year === time && month === "Mar" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Mar" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                marWeight: prevState.marWeight += newWeight
+                marSurplus: prevState.marSurplus += newWeight
               }));
-            } else if (year === time && month === "Apr" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Apr" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                aprWeight: prevState.aprWeight += newWeight
+                aprSurplus: prevState.aprSurplus += newWeight
               }));
-            } else if (year === time && month === "May" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "May" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                mayWeight: prevState.mayWeight += newWeight
+                maySurplus: prevState.maySurplus += newWeight
               }));
-            } else if (year === time && month === "Jun" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Jun" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                junWeight: prevState.junWeight += newWeight
+                junSurplus: prevState.junSurplus += newWeight
               }));
-            } else if (year === time && month === "Jul" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Jul" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                julWeight: prevState.julWeight += newWeight
+                julSurplus: prevState.julSurplus += newWeight
               }));
-            } else if (year === time && month === "Aug" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Aug" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                augWeight: prevState.augWeight += newWeight
+                augSurplus: prevState.augSurplus += newWeight
               }));
-            } else if (year === time && month === "Sep" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Sep" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                sepWeight: prevState.sepWeight += newWeight
+                sepSurplus: prevState.sepSurplus += newWeight
               }));
-            } else if (year === time && month === "Oct" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Oct" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                octWeight: prevState.octWeight += newWeight
+                octSurplus: prevState.octSurplus += newWeight
               }));
-            } else if (year === time && month === "Nov" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Nov" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                novWeight: prevState.novWeight += newWeight
+                novSurplus: prevState.novSurplus += newWeight
               }));
-            } else if (year === time && month === "Dec" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Dec" && isSurplus === "Surplus"){
               this.setState( (prevState) => ({
-                decWeight: prevState.decWeight += newWeight
+                decSurplus: prevState.decSurplus += newWeight
               }));
             }
+            
+            // else if (year === time && month === "Jan" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     janWeight: prevState.janWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Feb" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     febWeight: prevState.febWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Mar" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     marWeight: prevState.marWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Apr" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     aprWeight: prevState.aprWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "May" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     mayWeight: prevState.mayWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Jun" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     junWeight: prevState.junWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Jul" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     julWeight: prevState.julWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Aug" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     augWeight: prevState.augWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Sep" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     sepWeight: prevState.sepWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Oct" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     octWeight: prevState.octWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Nov" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     novWeight: prevState.novWeight -= newWeight
+            //   }));
+            // } else if (year === time && month === "Dec" && isSurplus === "Surplus"){
+            //   this.setState( (prevState) => ({
+            //     decWeight: prevState.decWeight -= newWeight
+            //   }));
+            // }
 
           })
         })
@@ -270,31 +320,31 @@ class Chart1 extends Component {
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
-                  ['Month', 'Food Wastage Weight'],
-                  ['January', this.state.janWeight],
-                  ['February', this.state.febWeight],
-                  ['March', this.state.marWeight],
-                  ['April', this.state.aprWeight],
-                  ['May', this.state.mayWeight],
-                  ['June', this.state.junWeight],
-                  ['July', this.state.julWeight],
-                  ['August', this.state.augWeight],
-                  ['September', this.state.sepWeight],
-                  ['October', this.state.octWeight],
-                  ['November', this.state.novWeight],
-                  ['December', this.state.decWeight],
+                  ['Month', 'Food Surplus Weight Saved'],
+                  ['January', this.state.janSurplus],
+                  ['February', this.state.febSurplus],
+                  ['March', this.state.marSurplus],
+                  ['April', this.state.aprSurplus],
+                  ['May', this.state.maySurplus],
+                  ['June', this.state.junSurplus],
+                  ['July', this.state.julSurplus],
+                  ['August', this.state.augSurplus],
+                  ['September', this.state.sepSurplus],
+                  ['October', this.state.octSurplus],
+                  ['November', this.state.novSurplus],
+                  ['December', this.state.decSurplus],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'This year\'s Food Wastage Performance (' + time + ')',
+                  title: 'This year\'s Food Surplus Weight Saved Performance (' + time + ')',
                   chartArea: { width: '75%' },
-                  colors: ['#aab41e'],
+                  colors: ['rgb(13, 27, 92)'],
                   hAxis: {
                     title: 'Month of ' + time,
                     minValue: 0,
                   },
                   vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
+                    title: 'Weight of Food Saved (kg)',
                   },
                 }}
                 legendToggle
@@ -335,32 +385,32 @@ class Chart1 extends Component {
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
-                  ['Month', 'Weight '],
-                  ['Jan', this.state.janWeight],
-                  ['Feb', this.state.febWeight],
-                  ['Mar', this.state.marWeight],
-                  ['Apr', this.state.aprWeight],
-                  ['May', this.state.mayWeight],
-                  ['Jun', this.state.junWeight],
-                  ['Jul', this.state.julWeight],
-                  ['Aug', this.state.augWeight],
-                  ['Sep', this.state.sepWeight],
-                  ['Oct', this.state.octWeight],
-                  ['Nov', this.state.novWeight],
-                  ['Dec', this.state.decWeight],
+                    ['Month', 'Weight Saved '],
+                    ['Jan', this.state.janSurplus],
+                    ['Feb', this.state.febSurplus],
+                    ['Mar', this.state.marSurplus],
+                    ['Apr', this.state.aprSurplus],
+                    ['May', this.state.maySurplus],
+                    ['Jun', this.state.junSurplus],
+                    ['Jul', this.state.julSurplus],
+                    ['Aug', this.state.augSurplus],
+                    ['Sep', this.state.sepSurplus],
+                    ['Oct', this.state.octSurplus],
+                    ['Nov', this.state.novSurplus],
+                    ['Dec', this.state.decSurplus],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'Food Wastage Performance (' + time + ')',
+                  title: 'Food Surplus Weight Saved Performance (' + time + ')',
                   chartArea: { width: '60%' },
                   legend: 'none',
-                  colors: ['#aab41e'],
+                  colors: ['rgb(13, 27, 92)'],
                   hAxis: {
                     title: 'Month of ' + time,
                     minValue: 0,
                   },
                   vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
+                    title: 'Weight of Food Saved (kg)',
                   },
                 }}
                 legendToggle
@@ -449,4 +499,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart1);
+export default connect(mapStateToProps, null)(Chart13);

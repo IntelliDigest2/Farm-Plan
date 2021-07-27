@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Modal, Dropdown} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { startData, createFoodSurplusData, createFoodWasteData } from '../../../store/actions/dataActions';
@@ -11,8 +11,13 @@ import styled from "styled-components";
 import moment from "moment"
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import { BrowserView, MobileView, isMobile, isBrowser } from 'react-device-detect';
-import {fs} from "../../../config/fbConfig"
-import {BsQuestionCircle, BsFillQuestionCircleFill} from "react-icons/bs"
+// import {fs} from "../../../config/fbConfig"
+import {BsFillQuestionCircleFill} from "react-icons/bs"
+import { Divider, FormControlLabel } from '@material-ui/core';
+import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
+import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
+import {Autocomplete} from '@material-ui/lab';
+import {TextField, Checkbox} from '@material-ui/core';
 
 // import {Chart} from "react-google-charts"
 
@@ -31,39 +36,56 @@ class FoodWaste extends Component {
         email: this.props.auth.email,
         uid: this.props.auth.uid,
         filteredData: [],
-        weightOfInedibleFoodWaste: 0,
-        weightOfEdibleFoodWaste: 0,
-        dailyFoodWaste: 0,
 
-        edibleOrInedible: "Select Edible or Inedible",
+        formWidth: "",
+        formHeight: "",
+
+        meal: "Select Meal",
+
+        foodName: "",
+
+        checkedA: false,
+        checkedB: false,
+        eatingInOrOut: "",
+
+        edibleInedibleSurplus: "Select",
+
+        foodWasteWeight: 0,
+        weightType: "Select Unit",
+        weightMultiplier: 0,
 
         // edibleFoodWasteType: "Select Type",
         // inedibleFoodWasteType: "Select Type",
 
-        carbsContent: 0,
-        proteinContent: 0,
-        fatContent: 0,
-        fibreContent: 0,
+        // carbsContent: 0,
+        // proteinContent: 0,
+        // fatContent: 0,
+        // fibreContent: 0,
 
-        edibleMoisture: 0,
-        inedibleMoisture: 0,
-
-        foodName: "",
         producedLocally: "Select Local or Non-local",
+
+        expiryDate: "",
+
+        // moisture: 0,
+        // showMoisture: false, 
+
+        // inedibleMoisture: 0,
+
         // volumeOfFoodWaste: 0,
 
-        edibleGHG: 0,
-        inedibleGHG: 0,
-        dailyFoodSurplus: 0,
-        costOfEdibleFoodWaste: 0,
-        costOfInedibleFoodWaste: 0,
-        dropDownValueEFW: "Select Currency",
-        dropDownValueIFW: "Select Currency",
-        currencyMultiplierEFW: 0,
-        currencyMultiplierIFW: 0,
+        ghg: 0,
+        
+        // inedibleGHG: 0,
+        // dailyFoodSurplus: 0,
 
-        weightType: "Select Unit",
-        weightMultiplier: 0,
+        foodWasteCost: 0,
+        currency: "Select Currency",
+        currencyMultiplier: 0,
+
+        // costOfInedibleFoodWaste: 0,
+
+        // dropDownValueIFW: "Select Currency",
+        // currencyMultiplierIFW: 0,
 
         chartSubmissionDay: moment().format("ddd"),
         chartSubmissionWeek: moment().format("W"),
@@ -72,12 +94,13 @@ class FoodWaste extends Component {
         chartSubmissionYear: moment().format("YYYY"),
         chartSubmissionFullDate: moment().format("ddd MMM Do YYYY"),
 
-        showComposition: false,
-        showMoisture: false, 
+        // showComposition: false,
 
-        dataChartEFW: [['Food Wastage Type', 'Food Wastage Weight']],
+        // dataChartEFW: [['Food Wastage Type', 'Food Wastage Weight']],
 
-        formWidth: ""
+        // autocompleteEntries: [
+        //     {}
+        // ]
     }
 
     // handleChartSubmit(label, column){
@@ -88,39 +111,49 @@ class FoodWaste extends Component {
 
     clearEFWForm = () => {
         this.setState({
+            meal: "Select Meal",
             foodName: "",
-            edibleOrInedible: "Select Edible or Inedible",
-            weightOfEdibleFoodWaste: 0,
+            checkedA: false,
+            checkedB: false,
+            eatingInOrOut: "",
+            edibleInedibleSurplus: "Select",
+            foodWasteWeight: 0,
             weightType: "Select Unit",
             producedLocally: "Select Local or Non-local",
+            expiryDate: "",
             // edibleFoodWasteType: "Select Type",
-            carbsContent: 0,
-            proteinContent: 0,
-            fatContent: 0,
-            fibreContent: 0,
-            edibleMoisture: 0,
-            edibleGHG: 0,
-            costOfEdibleFoodWaste: 0,
-            dropDownValueEFW: "Select Currency",
-            currencyMultiplierEFW: 0
+            // carbsContent: 0,
+            // proteinContent: 0,
+            // fatContent: 0,
+            // fibreContent: 0,
+            // moisture: 0,
+            ghg: 0,
+            foodWasteCost: 0,
+            currency: "Select Currency",
+            currencyMultiplier: 0,
+            formHeight: "945px"
         });
     }
 
-    changeEFWCurrency(text) {
-        this.setState({dropDownValueEFW: text})
+    changeMeal(text){
+        this.setState({meal: text})
     }
 
-    changeIFWCurrency(text) {
-        this.setState({dropDownValueIFW: text})
+    changeCurrency(text) {
+        this.setState({currency: text})
     }
 
-    changeMultiplierEFW(value) {
-        this.setState({currencyMultiplierEFW: value})
+    // changeIFWCurrency(text) {
+    //     this.setState({dropDownValueIFW: text})
+    // }
+
+    changeCurrencyMultiplier(value) {
+        this.setState({currencyMultiplier: value})
     }
 
-    changeMultiplierIFW(value) {
-        this.setState({currencyMultiplierIFW: value})
-    }
+    // changeMultiplierIFW(value) {
+    //     this.setState({currencyMultiplierIFW: value})
+    // }
 
     changeWeightMultiplier(value) {
         this.setState({weightMultiplier: value})
@@ -133,9 +166,9 @@ class FoodWaste extends Component {
         })
     }
 
-    handleEdibleOrInedibleChange = (e) => {
+    handleEdibleInedibleSurplusChange = (e) => {
         // console.log(e)
-        this.setState({edibleOrInedible: e})
+        this.setState({edibleInedibleSurplus: e})
     }
 
     handleProducedLocallyChange(text){
@@ -146,59 +179,59 @@ class FoodWaste extends Component {
         this.setState({weightType: text})
     }
 
-    handleEdibleFoodTypeChange(text) {
-        this.setState({edibleFoodWasteType: text})
-    }
+    // handleEdibleFoodTypeChange(text) {
+    //     this.setState({edibleFoodWasteType: text})
+    // }
 
-    handleInedibleFoodTypeChange(text) {
-        this.setState({inedibleFoodWasteType: text})
-    }
+    // handleInedibleFoodTypeChange(text) {
+    //     this.setState({inedibleFoodWasteType: text})
+    // }
 
-    handleCarbsContentChange(event) {
-        this.setState({carbsContent: event.target.value})
-    }
+    // handleCarbsContentChange(event) {
+    //     this.setState({carbsContent: event.target.value})
+    // }
 
-    handleProteinContentChange(event) {
-        this.setState({proteinContent: event.target.value})
-    }
+    // handleProteinContentChange(event) {
+    //     this.setState({proteinContent: event.target.value})
+    // }
 
-    handleFibreContentChange(event) {
-        this.setState({fibreContent: event.target.value})
-    }
+    // handleFibreContentChange(event) {
+    //     this.setState({fibreContent: event.target.value})
+    // }
 
-    handleFatContentChange(event) {
-        this.setState({fatContent: event.target.value})
-    }
+    // handleFatContentChange(event) {
+    //     this.setState({fatContent: event.target.value})
+    // }
 
-    handleEdibleMoistureChange(event) {
-        this.setState({edibleMoisture: event.target.value})
-    }
+    // handleMoistureChange(event) {
+    //     this.setState({moisture: event.target.value})
+    // }
 
-    handleInedibleMoistureChange(event) {
-        this.setState({inedibleMoisture: event.target.value})
-    }
+    // handleInedibleMoistureChange(event) {
+    //     this.setState({inedibleMoisture: event.target.value})
+    // }
 
-    handleEdibleFoodWasteGHGChange = (e) => {
+    handleFoodWasteGHGChange = (e) => {
         //console.log(e);
         this.setState({
             [e.target.id]: e.target.value,
-            edibleGHG: Number(e.target.value) * 2.5,
+            ghg: Number(e.target.value) * 2.5,
         })
     }
 
-    handleInedibleFoodWasteGHGChange = (e) => {
-        //console.log(e);
-        this.setState({
-            [e.target.id]: e.target.value,
-            inedibleGHG: Number(e.target.value) * 2.5,
-        })
-    }
+    // handleInedibleFoodWasteGHGChange = (e) => {
+    //     //console.log(e);
+    //     this.setState({
+    //         [e.target.id]: e.target.value,
+    //         inedibleGHG: Number(e.target.value) * 2.5,
+    //     })
+    // }
 
-    handleEdibleFoodCostChange = (e) => {
+    handleFoodCostChange = (e) => {
         //console.log(e);
         this.setState({
             [e.target.id]: e.target.value,
-            costOfEdibleFoodWaste: (Number(e.target.value) * 0.85).toFixed(2)
+            foodWasteCost: (Number(e.target.value) * 0.85).toFixed(2)
         })
     }
 
@@ -229,12 +262,12 @@ class FoodWaste extends Component {
         this.props.startData(this.state)
     }
 
-    handleFoodSurplusSubmit = (e) => {
-        e.preventDefault();
-        this.setState({
-        })
-        this.props.createFoodSurplusData(this.state);
-    }
+    // handleFoodSurplusSubmit = (e) => {
+    //     e.preventDefault();
+    //     this.setState({
+    //     })
+    //     this.props.createFoodSurplusData(this.state);
+    // }
 
     handleFoodWasteSubmit = (e) => {
         e.preventDefault();
@@ -242,6 +275,42 @@ class FoodWaste extends Component {
         })
         this.props.createFoodWasteData(this.state);
     }
+
+    handleFormHeight(text){
+        if (text === "Select" || text === "Edible" || text === "Surplus"){
+            this.setState({formHeight: "945px"})
+        } else if (text === "Inedible"){
+            this.setState({formHeight: "800px"})
+        }
+    }
+
+    handleCheckboxTick = (e) => {
+        if (e.target.name === "checkedA"){
+            this.setState({ 
+                [e.target.name]: e.target.checked,
+                checkedB: !e.target.checked,
+                eatingInOrOut: "Eating In"
+            });
+        } else if (e.target.name === "checkedB"){
+            this.setState({
+                [e.target.name]: e.target.checked,
+                checkedA: !e.target.checked,
+                eatingInOrOut: "Eating Out"
+            })
+        }
+    }
+
+    // handleFoodNameEntry(text){
+    //     this.setState({
+    //         foodName: text
+    //     })
+    // }
+
+    // handleAutoCompleteValueEntry(text){
+    //     this.setState( (prevState) => ({
+    //         autocompleteEntries: {...prevState.autocompleteEntries, text}
+    //     }));
+    // }
 
     // handleFoodWasteSubmitMobile = (e) => {
     //     e.preventDefault();
@@ -259,10 +328,10 @@ class FoodWaste extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw"})
+            this.setState({formWidth: "72vw", formHeight: "945px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px"})
+            this.setState({formWidth: "261px", formHeight: "945px"})
         }
     }
 
@@ -282,12 +351,14 @@ class FoodWaste extends Component {
         // console.log(foodSurplus);
 
         // 284 - paddingBottom:
+
         return(
             <div 
                 // className="container"
                 style={{width: "100%", height: "100%" }}
             >
-            <h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible & Inedible Food Waste</h4>
+            <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste & Food Surplus</h6></MobileView>
+            <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste & Food Surplus (User)</h4></BrowserView>
 
                 {filteredData.length === 0 ? <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
         <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
@@ -322,7 +393,7 @@ class FoodWaste extends Component {
                     // width: "90%", 
                     width: this.state.formWidth, 
                     // height: "100%"
-                    height:'1095px',
+                    height:this.state.formHeight,
                     marginBottom: '10vh'
                     // backgroundColor: 'lightgray'
                 }}
@@ -330,11 +401,77 @@ class FoodWaste extends Component {
                 
                 {/* onSubmit={this.handleFoodWasteSubmit}     */}
             <Form className= "form-layout" style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste & Surplus</h5>
                 
                 <div>
 
-                    <div style={{padding: "0 10% 0 10%"}}>Food Name <div style={{fontSize: "11px"}}>(e.g. Bread, Milk, Spaghetti, ...)</div></div>
+                    <div style={{padding: "0 10% 0 10%"}}>Meal</div>
+                    <Form.Group
+                        style={{
+                            padding: "0 10% 0 10%",
+                            // paddingBottom: "20px",
+                            display: "flex"
+                        }}>
+                    <InputGroup>
+                        <DDMenuStyle>
+                            <Dropdown>
+                                <DropdownToggle variant="secondary" style={{width: "190px"}} className="dd">{this.state.meal}</DropdownToggle>
+                                <DropdownMenu>
+
+                                    {/* as="button" */}
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.changeMeal(e.target.textContent)}>
+                                            Breakfast
+                                        </div>
+                                    </DropdownItem>
+
+                                    {/* as="button" */}
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.changeMeal(e.target.textContent)}>
+                                            Lunch
+                                        </div>
+                                    </DropdownItem>
+
+                                    {/* as="button" */}
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.changeMeal(e.target.textContent)}>
+                                            Dinner
+                                        </div>
+                                    </DropdownItem>
+
+                                </DropdownMenu>
+                            </Dropdown>
+                        </DDMenuStyle>
+                    </InputGroup>
+
+                    </Form.Group>
+
+                    <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
+                    <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                        <Autocomplete
+                            freeSolo 
+                            id="foodName"
+                            options={foodOptions}
+                            // getOptionLabel={(option) => option.name}
+                            style={{width: "100%"}}
+                            size="small"
+                            onChange={(e) => this.setState({ foodName: e.target.textContent })}
+                            onInputChange={(e) => this.handleChange(e)}
+                            renderInput={(params) => ( <TextField {...params} label="Enter Food Name" variant="outlined" /> )}
+                        />
+                    </Form.Group>
+
+                    <div style={{padding: "0 10% 0 10%"}}>Eating In or Out?</div>
+                        <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedA} name="checkedA" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating In" />
+                        </Form.Group>
+                        <Form.Group style={{padding: "0 10% 0 10%", marginTop: "-25px", display: "flex"}}>
+                            <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedB} name="checkedB" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating Out" />
+                        </Form.Group>
+
+                    <Divider />
+
+                    {/* <div style={{padding: "0 10% 0 10%", paddingTop: "25px"}}>Food Name <div style={{fontSize: "11px"}}>(e.g. Bread, Milk, Spaghetti, ...)</div></div>
                     <Form.Group
                         style={{
                             padding: "0 10% 0 10%",
@@ -344,36 +481,44 @@ class FoodWaste extends Component {
                     <Form.Control id="foodName" placeholder="Enter food name" onChange={(e) => {this.handleChange(e)}} width="100%" value={this.state.foodName}/>
                     </InputGroup>
 
-                    </Form.Group>
+                    </Form.Group> */}
 
                     {/* <BsFillQuestionCircleFill onClick={() => this.setState({showEdibleOrInedible: true})} style={{marginLeft: '5px'}}/> */}
-                    <div style={{padding: "0 10% 0 10%"}}>Edible or Inedible?</div>
+                    <div style={{padding: "0 10% 0 10%", paddingTop: "25px"}}>Edible, Inedible or Surplus?</div>
                     <Form.Group
                         style={{
                             padding: "0 10% 0 10%",
                             display: "flex"
                         }}>
                         <InputGroup>
-                            <DropdownButton
-                                variant="outline-secondary"
-                                title={this.state.edibleOrInedible}
-                                id="eidd"
-                            >
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => this.handleEdibleOrInedibleChange(e.target.textContent)}>
-                                        Edible
-                                    </div>
-                                </DropdownItem>
+                            <DDMenuStyle>
+                                <Dropdown>
+                                    <DropdownToggle variant="secondary" style={{width: "190px"}} className="dd">{this.state.edibleInedibleSurplus}</DropdownToggle>
+                                    <DropdownMenu>
 
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => this.handleEdibleOrInedibleChange(e.target.textContent)}>
-                                        Inedible
-                                    </div>
-                                </DropdownItem>
+                                        {/* as="button" */}
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => {this.handleEdibleInedibleSurplusChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
+                                                Edible
+                                            </div>
+                                        </DropdownItem>
 
-                            </DropdownButton>
+                                        {/* as="button" */}
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => {this.handleEdibleInedibleSurplusChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
+                                                Inedible
+                                            </div>
+                                        </DropdownItem>
+
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => {this.handleEdibleInedibleSurplusChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
+                                                Surplus
+                                            </div>
+                                        </DropdownItem>
+
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </DDMenuStyle>
                         </InputGroup>
                     </Form.Group>
 
@@ -390,356 +535,529 @@ class FoodWaste extends Component {
                         </Modal.Footer>
                     </Modal> */}
 
-                    <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
-                    <Form.Group className= "form-layout" 
-                        style={{
-                            padding: "0 10% 0 10%", 
-                            display: "flex", 
-                            justifyContent: 'space-around'}} 
-                    >
-                    <InputGroup>
-                        <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
-                        {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
-                        <InputGroup.Append>
-                            <InputGroup.Text>kg</InputGroup.Text>
-                        </InputGroup.Append> */}
+                <div>{this.state.edibleInedibleSurplus === "Edible" || this.state.edibleInedibleSurplus === "Select" || this.state.edibleInedibleSurplus === "Surplus" ? 
+                    <div>
 
-                        <DropdownButton
-                            as={InputGroup.Append}
-                            variant="outline-secondary"
-                            title={this.state.weightType}
-                            id="wtdd"
+                        <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
+                        <Form.Group className= "form-layout" 
+                            style={{
+                                padding: "0 10% 0 10%", 
+                                display: "flex", 
+                                justifyContent: 'space-around'}} 
                         >
-
-                            <Dropdown.Header>Weight (Solids)</Dropdown.Header>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(1)}}>
-                                    kg
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.001)}}>
-                                    g
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.028)}}>
-                                    oz
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.454)}}>
-                                    lbs
-                                </div>
-                            </DropdownItem>
-
-                            <Dropdown.Divider />
-
-                            <Dropdown.Header>Volume (Liquids)</Dropdown.Header>
-
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(1)}}>
-                                    l
-                                </div>
-                            </DropdownItem>
-
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.001)}}>
-                                    ml
-                                </div>
-                            </DropdownItem>
-
-                        </DropdownButton>
-
-                    </InputGroup>
-                    </Form.Group>
-
-                    <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
-                    <Form.Group 
-                        style={{
-                            padding: "0 10% 0 10%",
-                            display: "flex"
-                        }}>
                         <InputGroup>
+                            <Form.Control  type="number" id="foodWasteWeight" placeholder="Enter weight of food waste" onChange={(e) => {this.handleFoodWasteGHGChange(e); this.handleFoodCostChange(e)}} width="100%" value={this.state.foodWasteWeight}/>
+                            {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
+                            <InputGroup.Append>
+                                <InputGroup.Text>kg</InputGroup.Text>
+                            </InputGroup.Append> */}
+
                             <DropdownButton
+                                as={InputGroup.Append}
                                 variant="outline-secondary"
-                                title={this.state.producedLocally}
-                                id="lnldd"
+                                title={this.state.weightType}
+                                id="wtdd"
                             >
+
+                                <Dropdown.Header>Weight (Solids)</Dropdown.Header>
+
+                                {/* as="button" */}
                                 <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
-                                        Local Produce
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(1)}}>
+                                        kg
+                                    </div>
+                                </DropdownItem>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.001)}}>
+                                        g
+                                    </div>
+                                </DropdownItem>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.028)}}>
+                                        oz
+                                    </div>
+                                </DropdownItem>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.454)}}>
+                                        lbs
+                                    </div>
+                                </DropdownItem>
+
+                                <Dropdown.Divider />
+
+                                <Dropdown.Header>Volume (Liquids)</Dropdown.Header>
+
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(1)}}>
+                                        l
                                     </div>
                                 </DropdownItem>
 
                                 <DropdownItem as="button" type="button">
-                                    <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
-                                        Non-local Produce
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.001)}}>
+                                        ml
                                     </div>
                                 </DropdownItem>
 
                             </DropdownButton>
+
                         </InputGroup>
+                        </Form.Group>
 
-                    </Form.Group>
+                        <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
+                        <Form.Group 
+                            style={{
+                                padding: "0 10% 0 10%",
+                                display: "flex"
+                            }}>
+                            <InputGroup>
+                                <DropdownButton
+                                    variant="outline-secondary"
+                                    title={this.state.producedLocally}
+                                    id="lnldd"
+                                >
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                            Local Produce
+                                        </div>
+                                    </DropdownItem>
 
-                    {/* <div style={{padding: "0 10% 0 10%"}}>Food Waste Type</div>  
-                    <Form.Group
-                        style={{
-                            padding: "0 10% 0 10%", 
-                            display: "flex"}}                    
-                    >
-                    <InputGroup>
-                        <DropdownButton
-                            variant="outline-secondary"
-                            title={this.state.edibleFoodWasteType}
-                            id="igdd"
-                            // style ={{backgroundColor: 'white'}}
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                            Non-local Produce
+                                        </div>
+                                    </DropdownItem>
+
+                                </DropdownButton>
+                            </InputGroup>
+
+                        </Form.Group>
+
+                        <div style={{padding: "0 10% 0 10%"}}>Expiry Date</div>
+                        <Form.Group className="form-layout"
+                            style={{
+                                padding: "0 10% 0 10%",
+                                display: "flex",
+                                justifyContent: "space-around"
+                            }}
                         >
+                        <InputGroup>
+                            <Form.Control id="expiryDate" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
+                        </InputGroup>
+                        </Form.Group>
+
+                        {/* <div style={{padding: "0 10% 0 10%"}}>Food Waste Type</div>  
+                        <Form.Group
+                            style={{
+                                padding: "0 10% 0 10%", 
+                                display: "flex"}}                    
+                        >
+                        <InputGroup>
+                            <DropdownButton
+                                variant="outline-secondary"
+                                title={this.state.edibleFoodWasteType}
+                                id="igdd"
+                                // style ={{backgroundColor: 'white'}}
+                            >
+
+                                
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
+                                        Carbohydrates
+                                    </div>
+                                </DropdownItem>
+
+                                
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
+                                        Protein
+                                    </div>
+                                </DropdownItem>
+
+                                
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
+                                        Fat
+                                    </div>
+                                </DropdownItem>
 
                             
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
-                                    Carbohydrates
-                                </div>
-                            </DropdownItem>
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
+                                        Fibre
+                                    </div>
+                                </DropdownItem>                                                        
 
-                            
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
-                                    Protein
-                                </div>
-                            </DropdownItem>
+                            </DropdownButton>
+                        </InputGroup>
+                        </Form.Group> */}
+                        {/* <div>
+                            <div style={{padding: "0 10% 0 10%", fontWeight: "bold"}}>Food Waste Composition<BsFillQuestionCircleFill onClick={() => this.setState({showComposition: true})} style={{marginLeft: '5px'}}/></div>
 
-                            
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
-                                    Fat
-                                </div>
-                            </DropdownItem>
+                            <Modal show={this.state.showComposition} onHide={() => this.setState({showComposition: !this.state.showComposition})}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Food Waste Composition Guide</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <p>For help with filling out this section of the form as accurately as possible,
+                                        consult the 'About' page for further info on Food Waste, Macronutrients, etc.
+                                    </p>
+                                    <p>Note: make sure your entries total to 100</p>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={() => this.setState({showComposition: false})}>Close</Button>
+                                </Modal.Footer>
+                            </Modal>
 
-                           
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.handleEdibleFoodTypeChange(e.target.textContent)}}>
-                                    Fibre
-                                </div>
-                            </DropdownItem>                                                        
+                            <div style={{padding: "0 10% 0 10%"}}>Carbohydrate Content</div>
+                            <Form.Group className="form-layout"
+                                style={{
+                                    padding: "0 10% 0 10%",
+                                    display: "flex",
+                                    justifyContent: "space-around"
+                                }}
+                            >
+                            <InputGroup>
+                                <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.fatContent - this.state.fibreContent} id="carbsContent" placeholder="Enter carbohydrate content of food waste" onChange={(e) => this.handleCarbsContentChange(e)} width="100%" value={this.state.carbsContent}/>
+                                <InputGroup.Append>
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            </Form.Group>
 
-                        </DropdownButton>
-                    </InputGroup>
-                    </Form.Group> */}
-                    <div>
-                        <div style={{padding: "0 10% 0 10%", fontWeight: "bold"}}>Food Waste Composition<BsFillQuestionCircleFill onClick={() => this.setState({showComposition: true})} style={{marginLeft: '5px'}}/></div>
+                            <div style={{padding: "0 10% 0 10%"}}>Protein Content</div>
+                            <Form.Group className="form-layout"
+                                style={{
+                                    padding: "0 10% 0 10%",
+                                    display: "flex",
+                                    justifyContent: "space-around"
+                                }}
+                            >
+                            <InputGroup>
+                                <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.carbsContent - this.state.fatContent - this.state.fibreContent} id="proteinContent" placeholder="Enter protein content of food waste" onChange={(e) => this.handleProteinContentChange(e)} width="100%" value={this.state.proteinContent}/>
+                                <InputGroup.Append>
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            </Form.Group>
 
-                        <Modal show={this.state.showComposition} onHide={() => this.setState({showComposition: !this.state.showComposition})}>
+                            <div style={{padding: "0 10% 0 10%"}}>Fat Content</div>
+                            <Form.Group className="form-layout"
+                                style={{
+                                    padding: "0 10% 0 10%",
+                                    display: "flex",
+                                    justifyContent: "space-around"
+                                }}
+                            >
+                            <InputGroup>
+                                <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.carbsContent - this.state.fibreContent} id="fatContent" placeholder="Enter fat content of food waste" onChange={(e) => this.handleFatContentChange(e)} width="100%" value={this.state.fatContent}/>
+                                <InputGroup.Append>
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            </Form.Group>
+
+                            <div style={{padding: "0 10% 0 10%"}}>Fibre Content</div>
+                            <Form.Group className="form-layout"
+                                style={{
+                                    padding: "0 10% 0 10%",
+                                    display: "flex",
+                                    justifyContent: "space-around"
+                                }}
+                            >
+                            <InputGroup>
+                                <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.carbsContent - this.state.fatContent} id="fibreContent" placeholder="Enter fibre content of food waste" onChange={(e) => this.handleFibreContentChange(e)} width="100%" value={this.state.fibreContent}/>
+                                <InputGroup.Append>
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            </Form.Group>
+
+                            <div style={{padding: "0 10% 0 10%"}}>TOTAL</div>
+                            <Form.Group className="form-layout"
+                                style={{
+                                    padding: "0 10% 0 10%",
+                                    display: "flex",
+                                    justifyContent: "space-around"
+                                }}
+                            >
+                            <InputGroup>
+                                <Form.Control id="totalContent" placeholder="Total content" width="100%" value={Number(this.state.carbsContent)+Number(this.state.proteinContent)+Number(this.state.fatContent)+Number(this.state.fibreContent) + "/100"}/>
+                                <InputGroup.Append>
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            </Form.Group>
+
+                        </div> */}
+
+                        {/* <div style={{padding: "0 10% 0 10%"}}>Moisture Content<BsFillQuestionCircleFill onClick={() => this.setState({showMoisture: true})} style={{marginLeft: '5px'}}/></div>
+
+                        <Modal show={this.state.showMoisture} onHide={() => this.setState({showMoisture: !this.state.showMoisture})}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Food Waste Composition Guide</Modal.Title>
+                                <Modal.Title>Moisture Content Guide</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <p>For help with filling out this section of the form as accurately as possible,
-                                    consult the 'About' page for further info on Food Waste, Macronutrients, etc.
-                                </p>
-                                <p>Note: make sure your entries total to 100</p>
+                                <li>Banana: 10%</li>
+                                <li>Bread: 0%</li>
+                                <li>...</li>
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button variant="secondary" onClick={() => this.setState({showComposition: false})}>Close</Button>
+                                <Button variant="secondary" onClick={() => this.setState({showMoisture: false})}>Close</Button>
                             </Modal.Footer>
                         </Modal>
 
-                        <div style={{padding: "0 10% 0 10%"}}>Carbohydrate Content</div>
                         <Form.Group className="form-layout"
                             style={{
-                                padding: "0 10% 0 10%",
+                                padding: "0 10% 0 10%", 
                                 display: "flex",
-                                justifyContent: "space-around"
-                            }}
+                                justifyContent: 'space-around'}}                      
                         >
                         <InputGroup>
-                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.fatContent - this.state.fibreContent} id="carbsContent" placeholder="Enter carbohydrate content of food waste" onChange={(e) => this.handleCarbsContentChange(e)} width="100%" value={this.state.carbsContent}/>
+                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100} id="moisture" placeholder="Enter moisture content of food waste" onChange={(e) => {this.handleMoistureChange(e)}} width="100%" value={this.state.moisture}/>
                             <InputGroup.Append>
                                 <InputGroup.Text>%</InputGroup.Text>
+                            </InputGroup.Append>
+                        </InputGroup>
+                        </Form.Group>          */}
+
+                        <div style={{padding: "0 10% 0 10%"}}>GHG</div>
+                        <Form.Group 
+                            style={{
+                                padding: "0 10% 0 10%", 
+                                display: "flex"}}
+                        >
+                        <InputGroup>
+                            <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={(this.state.ghg*this.state.weightMultiplier).toFixed(2)} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
+                            <InputGroup.Append>
+                                <InputGroup.Text>kg co2</InputGroup.Text>
                             </InputGroup.Append>
                         </InputGroup>
                         </Form.Group>
 
-                        <div style={{padding: "0 10% 0 10%"}}>Protein Content</div>
-                        <Form.Group className="form-layout"
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
-                        >
+                        <div style={{padding: "0 10% 0 10%"}}>Cost</div>
+                        <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
                         <InputGroup>
-                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.carbsContent - this.state.fatContent - this.state.fibreContent} id="proteinContent" placeholder="Enter protein content of food waste" onChange={(e) => this.handleProteinContentChange(e)} width="100%" value={this.state.proteinContent}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>%</InputGroup.Text>
-                            </InputGroup.Append>
+
+                            {/* <InputGroup.Prepend>
+                                <InputGroup.Text>£</InputGroup.Text>
+                            </InputGroup.Prepend> */}
+
+                            <DropdownButton
+                                as={InputGroup.Prepend}
+                                variant="outline-secondary"
+                                title={this.state.currency}
+                                id="input-group-dropdown-1"
+                                // style ={{backgroundColor: 'white'}}
+                            >
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.changeCurrency(e.target.textContent); this.changeCurrencyMultiplier(1)}}>
+                                        GBP (£)
+                                    </div>
+                                </DropdownItem>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.changeCurrency(e.target.textContent); this.changeCurrencyMultiplier(1.404)}}>
+                                        USD ($)
+                                    </div>
+                                </DropdownItem>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.changeCurrency(e.target.textContent); this.changeCurrencyMultiplier(1.161)}}>
+                                        EUR (€)
+                                    </div>    
+                                </DropdownItem>
+
+                            </DropdownButton>
+
+                        <Form.Control type="number" id="foodWasteCost" placeholder="Enter cost of food surplus" value={(this.state.foodWasteCost*this.state.currencyMultiplier*this.state.weightMultiplier).toFixed(2)}/>{/*pounds*/}
                         </InputGroup>
                         </Form.Group>
 
-                        <div style={{padding: "0 10% 0 10%"}}>Fat Content</div>
-                        <Form.Group className="form-layout"
+                        {/* <div style={{padding: "0 10% 0 10%"}}>Daily</div>
+                        <Form.Group 
+                        style={{
+                            padding: "0 10% 0 10%",
+                            width: "90%",
+                            display: "flex"
+                            }}>
+                            <Form.Control type="number" id="dailyFoodWaste" placeholder="Enter daily food waste value" onChange={this.handleChange} width="100%" value={this.state.dailyFoodWaste}/>kg
+                        </Form.Group> */}
+
+                        {/* this.addData([id, this.state.weightOfEdibleFoodWaste, this.state.edibleFoodWasteType, this.state.edibleMoisture, this.state.edibleGHG, this.state.dropDownValueEFW, this.state.costOfEdibleFoodWaste]) */}
+                        {/* this.handleChartSubmit(this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)); */}
+
+                        {/* this.handleFoodWasteSubmit(e); */}
+
+                        <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
+                            Update
+                        </Button>
+                    </div> : 
+                    
+                    <div>
+
+                        <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
+                        <Form.Group className= "form-layout" 
                             style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
+                                padding: "0 10% 0 10%", 
+                                display: "flex", 
+                                justifyContent: 'space-around'}} 
                         >
                         <InputGroup>
-                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.carbsContent - this.state.fibreContent} id="fatContent" placeholder="Enter fat content of food waste" onChange={(e) => this.handleFatContentChange(e)} width="100%" value={this.state.fatContent}/>
+                            <Form.Control type="number" id="foodWasteWeight" placeholder="Enter weight of food waste" onChange={(e) => {this.handleFoodWasteGHGChange(e); this.handleFoodCostChange(e)}} width="100%" value={this.state.foodWasteWeight}/>
+                            {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
                             <InputGroup.Append>
-                                <InputGroup.Text>%</InputGroup.Text>
-                            </InputGroup.Append>
+                                <InputGroup.Text>kg</InputGroup.Text>
+                            </InputGroup.Append> */}
+
+                            <DropdownButton
+                                as={InputGroup.Append}
+                                variant="outline-secondary"
+                                title={this.state.weightType}
+                                id="wtdd"
+                            >
+
+                                <Dropdown.Header>Weight (Solids)</Dropdown.Header>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(1)}}>
+                                        kg
+                                    </div>
+                                </DropdownItem>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.001)}}>
+                                        g
+                                    </div>
+                                </DropdownItem>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.028)}}>
+                                        oz
+                                    </div>
+                                </DropdownItem>
+
+                                {/* as="button" */}
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.454)}}>
+                                        lbs
+                                    </div>
+                                </DropdownItem>
+
+                                <Dropdown.Divider />
+
+                                <Dropdown.Header>Volume (Liquids)</Dropdown.Header>
+
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(1)}}>
+                                        l
+                                    </div>
+                                </DropdownItem>
+
+                                <DropdownItem as="button" type="button">
+                                    <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent); this.changeWeightMultiplier(0.001)}}>
+                                        ml
+                                    </div>
+                                </DropdownItem>
+
+                            </DropdownButton>
+
                         </InputGroup>
                         </Form.Group>
 
-                        <div style={{padding: "0 10% 0 10%"}}>Fibre Content</div>
-                        <Form.Group className="form-layout"
+                        <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
+                        <Form.Group 
                             style={{
                                 padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                        <InputGroup>
-                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100 - this.state.proteinContent - this.state.carbsContent - this.state.fatContent} id="fibreContent" placeholder="Enter fibre content of food waste" onChange={(e) => this.handleFibreContentChange(e)} width="100%" value={this.state.fibreContent}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>%</InputGroup.Text>
-                            </InputGroup.Append>
-                        </InputGroup>
+                                display: "flex"
+                            }}>
+                            <InputGroup>
+                                <DropdownButton
+                                    variant="outline-secondary"
+                                    title={this.state.producedLocally}
+                                    id="lnldd"
+                                >
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                            Local Produce
+                                        </div>
+                                    </DropdownItem>
+
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                            Non-local Produce
+                                        </div>
+                                    </DropdownItem>
+
+                                </DropdownButton>
+                            </InputGroup>
+
                         </Form.Group>
 
-                        <div style={{padding: "0 10% 0 10%"}}>TOTAL</div>
+                        {/* <div style={{padding: "0 10% 0 10%"}}>Moisture Content<BsFillQuestionCircleFill onClick={() => this.setState({showMoisture: true})} style={{marginLeft: '5px'}}/></div>
+
+                        <Modal show={this.state.showMoisture} onHide={() => this.setState({showMoisture: !this.state.showMoisture})}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Moisture Content Guide</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <li>Banana: 10%</li>
+                                <li>Bread: 0%</li>
+                                <li>...</li>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={() => this.setState({showMoisture: false})}>Close</Button>
+                            </Modal.Footer>
+                        </Modal>
+
                         <Form.Group className="form-layout"
                             style={{
-                                padding: "0 10% 0 10%",
+                                padding: "0 10% 0 10%", 
                                 display: "flex",
-                                justifyContent: "space-around"
-                            }}
+                                justifyContent: 'space-around'}}                      
                         >
                         <InputGroup>
-                            <Form.Control id="totalContent" placeholder="Total content" width="100%" value={Number(this.state.carbsContent)+Number(this.state.proteinContent)+Number(this.state.fatContent)+Number(this.state.fibreContent) + "/100"}/>
+                            <Form.Control type="number" pattern="[0-100]*" min={0} max={100} id="moisture" placeholder="Enter moisture content of food waste" onChange={(e) => {this.handleMoistureChange(e)}} width="100%" value={this.state.moisture}/>
                             <InputGroup.Append>
                                 <InputGroup.Text>%</InputGroup.Text>
                             </InputGroup.Append>
                         </InputGroup>
+                        </Form.Group>  */}
+
+                        <div style={{padding: "0 10% 0 10%"}}>GHG</div>
+                        <Form.Group 
+                            style={{
+                                padding: "0 10% 0 10%", 
+                                display: "flex"}}
+                        >
+                        <InputGroup>
+                            <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={(this.state.ghg*this.state.weightMultiplier).toFixed(2)} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
+                            <InputGroup.Append>
+                                <InputGroup.Text>kg co2</InputGroup.Text>
+                            </InputGroup.Append>
+                        </InputGroup>
                         </Form.Group>
+                        {/* this.handleFoodWasteSubmit(e); this.handleAutoCompleteValueEntry(this.state.foodName);*/}
+                        <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
+                            Update
+                        </Button>
 
                     </div>
-
-                    <div style={{padding: "0 10% 0 10%"}}>Moisture Content<BsFillQuestionCircleFill onClick={() => this.setState({showMoisture: true})} style={{marginLeft: '5px'}}/></div>
-
-                    <Modal show={this.state.showMoisture} onHide={() => this.setState({showMoisture: !this.state.showMoisture})}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Moisture Content Guide</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <li>Banana: 10%</li>
-                            <li>Bread: 0%</li>
-                            <li>...</li>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={() => this.setState({showMoisture: false})}>Close</Button>
-                        </Modal.Footer>
-                    </Modal>
-
-                    <Form.Group className="form-layout"
-                        style={{
-                            padding: "0 10% 0 10%", 
-                            display: "flex",
-                            justifyContent: 'space-around'}}                      
-                    >
-                    <InputGroup>
-                        <Form.Control type="number" pattern="[0-100]*" min={0} max={100} id="edibleMoisture" placeholder="Enter moisture content of food waste" onChange={(e) => {this.handleEdibleMoistureChange(e)}} width="100%" value={this.state.edibleMoisture}/>
-                        <InputGroup.Append>
-                            <InputGroup.Text>%</InputGroup.Text>
-                        </InputGroup.Append>
-                    </InputGroup>
-                    </Form.Group>         
-
-                    <div style={{padding: "0 10% 0 10%"}}>GHG</div>
-                    <Form.Group 
-                        style={{
-                            padding: "0 10% 0 10%", 
-                            display: "flex"}}
-                    >
-                    <InputGroup>
-                        <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={(this.state.edibleGHG*this.state.weightMultiplier).toFixed(2)} width="100%"/>{/*<p style={{width:'100px'}}>kg co2</p>*/}
-                        <InputGroup.Append>
-                            <InputGroup.Text>kg co2</InputGroup.Text>
-                        </InputGroup.Append>
-                    </InputGroup>
-                    </Form.Group>
-
-                    <div style={{padding: "0 10% 0 10%"}}>Cost</div>
-                    <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
-                    <InputGroup>
-
-                        {/* <InputGroup.Prepend>
-                            <InputGroup.Text>£</InputGroup.Text>
-                        </InputGroup.Prepend> */}
-
-                        <DropdownButton
-                            as={InputGroup.Prepend}
-                            variant="outline-secondary"
-                            title={this.state.dropDownValueEFW}
-                            id="input-group-dropdown-1"
-                            // style ={{backgroundColor: 'white'}}
-                        >
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1)}}>
-                                    GBP (£)
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1.404)}}>
-                                    USD ($)
-                                </div>
-                            </DropdownItem>
-
-                            {/* as="button" */}
-                            <DropdownItem as="button" type="button">
-                                <div onClick={(e) => {this.changeEFWCurrency(e.target.textContent); this.changeMultiplierEFW(1.161)}}>
-                                    EUR (€)
-                                </div>    
-                            </DropdownItem>
-
-                        </DropdownButton>
-
-                    <Form.Control type="number" id="costOfEdibleFoodWaste" placeholder="Enter cost of food surplus" value={(this.state.costOfEdibleFoodWaste*this.state.currencyMultiplierEFW*this.state.weightMultiplier).toFixed(2)}/>{/*pounds*/}
-                    </InputGroup>
-                    </Form.Group>
-
-                    {/* <div style={{padding: "0 10% 0 10%"}}>Daily</div>
-                    <Form.Group 
-                    style={{
-                        padding: "0 10% 0 10%",
-                        width: "90%",
-                        display: "flex"
-                        }}>
-                        <Form.Control type="number" id="dailyFoodWaste" placeholder="Enter daily food waste value" onChange={this.handleChange} width="100%" value={this.state.dailyFoodWaste}/>kg
-                    </Form.Group> */}
-
-                    {/* this.addData([id, this.state.weightOfEdibleFoodWaste, this.state.edibleFoodWasteType, this.state.edibleMoisture, this.state.edibleGHG, this.state.dropDownValueEFW, this.state.costOfEdibleFoodWaste]) */}
-                    {/* this.handleChartSubmit(this.state.edibleFoodWasteType, parseInt(this.state.weightOfEdibleFoodWaste)); */}
-
-                    <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
-                        Update
-                    </Button>
-
+        }
+                </div>
                 </div>
             </Form> 
             </Card>
@@ -1068,6 +1386,31 @@ class FoodWaste extends Component {
     }
 }
 
+const foodOptions = [
+    "Cereal",
+    "Bacon",
+    "Baked Beans",
+    "Porridge",
+    "Pancake", 
+    "Beef",
+    "Chicken",
+    "Pork",
+    "Apple",
+    "Banana",
+    "Orange",
+    "Pear",
+    "Grapes",
+    "Chocolate",
+    "Crisps",
+    "Pasta",
+    "Bolognese",
+    "Potato",
+    "Chips",
+    "Milk",
+    "Fruit Juice",
+    "Onion",
+]
+
 const mapStateToProps = (state) => {
     return{
         auth: state.firebase.auth,
@@ -1113,6 +1456,15 @@ const ChartStyle = styled.div`
         position: absolute;
         left: 17%;
         padding: 20px
+    }
+`;
+
+const DDMenuStyle = styled.div`
+    .dd{
+        background-color: white;
+        color: grey;
+        border-color: grey;
+
     }
 `;
 

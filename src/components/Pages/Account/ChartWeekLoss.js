@@ -11,7 +11,7 @@ import {fs} from "../../../config/fbConfig"
 
 const time = moment().format("W")
 
-class Chart3 extends Component {
+class Chart30 extends Component {
 
   state = {
     uid: this.props.auth.uid,
@@ -26,47 +26,9 @@ class Chart3 extends Component {
     weekEnding: "",
   }
 
-      // fetch db.json data
-      fetchData = async () => {
-        // const res = await fetch('http://localhost:5000/edible-food-waste-data')
-        // const data = await res.json();
+    fetchData = async () => {
 
-        // data.forEach(efw => {
-        //   if (efw.week === time && efw.day === "Mon"){
-
-        //     this.setState({weekBeginning: efw.month + " " + efw.date})
-
-        //     this.setState( (prevState) => ({
-        //       mondayWeight: prevState.mondayWeight += efw.weight
-        //     }));
-        //   } else if (efw.week === time && efw.day === "Tue"){
-        //     this.setState( (prevState) => ({
-        //       tuesdayWeight: prevState.tuesdayWeight += efw.weight
-        //     }));
-        //   } else if (efw.week === time && efw.day === "Wed"){
-        //     this.setState( (prevState) => ({
-        //       wednesdayWeight: prevState.wednesdayWeight += efw.weight
-        //     }));
-        //   } else if (efw.week === time && efw.day === "Thu"){
-        //     this.setState( (prevState) => ({
-        //       thursdayWeight: prevState.thursdayWeight += efw.weight
-        //     }));
-        //   } else if (efw.week === time && efw.day === "Fri"){
-        //     this.setState( (prevState) => ({
-        //       fridayWeight: prevState.fridayWeight += efw.weight
-        //     }));
-        //   } else if (efw.week === time && efw.day === "Sat"){
-        //     this.setState( (prevState) => ({
-        //       saturdayWeight: prevState.saturdayWeight += efw.weight
-        //     }));
-        //   } else if (efw.week === time && efw.day === "Sun"){
-        //     this.setState( (prevState) => ({
-        //       sundayWeight: prevState.sundayWeight += efw.weight
-        //     }));
-        //   }
-        // })
-
-        fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+        fs.collection('data').doc(this.state.uid).collection('writtenFoodSurplusData')
           .get()
           .then( snapshot => {
             snapshot.forEach(doc => {
@@ -78,7 +40,7 @@ class Chart3 extends Component {
               var mdate = doc.data().MDATE
               var weight = doc.data().weight
               var wu = doc.data().WEIGHTUNIT
-              var isSurplus = doc.data().EDIBLEORINEDIBLE
+              // var isSurplus = doc.data().EDIBLEORINEDIBLE
 
               var newWeight = 0
     
@@ -101,33 +63,33 @@ class Chart3 extends Component {
               // var fatCon = doc.data().FATCONTENT
               // var fibCon = doc.data().FIBRECONTENT
 
-              if (week === time && day === "Mon" && isSurplus !== "Surplus"){
+              if (week === time && day === "Mon"){
                 this.setState({weekBeginning: month + " " + mdate})
 
                 this.setState( (prevState) => ({
                   mondayWeight: prevState.mondayWeight += newWeight
                 }));
-              } else if (week === time && day === "Tue" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Tue"){
                 this.setState( (prevState) => ({
                   tuesdayWeight: prevState.tuesdayWeight += newWeight
                 })); 
-              } else if (week === time && day === "Wed" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Wed"){
                 this.setState( (prevState) => ({
                   wednesdayWeight: prevState.wednesdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Thu" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Thu"){
                 this.setState( (prevState) => ({
                   thursdayWeight: prevState.thursdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Fri" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Fri"){
                 this.setState( (prevState) => ({
                   fridayWeight: prevState.fridayWeight += newWeight
                 }));
-              } else if (week === time && day === "Sat" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Sat"){
                 this.setState( (prevState) => ({
                   saturdayWeight: prevState.saturdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Sun" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Sun"){
                 this.setState( (prevState) => ({
                   sundayWeight: prevState.sundayWeight += newWeight
                 }));
@@ -238,7 +200,7 @@ class Chart3 extends Component {
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'This week\'s Food Wastage Performance',
+                  title: 'This week\'s Food Loss Weight Performance',
                   chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   legend: 'none',
@@ -247,36 +209,11 @@ class Chart3 extends Component {
                     minValue: 0,
                   },
                   vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
+                    title: 'Weight of Food Loss (kg)',
                   },
                 }}
                 // legendToggle='false'
               />
-
-              {/* <Chart 
-                className="area-chart"
-                width={600}
-                height={500}
-                chartType="AreaChart"
-                loader={<div>Loading Chart</div>}
-                data = {[
-                  ['Week', 'Food Wastage'],
-                  ['03/05 - 09/05', 250],
-                  ['10/05 - 16/05', 189],
-                  ['17/05 - 23/05', 221],
-                  ['24/05 - 30/05', 273],
-                ]}
-                options={{
-                  title: 'Weekly Food Wastage Performance (Line)',
-                  chartArea: {width: '50%', height: '70%'},
-                  hAxis: {
-                    title: 'Week', titleTextStyle: {color: '#333'}
-                  },
-                  vAxis: {
-                    minValue: 0, title: 'Weight of Food Wastage (kg)'
-                  }
-                }}
-              />   */}
 
             </ChartStyle>
           </MobileView>
@@ -289,7 +226,7 @@ class Chart3 extends Component {
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
-                  ['Day', 'Food Wastage Weight'],
+                  ['Day', 'Food Loss Weight'],
                   ['Monday', this.state.mondayWeight],
                   ['Tuesday', this.state.tuesdayWeight],
                   ['Wednesday', this.state.wednesdayWeight],
@@ -300,7 +237,7 @@ class Chart3 extends Component {
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'This week\'s Food Wastage Performance',
+                  title: 'This week\'s Food Loss Weight Performance',
                   chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   hAxis: {
@@ -308,65 +245,14 @@ class Chart3 extends Component {
                     minValue: 0,
                   },
                   vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
+                    title: 'Weight of Food Loss (kg)',
                   },
                 }}
                 legendToggle
                 />
               </ChartStyle>
           </BrowserView>
-            {/* <Chart
-            className="row"
-            style={{width:'1684px', height:'650px', alignItems:'center', justifyContent:'center', display:'flex'}}
-              chartType="AreaChart"
-              loader={<div>Loading Chart</div>}
-              data={[
-                ['Year', 'Sales', 'Expenses'],
-                ['2013', 0, 400],
-                ['2014', 1170, 460],
-                ['2015', 660, 1120],
-                ['2016', 546  , 540],
-                ['2013', 1000, 400],
-                ['2014', 57, 460],
-                ['2015', 660, 1120],
-                ['2016', 1030, 8],
-                ['2013', 1000, 400],
-                ['2014', 1170, 460],
-                ['2015', 197, 1120],
-                ['2016', 47, 789],
-                ['2013', 0, 400],
-                ['2014', 1170, 460],
-                ['2015', 660, 1120],
-                ['2016', 546  , 540],
-                ['2013', 1000, 400],
-                ['2014', 57, 460],
-                ['2015', 660, 1120],
-                ['2016', 1030, 8],
-                ['2013', 1000, 400],
-                ['2014', 1170, 460],
-                ['2015', 197, 1120],
-                ['2016', 47, 789],
-              ]}
-              options={{
-                title: 'My Weekly Food Surplus Performance',
-                hAxis: { title: 'Year', titleTextStyle: { color: '#333' } },
-                vAxis: { title:'hi', minValue: 0 },
-                // For the legend to fit, we make the chart area smaller
-                chartArea: { width: '50%', height: '70%' },
-                // lineWidth: 25
-              }}
-              // For tests
-              rootProps={{ 'data-testid': '1' }}
-            /> */}
-
-          {/* </Col>
-          <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
-          <Col className="mt-5 pt-5" xs={12}></Col>
-          <Col className="mt-5 pt-5" xs={12}></Col>
-        </Row> */}
-        <br/>
-        <br/>
-        <br/>
+           
       </React.Fragment>
         
     )
@@ -393,4 +279,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart3);
+export default connect(mapStateToProps, null)(Chart30);

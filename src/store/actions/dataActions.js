@@ -46,24 +46,31 @@ export const createFoodWasteData =  (data) => {
         const profile = getState().firebase.profile;
         const auth = getState().firebase.auth;
 
+        const MEAL = data.meal;
         const FOODNAME = data.foodName;
-        const EDIBLEORINEDIBLE = data.edibleOrInedible;
+        const EATINGINOROUT = data.eatingInOrOut
+
+        const EDIBLEORINEDIBLE = data.edibleInedibleSurplus;
         const LOCALORNOT = data.producedLocally;
-        const GHG = data.edibleGHG*data.weightMultiplier;
+        const GHG = data.ghg*data.weightMultiplier;
         const WDAY = data.chartSubmissionDay;
         const WEEK = data.chartSubmissionWeek;
         const MONTH = data.chartSubmissionMonth;
         const MDATE = data.chartSubmissionDate;
         const YEAR = data.chartSubmissionYear;
         const FULLDATE = data.chartSubmissionFullDate;
-        const CARBSCONTENT = data.carbsContent;
-        const PROTEINCONTENT = data.proteinContent;
-        const FATCONTENT = data.fatContent;
-        const FIBRECONTENT = data.fibreContent;
+
+        // const CARBSCONTENT = data.carbsContent;
+        // const PROTEINCONTENT = data.proteinContent;
+        // const FATCONTENT = data.fatContent;
+        // const FIBRECONTENT = data.fibreContent;
+
         // const FWTYPE = data.edibleFoodWasteType;
-        // const MOISTURE = data.edibleMoisture;
-        const CURRENCY = data.dropDownValueEFW;
-        const COST = (data.costOfEdibleFoodWaste*data.weightMultiplier*data.currencyMultiplierEFW).toFixed(2);
+
+        const EXPIRYDATE = data.expiryDate;
+        // const MOISTURE = data.moisture;
+        const CURRENCY = data.currency;
+        const COST = (data.foodWasteCost*data.weightMultiplier*data.currencyMultiplier).toFixed(2);
         const WEIGHTUNIT = data.weightType;
 
         const date = new Date();
@@ -1490,9 +1497,14 @@ export const createFoodWasteData =  (data) => {
       .add({
         date: DATE,
         GHG: GHG,
-        weight: Number(data.weightOfEdibleFoodWaste),
+        weight: Number(data.foodWasteWeight),
         type: t,
+
+        // FOODNAME: FOODNAME,
+
+        MEAL: MEAL,
         FOODNAME: FOODNAME,
+        EATINGINOROUT: EATINGINOROUT,
         EDIBLEORINEDIBLE: EDIBLEORINEDIBLE,
         LOCALORNOT: LOCALORNOT,
         WDAY: WDAY,
@@ -1501,11 +1513,15 @@ export const createFoodWasteData =  (data) => {
         MDATE: MDATE,
         YEAR: YEAR,
         FULLDATE: FULLDATE,
-        CARBSCONTENT: Number(CARBSCONTENT),
-        PROTEINCONTENT: Number(PROTEINCONTENT),
-        FATCONTENT: Number(FATCONTENT),
-        FIBRECONTENT: Number(FIBRECONTENT),
+
+        // CARBSCONTENT: Number(CARBSCONTENT),
+        // PROTEINCONTENT: Number(PROTEINCONTENT),
+        // FATCONTENT: Number(FATCONTENT),
+        // FIBRECONTENT: Number(FIBRECONTENT),
+
         // FWTYPE: FWTYPE,
+
+        EXPIRYDATE: EXPIRYDATE,
         // MOISTURE: MOISTURE,
         CURRENCY: CURRENCY,
         COST: Number(COST),
@@ -1524,8 +1540,26 @@ export const createFoodSurplusData =  (data) => {
     return(dispatch, getState,  {getFirebase} ) => {
         const profile = getState().firebase.profile;
         const auth = getState().firebase.auth;
-        const costInDollars = Number(data.weightOfFoodSurplus) * 0.85;
-        const costInPounds = Number(data.weightOfFoodSurplus) * 0.62;
+
+        // const costInDollars = Number(data.weightOfFoodSurplus) * 0.85;
+        // const costInPounds = Number(data.weightOfFoodSurplus) * 0.62;
+
+        const FOODNAME = data.foodName;
+        const EDIBLEORINEDIBLE = data.edibleOrInedible;
+        const GHG = data.ghg*data.weightMultiplier;
+
+        const WDAY = data.chartSubmissionDay;
+        const WEEK = data.chartSubmissionWeek;
+        const MONTH = data.chartSubmissionMonth;
+        const MDATE = data.chartSubmissionDate;
+        const YEAR = data.chartSubmissionYear;
+        const FULLDATE = data.chartSubmissionFullDate;
+
+        const EXPIRYDATE = data.expiryDate;
+        const CURRENCY = data.currency;
+        const COST = (data.foodLossCost*data.weightMultiplier*data.currencyMultiplier).toFixed(2);
+        const WEIGHTUNIT = data.weightType;
+
         const date = new Date();
         const DATE = moment(date).format(
           // "hh:mm"
@@ -2939,10 +2973,27 @@ export const createFoodSurplusData =  (data) => {
         }
         getFirebase().firestore().collection('data').doc(auth.uid).collection('writtenFoodSurplusData').add({
             date: date,
-            costInDollars: costInDollars,
-            costInPounds: costInPounds,
-            weight: Number(data.weightOfFoodSurplus),
-            type: t
+            // costInDollars: costInDollars,
+            // costInPounds: costInPounds,
+            weight: Number(data.foodLossWeight),
+            type: t,
+
+            GHG: GHG,
+            FOODNAME: FOODNAME,
+            EDIBLEORINEDIBLE: EDIBLEORINEDIBLE,
+
+            WDAY: WDAY,
+            WEEK: WEEK,
+            MONTH: MONTH,
+            MDATE: MDATE,
+            YEAR: YEAR,
+            FULLDATE: FULLDATE,
+
+            EXPIRYDATE: EXPIRYDATE,
+            CURRENCY: CURRENCY,
+            COST: Number(COST),
+            WEIGHTUNIT: WEIGHTUNIT,
+
         })
         .then(()=> {
             dispatch({type: 'CREATE_DATA'});          
