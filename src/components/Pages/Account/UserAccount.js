@@ -9,11 +9,14 @@ import { Row, Col, Dropdown, Button } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
 
 class Account extends Component {
 
   render(){
-  const { auth, profile } = this.props;
+  const { auth, profile, users } = this.props;
+  console.log(users);
   // console.log(profile.buildingFunction);
 
   // var buttonDisplay;
@@ -460,8 +463,10 @@ const mapStateToProps = (state) => {
   // console.log(state);
   return{
       auth: state.firebase.auth,
-      profile: state.firebase.profile
+      profile: state.firebase.profile,
+      users: state.firestore.ordered.users
+
   }
 }
 
-export default connect(mapStateToProps, null)(Account);
+export default compose(connect(mapStateToProps),firestoreConnect([{ collection: "users" }]))(Account);

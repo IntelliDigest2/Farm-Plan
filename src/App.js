@@ -73,6 +73,7 @@ import Chart39 from "./components/Pages/Account/ChartDayLossCost";
 import Chart40 from "./components/Pages/Account/NutrientGapChart";
 
 import FoodReduction from "./components/Pages/FoodReduction";
+import InfoTable from "./components/Pages/InfoTable";
 
 // import BrowseProducts from "./components/Pages/Account/BrowseProducts";
 
@@ -136,6 +137,7 @@ class App extends Component {
             <Route path="/food-waste" exact component={FoodWaste}/>
             <Route path="/food-loss" exact component={FoodLoss}/>
             <Route path="/food-wasteBusiness" exact component={FoodWasteBusiness}/>
+            <Route path="/table" component={InfoTable} />
             
             <Route path="/chart/year" exact component={Chart1} />
             <Route path="/chart/month" exact component={Chart2} />
