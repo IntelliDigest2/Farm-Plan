@@ -404,6 +404,7 @@ class Account extends Component {
 
                 <BGroup>
                   <PWBStyle><Button className="custom-btn" as={Link} to="/change-password">Change Your Password</Button></PWBStyle>
+                  <BStyle><Button className="custom-btn" as={Link} to="/browse-products">Browse Products</Button></BStyle>
                 </BGroup>
 
               </div>

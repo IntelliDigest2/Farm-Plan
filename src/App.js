@@ -75,7 +75,7 @@ import Chart40 from "./components/Pages/Account/NutrientGapChart";
 import FoodReduction from "./components/Pages/FoodReduction";
 import InfoTable from "./components/Pages/InfoTable";
 
-// import BrowseProducts from "./components/Pages/Account/BrowseProducts";
+import BrowseProducts from "./components/Pages/Account/BrowseProducts";
 
 import { connect } from 'react-redux';
 import { auth } from "./config/fbConfig";
@@ -192,7 +192,7 @@ class App extends Component {
 
             <Route path="/food-reduction" component={FoodReduction} />
 
-            {/* <Route path="/browse-products" component={BrowseProducts} /> */}
+            <Route path="/browse-products" component={BrowseProducts} />
 
             <Route component={NotFound} />
           </Switch>
