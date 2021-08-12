@@ -25,6 +25,7 @@ class Chart24 extends Component {
         totalBreakfastSurplusCost: 0,
         totalLunchSurplusCost: 0,
         totalDinnerSurplusCost: 0,
+        totalOtherSurplusCost: 0,
     }
 
     fetchData = async () => {
@@ -90,6 +91,10 @@ class Chart24 extends Component {
                     this.setState( (prevState) => ({
                         totalDinnerSurplusCost: prevState.totalDinnerSurplusCost += newCost
                     }));
+                } else if (fd === time && meal === "Other" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalOtherSurplusCost: prevState.totalOtherSurplusCost += newCost
+                    }));
                 }
             })
 
@@ -125,6 +130,7 @@ class Chart24 extends Component {
                                 ['Breakfast', this.state.totalBreakfastSurplusCost],
                                 ['Lunch', this.state.totalLunchSurplusCost],
                                 ['Dinner', this.state.totalDinnerSurplusCost],
+                                ['Other', this.state.totalOtherSurplusCost],
                             ]}
                             options={{
                                 title: 'Today\'s Food Surplus Costs Saved Performance (' + time + ')',
@@ -168,6 +174,7 @@ class Chart24 extends Component {
                                 ['Breakfast', this.state.totalBreakfastSurplusCost],
                                 ['Lunch', this.state.totalLunchSurplusCost],
                                 ['Dinner', this.state.totalDinnerSurplusCost],
+                                ['Other', this.state.totalOtherSurplusCost],
                             ]}
                             options={{
                                 title: 'Today\'s Food Surplus Costs Saved Performance (' + time + ')',

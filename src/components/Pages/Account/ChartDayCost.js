@@ -25,6 +25,7 @@ class Chart12 extends Component {
         totalBreakfastCost: 0,
         totalLunchCost: 0,
         totalDinnerCost: 0,
+        totalOtherCost: 0,
     }
 
     fetchData = async () => {
@@ -76,6 +77,10 @@ class Chart12 extends Component {
                     this.setState( (prevState) => ({
                         totalDinnerCost: prevState.totalDinnerCost += newCost
                     }));
+                } else if (fd === time && meal === "Other" && isSurplus === "Edible"){
+                    this.setState( (prevState) => ({
+                        totalOtherCost: prevState.totalOtherCost += newCost
+                    }));
                 }
 
             })
@@ -112,6 +117,7 @@ class Chart12 extends Component {
                                 ['Breakfast', this.state.totalBreakfastCost],
                                 ['Lunch', this.state.totalLunchCost],
                                 ['Dinner', this.state.totalDinnerCost],
+                                ['Other', this.state.totalOtherCost],
                             ]}
                             options={{
                                 title: 'Today\'s Food Wastage Cost Performance (' + time + ')',
@@ -155,6 +161,7 @@ class Chart12 extends Component {
                                 ['Breakfast', this.state.totalBreakfastCost],
                                 ['Lunch', this.state.totalLunchCost],
                                 ['Dinner', this.state.totalDinnerCost],
+                                ['Other', this.state.totalOtherCost],
                             ]}
                             options={{
                                 title: 'Today\'s Food Wastage Cost Performance (' + time + ')',

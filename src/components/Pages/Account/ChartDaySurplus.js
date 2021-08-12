@@ -20,7 +20,8 @@ class Chart16 extends Component {
         uid: this.props.auth.uid,
         totalBreakfastSurplus: 0,
         totalLunchSurplus: 0,
-        totalDinnerSurplus: 0
+        totalDinnerSurplus: 0,
+        totalOtherSurplus: 0
     }
 
     fetchData = async () => {
@@ -74,6 +75,10 @@ class Chart16 extends Component {
                     this.setState( (prevState) => ({
                         totalDinnerSurplus: prevState.totalDinnerSurplus += newWeight
                     }));
+                } else if (fd === time && meal === "Other" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalOtherSurplus: prevState.totalOtherSurplus += newWeight
+                    }));
                 }
 
                 // else if (fd === time && meal === "Breakfast" && isSurplus === "Surplus"){
@@ -123,6 +128,7 @@ class Chart16 extends Component {
                                 ['Breakfast', this.state.totalBreakfastSurplus],
                                 ['Lunch', this.state.totalLunchSurplus],
                                 ['Dinner', this.state.totalDinnerSurplus],
+                                ['Other', this.state.totalOtherSurplus],
                             ]}
                             options={{
                                 title: 'Today\'s Food Surplus Weight Saved Performance (' + time + ')',
@@ -167,6 +173,7 @@ class Chart16 extends Component {
                                 ['Breakfast', this.state.totalBreakfastSurplus],
                                 ['Lunch', this.state.totalLunchSurplus],
                                 ['Dinner', this.state.totalDinnerSurplus],
+                                ['Other', this.state.totalOtherSurplus],
                             ]}
                             options={{
                                 title: 'Today\'s Food Surplus Weight Saved Performance (' + time + ')',

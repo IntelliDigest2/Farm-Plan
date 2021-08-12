@@ -20,7 +20,8 @@ class Chart20 extends Component {
         uid: this.props.auth.uid,
         totalBreakfastSurplusGHG: 0,
         totalLunchSurplusGHG: 0,
-        totalDinnerSurplusGHG: 0
+        totalDinnerSurplusGHG: 0,
+        totalOtherSurplusGHG: 0,
     }
 
     fetchData = async () => {
@@ -60,6 +61,10 @@ class Chart20 extends Component {
                 } else if (fd === time && meal === "Dinner" && isSurplus === "Surplus"){
                     this.setState( (prevState) => ({
                         totalDinnerSurplusGHG: prevState.totalDinnerSurplusGHG += ghg
+                    }));
+                } else if (fd === time && meal === "Other" && isSurplus === "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalOtherSurplusGHG: prevState.totalOtherSurplusGHG += ghg
                     }));
                 }
 
@@ -110,6 +115,7 @@ class Chart20 extends Component {
                                 ['Breakfast', this.state.totalBreakfastSurplusGHG],
                                 ['Lunch', this.state.totalLunchSurplusGHG],
                                 ['Dinner', this.state.totalDinnerSurplusGHG],
+                                ['Other', this.state.totalOtherSurplusGHG],
                             ]}
                             options={{
                                 title: 'Today\'s Food Surplus GHG Saved Performance (' + time + ')',
@@ -153,6 +159,7 @@ class Chart20 extends Component {
                                 ['Breakfast', this.state.totalBreakfastSurplusGHG],
                                 ['Lunch', this.state.totalLunchSurplusGHG],
                                 ['Dinner', this.state.totalDinnerSurplusGHG],
+                                ['Other', this.state.totalOtherSurplusGHG],
                             ]}
                             options={{
                                 title: 'Today\'s Food Surplus GHG Saved Performance (' + time + ')',

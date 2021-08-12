@@ -25,6 +25,7 @@ class Chart8 extends Component {
         totalBreakfastGHG: 0,
         totalLunchGHG: 0,
         totalDinnerGHG: 0,
+        totalOtherGHG: 0,
     }
 
     fetchData = async () => {
@@ -65,6 +66,10 @@ class Chart8 extends Component {
                     this.setState( (prevState) => ({
                         totalDinnerGHG: prevState.totalDinnerGHG += ghg
                     }));
+                } else if (fd === time && meal === "Other" && isSurplus !== "Surplus"){
+                    this.setState( (prevState) => ({
+                        totalOtherGHG: prevState.totalOtherGHG += ghg
+                    }));
                 } 
                 
             })
@@ -101,6 +106,7 @@ class Chart8 extends Component {
                                 ['Breakfast', this.state.totalBreakfastGHG],
                                 ['Lunch', this.state.totalLunchGHG],
                                 ['Dinner', this.state.totalDinnerGHG],
+                                ['Other', this.state.totalOtherGHG],
                             ]}
                             options={{
                                 title: 'Today\'s Food Wastage GHG Performance (' + time + ')',
@@ -144,6 +150,7 @@ class Chart8 extends Component {
                                 ['Breakfast', this.state.totalBreakfastGHG],
                                 ['Lunch', this.state.totalLunchGHG],
                                 ['Dinner', this.state.totalDinnerGHG],
+                                ['Other', this.state.totalOtherGHG],
                             ]}
                             options={{
                                 title: 'Today\'s Food Wastage GHG Performance (' + time + ')',

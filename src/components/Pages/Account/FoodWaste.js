@@ -439,6 +439,13 @@ class FoodWaste extends Component {
                                         </div>
                                     </DropdownItem>
 
+                                    {/* as="button" */}
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.changeMeal(e.target.textContent)}>
+                                            Other
+                                        </div>
+                                    </DropdownItem>
+
                                 </DropdownMenu>
                             </Dropdown>
                         </DDMenuStyle>
@@ -449,14 +456,23 @@ class FoodWaste extends Component {
                     <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
                     <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
                         <Autocomplete
-                            freeSolo 
+                            //multiple
                             id="foodName"
-                            options={foodOptions}
+                            options={foodOptions.map((option) => option.title)}
+                            freeSolo
+                            // limitTags={1}
                             // getOptionLabel={(option) => option.name}
                             style={{width: "100%"}}
                             size="small"
                             onChange={(e) => this.setState({ foodName: e.target.textContent })}
                             onInputChange={(e) => this.handleChange(e)}
+
+                            // renderTags={(value, getTagProps) =>
+                            //     value.map((option, index) => (
+                            //       <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                            //     ))
+                            // }
+
                             renderInput={(params) => ( <TextField {...params} label="Enter Food Name" variant="outlined" /> )}
                         />
                     </Form.Group>
@@ -1387,28 +1403,28 @@ class FoodWaste extends Component {
 }
 
 const foodOptions = [
-    "Cereal",
-    "Bacon",
-    "Baked Beans",
-    "Porridge",
-    "Pancake", 
-    "Beef",
-    "Chicken",
-    "Pork",
-    "Apple",
-    "Banana",
-    "Orange",
-    "Pear",
-    "Grapes",
-    "Chocolate",
-    "Crisps",
-    "Pasta",
-    "Bolognese",
-    "Potato",
-    "Chips",
-    "Milk",
-    "Fruit Juice",
-    "Onion",
+    {title: "Cereal"},
+    {title: "Bacon"},
+    {title: "Baked Beans"},
+    {title: "Porridge"},
+    {title: "Pancake"}, 
+    {title: "Beef"},
+    {title: "Chicken"},
+    {title: "Pork"},
+    {title: "Apple"},
+    {title: "Banana"},
+    {title: "Orange"},
+    {title: "Pear"},
+    {title: "Grapes"},
+    {title: "Chocolate"},
+    {title: "Crisps"},
+    {title: "Pasta"},
+    {title: "Bolognese"},
+    {title: "Potato"},
+    {title: "Chips"},
+    {title: "Milk"},
+    {title: "Fruit Juice"},
+    {title: "Onion"},
 ]
 
 const mapStateToProps = (state) => {

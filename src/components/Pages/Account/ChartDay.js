@@ -28,6 +28,7 @@ class Chart4 extends Component {
       totalBreakfastWeight: 0,
       totalLunchWeight: 0,
       totalDinnerWeight: 0,
+      totalOtherWeight: 0,
       efwData: [],
     }
 
@@ -128,6 +129,10 @@ class Chart4 extends Component {
           } else if (fd === time && meal === "Dinner" && isSurplus !== "Surplus"){
             this.setState( (prevState) => ({
               totalDinnerWeight: prevState.totalDinnerWeight += newWeight
+            }));
+          } else if (fd === time && meal === "Other" && isSurplus !== "Surplus"){
+            this.setState( (prevState) => ({
+              totalOtherWeight: prevState.totalOtherWeight += newWeight
             }));
           } 
 
@@ -251,6 +256,7 @@ class Chart4 extends Component {
                   ['Breakfast', this.state.totalBreakfastWeight],
                   ['Lunch', this.state.totalLunchWeight],
                   ['Dinner', this.state.totalDinnerWeight],
+                  ['Other', this.state.totalOtherWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
@@ -307,6 +313,7 @@ class Chart4 extends Component {
                   ['Breakfast', this.state.totalBreakfastWeight],
                   ['Lunch', this.state.totalLunchWeight],
                   ['Dinner', this.state.totalDinnerWeight],
+                  ['Other', this.state.totalOtherWeight],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
