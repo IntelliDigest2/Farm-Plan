@@ -4,6 +4,12 @@ import styled from "styled-components"
 // import { Row, Col } from 'react-bootstrap';
 import {BrowserView, MobileView} from "react-device-detect"
 
+import { Button, ButtonGroup } from 'react-bootstrap';
+import "../Pages.css"
+import "../../../App.css";
+import {Link} from "react-router-dom"
+import {Card} from "react-bootstrap"
+
 import moment from "moment"
 
 import { connect } from 'react-redux';
@@ -171,11 +177,11 @@ class Chart38 extends Component {
               rootProps={{ 'data-testid': '1' }}
             /> */}
           <MobileView>
-            <ChartStyle>
-
+            {/* <ChartStyle> */}
+            <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
               <Chart className='bar-chart'
-                width={'85%'}
-                height={'85%'}
+                width={'78vw'}
+                height={'600px'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -204,15 +210,28 @@ class Chart38 extends Component {
                 }}
                 // legendToggle='false'
               />
+            </div>
 
-            </ChartStyle>
+            {/* </ChartStyle> */}
+
+            <div style={{height: "95px", marginBottom: "10%"}}>
+                <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                  <ButtonGroup>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/dayLossCost">View Previous</Button>
+                    <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthLossCost">View Next</Button>
+                  </ButtonGroup>
+                </Card>
+            </div>
+
           </MobileView>
 
           <BrowserView>
-              <ChartStyle>
+              {/* <ChartStyle> */}
+              <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
                 <Chart className='bar-chart'
-                width={'85%'}
-                height={'85%'}
+                width={'78vw'}
+                height={'600px'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -240,7 +259,19 @@ class Chart38 extends Component {
                 }}
                 legendToggle
                 />
-              </ChartStyle>
+              </div>
+              {/* </ChartStyle> */}
+
+              <div style={{height: "40px", marginBottom: "10%"}}>
+                <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                  <ButtonGroup>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/dayLossCost">View Previous (Daily Loss Cost)</Button>
+                    <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthLossCost">View Next (Monthly Loss Cost)</Button>
+                  </ButtonGroup>
+                </Card>
+              </div>
+
           </BrowserView>
            
       </React.Fragment>

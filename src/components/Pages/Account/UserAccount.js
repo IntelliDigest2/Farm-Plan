@@ -11,8 +11,30 @@ import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import { BrowserView, MobileView } from 'react-device-detect'
+
+// import addNotification from "react-push-notification"
 
 class Account extends Component {
+
+  // state = {
+  //   foodBubbleClicked: false,
+  //   foodWasteBubbleClicked: false
+  // }
+
+  // notificationTest = () => {
+  //   addNotification({
+  //     title: 'Warning',
+  //     subtitle: 'This is a subtitle',
+  //     message: 'This is a very long message',
+  //     // theme: 'darkblue',
+  //     // native: false,
+  //     backgroundTop: '#aab41e', //optional, background color of top container.
+  //     backgroundBottom: '#aab41e', //optional, background color of bottom container.
+  //     closeButton: 'Close',
+  //     duration: 10000
+  //   });
+  // }
 
   render(){
   const { auth, profile, users } = this.props;
@@ -302,6 +324,7 @@ class Account extends Component {
 
                 <BGroup><BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste & Surplus</Button></BStyle>
                 <BStyle><Button className="custom-btn" as={Link} to="/chart/nutrientGap">View Nutrient Gap Chart</Button></BStyle></BGroup>
+                {/* <BStyle><Button className="custom-btn" type="button" onClick={() => this.notificationTest()}>View Badge Progress</Button></BStyle></BGroup> */}
                   {/* <BStyle><Button className="custom-btn" as={Link} to="/food-wasteBusiness">Update Food Waste (Business)</Button></BStyle> */}
                   {/* <BStyle><Button className="custom-btn" as={Link} to="/food-loss">Update Food Loss</Button></BStyle></BGroup> */}
 
@@ -403,8 +426,14 @@ class Account extends Component {
                 </BGroup>
 
                 <BGroup>
+                  {/* <PWBStyle><Button className="custom-btn" as={Link} to="/change-password">Change Your Password</Button></PWBStyle> */}
+                  <BStyle><Button className="custom-btn" as={Link} to="/browse-products">Browse Products: Surplus</Button></BStyle>
+                  <BStyle><Button className="custom-btn" as={Link} to="/browse-products-local">Browse Products: Local Produce</Button></BStyle>
+                </BGroup>
+
+                <BGroup>
                   <PWBStyle><Button className="custom-btn" as={Link} to="/change-password">Change Your Password</Button></PWBStyle>
-                  <BStyle><Button className="custom-btn" as={Link} to="/browse-products">Browse Products</Button></BStyle>
+                  {/* <BStyle><Button className="custom-btn" onClick={() => this.notificationTest()}>Test Notification</Button></BStyle> */}
                 </BGroup>
 
               </div>

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../../App.css';
 import "./Pages.css"
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Table, Dropdown, Button } from "react-bootstrap";
 import { Layout } from "../Layout/Layout"
 import logo from "../../images/intellidigest-logo.png";
 import placeholder from "../../images/help2.jpg";
@@ -19,10 +19,17 @@ import protein from "../../images/protein.png"
 import fibre from "../../images/fibre.jpeg"
 import fat from "../../images/fat.jpeg"
 
+import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
+import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
+
 import { BrowserView, MobileView, isMobile, isBrowser } from 'react-device-detect';
 import styled from "styled-components"
 
 function About() {
+
+  const [tableView, setTableView] = useState("");
+
   return (
     <div>
       <BrowserView>
@@ -246,11 +253,893 @@ function About() {
                 </Col>
             </Row>
 
-            <Row className="pb-5 mb-5 mr-0 ml-0 text-justify about">
+            {/* <Row className="pb-5 mb-5 mr-0 ml-0 text-justify about">
                 <Col className="d-flex justify-content-center"sm={12} md={12} lg={4}>
 
                 </Col>
-            </Row>
+            </Row> */}
+
+            <h3 style={{marginTop: "-5%", marginBottom: "2.5%"}}>Recommended Daily Nutrient Intake</h3>
+
+            <Dropdown>
+              <DropdownToggle className="custom-btn" style={{marginBottom: "2.5%"}}>Select Age Group</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>0-5</div></DropdownItem>
+                <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>5-10</div></DropdownItem>
+                <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>10-15</div></DropdownItem>
+                <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>15-20</div></DropdownItem>
+                <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>70-75</div></DropdownItem>
+                <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>75-80</div></DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+
+            <div>{ tableView === "0-5" ?
+
+              <Table style={{width: "110%", marginBottom: "10%", marginLeft: "-5%"}} striped bordered hover size="sm">
+                <thead>
+                  <tr>
+                    <th><b>Age</b></th>
+                    <th><b>Sex</b></th>
+                    <th><b>Protein</b></th>
+                    <th><b>Fluid</b></th>
+                    <th><b>Fibre</b></th>
+                    <th><b>Vitamin A</b></th>
+                    <th><b>Thiamin</b></th>
+                    <th><b>Riboflavin</b></th>
+                    <th><b>Niacin</b></th>
+                    <th><b>Vitamin B6</b></th>
+                    <th><b>Vitamin B12</b></th>
+                    <th><b>Folate</b></th>
+                    <th><b>Vitamin</b></th>
+                    <th><b>Calcium</b></th>
+                    <th><b>Iodine</b></th>
+                    <th><b>Iron</b></th>
+                    <th><b>Magnesium</b></th>
+                    <th><b>Potassium</b></th>
+                    <th><b>Sodium</b></th>
+                    <th><b>Zinc</b></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <th>0-5</th>
+                    <th>F</th>
+                    <th>20g</th>
+                    <th>1.2L</th>
+                    <th>18g</th>
+                    <th>400Î¼g</th>
+                    <th>0.6mg</th>
+                    <th>0.6mg</th>
+                    <th>8mg</th>
+                    <th>0.6mg</th>
+                    <th>1.2Î¼g</th>
+                    <th>200Î¼g</th>
+                    <th>35mg</th>
+                    <th>700mg</th>
+                    <th>90Î¼g</th>
+                    <th>10mg</th>
+                    <th>130mg</th>
+                    <th>2300mg</th>
+                    <th>300-600mg</th>
+                    <th>4mg</th>
+                  </tr>
+
+                  <tr>
+                    <th>0-5</th>
+                    <th>M</th>
+                    <th>20g</th>
+                    <th>1.2L</th>
+                    <th>18g</th>
+                    <th>400Î¼g</th>
+                    <th>0.6mg</th>
+                    <th>0.6mg</th>
+                    <th>8mg</th>
+                    <th>0.6mg</th>
+                    <th>1.2Î¼g</th>
+                    <th>200Î¼g</th>
+                    <th>35mg</th>
+                    <th>700mg</th>
+                    <th>90Î¼g</th>
+                    <th>10mg</th>
+                    <th>130mg</th>
+                    <th>2300mg</th>
+                    <th>300-600mg</th>
+                    <th>4mg</th>
+                  </tr>
+                </tbody>
+
+              </Table>
+
+              :
+
+              <>
+                <div>{ tableView === "5-10" ?
+
+                  <Table style={{width: "110%", marginBottom: "10%", marginLeft: "-5%"}} striped bordered hover size="sm">
+                  <thead>
+                    <tr>
+                      <th><b>Age</b></th>
+                      <th><b>Sex</b></th>
+                      <th><b>Protein</b></th>
+                      <th><b>Fluid</b></th>
+                      <th><b>Fibre</b></th>
+                      <th><b>Vitamin A</b></th>
+                      <th><b>Thiamin</b></th>
+                      <th><b>Riboflavin</b></th>
+                      <th><b>Niacin</b></th>
+                      <th><b>Vitamin B6</b></th>
+                      <th><b>Vitamin B12</b></th>
+                      <th><b>Folate</b></th>
+                      <th><b>Vitamin</b></th>
+                      <th><b>Calcium</b></th>
+                      <th><b>Iodine</b></th>
+                      <th><b>Iron</b></th>
+                      <th><b>Magnesium</b></th>
+                      <th><b>Potassium</b></th>
+                      <th><b>Sodium</b></th>
+                      <th><b>Zinc</b></th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <th>5-10</th>
+                      <th>F</th>
+                      <th>35g</th>
+                      <th>1.4L</th>
+                      <th>20g</th>
+                      <th>600Î¼g</th>
+                      <th>0.9mg</th>
+                      <th>0.9mg</th>
+                      <th>12mg</th>
+                      <th>1mg</th>
+                      <th>1.8Î¼g</th>
+                      <th>300Î¼g</th>
+                      <th>40mg</th>
+                      <th>1000mg</th>
+                      <th>120Î¼g</th>
+                      <th>8mg</th>
+                      <th>240mg</th>
+                      <th>2500mg</th>
+                      <th>400-800mg</th>
+                      <th>6mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>5-10</th>
+                      <th>M</th>
+                      <th>40g</th>
+                      <th>1.6L</th>
+                      <th>24g</th>
+                      <th>600Î¼g</th>
+                      <th>0.9mg</th>
+                      <th>0.9mg</th>
+                      <th>12mg</th>
+                      <th>1mg</th>
+                      <th>1.8Î¼g</th>
+                      <th>300Î¼g</th>
+                      <th>40mg</th>
+                      <th>1000mg</th>
+                      <th>120Î¼g</th>
+                      <th>8mg</th>
+                      <th>240mg</th>
+                      <th>3000mg</th>
+                      <th>400-800mg</th>
+                      <th>6mg</th>
+                    </tr>
+                  </tbody>
+
+                  </Table>
+
+                  :
+
+                  <>
+                    <div>{ tableView === "10-15" ?
+                      <Table style={{width: "110%", marginBottom: "10%", marginLeft: "-5%"}} striped bordered hover size="sm">
+                        <thead>
+                          <tr>
+                            <th><b>Age</b></th>
+                            <th><b>Sex</b></th>
+                            <th><b>Protein</b></th>
+                            <th><b>Fluid</b></th>
+                            <th><b>Fibre</b></th>
+                            <th><b>Vitamin A</b></th>
+                            <th><b>Thiamin</b></th>
+                            <th><b>Riboflavin</b></th>
+                            <th><b>Niacin</b></th>
+                            <th><b>Vitamin B6</b></th>
+                            <th><b>Vitamin B12</b></th>
+                            <th><b>Folate</b></th>
+                            <th><b>Vitamin</b></th>
+                            <th><b>Calcium</b></th>
+                            <th><b>Iodine</b></th>
+                            <th><b>Iron</b></th>
+                            <th><b>Magnesium</b></th>
+                            <th><b>Potassium</b></th>
+                            <th><b>Sodium</b></th>
+                            <th><b>Zinc</b></th>
+                          </tr>
+                        </thead>
+      
+                        <tbody>
+                          <tr>
+                            <th>10-15</th>
+                            <th>F</th>
+                            <th>45g</th>
+                            <th>1.6L</th>
+                            <th>22g</th>
+                            <th>700Î¼g</th>
+                            <th>1.1mg</th>
+                            <th>1.1mg</th>
+                            <th>14mg</th>
+                            <th>1.2mg</th>
+                            <th>2.4Î¼g</th>
+                            <th>400Î¼g</th>
+                            <th>40mg</th>
+                            <th>1300mg</th>
+                            <th>150Î¼g</th>
+                            <th>15mg</th>
+                            <th>360mg</th>
+                            <th>2600mg</th>
+                            <th>460-920mg</th>
+                            <th>7mg</th>
+                          </tr>
+
+                          <tr>
+                            <th>10-15</th>
+                            <th>M</th>
+                            <th>65g</th>
+                            <th>1.9L</th>
+                            <th>28g</th>
+                            <th>900Î¼g</th>
+                            <th>1.2mg</th>
+                            <th>1.3mg</th>
+                            <th>16mg</th>
+                            <th>1.3mg</th>
+                            <th>2.4Î¼g</th>
+                            <th>400Î¼g</th>
+                            <th>40mg</th>
+                            <th>1300mg</th>
+                            <th>150Î¼g</th>
+                            <th>11mg</th>
+                            <th>410mg</th>
+                            <th>3600mg</th>
+                            <th>460-920mg</th>
+                            <th>13mg</th>
+                          </tr>
+                        </tbody>
+    
+                      </Table>
+
+                      :
+
+                      <>
+                        <div>{ tableView === "15-20" ?
+                          <Table style={{width: "110%", marginBottom: "10%", marginLeft: "-5%"}} striped bordered hover size="sm">
+                            <thead>
+                              <tr>
+                                <th><b>Age</b></th>
+                                <th><b>Sex</b></th>
+                                <th><b>Protein</b></th>
+                                <th><b>Fluid</b></th>
+                                <th><b>Fibre</b></th>
+                                <th><b>Vitamin A</b></th>
+                                <th><b>Thiamin</b></th>
+                                <th><b>Riboflavin</b></th>
+                                <th><b>Niacin</b></th>
+                                <th><b>Vitamin B6</b></th>
+                                <th><b>Vitamin B12</b></th>
+                                <th><b>Folate</b></th>
+                                <th><b>Vitamin</b></th>
+                                <th><b>Calcium</b></th>
+                                <th><b>Iodine</b></th>
+                                <th><b>Iron</b></th>
+                                <th><b>Magnesium</b></th>
+                                <th><b>Potassium</b></th>
+                                <th><b>Sodium</b></th>
+                                <th><b>Zinc</b></th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              <tr>
+                                <th>15-20</th>
+                                <th>F</th>
+                                <th>46g</th>
+                                <th>2.1L</th>
+                                <th>25g</th>
+                                <th>700Î¼g</th>
+                                <th>1.1mg</th>
+                                <th>1.1mg</th>
+                                <th>14mg</th>
+                                <th>1.3mg</th>
+                                <th>2.4Î¼g</th>
+                                <th>400Î¼g</th>
+                                <th>45mg</th>
+                                <th>1000mg</th>
+                                <th>150Î¼g</th>
+                                <th>18mg</th>
+                                <th>310mg</th>
+                                <th>2800mg</th>
+                                <th>460-920mg</th>
+                                <th>8mg</th>
+                              </tr>
+
+                              <tr>
+                                <th>15-20</th>
+                                <th>M</th>
+                                <th>64g</th>
+                                <th>2.3L</th>
+                                <th>30g</th>
+                                <th>900Î¼g</th>
+                                <th>1.2mg</th>
+                                <th>1.3mg</th>
+                                <th>16mg</th>
+                                <th>1.3mg</th>
+                                <th>2.4Î¼g</th>
+                                <th>400Î¼g</th>
+                                <th>45mg</th>
+                                <th>1000mg</th>
+                                <th>150Î¼g</th>
+                                <th>8mg</th>
+                                <th>400mg</th>
+                                <th>3800mg</th>
+                                <th>460-920mg</th>
+                                <th>14mg</th>
+                              </tr>
+                            </tbody>
+
+                        </Table>
+
+                        :
+
+                        <>
+                          <div>{ tableView === "70-75" ?
+                            <Table style={{width: "110%", marginBottom: "10%", marginLeft: "-5%"}} striped bordered hover size="sm">
+                              <thead>
+                                <tr>
+                                  <th><b>Age</b></th>
+                                  <th><b>Sex</b></th>
+                                  <th><b>Protein</b></th>
+                                  <th><b>Fluid</b></th>
+                                  <th><b>Fibre</b></th>
+                                  <th><b>Vitamin A</b></th>
+                                  <th><b>Thiamin</b></th>
+                                  <th><b>Riboflavin</b></th>
+                                  <th><b>Niacin</b></th>
+                                  <th><b>Vitamin B6</b></th>
+                                  <th><b>Vitamin B12</b></th>
+                                  <th><b>Folate</b></th>
+                                  <th><b>Vitamin</b></th>
+                                  <th><b>Calcium</b></th>
+                                  <th><b>Iodine</b></th>
+                                  <th><b>Iron</b></th>
+                                  <th><b>Magnesium</b></th>
+                                  <th><b>Potassium</b></th>
+                                  <th><b>Sodium</b></th>
+                                  <th><b>Zinc</b></th>
+                                </tr>
+                              </thead>
+
+                              <tbody>
+                                <tr>
+                                  <th>70-75</th>
+                                  <th>F</th>
+                                  <th>57g</th>
+                                  <th>2.1L</th>
+                                  <th>25g</th>
+                                  <th>700Î¼g</th>
+                                  <th>1.1mg</th>
+                                  <th>1.3mg</th>
+                                  <th>14mg</th>
+                                  <th>1.5mg</th>
+                                  <th>2.4Î¼g</th>
+                                  <th>400Î¼g</th>
+                                  <th>45mg</th>
+                                  <th>1300mg</th>
+                                  <th>150Î¼g</th>
+                                  <th>8mg</th>
+                                  <th>320mg</th>
+                                  <th>2800mg</th>
+                                  <th>460-920mg</th>
+                                  <th>8mg</th>
+                                </tr>
+
+                                <tr>
+                                  <th>70-75</th>
+                                  <th>M</th>
+                                  <th>81g</th>
+                                  <th>2.6L</th>
+                                  <th>30g</th>
+                                  <th>900Î¼g</th>
+                                  <th>1.2mg</th>
+                                  <th>1.6mg</th>
+                                  <th>16mg</th>
+                                  <th>1.7mg</th>
+                                  <th>2.4Î¼g</th>
+                                  <th>400Î¼g</th>
+                                  <th>45mg</th>
+                                  <th>1300mg</th>
+                                  <th>150Î¼g</th>
+                                  <th>8mg</th>
+                                  <th>420mg</th>
+                                  <th>3800mg</th>
+                                  <th>460-920mg</th>
+                                  <th>14mg</th>
+                                </tr>
+                              </tbody>
+
+                            </Table>
+                            
+                            :
+
+                            <>
+                              <div>{ tableView === "75-80" ?
+                                <Table style={{width: "110%", marginBottom: "10%", marginLeft: "-5%"}} striped bordered hover size="sm">
+                                <thead>
+                                  <tr>
+                                    <th><b>Age</b></th>
+                                    <th><b>Sex</b></th>
+                                    <th><b>Protein</b></th>
+                                    <th><b>Fluid</b></th>
+                                    <th><b>Fibre</b></th>
+                                    <th><b>Vitamin A</b></th>
+                                    <th><b>Thiamin</b></th>
+                                    <th><b>Riboflavin</b></th>
+                                    <th><b>Niacin</b></th>
+                                    <th><b>Vitamin B6</b></th>
+                                    <th><b>Vitamin B12</b></th>
+                                    <th><b>Folate</b></th>
+                                    <th><b>Vitamin</b></th>
+                                    <th><b>Calcium</b></th>
+                                    <th><b>Iodine</b></th>
+                                    <th><b>Iron</b></th>
+                                    <th><b>Magnesium</b></th>
+                                    <th><b>Potassium</b></th>
+                                    <th><b>Sodium</b></th>
+                                    <th><b>Zinc</b></th>
+                                  </tr>
+                                </thead>
+
+                                <tbody>
+                                  <tr>
+                                    <th>75-80</th>
+                                    <th>F</th>
+                                    <th>57g</th>
+                                    <th>2.1L</th>
+                                    <th>25g</th>
+                                    <th>700Î¼g</th>
+                                    <th>1.1mg</th>
+                                    <th>1.3mg</th>
+                                    <th>14mg</th>
+                                    <th>1.5mg</th>
+                                    <th>2.4Î¼g</th>
+                                    <th>400Î¼g</th>
+                                    <th>45mg</th>
+                                    <th>1300mg</th>
+                                    <th>150Î¼g</th>
+                                    <th>8mg</th>
+                                    <th>320mg</th>
+                                    <th>2800mg</th>
+                                    <th>460-920mg</th>
+                                    <th>8mg</th>
+                                  </tr>
+
+                                  <tr>
+                                    <th>75-80</th>
+                                    <th>M</th>
+                                    <th>81g</th>
+                                    <th>2.6L</th>
+                                    <th>30g</th>
+                                    <th>900Î¼g</th>
+                                    <th>1.2mg</th>
+                                    <th>1.6mg</th>
+                                    <th>16mg</th>
+                                    <th>1.7mg</th>
+                                    <th>2.4Î¼g</th>
+                                    <th>400Î¼g</th>
+                                    <th>45mg</th>
+                                    <th>1300mg</th>
+                                    <th>150Î¼g</th>
+                                    <th>8mg</th>
+                                    <th>420mg</th>
+                                    <th>3800mg</th>
+                                    <th>460-920mg</th>
+                                    <th>14mg</th>
+                                  </tr>
+                                </tbody>
+
+                              </Table>
+                          
+                          :
+
+                          <>
+                            <div>{ tableView === ""  ?
+                              <Table style={{width: "110%", marginBottom: "10%", marginLeft: "-5%"}} striped bordered hover size="sm">
+                                <thead>
+                                  <tr>
+                                    <th><b>Age</b></th>
+                                    <th><b>Sex</b></th>
+                                    <th><b>Protein</b></th>
+                                    <th><b>Fluid</b></th>
+                                    <th><b>Fibre</b></th>
+                                    <th><b>Vitamin A</b></th>
+                                    <th><b>Thiamin</b></th>
+                                    <th><b>Riboflavin</b></th>
+                                    <th><b>Niacin</b></th>
+                                    <th><b>Vitamin B6</b></th>
+                                    <th><b>Vitamin B12</b></th>
+                                    <th><b>Folate</b></th>
+                                    <th><b>Vitamin</b></th>
+                                    <th><b>Calcium</b></th>
+                                    <th><b>Iodine</b></th>
+                                    <th><b>Iron</b></th>
+                                    <th><b>Magnesium</b></th>
+                                    <th><b>Potassium</b></th>
+                                    <th><b>Sodium</b></th>
+                                    <th><b>Zinc</b></th>
+                                  </tr>
+                                </thead>
+
+                                <tbody>
+                                  <tr>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                    <th>...</th>
+                                  </tr>
+
+                                </tbody>
+
+                            </Table>
+
+                            :
+
+                            <></>
+
+                          }</div>
+                          </>
+
+                            }</div>
+                            </>
+                        }</div>
+                        </>
+
+                      }</div>
+                      </>
+
+                  }</div>
+
+                  </>
+
+                 }</div>
+
+              </>
+
+            }</div>
+
+            {/* <div style={{marginBottom: "10%", marginLeft: "-5%", marginRight: "-7.5%"}}>
+              <Table striped bordered hover size="sm">
+                <thead>
+                    <tr>
+                        <th><b>Age</b></th>
+                        <th><b>Sex</b></th>
+                        <th><b>Protein</b></th>
+                        <th><b>Fluid</b></th>
+                        <th><b>Fibre</b></th>
+                        <th><b>Vitamin A</b></th>
+                        <th><b>Thiamin</b></th>
+                        <th><b>Riboflavin</b></th>
+                        <th><b>Niacin</b></th>
+                        <th><b>Vitamin B6</b></th>
+                        <th><b>Vitamin B12</b></th>
+                        <th><b>Folate</b></th>
+                        <th><b>Vitamin</b></th>
+                        <th><b>Calcium</b></th>
+                        <th><b>Iodine</b></th>
+                        <th><b>Iron</b></th>
+                        <th><b>Magnesium</b></th>
+                        <th><b>Potassium</b></th>
+                        <th><b>Sodium</b></th>
+                        <th><b>Zinc</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <th>0-5</th>
+                      <th>F</th>
+                      <th>20g</th>
+                      <th>1.2L</th>
+                      <th>18g</th>
+                      <th>400Î¼g</th>
+                      <th>0.6mg</th>
+                      <th>0.6mg</th>
+                      <th>8mg</th>
+                      <th>0.6mg</th>
+                      <th>1.2Î¼g</th>
+                      <th>200Î¼g</th>
+                      <th>35mg</th>
+                      <th>700mg</th>
+                      <th>90Î¼g</th>
+                      <th>10mg</th>
+                      <th>130mg</th>
+                      <th>2300mg</th>
+                      <th>300-600mg</th>
+                      <th>4mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>0-5</th>
+                      <th>M</th>
+                      <th>20g</th>
+                      <th>1.2L</th>
+                      <th>18g</th>
+                      <th>400Î¼g</th>
+                      <th>0.6mg</th>
+                      <th>0.6mg</th>
+                      <th>8mg</th>
+                      <th>0.6mg</th>
+                      <th>1.2Î¼g</th>
+                      <th>200Î¼g</th>
+                      <th>35mg</th>
+                      <th>700mg</th>
+                      <th>90Î¼g</th>
+                      <th>10mg</th>
+                      <th>130mg</th>
+                      <th>2300mg</th>
+                      <th>300-600mg</th>
+                      <th>4mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>5-10</th>
+                      <th>F</th>
+                      <th>35g</th>
+                      <th>1.4L</th>
+                      <th>20g</th>
+                      <th>600Î¼g</th>
+                      <th>0.9mg</th>
+                      <th>0.9mg</th>
+                      <th>12mg</th>
+                      <th>1mg</th>
+                      <th>1.8Î¼g</th>
+                      <th>300Î¼g</th>
+                      <th>40mg</th>
+                      <th>1000mg</th>
+                      <th>120Î¼g</th>
+                      <th>8mg</th>
+                      <th>240mg</th>
+                      <th>2500mg</th>
+                      <th>400-800mg</th>
+                      <th>6mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>5-10</th>
+                      <th>M</th>
+                      <th>40g</th>
+                      <th>1.6L</th>
+                      <th>24g</th>
+                      <th>600Î¼g</th>
+                      <th>0.9mg</th>
+                      <th>0.9mg</th>
+                      <th>12mg</th>
+                      <th>1mg</th>
+                      <th>1.8Î¼g</th>
+                      <th>300Î¼g</th>
+                      <th>40mg</th>
+                      <th>1000mg</th>
+                      <th>120Î¼g</th>
+                      <th>8mg</th>
+                      <th>240mg</th>
+                      <th>3000mg</th>
+                      <th>400-800mg</th>
+                      <th>6mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>10-15</th>
+                      <th>F</th>
+                      <th>45g</th>
+                      <th>1.6L</th>
+                      <th>22g</th>
+                      <th>700Î¼g</th>
+                      <th>1.1mg</th>
+                      <th>1.1mg</th>
+                      <th>14mg</th>
+                      <th>1.2mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>40mg</th>
+                      <th>1300mg</th>
+                      <th>150Î¼g</th>
+                      <th>15mg</th>
+                      <th>360mg</th>
+                      <th>2600mg</th>
+                      <th>460-920mg</th>
+                      <th>7mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>10-15</th>
+                      <th>M</th>
+                      <th>65g</th>
+                      <th>1.9L</th>
+                      <th>28g</th>
+                      <th>900Î¼g</th>
+                      <th>1.2mg</th>
+                      <th>1.3mg</th>
+                      <th>16mg</th>
+                      <th>1.3mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>40mg</th>
+                      <th>1300mg</th>
+                      <th>150Î¼g</th>
+                      <th>11mg</th>
+                      <th>410mg</th>
+                      <th>3600mg</th>
+                      <th>460-920mg</th>
+                      <th>13mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>15-20</th>
+                      <th>F</th>
+                      <th>46g</th>
+                      <th>2.1L</th>
+                      <th>25g</th>
+                      <th>700Î¼g</th>
+                      <th>1.1mg</th>
+                      <th>1.1mg</th>
+                      <th>14mg</th>
+                      <th>1.3mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>45mg</th>
+                      <th>1000mg</th>
+                      <th>150Î¼g</th>
+                      <th>18mg</th>
+                      <th>310mg</th>
+                      <th>2800mg</th>
+                      <th>460-920mg</th>
+                      <th>8mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>15-20</th>
+                      <th>M</th>
+                      <th>64g</th>
+                      <th>2.3L</th>
+                      <th>30g</th>
+                      <th>900Î¼g</th>
+                      <th>1.2mg</th>
+                      <th>1.3mg</th>
+                      <th>16mg</th>
+                      <th>1.3mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>45mg</th>
+                      <th>1000mg</th>
+                      <th>150Î¼g</th>
+                      <th>8mg</th>
+                      <th>400mg</th>
+                      <th>3800mg</th>
+                      <th>460-920mg</th>
+                      <th>14mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>70-75</th>
+                      <th>F</th>
+                      <th>57g</th>
+                      <th>2.1L</th>
+                      <th>25g</th>
+                      <th>700Î¼g</th>
+                      <th>1.1mg</th>
+                      <th>1.3mg</th>
+                      <th>14mg</th>
+                      <th>1.5mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>45mg</th>
+                      <th>1300mg</th>
+                      <th>150Î¼g</th>
+                      <th>8mg</th>
+                      <th>320mg</th>
+                      <th>2800mg</th>
+                      <th>460-920mg</th>
+                      <th>8mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>70-75</th>
+                      <th>M</th>
+                      <th>81g</th>
+                      <th>2.6L</th>
+                      <th>30g</th>
+                      <th>900Î¼g</th>
+                      <th>1.2mg</th>
+                      <th>1.6mg</th>
+                      <th>16mg</th>
+                      <th>1.7mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>45mg</th>
+                      <th>1300mg</th>
+                      <th>150Î¼g</th>
+                      <th>8mg</th>
+                      <th>420mg</th>
+                      <th>3800mg</th>
+                      <th>460-920mg</th>
+                      <th>14mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>75-80</th>
+                      <th>F</th>
+                      <th>57g</th>
+                      <th>2.1L</th>
+                      <th>25g</th>
+                      <th>700Î¼g</th>
+                      <th>1.1mg</th>
+                      <th>1.3mg</th>
+                      <th>14mg</th>
+                      <th>1.5mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>45mg</th>
+                      <th>1300mg</th>
+                      <th>150Î¼g</th>
+                      <th>8mg</th>
+                      <th>320mg</th>
+                      <th>2800mg</th>
+                      <th>460-920mg</th>
+                      <th>8mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>75-80</th>
+                      <th>M</th>
+                      <th>81g</th>
+                      <th>2.6L</th>
+                      <th>30g</th>
+                      <th>900Î¼g</th>
+                      <th>1.2mg</th>
+                      <th>1.6mg</th>
+                      <th>16mg</th>
+                      <th>1.7mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>45mg</th>
+                      <th>1300mg</th>
+                      <th>150Î¼g</th>
+                      <th>8mg</th>
+                      <th>420mg</th>
+                      <th>3800mg</th>
+                      <th>460-920mg</th>
+                      <th>14mg</th>
+                    </tr>
+                </tbody>
+              </Table>
+            </div> */}
 
             </Layout>
         </React.Fragment>
@@ -415,6 +1304,1475 @@ function About() {
     When you cut back on foods like red meat and butter, replace them with fish, beans, nuts, and healthy oils instead of refined carbohydrates.</p>
               </Col>
             </div>
+
+            <div className="para">
+              <h4>Recommended Daily Nutrient Intake</h4>
+
+              <Dropdown>
+                <DropdownToggle className="custom-btn" style={{marginBottom: "2.5%", left: "50%", right: "50%", transform: "translate(75%, 0%)"}}>Select Age Group</DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>0-5</div></DropdownItem>
+                  <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>5-10</div></DropdownItem>
+                  <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>10-15</div></DropdownItem>
+                  <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>15-20</div></DropdownItem>
+                  <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>70-75</div></DropdownItem>
+                  <DropdownItem><div onClick={(e) => setTableView(e.target.textContent)}>75-80</div></DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+
+              <div>{ tableView === "0-5" ? 
+                <Table style={{marginLeft: "1%", marginRight: "7.5%"}} striped bordered hover size="sm">
+
+                  <thead>
+                    <tr>
+                      <th><b>Age</b></th>
+                      <th>0-5</th>
+                      <th>0-5</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+
+                    <tr>
+                      <th><b>Sex</b></th>
+                      <th>F</th>
+                      <th>M</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Protein</b></th>
+                      <th>20g</th>
+                      <th>20g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Fluid</b></th>
+                      <th>1.2L</th>
+                      <th>1.2L</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Fibre</b></th>
+                      <th>18g</th>
+                      <th>18g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Vit A</b></th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
+                      <th>0.6mg</th>
+                      <th>0.6mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
+                      <th>0.6mg</th>
+                      <th>0.6mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Niacin</b></th>
+                      <th>8mg</th>
+                      <th>8mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Vit B6</b></th>
+                      <th>0.6mg</th>
+                      <th>0.6mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Vit B12</b></th>
+                      <th style={{fontSize: "80%"}}>1.2Î¼g</th>
+                      <th style={{fontSize: "80%"}}>1.2Î¼g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Folate</b></th>
+                      <th style={{fontSize: "80%"}}>200Î¼g</th>
+                      <th style={{fontSize: "80%"}}>200Î¼g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
+                      <th>35mg</th>
+                      <th>35mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Calcium</b></th>
+                      <th style={{fontSize: "80%"}}>700mg</th>
+                      <th style={{fontSize: "80%"}}>700mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Iodine</b></th>
+                      <th style={{fontSize: "80%"}}>90Î¼g</th>
+                      <th style={{fontSize: "80%"}}>90Î¼g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Iron</b></th>
+                      <th>10mg</th>
+                      <th>10mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
+                      <th>130mg</th>
+                      <th>130mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Potassium</b></th>
+                      <th style={{fontSize: "80%"}}>2300mg</th>
+                      <th style={{fontSize: "80%"}}>2300mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Sodium</b></th>
+                      <th style={{fontSize: "80%"}}>300-600mg</th>
+                      <th style={{fontSize: "80%"}}>300-600mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Zinc</b></th>
+                      <th>4mg</th>
+                      <th>4mg</th>
+                    </tr>
+
+                  </tbody>
+
+                </Table>  
+
+                :
+
+                <>
+                  <div>{ tableView === "5-10" ?
+                    <Table style={{marginLeft: "1%", marginRight: "7.5%"}} striped bordered hover size="sm">
+
+                      <thead>
+                        <tr>
+                          <th><b>Age</b></th>
+                          <th style={{fontSize: "90%"}}>5-10</th>
+                          <th style={{fontSize: "90%"}}>5-10</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+
+                        <tr>
+                          <th><b>Sex</b></th>
+                          <th>F</th>
+                          <th>M</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Protein</b></th>
+                          <th>35g</th>
+                          <th>40g</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Fluid</b></th>
+                          <th>1.4L</th>
+                          <th>1.6L</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Fibre</b></th>
+                          <th>20g</th>
+                          <th>24g</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Vit A</b></th>
+                          <th style={{fontSize: "80%"}}>600Î¼g</th>
+                          <th style={{fontSize: "80%"}}>600Î¼g</th>
+                        </tr>
+
+                        <tr>
+                          <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
+                          <th>0.9mg</th>
+                          <th>0.9mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
+                          <th>0.9mg</th>
+                          <th>0.9mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Niacin</b></th>
+                          <th>12mg</th>
+                          <th>12mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Vit B6</b></th>
+                          <th>1mg</th>
+                          <th>1mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Vit B12</b></th>
+                          <th style={{fontSize: "80%"}}>1.8Î¼g</th>
+                          <th style={{fontSize: "80%"}}>1.8Î¼g</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Folate</b></th>
+                          <th style={{fontSize: "80%"}}>300Î¼g</th>
+                          <th style={{fontSize: "80%"}}>300Î¼g</th>
+                        </tr>
+
+                        <tr>
+                          <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
+                          <th>40mg</th>
+                          <th>40mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b style={{fontSize: "80%"}}>Calcium</b></th>
+                          <th style={{fontSize: "80%"}}>1000mg</th>
+                          <th style={{fontSize: "80%"}}>1000mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Iodine</b></th>
+                          <th style={{fontSize: "80%"}}>120Î¼g</th>
+                          <th style={{fontSize: "80%"}}>120Î¼g</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Iron</b></th>
+                          <th>8mg</th>
+                          <th>8mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
+                          <th>240mg</th>
+                          <th>240mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b style={{fontSize: "80%"}}>Potassium</b></th>
+                          <th style={{fontSize: "80%"}}>2500mg</th>
+                          <th style={{fontSize: "80%"}}>3000mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Sodium</b></th>
+                          <th style={{fontSize: "80%"}}>400-800mg</th>
+                          <th style={{fontSize: "80%"}}>400-800mg</th>
+                        </tr>
+
+                        <tr>
+                          <th><b>Zinc</b></th>
+                          <th>6mg</th>
+                          <th>6mg</th>
+                        </tr>
+
+                      </tbody>
+
+                  </Table> 
+
+                  :
+
+                  <>
+                    <div>{ tableView === "10-15" ?
+                      <Table style={{marginLeft: "1%", marginRight: "7.5%"}} striped bordered hover size="sm">
+
+                        <thead>
+                          <tr>
+                            <th><b>Age</b></th>
+                            <th style={{fontSize: "90%"}}>10-15</th>
+                            <th style={{fontSize: "90%"}}>10-15</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+
+                          <tr>
+                            <th><b>Sex</b></th>
+                            <th>F</th>
+                            <th>M</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Protein</b></th>
+                            <th>45g</th>
+                            <th>65g</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Fluid</b></th>
+                            <th>1.6L</th>
+                            <th>1.9L</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Fibre</b></th>
+                            <th>22g</th>
+                            <th>28g</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Vit A</b></th>
+                            <th style={{fontSize: "80%"}}>700Î¼g</th>
+                            <th style={{fontSize: "80%"}}>900Î¼g</th>
+                          </tr>
+
+                          <tr>
+                            <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
+                            <th>1.1mg</th>
+                            <th>1.2mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
+                            <th>1.1mg</th>
+                            <th>1.3mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Niacin</b></th>
+                            <th>14mg</th>
+                            <th>16mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Vit B6</b></th>
+                            <th>1.2mg</th>
+                            <th>1.3mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Vit B12</b></th>
+                            <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                            <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Folate</b></th>
+                            <th style={{fontSize: "80%"}}>400Î¼g</th>
+                            <th style={{fontSize: "80%"}}>400Î¼g</th>
+                          </tr>
+
+                          <tr>
+                            <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
+                            <th>40mg</th>
+                            <th>40mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b style={{fontSize: "80%"}}>Calcium</b></th>
+                            <th style={{fontSize: "80%"}}>1300mg</th>
+                            <th style={{fontSize: "80%"}}>1300mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Iodine</b></th>
+                            <th style={{fontSize: "80%"}}>150Î¼g</th>
+                            <th style={{fontSize: "80%"}}>150Î¼g</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Iron</b></th>
+                            <th>15mg</th>
+                            <th>11mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
+                            <th>360mg</th>
+                            <th>410mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b style={{fontSize: "80%"}}>Potassium</b></th>
+                            <th style={{fontSize: "80%"}}>2600mg</th>
+                            <th style={{fontSize: "80%"}}>3600mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Sodium</b></th>
+                            <th style={{fontSize: "80%"}}>460-920mg</th>
+                            <th style={{fontSize: "80%"}}>460-920mg</th>
+                          </tr>
+
+                          <tr>
+                            <th><b>Zinc</b></th>
+                            <th>7mg</th>
+                            <th>13mg</th>
+                          </tr>
+
+                        </tbody>
+
+                      </Table>  
+                      
+                      :
+
+                      <>
+                        <div>{ tableView === "15-20" ?
+                          <Table style={{marginLeft: "1%", marginRight: "7.5%"}} striped bordered hover size="sm">
+
+                            <thead>
+                              <tr>
+                                <th><b>Age</b></th>
+                                <th style={{fontSize: "90%"}}>15-20</th>
+                                <th style={{fontSize: "90%"}}>15-20</th>
+                              </tr>
+                            </thead>
+    
+                            <tbody>
+    
+                              <tr>
+                                <th><b>Sex</b></th>
+                                <th>F</th>
+                                <th>M</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Protein</b></th>
+                                <th>46g</th>
+                                <th>64g</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Fluid</b></th>
+                                <th>2.1L</th>
+                                <th>2.3L</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Fibre</b></th>
+                                <th>25g</th>
+                                <th>30g</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Vit A</b></th>
+                                <th style={{fontSize: "80%"}}>700Î¼g</th>
+                                <th style={{fontSize: "80%"}}>900Î¼g</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
+                                <th>1.1mg</th>
+                                <th>1.2mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
+                                <th>1.1mg</th>
+                                <th>1.3mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Niacin</b></th>
+                                <th>14mg</th>
+                                <th>16mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Vit B6</b></th>
+                                <th>1.3mg</th>
+                                <th>1.3mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Vit B12</b></th>
+                                <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                                <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Folate</b></th>
+                                <th style={{fontSize: "80%"}}>400Î¼g</th>
+                                <th style={{fontSize: "80%"}}>400Î¼g</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
+                                <th>45mg</th>
+                                <th>45mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b style={{fontSize: "80%"}}>Calcium</b></th>
+                                <th style={{fontSize: "80%"}}>1000mg</th>
+                                <th style={{fontSize: "80%"}}>1000mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Iodine</b></th>
+                                <th style={{fontSize: "80%"}}>150Î¼g</th>
+                                <th style={{fontSize: "80%"}}>150Î¼g</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Iron</b></th>
+                                <th>18mg</th>
+                                <th>8mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
+                                <th>310mg</th>
+                                <th>400mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b style={{fontSize: "80%"}}>Potassium</b></th>
+                                <th style={{fontSize: "80%"}}>2800mg</th>
+                                <th style={{fontSize: "80%"}}>3800mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Sodium</b></th>
+                                <th style={{fontSize: "80%"}}>460-920mg</th>
+                                <th style={{fontSize: "80%"}}>460-920mg</th>
+                              </tr>
+    
+                              <tr>
+                                <th><b>Zinc</b></th>
+                                <th>8mg</th>
+                                <th>14mg</th>
+                              </tr>
+    
+                            </tbody>
+  
+                          </Table>  
+
+                          :
+
+                          <>
+                            <div>{ tableView === "70-75" ?
+                              <Table style={{marginLeft: "1%", marginRight: "7.5%"}} striped bordered hover size="sm">
+
+                                <thead>
+                                  <tr>
+                                    <th><b>Age</b></th>
+                                    <th style={{fontSize: "90%"}}>70-75</th>
+                                    <th style={{fontSize: "90%"}}>70-75</th>
+                                  </tr>
+                                </thead>
+        
+                                <tbody>
+        
+                                  <tr>
+                                    <th><b>Sex</b></th>
+                                    <th>F</th>
+                                    <th>M</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Protein</b></th>
+                                    <th>57g</th>
+                                    <th>81g</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Fluid</b></th>
+                                    <th>2.1L</th>
+                                    <th>2.6L</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Fibre</b></th>
+                                    <th>25g</th>
+                                    <th>30g</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Vit A</b></th>
+                                    <th style={{fontSize: "80%"}}>700Î¼g</th>
+                                    <th style={{fontSize: "80%"}}>900Î¼g</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
+                                    <th>1.1mg</th>
+                                    <th>1.2mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
+                                    <th>1.3mg</th>
+                                    <th>1.6mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Niacin</b></th>
+                                    <th>14mg</th>
+                                    <th>16mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Vit B6</b></th>
+                                    <th>1.5mg</th>
+                                    <th>1.7mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Vit B12</b></th>
+                                    <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                                    <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Folate</b></th>
+                                    <th style={{fontSize: "80%"}}>400Î¼g</th>
+                                    <th style={{fontSize: "80%"}}>400Î¼g</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
+                                    <th>45mg</th>
+                                    <th>45mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b style={{fontSize: "80%"}}>Calcium</b></th>
+                                    <th style={{fontSize: "80%"}}>1300mg</th>
+                                    <th style={{fontSize: "80%"}}>1300mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Iodine</b></th>
+                                    <th style={{fontSize: "80%"}}>150Î¼g</th>
+                                    <th style={{fontSize: "80%"}}>150Î¼g</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Iron</b></th>
+                                    <th>8mg</th>
+                                    <th>8mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
+                                    <th>320mg</th>
+                                    <th>420mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b style={{fontSize: "80%"}}>Potassium</b></th>
+                                    <th style={{fontSize: "80%"}}>2800mg</th>
+                                    <th style={{fontSize: "80%"}}>3800mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Sodium</b></th>
+                                    <th style={{fontSize: "80%"}}>460-920mg</th>
+                                    <th style={{fontSize: "80%"}}>460-920mg</th>
+                                  </tr>
+        
+                                  <tr>
+                                    <th><b>Zinc</b></th>
+                                    <th>8mg</th>
+                                    <th>14mg</th>
+                                  </tr>
+        
+                                </tbody>
+
+                              </Table>   
+                              
+                              :
+
+                              <>
+                                <div>{ tableView === "75-80" ?
+                                  <Table style={{marginLeft: "1%", marginRight: "7.5%"}} striped bordered hover size="sm">
+
+                                    <thead>
+                                      <tr>
+                                        <th><b>Age</b></th>
+                                        <th style={{fontSize: "90%"}}>75-80</th>
+                                        <th style={{fontSize: "90%"}}>75-80</th>
+                                      </tr>
+                                    </thead>
+            
+                                    <tbody>
+            
+                                      <tr>
+                                        <th><b>Sex</b></th>
+                                        <th>F</th>
+                                        <th>M</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Protein</b></th>
+                                        <th>57g</th>
+                                        <th>81g</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Fluid</b></th>
+                                        <th>2.1L</th>
+                                        <th>2.6L</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Fibre</b></th>
+                                        <th>25g</th>
+                                        <th>30g</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Vit A</b></th>
+                                        <th style={{fontSize: "80%"}}>700Î¼g</th>
+                                        <th style={{fontSize: "80%"}}>900Î¼g</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
+                                        <th>1.1mg</th>
+                                        <th>1.2mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
+                                        <th>1.3mg</th>
+                                        <th>1.6mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Niacin</b></th>
+                                        <th>14mg</th>
+                                        <th>16mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Vit B6</b></th>
+                                        <th>1.5mg</th>
+                                        <th>1.7mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Vit B12</b></th>
+                                        <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                                        <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Folate</b></th>
+                                        <th style={{fontSize: "80%"}}>400Î¼g</th>
+                                        <th style={{fontSize: "80%"}}>400Î¼g</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
+                                        <th>45mg</th>
+                                        <th>45mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b style={{fontSize: "80%"}}>Calcium</b></th>
+                                        <th style={{fontSize: "80%"}}>1300mg</th>
+                                        <th style={{fontSize: "80%"}}>1300mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Iodine</b></th>
+                                        <th style={{fontSize: "80%"}}>150Î¼g</th>
+                                        <th style={{fontSize: "80%"}}>150Î¼g</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Iron</b></th>
+                                        <th>8mg</th>
+                                        <th>8mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
+                                        <th>320mg</th>
+                                        <th>420mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b style={{fontSize: "80%"}}>Potassium</b></th>
+                                        <th style={{fontSize: "80%"}}>2800mg</th>
+                                        <th style={{fontSize: "80%"}}>3800mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Sodium</b></th>
+                                        <th style={{fontSize: "80%"}}>460-920mg</th>
+                                        <th style={{fontSize: "80%"}}>460-920mg</th>
+                                      </tr>
+            
+                                      <tr>
+                                        <th><b>Zinc</b></th>
+                                        <th>8mg</th>
+                                        <th>14mg</th>
+                                      </tr>
+            
+                                    </tbody>
+
+                                  </Table>  
+                                
+                                  :
+
+                                  <>
+                                    <div>{ tableView === "" ?
+                                      <Table style={{marginLeft: "1%", marginRight: "7.5%"}} striped bordered hover size="sm">
+
+                                        <thead>
+                                          <tr>
+                                            <th><b>Age</b></th>
+                                            <th style={{fontSize: "90%"}}>...</th>
+                                            <th style={{fontSize: "90%"}}>...</th>
+                                          </tr>
+                                        </thead>
+                
+                                        <tbody>
+                
+                                          <tr>
+                                            <th><b>Sex</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Protein</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Fluid</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Fibre</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Vit A</b></th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Niacin</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Vit B6</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Vit B12</b></th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Folate</b></th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b style={{fontSize: "80%"}}>Calcium</b></th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Iodine</b></th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Iron</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b style={{fontSize: "80%"}}>Potassium</b></th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Sodium</b></th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                            <th style={{fontSize: "80%"}}>...</th>
+                                          </tr>
+                
+                                          <tr>
+                                            <th><b>Zinc</b></th>
+                                            <th>...</th>
+                                            <th>...</th>
+                                          </tr>
+                
+                                        </tbody>
+
+                                      </Table>  
+                                      
+                                      :
+
+                                      <></>
+                                  }</div>
+                                  </>
+                              }</div>
+                              </>
+
+                          }</div>
+                          </>
+
+                      }</div>
+                      </>
+
+                  }</div>
+                  </>
+
+                }</div>
+                </>
+
+            }</div>
+
+              {/* <Table style={{marginLeft: "1%", marginRight: "1%"}} striped bordered hover size="sm" responsive="sm">
+                <thead>
+                    <tr>
+                        <th><b>Age</b></th>
+                        <th style={{fontSize: "90%"}}>0-5</th>
+                        <th style={{fontSize: "90%"}}>0-5</th>
+                        <th style={{fontSize: "90%"}}>5-10</th>
+                        <th style={{fontSize: "90%"}}>5-10</th>
+                        <th style={{fontSize: "90%"}}>10-15</th>
+                        <th style={{fontSize: "90%"}}>10-15</th>
+                        <th style={{fontSize: "90%"}}>15-20</th>
+                        <th style={{fontSize: "90%"}}>15-20</th>
+                        <th style={{fontSize: "90%"}}>70-75</th>
+                        <th style={{fontSize: "90%"}}>70-75</th>
+                        <th style={{fontSize: "90%"}}>75-80</th>
+                        <th style={{fontSize: "90%"}}>75-80</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <th><b>Sex</b></th>
+                      <th>F</th>
+                      <th>M</th>
+                      <th>F</th>
+                      <th>M</th>
+                      <th>F</th>
+                      <th>M</th>
+                      <th>F</th>
+                      <th>M</th>
+                      <th>F</th>
+                      <th>M</th>
+                      <th>F</th>
+                      <th>M</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Protein</b></th>
+                      <th>20g</th>
+                      <th>20g</th>
+                      <th>35g</th>
+                      <th>40g</th>
+                      <th>45g</th>
+                      <th>65g</th>
+                      <th>46g</th>
+                      <th>64g</th>
+                      <th>57g</th>
+                      <th>81g</th>
+                      <th>57g</th>
+                      <th>81g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Fluid</b></th>
+                      <th>1.2L</th>
+                      <th>1.2L</th>
+                      <th>1.4L</th>
+                      <th>1.6L</th>
+                      <th>1.6L</th>
+                      <th>1.9L</th>
+                      <th>2.1L</th>
+                      <th>2.3L</th>
+                      <th>2.1L</th>
+                      <th>2.6L</th>
+                      <th>2.1L</th>
+                      <th>2.6L</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Fibre</b></th>
+                      <th>18g</th>
+                      <th>18g</th>
+                      <th>20g</th>
+                      <th>24g</th>
+                      <th>22g</th>
+                      <th>28g</th>
+                      <th>25g</th>
+                      <th>30g</th>
+                      <th>25g</th>
+                      <th>30g</th>
+                      <th>25g</th>
+                      <th>30g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Vit A</b></th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>600Î¼g</th>
+                      <th style={{fontSize: "80%"}}>600Î¼g</th>
+                      <th style={{fontSize: "80%"}}>700Î¼g</th>
+                      <th style={{fontSize: "80%"}}>900Î¼g</th>
+                      <th style={{fontSize: "80%"}}>700Î¼g</th>
+                      <th style={{fontSize: "80%"}}>900Î¼g</th>
+                      <th style={{fontSize: "80%"}}>700Î¼g</th>
+                      <th style={{fontSize: "80%"}}>900Î¼g</th>
+                      <th style={{fontSize: "80%"}}>700Î¼g</th>
+                      <th style={{fontSize: "80%"}}>900Î¼g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
+                      <th>0.6mg</th>
+                      <th>0.6mg</th>
+                      <th>0.9mg</th>
+                      <th>0.9mg</th>
+                      <th>1.1mg</th>
+                      <th>1.2mg</th>
+                      <th>1.1mg</th>
+                      <th>1.2mg</th>
+                      <th>1.1mg</th>
+                      <th>1.2mg</th>
+                      <th>1.1mg</th>
+                      <th>1.2mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
+                      <th>0.6mg</th>
+                      <th>0.6mg</th>
+                      <th>0.9mg</th>
+                      <th>0.9mg</th>
+                      <th>1.1mg</th>
+                      <th>1.3mg</th>
+                      <th>1.1mg</th>
+                      <th>1.3mg</th>
+                      <th>1.3mg</th>
+                      <th>1.6mg</th>
+                      <th>1.3mg</th>
+                      <th>1.6mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Niacin</b></th>
+                      <th>8mg</th>
+                      <th>8mg</th>
+                      <th>12mg</th>
+                      <th>12mg</th>
+                      <th>14mg</th>
+                      <th>16mg</th>
+                      <th>14mg</th>
+                      <th>16mg</th>
+                      <th>14mg</th>
+                      <th>16mg</th>
+                      <th>14mg</th>
+                      <th>16mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Vit B6</b></th>
+                      <th>0.6mg</th>
+                      <th>0.6mg</th>
+                      <th>1mg</th>
+                      <th>1mg</th>
+                      <th>1.2mg</th>
+                      <th>1.3mg</th>
+                      <th>1.3mg</th>
+                      <th>1.3mg</th>
+                      <th>1.5mg</th>
+                      <th>1.7mg</th>
+                      <th>1.5mg</th>
+                      <th>1.7mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Vit B12</b></th>
+                      <th style={{fontSize: "80%"}}>1.2Î¼g</th>
+                      <th style={{fontSize: "80%"}}>1.2Î¼g</th>
+                      <th style={{fontSize: "80%"}}>1.8Î¼g</th>
+                      <th style={{fontSize: "80%"}}>1.8Î¼g</th>
+                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Folate</b></th>
+                      <th style={{fontSize: "80%"}}>200Î¼g</th>
+                      <th style={{fontSize: "80%"}}>200Î¼g</th>
+                      <th style={{fontSize: "80%"}}>300Î¼g</th>
+                      <th style={{fontSize: "80%"}}>300Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                      <th style={{fontSize: "80%"}}>400Î¼g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
+                      <th>35mg</th>
+                      <th>35mg</th>
+                      <th>40mg</th>
+                      <th>40mg</th>
+                      <th>40mg</th>
+                      <th>40mg</th>
+                      <th>45mg</th>
+                      <th>45mg</th>
+                      <th>45mg</th>
+                      <th>45mg</th>
+                      <th>45mg</th>
+                      <th>45mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Calcium</b></th>
+                      <th style={{fontSize: "80%"}}>700mg</th>
+                      <th style={{fontSize: "80%"}}>700mg</th>
+                      <th style={{fontSize: "80%"}}>1000mg</th>
+                      <th style={{fontSize: "80%"}}>1000mg</th>
+                      <th style={{fontSize: "80%"}}>1300mg</th>
+                      <th style={{fontSize: "80%"}}>1300mg</th>
+                      <th style={{fontSize: "80%"}}>1000mg</th>
+                      <th style={{fontSize: "80%"}}>1000mg</th>
+                      <th style={{fontSize: "80%"}}>1300mg</th>
+                      <th style={{fontSize: "80%"}}>1300mg</th>
+                      <th style={{fontSize: "80%"}}>1300mg</th>
+                      <th style={{fontSize: "80%"}}>1300mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Iodine</b></th>
+                      <th style={{fontSize: "80%"}}>90Î¼g</th>
+                      <th style={{fontSize: "80%"}}>90Î¼g</th>
+                      <th style={{fontSize: "80%"}}>120Î¼g</th>
+                      <th style={{fontSize: "80%"}}>120Î¼g</th>
+                      <th style={{fontSize: "80%"}}>150Î¼g</th>
+                      <th style={{fontSize: "80%"}}>150Î¼g</th>
+                      <th style={{fontSize: "80%"}}>150Î¼g</th>
+                      <th style={{fontSize: "80%"}}>150Î¼g</th>
+                      <th style={{fontSize: "80%"}}>150Î¼g</th>
+                      <th style={{fontSize: "80%"}}>150Î¼g</th>
+                      <th style={{fontSize: "80%"}}>150Î¼g</th>
+                      <th style={{fontSize: "80%"}}>150Î¼g</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Iron</b></th>
+                      <th>10mg</th>
+                      <th>10mg</th>
+                      <th>8mg</th>
+                      <th>8mg</th>
+                      <th>15mg</th>
+                      <th>11mg</th>
+                      <th>18mg</th>
+                      <th>8mg</th>
+                      <th>8mg</th>
+                      <th>8mg</th>
+                      <th>8mg</th>
+                      <th>8mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
+                      <th>130mg</th>
+                      <th>130mg</th>
+                      <th>240mg</th>
+                      <th>240mg</th>
+                      <th>360mg</th>
+                      <th>410mg</th>
+                      <th>310mg</th>
+                      <th>400mg</th>
+                      <th>320mg</th>
+                      <th>420mg</th>
+                      <th>320mg</th>
+                      <th>420mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b style={{fontSize: "80%"}}>Potassium</b></th>
+                      <th style={{fontSize: "80%"}}>2300mg</th>
+                      <th style={{fontSize: "80%"}}>2300mg</th>
+                      <th style={{fontSize: "80%"}}>2500mg</th>
+                      <th style={{fontSize: "80%"}}>3000mg</th>
+                      <th style={{fontSize: "80%"}}>2600mg</th>
+                      <th style={{fontSize: "80%"}}>3600mg</th>
+                      <th style={{fontSize: "80%"}}>2800mg</th>
+                      <th style={{fontSize: "80%"}}>3800mg</th>
+                      <th style={{fontSize: "80%"}}>2800mg</th>
+                      <th style={{fontSize: "80%"}}>3800mg</th>
+                      <th style={{fontSize: "80%"}}>2800mg</th>
+                      <th style={{fontSize: "80%"}}>3800mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Sodium</b></th>
+                      <th style={{fontSize: "80%"}}>300-600mg</th>
+                      <th style={{fontSize: "80%"}}>300-600mg</th>
+                      <th style={{fontSize: "80%"}}>400-800mg</th>
+                      <th style={{fontSize: "80%"}}>400-800mg</th>
+                      <th style={{fontSize: "80%"}}>460-920mg</th>
+                      <th style={{fontSize: "80%"}}>460-920mg</th>
+                      <th style={{fontSize: "80%"}}>460-920mg</th>
+                      <th style={{fontSize: "80%"}}>460-920mg</th>
+                      <th style={{fontSize: "80%"}}>460-920mg</th>
+                      <th style={{fontSize: "80%"}}>460-920mg</th>
+                      <th style={{fontSize: "80%"}}>460-920mg</th>
+                      <th style={{fontSize: "80%"}}>460-920mg</th>
+                    </tr>
+
+                    <tr>
+                      <th><b>Zinc</b></th>
+                      <th>4mg</th>
+                      <th>4mg</th>
+                      <th>6mg</th>
+                      <th>6mg</th>
+                      <th>7mg</th>
+                      <th>13mg</th>
+                      <th>8mg</th>
+                      <th>14mg</th>
+                      <th>8mg</th>
+                      <th>14mg</th>
+                      <th>8mg</th>
+                      <th>14mg</th>
+                    </tr>
+
+                    {/* <tr>
+                      <th>75-80</th>
+                      <th>F</th>
+                      <th>57g</th>
+                      <th>2.1L</th>
+                      <th>25g</th>
+                      <th>700Î¼g</th>
+                      <th>1.1mg</th>
+                      <th>1.3mg</th>
+                      <th>14mg</th>
+                      <th>1.5mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>45mg</th>
+                      <th>1300mg</th>
+                      <th>150Î¼g</th>
+                      <th>8mg</th>
+                      <th>320mg</th>
+                      <th>2800mg</th>
+                      <th>460-920mg</th>
+                      <th>8mg</th>
+                    </tr>
+
+                    <tr>
+                      <th>70-75</th>
+                      <th>M</th>
+                      <th>81g</th>
+                      <th>2.6L</th>
+                      <th>30g</th>
+                      <th>900Î¼g</th>
+                      <th>1.2mg</th>
+                      <th>1.6mg</th>
+                      <th>16mg</th>
+                      <th>1.7mg</th>
+                      <th>2.4Î¼g</th>
+                      <th>400Î¼g</th>
+                      <th>45mg</th>
+                      <th>1300mg</th>
+                      <th>150Î¼g</th>
+                      <th>8mg</th>
+                      <th>420mg</th>
+                      <th>3800mg</th>
+                      <th>460-920mg</th>
+                      <th>14mg</th>
+                    </tr> 
+                </tbody>
+              </Table> */}
+
+            </div>
+{/* 
+            <div className="para">
+                <Table>
+
+                  <thead>
+
+                    <tr>
+                        <th><b>Age</b></th>
+                        <th style={{fontSize: "90%"}}>15-20</th>
+                        <th style={{fontSize: "90%"}}>15-20</th>
+                        <th style={{fontSize: "90%"}}>70-75</th>
+                        <th style={{fontSize: "90%"}}>70-75</th>
+                        <th style={{fontSize: "90%"}}>75-80</th>
+                        <th style={{fontSize: "90%"}}>75-80</th>
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+
+                    <tr>
+                      <th><b>Sex</b></th>
+                      <th>F</th>
+                      <th>M</th>
+                      <th>F</th>
+                      <th>M</th>
+                      <th>F</th>
+                      <th>M</th>
+                    </tr>
+
+                    <tr>
+                      <th style={{fontSize: "90%"}}><b>Folate</b></th>
+                      <th style={{fontSize: "90%"}}></th>
+                      <th style={{fontSize: "90%"}}></th>
+                      <th style={{fontSize: "90%"}}></th>
+                      <th style={{fontSize: "90%"}}></th>
+                      <th style={{fontSize: "90%"}}></th>
+                      <th style={{fontSize: "90%"}}></th>
+                    </tr>
+
+                    <tr>
+                      <th><b></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+
+                    <tr>
+                      <th><b></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+
+                    <tr>
+                      <th><b></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+
+                    <tr>
+                      <th><b></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+
+                    <tr>
+                      <th><b></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+
+                    <tr>
+                      <th><b></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+
+                    <tr>
+                      <th><b></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+
+                    <tr>
+                      <th><b></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+      
+                  </tbody>
+
+                </Table>
+            </div> */}
           </MobileDivStyle>
         </MobileView>
         </div>
@@ -425,6 +2783,13 @@ const MobileDivStyle = styled.div`
   .para{
     margin-top: 10vh;
     margin-bottom: 10vh;
+  }
+`;
+
+const MobileTable = styled.div`
+  .m-table{
+    width: 95%;
+    fontSize: 7px;
   }
 `;
 

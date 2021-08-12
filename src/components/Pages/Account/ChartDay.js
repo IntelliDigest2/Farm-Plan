@@ -2,9 +2,13 @@ import React, {Component, useState, useEffect} from 'react'
 import {Chart} from "react-google-charts"
 import styled from "styled-components"
 // import chartData from "../../../data/chart-data.json";
-// import { Row, Col } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';
 import {BrowserView, MobileView} from "react-device-detect"
 import moment from "moment"
+import "../Pages.css"
+import "../../../App.css";
+import {Link} from "react-router-dom"
+import {Card} from "react-bootstrap"
 
 import { connect } from 'react-redux';
 import {fs} from "../../../config/fbConfig"
@@ -235,11 +239,11 @@ class Chart4 extends Component {
             /> */}
 
           <BrowserView>
-            <ChartStyle>
+            <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
 
               <Chart className='bar-chart'
-                width={'85%'}
-                height={'85%'}
+                width={'78vw'}
+                height={'600px'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -265,14 +269,37 @@ class Chart4 extends Component {
                 legendToggle
               />
 
-            </ChartStyle>
+            </div>
+
+            <div style={{height: "40px", marginBottom: "10%"}}>
+              {/* <Button style={{marginTop: "90%", justifyContent: "center"}} className="custom-btn" as={Link} to="/account">Back</Button> */}
+              <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                {/* <ButtonGroup>
+                  <Button style={{}} className="custom-btn" as={Link} to="/account">Back</Button>
+                </ButtonGroup> */}
+                <ButtonGroup>
+                  <Button style={{width: "15%"}} disabled>View Previous</Button>
+                  <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/week">View Next (Weekly Weight)</Button>
+                </ButtonGroup>
+              </Card>
+            </div>
+
+            {/* <Button style={{backgroundColor: "rgb(8, 105, 27)", width: "15%", marginLeft: "80%", marginTop: "-60px", marginBottom: "25px"}}>View</Button> */}
+
+
+            {/* <BStyle><Button className="custom-btn" as={Link} to="/food-loss">Update Food Loss</Button></BStyle> */}
+
          </BrowserView>
 
          <MobileView>
-           <ChartStyle>
+
+           {/* <ChartStyle> */}
+           <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
+
             <Chart className='bar-chart'
-                width={'85%'}
-                height={'85%'}
+                width={'78vw'}
+                height={'600px'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -297,7 +324,24 @@ class Chart4 extends Component {
                 }}
                 // legendToggle
               />
-           </ChartStyle>
+
+           {/* </ChartStyle> */}
+           </div>
+
+           <div style={{height: "95px", marginBottom: "10%"}}>
+              {/* <Button style={{marginTop: "90%", justifyContent: "center"}} className="custom-btn" as={Link} to="/account">Back</Button> */}
+              <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                {/* <ButtonGroup>
+                  <Button style={{}} className="custom-btn" as={Link} to="/account">Back</Button>
+                </ButtonGroup> */}
+                <ButtonGroup>
+                  <Button style={{width: "15%"}} className="custom-btn" disabled>View Previous</Button>
+                  <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/week">View Next</Button>
+                </ButtonGroup>
+              </Card>
+            </div>
+
          </MobileView>
 
             {/* <Chart 

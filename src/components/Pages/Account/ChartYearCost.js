@@ -6,6 +6,12 @@ import moment from 'moment'
 import { connect } from 'react-redux'
 import { fs } from '../../../config/fbConfig'
 
+import { Button, ButtonGroup } from 'react-bootstrap';
+import "../Pages.css"
+import "../../../App.css";
+import {Link} from "react-router-dom"
+import {Card} from "react-bootstrap"
+
 const time = moment().format("YYYY")
 
 class Chart9 extends Component {
@@ -126,10 +132,11 @@ class Chart9 extends Component {
                 <br/>
 
                 <BrowserView>
-                    <ChartStyle>
+                    {/* <ChartStyle> */}
+                    <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
                         <Chart className="bar-chart"
-                            width={'85%'}
-                            height={'85%'}
+                            width={'78vw'}
+                            height={'600px'}
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
@@ -161,14 +168,27 @@ class Chart9 extends Component {
                             }}
                             legendToggle
                         />
-                    </ChartStyle>
+                      </div>
+                    {/* </ChartStyle> */}
+
+                    <div style={{height: "40px", marginBottom: "10%"}}>
+                        <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                        <ButtonGroup>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthCost">View Previous (Monthly GHG)</Button>
+                            <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                            <Button style={{width: "15%"}} disabled>View Next</Button>
+                        </ButtonGroup>
+                        </Card>
+                    </div>
+
                 </BrowserView>
 
                 <MobileView>
-                    <ChartStyle>
+                    {/* <ChartStyle> */}
+                    <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "5.5%"}}>
                         <Chart className="bar-chart"
-                            width={'95%'}
-                            height={'85%'}
+                            width={'90vw'}
+                            height={'600px'}
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
@@ -188,7 +208,7 @@ class Chart9 extends Component {
                             ]}
                             options={{
                                 title: 'Food Wastage Cost Performance (' + time + ')',
-                                chartArea: {width: '60%'},
+                                chartArea: {width: '62.5%'},
                                 colors: ['#aab41e'],
                                 legend: "none",
                                 hAxis: {
@@ -200,7 +220,19 @@ class Chart9 extends Component {
                                 }
                             }}
                         />
-                    </ChartStyle>
+                      </div>
+                    {/* </ChartStyle> */}
+
+                    <div style={{height: "95px", marginBottom: "15%"}}>
+                        <Card  style={{width: '90vw', height: '95px', marginBottom: "15%", marginLeft: '5.5%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                        <ButtonGroup>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthCost">View Previous</Button>
+                            <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                            <Button style={{width: "15%"}} disabled>View Next</Button>
+                        </ButtonGroup>
+                        </Card>
+                    </div>
+
                 </MobileView>
 
             </React.Fragment>

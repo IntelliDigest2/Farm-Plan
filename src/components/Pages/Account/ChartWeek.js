@@ -1,8 +1,12 @@
 import React, {Component} from 'react'
 import {Chart} from "react-google-charts"
 import styled from "styled-components"
-// import { Row, Col } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';
 import {BrowserView, MobileView} from "react-device-detect"
+import "../Pages.css"
+import "../../../App.css";
+import {Link} from "react-router-dom"
+import {Card} from "react-bootstrap"
 
 import moment from "moment"
 
@@ -24,6 +28,7 @@ class Chart3 extends Component {
     sundayWeight: 0,
     weekBeginning: "",
     weekEnding: "",
+    prevOption: ""
   }
 
       // fetch db.json data
@@ -141,7 +146,20 @@ class Chart3 extends Component {
         // return data
     }
 
+    getPrevOption(){
+
+      const { auth, profile } = this.props;
+
+      if (profile.buildingFunction === "Households"){
+        this.setState({prevOption: "/chart/day"})
+      } else if (profile.buildingFunction !== "Households" && profile.buildingFunction !== "Farm"){
+        this.setState({prevOption: "/chart/dayBusiness"})
+      }
+
+    }
+
     componentDidMount(){
+      this.getPrevOption();
       this.fetchData();
     }
 
@@ -219,11 +237,13 @@ class Chart3 extends Component {
               rootProps={{ 'data-testid': '1' }}
             /> */}
           <MobileView>
-            <ChartStyle>
+            {/* <ChartStyle> */}
+            <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
+
 
               <Chart className='bar-chart'
-                width={'85%'}
-                height={'85%'}
+                width={'78vw'}
+                height={'600px'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -253,39 +273,28 @@ class Chart3 extends Component {
                 // legendToggle='false'
               />
 
-              {/* <Chart 
-                className="area-chart"
-                width={600}
-                height={500}
-                chartType="AreaChart"
-                loader={<div>Loading Chart</div>}
-                data = {[
-                  ['Week', 'Food Wastage'],
-                  ['03/05 - 09/05', 250],
-                  ['10/05 - 16/05', 189],
-                  ['17/05 - 23/05', 221],
-                  ['24/05 - 30/05', 273],
-                ]}
-                options={{
-                  title: 'Weekly Food Wastage Performance (Line)',
-                  chartArea: {width: '50%', height: '70%'},
-                  hAxis: {
-                    title: 'Week', titleTextStyle: {color: '#333'}
-                  },
-                  vAxis: {
-                    minValue: 0, title: 'Weight of Food Wastage (kg)'
-                  }
-                }}
-              />   */}
+            </div>
+            {/* </ChartStyle> */}
 
-            </ChartStyle>
+            <div style={{height: "95px", marginBottom: "10%"}}>
+                <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                  <ButtonGroup>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to={this.state.prevOption}>View Previous</Button>
+                    <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">View Next</Button>
+                  </ButtonGroup>
+                </Card>
+            </div>
+
           </MobileView>
 
           <BrowserView>
-              <ChartStyle>
+              {/* <ChartStyle> */}
+              <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
+
                 <Chart className='bar-chart'
-                width={'85%'}
-                height={'85%'}
+                width={'78vw'}
+                height={'600px'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -313,7 +322,20 @@ class Chart3 extends Component {
                 }}
                 legendToggle
                 />
-              </ChartStyle>
+
+              </div>
+              {/* </ChartStyle> */}
+
+              <div style={{height: "40px", marginBottom: "10%"}}>
+                <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                  <ButtonGroup>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to={this.state.prevOption}>View Previous (Daily Weight)</Button>
+                    <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">View Next (Monthly Weight)</Button>
+                  </ButtonGroup>
+                </Card>
+              </div>
+
           </BrowserView>
             {/* <Chart
             className="row"
@@ -390,6 +412,7 @@ const ChartStyle = styled.div`
 const mapStateToProps = (state) => { 
   return{
       auth: state.firebase.auth,
+      profile: state.firebase.profile,
   }
 }
 

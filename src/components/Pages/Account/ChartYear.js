@@ -2,7 +2,11 @@ import React, {Component} from 'react'
 import { BrowserView, MobileView } from 'react-device-detect'
 import {Chart} from "react-google-charts"
 import styled from "styled-components"
-// import { Row, Col } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';
+import "../Pages.css"
+import "../../../App.css";
+import {Link} from "react-router-dom"
+import {Card} from "react-bootstrap"
 
 import moment from "moment"
 
@@ -262,11 +266,12 @@ class Chart1 extends Component {
               rootProps={{ 'data-testid': '1' }}
             /> */}
           <BrowserView>
-            <ChartStyle>
+            {/* <ChartStyle> */}
+            <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
 
               <Chart className='bar-chart'
-                width={'85%'}
-                height={'85%'}
+                width={'78vw'}
+                height={'600px'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -300,38 +305,28 @@ class Chart1 extends Component {
                 legendToggle
               />
 
-              {/* <Chart 
-                className="area-chart"
-                width={550}
-                height={500}
-                chartType="AreaChart"
-                loader={<div>Loading Chart</div>}
-                data = {[
-                  ['Year', 'Food Wastage'],
-                  ['2021', 12501],
-                  ['2022', 10997],
-                  ['2023', 9410],
-                ]}
-                options={{
-                  title: 'Yearly Food Wastage Performance (Line)',
-                  chartArea: {width: '50%', height: '70%'},
-                  hAxis: {
-                    title: 'Year', titleTextStyle: {color: '#333'}
-                  },
-                  vAxis: {
-                    minValue: 0, title: 'Weight of Food Wastage (kg)'
-                  }
-                }}
-              />   */}
+            </div>
+            {/* </ChartStyle> */}
 
-            </ChartStyle>
+            <div style={{height: "40px", marginBottom: "10%"}}>
+              <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                <ButtonGroup>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">View Previous (Monthly Weight)</Button>
+                  <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                  <Button style={{width: "15%"}} disabled>View Next</Button>
+                </ButtonGroup>
+              </Card>
+            </div>
+
           </BrowserView>
             
           <MobileView>
-            <ChartStyle>
+            {/* <ChartStyle> */}
+            <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "5.5%"}}>
+
               <Chart className='bar-chart'
-                width={'95%'}
-                height={'85%'}
+                width={'90vw'}
+                height={'600px'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={[
@@ -352,7 +347,7 @@ class Chart1 extends Component {
                 options={{
                   // backgroundColor: 'lightgray',
                   title: 'Food Wastage Performance (' + time + ')',
-                  chartArea: { width: '60%' },
+                  chartArea: { width: '62.5%' },
                   legend: 'none',
                   colors: ['#aab41e'],
                   hAxis: {
@@ -365,7 +360,20 @@ class Chart1 extends Component {
                 }}
                 legendToggle
               />
-            </ChartStyle>
+
+            </div>
+            {/* </ChartStyle> */}
+
+            <div style={{height: "95px", marginBottom: "10%"}}>
+              <Card  style={{width: '90vw', height: '95px', marginBottom: "10%", marginLeft: '5.5%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
+                <ButtonGroup>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">View Previous</Button>
+                  <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
+                  <Button style={{width: "15%"}} disabled>View Next</Button>
+                </ButtonGroup>
+              </Card>
+            </div>
+
           </MobileView>
             {/* <Chart
             className="row"

@@ -76,6 +76,9 @@ import FoodReduction from "./components/Pages/FoodReduction";
 import InfoTable from "./components/Pages/InfoTable";
 
 import BrowseProducts from "./components/Pages/Account/BrowseProducts";
+import BrowseProductsLocalProduce from "./components/Pages/Account/BrowseProductsLocalProduce";
+
+// import { Notifications } from "react-push-notification";
 
 import { connect } from 'react-redux';
 import { auth } from "./config/fbConfig";
@@ -103,6 +106,7 @@ class App extends Component {
     return (
       
       <React.Fragment>
+        {/* <Notifications /> */}
           <Router>
           <NavBar />
           <div>
@@ -193,6 +197,7 @@ class App extends Component {
             <Route path="/food-reduction" component={FoodReduction} />
 
             <Route path="/browse-products" component={BrowseProducts} />
+            <Route path="/browse-products-local" component={BrowseProductsLocalProduce} />
 
             <Route component={NotFound} />
           </Switch>
