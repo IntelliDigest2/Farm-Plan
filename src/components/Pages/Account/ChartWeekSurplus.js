@@ -25,7 +25,7 @@ class Chart15 extends Component {
         fridaySurplus: 0,
         saturdaySurplus: 0,
         sundaySurplus: 0,
-        prevOption: ""
+        // prevOption: ""
     }
 
     fetchData = async () => {
@@ -120,22 +120,22 @@ class Chart15 extends Component {
           .catch(error => console.log(error))
     }
 
-    getPrevOption(){
+    // getPrevOption(){
 
-      const { auth, profile } = this.props;
+    //   const { auth, profile } = this.props;
 
-      if (profile.buildingFunction === "Households"){
-        this.setState({prevOption: "/chart/daySurplus"})
-      } else if (profile.buildingFunction !== "Households" && profile.buildingFunction !== "Farm"){
-        this.setState({prevOption: "/chart/dayBusiness"})
-      }
+    //   if (profile.buildingFunction === "Households"){
+    //     this.setState({prevOption: "/chart/daySurplus"})
+    //   } else if (profile.buildingFunction !== "Households" && profile.buildingFunction !== "Farm"){
+    //     this.setState({prevOption: "/chart/dayBusiness"})
+    //   }
 
-    }
+    // }
 
     componentDidMount(){
-      this.getPrevOption();
+      // this.getPrevOption();
 
-        this.fetchData();
+      this.fetchData();
     }
 
     render(){
@@ -187,7 +187,7 @@ class Chart15 extends Component {
                     <div style={{height: "40px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to={this.state.prevOption}>View Previous (Daily Surplus Weight)</Button>
+                            <Button style={{width: "15%"}} disabled>View Previous</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                             <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplus">View Next (Monthly Surplus Weight)</Button>
                         </ButtonGroup>
@@ -234,7 +234,7 @@ class Chart15 extends Component {
                     <div style={{height: "95px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to={this.state.prevOption}>View Previous</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" disabled>View Previous</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                             <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplus">View Next</Button>
                         </ButtonGroup>

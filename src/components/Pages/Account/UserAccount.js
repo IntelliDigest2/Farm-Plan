@@ -12,15 +12,16 @@ import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { BrowserView, MobileView } from 'react-device-detect'
+import { Divider } from '@material-ui/core';
 
 // import addNotification from "react-push-notification"
 
 class Account extends Component {
 
-  // state = {
-  //   foodBubbleClicked: false,
-  //   foodWasteBubbleClicked: false
-  // }
+  state = {
+    foodBubbleClicked: false,
+    foodWasteBubbleClicked: false
+  }
 
   // notificationTest = () => {
   //   addNotification({
@@ -82,7 +83,7 @@ class Account extends Component {
  
                    <DropdownMenu>
                      <Dropdown.Header>Food Waste</Dropdown.Header>
-                     <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
+                     {/* <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem> */}
                      <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
@@ -90,7 +91,7 @@ class Account extends Component {
                      <Dropdown.Divider />
        
                      <Dropdown.Header>Food Surplus</Dropdown.Header>
-                     <DropdownItem as={Link} to="/chart/daySurplus">Daily</DropdownItem>
+                     {/* <DropdownItem as={Link} to="/chart/daySurplus">Daily</DropdownItem> */}
                      <DropdownItem as={Link} to="/chart/weekSurplus">Weekly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/monthSurplus">Monthly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/yearSurplus">Yearly</DropdownItem>
@@ -106,7 +107,7 @@ class Account extends Component {
                    <DropdownToggle style={{width: "124.5%", marginLeft: "-11%"}} className="custom-btn">View Food GHG Performance Chart</DropdownToggle>
                    <DropdownMenu>
                      <Dropdown.Header>Food Waste</Dropdown.Header>
-                     <DropdownItem as={Link} to="/chart/dayGHG">Daily</DropdownItem>
+                     {/* <DropdownItem as={Link} to="/chart/dayGHG">Daily</DropdownItem> */}
                      <DropdownItem as={Link} to="/chart/weekGHG">Weekly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/monthGHG">Monthly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/yearGHG">Yearly</DropdownItem>
@@ -114,7 +115,7 @@ class Account extends Component {
                      <Dropdown.Divider />
  
                      <Dropdown.Header>Food Surplus</Dropdown.Header>
-                     <DropdownItem as={Link} to="/chart/daySurplusGHG">Daily</DropdownItem>
+                     {/* <DropdownItem as={Link} to="/chart/daySurplusGHG">Daily</DropdownItem> */}
                      <DropdownItem as={Link} to="/chart/weekSurplusGHG">Weekly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/monthSurplusGHG">Monthly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/yearSurplusGHG">Yearly</DropdownItem>
@@ -130,7 +131,7 @@ class Account extends Component {
                    <DropdownToggle style={{width: "124.5%", marginLeft: "-11%"}} className="custom-btn">View Food Cost Performance Chart</DropdownToggle>
                    <DropdownMenu>
                      <Dropdown.Header>Food Waste</Dropdown.Header>
-                     <DropdownItem as={Link} to="/chart/dayCost">Daily</DropdownItem>
+                     {/* <DropdownItem as={Link} to="/chart/dayCost">Daily</DropdownItem> */}
                      <DropdownItem as={Link} to="/chart/weekCost">Weekly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/monthCost">Monthly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/yearCost">Yearly</DropdownItem>
@@ -138,7 +139,7 @@ class Account extends Component {
                      <Dropdown.Divider />
  
                      <Dropdown.Header>Food Surplus</Dropdown.Header>
-                     <DropdownItem as={Link} to="/chart/daySurplusCost">Daily</DropdownItem>
+                     {/* <DropdownItem as={Link} to="/chart/daySurplusCost">Daily</DropdownItem> */}
                      <DropdownItem as={Link} to="/chart/weekSurplusCost">Weekly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/monthSurplusCost">Monthly</DropdownItem>
                      <DropdownItem as={Link} to="/chart/yearSurplusCost">Yearly</DropdownItem>
@@ -221,7 +222,7 @@ class Account extends Component {
       
                       <DropdownMenu>
                         <Dropdown.Header>Food Waste</Dropdown.Header>
-                        <DropdownItem as={Link} to="/chart/dayBusiness">Daily</DropdownItem>
+                        {/* <DropdownItem as={Link} to="/chart/dayBusiness">Daily</DropdownItem> */}
                         <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
                         <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
                         <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
@@ -229,7 +230,7 @@ class Account extends Component {
                         <Dropdown.Divider />
       
                         <Dropdown.Header>Food Surplus</Dropdown.Header>
-                        <DropdownItem as={Link} to="/chart/dayBusiness">Daily</DropdownItem>
+                        {/* <DropdownItem as={Link} to="/chart/dayBusiness">Daily</DropdownItem> */}
                         <DropdownItem as={Link} to="/chart/weekSurplus">Weekly</DropdownItem>
                         <DropdownItem as={Link} to="/chart/monthSurplus">Monthly</DropdownItem>
                         <DropdownItem as={Link} to="/chart/yearSurplus">Yearly</DropdownItem>
@@ -260,7 +261,7 @@ class Account extends Component {
                           <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food GHG Performance Chart</DropdownToggle>
                           <DropdownMenu>
                             <Dropdown.Header>Food Waste</Dropdown.Header>
-                            <DropdownItem as={Link} to="/chart/dayBusinessGHG">Daily</DropdownItem>
+                            {/* <DropdownItem as={Link} to="/chart/dayBusinessGHG">Daily</DropdownItem> */}
                             <DropdownItem as={Link} to="/chart/weekGHG">Weekly</DropdownItem>
                             <DropdownItem as={Link} to="/chart/monthGHG">Monthly</DropdownItem>
                             <DropdownItem as={Link} to="/chart/yearGHG">Yearly</DropdownItem>
@@ -268,7 +269,7 @@ class Account extends Component {
                             <Dropdown.Divider />
 
                             <Dropdown.Header>Food Surplus</Dropdown.Header>
-                            <DropdownItem as={Link} to="/chart/dayBusinessGHG">Daily</DropdownItem>
+                            {/* <DropdownItem as={Link} to="/chart/dayBusinessGHG">Daily</DropdownItem> */}
                             <DropdownItem as={Link} to="/chart/weekSurplusGHG">Weekly</DropdownItem>
                             <DropdownItem as={Link} to="/chart/monthSurplusGHG">Monthly</DropdownItem>
                             <DropdownItem as={Link} to="/chart/yearSurplusGHG">Yearly</DropdownItem>
@@ -283,7 +284,7 @@ class Account extends Component {
                         <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food Cost Performance Chart</DropdownToggle>
                         <DropdownMenu>
                           <Dropdown.Header>Food Waste</Dropdown.Header>
-                          <DropdownItem as={Link} to="/chart/dayBusinessCost">Daily</DropdownItem>
+                          {/* <DropdownItem as={Link} to="/chart/dayBusinessCost">Daily</DropdownItem> */}
                           <DropdownItem as={Link} to="/chart/weekCost">Weekly</DropdownItem>
                           <DropdownItem as={Link} to="/chart/monthCost">Monthly</DropdownItem>
                           <DropdownItem as={Link} to="/chart/yearCost">Yearly</DropdownItem>
@@ -291,7 +292,7 @@ class Account extends Component {
                           <Dropdown.Divider />
 
                           <Dropdown.Header>Food Surplus</Dropdown.Header>
-                          <DropdownItem as={Link} to="/chart/dayBusinessCost">Daily</DropdownItem>
+                          {/* <DropdownItem as={Link} to="/chart/dayBusinessCost">Daily</DropdownItem> */}
                           <DropdownItem as={Link} to="/chart/weekSurplusCost">Weekly</DropdownItem>
                           <DropdownItem as={Link} to="/chart/monthSurplusCost">Monthly</DropdownItem>
                           <DropdownItem as={Link} to="/chart/yearSurplusCost">Yearly</DropdownItem>
@@ -320,121 +321,221 @@ class Account extends Component {
 
                 :
 
-                <div>
+                <div style={{height: "80vh", padding: "1.5% 1.5% 1.5% 1.5%", marginBottom: "5%"}}>
 
-                <BGroup><BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste & Surplus</Button></BStyle>
-                <BStyle><Button className="custom-btn" as={Link} to="/chart/nutrientGap">View Nutrient Gap Chart</Button></BStyle></BGroup>
-                {/* <BStyle><Button className="custom-btn" type="button" onClick={() => this.notificationTest()}>View Badge Progress</Button></BStyle></BGroup> */}
-                  {/* <BStyle><Button className="custom-btn" as={Link} to="/food-wasteBusiness">Update Food Waste (Business)</Button></BStyle> */}
-                  {/* <BStyle><Button className="custom-btn" as={Link} to="/food-loss">Update Food Loss</Button></BStyle></BGroup> */}
+                    <Button className="custom-btn rounded" style={{height: "120px", width: "100%", marginBottom: "2.5%", fontWeight: 600, fontSize: "200%"}} onClick={() => this.setState({foodBubbleClicked: !this.state.foodBubbleClicked, foodWasteBubbleClicked: false})}>Food</Button>
 
-                  <BGroup>
-                  <DDStyle><Dropdown>
-    
-                    {/* 'variant' value changes colour, not css(?) */}
-                    <DropdownToggle className="custom-btn">View Food Weight Performance Chart</DropdownToggle>
-    
-                    <DropdownMenu>
-                      <Dropdown.Header>Food Waste</Dropdown.Header>
-                      <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem>
-                      <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
-                      <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
-                      <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
-    
-                      <Dropdown.Divider />
-    
-                      <Dropdown.Header>Food Surplus</Dropdown.Header>
-                      <DropdownItem as={Link} to="/chart/daySurplus">Daily</DropdownItem>
-                      <DropdownItem as={Link} to="/chart/weekSurplus">Weekly</DropdownItem>
-                      <DropdownItem as={Link} to="/chart/monthSurplus">Monthly</DropdownItem>
-                      <DropdownItem as={Link} to="/chart/yearSurplus">Yearly</DropdownItem>
-    
-                        {/* <Dropdown.Divider />
-    
-                        <Dropdown.Header>GHG</Dropdown.Header>
-                          <DropdownItem as={Link} to="/chart/dayGHG">Daily</DropdownItem>
-                          <DropdownItem as={Link} to="/chart/weekGHG">Weekly</DropdownItem>
-                          <DropdownItem as={Link} to="/chart/monthGHG">Monthly</DropdownItem>
-                          <DropdownItem as={Link} to="/chart/yearGHG">Yearly</DropdownItem>
-    
-                        <Dropdown.Divider />
-    
-                        <Dropdown.Header>Cost</Dropdown.Header>
-                          <DropdownItem as={Link} to="">Daily</DropdownItem>
-                          <DropdownItem as={Link} to="">Weekly</DropdownItem>
-                          <DropdownItem as={Link} to="">Monthly</DropdownItem>
-                          <DropdownItem as={Link} to="">Yearly</DropdownItem> */}
-                    </DropdownMenu>
-    
-                  </Dropdown></DDStyle>
-                </BGroup>
+                    <>
+                      {this.state.foodBubbleClicked ? 
+                      <>
+                      <MobileView><div style={{marginTop: "-1.5%"}}>
 
-                <BGroup>
-                  <DDStyle>
-                    <Dropdown>
-                      <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food GHG Performance Chart</DropdownToggle>
-                      <DropdownMenu>
-                        <Dropdown.Header>Food Waste</Dropdown.Header>
-                        <DropdownItem as={Link} to="/chart/dayGHG">Daily</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/weekGHG">Weekly</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/monthGHG">Monthly</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/yearGHG">Yearly</DropdownItem>
+                      {/* <Divider style={{marginTop: "10px"}}/>
 
-                        <Dropdown.Divider />
+                        <BGroup>
+                          <BStyle><Button className="custom-btn-2" as={Link} to="/browse-products">Browse Products: Surplus</Button></BStyle>
+                          <BStyle><Button className="custom-btn-2" as={Link} to="/browse-products-local">Browse Products: Local Produce</Button></BStyle>
+                        </BGroup>
 
-                        <Dropdown.Header>Food Surplus</Dropdown.Header>
-                        <DropdownItem as={Link} to="/chart/daySurplusGHG">Daily</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/weekSurplusGHG">Weekly</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/monthSurplusGHG">Monthly</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/yearSurplusGHG">Yearly</DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  </DDStyle>
-                </BGroup>
+                        <BGroup>
+                          <BStyle><Button className="custom-btn-2" as={Link} to="/chart/nutrientGap">Nutrient Gap Breakdown</Button></BStyle>
+                        </BGroup>
 
-                <BGroup>
-                  <DDStyle>
-                    <Dropdown>
-                      <DropdownToggle style={{width: "105.5%", marginLeft: "-2.5%"}} className="custom-btn">View Food Cost Performance Chart</DropdownToggle>
-                      <DropdownMenu>
-                        <Dropdown.Header>Food Waste</Dropdown.Header>
-                        <DropdownItem as={Link} to="/chart/dayCost">Daily</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/weekCost">Weekly</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/monthCost">Monthly</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/yearCost">Yearly</DropdownItem>
+                        <Divider style={{marginBottom: "10px"}}/> */}
 
-                        <Dropdown.Divider />
+                        <Divider style={{marginTop: "10px"}}/>
 
-                        <Dropdown.Header>Food Surplus</Dropdown.Header>
-                        <DropdownItem as={Link} to="/chart/daySurplusCost">Daily</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/weekSurplusCost">Weekly</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/monthSurplusCost">Monthly</DropdownItem>
-                        <DropdownItem as={Link} to="/chart/yearSurplusCost">Yearly</DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  </DDStyle>
-                </BGroup>
+                        <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "80%", marginLeft: "10%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/food-intake">Update Food Intake</Button>
+                        <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "80%", marginLeft: "10%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/browse-products">Browse Products: Surplus</Button>
+                        <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "80%", marginLeft: "10%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/browse-products-local">Browse Products: Local Produce</Button>
+                        <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "80%", marginLeft: "10%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/chart/nutrientGap">Nutrient Gap Breakdown</Button>
 
-                <BGroup> 
-          
-                  {/* <p>
-                    <ButtonModal/>
-                  </p> */}
+                        <Divider style={{marginBottom: "10px"}}/>
 
-                  <BStyle><Button className="custom-btn" as={Link} to="/view-map">View Food Waste Map</Button></BStyle>
-                  <BStyle><Button className="custom-btn" as={Link} to="/food-reduction">Food Waste Reduction Tips</Button></BStyle>
-                </BGroup>
+                      </div></MobileView>
 
-                <BGroup>
-                  {/* <PWBStyle><Button className="custom-btn" as={Link} to="/change-password">Change Your Password</Button></PWBStyle> */}
-                  <BStyle><Button className="custom-btn" as={Link} to="/browse-products">Browse Products: Surplus</Button></BStyle>
-                  <BStyle><Button className="custom-btn" as={Link} to="/browse-products-local">Browse Products: Local Produce</Button></BStyle>
-                </BGroup>
+                      <BrowserView><div style={{marginTop: "-1.5%"}}>
+                        <Divider style={{marginTop: "10px"}}/>
 
-                <BGroup>
-                  <PWBStyle><Button className="custom-btn" as={Link} to="/change-password">Change Your Password</Button></PWBStyle>
-                  {/* <BStyle><Button className="custom-btn" onClick={() => this.notificationTest()}>Test Notification</Button></BStyle> */}
-                </BGroup>
+                        <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "80%", marginLeft: "10%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/food-intake">Update Food Intake</Button>
+                        <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "80%", marginLeft: "10%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/browse-products">Browse Products: Surplus</Button>
+                        <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "80%", marginLeft: "10%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/browse-products-local">Browse Products: Local Produce</Button>
+                        <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "80%", marginLeft: "10%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/chart/nutrientGap">Nutrient Gap Breakdown</Button>
+
+                        <Divider style={{marginBottom: "10px"}}/>
+
+                      </div></BrowserView>
+
+                      </> : <></>}
+                    </>
+
+                    <Button className="custom-btn-2 rounded" style={{height: "120px", width: "100%", marginBottom: "2.5%", fontWeight: 600, fontSize: "200%", borderColor: "#aab41e"}} onClick={() => this.setState({foodWasteBubbleClicked: !this.state.foodWasteBubbleClicked, foodBubbleClicked: false})}>Food Waste</Button>
+
+                    <>
+                        {this.state.foodWasteBubbleClicked ? 
+                        <>
+                          <MobileView><div>
+
+                          <Divider />
+                          
+                          {/* <BGroup>
+                            <BStyle><Button className="custom-btn" as={Link} to="/food-waste">Update Food Waste & Surplus</Button></BStyle>
+                          </BGroup> */}
+
+                          <Button style={{backgroundColor: "rgb(8, 105, 27)",  width: "85%", marginLeft: "7.5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(8, 105, 27)"}} as={Link} to="/food-waste">Update Food Waste & Surplus</Button>
+
+                          <Button style={{backgroundColor: "rgb(8, 105, 27)",  width: "85%", marginLeft: "7.5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(8, 105, 27)"}} as={Link} to="/view-map">View Food Waste Map</Button>
+
+                          <Button style={{backgroundColor: "rgb(8, 105, 27)",  width: "85%", marginLeft: "7.5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(8, 105, 27)"}} as={Link} to="/food-reduction">Food Waste Reduction Tips</Button>
+  
+                          <Dropdown>
+  
+                            <DropdownToggle style={{backgroundColor: "rgb(76, 226, 106)",  width: "85%", marginLeft: "7.5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(76, 226, 106)"}}>View Food Weight Performance Chart</DropdownToggle>
+            
+                            <DropdownMenu>
+                              <Dropdown.Header>Food Waste</Dropdown.Header>
+                              {/* <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem> */}
+                              <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
+            
+                              <Dropdown.Divider />
+            
+                              <Dropdown.Header>Food Surplus</Dropdown.Header>
+                              {/* <DropdownItem as={Link} to="/chart/daySurplus">Daily</DropdownItem> */}
+                              <DropdownItem as={Link} to="/chart/weekSurplus">Weekly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/monthSurplus">Monthly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/yearSurplus">Yearly</DropdownItem>
+            
+                            </DropdownMenu>
+              
+                          </Dropdown>
+  
+                          <Dropdown>
+                            <DropdownToggle style={{backgroundColor: "rgb(76, 226, 106)",  width: "85%", marginLeft: "7.5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(76, 226, 106)"}}>View Food GHG Performance Chart</DropdownToggle>
+                            <DropdownMenu>
+                              <Dropdown.Header>Food Waste</Dropdown.Header>
+                              {/* <DropdownItem as={Link} to="/chart/dayGHG">Daily</DropdownItem> */}
+                              <DropdownItem as={Link} to="/chart/weekGHG">Weekly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/monthGHG">Monthly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/yearGHG">Yearly</DropdownItem>
+
+                              <Dropdown.Divider />
+
+                              <Dropdown.Header>Food Surplus</Dropdown.Header>
+                              {/* <DropdownItem as={Link} to="/chart/daySurplusGHG">Daily</DropdownItem> */}
+                              <DropdownItem as={Link} to="/chart/weekSurplusGHG">Weekly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/monthSurplusGHG">Monthly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/yearSurplusGHG">Yearly</DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+  
+                          <Dropdown>
+                            <DropdownToggle style={{backgroundColor: "rgb(76, 226, 106)",  width: "85%", marginLeft: "7.5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(76, 226, 106)"}}>View Food Cost Performance Chart</DropdownToggle>
+                            <DropdownMenu>
+                              <Dropdown.Header>Food Waste</Dropdown.Header>
+                              {/* <DropdownItem as={Link} to="/chart/dayCost">Daily</DropdownItem> */}
+                              <DropdownItem as={Link} to="/chart/weekCost">Weekly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/monthCost">Monthly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/yearCost">Yearly</DropdownItem>
+
+                              <Dropdown.Divider />
+
+                              <Dropdown.Header>Food Surplus</Dropdown.Header>
+                              {/* <DropdownItem as={Link} to="/chart/daySurplusCost">Daily</DropdownItem> */}
+                              <DropdownItem as={Link} to="/chart/weekSurplusCost">Weekly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/monthSurplusCost">Monthly</DropdownItem>
+                              <DropdownItem as={Link} to="/chart/yearSurplusCost">Yearly</DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+  
+                          {/* <BGroup>
+                            <BStyle><Button className="custom-btn" as={Link} to="/view-map">View Food Waste Map</Button></BStyle>
+                            <BStyle><Button className="custom-btn" as={Link} to="/food-reduction">Food Waste Reduction Tips</Button></BStyle>
+                          </BGroup> */}
+
+                          <Divider style={{marginBottom: "10px"}}/>
+
+                        </div></MobileView>
+                        
+                        <BrowserView>
+                          <Divider style={{marginTop: "10px"}}/>
+
+                          <Button style={{backgroundColor: "rgb(8, 105, 27)", width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(8, 105, 27)"}} as={Link} to="/food-waste">Update Food Waste & Surplus</Button>
+                          <Button style={{backgroundColor: "rgb(8, 105, 27)", width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(8, 105, 27)"}} as={Link} to="/view-map">View Food Waste Map</Button>
+                          <Button style={{backgroundColor: "rgb(8, 105, 27)", width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(8, 105, 27)"}} as={Link} to="/food-reduction">Food Waste Reduction Tips</Button>
+
+                          <Dropdown>
+  
+                            <DropdownToggle style={{backgroundColor: "rgb(76, 226, 106)",  width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(76, 226, 106)"}}>View Food Weight Performance Chart</DropdownToggle>
+            
+                              <DropdownMenu>
+
+                                <Dropdown.Header>Food Waste</Dropdown.Header>
+                                {/* <DropdownItem as={Link} to="/chart/day">Daily</DropdownItem> */}
+                                <DropdownItem as={Link} to="/chart/week">Weekly</DropdownItem>
+                                <DropdownItem as={Link} to="/chart/month">Monthly</DropdownItem>
+                                <DropdownItem as={Link} to="/chart/year">Yearly</DropdownItem>
+              
+                                <Dropdown.Divider />
+              
+                                <Dropdown.Header>Food Surplus</Dropdown.Header>
+                                {/* <DropdownItem as={Link} to="/chart/daySurplus">Daily</DropdownItem> */}
+                                <DropdownItem as={Link} to="/chart/weekSurplus">Weekly</DropdownItem>
+                                <DropdownItem as={Link} to="/chart/monthSurplus">Monthly</DropdownItem>
+                                <DropdownItem as={Link} to="/chart/yearSurplus">Yearly</DropdownItem>
+              
+                              </DropdownMenu>
+              
+                            </Dropdown>
+
+                            <Dropdown>
+                                <DropdownToggle style={{backgroundColor: "rgb(76, 226, 106)",  width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(76, 226, 106)"}}>View Food GHG Performance Chart</DropdownToggle>
+                                <DropdownMenu>
+                                  <Dropdown.Header>Food Waste</Dropdown.Header>
+                                  {/* <DropdownItem as={Link} to="/chart/dayGHG">Daily</DropdownItem> */}
+                                  <DropdownItem as={Link} to="/chart/weekGHG">Weekly</DropdownItem>
+                                  <DropdownItem as={Link} to="/chart/monthGHG">Monthly</DropdownItem>
+                                  <DropdownItem as={Link} to="/chart/yearGHG">Yearly</DropdownItem>
+  
+                                  <Dropdown.Divider />
+  
+                                  <Dropdown.Header>Food Surplus</Dropdown.Header>
+                                  {/* <DropdownItem as={Link} to="/chart/daySurplusGHG">Daily</DropdownItem> */}
+                                  <DropdownItem as={Link} to="/chart/weekSurplusGHG">Weekly</DropdownItem>
+                                  <DropdownItem as={Link} to="/chart/monthSurplusGHG">Monthly</DropdownItem>
+                                  <DropdownItem as={Link} to="/chart/yearSurplusGHG">Yearly</DropdownItem>
+                                </DropdownMenu>
+                              </Dropdown>
+
+                              <Dropdown>
+                                <DropdownToggle style={{backgroundColor: "rgb(76, 226, 106)",  width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(76, 226, 106)"}}>View Food Cost Performance Chart</DropdownToggle>
+                                <DropdownMenu>
+                                  <Dropdown.Header>Food Waste</Dropdown.Header>
+                                  {/* <DropdownItem as={Link} to="/chart/dayCost">Daily</DropdownItem> */}
+                                  <DropdownItem as={Link} to="/chart/weekCost">Weekly</DropdownItem>
+                                  <DropdownItem as={Link} to="/chart/monthCost">Monthly</DropdownItem>
+                                  <DropdownItem as={Link} to="/chart/yearCost">Yearly</DropdownItem>
+  
+                                  <Dropdown.Divider />
+  
+                                  <Dropdown.Header>Food Surplus</Dropdown.Header>
+                                  {/* <DropdownItem as={Link} to="/chart/daySurplusCost">Daily</DropdownItem> */}
+                                  <DropdownItem as={Link} to="/chart/weekSurplusCost">Weekly</DropdownItem>
+                                  <DropdownItem as={Link} to="/chart/monthSurplusCost">Monthly</DropdownItem>
+                                  <DropdownItem as={Link} to="/chart/yearSurplusCost">Yearly</DropdownItem>
+                                </DropdownMenu>
+                              </Dropdown>
+
+                          <Divider style={{marginBottom: "10px"}}/>
+                        </BrowserView>
+
+                        </> : <></>
+                        }
+                    </>
+
+                    <BrowserView><Button className="custom-btn rounded" style={{padding: "1.5%", height: "60px", width: "65%", marginLeft: "17.5%", marginBottom: "5%", fontWeight: 550, fontSize: "150%"}} as={Link} to="/change-password">Change Your Password</Button></BrowserView>
+                    <MobileView><Button className="custom-btn rounded" style={{padding: "5%", height: "60px", width: "60%", marginLeft: "20%", marginBottom: "20%", fontWeight: 550, fontSize: "100%"}} as={Link} to="/change-password">Change Your Password</Button></MobileView>
 
               </div>
 

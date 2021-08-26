@@ -6,10 +6,11 @@ import styled from "styled-components"
 import {BrowserView, MobileView} from "react-device-detect"
 import {Card, Table} from "react-bootstrap"
 import moment from "moment"
+import {BsStarFill, BsStar} from "react-icons/bs"
 
 import { connect } from 'react-redux';
 import {fs} from "../../../config/fbConfig"
-import { green } from '@material-ui/core/colors'
+import { green, yellow } from '@material-ui/core/colors'
 
 const time = moment().format("ddd MMM Do YYYY")
 
@@ -31,11 +32,21 @@ class Chart40 extends Component {
                 <br/>
 
                 <BrowserView>
-                <h1 className="text-center" style={{marginBottom: "3.5%", fontWeight: 600}}>Nutrient Consumption Breakdown (Example)</h1>
+                <h1 className="text-center" style={{marginBottom: "0.5%", fontWeight: 600}}>Congratulations!</h1>
+
+                <div className="text-center" style={{marginBottom: "3.5%"}}>
+                    <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                    <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                    <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                    <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                    <BsStar style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                    <BsStar style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                </div>
 
                     <h4 className="text-center" style={{fontWeight: 550}}>Today's Nutrient Performance</h4>
+                    <h6 className="text-center" style={{fontSize: "90%", fontWeight: 300}}>View the About page for a guide on the recommended daily intake for all of the nutrients listed below</h6>
                     <div style={{height: "20vh", marginLeft: "5%", marginRight: "5%", marginTop: "1.5%"}}>
-                        <Table striped bordered hover size="sm">
+                        <Table style={{width: "105%", marginLeft: "-2.5%"}} striped bordered size="sm">
                             <thead>
                                 <tr>
                                     <th><b>Nutrient</b></th>
@@ -82,24 +93,54 @@ class Chart40 extends Component {
                                     <th style={{backgroundColor: "green"}}>YES</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
                                 </tr>
+
+                                <tr>
+                                    <th><b>Food containing this nutrient</b></th>
+                                    <th>Beef</th>
+                                    <th>Fruit Juice</th>
+                                    <th>Baked Beans</th>
+                                    <th>Salmon</th>
+                                    <th>N/A</th>
+                                    <th>N/A</th>
+                                    <th>Salmon</th>
+                                    <th>Milk</th>
+                                    <th>Beef</th>
+                                    <th>N/A</th>
+                                    <th>Salmon</th>
+                                    <th>Milk</th>
+                                    <th>Salmon</th>
+                                    <th>Spinach</th>
+                                    <th>N/A</th>
+                                    <th>N/A</th>
+                                    <th>Tomato Soup</th>
+                                    <th>Beef</th>
+                                </tr>
                             </tbody>
                         </Table>
                     </div>
 
-                    <h4 className="text-center" style={{fontWeight: 550}}>Summary</h4>
+                    {/* <h4 className="text-center" style={{fontWeight: 550}}>Summary</h4>
                     <div style={{height: "20vh", marginLeft: "5%", marginRight: "5%", marginTop: "1.5%"}}>
                         <Card style={{padding: "1.5% 1.5% 1.5% 1.5%"}}>
                             <li>Well done on...</li>
                             <li>You missed...</li>
                             <li>View the About page for a guide on the recommended daily intake for all of the above nutrients</li>
                         </Card>
-                    </div>
+                    </div> */}
 
                     <h4 className="text-center" style={{fontWeight: 550}}>Recommendations</h4>
-                    <div style={{height: "20vh", marginLeft: "5%", marginRight: "5%", marginTop: "1.5%"}}>
-                        <Card style={{padding: "1.5% 1.5% 1.5% 1.5%"}}>
-                            <li>To cover the nutrients you have missed, tomorrow you could have...</li>
-                            <li>View Browse Products pages to purchase/collect the following items: ...</li>
+                    <div style={{height: "40vh", display: 'flex', alignItems: 'center', marginLeft: "5%", marginBottom: "5%"}}>
+                        <Card style={{height: "100%", padding: "1.5% 1.5% 1.5% 1.5%", width: "25%"}}>
+                            <h3 className="text-center" style={{fontWeight: 600}}>Meals</h3>
+                            {/* <li>View Browse Products pages to purchase/collect the following items: ...</li> */}
+                        </Card>
+
+                        <Card style={{height: "100%", padding: "1.5% 1.5% 1.5% 1.5%", width: "25%", marginLeft: "10%"}}>
+                           <h3 className="text-center" style={{fontWeight: 600}}>Recipes</h3>
+                        </Card>
+
+                        <Card style={{height: "100%", padding: "1.5% 1.5% 1.5% 1.5%", width: "25%", marginLeft: "10%"}}>
+                           <h3 className="text-center" style={{fontWeight: 600}}>Local Produce</h3>
                         </Card>
                     </div>
 
@@ -269,15 +310,28 @@ class Chart40 extends Component {
                         </Card>
                     </div> */}
 
-                    <h5 className="text-center" style={{marginBottom: "7.5%", fontWeight: 600}}>Nutrient Consumption Breakdown (Example)</h5>
+                    <h5 className="text-center" style={{marginBottom: "0.5%", fontWeight: 600}}>Congratulations!</h5>
+
+                    <div className="text-center" style={{marginBottom: "5%", marginLeft: "2.5%"}}>
+                        <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                        <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                        <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                        <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                        <BsStar style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                        <BsStar style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                    </div>
 
                     <h5 className="text-center" style={{fontWeight: 550}}>Today's Nutrient Performance</h5>
+
+                    <h6 className="text-center" style={{fontSize: "75%", fontWeight: 300}}>View the About page for a guide on the recommended daily intake for all of the nutrients listed below</h6>
+
                     <div style={{height: "100%", marginLeft: "5%", marginRight: "5%", marginTop: "1.5%", marginBottom: "20px"}}>
                         <Table striped bordered hover size="sm">
                             <thead>
                                 <tr>
                                     <th><b>Nutrient</b></th>
                                     <th><b>Consumed?</b></th>
+                                    <th><b>From Food</b></th>
                                 </tr>
                             </thead>
 
@@ -285,6 +339,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Protein</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Beef</th>
                                 </tr>
                             </tbody>
 
@@ -292,6 +347,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Fluid</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Fruit Juice</th>
                                 </tr>
                             </tbody>
 
@@ -299,6 +355,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Fibre</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Baked Beans</th>
                                 </tr>
                             </tbody>
 
@@ -306,6 +363,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Vitamin A</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Salmon</th>
                                 </tr>
                             </tbody>
 
@@ -313,6 +371,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Thiamin</th>
                                     <th style={{backgroundColor: "red"}}>NO</th>
+                                    <th>N/A</th>
                                 </tr>
                             </tbody>
 
@@ -320,6 +379,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Riboflavin</th>
                                     <th style={{backgroundColor: "red"}}>NO</th>
+                                    <th>N/A</th>
                                 </tr>
                             </tbody>
 
@@ -327,6 +387,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Niacin</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Salmon</th>
                                 </tr>
                             </tbody>
 
@@ -334,6 +395,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Vitamin B6</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Milk</th>
                                 </tr>
                             </tbody>
 
@@ -341,6 +403,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Vitamin B12</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Beef</th>
                                 </tr>
                             </tbody>
 
@@ -348,6 +411,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Folate</th>
                                     <th style={{backgroundColor: "red"}}>NO</th>
+                                    <th>N/A</th>
                                 </tr>
                             </tbody>
 
@@ -355,6 +419,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Vitamin</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Salmon</th>
                                 </tr>
                             </tbody>
 
@@ -362,6 +427,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Calcium</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Milk</th>
                                 </tr>
                             </tbody>
 
@@ -369,6 +435,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Iodine</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Salmon</th>
                                 </tr>
                             </tbody>
 
@@ -376,6 +443,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Iron</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Spinach</th>
                                 </tr>
                             </tbody>
 
@@ -383,6 +451,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Magnesium</th>
                                     <th style={{backgroundColor: "red"}}>NO</th>
+                                    <th>N/A</th>
                                 </tr>
                             </tbody>
 
@@ -390,6 +459,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Potassium</th>
                                     <th style={{backgroundColor: "red"}}>NO</th>
+                                    <th>N/A</th>
                                 </tr>
                             </tbody>
 
@@ -397,6 +467,7 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Sodium</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Tomato Soup</th>
                                 </tr>
                             </tbody>
 
@@ -404,25 +475,39 @@ class Chart40 extends Component {
                                 <tr>
                                     <th>Zinc</th>
                                     <th style={{backgroundColor: "green"}}>YES</th>
+                                    <th>Beef</th>
                                 </tr>
                             </tbody>
 
                         </Table>
                     </div>
 
-                    <h5 className="text-center" style={{fontWeight: 550}}>Summary</h5>
+                    {/* <h5 className="text-center" style={{fontWeight: 550}}>Summary</h5>
                     <div style={{marginLeft: "5%", marginRight: "5%", marginBottom: "5vh"}}>
                         <Card style={{padding: "1.5% 1.5% 1.5% 1.5%"}}>
                             <li>Well done on...</li>
                             <li>You missed...</li>
                         </Card>
-                    </div>
+                    </div> */}
 
                     <h5 className="text-center" style={{fontWeight: 550}}>Recommendations</h5>
+                    <div style={{marginLeft: "5%", marginRight: "5%", marginBottom: "4vh"}}>
+                        <Card style={{padding: "1.5% 1.5% 1.5% 1.5%", height: "20vh"}}>
+                            <h6 className="text-center" style={{fontWeight: 600}}>Meals</h6>
+                            {/* <li>To cover the nutrients you have missed, tomorrow you could have...</li>
+                            <li>View Browse Products pages to purchase/collect the following items: ...</li> */}
+                        </Card>
+                    </div>
+
+                    <div style={{marginLeft: "5%", marginRight: "5%", marginBottom: "4vh"}}>
+                        <Card style={{padding: "1.5% 1.5% 1.5% 1.5%", height: "20vh"}}>
+                            <h6 className="text-center" style={{fontWeight: 600}}>Recipes</h6>
+                        </Card>
+                    </div>
+
                     <div style={{marginLeft: "5%", marginRight: "5%", marginBottom: "8vh"}}>
-                        <Card style={{padding: "1.5% 1.5% 1.5% 1.5%"}}>
-                            <li>To cover the nutrients you have missed, tomorrow you could have...</li>
-                            <li>View Browse Products pages to purchase/collect the following items: ...</li>
+                        <Card style={{padding: "1.5% 1.5% 1.5% 1.5%", height: "20vh"}}>
+                            <h6 className="text-center" style={{fontWeight: 600}}>Local Produce</h6>
                         </Card>
                     </div>
 
