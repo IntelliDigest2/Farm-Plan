@@ -71,6 +71,16 @@ body{
     height: 140vh;
   }
 
+  /* .foodpage-graphic{
+    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
+    height: 100vh;
+  }
+
+  .foodwastepage-graphic{
+    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
+    height: 125vh;
+  } */
+
   /* .signup-graphic-confirm{
     background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/signup3.jpg");
     height: 100vh;
@@ -323,6 +333,10 @@ body{
 
 .custom-btn {
   background-color: rgb(13, 27, 92);
+}
+
+.custom-btn-2 {
+  background-color: #aab41e;
 }
 
 /* map page */

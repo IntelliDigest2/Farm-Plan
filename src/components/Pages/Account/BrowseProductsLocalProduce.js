@@ -7,7 +7,7 @@ import {BsSearch} from "react-icons/bs"
 import { BrowserView, MobileView } from "react-device-detect";
 import {Accordion, AccordionSummary, AccordionDetails, Typography, Divider} from "@material-ui/core"
 
-class BrowseProducts extends Component{
+class BrowseProductsLocalProduce extends Component{
 
     state = {
         // tabClicked: false,
@@ -51,7 +51,7 @@ class BrowseProducts extends Component{
             <BrowserView>
                 <div className="main-div-layout">
 
-                    <h1 className="text-center" style={{marginTop: "5%", fontWeight: 600}}>Browse Products (Food Surplus)</h1>
+                    <h1 className="text-center" style={{marginTop: "5%", fontWeight: 600}}>Browse Products (Local Produce)</h1>
                 
                     <InputGroup style={{left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "2.5%", width: "40%"}}>
                         <BsSearch style={{marginRight: "5px", fontSize: "30px"}}/>
@@ -380,7 +380,7 @@ class BrowseProducts extends Component{
 
                     </Tab.Container> */}
 
-                    <h5 className="text-center" style={{marginTop: "1.5%", fontWeight: 600}}>Browse Products (Food Surplus)</h5>
+                    <h5 className="text-center" style={{marginTop: "1.5%", fontWeight: 600}}>Browse Products (Local Produce)</h5>
 
                     <InputGroup style={{marginTop: "7.5%", marginBottom: "35px"}}>
                         <BsSearch style={{marginRight: "2%", marginTop: "1.5%", fontSize: "30px"}}/>
@@ -539,7 +539,7 @@ class BrowseProducts extends Component{
     }
 }
 
-export default BrowseProducts;
+export default BrowseProductsLocalProduce;
 
 const CardStyle = styled.div`
       .outer-card{
