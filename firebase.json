@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "1:57163396396:web:dd800621173f5733a4a889",
     "public": "dist",
     "ignore": [
       "firebase.json",
