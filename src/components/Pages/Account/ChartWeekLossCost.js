@@ -197,7 +197,7 @@ class Chart38 extends Component {
                 options={{
                   // backgroundColor: 'lightgray',
                   title: 'This week\'s Food Loss Cost Performance',
-                  chartArea: { width: '50%' },
+                  chartArea: { width: '52.5%' },
                   colors: ['#aab41e'],
                   legend: 'none',
                   hAxis: {
@@ -217,9 +217,9 @@ class Chart38 extends Component {
             <div style={{height: "95px", marginBottom: "10%"}}>
                 <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                   <ButtonGroup>
-                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/dayLossCost">View Previous</Button>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/dayLossCost">Prev</Button>
                     <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthLossCost">View Next</Button>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthLossCost">Next</Button>
                   </ButtonGroup>
                 </Card>
             </div>

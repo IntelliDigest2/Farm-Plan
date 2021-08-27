@@ -147,9 +147,9 @@ class Chart35 extends Component {
                     <div style={{height: "95px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} disabled>View Previous</Button>
+                            <Button style={{width: "15%"}} disabled>Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekLossGHG">View Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekLossGHG">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>

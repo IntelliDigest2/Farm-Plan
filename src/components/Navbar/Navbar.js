@@ -67,7 +67,7 @@ const NavStyle = styled.div`
     .container .navbar-brand-mobile{
       font-weight: 700;
       color: #AFBA15;
-      font-size: 12px;
+      font-size: 10.5px;
       font-family: 'Rajdhani', sans-serif;
 
       &:hover{

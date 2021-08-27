@@ -535,7 +535,7 @@ class Account extends Component {
                     </>
 
                     <BrowserView><Button className="custom-btn rounded" style={{padding: "1.5%", height: "60px", width: "65%", marginLeft: "17.5%", marginBottom: "5%", fontWeight: 550, fontSize: "150%"}} as={Link} to="/change-password">Change Your Password</Button></BrowserView>
-                    <MobileView><Button className="custom-btn rounded" style={{padding: "5%", height: "60px", width: "60%", marginLeft: "20%", marginBottom: "20%", fontWeight: 550, fontSize: "100%"}} as={Link} to="/change-password">Change Your Password</Button></MobileView>
+                    <MobileView><Button className="custom-btn rounded" style={{padding: "5%", height: "60px", width: "65%", marginLeft: "17.5%", marginBottom: "20%", fontWeight: 550, fontSize: "100%"}} as={Link} to="/change-password">Change Password</Button></MobileView>
 
               </div>
 
