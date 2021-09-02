@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Modal, Dropdown} from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { startData, createFoodSurplusData, createFoodWasteData } from '../../../store/actions/dataActions';
+import { startData, createFoodWasteData } from '../../../store/actions/dataActions';
 import { Redirect } from 'react-router-dom';
+// import {Link} from "react-router-dom"
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import styled from "styled-components";
@@ -18,6 +19,7 @@ import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import {Autocomplete} from '@material-ui/lab';
 import {TextField, Checkbox} from '@material-ui/core';
+// import addNotification from "react-push-notification"
 
 // import {Chart} from "react-google-charts"
 
@@ -40,13 +42,15 @@ class FoodWasteBusiness extends Component {
         formWidth: "",
         formHeight: "",
 
-        meal: "",
+        submissionType: "Waste",
 
-        foodName: "",
+        // meal: "",
+
+        // foodName: "",
 
         // checkedA: false,
         // checkedB: false,
-        eatingInOrOut: "",
+        // eatingInOrOut: "",
 
         edibleInedibleSurplus: "Select",
 
@@ -112,7 +116,7 @@ class FoodWasteBusiness extends Component {
     clearEFWForm = () => {
         this.setState({
             // meal: "Select Meal",
-            foodName: "",
+            // foodName: "",
             // checkedA: false,
             // checkedB: false,
             // eatingInOrOut: "",
@@ -131,9 +135,22 @@ class FoodWasteBusiness extends Component {
             foodWasteCost: 0,
             currency: "Select Currency",
             currencyMultiplier: 0,
-            formHeight: "775px"
+            formHeight: "680px"
         });
     }
+
+    // notificationTest = () => {
+    //     addNotification({
+    //     title: 'Success!',
+    //     message: 'Food Waste successfully updated!',
+    //     // theme: 'darkblue',
+    //     // native: false,
+    //     backgroundTop: '#aab41e', //optional, background color of top container.
+    //     backgroundBottom: '#aab41e', //optional, background color of bottom container.
+    //     closeButton: 'Close',
+    //     duration: 4000
+    //     });
+    // }
 
     changeMeal(text){
         this.setState({meal: text})
@@ -278,9 +295,9 @@ class FoodWasteBusiness extends Component {
 
     handleFormHeight(text){
         if (text === "Select" || text === "Edible" || text === "Surplus"){
-            this.setState({formHeight: "775px"})
+            this.setState({formHeight: "680px"})
         } else if (text === "Inedible"){
-            this.setState({formHeight: "630px"})
+            this.setState({formHeight: "535px"})
         }
     }
 
@@ -328,10 +345,10 @@ class FoodWasteBusiness extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "775px"})
+            this.setState({formWidth: "72vw", formHeight: "680px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "775px"})
+            this.setState({formWidth: "261px", formHeight: "680px"})
         }
     }
 
@@ -359,6 +376,10 @@ class FoodWasteBusiness extends Component {
             >
             <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste & Food Surplus</h6></MobileView>
             <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste & Food Surplus (Business)</h4></BrowserView>
+
+            {/* <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
+                <Button style={{width: this.state.formWidth, borderColor: "#aab41e"}} className="custom-btn-2" as={Link} to="/account">Back</Button>
+            </div> */}
 
                 {filteredData.length === 0 ? <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
         <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
@@ -446,7 +467,7 @@ class FoodWasteBusiness extends Component {
 
                     </Form.Group> */}
 
-                    <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
+                    {/* <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
                     <Form.Group style={{padding: "0 10% 0 10%", display: "flex", marginBottom: "30px"}}>
                         <Autocomplete
                             freeSolo 
@@ -459,7 +480,7 @@ class FoodWasteBusiness extends Component {
                             onInputChange={(e) => this.handleChange(e)}
                             renderInput={(params) => ( <TextField {...params} label="Enter Food Name" variant="outlined" /> )}
                         />
-                    </Form.Group>
+                    </Form.Group> */}
 
                     {/* <div style={{padding: "0 10% 0 10%"}}>Eating In or Out?</div>
                         <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
@@ -469,7 +490,7 @@ class FoodWasteBusiness extends Component {
                             <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedB} name="checkedB" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating Out" />
                         </Form.Group> */}
 
-                    <Divider />
+                    {/* <Divider /> */}
 
                     {/* <div style={{padding: "0 10% 0 10%", paddingTop: "25px"}}>Food Name <div style={{fontSize: "11px"}}>(e.g. Bread, Milk, Spaghetti, ...)</div></div>
                     <Form.Group
@@ -1423,7 +1444,7 @@ const mapDispatchToProps = (dispatch) => {
     return{
         startData: (product) => dispatch(startData(product)),
         createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
-        createFoodSurplusData: (product) => dispatch(createFoodSurplusData(product)),
+        // createFoodSurplusData: (product) => dispatch(createFoodSurplusData(product)),
     }
 }
 
