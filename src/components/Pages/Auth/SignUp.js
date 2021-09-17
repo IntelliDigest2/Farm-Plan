@@ -5,6 +5,7 @@ import { signUp } from '../../../store/actions/authActions';
 import "../Pages.css"
 import styled from "styled-components";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import { Divider } from '@material-ui/core';
 
 
 class SignUp extends Component {
@@ -18,6 +19,9 @@ class SignUp extends Component {
     address: "",
     function: "choose",
     organisation: "",
+    schoolType: "choose",
+    department: "",
+    uniRole: "choose",
     city: "",
     country: "",
     // wasteMethod: "choose",
@@ -33,6 +37,18 @@ class SignUp extends Component {
   handleClick = (e) => {
     this.setState({
       function: e.target.value
+    })
+  }
+
+  handleSchoolTypeClick = (e) => {
+    this.setState({
+      schoolType: e.target.value
+    })
+  }
+
+  handleRoleClick = (e) => {
+    this.setState({
+      uniRole: e.target.value
     })
   }
 
@@ -141,6 +157,114 @@ render(){
                       <Form.Control type="text" id="function" placeholder="Building Function" required onChange={this.handleChange}  defaultValue={this.state.function}/>
                     </Form.Group>
                   </Form.Row>
+
+                : this.state.function === "Schools" ?
+                <>
+                
+                <Divider style={{marginBottom: "15px"}}/>
+                
+                <Form.Group>
+                  <div><Form.Label>School Type</Form.Label></div>
+                  <select
+                    required
+                    name="product"
+                    id="product"
+                    className="my-form"
+                    defaultValue={this.state.schoolType}
+                    onChange={this.handleSchoolTypeClick}
+                    style={{
+                      border: "1px solid #62680a", 
+                      display: "block",
+                      width: "100%",
+                      height: "calc(1.5em + .75rem + 2px)",
+                      padding: ".375rem .75rem",
+                      fontSize: "1rem",
+                      fontWeight: "400",
+                      lineHeight: "1.5",
+                      color: "#495057",
+                      backgroundColor: "#fff",
+                      backgroundClip: "padding-box",
+                      // border: "1px solid #ced4da",
+                      borderRadius: ".25rem",
+                      transition: "border-color .15s ease-in-out,box-shadow .15s ease-in-out",
+                }}
+                  >
+                    <option value="choose" disabled>Choose a school type</option>
+                    <option value="University">University</option>
+                    <option value="College">College</option>
+                    <option value="Secondary School">Secondary School</option>
+                    <option value="Primary School">Primary School</option>
+                  </select>
+                </Form.Group>
+                
+                <div>{this.state.schoolType === "University" ?
+                  <>
+
+                    <Form.Group>
+                      <Form.Label>Name of organisation</Form.Label>
+                      <Form.Control type="text" id="organisation" placeholder="Organisation" required onChange={this.handleChange}  defaultValue={this.state.organisation}/>
+                    </Form.Group>
+
+                      <Form.Group>
+                      <Form.Label>Department / Course</Form.Label>
+                        <Form.Control type="text" id="department" placeholder="Department / Course" required onChange={this.handleChange} defaultValue={this.state.department}/>
+                      </Form.Group>
+                  
+                      <Form.Group>
+                      {/* <Form.Label>Role</Form.Label>
+                        <Form.Control type="text" id="lastName" placeholder="Surname" required onChange={this.handleChange} defaultValue={this.state.lastName}/> */}
+
+                  <div><Form.Label>Role</Form.Label></div>
+                  <select
+                    required
+                    name="product"
+                    id="product"
+                    className="my-form"
+                    defaultValue={this.state.uniRole}
+                    onChange={this.handleRoleClick}
+                    style={{
+                      border: "1px solid #62680a", 
+                      display: "block",
+                      width: "100%",
+                      height: "calc(1.5em + .75rem + 2px)",
+                      padding: ".375rem .75rem",
+                      fontSize: "1rem",
+                      fontWeight: "400",
+                      lineHeight: "1.5",
+                      color: "#495057",
+                      backgroundColor: "#fff",
+                      backgroundClip: "padding-box",
+                      // border: "1px solid #ced4da",
+                      borderRadius: ".25rem",
+                      transition: "border-color .15s ease-in-out,box-shadow .15s ease-in-out",
+                }}
+                  >
+                    <option value="choose" disabled>Choose a role</option>
+                    <option value="Admin / Dept Head">Admin / Dept Head</option>
+                    <option value="Lecturer">Lecturer</option>
+                    <option value="Student">Student</option>
+                  </select>
+
+                      </Form.Group>
+
+                    <Divider style={{marginBottom: "15px"}}/>
+                  </>
+
+                  : <>
+                <Form.Group >
+                  <Form.Label>Name of organisation</Form.Label>
+                  <Form.Control type="text" id="organisation" placeholder="Organisation" required onChange={this.handleChange}  defaultValue={this.state.organisation}/>
+                </Form.Group>
+
+                <Divider style={{marginBottom: "15px"}}/>
+                  </>
+
+                }
+
+                </div>
+                
+                </>
+
               :
               <div>
                   <Form.Group >

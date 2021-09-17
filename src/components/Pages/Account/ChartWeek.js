@@ -28,7 +28,6 @@ class Chart3 extends Component {
     sundayWeight: 0,
     weekBeginning: "",
     weekEnding: "",
-    // prevOption: ""
   }
 
       // fetch db.json data
@@ -83,7 +82,9 @@ class Chart3 extends Component {
               var mdate = doc.data().MDATE
               var weight = doc.data().weight
               var wu = doc.data().WEIGHTUNIT
-              var isSurplus = doc.data().EDIBLEORINEDIBLE
+              // var isSurplus = doc.data().EDIBLEORINEDIBLE
+
+              var st = doc.data().SUBMISSIONTYPE
 
               var newWeight = 0
     
@@ -106,33 +107,33 @@ class Chart3 extends Component {
               // var fatCon = doc.data().FATCONTENT
               // var fibCon = doc.data().FIBRECONTENT
 
-              if (week === time && day === "Mon" && isSurplus !== "Surplus"){
+              if (week === time && day === "Mon" && st === "Waste"){
                 this.setState({weekBeginning: month + " " + mdate})
 
                 this.setState( (prevState) => ({
                   mondayWeight: prevState.mondayWeight += newWeight
                 }));
-              } else if (week === time && day === "Tue" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Tue" && st === "Waste"){
                 this.setState( (prevState) => ({
                   tuesdayWeight: prevState.tuesdayWeight += newWeight
                 })); 
-              } else if (week === time && day === "Wed" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Wed" && st === "Waste"){
                 this.setState( (prevState) => ({
                   wednesdayWeight: prevState.wednesdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Thu" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Thu" && st === "Waste"){
                 this.setState( (prevState) => ({
                   thursdayWeight: prevState.thursdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Fri" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Fri" && st === "Waste"){
                 this.setState( (prevState) => ({
                   fridayWeight: prevState.fridayWeight += newWeight
                 }));
-              } else if (week === time && day === "Sat" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Sat" && st === "Waste"){
                 this.setState( (prevState) => ({
                   saturdayWeight: prevState.saturdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Sun" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Sun" && st === "Waste"){
                 this.setState( (prevState) => ({
                   sundayWeight: prevState.sundayWeight += newWeight
                 }));
@@ -241,7 +242,6 @@ class Chart3 extends Component {
             {/* <ChartStyle> */}
             <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
 
-
               <Chart className='bar-chart'
                 width={'78vw'}
                 height={'600px'}
@@ -260,7 +260,7 @@ class Chart3 extends Component {
                 options={{
                   // backgroundColor: 'lightgray',
                   title: 'This week\'s Food Wastage Performance',
-                  chartArea: { width: '50%' },
+                  chartArea: { width: '52.5%' },
                   colors: ['#aab41e'],
                   legend: 'none',
                   hAxis: {
@@ -280,9 +280,9 @@ class Chart3 extends Component {
             <div style={{height: "95px", marginBottom: "10%"}}>
                 <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                   <ButtonGroup>
-                    <Button style={{width: "15%"}} disabled>View Previous</Button>
+                    <Button style={{width: "15%"}} disabled>Prev</Button>
                     <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">View Next</Button>
+                    <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">Next</Button>
                   </ButtonGroup>
                 </Card>
             </div>

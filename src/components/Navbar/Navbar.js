@@ -30,13 +30,14 @@ const NavBar = (props) => {
                 {(auth.uid)? 
                 <>
                 <Nav.Link as={NavLink} eventKey="3" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/account" activeClassName="active" exact={true}>My Account</Nav.Link>
-                <Nav.Link as={NavLink} eventKey="4" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link logout" to="/login" onClick={props.signOut}>Logout</Nav.Link>
+                <Nav.Link as={NavLink} eventKey="4" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/view-map" activeClassName="active" exact={true}>View Map</Nav.Link>
+                <Nav.Link as={NavLink} eventKey="5" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link logout" to="/login" onClick={props.signOut}>Logout</Nav.Link>
                 </>
                : 
                 
-                <Nav.Link as={NavLink} eventKey="5" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/login" activeClassName="active" exact={true}>Login</Nav.Link>
+                <Nav.Link as={NavLink} eventKey="6" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/login" activeClassName="active" exact={true}>Login</Nav.Link>
               }
-              <Nav.Link as={NavLink} eventKey="6" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/contact" activeClassName="active" exact={true}>Contact</Nav.Link>
+              <Nav.Link as={NavLink} eventKey="7" className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link" to="/contact" activeClassName="active" exact={true}>Contact Us</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -67,7 +68,7 @@ const NavStyle = styled.div`
     .container .navbar-brand-mobile{
       font-weight: 700;
       color: #AFBA15;
-      font-size: 12px;
+      font-size: 10.5px;
       font-family: 'Rajdhani', sans-serif;
 
       &:hover{
@@ -76,7 +77,7 @@ const NavStyle = styled.div`
     }
 
     .container .nav-link {
-    font-size: 18px;
+    font-size: 14px;
     color: whitesmoke;
     font-weight: 500;
     font-family: 'Source Sans Pro', sans-serif;

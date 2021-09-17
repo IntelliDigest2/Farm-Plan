@@ -76,6 +76,9 @@ export const signIn = (credentials) => {
               address: newUser.address,
               buildingFunction: newUser.function,
               organisation: newUser.organisation,
+              schoolType: newUser.schoolType,
+              department: newUser.department,
+              uniRole: newUser.uniRole,
               city: newUser.city,
               country: newUser.country,
               type: "user"

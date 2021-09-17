@@ -99,7 +99,9 @@ class Chart1 extends Component {
             var month = doc.data().MONTH
             var weight = doc.data().weight
             var wu = doc.data().WEIGHTUNIT
-            var isSurplus = doc.data().EDIBLEORINEDIBLE
+            // var isSurplus = doc.data().EDIBLEORINEDIBLE
+
+            var st = doc.data().SUBMISSIONTYPE
 
             var newWeight = 0
   
@@ -122,51 +124,51 @@ class Chart1 extends Component {
             // var fatCon = doc.data().FATCONTENT
             // var fibCon = doc.data().FIBRECONTENT
 
-            if (year === time && month === "Jan" && isSurplus !== "Surplus"){
+            if (year === time && month === "Jan" && st === "Waste"){
               this.setState( (prevState) => ({
                 janWeight: prevState.janWeight += newWeight
               }));
-            } else if (year === time && month === "Feb" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Feb" && st === "Waste"){
               this.setState( (prevState) => ({
                 febWeight: prevState.febWeight += newWeight
               }));
-            } else if (year === time && month === "Mar" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Mar" && st === "Waste"){
               this.setState( (prevState) => ({
                 marWeight: prevState.marWeight += newWeight
               }));
-            } else if (year === time && month === "Apr" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Apr" && st === "Waste"){
               this.setState( (prevState) => ({
                 aprWeight: prevState.aprWeight += newWeight
               }));
-            } else if (year === time && month === "May" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "May" && st === "Waste"){
               this.setState( (prevState) => ({
                 mayWeight: prevState.mayWeight += newWeight
               }));
-            } else if (year === time && month === "Jun" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Jun" && st === "Waste"){
               this.setState( (prevState) => ({
                 junWeight: prevState.junWeight += newWeight
               }));
-            } else if (year === time && month === "Jul" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Jul" && st === "Waste"){
               this.setState( (prevState) => ({
                 julWeight: prevState.julWeight += newWeight
               }));
-            } else if (year === time && month === "Aug" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Aug" && st === "Waste"){
               this.setState( (prevState) => ({
                 augWeight: prevState.augWeight += newWeight
               }));
-            } else if (year === time && month === "Sep" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Sep" && st === "Waste"){
               this.setState( (prevState) => ({
                 sepWeight: prevState.sepWeight += newWeight
               }));
-            } else if (year === time && month === "Oct" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Oct" && st === "Waste"){
               this.setState( (prevState) => ({
                 octWeight: prevState.octWeight += newWeight
               }));
-            } else if (year === time && month === "Nov" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Nov" && st === "Waste"){
               this.setState( (prevState) => ({
                 novWeight: prevState.novWeight += newWeight
               }));
-            } else if (year === time && month === "Dec" && isSurplus !== "Surplus"){
+            } else if (year === time && month === "Dec" && st === "Waste"){
               this.setState( (prevState) => ({
                 decWeight: prevState.decWeight += newWeight
               }));
@@ -367,9 +369,9 @@ class Chart1 extends Component {
             <div style={{height: "95px", marginBottom: "10%"}}>
               <Card  style={{width: '90vw', height: '95px', marginBottom: "10%", marginLeft: '5.5%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                 <ButtonGroup>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">View Previous</Button>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">Prev</Button>
                   <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                  <Button style={{width: "15%"}} disabled>View Next</Button>
+                  <Button style={{width: "15%"}} disabled>Next</Button>
                 </ButtonGroup>
               </Card>
             </div>

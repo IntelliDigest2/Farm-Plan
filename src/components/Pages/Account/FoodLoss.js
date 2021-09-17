@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Modal, Dropdown} from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { startData, createFoodSurplusData, createFoodWasteData } from '../../../store/actions/dataActions';
+import { startData, createFoodLossData } from '../../../store/actions/dataActions';
 import { Redirect } from 'react-router-dom';
+import {Link} from "react-router-dom"
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import styled from "styled-components";
@@ -17,6 +18,7 @@ import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import {Autocomplete} from '@material-ui/lab';
 import {TextField, Checkbox} from '@material-ui/core';
+import addNotification from "react-push-notification"
 
 const time = moment().format("MMMM Do YYYY, h:mm:ss a")
 class FoodLoss extends Component {
@@ -207,17 +209,30 @@ class FoodLoss extends Component {
             formHeight: "675px"
         });
     }
+
+    notificationTest = () => {
+        addNotification({
+        title: 'Success!',
+        message: 'Food Loss successfully updated!',
+        // theme: 'darkblue',
+        // native: false,
+        backgroundTop: '#aab41e', //optional, background color of top container.
+        backgroundBottom: '#aab41e', //optional, background color of bottom container.
+        closeButton: 'Close',
+        duration: 4000
+        });
+    }
     
     pressButton = (e) => {
         e.preventDefault();
         this.props.startData(this.state)
     }
 
-    handleFoodSurplusSubmit = (e) => {
+    handleFoodLossSubmit = (e) => {
         e.preventDefault();
         this.setState({
         })
-        this.props.createFoodSurplusData(this.state);
+        this.props.createFoodLossData(this.state);
     }
 
     // handleFoodWasteSubmit = (e) => {
@@ -272,6 +287,9 @@ class FoodLoss extends Component {
             <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Loss</h6></MobileView>
             <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Loss</h4></BrowserView>
 
+            <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
+                <Button style={{width: this.state.formWidth, borderColor: "#aab41e"}} className="custom-btn-2" as={Link} to="/account">Back</Button>
+            </div>
 
                 {filteredData.length === 0 ? <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
         <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
@@ -282,7 +300,7 @@ class FoodLoss extends Component {
                   <Card>
                 <Card.Body>
                    <Card.Text className="text-center">
-                   <h1 style={{fontSize: "33px",fontWeight: "600", color: "rgb(55, 85, 54)",}}>Start tracking your food waste and food surplus now</h1>
+                   <h1 style={{fontSize: "33px",fontWeight: "600", color: "rgb(55, 85, 54)",}}>Start tracking your food loss now</h1>
                  <button onClick={this.pressButton} style={{outline: 'none', border: 'none'}}>Start now</button>
                    </Card.Text> 
                   </Card.Body>
@@ -726,9 +744,23 @@ class FoodLoss extends Component {
                             <Form.Control type="number" id="dailyFoodWaste" placeholder="Enter daily food waste value" onChange={this.handleChange} width="100%" value={this.state.dailyFoodWaste}/>kg
                         </Form.Group> */}
 
-                        <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodSurplusSubmit(e); this.clearFLForm() }} variant="secondary" type="button">
+                        {/* <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodLossSubmit(e); this.clearFLForm(); this.notificationTest() }} variant="secondary" type="button">
+                            Update
+                        </Button> */}
+
+                        <div>{ this.state.foodName !== "" && this.state.edibleOrInedible === "Edible" && this.state.foodLossWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.expiryDate !== "" && this.state.currency !== "Select Currency" ?
+                            <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodLossSubmit(e); this.clearFLForm(); this.notificationTest() }} variant="secondary" type="button">
+                                Update
+                            </Button>
+
+                            :
+
+                        <Button style={{margin: "0 10% 0 10%", width: "80%", marginTop: "5px"}} variant="secondary" disabled>
                             Update
                         </Button>
+
+                        }</div>
+
                     </div> :
 
                     <div>
@@ -848,9 +880,22 @@ class FoodLoss extends Component {
                         </InputGroup>
                         </Form.Group>
 
-                        <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodSurplusSubmit(e); this.clearFLForm() }} variant="secondary" type="button">
+                        {/* <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodLossSubmit(e); this.clearFLForm(); this.notificationTest() }} variant="secondary" type="button">
                             Update
-                        </Button>
+                        </Button> */}
+
+                        <div>{ this.state.foodName !== "" && this.state.edibleOrInedible === "Inedible" && this.state.foodLossWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.currency !== "Select Currency" ?
+                            <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodLossSubmit(e); this.clearFLForm(); this.notificationTest() }} variant="secondary" type="button">
+                                Update
+                            </Button>
+
+                            :
+
+                            <Button style={{margin: "0 10% 0 10%", width: "80%", marginTop: "5px"}} variant="secondary" disabled>
+                                Update
+                            </Button>
+
+                        }</div>
 
                     </div>
                     }
@@ -869,7 +914,7 @@ class FoodLoss extends Component {
                 marginBottom: '100px'
                 // backgroundColor: 'lightgray'
             }}>
-            <Form className= "form-layout" onSubmit={this.handleFoodSurplusSubmit} style={{padding: "10px"}}>  
+            <Form className= "form-layout" onSubmit={this.handleFoodLossSubmit} style={{padding: "10px"}}>  
                 <h5 className="text-center" style={{margin: "30px", fontSize: "32px",fontWeight: "600",}}>Inedible Food Waste</h5>
 
                 <div>
@@ -1008,7 +1053,7 @@ class FoodLoss extends Component {
                 marginBottom: '60px'
                 // backgroundColor: 'lightgray'
             }}>
-            <Form className= "form-layout" onSubmit={this.handleFoodSurplusSubmit} style={{padding: "10px"}}>  
+            <Form className= "form-layout" onSubmit={this.handleFoodLossSubmit} style={{padding: "10px"}}>  
                 <h5 className="text-center" style={{margin: "30px", fontSize: "32px",fontWeight: "600",}}>Inedible Food Waste</h5>
 
                 <div>
@@ -1186,8 +1231,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return{
         startData: (product) => dispatch(startData(product)),
-        createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
-        createFoodSurplusData: (product) => dispatch(createFoodSurplusData(product)),
+        // createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
+        createFoodLossData: (product) => dispatch(createFoodLossData(product)),
     }
 }
 

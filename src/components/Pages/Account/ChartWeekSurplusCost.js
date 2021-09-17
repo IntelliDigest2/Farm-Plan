@@ -39,7 +39,10 @@ class Chart23 extends Component {
                 var day = doc.data().WDAY
                 var cost = doc.data().COST
                 var curr = doc.data().CURRENCY
-                var isSurplus = doc.data().EDIBLEORINEDIBLE
+                //var isSurplus = doc.data().EDIBLEORINEDIBLE
+
+                var st = doc.data().SUBMISSIONTYPE
+                var los = doc.data().LOCALORNOT
 
                 var newCost = 0;
 
@@ -86,31 +89,31 @@ class Chart23 extends Component {
                 //     }));
                 // }
 
-                if (week === time && day === "Mon" && isSurplus === "Surplus"){
+                if (week === time && day === "Mon" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         mondaySurplusCost: prevState.mondaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Tue" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Tue" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         tuesdaySurplusCost: prevState.tuesdaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Wed" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Wed" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         wednesdaySurplusCost: prevState.wednesdaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Thu" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Thu" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         thursdaySurplusCost: prevState.thursdaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Fri" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Fri" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         fridaySurplusCost: prevState.fridaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Sat" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Sat" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         saturdaySurplusCost: prevState.saturdaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Sun" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Sun" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         sundaySurplusCost: prevState.sundaySurplusCost += newCost
                     }));
@@ -217,7 +220,7 @@ class Chart23 extends Component {
                             ]}
                             options={{
                                 title: 'This week\'s Food Surplus Costs Saved Performance',
-                                chartArea: {width: '50%'},
+                                chartArea: {width: '52.5%'},
                                 colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
                                 hAxis: {
@@ -235,9 +238,9 @@ class Chart23 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '78vw', height: '95px', marginBottom: "15%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" disabled>View Previous</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" disabled>Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusCost">View Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusCost">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>

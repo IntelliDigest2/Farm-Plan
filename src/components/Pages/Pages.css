@@ -68,7 +68,7 @@ body{
 
   .signup-graphic{
     background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/signup3.jpg");
-    height: 140vh;
+    height: 175vh;
   }
 
   /* .foodpage-graphic{
@@ -333,10 +333,22 @@ body{
 
 .custom-btn {
   background-color: rgb(13, 27, 92);
+  border-color: rgb(13, 27, 92);
 }
 
 .custom-btn-2 {
   background-color: #aab41e;
+  border-color: #aab41e;
+}
+
+.custom-btn-3 {
+  background-color: rgb(24, 160, 101);
+  border-color: rgb(24, 160, 101);
+}
+
+.custom-btn-4 {
+  background-color: rgb(176, 10, 182);
+  border-color: rgb(176, 10, 182);
 }
 
 /* map page */

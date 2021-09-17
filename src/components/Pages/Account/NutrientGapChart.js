@@ -4,9 +4,10 @@ import styled from "styled-components"
 // import chartData from "../../../data/chart-data.json";
 // import { Row, Col } from 'react-bootstrap';
 import {BrowserView, MobileView} from "react-device-detect"
-import {Card, Table} from "react-bootstrap"
+import {Card, ListGroup, Table} from "react-bootstrap"
 import moment from "moment"
-import {BsStarFill, BsStar} from "react-icons/bs"
+import {BsStarFill, BsStar, BsArrowReturnLeft, BsArrow90DegLeft} from "react-icons/bs"
+import {Link} from "react-router-dom"
 
 import { connect } from 'react-redux';
 import {fs} from "../../../config/fbConfig"
@@ -133,6 +134,43 @@ class Chart40 extends Component {
                         <Card style={{height: "100%", padding: "1.5% 1.5% 1.5% 1.5%", width: "25%"}}>
                             <h3 className="text-center" style={{fontWeight: 600}}>Meals</h3>
                             {/* <li>View Browse Products pages to purchase/collect the following items: ...</li> */}
+                            <h6 className="text-center">To cover the nutrients you've missed today, tomorrow you could have the following:-</h6>
+
+                            {/* <ListGroup>
+                                <ListGroup.Item style={{height: "30px" , padding: "5px 15px"}}>THIAMIN: Whole Wheat Pasta Dish</ListGroup.Item>
+                                <ListGroup.Item style={{height: "30px" , padding: "5px 15px"}}>RIBOFLAVIN: Cereal</ListGroup.Item>
+                                <ListGroup.Item style={{height: "30px" , padding: "5px 15px"}}>FOLATE: Legumes</ListGroup.Item>
+                                <ListGroup.Item style={{height: "30px" , padding: "5px 15px"}}>MAGNESIUM: Dark Chocolate</ListGroup.Item>
+                                <ListGroup.Item style={{height: "30px" , padding: "5px 15px"}}>POTASSIUM: Banana</ListGroup.Item>
+                            </ListGroup> */}
+
+                            <Table striped bordered size="sm">
+                                <thead>
+                                    <tr>
+                                        <th><b>Thiamin</b></th>
+                                        <th>Whole Wheat Pasta Dish</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th><b>Riboflavin</b></th>
+                                        <th>Cereal</th>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Folate</b></th>
+                                        <th>Legumes</th>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Magnesium</b></th>
+                                        <th>Dark Chocolate</th>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Potassium</b></th>
+                                        <th>Banana</th>
+                                    </tr>
+                                </tbody>
+                            </Table>
+
                         </Card>
 
                         <Card style={{height: "100%", padding: "1.5% 1.5% 1.5% 1.5%", width: "25%", marginLeft: "10%"}}>
@@ -312,13 +350,17 @@ class Chart40 extends Component {
 
                     <h5 className="text-center" style={{marginBottom: "0.5%", fontWeight: 600}}>Congratulations!</h5>
 
-                    <div className="text-center" style={{marginBottom: "5%", marginLeft: "2.5%"}}>
+                    <div className="text-center" style={{marginBottom: "2.5%", marginLeft: "2.5%"}}>
                         <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
                         <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
                         <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
                         <BsStarFill style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
                         <BsStar style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
                         <BsStar style={{color: "gold", marginRight: "10px", fontSize: "150%"}}/>
+                    </div>
+
+                    <div>
+                        <Link to="/account"><BsArrow90DegLeft style={{fontSize: "250%", marginLeft: "10px", marginTop: "-105px", color: "black"}}/></Link>
                     </div>
 
                     <h5 className="text-center" style={{fontWeight: 550}}>Today's Nutrient Performance</h5>
@@ -492,21 +534,48 @@ class Chart40 extends Component {
 
                     <h5 className="text-center" style={{fontWeight: 550}}>Recommendations</h5>
                     <div style={{marginLeft: "5%", marginRight: "5%", marginBottom: "4vh"}}>
-                        <Card style={{padding: "1.5% 1.5% 1.5% 1.5%", height: "20vh"}}>
+                        <Card style={{padding: "2.5% 2.5% 2.5% 2.5%", height: "38vh"}}>
                             <h6 className="text-center" style={{fontWeight: 600}}>Meals</h6>
                             {/* <li>To cover the nutrients you have missed, tomorrow you could have...</li>
                             <li>View Browse Products pages to purchase/collect the following items: ...</li> */}
+                            <h7 className="text-center">To cover the nutrients you've missed today, tomorrow you could have the following:-</h7>
+                            <Table striped bordered size="sm" style={{marginTop: "2.5%"}}>
+                                <thead>
+                                    <tr>
+                                        <th><b>Thiamin</b></th>
+                                        <th>Whole Wheat Pasta Dish</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th><b>Riboflavin</b></th>
+                                        <th>Cereal</th>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Folate</b></th>
+                                        <th>Legumes</th>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Magnesium</b></th>
+                                        <th>Dark Chocolate</th>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Potassium</b></th>
+                                        <th>Banana</th>
+                                    </tr>
+                                </tbody>
+                            </Table>
                         </Card>
                     </div>
 
                     <div style={{marginLeft: "5%", marginRight: "5%", marginBottom: "4vh"}}>
-                        <Card style={{padding: "1.5% 1.5% 1.5% 1.5%", height: "20vh"}}>
+                        <Card style={{padding: "2.5% 2.5% 2.5% 2.5%", height: "20vh"}}>
                             <h6 className="text-center" style={{fontWeight: 600}}>Recipes</h6>
                         </Card>
                     </div>
 
                     <div style={{marginLeft: "5%", marginRight: "5%", marginBottom: "8vh"}}>
-                        <Card style={{padding: "1.5% 1.5% 1.5% 1.5%", height: "20vh"}}>
+                        <Card style={{padding: "2.5% 2.5% 2.5% 2.5%", height: "20vh"}}>
                             <h6 className="text-center" style={{fontWeight: 600}}>Local Produce</h6>
                         </Card>
                     </div>

@@ -36,26 +36,28 @@ class Chart6 extends Component {
                 var month = doc.data().MONTH
                 var mdate = doc.data().MDATE
                 var ghg = doc.data().GHG
-                var isSurplus = doc.data().EDIBLEORINEDIBLE
+                // var isSurplus = doc.data().EDIBLEORINEDIBLE
+
+                var st = doc.data().SUBMISSIONTYPE
 
                 // var carbCon = doc.data().CARBSCONTENT
                 // var proCon = doc.data().PROTEINCONTENT
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus !== "Surplus"){
+                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Waste"){
                   this.setState( (prevState) => ({
                     week1GHG: prevState.week1GHG += ghg
                   }));
-                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus !== "Surplus"){
+                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Waste"){
                   this.setState( (prevState) => ({
                     week2GHG: prevState.week2GHG += ghg
                   }));
-                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus !== "Surplus"){
+                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Waste"){
                   this.setState( (prevState) => ({
                     week3GHG: prevState.week3GHG += ghg
                   }));
-                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus !== "Surplus"){
+                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Waste"){
                   this.setState( (prevState) => ({
                     week4GHG: prevState.week4GHG += ghg
                   }));
@@ -169,9 +171,9 @@ class Chart6 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '78vw', height: '95px', marginBottom: "15%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekGHG">View Previous</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekGHG">Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearGHG">View Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearGHG">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>

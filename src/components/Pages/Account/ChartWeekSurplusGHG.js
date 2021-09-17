@@ -40,38 +40,41 @@ class Chart19 extends Component {
                 var month = doc.data().MONTH
                 var mdate = doc.data().MDATE
                 var ghg = doc.data().GHG
-                var isSurplus = doc.data().EDIBLEORINEDIBLE
+                // var isSurplus = doc.data().EDIBLEORINEDIBLE
+
+                var st = doc.data().SUBMISSIONTYPE
+                var los = doc.data().LOCALORNOT
 
                 // var carbCon = doc.data().CARBSCONTENT
                 // var proCon = doc.data().PROTEINCONTENT
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                if (week === time && day === "Mon" && isSurplus === "Surplus"){
+                if (week === time && day === "Mon" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         mondaySurplusGHG: prevState.mondaySurplusGHG += ghg
                     }));
-                } else if (week === time && day === "Tue" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Tue" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         tuesdaySurplusGHG: prevState.tuesdaySurplusGHG += ghg
                     }));
-                } else if (week === time && day === "Wed" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Wed" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         wednesdaySurplusGHG: prevState.wednesdaySurplusGHG += ghg
                     }));
-                } else if (week === time && day === "Thu" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Thu" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         thursdaySurplusGHG: prevState.thursdaySurplusGHG += ghg
                     }));
-                } else if (week === time && day === "Fri" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Fri" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         fridaySurplusGHG: prevState.fridaySurplusGHG += ghg
                     }));
-                } else if (week === time && day === "Sat" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Sat" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         saturdaySurplusGHG: prevState.saturdaySurplusGHG += ghg
                     }));
-                } else if (week === time && day === "Sun" && isSurplus === "Surplus"){
+                } else if (week === time && day === "Sun" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                         sundaySurplusGHG: prevState.sundaySurplusGHG += ghg
                     }));
@@ -208,7 +211,7 @@ class Chart19 extends Component {
                             ]}
                             options={{
                                 title: 'This week\'s Food Surplus GHG Saved Performance',
-                                chartArea: {width: '50%'},
+                                chartArea: {width: '52.5%'},
                                 colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
                                 hAxis: {
@@ -226,9 +229,9 @@ class Chart19 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '78vw', height: '95px', marginBottom: "15%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" disabled>View Previous</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" disabled>Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHG">View Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHG">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>

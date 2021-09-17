@@ -42,58 +42,61 @@ class Chart17 extends Component {
                 var year = doc.data().YEAR
                 var month = doc.data().MONTH
                 var ghg = doc.data().GHG
-                var isSurplus = doc.data().EDIBLEORINEDIBLE
+                // var isSurplus = doc.data().EDIBLEORINEDIBLE
+
+                var st = doc.data().SUBMISSIONTYPE
+                var los = doc.data().LOCALORNOT
 
                 // var carbCon = doc.data().CARBSCONTENT
                 // var proCon = doc.data().PROTEINCONTENT
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                if (year === time && month === "Jan" && isSurplus === "Surplus"){
+                if (year === time && month === "Jan" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       janSurplusGHG: prevState.janSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Feb" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Feb" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       febSurplusGHG: prevState.febSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Mar" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Mar" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       marSurplusGHG: prevState.marSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Apr" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Apr" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       aprSurplusGHG: prevState.aprSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "May" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "May" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       maySurplusGHG: prevState.maySurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Jun" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Jun" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       junSurplusGHG: prevState.junSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Jul" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Jul" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       julSurplusGHG: prevState.julSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Aug" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Aug" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       augSurplusGHG: prevState.augSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Sep" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Sep" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       sepSurplusGHG: prevState.sepSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Oct" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Oct" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       octSurplusGHG: prevState.octSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Nov" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Nov" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       novSurplusGHG: prevState.novSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Dec" && isSurplus === "Surplus"){
+                  } else if (year === time && month === "Dec" && st === "Surplus" && los === "Surplus"){
                     this.setState( (prevState) => ({
                       decSurplusGHG: prevState.decSurplusGHG += ghg
                     }));
@@ -264,9 +267,9 @@ class Chart17 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '90vw', height: '95px', marginBottom: "15%", marginLeft: '5.5%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHG">View Previous</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHG">Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} disabled>View Next</Button>
+                            <Button style={{width: "15%"}} disabled>Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
