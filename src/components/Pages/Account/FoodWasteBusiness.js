@@ -3,7 +3,7 @@ import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Modal, Dropdow
 import { connect } from 'react-redux';
 import { startData, createFoodWasteData } from '../../../store/actions/dataActions';
 import { Redirect } from 'react-router-dom';
-// import {Link} from "react-router-dom"
+import {Link} from "react-router-dom"
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import styled from "styled-components";
@@ -19,7 +19,7 @@ import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import {Autocomplete} from '@material-ui/lab';
 import {TextField, Checkbox} from '@material-ui/core';
-// import addNotification from "react-push-notification"
+import addNotification from "react-push-notification"
 
 // import {Chart} from "react-google-charts"
 
@@ -66,7 +66,7 @@ class FoodWasteBusiness extends Component {
         // fatContent: 0,
         // fibreContent: 0,
 
-        producedLocally: "Select Local or Non-local",
+        // producedLocally: "Select Local or Non-local",
 
         expiryDate: "",
 
@@ -85,6 +85,8 @@ class FoodWasteBusiness extends Component {
         foodWasteCost: 0,
         currency: "Select Currency",
         currencyMultiplier: 0,
+
+        notes: "n/a",
 
         // costOfInedibleFoodWaste: 0,
 
@@ -123,7 +125,7 @@ class FoodWasteBusiness extends Component {
             edibleInedibleSurplus: "Select",
             foodWasteWeight: 0,
             weightType: "Select Unit",
-            producedLocally: "Select Local or Non-local",
+            // producedLocally: "Select Local or Non-local",
             expiryDate: "",
             // edibleFoodWasteType: "Select Type",
             // carbsContent: 0,
@@ -135,22 +137,22 @@ class FoodWasteBusiness extends Component {
             foodWasteCost: 0,
             currency: "Select Currency",
             currencyMultiplier: 0,
-            formHeight: "680px"
+            formHeight: "590px"
         });
     }
 
-    // notificationTest = () => {
-    //     addNotification({
-    //     title: 'Success!',
-    //     message: 'Food Waste successfully updated!',
-    //     // theme: 'darkblue',
-    //     // native: false,
-    //     backgroundTop: '#aab41e', //optional, background color of top container.
-    //     backgroundBottom: '#aab41e', //optional, background color of bottom container.
-    //     closeButton: 'Close',
-    //     duration: 4000
-    //     });
-    // }
+    notificationTest = () => {
+        addNotification({
+        title: 'Success!',
+        message: 'Food Waste successfully updated!',
+        // theme: 'darkblue',
+        // native: false,
+        backgroundTop: '#aab41e', //optional, background color of top container.
+        backgroundBottom: '#aab41e', //optional, background color of bottom container.
+        closeButton: 'Close',
+        duration: 4000
+        });
+    }
 
     changeMeal(text){
         this.setState({meal: text})
@@ -188,9 +190,9 @@ class FoodWasteBusiness extends Component {
         this.setState({edibleInedibleSurplus: e})
     }
 
-    handleProducedLocallyChange(text){
-        this.setState({producedLocally: text})
-    }
+    // handleProducedLocallyChange(text){
+    //     this.setState({producedLocally: text})
+    // }
 
     handleWeightUnitChange(text){
         this.setState({weightType: text})
@@ -294,10 +296,10 @@ class FoodWasteBusiness extends Component {
     }
 
     handleFormHeight(text){
-        if (text === "Select" || text === "Edible" || text === "Surplus"){
-            this.setState({formHeight: "680px"})
+        if (text === "Select" || text === "Edible"){
+            this.setState({formHeight: "590px"})
         } else if (text === "Inedible"){
-            this.setState({formHeight: "535px"})
+            this.setState({formHeight: "445px"})
         }
     }
 
@@ -345,10 +347,10 @@ class FoodWasteBusiness extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "680px"})
+            this.setState({formWidth: "72vw", formHeight: "590px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "680px"})
+            this.setState({formWidth: "261px", formHeight: "590px"})
         }
     }
 
@@ -374,12 +376,12 @@ class FoodWasteBusiness extends Component {
                 // className="container"
                 style={{width: "100%", height: "100%" }}
             >
-            <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste & Food Surplus</h6></MobileView>
-            <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste & Food Surplus (Business)</h4></BrowserView>
+            <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste</h6></MobileView>
+            <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste (Business)</h4></BrowserView>
 
-            {/* <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
+            <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
                 <Button style={{width: this.state.formWidth, borderColor: "#aab41e"}} className="custom-btn-2" as={Link} to="/account">Back</Button>
-            </div> */}
+            </div>
 
                 {filteredData.length === 0 ? <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
         <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
@@ -391,7 +393,7 @@ class FoodWasteBusiness extends Component {
                 <Card>
                     <Card.Body>
                    <Card.Text className="text-center">
-                   <h1 style={{fontSize: "33px",fontWeight: "600", color: "rgb(55, 85, 54)",}}>Start tracking your food waste and food surplus now</h1>
+                   <h1 style={{fontSize: "33px",fontWeight: "600", color: "rgb(55, 85, 54)",}}>Start tracking your food waste now</h1>
                     <button onClick={this.pressButton} style={{outline: 'none', border: 'none'}}>Start now</button>
                    </Card.Text> 
                   </Card.Body>
@@ -422,7 +424,7 @@ class FoodWasteBusiness extends Component {
                 
                 {/* onSubmit={this.handleFoodWasteSubmit}     */}
             <Form className= "form-layout" style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste & Surplus</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Waste</h5>
                 
                 <div>
 
@@ -505,7 +507,7 @@ class FoodWasteBusiness extends Component {
                     </Form.Group> */}
 
                     {/* <BsFillQuestionCircleFill onClick={() => this.setState({showEdibleOrInedible: true})} style={{marginLeft: '5px'}}/> */}
-                    <div style={{padding: "0 10% 0 10%", paddingTop: "25px"}}>Edible, Inedible or Surplus?</div>
+                    <div style={{padding: "0 10% 0 10%", paddingTop: "25px"}}>Edible or Inedible?</div>
                     <Form.Group
                         style={{
                             padding: "0 10% 0 10%",
@@ -531,11 +533,11 @@ class FoodWasteBusiness extends Component {
                                             </div>
                                         </DropdownItem>
 
-                                        <DropdownItem as="button" type="button">
+                                        {/* <DropdownItem as="button" type="button">
                                             <div onClick={(e) => {this.handleEdibleInedibleSurplusChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
                                                 Surplus
                                             </div>
-                                        </DropdownItem>
+                                        </DropdownItem> */}
 
                                     </DropdownMenu>
                                 </Dropdown>
@@ -556,7 +558,7 @@ class FoodWasteBusiness extends Component {
                         </Modal.Footer>
                     </Modal> */}
 
-                <div>{this.state.edibleInedibleSurplus === "Edible" || this.state.edibleInedibleSurplus === "Select" || this.state.edibleInedibleSurplus === "Surplus" ? 
+                <div>{this.state.edibleInedibleSurplus === "Edible" || this.state.edibleInedibleSurplus === "Select"  ? 
                     <div>
 
                         <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
@@ -631,7 +633,7 @@ class FoodWasteBusiness extends Component {
                         </InputGroup>
                         </Form.Group>
 
-                        <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
+                        {/* <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
                         <Form.Group 
                             style={{
                                 padding: "0 10% 0 10%",
@@ -658,7 +660,7 @@ class FoodWasteBusiness extends Component {
                                 </DropdownButton>
                             </InputGroup>
 
-                        </Form.Group>
+                        </Form.Group> */}
 
                         <div style={{padding: "0 10% 0 10%"}}>Expiry Date</div>
                         <Form.Group className="form-layout"
@@ -920,9 +922,23 @@ class FoodWasteBusiness extends Component {
 
                         {/* this.handleFoodWasteSubmit(e); */}
 
-                        <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
+                        {/* <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.notificationTest(); this.clearEFWForm() }} variant="secondary" type="button">
                             Update
-                        </Button>
+                        </Button> */}
+
+                        <div>{ this.state.edibleInedibleSurplus === "Edible" && this.state.foodWasteWeight !== 0, this.state.weightType !== "Select Unit" && this.state.expiryDate !== "" && this.state.currency !== "Select Currency" ?
+                            <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.notificationTest(); this.clearEFWForm() }} variant="secondary" type="button">
+                                Update
+                            </Button>
+
+                            :
+
+                            <Button style={{margin: "0 10% 0 10%", width: "80%", marginTop: "5px"}} variant="secondary" disabled>
+                                Update
+                            </Button>                            
+                            
+                        }</div>
+
                     </div> : 
                     
                     <div>
@@ -999,7 +1015,7 @@ class FoodWasteBusiness extends Component {
                         </InputGroup>
                         </Form.Group>
 
-                        <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
+                        {/* <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
                         <Form.Group 
                             style={{
                                 padding: "0 10% 0 10%",
@@ -1026,7 +1042,7 @@ class FoodWasteBusiness extends Component {
                                 </DropdownButton>
                             </InputGroup>
 
-                        </Form.Group>
+                        </Form.Group> */}
 
                         {/* <div style={{padding: "0 10% 0 10%"}}>Moisture Content<BsFillQuestionCircleFill onClick={() => this.setState({showMoisture: true})} style={{marginLeft: '5px'}}/></div>
 
@@ -1072,9 +1088,22 @@ class FoodWasteBusiness extends Component {
                         </InputGroup>
                         </Form.Group>
                         {/* this.handleFoodWasteSubmit(e); this.handleAutoCompleteValueEntry(this.state.foodName);*/}
-                        <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
+                        {/* <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.notificationTest(); this.clearEFWForm() }} variant="secondary" type="button">
                             Update
-                        </Button>
+                        </Button> */}
+
+                        <div>{ this.state.edibleInedibleSurplus === "Inedible" && this.state.foodWasteWeight !== 0 && this.state.weightType !== "Select Unit" ?
+                            <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.notificationTest(); this.clearEFWForm() }} variant="secondary" type="button">
+                                Update
+                            </Button>
+
+                            :
+
+                            <Button style={{margin: "0 10% 0 10%", width: "80%", marginTop: "5px"}} variant="secondary" disabled>
+                                Update
+                            </Button>
+
+                        }</div>
 
                     </div>
         }

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Modal, Dropdown} from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { startData, createFoodSurplusData, createFoodWasteData, createFoodIntakeData } from '../../../store/actions/dataActions';
+import { startData, createFoodIntakeData } from '../../../store/actions/dataActions';
 import { Redirect } from 'react-router-dom';
+import {Link} from "react-router-dom"
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import styled from "styled-components";
@@ -18,6 +19,7 @@ import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import {Autocomplete} from '@material-ui/lab';
 import {TextField, Checkbox} from '@material-ui/core';
+import addNotification from "react-push-notification"
 
 // import {Chart} from "react-google-charts"
 
@@ -50,6 +52,8 @@ class FoodIntake extends Component {
         checkedB: false,
         eatingInOrOut: "",
 
+        notes: "n/a",
+
         // edibleInedibleSurplus: "Select",
 
         // foodWasteWeight: 0,
@@ -64,7 +68,7 @@ class FoodIntake extends Component {
         // fatContent: 0,
         // fibreContent: 0,
 
-        // producedLocally: "Select Local or Non-local",
+        producedLocally: "Select Local or Non-local",
 
         // expiryDate: "",
 
@@ -121,7 +125,7 @@ class FoodIntake extends Component {
             // edibleInedibleSurplus: "Select",
             // foodWasteWeight: 0,
             // weightType: "Select Unit",
-            // producedLocally: "Select Local or Non-local",
+            producedLocally: "Select Local or Non-local",
             // expiryDate: "",
             // edibleFoodWasteType: "Select Type",
             // carbsContent: 0,
@@ -133,7 +137,20 @@ class FoodIntake extends Component {
             // foodWasteCost: 0,
             // currency: "Select Currency",
             // currencyMultiplier: 0,
-            formHeight: "460px"
+            formHeight: "545px"
+        });
+    }
+
+    notificationTest = () => {
+        addNotification({
+        title: 'Success!',
+        message: 'Food Intake successfully updated!',
+        // theme: 'darkblue',
+        // native: false,
+        backgroundTop: '#aab41e', //optional, background color of top container.
+        backgroundBottom: '#aab41e', //optional, background color of bottom container.
+        closeButton: 'Close',
+        duration: 4000
         });
     }
 
@@ -330,10 +347,10 @@ class FoodIntake extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "465px"})
+            this.setState({formWidth: "72vw", formHeight: "545px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "465px"})
+            this.setState({formWidth: "261px", formHeight: "545px"})
         }
     }
 
@@ -362,6 +379,10 @@ class FoodIntake extends Component {
             <MobileView><h3 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Food Intake</h3></MobileView>
             <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Food Intake</h4></BrowserView>
 
+            <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
+                <Button style={{width: this.state.formWidth, borderColor: "#aab41e"}} className="custom-btn-2" as={Link} to="/account">Back</Button>
+            </div>
+
                 {filteredData.length === 0 ? <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
         <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
         <Col className="mt-5 pt-5" xs={12}></Col>
@@ -372,7 +393,7 @@ class FoodIntake extends Component {
                 <Card>
                     <Card.Body>
                    <Card.Text className="text-center">
-                   <h1 style={{fontSize: "33px",fontWeight: "600", color: "rgb(55, 85, 54)",}}>Start tracking your food waste and food surplus now</h1>
+                   <h1 style={{fontSize: "33px",fontWeight: "600", color: "rgb(55, 85, 54)",}}>Start tracking your food intake now</h1>
                     <button onClick={this.pressButton} style={{outline: 'none', border: 'none'}}>Start now</button>
                    </Card.Text> 
                   </Card.Body>
@@ -475,6 +496,35 @@ class FoodIntake extends Component {
                         />
                     </Form.Group>
 
+                    <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
+                        <Form.Group 
+                            style={{
+                                padding: "0 10% 0 10%",
+                                display: "flex"
+                            }}>
+                            <InputGroup>
+                                <DropdownButton
+                                    variant="outline-secondary"
+                                    title={this.state.producedLocally}
+                                    id="lnldd"
+                                >
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                            Local Produce
+                                        </div>
+                                    </DropdownItem>
+
+                                    <DropdownItem as="button" type="button">
+                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                            Non-local Produce
+                                        </div>
+                                    </DropdownItem>
+
+                                </DropdownButton>
+                            </InputGroup>
+
+                        </Form.Group>
+
                     <div style={{padding: "0 10% 0 10%"}}>Eating In or Out?</div>
                         <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
                             <FormControlLabel control={<Checkbox style={{color: '#aab41e', '&$checked': {color: '#aab41e'} }} checked={this.state.checkedA} name="checkedA" onChange={(e) => this.handleCheckboxTick(e)} />} label="Eating In" />
@@ -485,9 +535,22 @@ class FoodIntake extends Component {
 
                         <Divider />
 
-                        <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "20px"}} onClick={(e) => { this.handleFoodIntakeSubmit(e); this.clearEFWForm() }} variant="secondary" type="button">
+                        {/* <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "20px"}} onClick={(e) => {this.handleFoodIntakeSubmit(e); this.clearEFWForm(); this.notificationTest() }} variant="secondary" type="button">
                             Update
-                        </Button>
+                        </Button> */}
+
+                        <div>{ this.state.meal !== "Select Meal" && this.state.foodName !== "" && this.state.eatingInOrOut !== "" ?
+                            <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "20px"}} onClick={(e) => {this.handleFoodIntakeSubmit(e); this.clearEFWForm(); this.notificationTest() }} variant="secondary" type="button">
+                                Update
+                            </Button>
+
+                            :
+
+                            <Button style={{margin: "0 10% 0 10%", width: "80%", marginTop: "20px"}} variant="secondary" disabled>
+                                Update
+                            </Button>
+
+                        }</div>
 
                     {/* <Divider /> */}
 

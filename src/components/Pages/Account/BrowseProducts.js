@@ -6,6 +6,8 @@ import styled from "styled-components";
 import {BsSearch} from "react-icons/bs"
 import { BrowserView, MobileView } from "react-device-detect";
 import {Accordion, AccordionSummary, AccordionDetails, Typography, Divider} from "@material-ui/core"
+import {BsArrowReturnLeft, BsArrow90DegLeft} from "react-icons/bs"
+import {Link} from "react-router-dom"
 
 class BrowseProducts extends Component{
 
@@ -186,7 +188,7 @@ class BrowseProducts extends Component{
                 </div>
             </BrowserView>
             <MobileView>
-                <div className="main-div-layout" style={{height: "180vh", width: "95%", marginTop: "13%", padding: "10px 10px 5px 25px"}}>
+                <div className="main-div-layout" style={{height: "180vh", width: "95%", marginTop: "13%", padding: "10px 10px 2.5px 4.5px"}}>
                     {/* <Accordion defaultActiveKey="0">
                         <Accordion.Collapse eventKey="0">
                             <Accordion.Header>Meat & Fish</Accordion.Header>
@@ -380,14 +382,16 @@ class BrowseProducts extends Component{
 
                     </Tab.Container> */}
 
-                    <h5 className="text-center" style={{marginTop: "1.5%", fontWeight: 600}}>Browse Products (Food Surplus)</h5>
+                    <h5 className="text-center" style={{marginTop: "1.5%", fontWeight: 600, marginLeft: "20.5px"}}>Browse Products (Food Surplus)</h5>
+
+                    <Link to="/account"><BsArrow90DegLeft style={{fontSize: "250%", color: "black", marginTop: "-52.5px", marginRight: "25px"}}/></Link>
 
                     <InputGroup style={{marginTop: "7.5%", marginBottom: "35px"}}>
-                        <BsSearch style={{marginRight: "2%", marginTop: "1.5%", fontSize: "30px"}}/>
+                        <BsSearch style={{marginRight: "2%", marginTop: "1.5%", fontSize: "30px", marginLeft: "20.5px"}}/>
                         <Form.Control placeholder="Search"  />
                     </InputGroup>
 
-                    <Accordion style={{marginBottom: "10px", backgroundColor: "red"}}>
+                    <Accordion style={{marginBottom: "10px", backgroundColor: "red", marginLeft: "20.5px"}}>
                         <AccordionSummary
                             aria-controls="panel1a-content"
                             id="panel1a-header"
@@ -424,7 +428,7 @@ class BrowseProducts extends Component{
                         </AccordionDetails>
 
                     </Accordion>
-                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(103, 169, 226)"}}>
+                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(103, 169, 226)", marginLeft: "20.5px"}}>
                         <AccordionSummary
                             aria-controls="panel2a-content"
                             id="panel2a-header"
@@ -446,7 +450,7 @@ class BrowseProducts extends Component{
 
                     </Accordion>
 
-                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(76, 226, 106)"}}>
+                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(76, 226, 106)", marginLeft: "20.5px"}}>
                         <AccordionSummary
                             aria-controls="panel2a-content"
                             id="panel2a-header"
@@ -462,7 +466,7 @@ class BrowseProducts extends Component{
 
                     </Accordion>
 
-                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(8, 105, 27)"}}>
+                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(8, 105, 27)", marginLeft: "20.5px"}}>
                         <AccordionSummary
                             aria-controls="panel2a-content"
                             id="panel2a-header"
@@ -484,7 +488,7 @@ class BrowseProducts extends Component{
 
                     </Accordion>
 
-                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(245, 211, 20)"}}>
+                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(245, 211, 20)", marginLeft: "20.5px"}}>
                         <AccordionSummary
                             aria-controls="panel2a-content"
                             id="panel2a-header"
@@ -500,7 +504,7 @@ class BrowseProducts extends Component{
 
                     </Accordion>
 
-                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(31, 55, 212)"}}>
+                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(31, 55, 212)", marginLeft: "20.5px"}}>
                         <AccordionSummary
                             aria-controls="panel2a-content"
                             id="panel2a-header"
@@ -516,7 +520,7 @@ class BrowseProducts extends Component{
 
                     </Accordion>
 
-                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(168, 113, 11)"}}>
+                    <Accordion style={{marginBottom: "10px", backgroundColor: "rgb(168, 113, 11)", marginLeft: "20.5px"}}>
                         <AccordionSummary
                             aria-controls="panel2a-content"
                             id="panel2a-header"

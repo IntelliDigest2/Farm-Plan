@@ -39,6 +39,8 @@ class Chart10 extends Component {
                 var curr = doc.data().CURRENCY
                 var isSurplus = doc.data().EDIBLEORINEDIBLE
 
+                var st = doc.data().SUBMISSIONTYPE
+
                 var newCost = 0;
 
                 if (curr === "GBP (£)"){
@@ -54,19 +56,19 @@ class Chart10 extends Component {
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Edible"){
+                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Edible" && st === "Waste"){
                   this.setState( (prevState) => ({
                     week1Cost: prevState.week1Cost += newCost
                   }));
-                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Edible"){
+                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Edible" && st === "Waste"){
                   this.setState( (prevState) => ({
                     week2Cost: prevState.week2Cost += newCost
                   }));
-                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Edible"){
+                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Edible" && st === "Waste"){
                   this.setState( (prevState) => ({
                     week3Cost: prevState.week3Cost += newCost
                   }));
-                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Edible"){
+                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Edible" && st === "Waste"){
                   this.setState( (prevState) => ({
                     week4Cost: prevState.week4Cost += newCost
                   }));

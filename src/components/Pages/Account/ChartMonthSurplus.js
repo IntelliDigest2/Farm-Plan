@@ -39,7 +39,10 @@ class Chart14 extends Component {
             var mdate = doc.data().MDATE
             var weight = doc.data().weight
             var wu = doc.data().WEIGHTUNIT
-            var isSurplus = doc.data().EDIBLEORINEDIBLE
+            // var isSurplus = doc.data().EDIBLEORINEDIBLE
+
+            var st = doc.data().SUBMISSIONTYPE
+            var los = doc.data().LOCALORNOT
   
             var newWeight = 0
   
@@ -57,19 +60,19 @@ class Chart14 extends Component {
               // console.log(newWeight)
             }
 
-            if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Surplus"){
+            if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Surplus" && los === "Surplus"){
                 this.setState( (prevState) => ({
                   week1Surplus: prevState.week1Surplus += newWeight
                 }));
-              } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Surplus" && los === "Surplus"){
                 this.setState( (prevState) => ({
                   week2Surplus: prevState.week2Surplus += newWeight
                 }));
-              } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Surplus" && los === "Surplus"){
                 this.setState( (prevState) => ({
                   week3Surplus: prevState.week3Surplus += newWeight
                 }));
-              } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Surplus"){
+              } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Surplus" && los === "Surplus"){
                 this.setState( (prevState) => ({
                   week4Surplus: prevState.week4Surplus += newWeight
                 }));

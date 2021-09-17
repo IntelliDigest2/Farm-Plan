@@ -28,7 +28,6 @@ class Chart3 extends Component {
     sundayWeight: 0,
     weekBeginning: "",
     weekEnding: "",
-    // prevOption: ""
   }
 
       // fetch db.json data
@@ -83,7 +82,9 @@ class Chart3 extends Component {
               var mdate = doc.data().MDATE
               var weight = doc.data().weight
               var wu = doc.data().WEIGHTUNIT
-              var isSurplus = doc.data().EDIBLEORINEDIBLE
+              // var isSurplus = doc.data().EDIBLEORINEDIBLE
+
+              var st = doc.data().SUBMISSIONTYPE
 
               var newWeight = 0
     
@@ -106,33 +107,33 @@ class Chart3 extends Component {
               // var fatCon = doc.data().FATCONTENT
               // var fibCon = doc.data().FIBRECONTENT
 
-              if (week === time && day === "Mon" && isSurplus !== "Surplus"){
+              if (week === time && day === "Mon" && st === "Waste"){
                 this.setState({weekBeginning: month + " " + mdate})
 
                 this.setState( (prevState) => ({
                   mondayWeight: prevState.mondayWeight += newWeight
                 }));
-              } else if (week === time && day === "Tue" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Tue" && st === "Waste"){
                 this.setState( (prevState) => ({
                   tuesdayWeight: prevState.tuesdayWeight += newWeight
                 })); 
-              } else if (week === time && day === "Wed" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Wed" && st === "Waste"){
                 this.setState( (prevState) => ({
                   wednesdayWeight: prevState.wednesdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Thu" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Thu" && st === "Waste"){
                 this.setState( (prevState) => ({
                   thursdayWeight: prevState.thursdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Fri" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Fri" && st === "Waste"){
                 this.setState( (prevState) => ({
                   fridayWeight: prevState.fridayWeight += newWeight
                 }));
-              } else if (week === time && day === "Sat" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Sat" && st === "Waste"){
                 this.setState( (prevState) => ({
                   saturdayWeight: prevState.saturdayWeight += newWeight
                 }));
-              } else if (week === time && day === "Sun" && isSurplus !== "Surplus"){
+              } else if (week === time && day === "Sun" && st === "Waste"){
                 this.setState( (prevState) => ({
                   sundayWeight: prevState.sundayWeight += newWeight
                 }));
@@ -240,7 +241,6 @@ class Chart3 extends Component {
           <MobileView>
             {/* <ChartStyle> */}
             <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
-
 
               <Chart className='bar-chart'
                 width={'78vw'}

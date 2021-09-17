@@ -41,6 +41,8 @@ class Chart11 extends Component {
                 var curr = doc.data().CURRENCY
                 var isSurplus = doc.data().EDIBLEORINEDIBLE
 
+                var st = doc.data().SUBMISSIONTYPE
+
                 var newCost = 0;
 
                 if (curr === "GBP (£)"){
@@ -56,31 +58,31 @@ class Chart11 extends Component {
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                if (week === time && day === "Mon" && isSurplus === "Edible"){
+                if (week === time && day === "Mon" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                         mondayCost: prevState.mondayCost += newCost
                     }));
-                } else if (week === time && day === "Tue" && isSurplus === "Edible"){
+                } else if (week === time && day === "Tue" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                         tuesdayCost: prevState.tuesdayCost += newCost
                     }));
-                } else if (week === time && day === "Wed" && isSurplus === "Edible"){
+                } else if (week === time && day === "Wed" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                         wednesdayCost: prevState.wednesdayCost += newCost
                     }));
-                } else if (week === time && day === "Thu" && isSurplus === "Edible"){
+                } else if (week === time && day === "Thu" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                         thursdayCost: prevState.thursdayCost += newCost
                     }));
-                } else if (week === time && day === "Fri" && isSurplus === "Edible"){
+                } else if (week === time && day === "Fri" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                         fridayCost: prevState.fridayCost += newCost
                     }));
-                } else if (week === time && day === "Sat" && isSurplus === "Edible"){
+                } else if (week === time && day === "Sat" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                         saturdayCost: prevState.saturdayCost += newCost
                     }));
-                } else if (week === time && day === "Sun" && isSurplus === "Edible"){
+                } else if (week === time && day === "Sun" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                         sundayCost: prevState.sundayCost += newCost
                     }));

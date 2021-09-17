@@ -45,6 +45,8 @@ class Chart9 extends Component {
                 var curr = doc.data().CURRENCY
                 var isSurplus = doc.data().EDIBLEORINEDIBLE
 
+                var st = doc.data().SUBMISSIONTYPE
+
                 var newCost = 0;
 
                 if (curr === "GBP (£)"){
@@ -60,51 +62,51 @@ class Chart9 extends Component {
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                if (year === time && month === "Jan" && isSurplus === "Edible"){
+                if (year === time && month === "Jan" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       janCost: prevState.janCost += newCost
                     }));
-                  } else if (year === time && month === "Feb" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Feb" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       febCost: prevState.febCost += newCost
                     }));
-                  } else if (year === time && month === "Mar" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Mar" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       marCost: prevState.marCost += newCost
                     }));
-                  } else if (year === time && month === "Apr" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Apr" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       aprCost: prevState.aprCost += newCost
                     }));
-                  } else if (year === time && month === "May" && isSurplus === "Edible"){
+                  } else if (year === time && month === "May" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       mayCost: prevState.mayCost += newCost
                     }));
-                  } else if (year === time && month === "Jun" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Jun" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       junCost: prevState.junCost += newCost
                     }));
-                  } else if (year === time && month === "Jul" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Jul" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       julCost: prevState.julCost += newCost
                     }));
-                  } else if (year === time && month === "Aug" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Aug" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       augCost: prevState.augCost += newCost
                     }));
-                  } else if (year === time && month === "Sep" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Sep" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       sepCost: prevState.sepCost += newCost
                     }));
-                  } else if (year === time && month === "Oct" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Oct" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       octCost: prevState.octCost += newCost
                     }));
-                  } else if (year === time && month === "Nov" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Nov" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       novCost: prevState.novCost += newCost
                     }));
-                  } else if (year === time && month === "Dec" && isSurplus === "Edible"){
+                  } else if (year === time && month === "Dec" && isSurplus === "Edible" && st === "Waste"){
                     this.setState( (prevState) => ({
                       decCost: prevState.decCost += newCost
                     }));

@@ -20,7 +20,8 @@ import MapData from "./components/Pages/Account/MapData";
 import FoodWaste from "./components/Pages/Account/FoodWaste";
 import FoodLoss from "./components/Pages/Account/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/FoodWasteBusiness";
-import FoodIntake from "./components/Pages/Account/FoodIntake"
+import FoodIntake from "./components/Pages/Account/FoodIntake";
+import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
 import Chart1 from "./components/Pages/Account/ChartYear";
 import Chart2 from "./components/Pages/Account/ChartMonth";
@@ -73,13 +74,44 @@ import Chart39 from "./components/Pages/Account/ChartDayLossCost";
 
 import Chart40 from "./components/Pages/Account/NutrientGapChart";
 
+import Chart41 from "./components/Pages/Account/ChartYearUni";
+import Chart42 from "./components/Pages/Account/ChartMonthUni";
+import Chart43 from "./components/Pages/Account/ChartWeekUni";
+
+import Chart44 from "./components/Pages/Account/ChartYearGHGUni";
+import Chart45 from "./components/Pages/Account/ChartMonthGHGUni";
+import Chart46 from "./components/Pages/Account/ChartWeekGHGUni";
+
+import Chart47 from "./components/Pages/Account/ChartYearCostUni";
+import Chart48 from "./components/Pages/Account/ChartMonthCostUni";
+import Chart49 from "./components/Pages/Account/ChartWeekCostUni";
+
+import Chart50 from "./components/Pages/Account/ChartYearSurplusUni";
+import Chart51 from "./components/Pages/Account/ChartMonthSurplusUni";
+import Chart52 from "./components/Pages/Account/ChartWeekSurplusUni";
+
+import Chart53 from "./components/Pages/Account/ChartYearSurplusGHGUni";
+import Chart54 from "./components/Pages/Account/ChartMonthSurplusGHGUni";
+import Chart55 from "./components/Pages/Account/ChartWeekSurplusGHGUni";
+
+import Chart56 from "./components/Pages/Account/ChartYearSurplusCostUni";
+import Chart57 from "./components/Pages/Account/ChartMonthSurplusCostUni";
+import Chart58 from "./components/Pages/Account/ChartWeekSurplusCostUni";
+
 import FoodReduction from "./components/Pages/FoodReduction";
 import InfoTable from "./components/Pages/InfoTable";
 
 import BrowseProducts from "./components/Pages/Account/BrowseProducts";
 import BrowseProductsLocalProduce from "./components/Pages/Account/BrowseProductsLocalProduce";
 
-// import { Notifications } from "react-push-notification";
+// import ProductListing from "./components/Pages/Account/products/ProductListing";
+// import UploadFood from "./components/Pages/Account/UploadFood";
+
+import FoodWasteAcademic from "./components/Pages/Account/FoodWasteAcademic";
+import FoodIntakeAcademic from "./components/Pages/Account/FoodIntakeAcademic";
+import FoodSurplusAcademic from "./components/Pages/Account/FoodSurplusAcademic";
+
+import { Notifications } from "react-push-notification";
 
 import { connect } from 'react-redux';
 import { auth } from "./config/fbConfig";
@@ -107,7 +139,7 @@ class App extends Component {
     return (
       
       <React.Fragment>
-        {/* <Notifications /> */}
+        <Notifications />
           <Router>
           <NavBar />
           <div>
@@ -143,6 +175,7 @@ class App extends Component {
             <Route path="/food-loss" exact component={FoodLoss}/>
             <Route path="/food-wasteBusiness" exact component={FoodWasteBusiness}/>
             <Route path="/food-intake" exact component={FoodIntake}/>
+            <Route path="/food-surplus" exact component={FoodSurplus}/>
             <Route path="/table" component={InfoTable} />
             
             <Route path="/chart/year" exact component={Chart1} />
@@ -196,10 +229,41 @@ class App extends Component {
 
             <Route path="/chart/nutrientGap" exact component={Chart40} />
 
+            <Route path="/chart/yearUni" exact component={Chart41} />
+            <Route path="/chart/monthUni" exact component={Chart42} />
+            <Route path="/chart/weekUni" exact component={Chart43} />
+
+            <Route path="/chart/yearGHGUni" exact component={Chart44} />
+            <Route path="/chart/monthGHGUni" exact component={Chart45} />
+            <Route path="/chart/weekGHGUni" exact component={Chart46} />
+
+            <Route path="/chart/yearCostUni" exact component={Chart47} />
+            <Route path="/chart/monthCostUni" exact component={Chart48} />
+            <Route path="/chart/weekCostUni" exact component={Chart49} />
+
+            <Route path="/chart/yearSurplusUni" exact component={Chart50} />
+            <Route path="/chart/monthSurplusUni" exact component={Chart51} />
+            <Route path="/chart/weekSurplusUni" exact component={Chart52} />
+
+            <Route path="/chart/yearSurplusGHGUni" exact component={Chart53} />
+            <Route path="/chart/monthSurplusGHGUni" exact component={Chart54} />
+            <Route path="/chart/weekSurplusGHGUni" exact component={Chart55} />
+
+            <Route path="/chart/yearSurplusCostUni" exact component={Chart56} />
+            <Route path="/chart/monthSurplusCostUni" exact component={Chart57} />
+            <Route path="/chart/weekSurplusCostUni" exact component={Chart58} />
+
             <Route path="/food-reduction" component={FoodReduction} />
 
             <Route path="/browse-products" component={BrowseProducts} />
             <Route path="/browse-products-local" component={BrowseProductsLocalProduce} />
+
+            {/* <Route path="/product-listing" component={ProductListing} />
+            <Route path="/upload-food" component={UploadFood} /> */}
+
+            <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
+            <Route path="/food-intakeAcademic" component={FoodIntakeAcademic} />
+            <Route path="/food-surplusAcademic" component={FoodSurplusAcademic} />
 
             <Route component={NotFound} />
           </Switch>

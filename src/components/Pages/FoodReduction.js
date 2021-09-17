@@ -5,13 +5,23 @@ import tip2 from '../../images/tip2.jpg'
 import tip3 from '../../images/tip3.jpg'
 import tip4 from '../../images/tip4.jpg'
 import tip5 from '../../images/tip5.jpg'
+import {BsArrowReturnLeft, BsArrow90DegLeft} from "react-icons/bs"
+import {Link} from "react-router-dom"
+import { BrowserView, MobileView } from 'react-device-detect';
 
 class FoodReduction extends Component {
   render() {
     return (
       <div style={{width: '100%', height: "100vh", textAlign: 'center', margin: '0 auto'}}>
         <div style={{width: '100%',textAlign: 'center', top: '60px', position: 'absolute'}}>
-        <h1>Food Waste Reduction Tips</h1>
+        <MobileView><h5 className="text-center" style={{fontWeight: 600}}>Food Waste Reduction Tips</h5>
+
+        <div>
+          <Link to="/account"><BsArrow90DegLeft style={{fontSize: "250%", color: "black", marginRight: "80%", marginTop: "-50px"}}/></Link>
+        </div></MobileView>
+
+        <BrowserView><h1>Food Waste Reduction Tips</h1></BrowserView>
+
         <p style={{textAlign: 'left', padding: '10px 20% 0 20%'}}>Food waste is a bigger problem than many people realize.
 <br/><br/>
 In fact, nearly one-third of all food produced in the world is discarded or wasted for various reasons. That equates to nearly <b>1.3 billion tons</b> every year.

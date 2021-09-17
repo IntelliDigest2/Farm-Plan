@@ -5,6 +5,7 @@ import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import emailjs from 'emailjs-com';
 import { connect } from "react-redux";
 import { compose } from "redux";
+import {BrowserView, MobileView} from "react-device-detect"
 
 class Contact extends Component {
   state = {
@@ -59,11 +60,12 @@ class Contact extends Component {
 
       </div>
       <div className="contact-text-layout">
-        <h1>If you are interested in this scheme and would like to request a SMART bin or have any enquiries, please complete the contact form below. We aim to respond to you via e-mail as soon as possible.</h1>
+        {/* <h1>If you are interested in this scheme and would like to request a SMART bin or have any enquiries, please complete the contact form below. We aim to respond to you via e-mail as soon as possible.</h1> */}
+        <h1>If you have any questions regarding your experience of using the Global Food Loss & Waste Tracker, please complete the contact form below. We aim to respond to you via e-mail as soon as possible.</h1>
       </div> 
         </Col>
         <Col xs={12} className="mt-4">
-          <FormStyle>
+          <BrowserView><FormStyle>
 
         <Form onSubmit={this.sendEmail}>
     <Form.Row>
@@ -91,9 +93,44 @@ class Contact extends Component {
     </Button>
   </Form.Group>
   </Form>
-          </FormStyle>
+          </FormStyle></BrowserView>
+
+      <MobileView>
+        <FormStyleMobile>
+
+        <Form onSubmit={this.sendEmail}>
+    <Form.Row>
+      <Form.Group as={Col}>
+        <Form.Control type="text" placeholder="Name" id="name" name="name" onChange={this.handleChange} value={this.state.name} required />
+      </Form.Group>
+  
+      <Form.Group as={Col}>
+        <Form.Control type="email" placeholder="Email" id="email" name="email" onChange={this.handleChange} value={this.state.email} required />
+      </Form.Group>
+    </Form.Row>
+  
+    <Form.Group>
+      <Form.Control placeholder="Subject" id="subject" name="subject" required />
+    </Form.Group>
+  
+    <Form.Group>
+    <Form.Control as="textarea" rows={12} placeholder="Message" id="message" name="message" required />
+  </Form.Group>
+
+  <Form.Group controlId="formActions">
+
+    <Button variant="dark" type="submit">
+      Submit
+    </Button>
+  </Form.Group>
+  </Form>
+
+        </FormStyleMobile>
+      </MobileView>
+
         </Col>
       </Row>
+
       <Row className="mr-0 ml-0 pt-5 details text-center"> 
         <Col>
           <h1 className="more-details-header">More Contact Details</h1>
@@ -180,6 +217,38 @@ form{
     }
 
 `
+
+const FormStyleMobile = styled.div`
+
+  form{
+    width:90%;
+    margin:auto;
+    padding:10px;
+  }
+
+  input, textarea{
+    border: 1px solid #62680a;
+  }
+
+.btn-dark{
+  background-color:  #071850;
+  color:whitesmoke;
+  border: 1px solid #03091d;
+  float:right;
+
+  &:hover{
+    background-color: #030d2b;
+    border: 1px solid #03091d;
+  }
+
+  &:active{
+    background-color: #030d2b;
+    border: 1px solid #03091d;
+  }
+}
+
+`;
+
 const CardStyle = styled.div`
 .card{
   margin-top: 5px;
