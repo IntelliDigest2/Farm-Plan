@@ -68,7 +68,7 @@ class FoodIntake extends Component {
         // fatContent: 0,
         // fibreContent: 0,
 
-        producedLocally: "Select Local or Non-local",
+        producedLocally: "Select",
 
         // expiryDate: "",
 
@@ -125,7 +125,7 @@ class FoodIntake extends Component {
             // edibleInedibleSurplus: "Select",
             // foodWasteWeight: 0,
             // weightType: "Select Unit",
-            producedLocally: "Select Local or Non-local",
+            producedLocally: "Select",
             // expiryDate: "",
             // edibleFoodWasteType: "Select Type",
             // carbsContent: 0,
@@ -424,7 +424,7 @@ class FoodIntake extends Component {
                 
                 {/* onSubmit={this.handleFoodWasteSubmit}     */}
             <Form className= "form-layout" style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Intake</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "23px",fontWeight: "600",}}>Food Intake</h5>
                 
                 <div>
 
@@ -496,13 +496,13 @@ class FoodIntake extends Component {
                         />
                     </Form.Group>
 
-                    <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
+                    <div style={{padding: "0 10% 0 10%"}}>Local or Non-local?</div>
                         <Form.Group 
                             style={{
                                 padding: "0 10% 0 10%",
                                 display: "flex"
                             }}>
-                            <InputGroup>
+                            {/* <InputGroup>
                                 <DropdownButton
                                     variant="outline-secondary"
                                     title={this.state.producedLocally}
@@ -521,7 +521,28 @@ class FoodIntake extends Component {
                                     </DropdownItem>
 
                                 </DropdownButton>
-                            </InputGroup>
+                            </InputGroup> */}
+
+                        <InputGroup>
+                            <DDMenuStyle>
+                                <Dropdown>
+                                    <DropdownToggle variant="secondary" style={{width: "190px"}} className="dd">{this.state.producedLocally}</DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                                Local Produce
+                                            </div>
+                                        </DropdownItem>
+
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                                Non-local Produce
+                                            </div>
+                                        </DropdownItem>
+                                    </DropdownMenu>   
+                                </Dropdown>
+                            </DDMenuStyle>
+                        </InputGroup>
 
                         </Form.Group>
 
@@ -539,7 +560,7 @@ class FoodIntake extends Component {
                             Update
                         </Button> */}
 
-                        <div>{ this.state.meal !== "Select Meal" && this.state.foodName !== "" && this.state.eatingInOrOut !== "" ?
+                        <div>{ this.state.meal !== "Select Meal" && this.state.foodName !== "" && this.state.eatingInOrOut !== "" && this.state.producedLocally !== "Select" ?
                             <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "20px"}} onClick={(e) => {this.handleFoodIntakeSubmit(e); this.clearEFWForm(); this.notificationTest() }} variant="secondary" type="button">
                                 Update
                             </Button>
