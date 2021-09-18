@@ -69,7 +69,7 @@ class FoodSurplus extends Component {
         // fatContent: 0,
         // fibreContent: 0,
 
-        producedLocally: "Select Surplus or Local...",
+        producedLocally: "Select",
 
         expiryDate: "",
 
@@ -141,7 +141,7 @@ class FoodSurplus extends Component {
             // edibleInedibleSurplus: "Select",
             foodSurplusWeight: 0,
             weightType: "Select Unit",
-            producedLocally: "Select Surplus or Local...",
+            producedLocally: "Select",
             expiryDate: "",
             // edibleFoodWasteType: "Select Type",
             // carbsContent: 0,
@@ -431,10 +431,10 @@ class FoodSurplus extends Component {
 
     componentDidMount() {
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "965px"})
+            this.setState({formWidth: "72vw", formHeight: "695px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "965px"})
+            this.setState({formWidth: "261px", formHeight: "695px"})
         }
     }
 
@@ -460,7 +460,7 @@ class FoodSurplus extends Component {
                 // className="container"
                 style={{width: "100%", height: "100%" }}
             >
-            <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Food Surplus</h6></MobileView>
+            <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Upload Food</h6></MobileView>
             <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Upload Food</h4></BrowserView>
 
             <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
@@ -500,7 +500,7 @@ class FoodSurplus extends Component {
                     // width: "90%", 
                     width: this.state.formWidth, 
                     // height: "100%"
-                    height: '695px',
+                    height: this.state.formHeight,
                     marginBottom: '10vh'
                     // backgroundColor: 'lightgray'
                 }}
@@ -508,7 +508,7 @@ class FoodSurplus extends Component {
                 
                 {/* onSubmit={this.handleFoodWasteSubmit}     */}
             <Form className= "form-layout" style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Upload Food</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "23px",fontWeight: "600"}}>Upload Food</h5>
                 
                 <div>
 
@@ -785,7 +785,7 @@ class FoodSurplus extends Component {
                         </InputGroup>
                         </Form.Group>
 
-                        <div style={{padding: "0 10% 0 10%"}}>Local Produce or Surplus?</div>
+                        {/* <div style={{padding: "0 10% 0 10%"}}>Local Produce or Surplus?</div>
                         <Form.Group 
                             style={{
                                 padding: "0 10% 0 10%",
@@ -813,6 +813,34 @@ class FoodSurplus extends Component {
                                 </DropdownButton>
                             </InputGroup>
 
+                        </Form.Group> */}
+
+                        <div style={{padding: "0 10% 0 10%"}}>Upload Type</div>
+                        <Form.Group 
+                            style={{
+                                padding: "0 10% 0 10%",
+                                display: "flex"
+                            }}>
+                        <InputGroup>
+                            <DDMenuStyle>
+                                <Dropdown>
+                                    <DropdownToggle variant="secondary" style={{width: "190px"}} className="dd">{this.state.producedLocally}</DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                                Local Produce
+                                            </div>
+                                        </DropdownItem>
+
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                                Surplus
+                                            </div>
+                                        </DropdownItem>
+                                    </DropdownMenu>   
+                                </Dropdown>
+                            </DDMenuStyle>
+                        </InputGroup>
                         </Form.Group>
 
                         <div style={{padding: "0 10% 0 10%"}}>Expiry Date</div>
@@ -902,7 +930,7 @@ class FoodSurplus extends Component {
                             Update
                         </Button> */}
 
-                        <div>{ this.state.foodName !== "" && this.state.foodSurplusWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.producedLocally !== "Select Surplus or Local..." && this.state.expiryDate !== "" && this.state.currency !== "Select Currency" ?
+                        <div>{ this.state.foodName !== "" && this.state.foodSurplusWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.producedLocally !== "Select" && this.state.expiryDate !== "" && this.state.currency !== "Select Currency" ?
                             <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodSurplusSubmit(e); this.notificationTest(); this.clearEFWForm() }} variant="secondary" type="button">
                                 Update
                             </Button>
