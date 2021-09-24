@@ -11,8 +11,8 @@ const ExpDate = (props) => {
     <div className='exp-date'>
       <label>EXPIRY</label>
       <div className='exp-date__month'>{month}</div>
-      <div className='exp-date__year'>{year}</div>
       <div className='exp-date__day'>{day}</div>
+      <div className='exp-date__year'>{year}</div>
     </div>
   );
 };

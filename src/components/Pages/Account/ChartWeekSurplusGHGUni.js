@@ -136,7 +136,7 @@ class Chart55 extends Component {
                         <ButtonGroup>
                             <Button style={{width: "15%"}} disabled>View Previous</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHG">View Next (Monthly Surplus GHG)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHGUni">View Next (Monthly Surplus GHG)</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
@@ -183,7 +183,7 @@ class Chart55 extends Component {
                         <ButtonGroup>
                             <Button style={{width: "15%"}} className="custom-btn" disabled>Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHG">Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHGUni">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>

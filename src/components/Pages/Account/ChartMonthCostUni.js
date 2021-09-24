@@ -138,9 +138,9 @@ class Chart48 extends Component {
                     <div style={{height: "40px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekCost">View Previous (Weekly Cost)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekCostUni">View Previous (Weekly Cost)</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearCost">View Next (Yearly Cost)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearCostUni">View Next (Yearly Cost)</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
@@ -181,9 +181,9 @@ class Chart48 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '78vw', height: '95px', marginBottom: "15%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekCost">Prev</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekCostUni">Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearCost">Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearCostUni">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>

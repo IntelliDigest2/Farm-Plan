@@ -176,7 +176,7 @@ class Chart41 extends Component {
             <div style={{height: "40px", marginBottom: "10%"}}>
               <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                 <ButtonGroup>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">View Previous (Monthly Weight)</Button>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthUni">View Previous (Monthly Weight)</Button>
                   <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                   <Button style={{width: "15%"}} disabled>View Next</Button>
                 </ButtonGroup>
@@ -231,7 +231,7 @@ class Chart41 extends Component {
             <div style={{height: "95px", marginBottom: "10%"}}>
               <Card  style={{width: '90vw', height: '95px', marginBottom: "10%", marginLeft: '5.5%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                 <ButtonGroup>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/month">Prev</Button>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthUni">Prev</Button>
                   <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                   <Button style={{width: "15%"}} disabled>Next</Button>
                 </ButtonGroup>

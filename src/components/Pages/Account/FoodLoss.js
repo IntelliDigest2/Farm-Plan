@@ -328,7 +328,7 @@ class FoodLoss extends Component {
             >
              {/* onSubmit={this.handleFoodWasteSubmit} */}
             <Form className= "form-layout" style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Loss</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "23px",fontWeight: "600",}}>Food Loss</h5>
                 <div>
 
                 {/* <div style={{padding: "0 10% 0 10%"}}>Food Name <div style={{fontSize: "11px"}}>(e.g. Bread, Milk, Spaghetti, ...)</div></div>

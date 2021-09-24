@@ -1,5 +1,6 @@
 import React, {useState, Component} from 'react';
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import { MobileView, BrowserView } from 'react-device-detect';
 
 // import NewItem from './components/NewItem/NewItem';
 // import Listing from './components/Expenses/Listing';
@@ -54,10 +55,21 @@ const ProductListing = () => {
   // );
 
   return (
-    <div>
-      <NewItem onAddE={addEHandler} />
-      <Listing items={e} />
-    </div>
+    <>
+      <MobileView>
+        <div style={{marginTop: "20%", marginBottom: "20%"}}>
+          <NewItem onAddE={addEHandler} />
+          <Listing items={e} />
+        </div>
+      </MobileView>
+
+      <BrowserView>
+        <div style={{marginTop: "5%", marginBottom: "5%"}}>
+          <NewItem onAddE={addEHandler} />
+          <Listing items={e} />
+        </div>
+      </BrowserView>
+    </>
   );
 }
 

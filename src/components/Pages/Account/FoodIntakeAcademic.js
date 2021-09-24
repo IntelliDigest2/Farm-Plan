@@ -425,7 +425,7 @@ class FoodIntake extends Component {
                 
                 {/* onSubmit={this.handleFoodWasteSubmit}     */}
             <Form className= "form-layout" style={{padding: "10px"}}>  
-                <h5 className="text-center" style={{margin: "30px", fontSize: "33px",fontWeight: "600",}}>Food Intake</h5>
+                <h5 className="text-center" style={{margin: "30px", fontSize: "23px",fontWeight: "600",}}>Food Intake</h5>
                 
                 <div>
 
@@ -497,7 +497,7 @@ class FoodIntake extends Component {
                         />
                     </Form.Group>
 
-                    <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
+                    {/* <div style={{padding: "0 10% 0 10%"}}>Local or Non-local Produce?</div>
                         <Form.Group 
                             style={{
                                 padding: "0 10% 0 10%",
@@ -523,6 +523,35 @@ class FoodIntake extends Component {
 
                                 </DropdownButton>
                             </InputGroup>
+
+                        </Form.Group> */}
+
+                        <div style={{padding: "0 10% 0 10%"}}>Local or Non-local?</div>
+                        <Form.Group 
+                            style={{
+                                padding: "0 10% 0 10%",
+                                display: "flex"
+                            }}>
+                        <InputGroup>
+                            <DDMenuStyle>
+                                <Dropdown>
+                                    <DropdownToggle variant="secondary" style={{width: "190px"}} className="dd">{this.state.producedLocally}</DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                                Local Produce
+                                            </div>
+                                        </DropdownItem>
+
+                                        <DropdownItem as="button" type="button">
+                                            <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
+                                                Non-local Produce
+                                            </div>
+                                        </DropdownItem>
+                                    </DropdownMenu>   
+                                </Dropdown>
+                            </DDMenuStyle>
+                        </InputGroup>
 
                         </Form.Group>
 
