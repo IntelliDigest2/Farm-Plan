@@ -141,9 +141,9 @@ class Chart51 extends Component {
                 <div style={{height: "40px", marginBottom: "10%"}}>
                   <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                   <ButtonGroup>
-                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplus">View Previous (Weekly Surplus Weight)</Button>
+                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusUni">View Previous (Weekly Surplus Weight)</Button>
                       <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplus">View Next (Yearly Surplus Weight)</Button>
+                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusUni">View Next (Yearly Surplus Weight)</Button>
                   </ButtonGroup>
                   </Card>
                 </div>
@@ -185,9 +185,9 @@ class Chart51 extends Component {
                 <div style={{height: "95px", marginBottom: "10%"}}>
                   <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                   <ButtonGroup>
-                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplus">Prev</Button>
+                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusUni">Prev</Button>
                       <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplus">Next</Button>
+                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusUni">Next</Button>
                   </ButtonGroup>
                   </Card>
                 </div>

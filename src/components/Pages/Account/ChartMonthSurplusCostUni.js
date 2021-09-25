@@ -133,9 +133,9 @@ class Chart57 extends Component {
                     <div style={{height: "40px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusCost">View Previous (Weekly Surplus Cost)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusCostUni">View Previous (Weekly Surplus Cost)</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusCost">View Next (Yearly Surplus Cost)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusCostUni">View Next (Yearly Surplus Cost)</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
@@ -177,9 +177,9 @@ class Chart57 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '78vw', height: '95px', marginBottom: "15%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusCost">Prev</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusCostUni">Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusCost">Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusCostUni">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>

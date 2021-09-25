@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Link} from "react-router-dom"
 
 import './ItemForm.css';
 
@@ -84,34 +85,31 @@ const ItemForm = (props) => {
 
   return (<div>
     <form onSubmit={submitHandler}>
-      <div className='new-item__controls'>
         <div className='new-item__control'>
           <div className='item__actions'>
-          <h2>Add a product</h2>
+          <h2 style={{fontWeight: 600, marginBottom: "3.5%"}}>Add a product</h2>
           </div>
-          <label>Name</label>
+          <label style={{marginBottom: "0.25%"}}>Name</label>
           <input
             type='text'
             value={enteredTitle}
             onChange={titleChangeHandler}
           />
-          <label>Type</label>
+          <label style={{marginTop: "2%", marginBottom: "0.25%"}}>Type</label>
           <input
             type='text'
             value={enteredType}
             onChange={typeChangeHandler}
           />
 
-          <label>Post Code</label>
+          <label style={{marginTop: "2%", marginBottom: "0.25%"}}>Post Code</label>
           <input
             type='text'
             value={enteredCode}
             onChange={codeChangeHandler}
           />
 
-        </div>
-        <div className='new-item__control'>
-          <label>Amount</label>
+          <label style={{marginTop: "2%", marginBottom: "0.25%"}}>Amount</label>
           <input
             type='number'
             min='0.01'
@@ -119,26 +117,24 @@ const ItemForm = (props) => {
             value={enteredAmount}
             onChange={amountChangeHandler}
           />
-        </div>
-        <div className='new-item__control'>
-          <label>Date</label>
+          <label style={{marginTop: "2%", marginBottom: "0.25%"}}>Date</label>
           <input
             type='date'
             min='2019-01-01'
             max='2022-12-31'
             value={enteredDate}
             onChange={dateChangeHandler}
+            style={{marginBottom: "2.5%"}}
           />
         </div>
-      </div>
       <div  className='item__actions'>
-        <button type='submit'>Add Product</button>
+        <button style={{marginBottom: "-1%"}} type='submit'>Add Product</button>
      </div>
       
   
     </form>
     <br/>
-    <button>Back</button></div>
+    <Link to="/account"><button type="button">Back</button></Link></div>
   
 
   );
