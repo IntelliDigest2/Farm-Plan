@@ -14,22 +14,22 @@ import {Card} from "react-bootstrap"
 
 const time = moment().format("YYYY")
 
-class Chart56 extends Component {
+class Chart65 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        janSurplusCostUni: 0,
-        febSurplusCostUni: 0,
-        marSurplusCostUni: 0,
-        aprSurplusCostUni: 0,
-        maySurplusCostUni: 0,
-        junSurplusCostUni: 0,
-        julSurplusCostUni: 0,
-        augSurplusCostUni: 0,
-        sepSurplusCostUni: 0,
-        octSurplusCostUni: 0,
-        novSurplusCostUni: 0,
-        decSurplusCostUni: 0,
+        janCostBusiness: 0,
+        febCostBusiness: 0,
+        marCostBusiness: 0,
+        aprCostBusiness: 0,
+        mayCostBusiness: 0,
+        junCostBusiness: 0,
+        julCostBusiness: 0,
+        augCostBusiness: 0,
+        sepCostBusiness: 0,
+        octCostBusiness: 0,
+        novCostBusiness: 0,
+        decCostBusiness: 0,
     }
 
     fetchData = async () => {
@@ -43,10 +43,9 @@ class Chart56 extends Component {
                 var month = doc.data().MONTH
                 var cost = doc.data().COST
                 var curr = doc.data().CURRENCY
-                // var isSurplus = doc.data().EDIBLEORINEDIBLE
+                var isSurplus = doc.data().EDIBLEORINEDIBLE
 
                 var st = doc.data().SUBMISSIONTYPE
-                var los = doc.data().LOCALORNOT
 
                 var newCost = 0;
 
@@ -58,55 +57,56 @@ class Chart56 extends Component {
                     newCost = Number((cost/1.161).toFixed(2))
                 }
 
-                  if (year === time && month === "Jan" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                if (year === time && month === "Jan" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      janSurplusCostUni: prevState.janSurplusCostUni += newCost
+                      janCostBusiness: prevState.janCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Feb" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Feb" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      febSurplusCostUni: prevState.febSurplusCostUni += newCost
+                      febCostBusiness: prevState.febCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Mar" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Mar" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      marSurplusCostUni: prevState.marSurplusCostUni += newCost
+                      marCostBusiness: prevState.marCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Apr" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Apr" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      aprSurplusCostUni: prevState.aprSurplusCostUni += newCost
+                      aprCostBusiness: prevState.aprCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "May" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "May" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      maySurplusCostUni: prevState.maySurplusCostUni += newCost
+                      mayCostBusiness: prevState.mayCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Jun" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Jun" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      junSurplusCostUni: prevState.junSurplusCostUni += newCost
+                      junCostBusiness: prevState.junCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Jul" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Jul" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      julSurplusCostUni: prevState.julSurplusCostUni += newCost
+                      julCostBusiness: prevState.julCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Aug" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Aug" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      augSurplusCostUni: prevState.augSurplusCostUni += newCost
+                      augCostBusiness: prevState.augCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Sep" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Sep" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      sepSurplusCostUni: prevState.sepSurplusCostUni += newCost
+                      sepCostBusiness: prevState.sepCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Oct" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Oct" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      octSurplusCostUni: prevState.octSurplusCostUni += newCost
+                      octCostBusiness: prevState.octCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Nov" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Nov" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      novSurplusCostUni: prevState.novSurplusCostUni += newCost
+                      novCostBusiness: prevState.novCostBusiness += newCost
                     }));
-                  } else if (year === time && month === "Dec" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Dec" && isSurplus === "Edible" && st === "Waste Business"){
                     this.setState( (prevState) => ({
-                      decSurplusCostUni: prevState.decSurplusCostUni += newCost
+                      decCostBusiness: prevState.decCostBusiness += newCost
                     }));
                   }
+
             })
 
           })
@@ -137,30 +137,30 @@ class Chart56 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Month', 'Food Surplus Costs Saved'],
-                                ['January', this.state.janSurplusCostUni],
-                                ['February', this.state.febSurplusCostUni],
-                                ['March', this.state.marSurplusCostUni],
-                                ['April', this.state.aprSurplusCostUni],
-                                ['May', this.state.maySurplusCostUni],
-                                ['June', this.state.junSurplusCostUni],
-                                ['July', this.state.julSurplusCostUni],
-                                ['August', this.state.augSurplusCostUni],
-                                ['September', this.state.sepSurplusCostUni],
-                                ['October', this.state.octSurplusCostUni],
-                                ['November', this.state.novSurplusCostUni],
-                                ['December', this.state.decSurplusCostUni],
+                                ['Month', 'Food Wastage Cost'],
+                                ['January', this.state.janCostBusiness],
+                                ['February', this.state.febCostBusiness],
+                                ['March', this.state.marCostBusiness],
+                                ['April', this.state.aprCostBusiness],
+                                ['May', this.state.mayCostBusiness],
+                                ['June', this.state.junCostBusiness],
+                                ['July', this.state.julCostBusiness],
+                                ['August', this.state.augCostBusiness],
+                                ['September', this.state.sepCostBusiness],
+                                ['October', this.state.octCostBusiness],
+                                ['November', this.state.novCostBusiness],
+                                ['December', this.state.decCostBusiness],
                             ]}
                             options={{
-                                title: 'This year\'s Food Surplus Costs Saved Performance (' + time + ', Academic)',
+                                title: 'This year\'s Food Wastage Cost Performance (' + time + ', Business)',
                                 chartArea: {width: '75%'},
-                                colors: ['rgb(13, 27, 92)'],
+                                colors: ['#aab41e'],
                                 hAxis: {
                                     title: 'Month of ' + time,
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Costs Saved from Food Surplus (GBP (£))'
+                                    title: 'Cost of Food Wastage (GBP (£))'
                                 }
                             }}
                             legendToggle
@@ -171,7 +171,7 @@ class Chart56 extends Component {
                     <div style={{height: "40px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusCostUni">View Previous (Monthly Surplus Cost)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthCostBusiness">View Previous (Monthly GHG)</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                             <Button style={{width: "15%"}} disabled>View Next</Button>
                         </ButtonGroup>
@@ -189,31 +189,31 @@ class Chart56 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Month', 'Costs Saved '],
-                                ['Jan', this.state.janSurplusCostUni],
-                                ['Feb', this.state.febSurplusCostUni],
-                                ['Mar', this.state.marSurplusCostUni],
-                                ['Apr', this.state.aprSurplusCostUni],
-                                ['May', this.state.maySurplusCostUni],
-                                ['Jun', this.state.junSurplusCostUni],
-                                ['Jul', this.state.julSurplusCostUni],
-                                ['Aug', this.state.augSurplusCostUni],
-                                ['Sep', this.state.sepSurplusCostUni],
-                                ['Oct', this.state.octSurplusCostUni],
-                                ['Nov', this.state.novSurplusCostUni],
-                                ['Dec', this.state.decSurplusCostUni],
+                                ['Month', 'GHG '],
+                                ['Jan', this.state.janCostBusiness],
+                                ['Feb', this.state.febCostBusiness],
+                                ['Mar', this.state.marCostBusiness],
+                                ['Apr', this.state.aprCostBusiness],
+                                ['May', this.state.mayCostBusiness],
+                                ['Jun', this.state.junCostBusiness],
+                                ['Jul', this.state.julCostBusiness],
+                                ['Aug', this.state.augCostBusiness],
+                                ['Sep', this.state.sepCostBusiness],
+                                ['Oct', this.state.octCostBusiness],
+                                ['Nov', this.state.novCostBusiness],
+                                ['Dec', this.state.decCostBusiness],
                             ]}
                             options={{
-                                title: 'Food Surplus Costs Saved Performance (' + time + ', Uni)',
+                                title: 'Food Wastage Cost Performance (' + time + ', Business)',
                                 chartArea: {width: '62.5%'},
-                                colors: ['rgb(13, 27, 92)'],
+                                colors: ['#aab41e'],
                                 legend: "none",
                                 hAxis: {
                                     title: 'Month of ' + time,
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Costs Saved from Food Surplus (GBP (£))'
+                                    title: 'Cost of Food Wastage (GBP (£))'
                                 }
                             }}
                         />
@@ -223,7 +223,7 @@ class Chart56 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '90vw', height: '95px', marginBottom: "15%", marginLeft: '5.5%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusCostUni">Prev</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthCostBusiness">Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                             <Button style={{width: "15%"}} disabled>Next</Button>
                         </ButtonGroup>
@@ -259,4 +259,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart56);
+export default connect(mapStateToProps, null)(Chart65);

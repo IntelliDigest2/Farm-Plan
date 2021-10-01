@@ -122,6 +122,10 @@ class FoodSurplus extends Component {
         // autocompleteEntries: [
         //     {}
         // ]
+
+        // price: 1.99,
+        // postcode: "CD3 5EF"
+
     }
 
     // handleChartSubmit(label, column){
@@ -160,11 +164,11 @@ class FoodSurplus extends Component {
     notificationTest = () => {
         addNotification({
         title: 'Success!',
-        message: 'Food Surplus successfully updated!',
+        message: 'Product Added!',
         // theme: 'darkblue',
         // native: false,
-        backgroundTop: '#aab41e', //optional, background color of top container.
-        backgroundBottom: '#aab41e', //optional, background color of bottom container.
+        backgroundTop: 'rgb(29, 207, 29)', //optional, background color of top container.
+        backgroundBottom: 'rgb(29, 207, 29)', //optional, background color of bottom container.
         closeButton: 'Close',
         duration: 4000
         });
@@ -852,7 +856,7 @@ class FoodSurplus extends Component {
                             }}
                         >
                         <InputGroup>
-                            <Form.Control id="expiryDate" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
+                            <Form.Control id="expiryDate" type="date" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
                         </InputGroup>
                         </Form.Group>
 
@@ -930,7 +934,7 @@ class FoodSurplus extends Component {
                             Update
                         </Button> */}
 
-                        <div>{ this.state.foodName !== "" && this.state.foodSurplusWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.producedLocally !== "Select" && this.state.expiryDate !== "" && this.state.currency !== "Select Currency" ?
+                        <div>{ this.state.foodName !== "" && this.state.foodCategory !== "Select Category" && this.state.foodSurplusWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.producedLocally !== "Select" && this.state.expiryDate !== "" && this.state.currency !== "Select Currency" ?
                             <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodSurplusSubmit(e); this.notificationTest(); this.clearEFWForm() }} variant="secondary" type="button">
                                 Update
                             </Button>

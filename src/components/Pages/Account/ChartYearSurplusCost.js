@@ -113,51 +113,51 @@ class Chart21 extends Component {
                 //     }));
                 //   }
 
-                  if (year === time && month === "Jan" && st === "Surplus" && los === "Surplus"){
+                  if (year === time && month === "Jan" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       janSurplusCost: prevState.janSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Feb" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Feb" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       febSurplusCost: prevState.febSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Mar" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Mar" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       marSurplusCost: prevState.marSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Apr" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Apr" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       aprSurplusCost: prevState.aprSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "May" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "May" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       maySurplusCost: prevState.maySurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Jun" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Jun" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       junSurplusCost: prevState.junSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Jul" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Jul" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       julSurplusCost: prevState.julSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Aug" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Aug" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       augSurplusCost: prevState.augSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Sep" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Sep" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       sepSurplusCost: prevState.sepSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Oct" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Oct" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       octSurplusCost: prevState.octSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Nov" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Nov" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       novSurplusCost: prevState.novSurplusCost += newCost
                     }));
-                  } else if (year === time && month === "Dec" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Dec" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       decSurplusCost: prevState.decSurplusCost += newCost
                     }));

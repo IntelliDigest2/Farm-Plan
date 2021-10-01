@@ -17,25 +17,24 @@ import {Card} from "react-bootstrap"
 
 const time = moment().format("YYYY")
 
-class Chart50 extends Component {
+class Chart80 extends Component {
 
   state = {
     uid: this.props.auth.uid,
-    janSurplusUni: 0,
-    febSurplusUni: 0,
-    marSurplusUni: 0,
-    aprSurplusUni: 0,
-    maySurplusUni: 0,
-    junSurplusUni: 0,
-    julSurplusUni: 0,
-    augSurplusUni: 0,
-    sepSurplusUni: 0,
-    octSurplusUni: 0,
-    novSurplusUni: 0,
-    decSurplusUni: 0,
+    janSurplusFarm: 0,
+    febSurplusFarm: 0,
+    marSurplusFarm: 0,
+    aprSurplusFarm: 0,
+    maySurplusFarm: 0,
+    junSurplusFarm: 0,
+    julSurplusFarm: 0,
+    augSurplusFarm: 0,
+    sepSurplusFarm: 0,
+    octSurplusFarm: 0,
+    novSurplusFarm: 0,
+    decSurplusFarm: 0,
   }
 
-    // fetch db.json data
     fetchData = async () => {
 
       fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
@@ -68,55 +67,56 @@ class Chart50 extends Component {
               // console.log(newWeight)
             }
 
-            if (year === time && month === "Jan" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            if (year === time && month === "Jan" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                janSurplusUni: prevState.janSurplusUni += newWeight
+                janSurplusFarm: prevState.janSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Feb" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Feb" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                febSurplusUni: prevState.febSurplusUni += newWeight
+                febSurplusFarm: prevState.febSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Mar" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Mar" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                marSurplusUni: prevState.marSurplusUni += newWeight
+                marSurplusFarm: prevState.marSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Apr" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Apr" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                aprSurplusUni: prevState.aprSurplusUni += newWeight
+                aprSurplusFarm: prevState.aprSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "May" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "May" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                maySurplusUni: prevState.maySurplusUni += newWeight
+                maySurplusFarm: prevState.maySurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Jun" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Jun" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                junSurplusUni: prevState.junSurplusUni += newWeight
+                junSurplusFarm: prevState.junSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Jul" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Jul" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                julSurplusUni: prevState.julSurplusUni += newWeight
+                julSurplusFarm: prevState.julSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Aug" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Aug" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                augSurplusUni: prevState.augSurplusUni += newWeight
+                augSurplusFarm: prevState.augSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Sep" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Sep" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                sepSurplusUni: prevState.sepSurplusUni += newWeight
+                sepSurplusFarm: prevState.sepSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Oct" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Oct" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                octSurplusUni: prevState.octSurplusUni += newWeight
+                octSurplusFarm: prevState.octSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Nov" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Nov" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                novSurplusUni: prevState.novSurplusUni += newWeight
+                novSurplusFarm: prevState.novSurplusFarm += newWeight
               }));
-            } else if (year === time && month === "Dec" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            } else if (year === time && month === "Dec" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
-                decSurplusUni: prevState.decSurplusUni += newWeight
+                decSurplusFarm: prevState.decSurplusFarm += newWeight
               }));
             }
+            
 
           })
         })
@@ -127,6 +127,7 @@ class Chart50 extends Component {
     componentDidMount(){
       this.fetchData();
     }
+
 
   render(){
     return (
@@ -147,22 +148,22 @@ class Chart50 extends Component {
                 loader={<div>Loading Chart</div>}
                 data={[
                   ['Month', 'Food Surplus Weight Saved'],
-                  ['January', this.state.janSurplusUni],
-                  ['February', this.state.febSurplusUni],
-                  ['March', this.state.marSurplusUni],
-                  ['April', this.state.aprSurplusUni],
-                  ['May', this.state.maySurplusUni],
-                  ['June', this.state.junSurplusUni],
-                  ['July', this.state.julSurplusUni],
-                  ['August', this.state.augSurplusUni],
-                  ['September', this.state.sepSurplusUni],
-                  ['October', this.state.octSurplusUni],
-                  ['November', this.state.novSurplusUni],
-                  ['December', this.state.decSurplusUni],
+                  ['January', this.state.janSurplusFarm],
+                  ['February', this.state.febSurplusFarm],
+                  ['March', this.state.marSurplusFarm],
+                  ['April', this.state.aprSurplusFarm],
+                  ['May', this.state.maySurplusFarm],
+                  ['June', this.state.junSurplusFarm],
+                  ['July', this.state.julSurplusFarm],
+                  ['August', this.state.augSurplusFarm],
+                  ['September', this.state.sepSurplusFarm],
+                  ['October', this.state.octSurplusFarm],
+                  ['November', this.state.novSurplusFarm],
+                  ['December', this.state.decSurplusFarm],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'This year\'s Food Surplus Weight Saved Performance (' + time + ', Academic)',
+                  title: 'This year\'s Food Surplus Weight Saved Performance (' + time + ', Farm)',
                   chartArea: { width: '75%' },
                   colors: ['rgb(13, 27, 92)'],
                   hAxis: {
@@ -182,7 +183,7 @@ class Chart50 extends Component {
             <div style={{height: "40px", marginBottom: "10%"}}>
               <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                 <ButtonGroup>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusUni">View Previous (Monthly Surplus Weight)</Button>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusFarm">View Previous (Monthly Surplus Weight)</Button>
                   <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                   <Button style={{width: "15%"}} disabled>View Next</Button>
                 </ButtonGroup>
@@ -202,22 +203,22 @@ class Chart50 extends Component {
                 loader={<div>Loading Chart</div>}
                 data={[
                     ['Month', 'Weight Saved '],
-                    ['Jan', this.state.janSurplusUni],
-                    ['Feb', this.state.febSurplusUni],
-                    ['Mar', this.state.marSurplusUni],
-                    ['Apr', this.state.aprSurplusUni],
-                    ['May', this.state.maySurplusUni],
-                    ['Jun', this.state.junSurplusUni],
-                    ['Jul', this.state.julSurplusUni],
-                    ['Aug', this.state.augSurplusUni],
-                    ['Sep', this.state.sepSurplusUni],
-                    ['Oct', this.state.octSurplusUni],
-                    ['Nov', this.state.novSurplusUni],
-                    ['Dec', this.state.decSurplusUni],
+                    ['Jan', this.state.janSurplusFarm],
+                    ['Feb', this.state.febSurplusFarm],
+                    ['Mar', this.state.marSurplusFarm],
+                    ['Apr', this.state.aprSurplusFarm],
+                    ['May', this.state.maySurplusFarm],
+                    ['Jun', this.state.junSurplusFarm],
+                    ['Jul', this.state.julSurplusFarm],
+                    ['Aug', this.state.augSurplusFarm],
+                    ['Sep', this.state.sepSurplusFarm],
+                    ['Oct', this.state.octSurplusFarm],
+                    ['Nov', this.state.novSurplusFarm],
+                    ['Dec', this.state.decSurplusFarm],
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'Food Surplus Weight Saved Performance (' + time + ', Uni)',
+                  title: 'Food Surplus Weight Saved Performance (' + time + ', Farm)',
                   chartArea: { width: '60%' },
                   legend: 'none',
                   colors: ['rgb(13, 27, 92)'],
@@ -238,7 +239,7 @@ class Chart50 extends Component {
             <div style={{height: "95px", marginBottom: "10%"}}>
               <Card  style={{width: '90vw', height: '95px', marginBottom: "10%", marginLeft: '5.5%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                 <ButtonGroup>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusUni">Prev</Button>
+                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusFarm">Prev</Button>
                   <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                   <Button style={{width: "15%"}} disabled>Next</Button>
                 </ButtonGroup>
@@ -246,7 +247,7 @@ class Chart50 extends Component {
             </div>
 
           </MobileView>
-           
+
         <br/>
         <br/>
         <br/>
@@ -280,4 +281,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart50);
+export default connect(mapStateToProps, null)(Chart80);

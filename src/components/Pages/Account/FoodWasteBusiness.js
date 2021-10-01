@@ -42,7 +42,7 @@ class FoodWasteBusiness extends Component {
         formWidth: "",
         formHeight: "",
 
-        submissionType: "Waste",
+        submissionType: "Waste Business",
 
         // meal: "",
 

@@ -89,31 +89,31 @@ class Chart23 extends Component {
                 //     }));
                 // }
 
-                if (week === time && day === "Mon" && st === "Surplus" && los === "Surplus"){
+                if (week === time && day === "Mon" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         mondaySurplusCost: prevState.mondaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Tue" && st === "Surplus" && los === "Surplus"){
+                } else if (week === time && day === "Tue" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         tuesdaySurplusCost: prevState.tuesdaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Wed" && st === "Surplus" && los === "Surplus"){
+                } else if (week === time && day === "Wed" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         wednesdaySurplusCost: prevState.wednesdaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Thu" && st === "Surplus" && los === "Surplus"){
+                } else if (week === time && day === "Thu" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         thursdaySurplusCost: prevState.thursdaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Fri" && st === "Surplus" && los === "Surplus"){
+                } else if (week === time && day === "Fri" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         fridaySurplusCost: prevState.fridaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Sat" && st === "Surplus" && los === "Surplus"){
+                } else if (week === time && day === "Sat" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         saturdaySurplusCost: prevState.saturdaySurplusCost += newCost
                     }));
-                } else if (week === time && day === "Sun" && st === "Surplus" && los === "Surplus"){
+                } else if (week === time && day === "Sun" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         sundaySurplusCost: prevState.sundaySurplusCost += newCost
                     }));
