@@ -261,7 +261,7 @@ class AddProducts extends Component {
               var pr = doc.data().PRICE
               var pc = doc.data().POSTCODE
 
-              if (st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+              if (st === "Surplus"){
                   // console.log(newExp)
 
                   this.setState( (prevState) => ({

@@ -261,7 +261,7 @@ class AddProductsAcademic extends Component {
               var pr = doc.data().PRICE
               var pc = doc.data().POSTCODE
 
-              if (st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+              if (st === "Surplus Academic"){
                   this.setState( (prevState) => ({
                     myProducts: prevState.myProducts.concat({foodName: name, category: cat, weight: weight, wtUnit: wu, price: pr, postcode: pc, expiryDate: exp})
                   }));

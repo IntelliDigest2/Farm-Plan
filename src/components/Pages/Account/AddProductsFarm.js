@@ -261,7 +261,7 @@ class AddProductsFarm extends Component {
               var pr = doc.data().PRICE
               var pc = doc.data().POSTCODE
 
-              if (st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+              if (st === "Surplus Farm"){
                   this.setState( (prevState) => ({
                     myProducts: prevState.myProducts.concat({foodName: name, category: cat, weight: weight, wtUnit: wu, price: pr, postcode: pc, expiryDate: exp})
                   }));
