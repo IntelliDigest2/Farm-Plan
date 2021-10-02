@@ -18,14 +18,14 @@ import {Card} from "react-bootstrap"
 const time = moment().format("MMM")
 const fullMonth = moment().format("MMMM")
 
-class Chart14 extends Component {
+class Chart69 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        week1Surplus: 0,
-        week2Surplus: 0,
-        week3Surplus: 0,
-        week4Surplus: 0,
+        week1SurplusBusiness: 0,
+        week2SurplusBusiness: 0,
+        week3SurplusBusiness: 0,
+        week4SurplusBusiness: 0,
         monthEnd: ""
     }
 
@@ -60,21 +60,21 @@ class Chart14 extends Component {
               // console.log(newWeight)
             }
 
-            if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+            if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                 this.setState( (prevState) => ({
-                  week1Surplus: prevState.week1Surplus += newWeight
+                  week1SurplusBusiness: prevState.week1SurplusBusiness += newWeight
                 }));
-              } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+              } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                 this.setState( (prevState) => ({
-                  week2Surplus: prevState.week2Surplus += newWeight
+                  week2SurplusBusiness: prevState.week2SurplusBusiness += newWeight
                 }));
-              } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+              } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                 this.setState( (prevState) => ({
-                  week3Surplus: prevState.week3Surplus += newWeight
+                  week3SurplusBusiness: prevState.week3SurplusBusiness += newWeight
                 }));
-              } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+              } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                 this.setState( (prevState) => ({
-                  week4Surplus: prevState.week4Surplus += newWeight
+                  week4SurplusBusiness: prevState.week4SurplusBusiness += newWeight
                 }));
               }
 
@@ -116,13 +116,13 @@ class Chart14 extends Component {
                         loader={<div>Loading Chart</div>}
                         data={[
                             ['Week/Period', 'Food Surplus Weight Saved'],
-                            ['1st-7th', this.state.week1Surplus],
-                            ['8th-14th', this.state.week2Surplus],
-                            ['15th-21st', this.state.week3Surplus],
-                            ['22nd-'+this.state.monthEnd, this.state.week4Surplus],
+                            ['1st-7th', this.state.week1SurplusBusiness],
+                            ['8th-14th', this.state.week2SurplusBusiness],
+                            ['15th-21st', this.state.week3SurplusBusiness],
+                            ['22nd-'+this.state.monthEnd, this.state.week4SurplusBusiness],
                         ]}
                         options={{
-                            title: 'This month\'s Food Surplus Weight Saved Performance (' + fullMonth + ' 2021)',
+                            title: 'This month\'s Food Surplus Weight Saved Performance (' + fullMonth + ', Business)',
                             chartArea: {width: '50%'},
                             colors: ['rgb(13, 27, 92)'],
                             hAxis: {
@@ -141,9 +141,9 @@ class Chart14 extends Component {
                 <div style={{height: "40px", marginBottom: "10%"}}>
                   <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                   <ButtonGroup>
-                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplus">View Previous (Weekly Surplus Weight)</Button>
+                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusBusiness">View Previous (Weekly Surplus Weight)</Button>
                       <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplus">View Next (Yearly Surplus Weight)</Button>
+                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusBusiness">View Next (Yearly Surplus Weight)</Button>
                   </ButtonGroup>
                   </Card>
                 </div>
@@ -160,13 +160,13 @@ class Chart14 extends Component {
                         loader={<div>Loading Chart</div>}
                         data={[
                             ['Week/Period', 'Weight Saved '],
-                            ['1st-7th', this.state.week1Surplus],
-                            ['8th-14th', this.state.week2Surplus],
-                            ['15th-21st', this.state.week3Surplus],
-                            ['22nd-'+this.state.monthEnd, this.state.week4Surplus],
+                            ['1st-7th', this.state.week1SurplusBusiness],
+                            ['8th-14th', this.state.week2SurplusBusiness],
+                            ['15th-21st', this.state.week3SurplusBusiness],
+                            ['22nd-'+this.state.monthEnd, this.state.week4SurplusBusiness],
                         ]}
                         options={{
-                            title: 'Food Surplus Weight Saved Performance (' + fullMonth + ' 2021)',
+                            title: 'Food Surplus Weight Saved Performance (' + fullMonth + ', Business)',
                             chartArea: {width: '50%'},
                             colors: ['rgb(13, 27, 92)'],
                             legend: "none",
@@ -185,9 +185,9 @@ class Chart14 extends Component {
                 <div style={{height: "95px", marginBottom: "10%"}}>
                   <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                   <ButtonGroup>
-                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplus">Prev</Button>
+                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusBusiness">Prev</Button>
                       <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplus">Next</Button>
+                      <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusBusiness">Next</Button>
                   </ButtonGroup>
                   </Card>
                 </div>
@@ -219,4 +219,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart14);
+export default connect(mapStateToProps, null)(Chart69);

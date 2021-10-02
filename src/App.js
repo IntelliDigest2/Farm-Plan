@@ -21,7 +21,7 @@ import FoodWaste from "./components/Pages/Account/FoodWaste";
 import FoodLoss from "./components/Pages/Account/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/FoodWasteBusiness";
 import FoodIntake from "./components/Pages/Account/FoodIntake";
-import FoodSurplus from "./components/Pages/Account/FoodSurplus";
+// import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
 import Chart1 from "./components/Pages/Account/ChartYear";
 import Chart2 from "./components/Pages/Account/ChartMonth";
@@ -98,14 +98,54 @@ import Chart56 from "./components/Pages/Account/ChartYearSurplusCostUni";
 import Chart57 from "./components/Pages/Account/ChartMonthSurplusCostUni";
 import Chart58 from "./components/Pages/Account/ChartWeekSurplusCostUni";
 
+import Chart59 from "./components/Pages/Account/ChartYearBusiness";
+import Chart60 from "./components/Pages/Account/ChartMonthBusiness";
+import Chart61 from "./components/Pages/Account/ChartWeekBusiness";
+
+import Chart62 from "./components/Pages/Account/ChartYearGHGBusiness";
+import Chart63 from "./components/Pages/Account/ChartMonthGHGBusiness";
+import Chart64 from "./components/Pages/Account/ChartWeekGHGBusiness";
+
+import Chart65 from "./components/Pages/Account/ChartYearCostBusiness";
+import Chart66 from "./components/Pages/Account/ChartMonthCostBusiness";
+import Chart67 from "./components/Pages/Account/ChartWeekCostBusiness";
+
+import Chart68 from "./components/Pages/Account/ChartYearSurplusBusiness";
+import Chart69 from "./components/Pages/Account/ChartMonthSurplusBusiness";
+import Chart70 from "./components/Pages/Account/ChartWeekSurplusBusiness";
+
+import Chart71 from "./components/Pages/Account/ChartYearSurplusGHGBusiness";
+import Chart72 from "./components/Pages/Account/ChartMonthSurplusGHGBusiness";
+import Chart73 from "./components/Pages/Account/ChartWeekSurplusGHGBusiness";
+
+import Chart74 from "./components/Pages/Account/ChartYearSurplusCostBusiness";
+import Chart75 from "./components/Pages/Account/ChartMonthSurplusCostBusiness";
+import Chart76 from "./components/Pages/Account/ChartWeekSurplusCostBusiness";
+
+import Chart77 from "./components/Pages/Account/ChartYearSurplusFarm";
+import Chart78 from "./components/Pages/Account/ChartMonthSurplusFarm";
+import Chart79 from "./components/Pages/Account/ChartWeekSurplusFarm";
+
+import Chart80 from "./components/Pages/Account/ChartYearSurplusGHGFarm";
+import Chart81 from "./components/Pages/Account/ChartMonthSurplusGHGFarm";
+import Chart82 from "./components/Pages/Account/ChartWeekSurplusGHGFarm";
+
+import Chart83 from "./components/Pages/Account/ChartYearSurplusCostFarm";
+import Chart84 from "./components/Pages/Account/ChartMonthSurplusCostFarm";
+import Chart85 from "./components/Pages/Account/ChartWeekSurplusCostFarm";
+
 import FoodReduction from "./components/Pages/FoodReduction";
 import InfoTable from "./components/Pages/InfoTable";
 
 import BrowseProducts from "./components/Pages/Account/BrowseProducts";
-import BrowseProductsLocalProduce from "./components/Pages/Account/BrowseProductsLocalProduce";
+// import BrowseProductsLocalProduce from "./components/Pages/Account/BrowseProductsLocalProduce";
 
-// import ProductListing from "./components/Pages/Account/products/ProductListing";
-// import UploadFood from "./components/Pages/Account/UploadFood";
+import ProductListing from "./components/Pages/Account/products/ProductListing";
+
+import AddProducts from "./components/Pages/Account/AddProducts";
+import AddProductsFarm from "./components/Pages/Account/AddProductsFarm";
+import AddProductsBusiness from "./components/Pages/Account/AddProductsBusiness";
+import AddProductsAcademic from "./components/Pages/Account/AddProductsAcademic";
 
 import FoodWasteAcademic from "./components/Pages/Account/FoodWasteAcademic";
 import FoodIntakeAcademic from "./components/Pages/Account/FoodIntakeAcademic";
@@ -175,7 +215,7 @@ class App extends Component {
             <Route path="/food-loss" exact component={FoodLoss}/>
             <Route path="/food-wasteBusiness" exact component={FoodWasteBusiness}/>
             <Route path="/food-intake" exact component={FoodIntake}/>
-            <Route path="/food-surplus" exact component={FoodSurplus}/>
+            {/* <Route path="/food-surplus" exact component={FoodSurplus}/> */}
             <Route path="/table" component={InfoTable} />
             
             <Route path="/chart/year" exact component={Chart1} />
@@ -253,13 +293,53 @@ class App extends Component {
             <Route path="/chart/monthSurplusCostUni" exact component={Chart57} />
             <Route path="/chart/weekSurplusCostUni" exact component={Chart58} />
 
+            <Route path="/chart/yearBusiness" exact component={Chart59} />
+            <Route path="/chart/monthBusiness" exact component={Chart60} />
+            <Route path="/chart/weekBusiness" exact component={Chart61} />
+
+            <Route path="/chart/yearGHGBusiness" exact component={Chart62} />
+            <Route path="/chart/monthGHGBusiness" exact component={Chart63} />
+            <Route path="/chart/weekGHGBusiness" exact component={Chart64} />
+
+            <Route path="/chart/yearCostBusiness" exact component={Chart65} />
+            <Route path="/chart/monthCostBusiness" exact component={Chart66} />
+            <Route path="/chart/weekCostBusiness" exact component={Chart67} />
+
+            <Route path="/chart/yearSurplusBusiness" exact component={Chart68} />
+            <Route path="/chart/monthSurplusBusiness" exact component={Chart69} />
+            <Route path="/chart/weekSurplusBusiness" exact component={Chart70} />
+
+            <Route path="/chart/yearSurplusGHGBusiness" exact component={Chart71} />
+            <Route path="/chart/monthSurplusGHGBusiness" exact component={Chart72} />
+            <Route path="/chart/weekSurplusGHGBusiness" exact component={Chart73} />
+
+            <Route path="/chart/yearSurplusCostBusiness" exact component={Chart74} />
+            <Route path="/chart/monthSurplusCostBusiness" exact component={Chart75} />
+            <Route path="/chart/weekSurplusCostBusiness" exact component={Chart76} />
+
+            <Route path="/chart/yearSurplusFarm" exact component={Chart77} />
+            <Route path="/chart/monthSurplusFarm" exact component={Chart78} />
+            <Route path="/chart/weekSurplusFarm" exact component={Chart79} />
+
+            <Route path="/chart/yearSurplusGHGFarm" exact component={Chart80} />
+            <Route path="/chart/monthSurplusGHGFarm" exact component={Chart81} />
+            <Route path="/chart/weekSurplusGHGFarm" exact component={Chart82} />
+
+            <Route path="/chart/yearSurplusCostFarm" exact component={Chart83} />
+            <Route path="/chart/monthSurplusCostFarm" exact component={Chart84} />
+            <Route path="/chart/weekSurplusCostFarm" exact component={Chart85} />
+
             <Route path="/food-reduction" component={FoodReduction} />
 
             <Route path="/browse-products" component={BrowseProducts} />
-            <Route path="/browse-products-local" component={BrowseProductsLocalProduce} />
+            {/* <Route path="/browse-products-local" component={BrowseProductsLocalProduce} /> */}
 
-            {/* <Route path="/product-listing" component={ProductListing} />
-            <Route path="/upload-food" component={UploadFood} /> */}
+            <Route path="/product-listing" component={ProductListing} />
+
+            <Route path="/add-products" component={AddProducts} />
+            <Route path="/add-products-farm" component={AddProductsFarm} />
+            <Route path="/add-products-business" component={AddProductsBusiness} />
+            <Route path="/add-products-academic" component={AddProductsAcademic} />
 
             <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
             <Route path="/food-intakeAcademic" component={FoodIntakeAcademic} />

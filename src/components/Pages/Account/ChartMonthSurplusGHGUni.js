@@ -41,19 +41,19 @@ class Chart54 extends Component {
                 var st = doc.data().SUBMISSIONTYPE
                 var los = doc.data().LOCALORNOT
 
-                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Surplus Academic" && los === "Surplus"){
+                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                   this.setState( (prevState) => ({
                     week1SurplusGHGUni: prevState.week1SurplusGHGUni += ghg
                   }));
-                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Surplus Academic" && los === "Surplus"){
+                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                   this.setState( (prevState) => ({
                     week2SurplusGHGUni: prevState.week2SurplusGHGUni += ghg
                   }));
-                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Surplus Academic" && los === "Surplus"){
+                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                   this.setState( (prevState) => ({
                     week3SurplusGHGUni: prevState.week3SurplusGHGUni += ghg
                   }));
-                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Surplus Academic" && los === "Surplus"){
+                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                   this.setState( (prevState) => ({
                     week4SurplusGHGUni: prevState.week4SurplusGHGUni += ghg
                   }));

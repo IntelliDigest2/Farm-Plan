@@ -15,14 +15,14 @@ import {Card} from "react-bootstrap"
 const time = moment().format("MMM")
 const fullMonth = moment().format("MMMM")
 
-class Chart22 extends Component {
+class Chart63 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        week1SurplusCost: 0,
-        week2SurplusCost: 0,
-        week3SurplusCost: 0,
-        week4SurplusCost: 0,
+        week1GHGBusiness: 0,
+        week2GHGBusiness: 0,
+        week3GHGBusiness: 0,
+        week4GHGBusiness: 0,
         monthEnd: ""
     }
 
@@ -35,63 +35,34 @@ class Chart22 extends Component {
 
                 var month = doc.data().MONTH
                 var mdate = doc.data().MDATE
-                var cost = doc.data().COST
-                var curr = doc.data().CURRENCY
+                var ghg = doc.data().GHG
                 // var isSurplus = doc.data().EDIBLEORINEDIBLE
 
                 var st = doc.data().SUBMISSIONTYPE
-                var los = doc.data().LOCALORNOT
-
-                var newCost = 0;
-
-                if (curr === "GBP (£)"){
-                    newCost = Number(cost*1)
-                } else if (curr === "USD ($)"){
-                    newCost = Number((cost/1.404).toFixed(2))
-                } else if (curr === "EUR (€)"){
-                    newCost = Number((cost/1.161).toFixed(2))
-                }
 
                 // var carbCon = doc.data().CARBSCONTENT
                 // var proCon = doc.data().PROTEINCONTENT
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                // if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && isSurplus === "Edible"){
-                //   this.setState( (prevState) => ({
-                //     week1Cost: prevState.week1Cost += newCost
-                //   }));
-                // } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && isSurplus === "Edible"){
-                //   this.setState( (prevState) => ({
-                //     week2Cost: prevState.week2Cost += newCost
-                //   }));
-                // } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && isSurplus === "Edible"){
-                //   this.setState( (prevState) => ({
-                //     week3Cost: prevState.week3Cost += newCost
-                //   }));
-                // } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && isSurplus === "Edible"){
-                //   this.setState( (prevState) => ({
-                //     week4Cost: prevState.week4Cost += newCost
-                //   }));
-                // }
+                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Waste Business"){
+                  this.setState( (prevState) => ({
+                    week1GHGBusiness: prevState.week1GHGBusiness += ghg
+                  }));
+                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Waste Business"){
+                  this.setState( (prevState) => ({
+                    week2GHGBusiness: prevState.week2GHGBusiness += ghg
+                  }));
+                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Waste Business"){
+                  this.setState( (prevState) => ({
+                    week3GHGBusiness: prevState.week3GHGBusiness += ghg
+                  }));
+                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Waste Business"){
+                  this.setState( (prevState) => ({
+                    week4GHGBusiness: prevState.week4GHGBusiness += ghg
+                  }));
+                } 
 
-                if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                    week1SurplusCost: prevState.week1SurplusCost += newCost
-                  }));
-                } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                    week2SurplusCost: prevState.week2SurplusCost += newCost
-                  }));
-                } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                    week3SurplusCost: prevState.week3SurplusCost += newCost
-                  }));
-                } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                    week4SurplusCost: prevState.week4SurplusCost += newCost
-                  }));
-                }
             })
 
           })
@@ -130,22 +101,22 @@ class Chart22 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Week/Period', 'Food Surplus Costs Saved'],
-                                ['1st-7th', this.state.week1SurplusCost],
-                                ['8th-14th', this.state.week2SurplusCost],
-                                ['15th-21st', this.state.week3SurplusCost],
-                                ['22nd-'+this.state.monthEnd, this.state.week4SurplusCost],
+                                ['Week/Period', 'Food Wastage GHG'],
+                                ['1st-7th', this.state.week1GHGBusiness],
+                                ['8th-14th', this.state.week2GHGBusiness],
+                                ['15th-21st', this.state.week3GHGBusiness],
+                                ['22nd-'+this.state.monthEnd, this.state.week4GHGBusiness],
                             ]}
                             options={{
-                                title: 'This month\'s Food Surplus Costs Saved Performance (' + fullMonth + ' 2021)',
+                                title: 'This month\'s Food Wastage GHG Performance (' + fullMonth + ', Business)',
                                 chartArea: {width: '50%'},
-                                colors: ['rgb(13, 27, 92)'],
+                                colors: ['#aab41e'],
                                 hAxis: {
                                     title: 'Week/Period of ' + fullMonth,
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Costs Saved from Food Surplus (GBP (£))'
+                                    title: 'GHG Emissions of Food Wastage (kg co2)'
                                 }
                             }}
                             legendToggle
@@ -156,9 +127,9 @@ class Chart22 extends Component {
                     <div style={{height: "40px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusCost">View Previous (Weekly Surplus Cost)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekGHGBusiness">View Previous (Weekly GHG)</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusCost">View Next (Yearly Surplus Cost)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearGHGBusiness">View Next (Yearly GHG)</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
@@ -174,23 +145,23 @@ class Chart22 extends Component {
                             chartType="ColumnChart"
                             loader={<div>Loading Chart</div>}
                             data={[
-                                ['Week/Period', 'Costs Saved '],
-                                ['1st-7th', this.state.week1SurplusCost],
-                                ['8th-14th', this.state.week2SurplusCost],
-                                ['15th-21st', this.state.week3SurplusCost],
-                                ['22nd-'+this.state.monthEnd, this.state.week4SurplusCost],
+                                ['Week/Period', 'GHG '],
+                                ['1st-7th', this.state.week1GHGBusiness],
+                                ['8th-14th', this.state.week2GHGBusiness],
+                                ['15th-21st', this.state.week3GHGBusiness],
+                                ['22nd-'+this.state.monthEnd, this.state.week4GHGBusiness],
                             ]}
                             options={{
-                                title: 'Food Surplus Costs Saved Performance (' + fullMonth + ' 2021)',
+                                title: 'Food Wastage GHG Performance (' + fullMonth + ', Business)',
                                 chartArea: {width: '50%'},
-                                colors: ['rgb(13, 27, 92)'],
+                                colors: ['#aab41e'],
                                 legend: "none",
                                 hAxis: {
                                     title: 'Week/Period of ' + fullMonth,
                                     minValue: 0,
                                 },
                                 vAxis: {
-                                    title: 'Costs Saved from Food Surplus (GBP (£))'
+                                    title: 'GHG Emissions of Food Wastage (kg co2)'
                                 }
                             }}
                         />
@@ -200,13 +171,13 @@ class Chart22 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '78vw', height: '95px', marginBottom: "15%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekSurplusCost">Prev</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/weekGHGBusiness">Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearSurplusCost">Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/yearGHGBusiness">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
-
+                    
                 </MobileView>
 
             </React.Fragment>
@@ -236,4 +207,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart22);
+export default connect(mapStateToProps, null)(Chart63);

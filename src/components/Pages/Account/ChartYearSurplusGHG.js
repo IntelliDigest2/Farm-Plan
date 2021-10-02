@@ -52,51 +52,51 @@ class Chart17 extends Component {
                 // var fatCon = doc.data().FATCONTENT
                 // var fibCon = doc.data().FIBRECONTENT
 
-                if (year === time && month === "Jan" && st === "Surplus" && los === "Surplus"){
+                if (year === time && month === "Jan" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       janSurplusGHG: prevState.janSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Feb" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Feb" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       febSurplusGHG: prevState.febSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Mar" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Mar" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       marSurplusGHG: prevState.marSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Apr" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Apr" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       aprSurplusGHG: prevState.aprSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "May" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "May" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       maySurplusGHG: prevState.maySurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Jun" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Jun" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       junSurplusGHG: prevState.junSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Jul" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Jul" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       julSurplusGHG: prevState.julSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Aug" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Aug" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       augSurplusGHG: prevState.augSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Sep" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Sep" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       sepSurplusGHG: prevState.sepSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Oct" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Oct" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       octSurplusGHG: prevState.octSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Nov" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Nov" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       novSurplusGHG: prevState.novSurplusGHG += ghg
                     }));
-                  } else if (year === time && month === "Dec" && st === "Surplus" && los === "Surplus"){
+                  } else if (year === time && month === "Dec" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                       decSurplusGHG: prevState.decSurplusGHG += ghg
                     }));

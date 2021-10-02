@@ -45,31 +45,31 @@ class Chart55 extends Component {
                 var st = doc.data().SUBMISSIONTYPE
                 var los = doc.data().LOCALORNOT
 
-                if (week === time && day === "Mon" && st === "Surplus Academic" && los === "Surplus"){
+                if (week === time && day === "Mon" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         mondaySurplusGHGUni: prevState.mondaySurplusGHGUni += ghg
                     }));
-                } else if (week === time && day === "Tue" && st === "Surplus Academic" && los === "Surplus"){
+                } else if (week === time && day === "Tue" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         tuesdaySurplusGHGUni: prevState.tuesdaySurplusGHGUni += ghg
                     }));
-                } else if (week === time && day === "Wed" && st === "Surplus Academic" && los === "Surplus"){
+                } else if (week === time && day === "Wed" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         wednesdaySurplusGHGUni: prevState.wednesdaySurplusGHGUni += ghg
                     }));
-                } else if (week === time && day === "Thu" && st === "Surplus Academic" && los === "Surplus"){
+                } else if (week === time && day === "Thu" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         thursdaySurplusGHGUni: prevState.thursdaySurplusGHGUni += ghg
                     }));
-                } else if (week === time && day === "Fri" && st === "Surplus Academic" && los === "Surplus"){
+                } else if (week === time && day === "Fri" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         fridaySurplusGHGUni: prevState.fridaySurplusGHGUni += ghg
                     }));
-                } else if (week === time && day === "Sat" && st === "Surplus Academic" && los === "Surplus"){
+                } else if (week === time && day === "Sat" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         saturdaySurplusGHGUni: prevState.saturdaySurplusGHGUni += ghg
                     }));
-                } else if (week === time && day === "Sun" && st === "Surplus Academic" && los === "Surplus"){
+                } else if (week === time && day === "Sun" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
                         sundaySurplusGHGUni: prevState.sundaySurplusGHGUni += ghg
                     }));

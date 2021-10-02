@@ -14,17 +14,18 @@ import {Card} from "react-bootstrap"
 
 const time = moment().format("W")
 
-class Chart52 extends Component {
+class Chart79 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        mondaySurplusUni: 0,
-        tuesdaySurplusUni: 0,
-        wednesdaySurplusUni: 0,
-        thursdaySurplusUni: 0,
-        fridaySurplusUni: 0,
-        saturdaySurplusUni: 0,
-        sundaySurplusUni: 0,
+        mondaySurplusFarm: 0,
+        tuesdaySurplusFarm: 0,
+        wednesdaySurplusFarm: 0,
+        thursdaySurplusFarm: 0,
+        fridaySurplusFarm: 0,
+        saturdaySurplusFarm: 0,
+        sundaySurplusFarm: 0,
+        // prevOption: ""
     }
 
     fetchData = async () => {
@@ -59,35 +60,35 @@ class Chart52 extends Component {
                   // console.log(newWeight)
                 }
 
-                if (week === time && day === "Mon" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                if (week === time && day === "Mon" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                        mondaySurplusUni: prevState.mondaySurplusUni += newWeight
+                        mondaySurplusFarm: prevState.mondaySurplusFarm += newWeight
                     }));
-                } else if (week === time && day === "Tue" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                      tuesdaySurplusUni: prevState.tuesdaySurplusUni += newWeight
-                  }));
-                } else if (week === time && day === "Wed" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                      wednesdaySurplusUni: prevState.wednesdaySurplusUni += newWeight
-                  }));
-                } else if (week === time && day === "Thu" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                    thursdaySurplusUni: prevState.thursdaySurplusUni += newWeight
-                  })); 
-                } else if (week === time && day === "Fri" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                    fridaySurplusUni: prevState.fridaySurplusUni += newWeight
-                  }));
-                } else if (week === time && day === "Sat" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                    saturdaySurplusUni: prevState.saturdaySurplusUni += newWeight
-                  }));
-                } else if (week === time && day === "Sun" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
-                  this.setState( (prevState) => ({
-                    sundaySurplusUni: prevState.sundaySurplusUni += newWeight
-                  }));
-                }
+                } else if (week === time && day === "Tue" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                    this.setState( (prevState) => ({
+                        tuesdaySurplusFarm: prevState.tuesdaySurplusFarm += newWeight
+                    }));
+                } else if (week === time && day === "Wed" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                    this.setState( (prevState) => ({
+                        wednesdaySurplusFarm: prevState.wednesdaySurplusFarm += newWeight
+                    }));
+                } else if (week === time && day === "Thu" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                    this.setState( (prevState) => ({
+                      thursdaySurplusFarm: prevState.thursdaySurplusFarm += newWeight
+                    })); 
+                  } else if (week === time && day === "Fri" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                    this.setState( (prevState) => ({
+                      fridaySurplusFarm: prevState.fridaySurplusFarm += newWeight
+                    }));
+                  } else if (week === time && day === "Sat" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                    this.setState( (prevState) => ({
+                      saturdaySurplusFarm: prevState.saturdaySurplusFarm += newWeight
+                    }));
+                  } else if (week === time && day === "Sun" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                    this.setState( (prevState) => ({
+                      sundaySurplusFarm: prevState.sundaySurplusFarm += newWeight
+                    }));
+                  }
 
             })
 
@@ -111,45 +112,46 @@ class Chart52 extends Component {
                 <br/>
 
                 <BrowserView>
-
-                      <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
+                    {/* <ChartStyle> */}
+                    <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
                         <Chart className="bar-chart"
-                          width={'78vw'}
-                          height={'600px'}
-                          chartType="ColumnChart"
-                          loader={<div>Loading Chart</div>}
-                          data={[
-                              ['Day of the Week', 'Food Surplus Weight Saved'],
-                              ['Monday', this.state.mondaySurplusUni],
-                              ['Tuesday', this.state.tuesdaySurplusUni],
-                              ['Wednesday', this.state.wednesdaySurplusUni],
-                              ['Thursday', this.state.thursdaySurplusUni],
-                              ['Friday', this.state.fridaySurplusUni],
-                              ['Saturday', this.state.saturdaySurplusUni],
-                              ['Sunday', this.state.sundaySurplusUni],
-                          ]}
-                          options={{
-                              title: 'This week\'s Food Surplus Weight Saved Performance (' + time + ', Academic)',
-                              chartArea: {width: '50%'},
-                              colors: ['rgb(13, 27, 92)'],
-                              hAxis: {
-                                  title: 'Day of the Week',
-                                  minValue: 0,
-                              },
-                              vAxis: {
-                                  title: 'Weight of Food Saved (kg)'
-                              }
-                          }}
-                          legendToggle
+                            width={'78vw'}
+                            height={'600px'}
+                            chartType="ColumnChart"
+                            loader={<div>Loading Chart</div>}
+                            data={[
+                                ['Day of the Week', 'Food Surplus Weight Saved'],
+                                ['Monday', this.state.mondaySurplusFarm],
+                                ['Tuesday', this.state.tuesdaySurplusFarm],
+                                ['Wednesday', this.state.wednesdaySurplusFarm],
+                                ['Thursday', this.state.thursdaySurplusFarm],
+                                ['Friday', this.state.fridaySurplusFarm],
+                                ['Saturday', this.state.saturdaySurplusFarm],
+                                ['Sunday', this.state.sundaySurplusFarm],
+                            ]}
+                            options={{
+                                title: 'This week\'s Food Surplus Weight Saved Performance (' + time + ', Farm)',
+                                chartArea: {width: '50%'},
+                                colors: ['rgb(13, 27, 92)'],
+                                hAxis: {
+                                    title: 'Day of the Week',
+                                    minValue: 0,
+                                },
+                                vAxis: {
+                                    title: 'Weight of Food Saved (kg)'
+                                }
+                            }}
+                            legendToggle
                         />
-                      </div>
+                    </div>
+                    {/* </ChartStyle> */}
 
                     <div style={{height: "40px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
                             <Button style={{width: "15%"}} disabled>View Previous</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusUni">View Next (Monthly Surplus Weight)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusFarm">View Next (Monthly Surplus Weight)</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
@@ -166,16 +168,16 @@ class Chart52 extends Component {
                             loader={<div>Loading Chart</div>}
                             data={[
                                 ['Meal of the day', 'Weight Saved '],
-                                ['Mon', this.state.mondaySurplusUni],
-                                ['Tue', this.state.tuesdaySurplusUni],
-                                ['Wed', this.state.wednesdaySurplusUni],
-                                ['Thu', this.state.thursdaySurplusUni],
-                                ['Fri', this.state.fridaySurplusUni],
-                                ['Sat', this.state.saturdaySurplusUni],
-                                ['Sun', this.state.sundaySurplusUni],
+                                ['Mon', this.state.mondaySurplusFarm],
+                                ['Tue', this.state.tuesdaySurplusFarm],
+                                ['Wed', this.state.wednesdaySurplusFarm],
+                                ['Thu', this.state.thursdaySurplusFarm],
+                                ['Fri', this.state.fridaySurplusFarm],
+                                ['Sat', this.state.saturdaySurplusFarm],
+                                ['Sun', this.state.sundaySurplusFarm],
                             ]}
                             options={{
-                                title: 'This week\'s Food Surplus Weight Saved Performance (' + time + ', Uni)',
+                                title: 'This week\'s Food Surplus Weight Saved Performance (' + time + ', Farm)',
                                 chartArea: {width: '52.5%'},
                                 colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
@@ -196,7 +198,7 @@ class Chart52 extends Component {
                         <ButtonGroup>
                             <Button style={{width: "15%"}} className="custom-btn" disabled>Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusUni">Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusFarm">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
@@ -231,4 +233,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart52);
+export default connect(mapStateToProps, null)(Chart79);

@@ -3018,6 +3018,7 @@ export const createFoodSurplusData =  (data) => {
       const SUBMISSIONTYPE = data.submissionType;
 
       const FOODNAME = data.foodName;
+      const FOODCATEGORY = data.foodCategory;
       const LOCALORNOT = data.producedLocally;
       const EXPIRYDATE = data.expiryDate;
       const GHG = data.ghg*data.weightMultiplier;
@@ -3033,6 +3034,14 @@ export const createFoodSurplusData =  (data) => {
       const MDATE = data.chartSubmissionDate;
       const YEAR = data.chartSubmissionYear;
       const FULLDATE = data.chartSubmissionFullDate;
+
+      const PRICE = data.price;
+      const POSTCODE = data.postcode;
+
+      const CARBSCONTENT = data.carbsContent;
+      const PROTEINCONTENT = data.proteinContent;
+      const FIBRECONTENT = data.fibreContent;
+      const FATCONTENT = data.fatContent;
 
       const date = new Date();
       const DATE = moment(date).format(
@@ -4457,6 +4466,7 @@ export const createFoodSurplusData =  (data) => {
           SUBMISSIONTYPE: SUBMISSIONTYPE,
 
           FOODNAME: FOODNAME,
+          FOODCATEGORY: FOODCATEGORY,
           LOCALORNOT: LOCALORNOT,
           EXPIRYDATE: EXPIRYDATE,
           GHG: GHG,
@@ -4472,6 +4482,14 @@ export const createFoodSurplusData =  (data) => {
           MDATE: MDATE,
           YEAR: YEAR,
           FULLDATE: FULLDATE,
+
+          PRICE: PRICE,
+          POSTCODE: POSTCODE,
+
+          CARBSCONTENT: CARBSCONTENT,
+          PROTEINCONTENT: PROTEINCONTENT,
+          FIBRECONTENT: FIBRECONTENT,
+          FATCONTENT: FATCONTENT,
 
       })
       .then(()=> {

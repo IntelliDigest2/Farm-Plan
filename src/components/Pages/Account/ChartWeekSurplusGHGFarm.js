@@ -14,17 +14,17 @@ import {Card} from "react-bootstrap"
 
 const time = moment().format("W")
 
-class Chart19 extends Component {
+class Chart82 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        mondaySurplusGHG: 0,
-        tuesdaySurplusGHG: 0,
-        wednesdaySurplusGHG: 0,
-        thursdaySurplusGHG: 0,
-        fridaySurplusGHG: 0,
-        saturdaySurplusGHG: 0,
-        sundaySurplusGHG: 0,
+        mondaySurplusGHGFarm: 0,
+        tuesdaySurplusGHGFarm: 0,
+        wednesdaySurplusGHGFarm: 0,
+        thursdaySurplusGHGFarm: 0,
+        fridaySurplusGHGFarm: 0,
+        saturdaySurplusGHGFarm: 0,
+        sundaySurplusGHGFarm: 0,
         // prevOption: ""
     }
 
@@ -45,87 +45,41 @@ class Chart19 extends Component {
                 var st = doc.data().SUBMISSIONTYPE
                 var los = doc.data().LOCALORNOT
 
-                // var carbCon = doc.data().CARBSCONTENT
-                // var proCon = doc.data().PROTEINCONTENT
-                // var fatCon = doc.data().FATCONTENT
-                // var fibCon = doc.data().FIBRECONTENT
-
-                if (week === time && day === "Mon" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                if (week === time && day === "Mon" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                        mondaySurplusGHG: prevState.mondaySurplusGHG += ghg
+                        mondaySurplusGHGFarm: prevState.mondaySurplusGHGFarm += ghg
                     }));
-                } else if (week === time && day === "Tue" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                } else if (week === time && day === "Tue" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                        tuesdaySurplusGHG: prevState.tuesdaySurplusGHG += ghg
+                        tuesdaySurplusGHGFarm: prevState.tuesdaySurplusGHGFarm += ghg
                     }));
-                } else if (week === time && day === "Wed" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                } else if (week === time && day === "Wed" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                        wednesdaySurplusGHG: prevState.wednesdaySurplusGHG += ghg
+                        wednesdaySurplusGHGFarm: prevState.wednesdaySurplusGHGFarm += ghg
                     }));
-                } else if (week === time && day === "Thu" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                } else if (week === time && day === "Thu" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                        thursdaySurplusGHG: prevState.thursdaySurplusGHG += ghg
+                        thursdaySurplusGHGFarm: prevState.thursdaySurplusGHGFarm += ghg
                     }));
-                } else if (week === time && day === "Fri" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                } else if (week === time && day === "Fri" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                        fridaySurplusGHG: prevState.fridaySurplusGHG += ghg
+                        fridaySurplusGHGFarm: prevState.fridaySurplusGHGFarm += ghg
                     }));
-                } else if (week === time && day === "Sat" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                } else if (week === time && day === "Sat" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                        saturdaySurplusGHG: prevState.saturdaySurplusGHG += ghg
+                        saturdaySurplusGHGFarm: prevState.saturdaySurplusGHGFarm += ghg
                     }));
-                } else if (week === time && day === "Sun" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                } else if (week === time && day === "Sun" && st === "Surplus Farm" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                        sundaySurplusGHG: prevState.sundaySurplusGHG += ghg
+                        sundaySurplusGHGFarm: prevState.sundaySurplusGHGFarm += ghg
                     }));
                 }
 
-                // else if (week === time && day === "Mon" && isSurplus === "Surplus"){
-                //     this.setState( (prevState) => ({
-                //         mondayGHG: prevState.mondayGHG -= ghg
-                //     }));
-                // } else if (week === time && day === "Tue" && isSurplus === "Surplus"){
-                //     this.setState( (prevState) => ({
-                //         tuesdayGHG: prevState.tuesdayGHG -= ghg
-                //     }));
-                // } else if (week === time && day === "Wed" && isSurplus === "Surplus"){
-                //     this.setState( (prevState) => ({
-                //         wednesdayGHG: prevState.wednesdayGHG -= ghg
-                //     }));
-                // } else if (week === time && day === "Thu" && isSurplus === "Surplus"){
-                //     this.setState( (prevState) => ({
-                //         thursdayGHG: prevState.thursdayGHG -= ghg
-                //     }));
-                // } else if (week === time && day === "Fri" && isSurplus === "Surplus"){
-                //     this.setState( (prevState) => ({
-                //         fridayGHG: prevState.fridayGHG -= ghg
-                //     }));
-                // } else if (week === time && day === "Sat" && isSurplus === "Surplus"){
-                //     this.setState( (prevState) => ({
-                //         saturdayGHG: prevState.saturdayGHG -= ghg
-                //     }));
-                // } else if (week === time && day === "Sun" && isSurplus === "Surplus"){
-                //     this.setState( (prevState) => ({
-                //         sundayGHG: prevState.sundayGHG -= ghg
-                //     }));
-                // }
             })
 
           })
           .catch(error => console.log(error))
     }
-
-    // getPrevOption(){
-
-    //     const { auth, profile } = this.props;
-  
-    //     if (profile.buildingFunction === "Households"){
-    //       this.setState({prevOption: "/chart/daySurplusGHG"})
-    //     } else if (profile.buildingFunction !== "Households" && profile.buildingFunction !== "Farm"){
-    //       this.setState({prevOption: "/chart/dayBusinessGHG"})
-    //     }
-  
-    //   }
 
     componentDidMount(){
         // this.getPrevOption();
@@ -154,16 +108,16 @@ class Chart19 extends Component {
                             loader={<div>Loading Chart</div>}
                             data={[
                                 ['Day', 'Food Surplus GHG Saved'],
-                                ['Monday', this.state.mondaySurplusGHG],
-                                ['Tuesday', this.state.tuesdaySurplusGHG],
-                                ['Wednesday', this.state.wednesdaySurplusGHG],
-                                ['Thursday', this.state.thursdaySurplusGHG],
-                                ['Friday', this.state.fridaySurplusGHG],
-                                ['Saturday', this.state.saturdaySurplusGHG],
-                                ['Sunday', this.state.sundaySurplusGHG],
+                                ['Monday', this.state.mondaySurplusGHGFarm],
+                                ['Tuesday', this.state.tuesdaySurplusGHGFarm],
+                                ['Wednesday', this.state.wednesdaySurplusGHGFarm],
+                                ['Thursday', this.state.thursdaySurplusGHGFarm],
+                                ['Friday', this.state.fridaySurplusGHGFarm],
+                                ['Saturday', this.state.saturdaySurplusGHGFarm],
+                                ['Sunday', this.state.sundaySurplusGHGFarm],
                             ]}
                             options={{
-                                title: 'This week\'s Food Surplus GHG Saved Performance (' + time + ')',
+                                title: 'This week\'s Food Surplus GHG Saved Performance (' + time + ', Farm)',
                                 chartArea: {width: '50%'},
                                 colors: ['rgb(13, 27, 92)'],
                                 hAxis: {
@@ -184,7 +138,7 @@ class Chart19 extends Component {
                         <ButtonGroup>
                             <Button style={{width: "15%"}} disabled>View Previous</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHG">View Next (Monthly Surplus GHG)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHGFarm">View Next (Monthly Surplus GHG)</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
@@ -201,16 +155,16 @@ class Chart19 extends Component {
                             loader={<div>Loading Chart</div>}
                             data={[
                                 ['Day', 'GHG Saved '],
-                                ['Mon', this.state.mondaySurplusGHG],
-                                ['Tue', this.state.tuesdaySurplusGHG],
-                                ['Wed', this.state.wednesdaySurplusGHG],
-                                ['Thu', this.state.thursdaySurplusGHG],
-                                ['Fri', this.state.fridaySurplusGHG],
-                                ['Sat', this.state.saturdaySurplusGHG],
-                                ['Sun', this.state.sundaySurplusGHG],
+                                ['Mon', this.state.mondaySurplusGHGFarm],
+                                ['Tue', this.state.tuesdaySurplusGHGFarm],
+                                ['Wed', this.state.wednesdaySurplusGHGFarm],
+                                ['Thu', this.state.thursdaySurplusGHGFarm],
+                                ['Fri', this.state.fridaySurplusGHGFarm],
+                                ['Sat', this.state.saturdaySurplusGHGFarm],
+                                ['Sun', this.state.sundaySurplusGHGFarm],
                             ]}
                             options={{
-                                title: 'This week\'s Food Surplus GHG Saved Performance',
+                                title: 'This week\'s Food Surplus GHG Saved Performance (Farm)',
                                 chartArea: {width: '52.5%'},
                                 colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
@@ -231,7 +185,7 @@ class Chart19 extends Component {
                         <ButtonGroup>
                             <Button style={{width: "15%"}} className="custom-btn" disabled>Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHG">Next</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHGFarm">Next</Button>
                         </ButtonGroup>
                         </Card>
                     </div>
@@ -266,4 +220,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart19);
+export default connect(mapStateToProps, null)(Chart82);

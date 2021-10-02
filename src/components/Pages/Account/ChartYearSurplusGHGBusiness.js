@@ -14,22 +14,22 @@ import {Card} from "react-bootstrap"
 
 const time = moment().format("YYYY")
 
-class Chart53 extends Component {
+class Chart71 extends Component {
 
     state = {
         uid: this.props.auth.uid,
-        janSurplusGHGUni: 0,
-        febSurplusGHGUni: 0,
-        marSurplusGHGUni: 0,
-        aprSurplusGHGUni: 0,
-        maySurplusGHGUni: 0,
-        junSurplusGHGUni: 0,
-        julSurplusGHGUni: 0,
-        augSurplusGHGUni: 0,
-        sepSurplusGHGUni: 0,
-        octSurplusGHGUni: 0,
-        novSurplusGHGUni: 0,
-        decSurplusGHGUni: 0,
+        janSurplusGHGBusiness: 0,
+        febSurplusGHGBusiness: 0,
+        marSurplusGHGBusiness: 0,
+        aprSurplusGHGBusiness: 0,
+        maySurplusGHGBusiness: 0,
+        junSurplusGHGBusiness: 0,
+        julSurplusGHGBusiness: 0,
+        augSurplusGHGBusiness: 0,
+        sepSurplusGHGBusiness: 0,
+        octSurplusGHGBusiness: 0,
+        novSurplusGHGBusiness: 0,
+        decSurplusGHGBusiness: 0,
     }
 
     fetchData = async () => {
@@ -47,53 +47,53 @@ class Chart53 extends Component {
                 var st = doc.data().SUBMISSIONTYPE
                 var los = doc.data().LOCALORNOT
 
-                if (year === time && month === "Jan" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                if (year === time && month === "Jan" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      janSurplusGHGUni: prevState.janSurplusGHGUni += ghg
+                      janSurplusGHGBusiness: prevState.janSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Feb" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Feb" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      febSurplusGHGUni: prevState.febSurplusGHGUni += ghg
+                      febSurplusGHGBusiness: prevState.febSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Mar" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Mar" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      marSurplusGHGUni: prevState.marSurplusGHGUni += ghg
+                      marSurplusGHGBusiness: prevState.marSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Apr" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Apr" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      aprSurplusGHGUni: prevState.aprSurplusGHGUni += ghg
+                      aprSurplusGHGBusiness: prevState.aprSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "May" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "May" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      maySurplusGHGUni: prevState.maySurplusGHGUni += ghg
+                      maySurplusGHGBusiness: prevState.maySurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Jun" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Jun" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      junSurplusGHGUni: prevState.junSurplusGHGUni += ghg
+                      junSurplusGHGBusiness: prevState.junSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Jul" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Jul" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      julSurplusGHGUni: prevState.julSurplusGHGUni += ghg
+                      julSurplusGHGBusiness: prevState.julSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Aug" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Aug" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      augSurplusGHGUni: prevState.augSurplusGHGUni += ghg
+                      augSurplusGHGBusiness: prevState.augSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Sep" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Sep" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      sepSurplusGHGUni: prevState.sepSurplusGHGUni += ghg
+                      sepSurplusGHGBusiness: prevState.sepSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Oct" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Oct" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      octSurplusGHGUni: prevState.octSurplusGHGUni += ghg
+                      octSurplusGHGBusiness: prevState.octSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Nov" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Nov" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      novSurplusGHGUni: prevState.novSurplusGHGUni += ghg
+                      novSurplusGHGBusiness: prevState.novSurplusGHGBusiness += ghg
                     }));
-                  } else if (year === time && month === "Dec" && st === "Surplus Academic" && (los === "Surplus Food" || los === "Surplus Local Produce")){
+                  } else if (year === time && month === "Dec" && st === "Surplus Business" && (los === "Surplus Food" || los === "Surplus Local Produce")){
                     this.setState( (prevState) => ({
-                      decSurplusGHGUni: prevState.decSurplusGHGUni += ghg
+                      decSurplusGHGBusiness: prevState.decSurplusGHGBusiness += ghg
                     }));
                   }
 
@@ -128,21 +128,21 @@ class Chart53 extends Component {
                             loader={<div>Loading Chart</div>}
                             data={[
                                 ['Month', 'Food Surplus GHG Saved'],
-                                ['January', this.state.janSurplusGHGUni],
-                                ['February', this.state.febSurplusGHGUni],
-                                ['March', this.state.marSurplusGHGUni],
-                                ['April', this.state.aprSurplusGHGUni],
-                                ['May', this.state.maySurplusGHGUni],
-                                ['June', this.state.junSurplusGHGUni],
-                                ['July', this.state.julSurplusGHGUni],
-                                ['August', this.state.augSurplusGHGUni],
-                                ['September', this.state.sepSurplusGHGUni],
-                                ['October', this.state.octSurplusGHGUni],
-                                ['November', this.state.novSurplusGHGUni],
-                                ['December', this.state.decSurplusGHGUni],
+                                ['January', this.state.janSurplusGHGBusiness],
+                                ['February', this.state.febSurplusGHGBusiness],
+                                ['March', this.state.marSurplusGHGBusiness],
+                                ['April', this.state.aprSurplusGHGBusiness],
+                                ['May', this.state.maySurplusGHGBusiness],
+                                ['June', this.state.junSurplusGHGBusiness],
+                                ['July', this.state.julSurplusGHGBusiness],
+                                ['August', this.state.augSurplusGHGBusiness],
+                                ['September', this.state.sepSurplusGHGBusiness],
+                                ['October', this.state.octSurplusGHGBusiness],
+                                ['November', this.state.novSurplusGHGBusiness],
+                                ['December', this.state.decSurplusGHGBusiness],
                             ]}
                             options={{
-                                title: 'This year\'s Food Surplus GHG Saved Performance (' + time + ', Academic)',
+                                title: 'This year\'s Food Surplus GHG Saved Performance (' + time + ', Business)',
                                 chartArea: {width: '75%'},
                                 colors: ['rgb(13, 27, 92)'],
                                 hAxis: {
@@ -161,7 +161,7 @@ class Chart53 extends Component {
                     <div style={{height: "40px", marginBottom: "10%"}}>
                         <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHGUni">View Previous (Monthly Surplus GHG)</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHGBusiness">View Previous (Monthly Surplus GHG)</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                             <Button style={{width: "15%"}} disabled>View Next</Button>
                         </ButtonGroup>
@@ -180,21 +180,21 @@ class Chart53 extends Component {
                             loader={<div>Loading Chart</div>}
                             data={[
                                 ['Month', 'GHG Saved '],
-                                ['Jan', this.state.janSurplusGHGUni],
-                                ['Feb', this.state.febSurplusGHGUni],
-                                ['Mar', this.state.marSurplusGHGUni],
-                                ['Apr', this.state.aprSurplusGHGUni],
-                                ['May', this.state.maySurplusGHGUni],
-                                ['Jun', this.state.junSurplusGHGUni],
-                                ['Jul', this.state.julSurplusGHGUni],
-                                ['Aug', this.state.augSurplusGHGUni],
-                                ['Sep', this.state.sepSurplusGHGUni],
-                                ['Oct', this.state.octSurplusGHGUni],
-                                ['Nov', this.state.novSurplusGHGUni],
-                                ['Dec', this.state.decSurplusGHGUni],
+                                ['Jan', this.state.janSurplusGHGBusiness],
+                                ['Feb', this.state.febSurplusGHGBusiness],
+                                ['Mar', this.state.marSurplusGHGBusiness],
+                                ['Apr', this.state.aprSurplusGHGBusiness],
+                                ['May', this.state.maySurplusGHGBusiness],
+                                ['Jun', this.state.junSurplusGHGBusiness],
+                                ['Jul', this.state.julSurplusGHGBusiness],
+                                ['Aug', this.state.augSurplusGHGBusiness],
+                                ['Sep', this.state.sepSurplusGHGBusiness],
+                                ['Oct', this.state.octSurplusGHGBusiness],
+                                ['Nov', this.state.novSurplusGHGBusiness],
+                                ['Dec', this.state.decSurplusGHGBusiness],
                             ]}
                             options={{
-                                title: 'Food Surplus GHG Saved Performance (' + time + ', Uni)',
+                                title: 'Food Surplus GHG Saved Performance (' + time + ', Business)',
                                 chartArea: {width: '62.5%'},
                                 colors: ['rgb(13, 27, 92)'],
                                 legend: "none",
@@ -213,7 +213,7 @@ class Chart53 extends Component {
                     <div style={{height: "95px", marginBottom: "15%"}}>
                         <Card  style={{width: '90vw', height: '95px', marginBottom: "15%", marginLeft: '5.5%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
                         <ButtonGroup>
-                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHGUni">Prev</Button>
+                            <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/monthSurplusGHGBusiness">Prev</Button>
                             <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
                             <Button style={{width: "15%"}} disabled>Next</Button>
                         </ButtonGroup>
@@ -249,4 +249,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Chart53);
+export default connect(mapStateToProps, null)(Chart71);

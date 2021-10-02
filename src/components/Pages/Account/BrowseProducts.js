@@ -53,7 +53,7 @@ class BrowseProducts extends Component{
             <BrowserView>
                 <div className="main-div-layout">
 
-                    <h1 className="text-center" style={{marginTop: "5%", fontWeight: 600}}>Browse Products (Food Surplus)</h1>
+                    <h1 className="text-center" style={{marginTop: "5%", fontWeight: 600}}>Buy Food</h1>
                 
                     <InputGroup style={{left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "2.5%", width: "40%"}}>
                         <BsSearch style={{marginRight: "5px", fontSize: "30px"}}/>
@@ -382,7 +382,7 @@ class BrowseProducts extends Component{
 
                     </Tab.Container> */}
 
-                    <h5 className="text-center" style={{marginTop: "1.5%", fontWeight: 600, marginLeft: "20.5px"}}>Browse Products (Food Surplus)</h5>
+                    <h5 className="text-center" style={{marginTop: "1.5%", fontWeight: 600, marginLeft: "20.5px"}}>Buy Food</h5>
 
                     <Link to="/account"><BsArrow90DegLeft style={{fontSize: "250%", color: "black", marginTop: "-52.5px", marginRight: "25px"}}/></Link>
 

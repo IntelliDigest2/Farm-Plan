@@ -127,51 +127,51 @@ class Chart13 extends Component {
             // var fatCon = doc.data().FATCONTENT
             // var fibCon = doc.data().FIBRECONTENT
 
-            if (year === time && month === "Jan" && st === "Surplus" && los === "Surplus"){
+            if (year === time && month === "Jan" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 janSurplus: prevState.janSurplus += newWeight
               }));
-            } else if (year === time && month === "Feb" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Feb" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 febSurplus: prevState.febSurplus += newWeight
               }));
-            } else if (year === time && month === "Mar" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Mar" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 marSurplus: prevState.marSurplus += newWeight
               }));
-            } else if (year === time && month === "Apr" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Apr" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 aprSurplus: prevState.aprSurplus += newWeight
               }));
-            } else if (year === time && month === "May" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "May" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 maySurplus: prevState.maySurplus += newWeight
               }));
-            } else if (year === time && month === "Jun" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Jun" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 junSurplus: prevState.junSurplus += newWeight
               }));
-            } else if (year === time && month === "Jul" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Jul" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 julSurplus: prevState.julSurplus += newWeight
               }));
-            } else if (year === time && month === "Aug" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Aug" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 augSurplus: prevState.augSurplus += newWeight
               }));
-            } else if (year === time && month === "Sep" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Sep" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 sepSurplus: prevState.sepSurplus += newWeight
               }));
-            } else if (year === time && month === "Oct" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Oct" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 octSurplus: prevState.octSurplus += newWeight
               }));
-            } else if (year === time && month === "Nov" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Nov" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 novSurplus: prevState.novSurplus += newWeight
               }));
-            } else if (year === time && month === "Dec" && st === "Surplus" && los === "Surplus"){
+            } else if (year === time && month === "Dec" && st === "Surplus" && (los === "Surplus Food" || los === "Surplus Local Produce")){
               this.setState( (prevState) => ({
                 decSurplus: prevState.decSurplus += newWeight
               }));
