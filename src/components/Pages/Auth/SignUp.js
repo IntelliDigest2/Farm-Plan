@@ -420,7 +420,7 @@ render(){
                 <div className="auth-error">{authError ? <p> {authError}</p> : null}</div>
                 </FormStyle>
               </Col>
-              <Col className="bg-image signup-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7}></Col>
+              <Col className="bg-image new-signup-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7}></Col>
         </Row>
       </React.Fragment>
         //   : 

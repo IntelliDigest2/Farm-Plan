@@ -23,116 +23,116 @@ import FoodWasteBusiness from "./components/Pages/Account/FoodWasteBusiness";
 import FoodIntake from "./components/Pages/Account/FoodIntake";
 // import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
-import Chart1 from "./components/Pages/Account/ChartYear";
-import Chart2 from "./components/Pages/Account/ChartMonth";
-import Chart3 from "./components/Pages/Account/ChartWeek";
+import Chart1 from "./components/Pages/Account/Charts/HH/Waste/ChartYear";
+import Chart2 from "./components/Pages/Account/Charts/HH/Waste/ChartMonth";
+import Chart3 from "./components/Pages/Account/Charts/HH/Waste/ChartWeek";
 // import Chart4 from "./components/Pages/Account/ChartDay";
 
-import Chart5 from "./components/Pages/Account/ChartYearGHG"
-import Chart6 from "./components/Pages/Account/ChartMonthGHG"
-import Chart7 from "./components/Pages/Account/ChartWeekGHG";
+import Chart5 from "./components/Pages/Account/Charts/HH/Waste/ChartYearGHG"
+import Chart6 from "./components/Pages/Account/Charts/HH/Waste/ChartMonthGHG"
+import Chart7 from "./components/Pages/Account/Charts/HH/Waste/ChartWeekGHG";
 // import Chart8 from "./components/Pages/Account/ChartDayGHG";
 
-import Chart9 from "./components/Pages/Account/ChartYearCost";
-import Chart10 from "./components/Pages/Account/ChartMonthCost"
-import Chart11 from "./components/Pages/Account/ChartWeekCost";
+import Chart9 from "./components/Pages/Account/Charts/HH/Waste/ChartYearCost";
+import Chart10 from "./components/Pages/Account/Charts/HH/Waste/ChartMonthCost"
+import Chart11 from "./components/Pages/Account/Charts/HH/Waste/ChartWeekCost";
 // import Chart12 from "./components/Pages/Account/ChartDayCost";
 
-import Chart13 from "./components/Pages/Account/ChartYearSurplus";
-import Chart14 from "./components/Pages/Account/ChartMonthSurplus";
-import Chart15 from "./components/Pages/Account/ChartWeekSurplus";
+import Chart13 from "./components/Pages/Account/Charts/HH/Surplus/ChartYearSurplus";
+import Chart14 from "./components/Pages/Account/Charts/HH/Surplus/ChartMonthSurplus";
+import Chart15 from "./components/Pages/Account/Charts/HH/Surplus/ChartWeekSurplus";
 // import Chart16 from "./components/Pages/Account/ChartDaySurplus";
 
-import Chart17 from "./components/Pages/Account/ChartYearSurplusGHG";
-import Chart18 from "./components/Pages/Account/ChartMonthSurplusGHG";
-import Chart19 from "./components/Pages/Account/ChartWeekSurplusGHG";
+import Chart17 from "./components/Pages/Account/Charts/HH/Surplus/ChartYearSurplusGHG";
+import Chart18 from "./components/Pages/Account/Charts/HH/Surplus/ChartMonthSurplusGHG";
+import Chart19 from "./components/Pages/Account/Charts/HH/Surplus/ChartWeekSurplusGHG";
 // import Chart20 from "./components/Pages/Account/ChartDaySurplusGHG";
 
-import Chart21 from "./components/Pages/Account/ChartYearSurplusCost";
-import Chart22 from "./components/Pages/Account/ChartMonthSurplusCost";
-import Chart23 from "./components/Pages/Account/ChartWeekSurplusCost";
+import Chart21 from "./components/Pages/Account/Charts/HH/Surplus/ChartYearSurplusCost";
+import Chart22 from "./components/Pages/Account/Charts/HH/Surplus/ChartMonthSurplusCost";
+import Chart23 from "./components/Pages/Account/Charts/HH/Surplus/ChartWeekSurplusCost";
 // import Chart24 from "./components/Pages/Account/ChartDaySurplusCost";
 
 // import Chart25 from "./components/Pages/Account/ChartDayBusiness";
 // import Chart26 from "./components/Pages/Account/ChartDayCostBusiness";
 // import Chart27 from "./components/Pages/Account/ChartDayGHGBusiness";
 
-import Chart28 from "./components/Pages/Account/ChartYearLoss";
-import Chart29 from "./components/Pages/Account/ChartMonthLoss";
-import Chart30 from "./components/Pages/Account/ChartWeekLoss";
-import Chart31 from "./components/Pages/Account/ChartDayLoss";
+import Chart28 from "./components/Pages/Account/Charts/Farm/Loss/ChartYearLoss";
+import Chart29 from "./components/Pages/Account/Charts/Farm/Loss/ChartMonthLoss";
+import Chart30 from "./components/Pages/Account/Charts/Farm/Loss/ChartWeekLoss";
+import Chart31 from "./components/Pages/Account/Charts/Farm/Loss/ChartDayLoss";
 
-import Chart32 from "./components/Pages/Account/ChartYearLossGHG";
-import Chart33 from "./components/Pages/Account/ChartMonthLossGHG";
-import Chart34 from "./components/Pages/Account/ChartWeekLossGHG";
-import Chart35 from "./components/Pages/Account/ChartDayLossGHG";
+import Chart32 from "./components/Pages/Account/Charts/Farm/Loss/ChartYearLossGHG";
+import Chart33 from "./components/Pages/Account/Charts/Farm/Loss/ChartMonthLossGHG";
+import Chart34 from "./components/Pages/Account/Charts/Farm/Loss/ChartWeekLossGHG";
+import Chart35 from "./components/Pages/Account/Charts/Farm/Loss/ChartDayLossGHG";
 
-import Chart36 from "./components/Pages/Account/ChartYearLossCost";
-import Chart37 from "./components/Pages/Account/ChartMonthLossCost";
-import Chart38 from "./components/Pages/Account/ChartWeekLossCost";
-import Chart39 from "./components/Pages/Account/ChartDayLossCost";
+import Chart36 from "./components/Pages/Account/Charts/Farm/Loss/ChartYearLossCost";
+import Chart37 from "./components/Pages/Account/Charts/Farm/Loss/ChartMonthLossCost";
+import Chart38 from "./components/Pages/Account/Charts/Farm/Loss/ChartWeekLossCost";
+import Chart39 from "./components/Pages/Account/Charts/Farm/Loss/ChartDayLossCost";
 
 import Chart40 from "./components/Pages/Account/NutrientGapChart";
 
-import Chart41 from "./components/Pages/Account/ChartYearUni";
-import Chart42 from "./components/Pages/Account/ChartMonthUni";
-import Chart43 from "./components/Pages/Account/ChartWeekUni";
+import Chart41 from "./components/Pages/Account/Charts/Uni/Waste/ChartYearUni";
+import Chart42 from "./components/Pages/Account/Charts/Uni/Waste/ChartMonthUni";
+import Chart43 from "./components/Pages/Account/Charts/Uni/Waste/ChartWeekUni";
 
-import Chart44 from "./components/Pages/Account/ChartYearGHGUni";
-import Chart45 from "./components/Pages/Account/ChartMonthGHGUni";
-import Chart46 from "./components/Pages/Account/ChartWeekGHGUni";
+import Chart44 from "./components/Pages/Account/Charts/Uni/Waste/ChartYearGHGUni";
+import Chart45 from "./components/Pages/Account/Charts/Uni/Waste/ChartMonthGHGUni";
+import Chart46 from "./components/Pages/Account/Charts/Uni/Waste/ChartWeekGHGUni";
 
-import Chart47 from "./components/Pages/Account/ChartYearCostUni";
-import Chart48 from "./components/Pages/Account/ChartMonthCostUni";
-import Chart49 from "./components/Pages/Account/ChartWeekCostUni";
+import Chart47 from "./components/Pages/Account/Charts/Uni/Waste/ChartYearCostUni";
+import Chart48 from "./components/Pages/Account/Charts/Uni/Waste/ChartMonthCostUni";
+import Chart49 from "./components/Pages/Account/Charts/Uni/Waste/ChartWeekCostUni";
 
-import Chart50 from "./components/Pages/Account/ChartYearSurplusUni";
-import Chart51 from "./components/Pages/Account/ChartMonthSurplusUni";
-import Chart52 from "./components/Pages/Account/ChartWeekSurplusUni";
+import Chart50 from "./components/Pages/Account/Charts/Uni/Surplus/ChartYearSurplusUni";
+import Chart51 from "./components/Pages/Account/Charts/Uni/Surplus/ChartMonthSurplusUni";
+import Chart52 from "./components/Pages/Account/Charts/Uni/Surplus/ChartWeekSurplusUni";
 
-import Chart53 from "./components/Pages/Account/ChartYearSurplusGHGUni";
-import Chart54 from "./components/Pages/Account/ChartMonthSurplusGHGUni";
-import Chart55 from "./components/Pages/Account/ChartWeekSurplusGHGUni";
+import Chart53 from "./components/Pages/Account/Charts/Uni/Surplus/ChartYearSurplusGHGUni";
+import Chart54 from "./components/Pages/Account/Charts/Uni/Surplus/ChartMonthSurplusGHGUni";
+import Chart55 from "./components/Pages/Account/Charts/Uni/Surplus/ChartWeekSurplusGHGUni";
 
-import Chart56 from "./components/Pages/Account/ChartYearSurplusCostUni";
-import Chart57 from "./components/Pages/Account/ChartMonthSurplusCostUni";
-import Chart58 from "./components/Pages/Account/ChartWeekSurplusCostUni";
+import Chart56 from "./components/Pages/Account/Charts/Uni/Surplus/ChartYearSurplusCostUni";
+import Chart57 from "./components/Pages/Account/Charts/Uni/Surplus/ChartMonthSurplusCostUni";
+import Chart58 from "./components/Pages/Account/Charts/Uni/Surplus/ChartWeekSurplusCostUni";
 
-import Chart59 from "./components/Pages/Account/ChartYearBusiness";
-import Chart60 from "./components/Pages/Account/ChartMonthBusiness";
-import Chart61 from "./components/Pages/Account/ChartWeekBusiness";
+import Chart59 from "./components/Pages/Account/Charts/Business/Waste/ChartYearBusiness";
+import Chart60 from "./components/Pages/Account/Charts/Business/Waste/ChartMonthBusiness";
+import Chart61 from "./components/Pages/Account/Charts/Business/Waste/ChartWeekBusiness";
 
-import Chart62 from "./components/Pages/Account/ChartYearGHGBusiness";
-import Chart63 from "./components/Pages/Account/ChartMonthGHGBusiness";
-import Chart64 from "./components/Pages/Account/ChartWeekGHGBusiness";
+import Chart62 from "./components/Pages/Account/Charts/Business/Waste/ChartYearGHGBusiness";
+import Chart63 from "./components/Pages/Account/Charts/Business/Waste/ChartMonthGHGBusiness";
+import Chart64 from "./components/Pages/Account/Charts/Business/Waste/ChartWeekGHGBusiness";
 
-import Chart65 from "./components/Pages/Account/ChartYearCostBusiness";
-import Chart66 from "./components/Pages/Account/ChartMonthCostBusiness";
-import Chart67 from "./components/Pages/Account/ChartWeekCostBusiness";
+import Chart65 from "./components/Pages/Account/Charts/Business/Waste/ChartYearCostBusiness";
+import Chart66 from "./components/Pages/Account/Charts/Business/Waste/ChartMonthCostBusiness";
+import Chart67 from "./components/Pages/Account/Charts/Business/Waste/ChartWeekCostBusiness";
 
-import Chart68 from "./components/Pages/Account/ChartYearSurplusBusiness";
-import Chart69 from "./components/Pages/Account/ChartMonthSurplusBusiness";
-import Chart70 from "./components/Pages/Account/ChartWeekSurplusBusiness";
+import Chart68 from "./components/Pages/Account/Charts/Business/Surplus/ChartYearSurplusBusiness";
+import Chart69 from "./components/Pages/Account/Charts/Business/Surplus/ChartMonthSurplusBusiness";
+import Chart70 from "./components/Pages/Account/Charts/Business/Surplus/ChartWeekSurplusBusiness";
 
-import Chart71 from "./components/Pages/Account/ChartYearSurplusGHGBusiness";
-import Chart72 from "./components/Pages/Account/ChartMonthSurplusGHGBusiness";
-import Chart73 from "./components/Pages/Account/ChartWeekSurplusGHGBusiness";
+import Chart71 from "./components/Pages/Account/Charts/Business/Surplus/ChartYearSurplusGHGBusiness";
+import Chart72 from "./components/Pages/Account/Charts/Business/Surplus/ChartMonthSurplusGHGBusiness";
+import Chart73 from "./components/Pages/Account/Charts/Business/Surplus/ChartWeekSurplusGHGBusiness";
 
-import Chart74 from "./components/Pages/Account/ChartYearSurplusCostBusiness";
-import Chart75 from "./components/Pages/Account/ChartMonthSurplusCostBusiness";
-import Chart76 from "./components/Pages/Account/ChartWeekSurplusCostBusiness";
+import Chart74 from "./components/Pages/Account/Charts/Business/Surplus/ChartYearSurplusCostBusiness";
+import Chart75 from "./components/Pages/Account/Charts/Business/Surplus/ChartMonthSurplusCostBusiness";
+import Chart76 from "./components/Pages/Account/Charts/Business/Surplus/ChartWeekSurplusCostBusiness";
 
-import Chart77 from "./components/Pages/Account/ChartYearSurplusFarm";
-import Chart78 from "./components/Pages/Account/ChartMonthSurplusFarm";
-import Chart79 from "./components/Pages/Account/ChartWeekSurplusFarm";
+import Chart77 from "./components/Pages/Account/Charts/Farm/Surplus/ChartYearSurplusFarm";
+import Chart78 from "./components/Pages/Account/Charts/Farm/Surplus/ChartMonthSurplusFarm";
+import Chart79 from "./components/Pages/Account/Charts/Farm/Surplus/ChartWeekSurplusFarm";
 
-import Chart80 from "./components/Pages/Account/ChartYearSurplusGHGFarm";
-import Chart81 from "./components/Pages/Account/ChartMonthSurplusGHGFarm";
-import Chart82 from "./components/Pages/Account/ChartWeekSurplusGHGFarm";
+import Chart80 from "./components/Pages/Account/Charts/Farm/Surplus/ChartYearSurplusGHGFarm";
+import Chart81 from "./components/Pages/Account/Charts/Farm/Surplus/ChartMonthSurplusGHGFarm";
+import Chart82 from "./components/Pages/Account/Charts/Farm/Surplus/ChartWeekSurplusGHGFarm";
 
-import Chart83 from "./components/Pages/Account/ChartYearSurplusCostFarm";
-import Chart84 from "./components/Pages/Account/ChartMonthSurplusCostFarm";
-import Chart85 from "./components/Pages/Account/ChartWeekSurplusCostFarm";
+import Chart83 from "./components/Pages/Account/Charts/Farm/Surplus/ChartYearSurplusCostFarm";
+import Chart84 from "./components/Pages/Account/Charts/Farm/Surplus/ChartMonthSurplusCostFarm";
+import Chart85 from "./components/Pages/Account/Charts/Farm/Surplus/ChartWeekSurplusCostFarm";
 
 import FoodReduction from "./components/Pages/FoodReduction";
 import InfoTable from "./components/Pages/InfoTable";
@@ -141,6 +141,8 @@ import BrowseProducts from "./components/Pages/Account/BrowseProducts";
 // import BrowseProductsLocalProduce from "./components/Pages/Account/BrowseProductsLocalProduce";
 
 import ProductListing from "./components/Pages/Account/products/ProductListing";
+
+import ReserveItems from "./components/Pages/Account/ReserveItems";
 
 import AddProducts from "./components/Pages/Account/AddProducts";
 import AddProductsFarm from "./components/Pages/Account/AddProductsFarm";
@@ -335,6 +337,8 @@ class App extends Component {
             {/* <Route path="/browse-products-local" component={BrowseProductsLocalProduce} /> */}
 
             <Route path="/product-listing" component={ProductListing} />
+
+            <Route path="/reserve-items" component={ReserveItems} />
 
             <Route path="/add-products" component={AddProducts} />
             <Route path="/add-products-farm" component={AddProductsFarm} />

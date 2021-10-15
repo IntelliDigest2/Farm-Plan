@@ -71,6 +71,11 @@ body{
     height: 175vh;
   }
 
+  .new-signup-graphic{
+    background-image: url("../../images/for-website-book-text-banner-5.png");
+    height: 175vh;
+  }
+
   /* .foodpage-graphic{
     background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
     height: 100vh;
@@ -89,11 +94,11 @@ body{
   } */
 
   .home{
-    background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/connectivity.png");
+    background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/for-website.png");
   }
 
   .home-mobile{
-    background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/connectivity.png");
+    background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/for-website-2.png");
   }
 
   .home-text-mobile{
@@ -349,6 +354,11 @@ body{
 .custom-btn-4 {
   background-color: rgb(176, 10, 182);
   border-color: rgb(176, 10, 182);
+}
+
+.custom-btn-5 {
+  background-color: rgb(13, 108, 6);
+  border-color: rgb(13, 108, 6);
 }
 
 /* map page */

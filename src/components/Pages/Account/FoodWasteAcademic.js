@@ -17,6 +17,8 @@ import { Divider } from '@material-ui/core';
 import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import addNotification from "react-push-notification"
+import {Autocomplete} from '@material-ui/lab';
+import {TextField} from '@material-ui/core';
 
 // import {Chart} from "react-google-charts"
 
@@ -44,9 +46,11 @@ class FoodWaste extends Component {
 
         submissionType: "Waste Academic",
 
+        projectName: "",
+
         // meal: "Select Meal",
 
-        // foodName: "",
+        foodName: "",
 
         // checkedA: false,
         // checkedB: false,
@@ -130,7 +134,8 @@ class FoodWaste extends Component {
     clearEFWForm = () => {
         this.setState({
             // meal: "Select Meal",
-            // foodName: "",
+            projectName: "",
+            foodName: "",
             // checkedA: false,
             // checkedB: false,
             // eatingInOrOut: "",
@@ -150,7 +155,7 @@ class FoodWaste extends Component {
             currency: "Select Currency",
             currencyMultiplier: 0,
             notes: "",
-            formHeight: "1060px"
+            formHeight: "1110px"
         });
     }
 
@@ -258,9 +263,9 @@ class FoodWaste extends Component {
 
     handleFormHeight(text){
         if (text === "Select" || text === "Edible"){
-            this.setState({formHeight: "980px"})
+            this.setState({formHeight: "1110px"})
         } else if (text === "Inedible"){
-            this.setState({formHeight: "750px"})
+            this.setState({formHeight: "900px"})
         }
     }
 
@@ -339,10 +344,10 @@ class FoodWaste extends Component {
         this.fetchData()
 
         if (isMobile){
-            this.setState({formWidth: "72vw", formHeight: "980px"})
+            this.setState({formWidth: "72vw", formHeight: "1110px"})
         }
         else if (isBrowser){
-            this.setState({formWidth: "261px", formHeight: "980px"})
+            this.setState({formWidth: "261px", formHeight: "1110px"})
         }
 
     }
@@ -370,7 +375,7 @@ class FoodWaste extends Component {
                 style={{width: "100%", height: "100%" }}
             >
             <MobileView><h6 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste</h6></MobileView>
-            <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste (Academic)</h4></BrowserView>
+            <BrowserView><h4 style={{paddingTop: '8vh', color: 'black', justifyContent: 'center', display: 'flex'}}>Update Edible/Inedible Food Waste (Research)</h4></BrowserView>
 
             <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
                 <Button style={{width: this.state.formWidth, borderColor: "#aab41e"}} className="custom-btn-2" as={Link} to="/account">Back</Button>
@@ -420,6 +425,43 @@ class FoodWaste extends Component {
                 <h5 className="text-center" style={{margin: "30px", fontSize: "23px",fontWeight: "600",}}>Food Waste</h5>
                 
                 <div>
+
+                    <div style={{padding: "0 10% 0 10%"}}>Project Name</div>
+                        <Form.Group className="form-layout"
+                            style={{
+                                padding: "0 10% 0 10%",
+                                display: "flex",
+                                justifyContent: "space-around"
+                            }}
+                        >
+                        <InputGroup>
+                            <Form.Control id="projectName" placeholder="Enter Project Name" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.projectName} />
+                        </InputGroup>
+                        </Form.Group>
+
+                    <div style={{padding: "0 10% 0 10%"}}>Food Name</div>
+                    <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
+                        <Autocomplete
+                            // multiple
+                            id="foodName"
+                            options={foodOptions.map((option) => option.title)}
+                            freeSolo
+                            // limitTags={1}
+                            // getOptionLabel={(option) => option.name}
+                            style={{width: "100%"}}
+                            size="small"
+                            onChange={(e) => this.setState({ foodName: e.target.textContent })}
+                            onInputChange={(e) => this.handleChange(e)}
+
+                            // renderTags={(value, getTagProps) =>
+                            //     value.map((option, index) => (
+                            //       <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                            //     ))
+                            // }
+
+                            renderInput={(params) => ( <TextField {...params} label="Enter Food Name" variant="outlined" /> )}
+                        />
+                    </Form.Group>
 
                     <div style={{padding: "0 10% 0 10%"}}>Edible or Inedible</div>
                     <Form.Group
@@ -562,7 +604,7 @@ class FoodWaste extends Component {
                             }}
                         >
                         <InputGroup>
-                            <Form.Control id="expiryDate" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
+                            <Form.Control id="expiryDate" type="date" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
                         </InputGroup>
                         </Form.Group>
 
@@ -626,7 +668,7 @@ class FoodWaste extends Component {
 
                         {/* this.handleFoodWasteSubmit(e); */}
 
-                        <div>{this.state.edibleInedibleSurplus !== "Select" && this.state.foodWasteWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.expiryDate !== "" && this.state.currency !== "Select Currency" ?
+                        <div>{this.state.edibleInedibleSurplus !== "Select" && this.state.foodWasteWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.expiryDate !== "" && this.state.currency !== "Select Currency" && this.state.projectName !== "" && this.state.foodName !== "" ?
                             <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.notificationTest(); this.clearEFWForm() }} variant="secondary" type="button">
                                 Update
                             </Button>
@@ -810,7 +852,7 @@ class FoodWaste extends Component {
                             <Form.Control as="textarea" rows={3} id="notes" style={{resize: "none", width: "100%"}} onChange={(e) => this.handleChange(e)} value={this.state.notes}/>
                         </Form.Group>
 
-                        <div>{this.state.edibleInedibleSurplus === "Inedible" && this.state.foodWasteWeight !== 0 && this.state.weightType !== "Select Unit" ?
+                        <div>{this.state.edibleInedibleSurplus === "Inedible" && this.state.foodWasteWeight !== 0 && this.state.weightType !== "Select Unit" && this.state.projectName !== "" && this.state.foodName !== "" ?
                             <Button style={{margin: "0 10% 0 10%", backgroundColor: '#aab41e', width: "80%", marginTop: "5px"}} onClick={(e) => {this.handleFoodWasteSubmit(e); this.notificationTest(); this.clearEFWForm() }} variant="secondary" type="button">
                                 Update
                             </Button>

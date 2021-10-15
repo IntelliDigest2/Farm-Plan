@@ -87,6 +87,8 @@ class FoodWaste extends Component {
         currencyMultiplier: 0,
 
         notes: "n/a",
+        projectName: "n/a",
+        foodName: "n/a",
 
         // costOfInedibleFoodWaste: 0,
 
