@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { auth } from "../../config/fbConfig"
 // import googleplaylogo from '../../images/google-play-logo.png'
 import buttonDesign from '../../images/button-design-6.png';
+import buttonDesign3 from '../../images/new-button-pic-3.png';
 
 class Home extends Component {
 
@@ -113,7 +114,7 @@ class Home extends Component {
 
                 {!this.state.isLoggedIn ?
 
-                  <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "9vh", width: "75%"}} src={buttonDesign}/></Link>
+                  <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "9vh", width: "75%"}} src={buttonDesign3}/></Link>
 
                 :
 
