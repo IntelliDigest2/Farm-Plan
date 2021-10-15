@@ -1,12 +1,34 @@
-import React from "react";
+import React, {Component} from "react";
 import "../../App.css";
 import "./Pages.css"
 import { Row, Col, Form, Button } from "react-bootstrap";
 import styled from "styled-components";
 import {BrowserView, MobileView} from 'react-device-detect';
+import {Link} from "react-router-dom";
+import { connect } from 'react-redux';
+import { auth } from "../../config/fbConfig"
 // import googleplaylogo from '../../images/google-play-logo.png'
+import buttonDesign from '../../images/button-design-6.png';
 
-function Home() {
+class Home extends Component {
+
+  state = {
+    uid: this.props.auth.uid,
+    isLoggedIn: false
+  }
+
+  componentDidMount(){
+    if (this.state.uid){
+      this.setState({isLoggedIn: true})
+    } else {
+      this.setState({isLoggedIn: false})
+    }
+  }
+
+  render(){
+
+    const {auth} = this.props;
+
     return (
         <React.Fragment>
 
@@ -16,11 +38,17 @@ function Home() {
     <Col className="" xs={12} lg={4}></Col>
           <Col className="mt-2 pt-2" xs={12}></Col>
                 <Col className="justify-content-center align-items-center d-flex mt-5 pt-5" xs={12}>
-            <p className="home-welcome text-center">The Global Food Loss & Waste Tracker</p>
+            <p className="home-welcome text-center " style={{marginBottom: "4.5%"}}>The Global Food Loss & Waste Tracker</p>
                 </Col>
                 <Col className="mt-0 pt-0 d-block justify-content-center align-items-center" xs={12}>
 
-                <p className="text-center update-text"> For updates, please sign up to the newsletter below.</p>
+                  {!this.state.isLoggedIn ?
+
+                    <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "30%"}} src={buttonDesign}/></Link>
+
+                  : <></> }
+
+                <p className="text-center update-text" style={{marginTop: "6.5%", marginBottom: "-0.5%"}}> For updates, please sign up to the newsletter below.</p>
 
                 <FormStyle>
 
@@ -41,8 +69,10 @@ function Home() {
               </Form>
                 </FormStyle>
 
-                <p className="text-center update-text"><a className="home-play-store-link" href="https://play.google.com/store/apps/details?id=com.IntelliDigest.TheGlobalFoodLossandWasteTracker" target="_blank" rel="noopener noreferrer">Click here </a>to view/download The Global Food Loss & Waste Tracker Android app from the Google Play Store</p>
-                {/* <img src={googleplaylogo} alt="googleplaylogo" className="img-fluid rounded fix-image" /> */}
+                <a href='https://play.google.com/store/apps/details?id=com.IntelliDigest.TheGlobalFoodLossandWasteTracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "9vh", width: "30%"}}  alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+                  
+
+
 
                 </Col>
       <Col className="mt-5 pt-5" xs={12}></Col>
@@ -80,6 +110,18 @@ function Home() {
                 </Form.Row>
               </Form>
                 </FormStyle>
+
+                {!this.state.isLoggedIn ?
+
+                  <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "9vh", width: "75%"}} src={buttonDesign}/></Link>
+
+                :
+
+                  <></>
+
+                }
+
+
                 </Col>
       <Col className="mt-5 pt-5" xs={12}></Col>
       <Col className="mt-5 pt-5" xs={12}></Col>
@@ -88,6 +130,7 @@ function Home() {
 
         </React.Fragment>
     );
+  }
 }
 
 const FormStyle = styled.div`
@@ -138,4 +181,10 @@ form{
   }
 `
 
-export default Home;
+const mapStateToProps = (state) => { 
+  return{
+      auth: state.firebase.auth,
+  }
+}
+
+export default connect(mapStateToProps, null)(Home);
