@@ -137,7 +137,7 @@ class ReserveItems extends Component{
 
                 <div style={{width: "100%", height: "100%"}}>
 
-                    <h2 className="text-center" style={{marginBottom: "2.5%", paddingTop: "8vh", fontWeight: 600}}>Reserve Items</h2>
+                    <h4 className="text-center" style={{marginBottom: "2.5%", paddingTop: "8vh", fontWeight: 600}}>Plan, Reserve, Collect, Save</h4>
 
                     <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
                         <Button style={{width: this.state.formWidth, borderColor: "#040335", backgroundColor: "#040335"}} as={Link} to="/account">Back</Button>
@@ -149,7 +149,7 @@ class ReserveItems extends Component{
 
                             <Form className="form-layout" style={{padding: "10px"}}>
 
-                                <h5 className="text-center" style={{margin: "30px", fontSize: "23px",fontWeight: "600"}}>Reserve Items</h5>
+                                <h5 className="text-center" style={{margin: "30px", fontSize: "15px",fontWeight: "600"}}>Plan, Reserve, Collect, Save</h5>
 
                                 <div>
 
