@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { auth } from "../../config/fbConfig"
 // import googleplaylogo from '../../images/google-play-logo.png'
 import buttonDesign from '../../images/button-design-6.png';
-import buttonDesign3 from '../../images/new-button-pic-3.png';
+import buttonDesign2 from "../../images/button-home-3.png"
 
 class Home extends Component {
 
@@ -91,7 +91,17 @@ class Home extends Component {
                 </Col>
                 <Col className="mt-0 pt-0 d-block justify-content-center align-items-center" xs={12}>
 
-                <p className="home-update-text-mobile text-center"> For updates, please sign up to the newsletter below.</p>
+                {!this.state.isLoggedIn ?
+
+                <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "75%", marginTop: "9vh"}} src={buttonDesign2}/></Link>
+
+                :
+
+                <></>
+
+                }
+
+                <p className="home-update-text-mobile text-center"  style={{marginTop: "45%", marginBottom: "-0.5%"}}> For updates, please sign up to the newsletter below.</p>
 
                 <FormStyle>
 
@@ -111,17 +121,6 @@ class Home extends Component {
                 </Form.Row>
               </Form>
                 </FormStyle>
-
-                {!this.state.isLoggedIn ?
-
-                  <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "9vh", width: "75%"}} src={buttonDesign3}/></Link>
-
-                :
-
-                  <></>
-
-                }
-
 
                 </Col>
       <Col className="mt-5 pt-5" xs={12}></Col>
