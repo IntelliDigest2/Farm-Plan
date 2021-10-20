@@ -15,10 +15,13 @@ import { startData, createReserveItemsData } from '../../../store/actions/dataAc
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import {fs} from "../../../config/fbConfig"
 
 class ReserveItems extends Component{
 
     state = {
+        uid: this.props.auth.uid,
+
         item: "",
         items: [],
         fromDate: "",
@@ -38,6 +41,13 @@ class ReserveItems extends Component{
         submissionDate: moment().format("Do"),
         submissionYear: moment().format("YYYY"),
         submissionFullDate: moment().format("ddd MMM Do YYYY"),
+
+        testReservationList: [
+            {itemList: [{name: "Onion"}, {name: "Pepper"}, {name: "Beef"}], fromDate: "2022-06-01", toDate: "2022-09-01", frequency: "Weekly"},
+            {itemList: [{name: "Pork"}, {name: "Cod"}], fromDate: "2022-06-07", toDate: "2022-10-07", frequency: "Fortnightly"},
+            {itemList: [{name: "Apple"}, {name: "Banana"}, {name: "Pear"}, {name: "Grapes"}], fromDate: "2022-07-01", toDate: "2022-08-01", frequency: "Weekly"}
+        ],
+        myReservations: [],
     }
 
     handleChange = (e) => {
@@ -99,6 +109,11 @@ class ReserveItems extends Component{
         });
     }
 
+
+        
+    // Method below is what sends relevant form data to Firebase collection, 'createReserveItemsData' const is imported from 'dataActions.js' file in the 'store/actions/...' directory
+    // Similar methods used for other forms with relevant const imported from 'dataActions.js' file (e.g. 'createFoodWasteData' const used for Food Waste form submissions)
+
     handleReserveItemSubmit = (e) => {
         e.preventDefault();
         this.setState({
@@ -106,8 +121,54 @@ class ReserveItems extends Component{
         this.props.createReserveItemsData(this.state);
     }
 
+    // =================================
+
+    handleTestSubmission = (e) => {
+        this.setState( (prevState) => ({
+            testReservationList: prevState.testReservationList.concat({itemList: this.state.items, fromDate: this.state.fromDate, toDate: this.state.toDate, frequency: this.state.frequency})
+        }))
+    }
+
+    // =================================
+
+    // Method below is what gathers relevant data from user's Firebase collection to be shown in the 'My Reservations' section. Data in Firebase is stored as collections of documents: relevant collection is iterated through and relevant pieces of info in each 
+    // document (in this case FROMDATE, TODATE, etc.) is taken and used to populate the 'My Reservations' section with the user's own submissions from this form.
+    //
+    // Same technique is used for gathering chart data in all of the Chart files, and for the daily info tab in the FoodWaste.js file
+
+    fetchMyReservationsData = async () => {
+        fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+        .get()
+        .then( snapshot => {
+
+          snapshot.forEach(doc => {
+
+              var st = doc.data().SUBMISSIONTYPE
+
+              var il = doc.data().ITEMLIST
+              var fd = doc.data().FROMDATE
+              var td = doc.data().TODATE
+              var freq = doc.data().FREQUENCY
+
+              if (st === "Reserve Items"){
+                  // console.log(newExp)
+
+                  this.setState( (prevState) => ({
+                    myReservations: prevState.myReservations.concat({itemList: il, fromDate: fd, toDate: td, frequency: freq})
+                  }));
+              }
+
+          })
+
+        })
+        .catch(error => console.log(error))
+    }
+
+    // Similar to BrowserView & MobileView tags used elsewhere, here, 'isMobile' & 'isBrowser' booleans (also imported from 'react-device-detect' package) used to set certain elements of form as different values on browser & mobile
+    // Note: 'componentDidMount' method is for executing certain functions upon the page loading.
+
     componentDidMount(){
-        // this.setState({ showDevMessage: true })
+        this.fetchMyReservationsData()
 
         if (isMobile){
             this.setState({formWidth: "90vw", dropdownWidth: "241px"})
@@ -117,6 +178,9 @@ class ReserveItems extends Component{
     }
 
     render(){
+
+        const {data, auth} = this.props;
+
         return (
 
             <>
@@ -152,6 +216,8 @@ class ReserveItems extends Component{
                                 <h5 className="text-center" style={{margin: "30px", fontSize: "15px",fontWeight: "600"}}>Plan, Reserve, Collect, Save</h5>
 
                                 <div>
+
+                                    {/* For 'Select Items' input below, Autocomplete component is used rather than ordinary text field. Info on this (and possible future alternatives) found here: https://mui.com/components/autocomplete/ */}
 
                                     <div style={{padding: "0 10% 0 10%"}}>Select Items</div>
                                         <BrowserView>
@@ -221,6 +287,8 @@ class ReserveItems extends Component{
                                         }
                                     </ButtonGroup>
 
+                                    {/* For below, 'type=date' added to <Form.Control ... /> tag to allow date to be entered via a calendar pop-up, rather than just text */}
+
                                     <div style={{padding: "0 10% 0 10%"}}>From</div>
                                     <Form.Group style={{padding: "0 10% 0 10%", display: "flex", justifyContent: "space-around"}}>
                                         <InputGroup>
@@ -234,6 +302,8 @@ class ReserveItems extends Component{
                                             <Form.Control id="toDate" type="date" min="2022-07-01" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.toDate} />
                                         </InputGroup>
                                     </Form.Group>
+
+                                    {/* Dropdown menu below updates value shown on menu on screen, and simultaneously updates value of 'frequency' value in state. Dropdown menus in other forms (e.g. Food Waste) work in the same way */}
 
                                     <div style={{padding: "0 10% 0 10%"}}>Frequency</div>
                                     <Form.Group style={{padding: "0 10% 0 10%", display: "flex"}}>
@@ -269,6 +339,11 @@ class ReserveItems extends Component{
 
                                     {/* this.handleReserveItemSubmit(e); */}
 
+                                    {/* 
+                                        Reserve/Submit button is rendered in a 'ternary operator' to make the button clickable only once the form has been fully correctly filled out. 
+                                        Same technique is used for submit buttons on other forms (e.g. FoodWaste.js), and also used similarly for 'Add' & 'Remove Last Item'/'Clear' buttons above.
+                                    */}
+
                                     {this.state.items !== [] && this.state.fromDate !== "" && this.state.toDate !== "" && this.state.frequency !== "Select Frequency" ?
                                         <Button style={{margin: "0 10% 0 10%", backgroundColor: "#040335", width: "80%", marginTop: "5px"}} onClick={(e) => { this.handleReserveItemSubmit(e); this.clearForm(); this.showNotification(); }} variant="secondary" type="button">Reserve</Button>
                                     :
@@ -278,6 +353,85 @@ class ReserveItems extends Component{
                                 </div>
 
                             </Form>
+
+                        </Card>
+
+                        <Card
+                        style={{
+                            // width: "90%", 
+                            width: this.state.formWidth, 
+                            // height: "100%"
+                            height: "400px",
+                            maxHeight: "300px",
+                            marginBottom: '10vh',
+                            backgroundColor: "#040335",
+                            overflowY: 'auto'
+                        }}
+                        >
+
+                            <h5 className="text-center" style={{fontWeight: 600, color: "white", marginTop: "2.5%", marginBottom: "5%"}}>My Reservations</h5>
+
+                            {/* "collection".map("each item in collection" => ( <>...</> ) ) method used here to render boxes shown in My Reservations section in the same way for all "Reserve Items" submissions in user's Firebase collection data */}
+
+                            <div>
+                                {this.state.myReservations.map(res => (
+                                    <>
+                                        <BrowserView>
+                                            <Card style={{width: "95%", marginLeft: "2.5%", backgroundColor: "rgb(38, 120, 214)", height: "160px", marginBottom: "50px"}}>
+
+                                                <div className="text-center" style={{marginBottom: "7.5px"}}>
+                                                    <span style={{marginRight: "20%"}}><b>From: </b> {res.fromDate}</span> <b>To: </b> {res.toDate}
+                                                </div>
+
+                                                <div className="text-center" style={{marginBottom: "10px"}}>
+                                                    <b>Frequency: </b> {res.frequency}
+                                                </div>
+
+                                                <div style={{overflowY: "scroll", marginBottom: "10px"}}>
+                                                    <Table striped bordered hover size="sm" style={{width: "99.5%", marginLeft: "0.5%", height: "50px", backgroundColor: "white"}}>
+                                                        <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white"}}><tr><b>Items Reserved</b></tr></thead>
+                                                        <tbody>
+
+                                                            {/* 'map' method used again to add each item in each document's "ITEMLIST" array to table */}
+
+                                                            {res.itemList.map(item => (                                                 
+                                                                <tr>{item.name}</tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </Table>
+                                                </div>
+
+                                            </Card>
+                                        </BrowserView>
+
+                                        <MobileView>
+                                            <Card style={{width: "95%", marginLeft: "2.5%", backgroundColor: "rgb(38, 120, 214)", height: "160px", marginBottom: "50px"}}>
+
+                                                <div className="text-center" style={{marginBottom: "5px"}}>
+                                                    <span style={{marginRight: "20%"}}><b>From: </b> {res.fromDate} </span> <b>To: </b> {res.toDate}
+                                                </div>
+
+                                                <div className="text-center" style={{marginBottom: "10px"}}>
+                                                    <b>Frequency: </b> {res.frequency}
+                                                </div>
+
+                                                <div style={{overflowY: "scroll", marginBottom: "10px"}}>
+                                                    <Table striped bordered hover size="sm" style={{width: "99.5%", marginLeft: "0.25%", height: "50px", backgroundColor: "white"}}>
+                                                        <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white"}}><tr><b>Items Reserved</b></tr></thead>
+                                                        <tbody>
+                                                            {res.itemList.map(item => (                                                 
+                                                                <tr>{item.name}</tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </Table>
+                                                </div>
+
+                                            </Card>
+                                        </MobileView>
+                                    </>
+                                ))}
+                            </div>
+
 
                         </Card>
 
@@ -292,29 +446,27 @@ class ReserveItems extends Component{
 }
 
 const foodOptions = [
-    {title: "Cereal"},
-    {title: "Bacon"},
-    {title: "Baked Beans"},
-    {title: "Porridge"},
-    {title: "Pancake"}, 
+    {title: "Ham"},
     {title: "Beef"},
     {title: "Chicken"},
     {title: "Pork"},
+    {title: "Cod"},
+    {title: "Haddock"},
+    {title: "Lamb"},
     {title: "Apple"},
     {title: "Banana"},
     {title: "Orange"},
     {title: "Pear"},
     {title: "Grapes"},
-    {title: "Chocolate"},
-    {title: "Crisps"},
-    {title: "Pasta"},
-    {title: "Bolognese"},
     {title: "Potato"},
-    {title: "Chips"},
     {title: "Milk"},
-    {title: "Fruit Juice"},
     {title: "Onion"},
+    {title: "Cucumber"},
+    {title: "Peppers"},
+    {title: "Cabbage"},
 ]
+
+// 'mapStateToProps' & 'mapDispatchToProps' consts below necessary to get & submit data to user's specific Firebase collection (notice 'uid' used in 'fetchMyReservationsData' to get correct collection)
 
 const mapStateToProps = (state) => {
     return{
@@ -342,6 +494,8 @@ const DDMenuStyle = styled.div`
 
     }
 `;
+
+// files that require use of Firebase collection data require this kind of export statement rather than just 'export default FileName'
 
 export default compose(connect(mapStateToProps, mapDispatchToProps),firestoreConnect([{ collection: "data" }]))(ReserveItems);
 // export default ReserveItems
