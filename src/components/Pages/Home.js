@@ -8,8 +8,9 @@ import {Link} from "react-router-dom";
 import { connect } from 'react-redux';
 import { auth } from "../../config/fbConfig"
 // import googleplaylogo from '../../images/google-play-logo.png'
-import buttonDesign from '../../images/button-design-6.png';
-import buttonDesign2 from "../../images/button-home-3.png"
+// import buttonDesign from '../../images/button-design-6.png';
+// import buttonDesign2 from "../../images/button-home-3.png"
+import buttonDesign3 from "../../images/pts-button-2.png"
 
 class Home extends Component {
 
@@ -45,9 +46,9 @@ class Home extends Component {
 
                   {!this.state.isLoggedIn ?
 
-                    <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "30%"}} src={buttonDesign}/></Link>
+                    <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "30%"}} src={buttonDesign3}/></Link>
 
-                  : <></> }
+                  : <img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "30%"}} src={buttonDesign3}/> }
 
                 <p className="text-center update-text" style={{marginTop: "6.5%", marginBottom: "-0.5%"}}> For updates, please sign up to the newsletter below.</p>
 
@@ -70,7 +71,7 @@ class Home extends Component {
               </Form>
                 </FormStyle>
 
-                <a href='https://play.google.com/store/apps/details?id=com.IntelliDigest.TheGlobalFoodLossandWasteTracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "9vh", width: "30%"}}  alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+                <a href='https://play.google.com/store/apps/details?id=com.IntelliDigest.TheGlobalFoodLossandWasteTracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", marginTop: "9vh", width: "20%"}}  alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
                   
 
 
@@ -93,11 +94,11 @@ class Home extends Component {
 
                 {!this.state.isLoggedIn ?
 
-                <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "75%", marginTop: "9vh"}} src={buttonDesign2}/></Link>
+                <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "75%", marginTop: "9vh"}} src={buttonDesign3}/></Link>
 
                 :
 
-                <></>
+                <img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "75%", marginTop: "9vh"}} src={buttonDesign3}/>
 
                 }
 

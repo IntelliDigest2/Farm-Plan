@@ -16,7 +16,24 @@ import { Divider } from '@material-ui/core';
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Countdown from "react-countdown"
 
-// import addNotification from "react-push-notification"
+
+
+
+{/* 
+  
+  Nested 'Ternary Operators' (Conditional Rendering) used for returning different account types, and showing different options in Food & Food Waste sections. Ternary operators are structured as shown below:-
+
+    { (condition) ? <> Return if condition true </> : <> Return if condition false </> }
+
+  Code here split into FARM ACCOUNT, BUSINESS ACCOUNT, UNIVERSITY ACCOUNT and them HOUSEHOLD ACCOUNT with large gaps between these sections to help tell them apart
+
+  Some elements rendered in <BrowserView></BrowserView> & <MobileView></MobileView> tags. This is so these elements are rendered differently on browser than on mobile (e.g. a button may need to be sized smaller to fit properly on a mobile device). This is used 
+  frequently across the code.
+
+*/}
+
+
+
 
 class Account extends Component {
 
@@ -31,19 +48,6 @@ class Account extends Component {
     skipPTSCLicked: false
   }
 
-  // notificationTest = () => {
-  //   addNotification({
-  //     title: 'Warning',
-  //     subtitle: 'This is a subtitle',
-  //     message: 'This is a very long message',
-  //     // theme: 'darkblue',
-  //     // native: false,
-  //     backgroundTop: '#aab41e', //optional, background color of top container.
-  //     backgroundBottom: '#aab41e', //optional, background color of bottom container.
-  //     closeButton: 'Close',
-  //     duration: 10000
-  //   });
-  // }
 
   render(){
   const { auth, profile, users } = this.props;
@@ -475,8 +479,12 @@ class Account extends Component {
                       </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="text-center">
+                    <div className="text-center" style={{marginBottom: "-2px"}}>
                         <span>Campaign Ends: </span><DateStyle><Countdown className="date" date='2022-01-31T23:59:59'/></DateStyle>
+                    </div>
+
+                    <div className="text-center">
+                      <DateStyle><span className="label">days : hrs : mins : secs</span></DateStyle>
                     </div>
 
                     <Button variant="secondary" style={{width: "45%", marginLeft: "27.5%", marginTop: "5%", marginBottom: "1%"}} onClick={() => this.setState({skipPTSCLicked: !this.state.skipPTSCLicked})}>My Account</Button>
@@ -491,8 +499,12 @@ class Account extends Component {
                       </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="text-center">
+                    <div className="text-center" style={{marginBottom: "-2px"}}>
                         <span>Campaign Ends: </span><DateStyle><Countdown className="date" date='2022-01-31T23:59:59'/></DateStyle>
+                    </div>
+
+                    <div className="text-center">
+                      <DateStyle><span className="label">days : hrs : mins : secs</span></DateStyle>
                     </div>
 
                     <Button variant="secondary" style={{width: "70%", marginLeft: "15%", marginTop: "7.5%", marginBottom: "1%"}} onClick={() => this.setState({skipPTSCLicked: !this.state.skipPTSCLicked})}>My Account</Button>
@@ -911,8 +923,12 @@ class Account extends Component {
                       </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="text-center">
+                    <div className="text-center" style={{marginBottom: "-2px"}}>
                         <span>Campaign Ends: </span><DateStyle><Countdown className="date" date='2022-01-31T23:59:59'/></DateStyle>
+                    </div>
+
+                    <div className="text-center">
+                      <DateStyle><span className="label">days : hrs : mins : secs</span></DateStyle>
                     </div>
 
                     <Button variant="secondary" style={{width: "45%", marginLeft: "27.5%", marginTop: "5%", marginBottom: "1%"}} onClick={() => this.setState({skipPTSCLicked: !this.state.skipPTSCLicked})}>My Account</Button>
@@ -927,8 +943,12 @@ class Account extends Component {
                       </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="text-center">
+                    <div className="text-center" style={{marginBottom: "-2px"}}>
                         <span>Campaign Ends: </span><DateStyle><Countdown className="date" date='2022-01-31T23:59:59'/></DateStyle>
+                    </div>
+
+                    <div className="text-center">
+                      <DateStyle><span className="label">days : hrs : mins : secs</span></DateStyle>
                     </div>
 
                     <Button variant="secondary" style={{width: "70%", marginLeft: "15%", marginTop: "7.5%", marginBottom: "1%"}} onClick={() => this.setState({skipPTSCLicked: !this.state.skipPTSCLicked})}>My Account</Button>
@@ -1497,8 +1517,12 @@ class Account extends Component {
                       </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="text-center">
+                    <div className="text-center" style={{marginBottom: "-2px"}}>
                         <span>Campaign Ends: </span><DateStyle><Countdown className="date" date='2022-01-31T23:59:59'/></DateStyle>
+                    </div>
+
+                    <div className="text-center">
+                      <DateStyle><span className="label">days : hrs : mins : secs</span></DateStyle>
                     </div>
 
                     <Button variant="secondary" style={{width: "45%", marginLeft: "27.5%", marginTop: "5%", marginBottom: "1%"}} onClick={() => this.setState({skipPTSCLicked: !this.state.skipPTSCLicked})}>My Account</Button>
@@ -1513,8 +1537,12 @@ class Account extends Component {
                       </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="text-center">
+                    <div className="text-center" style={{marginBottom: "-2px"}}>
                         <span>Campaign Ends: </span><DateStyle><Countdown className="date" date='2022-01-31T23:59:59'/></DateStyle>
+                    </div>
+
+                    <div className="text-center">
+                      <DateStyle><span className="label">days : hrs : mins : secs</span></DateStyle>
                     </div>
 
                     <Button variant="secondary" style={{width: "70%", marginLeft: "15%", marginTop: "7.5%", marginBottom: "1%"}} onClick={() => this.setState({skipPTSCLicked: !this.state.skipPTSCLicked})}>My Account</Button>
@@ -1828,8 +1856,12 @@ class Account extends Component {
                       </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="text-center">
+                    <div className="text-center" style={{marginBottom: "-2px"}}>
                         <span>Campaign Ends: </span><DateStyle><Countdown className="date" date='2022-01-31T23:59:59'/></DateStyle>
+                    </div>
+
+                    <div className="text-center">
+                      <DateStyle><span className="label">days : hrs : mins : secs</span></DateStyle>
                     </div>
 
                     <Button variant="secondary" style={{width: "45%", marginLeft: "27.5%", marginTop: "5%", marginBottom: "1%"}} onClick={() => this.setState({skipPTSCLicked: !this.state.skipPTSCLicked})}>My Account</Button>
@@ -1844,8 +1876,12 @@ class Account extends Component {
                       </ListGroup.Item>
                     </ListGroup>
 
-                    <div className="text-center">
+                    <div className="text-center" style={{marginBottom: "-2px"}}>
                         <span>Campaign Ends: </span><DateStyle><Countdown className="date" date='2022-01-31T23:59:59'/></DateStyle>
+                    </div>
+
+                    <div className="text-center">
+                      <DateStyle><span className="label">days : hrs : mins : secs</span></DateStyle>
                     </div>
 
                     <Button variant="secondary" style={{width: "70%", marginLeft: "15%", marginTop: "7.5%", marginBottom: "1%"}} onClick={() => this.setState({skipPTSCLicked: !this.state.skipPTSCLicked})}>My Account</Button>
@@ -1921,6 +1957,14 @@ const DateStyle = styled.div`
       color: white;
       font-size: 200%;
       padding: 5px;
+  }
+
+  .label{
+    background-color: rgb(18, 108, 164);
+    color: white;
+    font-weight: 600;
+    padding-left: 15.5px;
+    padding-right: 15.5px;
   }
 `;
 

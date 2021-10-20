@@ -48,6 +48,10 @@ class Chart61 extends Component {
 
               var st = doc.data().SUBMISSIONTYPE
 
+              //==================================================================================================================================================
+              // Section below converts all submissions' weight value to kilograms so y-axis of chart is the same for all Food Waste, Loss & Surplus Weight charts
+              // Similar method used to convert all submissions' cost values to GBP (£) for Food Waste, Loss & Surplus Cost charts
+
               var newWeight = 0
     
               if (wu === "kg" || wu === "l"){
@@ -63,6 +67,8 @@ class Chart61 extends Component {
                 newWeight = Number((weight * 0.454).toFixed(3))
                 // console.log(newWeight)
               }
+
+              // ==================================================================================================================================================
 
               if (week === time && day === "Mon" && st === "Waste Business"){
                 this.setState({weekBeginning: month + " " + mdate})
@@ -115,6 +121,8 @@ class Chart61 extends Component {
         <br/>
         <br/>
 
+        {/* Charts rendered slightly differently on mobile & browser (e.g. shorter labels on mobile), columns show data captured in fetchData method */}
+
           <MobileView>
             {/* <ChartStyle> */}
             <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
@@ -153,6 +161,8 @@ class Chart61 extends Component {
 
             </div>
             {/* </ChartStyle> */}
+
+            {/* Below, row of buttons act as easier navigation between linked charts (in this case: Weekly Food Waste Weight (Business), Monthly Food Waste Weight (Business), Yearly Food Waste Weight (Business) ) */}
 
             <div style={{height: "95px", marginBottom: "10%"}}>
                 <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
