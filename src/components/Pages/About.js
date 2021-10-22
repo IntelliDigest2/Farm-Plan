@@ -261,6 +261,12 @@ function About() {
 
             <h3 style={{marginTop: "-5%", marginBottom: "2.5%"}}>Recommended Daily Nutrient Intake</h3>
 
+            {/* 
+              Conditional rendering/ternary operators used again here to alter the table upon clicking certian options from this dropdown menu.
+              This example makes use of the 'useState' hook since this is a 'functional component' rather than a 'class component' (where you would make use of 'this.setState({ ... })' )
+              More info/help on this: https://reactjs.org/docs/hooks-state.html
+            */}
+
             <Dropdown>
               <DropdownToggle className="custom-btn" style={{marginBottom: "2.5%"}}>Select Age Group</DropdownToggle>
               <DropdownMenu>
