@@ -6,7 +6,7 @@ import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import {Autocomplete} from '@material-ui/lab';
 import {TextField, Checkbox} from '@material-ui/core';
-import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Dropdown, Table, Modal, ButtonGroup} from 'react-bootstrap';
+import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Dropdown, Table, Modal, ButtonGroup, ListGroup} from 'react-bootstrap';
 import styled from "styled-components";
 import {Link} from "react-router-dom"
 import addNotification from "react-push-notification"
@@ -43,29 +43,19 @@ class ReserveItems extends Component{
         submissionFullDate: moment().format("ddd MMM Do YYYY"),
 
         testReservationList: [
-            {itemList: [{name: "Onion"}, {name: "Pepper"}, {name: "Beef"}], fromDate: "2022-06-01", toDate: "2022-09-01", frequency: "Weekly"},
-            {itemList: [{name: "Pork"}, {name: "Cod"}], fromDate: "2022-06-07", toDate: "2022-10-07", frequency: "Fortnightly"},
-            {itemList: [{name: "Apple"}, {name: "Banana"}, {name: "Pear"}, {name: "Grapes"}], fromDate: "2022-07-01", toDate: "2022-08-01", frequency: "Weekly"}
+            {resID: 1, itemList: [{name: "Onion"}, {name: "Pepper"}, {name: "Beef"}], fromDate: "2022-06-01", toDate: "2022-09-01", frequency: "Weekly"},
+            {resID: 2, itemList: [{name: "Pork"}, {name: "Cod"}], fromDate: "2022-06-07", toDate: "2022-10-07", frequency: "Fortnightly"},
+            {resID: 3, itemList: [{name: "Apple"}, {name: "Banana"}, {name: "Pear"}, {name: "Grapes"}], fromDate: "2022-07-01", toDate: "2022-08-01", frequency: "Weekly"}
         ],
         myReservations: [],
+
+        // cardDeleted: false,
     }
 
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
-    }
-
-    handleListUpdateText = (e) => {
-        this.setState( (prevState) => ({
-            items: prevState.items.concat(e.target.value)
-        }))
-    }
-
-    handleListUpdateClick = (e) => {
-        this.setState( (prevState) => ({
-            items: prevState.items.concat(e.target.textContent)
-        }))
     }
 
     handleFreqChange(value){
@@ -109,6 +99,22 @@ class ReserveItems extends Component{
         });
     }
 
+    deleteReservation = (rID) => {
+        const newRes = this.state.myReservations.filter(res => res.resID !== rID);
+        this.setState({myReservations: newRes});
+        fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData').doc(rID).delete();
+    }
+
+    // testDeleteReservation = (rID) => {
+    //     const newRes = this.state.testReservationList.filter(res => res.resID !== rID);
+    //     this.setState({testReservationList: newRes});
+    // }
+
+    // testDeleteItem = (name, items) => {
+    //     const newItemList = items.filter(item => item.name !== name);
+    //     this.setState
+    // }
+
 
         
     // Method below is what sends relevant form data to Firebase collection, 'createReserveItemsData' const is imported from 'dataActions.js' file in the 'store/actions/...' directory
@@ -123,11 +129,11 @@ class ReserveItems extends Component{
 
     // =================================
 
-    handleTestSubmission = (e) => {
-        this.setState( (prevState) => ({
-            testReservationList: prevState.testReservationList.concat({itemList: this.state.items, fromDate: this.state.fromDate, toDate: this.state.toDate, frequency: this.state.frequency})
-        }))
-    }
+    // handleTestSubmission = (e) => {
+    //     this.setState( (prevState) => ({
+    //         testReservationList: prevState.testReservationList.concat({itemList: this.state.items, fromDate: this.state.fromDate, toDate: this.state.toDate, frequency: this.state.frequency})
+    //     }))
+    // }
 
     // =================================
 
@@ -151,10 +157,10 @@ class ReserveItems extends Component{
               var freq = doc.data().FREQUENCY
 
               if (st === "Reserve Items"){
-                  // console.log(newExp)
+                  // console.log(doc.id);
 
                   this.setState( (prevState) => ({
-                    myReservations: prevState.myReservations.concat({itemList: il, fromDate: fd, toDate: td, frequency: freq})
+                    myReservations: prevState.myReservations.concat({itemList: il, fromDate: fd, toDate: td, frequency: freq, resID: doc.id})
                   }));
               }
 
@@ -383,6 +389,8 @@ class ReserveItems extends Component{
                                                     <span style={{marginRight: "20%"}}><b>From: </b> {res.fromDate}</span> <b>To: </b> {res.toDate}
                                                 </div>
 
+                                                <div onClick={() => this.deleteReservation(res.resID)} style={{fontSize: "150%", fontWeight: 600, marginLeft: "97.5%", marginTop: "-4.5%"}}>X</div>
+
                                                 <div className="text-center" style={{marginBottom: "10px"}}>
                                                     <b>Frequency: </b> {res.frequency}
                                                 </div>
@@ -398,9 +406,16 @@ class ReserveItems extends Component{
                                                                 <tr>{item.name}</tr>
                                                             ))}
                                                         </tbody>
-                                                    </Table>
-                                                </div>
+                                                    </Table> 
 
+                                                    {/* <ListGroup style={{width: "98%", marginLeft: "2%"}}>
+                                                        <ListGroup.Item  style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white"}}>Items Added</ListGroup.Item>
+                                                        {res.itemList.map(item => (
+                                                            <ListGroup.Item>{item.name} <div style={{marginLeft: "95%", marginTop: "-3.5%", fontWeight: 600}}>X</div></ListGroup.Item>
+                                                        ))}
+                                                    </ListGroup> */}
+
+                                                </div>
                                             </Card>
                                         </BrowserView>
 
@@ -408,8 +423,10 @@ class ReserveItems extends Component{
                                             <Card style={{width: "95%", marginLeft: "2.5%", backgroundColor: "rgb(38, 120, 214)", height: "160px", marginBottom: "50px"}}>
 
                                                 <div className="text-center" style={{marginBottom: "5px"}}>
-                                                    <span style={{marginRight: "20%"}}><b>From: </b> {res.fromDate} </span> <b>To: </b> {res.toDate}
+                                                    <span style={{marginRight: "8.5%"}}><b>From: </b> {res.fromDate} </span> <b>To: </b> {res.toDate}
                                                 </div>
+
+                                                <div onClick={() => this.deleteReservation(res.resID)} style={{marginLeft: "95%", marginTop: "-10%", fontWeight: 600, fontSize: "150%"}}>X</div>
 
                                                 <div className="text-center" style={{marginBottom: "10px"}}>
                                                     <b>Frequency: </b> {res.frequency}

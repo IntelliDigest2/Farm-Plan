@@ -78,9 +78,9 @@ render(){
     // <div>{!this.state.isConfirming ?
       <React.Fragment>
         <Row className="mr-0 ml-0 justify-content-center align-items-center signup">
-              <Col className="d-block mt-5 pt-5 pb-5 mb-5 pb-lg-0 mb-lg-0 mt-lg-0 pt-lg-0" sm={12} md={12} lg={5}>
+              <Col className="d-block mt-5 pt-5 pb-5 mb-5 pb-lg-0 mb-lg-0 mt-lg-0 pt-lg-0" sm={12} md={12} lg={5} style={{height: "100vh", overflowY: "scroll"}}>
                 <FormStyle>
-                  <div className="text-center">
+                  <div className="text-center" style={{marginTop: "10%"}}>
 
                 <i className="fa fa-user-circle-o signup-logo"></i>
                   </div>
@@ -416,11 +416,11 @@ render(){
                 </div> 
                 }
                 </div>
-                <p className="text-center terms">Already a member? <Link to="/login" className="register">Login</Link> to your account.</p>
+                <p style={{marginBottom: "10%"}} className="text-center terms">Already a member? <Link to="/login" className="register">Login</Link> to your account.</p>
                 <div className="auth-error">{authError ? <p> {authError}</p> : null}</div>
                 </FormStyle>
               </Col>
-              <Col className="bg-image new-signup-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7}></Col>
+              <Col className="bg-image new-signup-graphic d-none d-sm-none d-md-none d-lg-block" sm={12} md={12} lg={7} style={{ height: "100vh"}}></Col>
         </Row>
       </React.Fragment>
         //   : 
