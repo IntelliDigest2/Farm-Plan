@@ -48,7 +48,7 @@ class Home extends Component {
 
                     <Link to="/signup"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "30%"}} src={buttonDesign3}/></Link>
 
-                  : <img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "30%"}} src={buttonDesign3}/> }
+                  : <Link to="/reserve-items"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "30%"}} src={buttonDesign3}/></Link> }
 
                 <p className="text-center update-text" style={{marginTop: "6.5%", marginBottom: "-0.5%"}}> For updates, please sign up to the newsletter below.</p>
 
@@ -98,7 +98,7 @@ class Home extends Component {
 
                 :
 
-                <img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "75%", marginTop: "9vh"}} src={buttonDesign3}/>
+                <Link to="/reserve-items"><img style={{position: "absolute", left: "50%", right: "50%", transform: "translate(-50%, -50%)", width: "30%"}} src={buttonDesign3}/></Link>
 
                 }
 
