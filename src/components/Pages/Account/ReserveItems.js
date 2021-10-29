@@ -6,11 +6,12 @@ import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import {Autocomplete} from '@material-ui/lab';
 import {TextField, Checkbox} from '@material-ui/core';
-import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Dropdown, Table, Modal, ButtonGroup, ListGroup} from 'react-bootstrap';
+import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Dropdown, Table, Modal, ButtonGroup, ListGroup, ListGroupItem} from 'react-bootstrap';
 import styled from "styled-components";
 import {Link} from "react-router-dom"
 import addNotification from "react-push-notification"
 import moment from "moment"
+// import {ImCross} from "react-icons/im"
 import { startData, createReserveItemsData } from '../../../store/actions/dataActions';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -23,6 +24,8 @@ class ReserveItems extends Component{
         uid: this.props.auth.uid,
 
         item: "",
+        itemWeight: 0,
+        weightType: "Select Unit",
         items: [],
         fromDate: "",
         toDate: "",
@@ -43,9 +46,9 @@ class ReserveItems extends Component{
         submissionFullDate: moment().format("ddd MMM Do YYYY"),
 
         testReservationList: [
-            {resID: 1, itemList: [{name: "Onion"}, {name: "Pepper"}, {name: "Beef"}], fromDate: "2022-06-01", toDate: "2022-09-01", frequency: "Weekly"},
-            {resID: 2, itemList: [{name: "Pork"}, {name: "Cod"}], fromDate: "2022-06-07", toDate: "2022-10-07", frequency: "Fortnightly"},
-            {resID: 3, itemList: [{name: "Apple"}, {name: "Banana"}, {name: "Pear"}, {name: "Grapes"}], fromDate: "2022-07-01", toDate: "2022-08-01", frequency: "Weekly"}
+            {resID: 1, itemList: [{name: "Onion", weight: "200g"}, {name: "Pepper", weight: "250g"}, {name: "Beef", weight: "1kg"}], fromDate: "2022-06-01", toDate: "2022-09-01", frequency: "Weekly"},
+            {resID: 2, itemList: [{name: "Pork", weight: "750g"}, {name: "Cod", weight: "450g"}], fromDate: "2022-06-07", toDate: "2022-10-07", frequency: "Fortnightly"},
+            {resID: 3, itemList: [{name: "Apple", weight: "180g"}, {name: "Banana", weight: "190g"}, {name: "Pear", weight: "200g"}, {name: "Grapes", weight: "100g"}], fromDate: "2022-07-01", toDate: "2022-08-01", frequency: "Weekly"}
         ],
         myReservations: [],
 
@@ -56,6 +59,10 @@ class ReserveItems extends Component{
         this.setState({
             [e.target.id]: e.target.value
         })
+    }
+
+    handleWeightUnitChange(text){
+        this.setState({weightType: text})
     }
 
     handleFreqChange(value){
@@ -72,6 +79,15 @@ class ReserveItems extends Component{
         }
     }
 
+    handleAddClick(){
+        this.setState({
+            itemWeight: 0,
+            weightType: "Select Unit"
+        });
+
+        this.setState( (prevState) => ({items: prevState.items.concat( {name: this.state.item, weight: this.state.itemWeight+this.state.weightType} )}));
+    }
+
     // testItemList(){
     //     console.log(this.state.items)
     // }
@@ -79,6 +95,8 @@ class ReserveItems extends Component{
     clearForm = () => {
         this.setState({
             item: "",
+            itemWeight: 0,
+            weightType: "Select Unit",
             items: [],
             fromDate: "",
             toDate: "",
@@ -130,8 +148,10 @@ class ReserveItems extends Component{
     // =================================
 
     // handleTestSubmission = (e) => {
+    //     const id = Math.floor(Math.random() * 10000) + 1
+
     //     this.setState( (prevState) => ({
-    //         testReservationList: prevState.testReservationList.concat({itemList: this.state.items, fromDate: this.state.fromDate, toDate: this.state.toDate, frequency: this.state.frequency})
+    //         testReservationList: prevState.testReservationList.concat({resID: id, itemList: this.state.items, fromDate: this.state.fromDate, toDate: this.state.toDate, frequency: this.state.frequency})
     //     }))
     // }
 
@@ -215,7 +235,7 @@ class ReserveItems extends Component{
 
                     <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%", height: "190%"}}>
 
-                        <Card style={{width: this.state.formWidth, height: "615px", marginBottom: "10vh", backgroundColor: "#aab41e"}}>
+                        <Card style={{width: this.state.formWidth, height: "675px", marginBottom: "10vh", backgroundColor: "#aab41e"}}>
 
                             <Form className="form-layout" style={{padding: "10px"}}>
 
@@ -239,8 +259,8 @@ class ReserveItems extends Component{
                                                     onChange={(e) => this.setState({ item: e.target.textContent})}
                                                     renderInput={(params) => ( <TextField {...params} label="Enter Items" variant="outlined" /> )}
                                                 />
-                                                {this.state.item !== "" ?
-                                                    <Button type="button" style={{width: "10%", backgroundColor: "#040335"}} onClick={() => this.setState((prevState) => ({items: prevState.items.concat({name: this.state.item})}))}>Add</Button>
+                                                {this.state.item !== "" && this.state.itemWeight !== 0 && this.state.weightType !== "Select Unit" ?
+                                                    <Button type="button" style={{width: "10%", backgroundColor: "#040335"}} onClick={() => this.handleAddClick()}>Add</Button>
                                                 :
                                                     <Button type="button" style={{width: "10%"}} variant="secondary" disabled>Add</Button>
                                                 }       
@@ -260,24 +280,127 @@ class ReserveItems extends Component{
                                                     onChange={(e) => this.setState({ item: e.target.textContent})}
                                                     renderInput={(params) => ( <TextField {...params} label="Enter Items" variant="outlined" /> )}
                                                 />
-                                                {this.state.item !== "" ?
-                                                    <Button type="button" style={{width: "30%", backgroundColor: "#040335"}} onClick={() => this.setState((prevState) => ({items: prevState.items.concat({name: this.state.item})}))}>Add</Button>
+                                                {this.state.item !== "" && this.state.itemWeight !== 0 && this.state.weightType !== "Select Unit" ?
+                                                    <Button type="button" style={{width: "30%", backgroundColor: "#040335"}} onClick={() => this.handleAddClick()}>Add</Button>
                                                 :
                                                     <Button type="button" style={{width: "30%"}} variant="secondary" disabled>Add</Button>
                                                 }
                                             </Form.Group>
                                         </MobileView>
 
+                                    <div style={{padding: "0 10% 0 10%"}}>Weight / Volume</div>
+                                    <Form.Group className= "form-layout" 
+                                        style={{
+                                            padding: "0 10% 0 10%", 
+                                            display: "flex", 
+                                            justifyContent: 'space-around'}} 
+                                    >
+                                    <InputGroup>
+                                        <Form.Control  type="number" id="itemWeight" placeholder="Enter weight" onChange={(e) => {this.handleChange(e)}} width="100%" value={this.state.itemWeight}/>
+                                        {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
+                                        <InputGroup.Append>
+                                            <InputGroup.Text>kg</InputGroup.Text>
+                                        </InputGroup.Append> */}
+
+                                        <DropdownButton
+                                            as={InputGroup.Append}
+                                            variant="outline-secondary"
+                                            title={<span style={{color: "white"}}>{this.state.weightType}</span>}
+                                            id="wtdd"
+                                            style={{backgroundColor: "#040335"}}
+                                        >
+
+                                            <Dropdown.Header>Weight (Solids)</Dropdown.Header>
+
+                                            {/* as="button" */}
+                                            <DropdownItem as="button" type="button">
+                                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent)}}>
+                                                    kg
+                                                </div>
+                                            </DropdownItem>
+
+                                            {/* as="button" */}
+                                            <DropdownItem as="button" type="button">
+                                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent)}}>
+                                                    g
+                                                </div>
+                                            </DropdownItem>
+
+                                            {/* as="button" */}
+                                            <DropdownItem as="button" type="button">
+                                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent)}}>
+                                                    oz
+                                                </div>
+                                            </DropdownItem>
+
+                                            {/* as="button" */}
+                                            <DropdownItem as="button" type="button">
+                                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent)}}>
+                                                    lbs
+                                                </div>
+                                            </DropdownItem>
+
+                                            <Dropdown.Divider />
+
+                                            <Dropdown.Header>Volume (Liquids)</Dropdown.Header>
+
+                                            <DropdownItem as="button" type="button">
+                                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent)}}>
+                                                    l
+                                                </div>
+                                            </DropdownItem>
+
+                                            <DropdownItem as="button" type="button">
+                                                <div onClick={(e) => {this.handleWeightUnitChange(e.target.textContent)}}>
+                                                    ml
+                                                </div>
+                                            </DropdownItem>
+
+                                        </DropdownButton>
+
+                                    </InputGroup>
+                                    </Form.Group>
+
                                     <div style={{padding: "0 10% 0 10%"}}>Selected Items</div>
                                     <div style={{overflowY: "scroll", height: "85px", width: "80%", marginLeft: "10%", backgroundColor: "white", marginBottom: "10px"}}>
-                                        <Table striped bordered hover size="sm">
-                                            <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white"}}><tr><b>Items Added</b></tr></thead>
-                                            <tbody>
-                                                {this.state.items.map(item => (                                                 
-                                                    <tr>{item.name}</tr>
-                                                ))}
-                                            </tbody>
-                                        </Table>
+                                        <ListGroup>
+                                            <ListGroupItem style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white", width: "100%", fontWeight: 600, padding: "0 1px 0 1px", borderRadius: "0px"}}>Items Added</ListGroupItem>
+                                        </ListGroup>
+                                        <BrowserView>
+                                            <Table striped bordered hover size="sm">
+                                                {/* <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white", width: "200%"}}><b>Items Added</b></thead> */}
+                                                <tbody>
+                                                    <tr>
+                                                        <th style={{textAlign: "center", width: "50%"}}><b>Item Name</b></th>
+                                                        <th style={{textAlign: "center", width: "50%"}}><b>Weight / Volume</b></th>
+                                                    </tr>
+                                                    {this.state.items.map(item => (                                                 
+                                                        <tr>
+                                                            <th>{item.name}</th>
+                                                            <th>{item.weight}</th>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </Table>
+                                        </BrowserView>
+
+                                        <MobileView>
+                                            <Table striped bordered hover size="sm">
+                                                {/* <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white", width: "200%"}}><b>Items Added</b></thead> */}
+                                                <tbody>
+                                                    <tr>
+                                                        <th style={{textAlign: "center", width: "50%"}}><b style={{fontSize: "85%"}}>Item Name</b></th>
+                                                        <th style={{textAlign: "center", width: "50%"}}><b style={{fontSize: "85%"}}>Weight/Volume</b></th>
+                                                    </tr>
+                                                    {this.state.items.map(item => (                                                 
+                                                        <tr>
+                                                            <th>{item.name}</th>
+                                                            <th>{item.weight}</th>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </Table>
+                                        </MobileView>
                                     </div>
                                     <ButtonGroup style={{width: "80%", marginLeft: "10%", marginTop: "-10px", marginBottom: "10px"}}>
                                         {!this.isItemsEmpty(this.state.items) ?
@@ -390,20 +513,34 @@ class ReserveItems extends Component{
                                                 </div>
 
                                                 <div onClick={() => this.deleteReservation(res.resID)} style={{fontSize: "150%", fontWeight: 600, marginLeft: "97.5%", marginTop: "-4.5%"}}>X</div>
+                                                {/* <ImCross onClick={() => this.testDeleteReservation(res.resID)} style={{marginLeft: "96.5%", marginTop: "-3.5%"}} /> */}
 
                                                 <div className="text-center" style={{marginBottom: "10px"}}>
-                                                    <b>Frequency: </b> {res.frequency}
+                                                    <b>Frequency: </b> {res.frequency} {" "} {res.resID}
                                                 </div>
 
                                                 <div style={{overflowY: "scroll", marginBottom: "10px"}}>
+                                                <ListGroup>
+                                                    <ListGroupItem style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white", width: "99.5%", marginLeft: "0.5%", fontWeight: 600, padding: "0 1px 0 1px", borderRadius: "0px"}}>Items Reserved</ListGroupItem>
+                                                </ListGroup>
                                                     <Table striped bordered hover size="sm" style={{width: "99.5%", marginLeft: "0.5%", height: "50px", backgroundColor: "white"}}>
-                                                        <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white"}}><tr><b>Items Reserved</b></tr></thead>
+                                                        {/* <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white"}}><tr><b>Items Reserved</b></tr></thead> */}
                                                         <tbody>
+
+                                                        <tr>
+                                                            <th style={{textAlign: "center", width: "50%"}}><b>Item Name</b></th>
+                                                            <th style={{textAlign: "center", width: "50%"}}><b>Weight / Volume</b></th>
+                                                        </tr>
 
                                                             {/* 'map' method used again to add each item in each document's "ITEMLIST" array to table */}
 
-                                                            {res.itemList.map(item => (                                                 
-                                                                <tr>{item.name}</tr>
+                                                            {res.itemList.map(item => (   
+                                                                <>                                              
+                                                                <tr>
+                                                                    <th>{item.name}</th>
+                                                                    <th>{item.weight}</th>
+                                                                </tr>
+                                                                </>
                                                             ))}
                                                         </tbody>
                                                     </Table> 
@@ -427,17 +564,33 @@ class ReserveItems extends Component{
                                                 </div>
 
                                                 <div onClick={() => this.deleteReservation(res.resID)} style={{marginLeft: "95%", marginTop: "-10%", fontWeight: 600, fontSize: "150%"}}>X</div>
+                                                {/* <ImCross onClick={() => this.testDeleteReservation(res.resID)} style={{marginLeft: "93.5%", marginTop: "-5.5%"}} /> */}
+
 
                                                 <div className="text-center" style={{marginBottom: "10px"}}>
                                                     <b>Frequency: </b> {res.frequency}
                                                 </div>
 
                                                 <div style={{overflowY: "scroll", marginBottom: "10px"}}>
+
+                                                <ListGroup>
+                                                    <ListGroupItem style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white", width: "99.5%", marginLeft: "0.25%", fontWeight: 600, padding: "0 1px 0 1px", borderRadius: "0px"}}>Items Reserved</ListGroupItem>
+                                                </ListGroup>
+
                                                     <Table striped bordered hover size="sm" style={{width: "99.5%", marginLeft: "0.25%", height: "50px", backgroundColor: "white"}}>
-                                                        <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white"}}><tr><b>Items Reserved</b></tr></thead>
+                                                        {/* <thead style={{textAlign: "center", backgroundColor: "rgb(13, 27, 92, 0.8)", color: "white"}}><tr><b>Items Reserved</b></tr></thead> */}
                                                         <tbody>
+
+                                                        <tr>
+                                                            <th style={{textAlign: "center", width: "50%"}}><b style={{fontSize: "85%"}}>Item Name</b></th>
+                                                            <th style={{textAlign: "center", width: "50%"}}><b style={{fontSize: "85%"}}>Weight/Volume</b></th>
+                                                        </tr>
+
                                                             {res.itemList.map(item => (                                                 
-                                                                <tr>{item.name}</tr>
+                                                                <tr>
+                                                                    <th>{item.name}</th>
+                                                                    <th>{item.weight}</th>
+                                                                </tr>
                                                             ))}
                                                         </tbody>
                                                     </Table>

@@ -18,10 +18,14 @@ import carbs from "../../images/carbs.jpg"
 import protein from "../../images/protein.png"
 import fibre from "../../images/fibre.jpeg"
 import fat from "../../images/fat.jpeg"
+import pts from "../../images/button-design-6.png"
+import pts2 from "../../images/pts-banner.png"
 
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
+
+import { Divider } from '@material-ui/core';
 
 import { BrowserView, MobileView, isMobile, isBrowser } from 'react-device-detect';
 import styled from "styled-components"
@@ -73,6 +77,61 @@ function About() {
 
                 </Col>
             </Row>
+
+            {/* <Row className="pb-5 mb-5 mr-0 ml-0 text-justify about"> 
+                <Col className="d-block justify-content-center" sm={12} md={12} lg={12}>
+                  <Divider style={{marginBottom: "25px"}}/>
+                  <img src={pts2} alt="PTS" style={{width: "100%", marginLeft: "0%", height: "50%"}}/>
+                  <h1>Plan To Save</h1>
+                  <p><b>'If we fail to plan, we have planned to fail'</b> is a common phrase which has lost application in the way we
+                  approach food, hence, this campaign (running from 16th Oct 2021 - 31st Jan 2022) is meant to help us rethink our attitude to food.</p>
+                  <p>It is targeted at motivating consumers to plan their food consumption to help local farmers plan farming and adopt a more
+                    sustainable farming system that will produce more nutritious food while impacting positively on the environment.
+                  </p>
+                  <p><b>The key questions the campaign will be seeking to address will be centered around:-</b>
+                    <li>Have you witnessed empty shelves in your grocery store during the pandemic?</li>
+                    <li>Have you ever wondered why we waste over 1.3 billion tonnes of food every year when over 800 million people are hungry?</li>
+                    <li>Do you know that our current AgriFood prodcution system contributes over 30% of greenhouse gas emission?</li>
+                    <li>Are you aware that 1 in 5 deaths is linked to malnutrition?</li>
+                    <li>Does the lack of HGV Drivers to support the food system create a concern for you?</li>
+                    <li>Are you worried about the future of food?</li>
+                    <li>Do you know you can help address most of these problems if you can change your attitude to food?</li>
+                  </p>
+                  <Divider />
+                </Col>
+            </Row> */}
+
+            <div style={{marginTop: "5vh", marginBottom: "10vh"}}>
+              <Col>
+              <Divider style={{marginBottom: "4%", marginTop: "-4%"}}/>
+              <h1>Plan To Save</h1>
+              <img src={pts2} alt="PTS" style={{width: "100%", marginLeft: "0%", height: "60vh", marginBottom: "1.5%"}}/>
+                <p><b>'If we fail to plan, we have planned to fail'</b> is a common phrase which has lost application in the way we
+                  approach food, hence, this campaign (running from 16th Oct 2021 - 31st Jan 2022) is meant to help us rethink our attitude to food.</p>
+                <p>It is targeted at motivating consumers to plan their food consumption to help local farmers plan farming and adopt a more
+                  sustainable farming system that will produce more nutritious food while impacting positively on the environment.
+                </p>
+                <p>
+                  If you can reserve your fresh food, local farmers can plan better in their food production to meet your needs in
+                  the most sustainable way. By signing up to the Plan To Save campaign and reserving your weekly, fortnightly and
+                  monthly fresh food requirements, we will take the responsibility to identify local farmers to supply your 
+                  reservation, ensuring the supply of nutritious food all year round for all.
+                </p>
+                <p><b>The key questions the campaign will be seeking to address will be centered around:-</b>
+                  <li>Have you witnessed empty shelves in your grocery store during the pandemic?</li>
+                  <li>Have you ever wondered why we waste over 1.3 billion tonnes of food every year when over 800 million people are hungry?</li>
+                  <li>Do you know that our current AgriFood prodcution system contributes over 30% of greenhouse gas emission?</li>
+                  <li>Are you aware that 1 in 5 deaths is linked to malnutrition?</li>
+                  <li>Does the lack of HGV Drivers to support the food system create a concern for you?</li>
+                  <li>Are you worried about the future of food?</li>
+                  <li>Do you know you can help address most of these problems if you can change your attitude to food?</li>
+                </p>
+                <Divider style={{marginTop: "5%"}}/>
+              </Col>
+            </div>
+
+            <h1 className="text-center" style={{fontWeight: 600, marginTop: "-5%", marginBottom: "2.5%"}}>Definitions</h1>
+
             <Row className="pb-5 mb-5 mr-0 ml-0 text-justify about">
                 <Col className="d-flex justify-content-center"sm={12} md={12} lg={4}>
                 <img src={surplus} alt="Help"  className="img-fluid rounded fix-image"/>
@@ -841,312 +900,6 @@ function About() {
 
             }</div>
 
-            {/* <div style={{marginBottom: "10%", marginLeft: "-5%", marginRight: "-7.5%"}}>
-              <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th><b>Age</b></th>
-                        <th><b>Sex</b></th>
-                        <th><b>Protein</b></th>
-                        <th><b>Fluid</b></th>
-                        <th><b>Fibre</b></th>
-                        <th><b>Vitamin A</b></th>
-                        <th><b>Thiamin</b></th>
-                        <th><b>Riboflavin</b></th>
-                        <th><b>Niacin</b></th>
-                        <th><b>Vitamin B6</b></th>
-                        <th><b>Vitamin B12</b></th>
-                        <th><b>Folate</b></th>
-                        <th><b>Vitamin</b></th>
-                        <th><b>Calcium</b></th>
-                        <th><b>Iodine</b></th>
-                        <th><b>Iron</b></th>
-                        <th><b>Magnesium</b></th>
-                        <th><b>Potassium</b></th>
-                        <th><b>Sodium</b></th>
-                        <th><b>Zinc</b></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                      <th>0-5</th>
-                      <th>F</th>
-                      <th>20g</th>
-                      <th>1.2L</th>
-                      <th>18g</th>
-                      <th>400Î¼g</th>
-                      <th>0.6mg</th>
-                      <th>0.6mg</th>
-                      <th>8mg</th>
-                      <th>0.6mg</th>
-                      <th>1.2Î¼g</th>
-                      <th>200Î¼g</th>
-                      <th>35mg</th>
-                      <th>700mg</th>
-                      <th>90Î¼g</th>
-                      <th>10mg</th>
-                      <th>130mg</th>
-                      <th>2300mg</th>
-                      <th>300-600mg</th>
-                      <th>4mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>0-5</th>
-                      <th>M</th>
-                      <th>20g</th>
-                      <th>1.2L</th>
-                      <th>18g</th>
-                      <th>400Î¼g</th>
-                      <th>0.6mg</th>
-                      <th>0.6mg</th>
-                      <th>8mg</th>
-                      <th>0.6mg</th>
-                      <th>1.2Î¼g</th>
-                      <th>200Î¼g</th>
-                      <th>35mg</th>
-                      <th>700mg</th>
-                      <th>90Î¼g</th>
-                      <th>10mg</th>
-                      <th>130mg</th>
-                      <th>2300mg</th>
-                      <th>300-600mg</th>
-                      <th>4mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>5-10</th>
-                      <th>F</th>
-                      <th>35g</th>
-                      <th>1.4L</th>
-                      <th>20g</th>
-                      <th>600Î¼g</th>
-                      <th>0.9mg</th>
-                      <th>0.9mg</th>
-                      <th>12mg</th>
-                      <th>1mg</th>
-                      <th>1.8Î¼g</th>
-                      <th>300Î¼g</th>
-                      <th>40mg</th>
-                      <th>1000mg</th>
-                      <th>120Î¼g</th>
-                      <th>8mg</th>
-                      <th>240mg</th>
-                      <th>2500mg</th>
-                      <th>400-800mg</th>
-                      <th>6mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>5-10</th>
-                      <th>M</th>
-                      <th>40g</th>
-                      <th>1.6L</th>
-                      <th>24g</th>
-                      <th>600Î¼g</th>
-                      <th>0.9mg</th>
-                      <th>0.9mg</th>
-                      <th>12mg</th>
-                      <th>1mg</th>
-                      <th>1.8Î¼g</th>
-                      <th>300Î¼g</th>
-                      <th>40mg</th>
-                      <th>1000mg</th>
-                      <th>120Î¼g</th>
-                      <th>8mg</th>
-                      <th>240mg</th>
-                      <th>3000mg</th>
-                      <th>400-800mg</th>
-                      <th>6mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>10-15</th>
-                      <th>F</th>
-                      <th>45g</th>
-                      <th>1.6L</th>
-                      <th>22g</th>
-                      <th>700Î¼g</th>
-                      <th>1.1mg</th>
-                      <th>1.1mg</th>
-                      <th>14mg</th>
-                      <th>1.2mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>40mg</th>
-                      <th>1300mg</th>
-                      <th>150Î¼g</th>
-                      <th>15mg</th>
-                      <th>360mg</th>
-                      <th>2600mg</th>
-                      <th>460-920mg</th>
-                      <th>7mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>10-15</th>
-                      <th>M</th>
-                      <th>65g</th>
-                      <th>1.9L</th>
-                      <th>28g</th>
-                      <th>900Î¼g</th>
-                      <th>1.2mg</th>
-                      <th>1.3mg</th>
-                      <th>16mg</th>
-                      <th>1.3mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>40mg</th>
-                      <th>1300mg</th>
-                      <th>150Î¼g</th>
-                      <th>11mg</th>
-                      <th>410mg</th>
-                      <th>3600mg</th>
-                      <th>460-920mg</th>
-                      <th>13mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>15-20</th>
-                      <th>F</th>
-                      <th>46g</th>
-                      <th>2.1L</th>
-                      <th>25g</th>
-                      <th>700Î¼g</th>
-                      <th>1.1mg</th>
-                      <th>1.1mg</th>
-                      <th>14mg</th>
-                      <th>1.3mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>45mg</th>
-                      <th>1000mg</th>
-                      <th>150Î¼g</th>
-                      <th>18mg</th>
-                      <th>310mg</th>
-                      <th>2800mg</th>
-                      <th>460-920mg</th>
-                      <th>8mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>15-20</th>
-                      <th>M</th>
-                      <th>64g</th>
-                      <th>2.3L</th>
-                      <th>30g</th>
-                      <th>900Î¼g</th>
-                      <th>1.2mg</th>
-                      <th>1.3mg</th>
-                      <th>16mg</th>
-                      <th>1.3mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>45mg</th>
-                      <th>1000mg</th>
-                      <th>150Î¼g</th>
-                      <th>8mg</th>
-                      <th>400mg</th>
-                      <th>3800mg</th>
-                      <th>460-920mg</th>
-                      <th>14mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>70-75</th>
-                      <th>F</th>
-                      <th>57g</th>
-                      <th>2.1L</th>
-                      <th>25g</th>
-                      <th>700Î¼g</th>
-                      <th>1.1mg</th>
-                      <th>1.3mg</th>
-                      <th>14mg</th>
-                      <th>1.5mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>45mg</th>
-                      <th>1300mg</th>
-                      <th>150Î¼g</th>
-                      <th>8mg</th>
-                      <th>320mg</th>
-                      <th>2800mg</th>
-                      <th>460-920mg</th>
-                      <th>8mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>70-75</th>
-                      <th>M</th>
-                      <th>81g</th>
-                      <th>2.6L</th>
-                      <th>30g</th>
-                      <th>900Î¼g</th>
-                      <th>1.2mg</th>
-                      <th>1.6mg</th>
-                      <th>16mg</th>
-                      <th>1.7mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>45mg</th>
-                      <th>1300mg</th>
-                      <th>150Î¼g</th>
-                      <th>8mg</th>
-                      <th>420mg</th>
-                      <th>3800mg</th>
-                      <th>460-920mg</th>
-                      <th>14mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>75-80</th>
-                      <th>F</th>
-                      <th>57g</th>
-                      <th>2.1L</th>
-                      <th>25g</th>
-                      <th>700Î¼g</th>
-                      <th>1.1mg</th>
-                      <th>1.3mg</th>
-                      <th>14mg</th>
-                      <th>1.5mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>45mg</th>
-                      <th>1300mg</th>
-                      <th>150Î¼g</th>
-                      <th>8mg</th>
-                      <th>320mg</th>
-                      <th>2800mg</th>
-                      <th>460-920mg</th>
-                      <th>8mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>75-80</th>
-                      <th>M</th>
-                      <th>81g</th>
-                      <th>2.6L</th>
-                      <th>30g</th>
-                      <th>900Î¼g</th>
-                      <th>1.2mg</th>
-                      <th>1.6mg</th>
-                      <th>16mg</th>
-                      <th>1.7mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>45mg</th>
-                      <th>1300mg</th>
-                      <th>150Î¼g</th>
-                      <th>8mg</th>
-                      <th>420mg</th>
-                      <th>3800mg</th>
-                      <th>460-920mg</th>
-                      <th>14mg</th>
-                    </tr>
-                </tbody>
-              </Table>
-            </div> */}
-
             </Layout>
         </React.Fragment>
         </BrowserView>
@@ -1179,6 +932,39 @@ function About() {
                   households to connect their smart bin to the platform. The Global Food Loss & Waste Tracker then observes how much food is wasted each day, week and month from a single household and presents it as food surplus and food waste.</p>
               </Col>
             </div>
+
+            <Divider style={{ marginBottom: "-20px", marginTop: "-30px", marginRight: "10px", marginLeft: "10px"}}/>
+
+            <div className="para">
+              <Col>
+                <h1>Plan To Save</h1>
+                <img src={pts2} alt="PTS" className="img-fluid rounded fix-image" style={{marginBottom: "5px"}} />
+                <p><b>'If we fail to plan, we have planned to fail'</b> is a common phrase which has lost application in the way we
+                  approach food, hence, this campaign (running from 16th Oct 2021 - 31st Jan 2022) is meant to help us rethink our attitude to food.</p>
+                <p>It is targeted at motivating consumers to plan their food consumption to help local farmers plan farming and adopt a more
+                  sustainable farming system that will produce more nutritious food while impacting positively on the environment.
+                </p>
+                <p>
+                  If you can reserve your fresh food, local farmers can plan better in their food production to meet your needs in
+                  the most sustainable way. By signing up to the Plan To Save campaign and reserving your weekly, fortnightly and
+                  monthly fresh food requirements, we will take the responsibility to identify local farmers to supply your 
+                  reservation, ensuring the supply of nutritious food all year round for all.
+                </p>
+                <p><b>The key questions the campaign will be seeking to address will be centered around:-</b>
+                  <li>Have you witnessed empty shelves in your grocery store during the pandemic?</li>
+                  <li>Have you ever wondered why we waste over 1.3 billion tonnes of food every year when over 800 million people are hungry?</li>
+                  <li>Do you know that our current AgriFood prodcution system contributes over 30% of greenhouse gas emission?</li>
+                  <li>Are you aware that 1 in 5 deaths is linked to malnutrition?</li>
+                  <li>Does the lack of HGV Drivers to support the food system create a concern for you?</li>
+                  <li>Are you worried about the future of food?</li>
+                  <li>Do you know you can help address most of these problems if you can change your attitude to food?</li>
+                </p>
+              </Col>
+            </div>
+
+            <Divider style={{ marginTop: "-20px", marginRight: "10px", marginLeft: "10px"}}/>
+
+            <h1 className="text-center" style={{marginTop: "5px", fontWeight: 600, marginBottom: "-25px"}}>Definitions</h1>
 
             <div className="para">
               <Col>
@@ -2283,502 +2069,8 @@ function About() {
 
             }</div>
 
-              {/* <Table style={{marginLeft: "1%", marginRight: "1%"}} striped bordered hover size="sm" responsive="sm">
-                <thead>
-                    <tr>
-                        <th><b>Age</b></th>
-                        <th style={{fontSize: "90%"}}>0-5</th>
-                        <th style={{fontSize: "90%"}}>0-5</th>
-                        <th style={{fontSize: "90%"}}>5-10</th>
-                        <th style={{fontSize: "90%"}}>5-10</th>
-                        <th style={{fontSize: "90%"}}>10-15</th>
-                        <th style={{fontSize: "90%"}}>10-15</th>
-                        <th style={{fontSize: "90%"}}>15-20</th>
-                        <th style={{fontSize: "90%"}}>15-20</th>
-                        <th style={{fontSize: "90%"}}>70-75</th>
-                        <th style={{fontSize: "90%"}}>70-75</th>
-                        <th style={{fontSize: "90%"}}>75-80</th>
-                        <th style={{fontSize: "90%"}}>75-80</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                      <th><b>Sex</b></th>
-                      <th>F</th>
-                      <th>M</th>
-                      <th>F</th>
-                      <th>M</th>
-                      <th>F</th>
-                      <th>M</th>
-                      <th>F</th>
-                      <th>M</th>
-                      <th>F</th>
-                      <th>M</th>
-                      <th>F</th>
-                      <th>M</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Protein</b></th>
-                      <th>20g</th>
-                      <th>20g</th>
-                      <th>35g</th>
-                      <th>40g</th>
-                      <th>45g</th>
-                      <th>65g</th>
-                      <th>46g</th>
-                      <th>64g</th>
-                      <th>57g</th>
-                      <th>81g</th>
-                      <th>57g</th>
-                      <th>81g</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Fluid</b></th>
-                      <th>1.2L</th>
-                      <th>1.2L</th>
-                      <th>1.4L</th>
-                      <th>1.6L</th>
-                      <th>1.6L</th>
-                      <th>1.9L</th>
-                      <th>2.1L</th>
-                      <th>2.3L</th>
-                      <th>2.1L</th>
-                      <th>2.6L</th>
-                      <th>2.1L</th>
-                      <th>2.6L</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Fibre</b></th>
-                      <th>18g</th>
-                      <th>18g</th>
-                      <th>20g</th>
-                      <th>24g</th>
-                      <th>22g</th>
-                      <th>28g</th>
-                      <th>25g</th>
-                      <th>30g</th>
-                      <th>25g</th>
-                      <th>30g</th>
-                      <th>25g</th>
-                      <th>30g</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Vit A</b></th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>600Î¼g</th>
-                      <th style={{fontSize: "80%"}}>600Î¼g</th>
-                      <th style={{fontSize: "80%"}}>700Î¼g</th>
-                      <th style={{fontSize: "80%"}}>900Î¼g</th>
-                      <th style={{fontSize: "80%"}}>700Î¼g</th>
-                      <th style={{fontSize: "80%"}}>900Î¼g</th>
-                      <th style={{fontSize: "80%"}}>700Î¼g</th>
-                      <th style={{fontSize: "80%"}}>900Î¼g</th>
-                      <th style={{fontSize: "80%"}}>700Î¼g</th>
-                      <th style={{fontSize: "80%"}}>900Î¼g</th>
-                    </tr>
-
-                    <tr>
-                      <th><b style={{fontSize: "80%"}}>Thiamin</b></th>
-                      <th>0.6mg</th>
-                      <th>0.6mg</th>
-                      <th>0.9mg</th>
-                      <th>0.9mg</th>
-                      <th>1.1mg</th>
-                      <th>1.2mg</th>
-                      <th>1.1mg</th>
-                      <th>1.2mg</th>
-                      <th>1.1mg</th>
-                      <th>1.2mg</th>
-                      <th>1.1mg</th>
-                      <th>1.2mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b style={{fontSize: "80%"}}>Riboflavin</b></th>
-                      <th>0.6mg</th>
-                      <th>0.6mg</th>
-                      <th>0.9mg</th>
-                      <th>0.9mg</th>
-                      <th>1.1mg</th>
-                      <th>1.3mg</th>
-                      <th>1.1mg</th>
-                      <th>1.3mg</th>
-                      <th>1.3mg</th>
-                      <th>1.6mg</th>
-                      <th>1.3mg</th>
-                      <th>1.6mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Niacin</b></th>
-                      <th>8mg</th>
-                      <th>8mg</th>
-                      <th>12mg</th>
-                      <th>12mg</th>
-                      <th>14mg</th>
-                      <th>16mg</th>
-                      <th>14mg</th>
-                      <th>16mg</th>
-                      <th>14mg</th>
-                      <th>16mg</th>
-                      <th>14mg</th>
-                      <th>16mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Vit B6</b></th>
-                      <th>0.6mg</th>
-                      <th>0.6mg</th>
-                      <th>1mg</th>
-                      <th>1mg</th>
-                      <th>1.2mg</th>
-                      <th>1.3mg</th>
-                      <th>1.3mg</th>
-                      <th>1.3mg</th>
-                      <th>1.5mg</th>
-                      <th>1.7mg</th>
-                      <th>1.5mg</th>
-                      <th>1.7mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Vit B12</b></th>
-                      <th style={{fontSize: "80%"}}>1.2Î¼g</th>
-                      <th style={{fontSize: "80%"}}>1.2Î¼g</th>
-                      <th style={{fontSize: "80%"}}>1.8Î¼g</th>
-                      <th style={{fontSize: "80%"}}>1.8Î¼g</th>
-                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
-                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
-                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
-                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
-                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
-                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
-                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
-                      <th style={{fontSize: "80%"}}>2.4Î¼g</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Folate</b></th>
-                      <th style={{fontSize: "80%"}}>200Î¼g</th>
-                      <th style={{fontSize: "80%"}}>200Î¼g</th>
-                      <th style={{fontSize: "80%"}}>300Î¼g</th>
-                      <th style={{fontSize: "80%"}}>300Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                      <th style={{fontSize: "80%"}}>400Î¼g</th>
-                    </tr>
-
-                    <tr>
-                      <th><b style={{fontSize: "80%"}}>Vitamin</b></th>
-                      <th>35mg</th>
-                      <th>35mg</th>
-                      <th>40mg</th>
-                      <th>40mg</th>
-                      <th>40mg</th>
-                      <th>40mg</th>
-                      <th>45mg</th>
-                      <th>45mg</th>
-                      <th>45mg</th>
-                      <th>45mg</th>
-                      <th>45mg</th>
-                      <th>45mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b style={{fontSize: "80%"}}>Calcium</b></th>
-                      <th style={{fontSize: "80%"}}>700mg</th>
-                      <th style={{fontSize: "80%"}}>700mg</th>
-                      <th style={{fontSize: "80%"}}>1000mg</th>
-                      <th style={{fontSize: "80%"}}>1000mg</th>
-                      <th style={{fontSize: "80%"}}>1300mg</th>
-                      <th style={{fontSize: "80%"}}>1300mg</th>
-                      <th style={{fontSize: "80%"}}>1000mg</th>
-                      <th style={{fontSize: "80%"}}>1000mg</th>
-                      <th style={{fontSize: "80%"}}>1300mg</th>
-                      <th style={{fontSize: "80%"}}>1300mg</th>
-                      <th style={{fontSize: "80%"}}>1300mg</th>
-                      <th style={{fontSize: "80%"}}>1300mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Iodine</b></th>
-                      <th style={{fontSize: "80%"}}>90Î¼g</th>
-                      <th style={{fontSize: "80%"}}>90Î¼g</th>
-                      <th style={{fontSize: "80%"}}>120Î¼g</th>
-                      <th style={{fontSize: "80%"}}>120Î¼g</th>
-                      <th style={{fontSize: "80%"}}>150Î¼g</th>
-                      <th style={{fontSize: "80%"}}>150Î¼g</th>
-                      <th style={{fontSize: "80%"}}>150Î¼g</th>
-                      <th style={{fontSize: "80%"}}>150Î¼g</th>
-                      <th style={{fontSize: "80%"}}>150Î¼g</th>
-                      <th style={{fontSize: "80%"}}>150Î¼g</th>
-                      <th style={{fontSize: "80%"}}>150Î¼g</th>
-                      <th style={{fontSize: "80%"}}>150Î¼g</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Iron</b></th>
-                      <th>10mg</th>
-                      <th>10mg</th>
-                      <th>8mg</th>
-                      <th>8mg</th>
-                      <th>15mg</th>
-                      <th>11mg</th>
-                      <th>18mg</th>
-                      <th>8mg</th>
-                      <th>8mg</th>
-                      <th>8mg</th>
-                      <th>8mg</th>
-                      <th>8mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b style={{fontSize: "75%"}}>Magnesium</b></th>
-                      <th>130mg</th>
-                      <th>130mg</th>
-                      <th>240mg</th>
-                      <th>240mg</th>
-                      <th>360mg</th>
-                      <th>410mg</th>
-                      <th>310mg</th>
-                      <th>400mg</th>
-                      <th>320mg</th>
-                      <th>420mg</th>
-                      <th>320mg</th>
-                      <th>420mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b style={{fontSize: "80%"}}>Potassium</b></th>
-                      <th style={{fontSize: "80%"}}>2300mg</th>
-                      <th style={{fontSize: "80%"}}>2300mg</th>
-                      <th style={{fontSize: "80%"}}>2500mg</th>
-                      <th style={{fontSize: "80%"}}>3000mg</th>
-                      <th style={{fontSize: "80%"}}>2600mg</th>
-                      <th style={{fontSize: "80%"}}>3600mg</th>
-                      <th style={{fontSize: "80%"}}>2800mg</th>
-                      <th style={{fontSize: "80%"}}>3800mg</th>
-                      <th style={{fontSize: "80%"}}>2800mg</th>
-                      <th style={{fontSize: "80%"}}>3800mg</th>
-                      <th style={{fontSize: "80%"}}>2800mg</th>
-                      <th style={{fontSize: "80%"}}>3800mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Sodium</b></th>
-                      <th style={{fontSize: "80%"}}>300-600mg</th>
-                      <th style={{fontSize: "80%"}}>300-600mg</th>
-                      <th style={{fontSize: "80%"}}>400-800mg</th>
-                      <th style={{fontSize: "80%"}}>400-800mg</th>
-                      <th style={{fontSize: "80%"}}>460-920mg</th>
-                      <th style={{fontSize: "80%"}}>460-920mg</th>
-                      <th style={{fontSize: "80%"}}>460-920mg</th>
-                      <th style={{fontSize: "80%"}}>460-920mg</th>
-                      <th style={{fontSize: "80%"}}>460-920mg</th>
-                      <th style={{fontSize: "80%"}}>460-920mg</th>
-                      <th style={{fontSize: "80%"}}>460-920mg</th>
-                      <th style={{fontSize: "80%"}}>460-920mg</th>
-                    </tr>
-
-                    <tr>
-                      <th><b>Zinc</b></th>
-                      <th>4mg</th>
-                      <th>4mg</th>
-                      <th>6mg</th>
-                      <th>6mg</th>
-                      <th>7mg</th>
-                      <th>13mg</th>
-                      <th>8mg</th>
-                      <th>14mg</th>
-                      <th>8mg</th>
-                      <th>14mg</th>
-                      <th>8mg</th>
-                      <th>14mg</th>
-                    </tr>
-
-                    {/* <tr>
-                      <th>75-80</th>
-                      <th>F</th>
-                      <th>57g</th>
-                      <th>2.1L</th>
-                      <th>25g</th>
-                      <th>700Î¼g</th>
-                      <th>1.1mg</th>
-                      <th>1.3mg</th>
-                      <th>14mg</th>
-                      <th>1.5mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>45mg</th>
-                      <th>1300mg</th>
-                      <th>150Î¼g</th>
-                      <th>8mg</th>
-                      <th>320mg</th>
-                      <th>2800mg</th>
-                      <th>460-920mg</th>
-                      <th>8mg</th>
-                    </tr>
-
-                    <tr>
-                      <th>70-75</th>
-                      <th>M</th>
-                      <th>81g</th>
-                      <th>2.6L</th>
-                      <th>30g</th>
-                      <th>900Î¼g</th>
-                      <th>1.2mg</th>
-                      <th>1.6mg</th>
-                      <th>16mg</th>
-                      <th>1.7mg</th>
-                      <th>2.4Î¼g</th>
-                      <th>400Î¼g</th>
-                      <th>45mg</th>
-                      <th>1300mg</th>
-                      <th>150Î¼g</th>
-                      <th>8mg</th>
-                      <th>420mg</th>
-                      <th>3800mg</th>
-                      <th>460-920mg</th>
-                      <th>14mg</th>
-                    </tr> 
-                </tbody>
-              </Table> */}
-
             </div>
-{/* 
-            <div className="para">
-                <Table>
 
-                  <thead>
-
-                    <tr>
-                        <th><b>Age</b></th>
-                        <th style={{fontSize: "90%"}}>15-20</th>
-                        <th style={{fontSize: "90%"}}>15-20</th>
-                        <th style={{fontSize: "90%"}}>70-75</th>
-                        <th style={{fontSize: "90%"}}>70-75</th>
-                        <th style={{fontSize: "90%"}}>75-80</th>
-                        <th style={{fontSize: "90%"}}>75-80</th>
-                    </tr>
-
-                  </thead>
-
-                  <tbody>
-
-                    <tr>
-                      <th><b>Sex</b></th>
-                      <th>F</th>
-                      <th>M</th>
-                      <th>F</th>
-                      <th>M</th>
-                      <th>F</th>
-                      <th>M</th>
-                    </tr>
-
-                    <tr>
-                      <th style={{fontSize: "90%"}}><b>Folate</b></th>
-                      <th style={{fontSize: "90%"}}></th>
-                      <th style={{fontSize: "90%"}}></th>
-                      <th style={{fontSize: "90%"}}></th>
-                      <th style={{fontSize: "90%"}}></th>
-                      <th style={{fontSize: "90%"}}></th>
-                      <th style={{fontSize: "90%"}}></th>
-                    </tr>
-
-                    <tr>
-                      <th><b></b></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-
-                    <tr>
-                      <th><b></b></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-
-                    <tr>
-                      <th><b></b></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-
-                    <tr>
-                      <th><b></b></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-
-                    <tr>
-                      <th><b></b></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-
-                    <tr>
-                      <th><b></b></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-
-                    <tr>
-                      <th><b></b></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-
-                    <tr>
-                      <th><b></b></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-      
-                  </tbody>
-
-                </Table>
-            </div> */}
           </MobileDivStyle>
         </MobileView>
         </div>
