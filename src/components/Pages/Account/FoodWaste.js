@@ -37,7 +37,7 @@ import addNotification from "react-push-notification";
 
 // import {Chart} from "react-google-charts"
 
-const time = moment().format("MMMM Do YYYY, h:mm:ss a");
+//const time = moment().format("MMMM Do YYYY, h:mm:ss a");
 
 const dailyTabTime = moment().format("ddd MMM Do YYYY");
 
@@ -241,16 +241,8 @@ class FoodWaste extends Component {
     this.setState({ fatPer: text });
   }
 
-  handleFoodWasteGHGChange = (e) => {
-    console.log(e);
-    this.setState({
-      [e.target.id]: e.target.value,
-      ghg: Number(e.target.value),
-    });
-  };
-
   handleFoodCostChange = (e) => {
-    //console.log(e);
+    //console.log("food cost changed");
     this.setState({
       [e.target.id]: e.target.value,
       foodWasteCost: (Number(e.target.value) * 0.85).toFixed(2),
@@ -265,6 +257,10 @@ class FoodWaste extends Component {
     });
   };
 
+  handleFoodWasteWeightChange(event) {
+    this.setState({ foodWasteWeight: event.target.value });
+  }
+
   handleCarbsContentChange(event) {
     this.setState({ carbsContent: event.target.value });
   }
@@ -275,6 +271,32 @@ class FoodWaste extends Component {
 
   handleFatContentChange(event) {
     this.setState({ fatContent: event.target.value });
+  }
+
+  handleFoodWasteGHGChange() {
+    //console.log("ghg updated");
+    //need to add short delay so other state updates first???
+    if (this.state.edibleInedibleSurplus === "Edible") {
+      this.setState({
+        ghg: Number(
+          20 *
+            16.0424 *
+            this.state.weightMultiplier *
+            this.state.foodWasteWeight *
+            (0.01852 * this.state.carbsMultiplier * this.state.carbsContent +
+              0.01744 *
+                this.state.proteinMultiplier *
+                this.state.proteinContent +
+              0.04608 * this.state.fatMultiplier * this.state.fatContent)
+        ),
+      });
+    } else {
+      this.setState({
+        ghg: Number(
+          this.state.foodWasteWeight * this.state.weightMultiplier * 2.5
+        ),
+      });
+    }
   }
 
   pressButton = (e) => {
@@ -308,21 +330,12 @@ class FoodWaste extends Component {
 
           var weight = doc.data().weight;
           var wu = doc.data().WEIGHTUNIT;
-          /* var carbs = doc.data().carbs;
-          var cu = doc.data().CARBSUNIT;
-          var protein = doc.data().protein;
-          var pu = doc.data().PROTEINUNIT;
-          var fat = doc.data().fat;
-          var fu = doc.data().FATUNIT; */
           var ghg = doc.data().GHG;
           var cost = doc.data().COST;
           var curr = doc.data().CURRENCY;
           var eis = doc.data().EDIBLEORINEDIBLE;
 
           var newWeight = 0;
-          /*var newCarbs = 0;
-          var newProtein = 0;
-          var newFat = 0; */
           var newCost = 0;
 
           if (wu === "kg" || wu === "l") {
@@ -334,31 +347,6 @@ class FoodWaste extends Component {
           } else if (wu === "lbs") {
             newWeight = Number((weight * 0.454).toFixed(3));
           }
-
-          /*if (cu === "1kg" || cu === "1L") {
-            newCarbs = Number(carbs * 1);
-          } else if (cu === "100g" || cu === "100ml") {
-            newCarbs = Number((carbs * 0.1).toFixed(3));
-          } else if (cu === "500g" || cu === "500ml") {
-            newCarbs = Number((carbs * 0.5).toFixed(3));
-          }
-
-          if (pu === "1kg" || pu === "1L") {
-            newProtein = Number(protein * 1);
-          } else if (pu === "100g" || pu === "100ml") {
-            newProtein = Number((protein * 0.1).toFixed(3));
-          } else if (pu === "500g" || pu === "500ml") {
-            newProtein = Number((protein * 0.5).toFixed(3));
-          }
-
-          if (fu === "1kg" || fu === "1L") {
-            newFat = Number(fat * 1);
-          } else if (fu === "100g" || fu === "100ml") {
-            newFat = Number((fat * 0.1).toFixed(3));
-          } else if (fu === "500g" || fu === "500ml") {
-            newFat = Number((fat * 0.5).toFixed(3));
-          } 
-          this section will only be needed if we change the bottom section of the form*/
 
           if (curr === "GBP (£)") {
             newCost = Number(cost * 1);
@@ -405,7 +393,7 @@ class FoodWaste extends Component {
     // console.log(data.[auth.uid].writtenFoodWasteData);
     // console.log(time);
     // console.log(Date(time));
-    const { foodWaste, foodSurplus } = this.state;
+    //const { foodWaste, foodSurplus } = this.state;
     if (!auth.uid) return <Redirect to="/login" />;
     if (data) {
       const filteredData =
@@ -622,8 +610,9 @@ class FoodWaste extends Component {
                                 id="foodWasteWeight"
                                 placeholder="Enter weight of food waste"
                                 onChange={(e) => {
-                                  this.handleFoodWasteGHGChange(e);
+                                  this.handleFoodWasteWeightChange(e);
                                   this.handleFoodCostChange(e);
+                                  this.handleFoodWasteGHGChange();
                                 }}
                                 width="100%"
                                 value={this.state.foodWasteWeight}
@@ -651,6 +640,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeWeightMultiplier(1);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     kg
@@ -665,6 +655,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeWeightMultiplier(0.001);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     g
@@ -679,6 +670,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeWeightMultiplier(0.028);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     oz
@@ -693,6 +685,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeWeightMultiplier(0.454);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     lbs
@@ -712,6 +705,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeWeightMultiplier(1);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     l
@@ -725,6 +719,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeWeightMultiplier(0.001);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     ml
@@ -752,6 +747,7 @@ class FoodWaste extends Component {
                                 placeholder="Enter carbohydrate content per unit (eg Carbs per 100g)."
                                 onChange={(e) => {
                                   this.handleCarbsContentChange(e);
+                                  this.handleFoodWasteGHGChange();
                                 }}
                                 width="100%"
                                 value={this.state.carbsContent}
@@ -773,6 +769,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeCarbsUnitMultiplier(0.01);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     100g
@@ -786,6 +783,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeCarbsUnitMultiplier(0.002);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     500g
@@ -799,6 +797,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeCarbsUnitMultiplier(0.001);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     1kg
@@ -818,6 +817,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeCarbsUnitMultiplier(0.01);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     100ml
@@ -831,6 +831,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeCarbsUnitMultiplier(0.002);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     500ml
@@ -844,6 +845,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeCarbsUnitMultiplier(0.001);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     1L
@@ -854,7 +856,7 @@ class FoodWaste extends Component {
                           </Form.Group>
 
                           <div style={{ padding: "0 10% 0 10%" }}>
-                            Protein Content per unit
+                            Protein Content
                           </div>
                           <Form.Group
                             className="form-layout"
@@ -871,6 +873,7 @@ class FoodWaste extends Component {
                                 placeholder="Enter protein content per unit (eg protein per 100g)."
                                 onChange={(e) => {
                                   this.handleProteinContentChange(e);
+                                  this.handleFoodWasteGHGChange();
                                 }}
                                 width="100%"
                                 value={this.state.proteinContent}
@@ -892,6 +895,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeProteinUnitMultiplier(0.01);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     100g
@@ -905,6 +909,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeProteinUnitMultiplier(0.002);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     500g
@@ -918,6 +923,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeProteinUnitMultiplier(0.001);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     1kg
@@ -937,6 +943,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeProteinUnitMultiplier(0.01);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     100ml
@@ -950,6 +957,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeProteinUnitMultiplier(0.002);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     500ml
@@ -963,6 +971,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeProteinUnitMultiplier(0.001);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     1L
@@ -973,7 +982,7 @@ class FoodWaste extends Component {
                           </Form.Group>
 
                           <div style={{ padding: "0 10% 0 10%" }}>
-                            Fat Content per unit
+                            Fat Content
                           </div>
                           <Form.Group
                             className="form-layout"
@@ -990,6 +999,7 @@ class FoodWaste extends Component {
                                 placeholder="Enter fat content per unit (eg fat per 100g)."
                                 onChange={(e) => {
                                   this.handleFatContentChange(e);
+                                  this.handleFoodWasteGHGChange();
                                 }}
                                 width="100%"
                                 value={this.state.fatContent}
@@ -1011,6 +1021,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeFatUnitMultiplier(0.01);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     100g
@@ -1024,6 +1035,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeFatUnitMultiplier(0.002);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     500g
@@ -1037,6 +1049,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeFatUnitMultiplier(0.001);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     1kg
@@ -1056,6 +1069,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeFatUnitMultiplier(0.01);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     100ml
@@ -1069,6 +1083,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeFatUnitMultiplier(0.002);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     500ml
@@ -1082,6 +1097,7 @@ class FoodWaste extends Component {
                                         e.target.textContent
                                       );
                                       this.changeFatUnitMultiplier(0.001);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     1L
@@ -1106,7 +1122,10 @@ class FoodWaste extends Component {
                               <Form.Control
                                 id="expiryDate"
                                 placeholder="DD/MM/YYYY"
-                                onChange={(e) => this.handleChange(e)}
+                                onChange={(e) => {
+                                  this.handleChange(e);
+                                  this.handleFoodWasteGHGChange();
+                                }}
                                 width="100%"
                                 value={this.state.expiryDate}
                               />
@@ -1122,25 +1141,29 @@ class FoodWaste extends Component {
                           >
                             <InputGroup>
                               <Form.Control
-                                type="number"
-                                id="GHG"
+                                id="ghg"
                                 placeholder="Enter GHG value"
-                                value={(
-                                  20 *
-                                  16.0424 *
-                                  this.state.weightMultiplier *
-                                  this.state.ghg *
-                                  (0.01852 *
-                                    this.state.carbsMultiplier *
-                                    this.state.carbsContent +
-                                    0.01744 *
-                                      this.state.proteinMultiplier *
-                                      this.state.proteinContent +
-                                    0.04608 *
-                                      this.state.fatMultiplier *
-                                      this.state.fatContent)
-                                ).toFixed(3)}
+                                value={this.state.ghg.toFixed(3)}
+                                //20 *
+                                //16.0424 *
+                                //this.state.weightMultiplier *
+                                //this.state.foodWasteWeight *
+                                //(0.01852 *
+                                //this.state.carbsMultiplier *
+                                //this.state.carbsContent +
+                                //0.01744 *
+                                //this.state.proteinMultiplier *
+                                //this.state.proteinContent +
+                                //0.04608 *
+                                //this.state.fatMultiplier *
+                                //this.state.fatContent)
+                                //).toFixed(3)}
                                 width="100%"
+                                //onChange={(e) => {
+                                //this.handleFoodWasteGHGChange(e);
+                                //}}
+                                title={this.state.ghg}
+                                readOnly
                               />
                               {/*<p style={{width:'100px'}}>kg co2</p>*/}
                               <InputGroup.Append>
@@ -1171,6 +1194,8 @@ class FoodWaste extends Component {
                                     onClick={(e) => {
                                       this.changeCurrency(e.target.textContent);
                                       this.changeCurrencyMultiplier(1);
+                                      this.handleFoodWasteGHGChange();
+                                      /*sorry this has to be here for now so that the ghg is fully updated*/
                                     }}
                                   >
                                     GBP (£)
@@ -1183,6 +1208,7 @@ class FoodWaste extends Component {
                                     onClick={(e) => {
                                       this.changeCurrency(e.target.textContent);
                                       this.changeCurrencyMultiplier(1.404);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     USD ($)
@@ -1195,6 +1221,7 @@ class FoodWaste extends Component {
                                     onClick={(e) => {
                                       this.changeCurrency(e.target.textContent);
                                       this.changeCurrencyMultiplier(1.161);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                   >
                                     EUR (€)
@@ -1203,7 +1230,6 @@ class FoodWaste extends Component {
                               </DropdownButton>
 
                               <Form.Control
-                                type="number"
                                 id="foodWasteCost"
                                 placeholder="Enter cost of food surplus"
                                 value={(
@@ -1211,8 +1237,8 @@ class FoodWaste extends Component {
                                   this.state.currencyMultiplier *
                                   this.state.weightMultiplier
                                 ).toFixed(2)}
+                                readOnly
                               />
-                              {/*pounds*/}
                             </InputGroup>
                           </Form.Group>
 
@@ -1232,6 +1258,7 @@ class FoodWaste extends Component {
                                   marginTop: "5px",
                                 }}
                                 onClick={(e) => {
+                                  //this.handleFoodWasteGHGChange();
                                   this.handleFoodWasteSubmit(e);
                                   this.notificationTest();
                                   this.clearEFWForm();
@@ -1291,7 +1318,6 @@ class FoodWaste extends Component {
                           >
                             <InputGroup>
                               <Form.Control
-                                type="number"
                                 id="totalEdibleWeight"
                                 placeholder=""
                                 value={(
@@ -1300,6 +1326,7 @@ class FoodWaste extends Component {
                                     this.state.weightMultiplier
                                 ).toFixed(2)}
                                 width="100%"
+                                readOnly
                               />
                               {/*<p style={{width:'100px'}}>kg co2</p>*/}
                               <InputGroup.Append>
@@ -1319,26 +1346,13 @@ class FoodWaste extends Component {
                           >
                             <InputGroup>
                               <Form.Control
-                                type="number"
                                 id="totalEdibleGHG"
                                 placeholder=""
                                 value={(
-                                  this.state.totalEdibleGHG +
-                                  20 *
-                                    16.0424 *
-                                    this.state.weightMultiplier *
-                                    this.state.ghg *
-                                    (0.01852 *
-                                      this.state.carbsMultiplier *
-                                      this.state.carbsContent +
-                                      0.01744 *
-                                        this.state.proteinMultiplier *
-                                        this.state.proteinContent +
-                                      0.04608 *
-                                        this.state.fatMultiplier *
-                                        this.state.fatContent)
+                                  this.state.totalEdibleGHG + this.state.ghg
                                 ).toFixed(3)}
                                 width="100%"
+                                readOnly
                               />
                               {/*<p style={{width:'100px'}}>kg co2</p>*/}
                               <InputGroup.Append>
@@ -1361,7 +1375,6 @@ class FoodWaste extends Component {
                                 <InputGroup.Text>£</InputGroup.Text>
                               </InputGroup.Prepend>
                               <Form.Control
-                                type="number"
                                 id="totalEdibleCost"
                                 placeholder=""
                                 value={(
@@ -1370,8 +1383,8 @@ class FoodWaste extends Component {
                                     this.state.weightMultiplier
                                 ).toFixed(2)}
                                 width="100%"
+                                readOnly
                               />
-                              {/*<p style={{width:'100px'}}>kg co2</p>*/}
                             </InputGroup>
                           </Form.Group>
                         </div>
@@ -1396,8 +1409,9 @@ class FoodWaste extends Component {
                                     id="foodWasteWeight"
                                     placeholder="Enter weight of food waste"
                                     onChange={(e) => {
-                                      this.handleFoodWasteGHGChange(e);
+                                      this.handleFoodWasteWeightChange(e);
                                       this.handleFoodCostChange(e);
+                                      this.handleFoodWasteGHGChange();
                                     }}
                                     width="100%"
                                     value={this.state.foodWasteWeight}
@@ -1425,6 +1439,7 @@ class FoodWaste extends Component {
                                             e.target.textContent
                                           );
                                           this.changeWeightMultiplier(1);
+                                          this.handleFoodWasteGHGChange();
                                         }}
                                       >
                                         kg
@@ -1439,6 +1454,7 @@ class FoodWaste extends Component {
                                             e.target.textContent
                                           );
                                           this.changeWeightMultiplier(0.001);
+                                          this.handleFoodWasteGHGChange();
                                         }}
                                       >
                                         g
@@ -1453,6 +1469,7 @@ class FoodWaste extends Component {
                                             e.target.textContent
                                           );
                                           this.changeWeightMultiplier(0.028);
+                                          this.handleFoodWasteGHGChange();
                                         }}
                                       >
                                         oz
@@ -1467,6 +1484,7 @@ class FoodWaste extends Component {
                                             e.target.textContent
                                           );
                                           this.changeWeightMultiplier(0.454);
+                                          this.handleFoodWasteGHGChange();
                                         }}
                                       >
                                         lbs
@@ -1486,6 +1504,7 @@ class FoodWaste extends Component {
                                             e.target.textContent
                                           );
                                           this.changeWeightMultiplier(1);
+                                          this.handleFoodWasteGHGChange();
                                         }}
                                       >
                                         l
@@ -1499,6 +1518,7 @@ class FoodWaste extends Component {
                                             e.target.textContent
                                           );
                                           this.changeWeightMultiplier(0.001);
+                                          this.handleFoodWasteGHGChange();
                                         }}
                                       >
                                         ml
@@ -1517,15 +1537,21 @@ class FoodWaste extends Component {
                               >
                                 <InputGroup>
                                   <Form.Control
-                                    type="number"
-                                    id="GHG"
+                                    id="ghg"
                                     placeholder="Enter GHG value"
-                                    value={(
-                                      this.state.ghg *
-                                      this.state.weightMultiplier
-                                    ).toFixed(2)}
+                                    value={this.state.ghg}
+                                    //this.state.weightMultiplier *
+                                    //this.state.foodWasteWeight *
+                                    //2.5
+                                    //).toFixed(3)}
                                     width="100%"
+                                    //onChange={(e) => {
+                                    //this.handleFoodWasteGHGChange(e);
+                                    //}}
+                                    title={this.state.ghg}
+                                    readOnly
                                   />
+
                                   {/*<p style={{width:'100px'}}>kg co2</p>*/}
                                   <InputGroup.Append>
                                     <InputGroup.Text>kg co2</InputGroup.Text>
@@ -1547,6 +1573,7 @@ class FoodWaste extends Component {
                                       marginTop: "5px",
                                     }}
                                     onClick={(e) => {
+                                      //this.handleFoodWasteGHGChange();
                                       this.handleFoodWasteSubmit(e);
                                       this.notificationTest();
                                       this.clearEFWForm();
@@ -1606,7 +1633,6 @@ class FoodWaste extends Component {
                               >
                                 <InputGroup>
                                   <Form.Control
-                                    type="number"
                                     id="totalInedibleWeight"
                                     placeholder=""
                                     value={(
@@ -1615,6 +1641,7 @@ class FoodWaste extends Component {
                                         this.state.weightMultiplier
                                     ).toFixed(2)}
                                     width="100%"
+                                    readOnly
                                   />
                                   {/*<p style={{width:'100px'}}>kg co2</p>*/}
                                   <InputGroup.Append>
@@ -1634,15 +1661,14 @@ class FoodWaste extends Component {
                               >
                                 <InputGroup>
                                   <Form.Control
-                                    type="number"
                                     id="totalInedibleGHG"
                                     placeholder=""
                                     value={(
                                       this.state.totalInedibleGHG +
-                                      this.state.ghg *
-                                        this.state.weightMultiplier
-                                    ).toFixed(2)}
+                                      this.state.ghg
+                                    ).toFixed(3)}
                                     width="100%"
+                                    readOnly
                                   />
                                   {/*<p style={{width:'100px'}}>kg co2</p>*/}
                                   <InputGroup.Append>
@@ -1685,30 +1711,30 @@ class FoodWaste extends Component {
   }
 }
 
-const foodOptions = [
-  { title: "Cereal" },
-  { title: "Bacon" },
-  { title: "Baked Beans" },
-  { title: "Porridge" },
-  { title: "Pancake" },
-  { title: "Beef" },
-  { title: "Chicken" },
-  { title: "Pork" },
-  { title: "Apple" },
-  { title: "Banana" },
-  { title: "Orange" },
-  { title: "Pear" },
-  { title: "Grapes" },
-  { title: "Chocolate" },
-  { title: "Crisps" },
-  { title: "Pasta" },
-  { title: "Bolognese" },
-  { title: "Potato" },
-  { title: "Chips" },
-  { title: "Milk" },
-  { title: "Fruit Juice" },
-  { title: "Onion" },
-];
+//const foodOptions = [
+//{ title: "Cereal" },
+//{ title: "Bacon" },
+//{ title: "Baked Beans" },
+//{ title: "Porridge" },
+//{ title: "Pancake" },
+//{ title: "Beef" },
+//{ title: "Chicken" },
+//{ title: "Pork" },
+//{ title: "Apple" },
+//{ title: "Banana" },
+//{ title: "Orange" },
+//{ title: "Pear" },
+//{ title: "Grapes" },
+//{ title: "Chocolate" },
+//{ title: "Crisps" },
+//{ title: "Pasta" },
+//{ title: "Bolognese" },
+//{ title: "Potato" },
+//{ title: "Chips" },
+//{ title: "Milk" },
+//{ title: "Fruit Juice" },
+//{ title: "Onion" },
+//];
 
 const mapStateToProps = (state) => {
   return {
@@ -1740,22 +1766,22 @@ const CardStyle = styled.div`
   }
 `;
 
-const FormStyle = styled.div`
-  .form {
-    display: flex;
-    align-items: center;
-    top: 50%;
-    transform: translateY(20%);
-  }
-`;
+//const FormStyle = styled.div`
+//.form {
+//display: flex;
+//align-items: center;
+//top: 50%;
+//transform: translateY(20%);
+//}
+//`;
 
-const ChartStyle = styled.div`
-  .chart {
-    position: absolute;
-    left: 17%;
-    padding: 20px;
-  }
-`;
+//const ChartStyle = styled.div`
+//.chart {
+//position: absolute;
+//left: 17%;
+//padding: 20px;
+// }
+//`;
 
 const DDMenuStyle = styled.div`
   .dd {
