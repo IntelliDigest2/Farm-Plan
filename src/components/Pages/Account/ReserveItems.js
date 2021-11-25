@@ -107,13 +107,14 @@ class ReserveItems extends Component{
     showNotification = () => {
         addNotification({
             title: 'Success!',
-            message: 'Successfully Reserved!',
+            message: 'Thank you for reserving items, you have helped a farmer plan their harvest more sustainably. We will contact you by the end of January via email about your reservation.',
             // theme: 'darkblue',
             // native: false,
+            container: 'top left',
             backgroundTop: 'rgb(29, 207, 29)', //optional, background color of top container.
             backgroundBottom: 'rgb(29, 207, 29)', //optional, background color of bottom container.
             closeButton: 'Close',
-            duration: 4000
+            duration: 20000,
         });
     }
 
@@ -257,7 +258,7 @@ class ReserveItems extends Component{
                                                     size="small"
                                                     onInputChange={(e) => this.handleChange(e)}
                                                     onChange={(e) => this.setState({ item: e.target.textContent})}
-                                                    renderInput={(params) => ( <TextField {...params} label="Enter Items" variant="outlined" /> )}
+                                                    renderInput={(params) => ( <TextField {...params} placeholder="Enter Items" variant="outlined" /> )}
                                                 />
                                                 {this.state.item !== "" && this.state.itemWeight !== 0 && this.state.weightType !== "Select Unit" ?
                                                     <Button type="button" style={{width: "10%", backgroundColor: "#040335"}} onClick={() => this.handleAddClick()}>Add</Button>
@@ -404,7 +405,7 @@ class ReserveItems extends Component{
                                     </div>
                                     <ButtonGroup style={{width: "80%", marginLeft: "10%", marginTop: "-10px", marginBottom: "10px"}}>
                                         {!this.isItemsEmpty(this.state.items) ?
-                                            <Button style={{backgroundColor: "#040335", width: "50%", fontSize: "75%"}} onClick={() => this.setState({items: this.state.items.filter((item, index) => index != this.state.items.length - 1)})}>Remove Last Item</Button>
+                                            <Button style={{backgroundColor: "#040335", width: "50%", fontSize: "75%"}} onClick={() => this.setState({items: this.state.items.filter((item, index) => index !== this.state.items.length - 1)})}>Remove Last Item</Button>
                                         :
                                             <Button variant="secondary" style={{width: "50%", fontSize: "75%"}} disabled>Remove Last Item</Button>
                                         }
