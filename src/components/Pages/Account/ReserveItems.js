@@ -106,13 +106,12 @@ class ReserveItems extends Component{
 
     showNotification = () => {
         addNotification({
+            // from react-push-notification
+            //could do if browser not native, if mobile native
             title: 'Success!',
             message: 'Thank you for reserving items, you have helped a farmer plan their harvest more sustainably. We will contact you by the end of January via email about your reservation.',
-            // theme: 'darkblue',
-            // native: false,
-            container: 'top left',
-            backgroundTop: 'rgb(29, 207, 29)', //optional, background color of top container.
-            backgroundBottom: 'rgb(29, 207, 29)', //optional, background color of bottom container.
+            backgroundTop: 'rgb(113, 83, 0)',
+            backgroundBottom: 'rgb(188, 144, 21)', 
             closeButton: 'Close',
             duration: 20000,
         });
