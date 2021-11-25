@@ -45,11 +45,11 @@ class ReserveItems extends Component{
         submissionYear: moment().format("YYYY"),
         submissionFullDate: moment().format("ddd MMM Do YYYY"),
 
-        testReservationList: [
+        /*testReservationList: [
             {resID: 1, itemList: [{name: "Onion", weight: "200g"}, {name: "Pepper", weight: "250g"}, {name: "Beef", weight: "1kg"}], fromDate: "2022-06-01", toDate: "2022-09-01", frequency: "Weekly"},
             {resID: 2, itemList: [{name: "Pork", weight: "750g"}, {name: "Cod", weight: "450g"}], fromDate: "2022-06-07", toDate: "2022-10-07", frequency: "Fortnightly"},
             {resID: 3, itemList: [{name: "Apple", weight: "180g"}, {name: "Banana", weight: "190g"}, {name: "Pear", weight: "200g"}, {name: "Grapes", weight: "100g"}], fromDate: "2022-07-01", toDate: "2022-08-01", frequency: "Weekly"}
-        ],
+        ],*/
         myReservations: [],
 
         // cardDeleted: false,
@@ -100,8 +100,10 @@ class ReserveItems extends Component{
             items: [],
             fromDate: "",
             toDate: "",
-            frequency: "Select Frequency"
+            frequency: "Select Frequency",
+            myReservations: [],
         })
+        this.fetchMyReservationsData()
     }
 
     showNotification = () => {
@@ -253,17 +255,12 @@ class ReserveItems extends Component{
                                                     freeSolo
                                                     id="item"
                                                     options={foodOptions.map((option) => option.title)}
-                                                    style={{width: "90%", backgroundColor: "white"}}
+                                                    style={{width: "100%", backgroundColor: "white"}}
                                                     size="small"
                                                     onInputChange={(e) => this.handleChange(e)}
                                                     onChange={(e) => this.setState({ item: e.target.textContent})}
                                                     renderInput={(params) => ( <TextField {...params} placeholder="Enter Items" variant="outlined" /> )}
-                                                />
-                                                {this.state.item !== "" && this.state.itemWeight !== 0 && this.state.weightType !== "Select Unit" ?
-                                                    <Button type="button" style={{width: "10%", backgroundColor: "#040335"}} onClick={() => this.handleAddClick()}>Add</Button>
-                                                :
-                                                    <Button type="button" style={{width: "10%"}} variant="secondary" disabled>Add</Button>
-                                                }       
+                                                />       
                                             </Form.Group>
                                         </BrowserView>
 
@@ -280,11 +277,6 @@ class ReserveItems extends Component{
                                                     onChange={(e) => this.setState({ item: e.target.textContent})}
                                                     renderInput={(params) => ( <TextField {...params} label="Enter Items" variant="outlined" /> )}
                                                 />
-                                                {this.state.item !== "" && this.state.itemWeight !== 0 && this.state.weightType !== "Select Unit" ?
-                                                    <Button type="button" style={{width: "30%", backgroundColor: "#040335"}} onClick={() => this.handleAddClick()}>Add</Button>
-                                                :
-                                                    <Button type="button" style={{width: "30%"}} variant="secondary" disabled>Add</Button>
-                                                }
                                             </Form.Group>
                                         </MobileView>
 
@@ -297,10 +289,6 @@ class ReserveItems extends Component{
                                     >
                                     <InputGroup>
                                         <Form.Control  type="number" id="itemWeight" placeholder="Enter weight" onChange={(e) => {this.handleChange(e)}} width="100%" value={this.state.itemWeight}/>
-                                        {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
-                                        <InputGroup.Append>
-                                            <InputGroup.Text>kg</InputGroup.Text>
-                                        </InputGroup.Append> */}
 
                                         <DropdownButton
                                             as={InputGroup.Append}
@@ -359,6 +347,18 @@ class ReserveItems extends Component{
                                         </DropdownButton>
 
                                     </InputGroup>
+                                    </Form.Group >
+
+                                    <Form.Group className= "form-layout" 
+                                        style={{
+                                            padding: "0 10% 0 10%", 
+                                            display: "flex", 
+                                            justifyContent: 'space-around'}}>
+                                         {this.state.item !== "" && this.state.itemWeight !== 0 && this.state.weightType !== "Select Unit" ?
+                                            <Button type="button" style={{width: "50%", backgroundColor: "#040335"}} onClick={() => this.handleAddClick()}>Add</Button>
+                                                :
+                                            <Button type="button" style={{width: "50%"}} variant="secondary" disabled>Add</Button>
+                                         } 
                                     </Form.Group>
 
                                     <div style={{padding: "0 10% 0 10%"}}>Selected Items</div>
