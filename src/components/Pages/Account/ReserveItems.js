@@ -237,7 +237,7 @@ class ReserveItems extends Component{
 
                     <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%", height: "190%"}}>
 
-                        <Card style={{width: this.state.formWidth, height: "675px", marginBottom: "10vh", backgroundColor: "#aab41e"}}>
+                        <Card style={{width: this.state.formWidth, height: "720px", marginBottom: "10vh", backgroundColor: "#aab41e"}}>
 
                             <Form className="form-layout" style={{padding: "10px"}}>
 
@@ -487,11 +487,10 @@ class ReserveItems extends Component{
 
                         <Card
                         style={{
-                            // width: "90%", 
                             width: this.state.formWidth, 
                             // height: "100%"
-                            height: "400px",
-                            maxHeight: "300px",
+                            height: "720px",
+                            //maxHeight: "300px",
                             marginBottom: '10vh',
                             backgroundColor: "#040335",
                             overflowY: 'auto'
