@@ -2,6 +2,7 @@
   "name": "platform",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://web-wrggqo5tiq-ue.a.run.app:443",
   "dependencies": {
     "@material-ui/core": "^4.12.1",
     "@material-ui/lab": "^4.0.0-alpha.60",
