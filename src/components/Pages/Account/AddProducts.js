@@ -91,7 +91,8 @@ class AddProducts extends Component {
             {foodName: "Beef Mince", category: "Meat", weight: 450, wtUnit: "g", price: 3.19, expiryDate: "2021-10-04", postcode: "ML6 7AW"},
             {foodName: "Carrots", category: "Vegetable", weight: 250, wtUnit: "g", price: 1.59, expiryDate: "2021-10-05", postcode: "ML6 5BF"},
         ],
-        myProducts: []
+        myProducts: [],
+        foodOptions: []
 
     }
 
@@ -147,8 +148,24 @@ class AddProducts extends Component {
         this.setState({weightMultiplier: value})
     }
 
-    handleChange = (e) => {
-        // console.log(e);
+    handleChange = async (e) => {
+        const resp = await fetch("/completion", {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors',
+            headers: {
+              //'Content-Type': 'application/json',
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `food=${e.target.value}`
+        });
+        //console.log(resp);
+        const data = await resp.json();
+        //console.table(data);
+        //this.foodOptions = data;
+        this.state.foodOptions = data;
+        //console.log(this.foodOptions);
+
+//          .then((res) => console.log(res.items));
         this.setState({
             [e.target.id]: e.target.value
         })
@@ -375,14 +392,16 @@ class AddProducts extends Component {
                         <Autocomplete
                             // multiple
                             id="foodName"
-                            options={foodOptions.map((option) => option.title)}
+                            options={this.state.foodOptions} //.map((option) => option.name)}
+                            getOptionLabel={(option) => option.name}
+                            filterOptions={x => x}
                             freeSolo
                             // limitTags={1}
                             // getOptionLabel={(option) => option.name}
                             style={{width: "100%", backgroundColor: "white"}}
                             size="small"
-                            onChange={(e) => this.setState({ foodName: e.target.textContent })}
                             onInputChange={(e) => this.handleChange(e)}
+                            onChange={(e) => this.setState({ foodName: e.target.textContent})}
 
                             // renderTags={(value, getTagProps) =>
                             //     value.map((option, index) => (
@@ -928,7 +947,7 @@ class AddProducts extends Component {
     }
 }
 
-const foodOptions = [
+/*const foodOptions = [
     {title: "Cereal"},
     {title: "Bacon"},
     {title: "Baked Beans"},
@@ -951,7 +970,7 @@ const foodOptions = [
     {title: "Milk"},
     {title: "Fruit Juice"},
     {title: "Onion"},
-]
+]*/
 
 const mapStateToProps = (state) => {
     return{
