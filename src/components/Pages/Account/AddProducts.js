@@ -149,7 +149,7 @@ class AddProducts extends Component {
     }
 
     handleChange = async (e) => {
-        const resp = await fetch("/completion", {
+        const resp = await fetch("https://web-wrggqo5tiq-lz.a.run.app/completion", {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors',
             headers: {
