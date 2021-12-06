@@ -261,12 +261,11 @@ body{
 
 .user-acc h1{
   font-size: 20px;
-  padding-bottom: 15px;
 }
 
 .user-acc h1:last-of-type{
-  padding-bottom: 35px;
-  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+  /*border-bottom: 1px solid black;*/
 }
 
 .user-acc .user-acc-title{
@@ -281,16 +280,16 @@ body{
 }
 
 .user-acc p{
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .user-acc p:first-of-type{
-  font-size: 17px;
-  padding-top: 30px;
+  font-size: 15px;
+  padding-top: 5px;
 }
 
 .user-acc p:last-of-type{
-  padding-bottom: 45px;
+  padding-bottom: 5px;
 }
 
 .user-acc .user-acc-opt{
@@ -344,6 +343,12 @@ body{
 .custom-btn-2 {
   background-color: #aab41e;
   border-color: #aab41e;
+  height: 120px;
+  width: 100%;
+  margin-bottom: 2.5%;
+  font-weight: 600;
+  font-size: 200%;
+  padding: 5% 0 5% 0;
 }
 
 .custom-btn-3 {
