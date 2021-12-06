@@ -409,7 +409,7 @@ class AddProducts extends Component {
                             //     ))
                             // }
 
-                            renderInput={(params) => ( <TextField {...params} label="Enter Food Name" variant="outlined" /> )}
+                            renderInput={(params) => ( <TextField {...params} placeholder="Enter Food Name" variant="outlined" /> )}
                         />
                     </Form.Group>
 
