@@ -112,8 +112,8 @@ class ReserveItems extends Component{
             //could do if browser not native, if mobile native
             title: 'Success!',
             message: 'Thank you for reserving items, you have helped a farmer plan their harvest more sustainably. We will contact you by the end of January via email about your reservation.',
-            backgroundTop: 'rgb(113, 83, 0)',
-            backgroundBottom: 'rgb(188, 144, 21)', 
+            backgroundTop: '#9D5F1A',
+            backgroundBottom: '#EA9434', 
             closeButton: 'Close',
             duration: 20000,
         });
@@ -229,7 +229,7 @@ class ReserveItems extends Component{
 
                 <div style={{width: "100%", height: "100%"}}>
 
-                    <h4 className="text-center" style={{marginBottom: "2.5%", paddingTop: "8vh", fontWeight: 600}}>Plan, Reserve, Collect, Save</h4>
+                    <h4 className="text-center" style={{ marginTop: "5%", marginBottom: "2.5%", paddingTop: "8vh", fontWeight: 600}}>Plan, Reserve, Collect, Save</h4>
 
                     <div style={{display: "flex", justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', width: "100%"}}>
                         <Button style={{width: this.state.formWidth, borderColor: "#040335", backgroundColor: "#040335"}} as={Link} to="/account">Back</Button>
@@ -439,7 +439,7 @@ class ReserveItems extends Component{
                                         <InputGroup>
                                             <DDMenuStyle>
                                                 <Dropdown>
-                                                    <DropdownToggle variant="secondary" style={{width: this.state.dropdownWidth}} className="dd">{this.state.frequency}</DropdownToggle>
+                                                    <DropdownToggle variant="secondary" width= "100%" className="dd">{this.state.frequency}</DropdownToggle>
                                                     <DropdownMenu>
                                                         <DropdownItem as="button" type="button">
                                                             <div onClick={(e) => this.handleFreqChange(e.target.textContent)}>
