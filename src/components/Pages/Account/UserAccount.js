@@ -2063,12 +2063,10 @@ class Account extends Component {
                                     <Button
                                       className="custom-btn-3 rounded"
                                       style={{
-                                        height: "50px",
                                         width: "70%",
                                         marginLeft: "15%",
                                         marginTop: "5%",
                                         marginBottom: "5%",
-                                        fontSize: "150%",
                                         backgroundColor: "#AFBA15",
                                       }}
                                       onClick={() =>
@@ -4043,12 +4041,10 @@ class Account extends Component {
                                 <Button
                                   className="custom-btn-3 rounded"
                                   style={{
-                                    height: "50px",
                                     width: "70%",
                                     marginLeft: "15%",
                                     marginTop: "5%",
                                     marginBottom: "5%",
-                                    fontSize: "150%",
                                     backgroundColor: "#AFBA15",
                                   }}
                                   onClick={() =>
@@ -4354,12 +4350,10 @@ class Account extends Component {
                                     <Button
                                       className="custom-btn-3 rounded"
                                       style={{
-                                        height: "50px",
                                         width: "70%",
                                         marginLeft: "15%",
                                         marginTop: "5%",
                                         marginBottom: "5%",
-                                        fontSize: "150%",
                                         backgroundColor: "#AFBA15",
                                       }}
                                       onClick={() =>
@@ -6565,14 +6559,12 @@ class Account extends Component {
                                     </Button>
 
                                     <Button
-                                      className="custom-btn-3 rounded"
+                                      className="custom-btn- rounded"
                                       style={{
-                                        height: "50px",
                                         width: "70%",
                                         marginLeft: "15%",
                                         marginTop: "5%",
                                         marginBottom: "5%",
-                                        fontSize: "150%",
                                         backgroundColor: "#AFBA15",
                                       }}
                                       onClick={() =>
@@ -6884,14 +6876,12 @@ class Account extends Component {
                                     </Button>
 
                                     <Button
-                                      className="custom-btn-3 rounded"
+                                      className="custom-btn-2 rounded"
                                       style={{
-                                        height: "50px",
                                         width: "70%",
                                         marginLeft: "15%",
                                         marginTop: "5%",
                                         marginBottom: "5%",
-                                        fontSize: "150%",
                                         backgroundColor: "#AFBA15",
                                       }}
                                       onClick={() =>
@@ -8208,12 +8198,10 @@ class Account extends Component {
                                         <Button
                                           className="custom-btn-3 rounded"
                                           style={{
-                                            height: "50px",
                                             width: "70%",
                                             marginLeft: "15%",
                                             marginTop: "5%",
                                             marginBottom: "5%",
-                                            fontSize: "150%",
                                             backgroundColor: "#AFBA15",
                                           }}
                                           onClick={() =>
@@ -8542,12 +8530,10 @@ class Account extends Component {
                                         <Button
                                           className="custom-btn-3 rounded"
                                           style={{
-                                            height: "50px",
                                             width: "70%",
                                             marginLeft: "15%",
                                             marginTop: "5%",
                                             marginBottom: "5%",
-                                            fontSize: "150%",
                                             backgroundColor: "#AFBA15",
                                           }}
                                           onClick={() =>
