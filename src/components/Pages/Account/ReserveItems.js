@@ -15,13 +15,13 @@ import {
   Form,
   Button,
   Card,
-  //Col,
-  //Row,
+  Col,
+  Row,
   InputGroup,
   DropdownButton,
   Dropdown,
   Table,
-  //Modal,
+  Modal,
   ButtonGroup,
   ListGroup,
   ListGroupItem,
@@ -30,7 +30,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import addNotification from "react-push-notification";
 import moment from "moment";
-// import {ImCross} from "react-icons/im";
+// import {ImCross} from "react-icons/im"
 import {
   startData,
   createReserveItemsData,
@@ -133,12 +133,12 @@ class ReserveItems extends Component {
   showNotification = () => {
     addNotification({
       // from react-push-notification
-      //could do "if browser not native, if mobile native"
+      //could do if browser not native, if mobile native
       title: "Success!",
       message:
         "Thank you for reserving items, you have helped a farmer plan their harvest more sustainably. We will contact you by the end of January via email about your reservation.",
-      backgroundTop: "rgb(113, 83, 0)",
-      backgroundBottom: "rgb(188, 144, 21)",
+      backgroundTop: "#9D5F1A",
+      backgroundBottom: "#EA9434",
       closeButton: "Close",
       duration: 20000,
     });
@@ -257,7 +257,12 @@ class ReserveItems extends Component {
         <div style={{ width: "100%", height: "100%" }}>
           <h4
             className="text-center"
-            style={{ marginBottom: "2.5%", paddingTop: "8vh", fontWeight: 600 }}
+            style={{
+              marginTop: "5%",
+              marginBottom: "2.5%",
+              paddingTop: "8vh",
+              fontWeight: 600,
+            }}
           >
             Plan, Reserve, Collect, Save
           </h4>
@@ -688,7 +693,7 @@ class ReserveItems extends Component {
                         <Dropdown>
                           <DropdownToggle
                             variant="secondary"
-                            style={{ width: this.state.dropdownWidth }}
+                            width="100%"
                             className="dd"
                           >
                             {this.state.frequency}
@@ -779,6 +784,7 @@ class ReserveItems extends Component {
             <Card
               style={{
                 width: this.state.formWidth,
+                // height: "100%"
                 height: "720px",
                 //maxHeight: "300px",
                 marginBottom: "10vh",
@@ -1079,3 +1085,4 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([{ collection: "data" }])
 )(ReserveItems);
+// export default ReserveItems

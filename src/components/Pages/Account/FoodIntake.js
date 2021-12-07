@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Button, Card, Col, Row, InputGroup, DropdownButton, Modal, Dropdown} from 'react-bootstrap';
+//change alerts to react bootstrap also
 import { connect } from 'react-redux';
 import { startData, createFoodIntakeData } from '../../../store/actions/dataActions';
 import { Redirect } from 'react-router-dom';
