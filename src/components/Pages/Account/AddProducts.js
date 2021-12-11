@@ -117,6 +117,7 @@ class AddProducts extends Component {
             showComposition: false,
             formHeight: "885px"
         });
+        this.fetchMyProductsData();
     }
 
     notificationTest = () => {
@@ -313,7 +314,7 @@ class AddProducts extends Component {
     }
 
     render() {
-
+        console.log(this.state.price);
         const {data, auth} = this.props;
         // console.log(data.[auth.uid].writtenFoodWasteData);
         // console.log(time);
@@ -483,7 +484,7 @@ class AddProducts extends Component {
                             }}
                         >
                         <InputGroup>
-                            <Form.Control id="postcode" placeholder="Enter Postcode" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.postcode} />
+                            <Form.Control id="postcode" placeholder="Enter Postcode" onChange={(e) => this.handleChange(e)} width="100%" />
                         </InputGroup>
                         </Form.Group>
 
@@ -753,7 +754,7 @@ class AddProducts extends Component {
                         >
                         <InputGroup>
                             <InputGroup.Text style={{backgroundColor: "#040335", color: "white"}}>£</InputGroup.Text>
-                            <Form.Control id="price" placeholder="Enter Price" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.price} type="number" min="0.01" step="0.01" />
+                            <Form.Control id="price" placeholder="Enter Price" onChange={(e) => this.handleChange(e)} width="100%" type="number" min="0.01" step="0.01" />
                         </InputGroup>
                         </Form.Group>
 
@@ -766,7 +767,7 @@ class AddProducts extends Component {
                             }}
                         >
                         <InputGroup>
-                            <Form.Control id="expiryDate" type="date" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
+                            <Form.Control id="expiryDate" type="date" placeholder="DD/MM/YYYY" onChange={(e) => this.handleChange(e)} width="100%"  />
                         </InputGroup>
                         </Form.Group>
 
