@@ -116,6 +116,7 @@ class AddProductsBusiness extends Component {
             showComposition: false,
             formHeight: "885px"
         });
+        this.fetchMyProductsData();
     }
 
     notificationTest = () => {

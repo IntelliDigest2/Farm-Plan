@@ -115,7 +115,8 @@ class AddProducts extends Component {
             fibreContent: 0,
             fatContent: 0,
             showComposition: false,
-            formHeight: "885px"
+            formHeight: "885px",
+            myProducts: []
         });
         this.fetchMyProductsData();
     }
@@ -444,7 +445,7 @@ class AddProducts extends Component {
                                             <div onClick={(e) => {this.handleFoodCategoryChange(e.target.textContent)}}>
                                                 Vegetables
                                             </div>
-                                        </DropdownItem>
+                                        </DropdownItem> 
 
                                         <DropdownItem as="button" type="button">
                                             <div onClick={(e) => {this.handleFoodCategoryChange(e.target.textContent)}}>
