@@ -134,7 +134,7 @@ render(){
                     <option value="Schools">Schools</option>
                     <option value="Hotels">Hotels</option>
                     <option value="Offices">Offices</option>
-                    <option value="Restraunts">Restraunts</option>
+                    <option value="Restaurants">Resautrants</option>
                     <option value="Shop/Supermarket">Shop/Supermarket</option>
                     <option value="Farm">Farm</option>
                     <option value="Recreational Centers">Recreational Centers</option>
