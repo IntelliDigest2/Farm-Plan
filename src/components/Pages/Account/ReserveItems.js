@@ -283,7 +283,7 @@ class ReserveItems extends Component {
                 backgroundColor: "#040335",
               }}
               as={Link}
-              to="/account"
+              to="/pts"
             >
               Back
             </Button>

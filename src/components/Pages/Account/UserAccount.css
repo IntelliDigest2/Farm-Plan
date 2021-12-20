@@ -37,6 +37,7 @@
 }
 
 .profile {
+  max-width: 300px;
   background-color: #0c0847;
   color: white;
 }

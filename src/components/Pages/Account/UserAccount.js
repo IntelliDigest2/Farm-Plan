@@ -1,8 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "../../../App.css";
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
+import "./UserAccount.css";
 import "../Pages.css";
+import { DefaultButton, SubButton } from "../SubComponents/Button";
+import { Profile } from "../SubComponents/Profile";
 import styled from "styled-components";
 import {
   Row,
@@ -14,7 +17,6 @@ import {
   Card,
   Container,
 } from "react-bootstrap";
-// import ButtonModal from './ButtonModalChart'
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
@@ -32,7 +34,146 @@ import pTSNotebook from "../../../images/pts_plate_notebook.png";
 //import pTSFoodWaste from "../../../images/pts_food_waste.jpg";
 import pTSBanner from "../../../images/pts-banner.png";
 import sTFCFoodNetwork from "../../../images/stfcfoodnetwork.png";
-//import { Layout } from "../../Layout/Layout";
+
+function FoodBubble() {
+  const [open, setOpen] = useState(false);
+  if (open === true) {
+    return (
+      <>
+        <DefaultButton
+          styling="green"
+          text="Food"
+          onClick={() => setOpen(false)}
+        />
+
+        <div style={{ marginTop: "5%", marginBottom: "5%" }}>
+          <div className="disclaimer">
+            <p>
+              <b>DISCLAIMER:</b>The Global Food Loss & Waste Tracker is
+              designed, in part, to help users develop healthy eating habits.
+              The nutritional information and dietary recommendations provided
+              are merely suggestions which may or may not improve users' eating
+              habits and/or overall health. This app is a self-regulatory tool,
+              not intended to replace professional medical advice. Please always
+              consult a dietician or medical professional for professional
+              medical advice regarding your health.
+            </p>
+          </div>
+
+          <SubButton
+            styling="turquoise"
+            goTo="/food-intake"
+            text="Update Food Intake"
+          />
+          <SubButton
+            styling="turquoise"
+            goTo="/chart/nutrientGap"
+            text="Nutrient Gap Breakdown"
+          />
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <DefaultButton
+        styling="green"
+        text="Food"
+        onClick={() => setOpen(true)}
+      />
+    );
+  }
+}
+
+function FoodSurplusBubble() {
+  const [open, setOpen] = useState(false);
+  if (open === true) {
+    return (
+      <>
+        <DefaultButton
+          styling="green"
+          text="Food Surplus"
+          onClick={() => setOpen(false)}
+        />
+        <SubButton
+          styling="turquoise"
+          goTo="/add-products"
+          text="Upload Food Surplus"
+        />
+        <SubButton
+          styling="turquoise"
+          goTo="/browse-products"
+          text="Buy Food"
+        />
+
+        <SubButton
+          styling="yellow"
+          goTo="/chart/weekSurplus"
+          text="View Food Surplus Weight Performance Chart"
+        />
+        <SubButton
+          styling="yellow"
+          goTo="/chart/weekSurplusGHG"
+          text="View Food Surplus GHG Performance Chart"
+        />
+        <SubButton
+          styling="yellow"
+          goTo="/chart/weekSurplusCost"
+          text="View Food Surplus Cost Performance Chart"
+        />
+      </>
+    );
+  } else {
+    return (
+      <DefaultButton
+        styling="green"
+        text="Food Surplus"
+        onClick={() => setOpen(true)}
+      />
+    );
+  }
+}
+
+function FoodWasteBubble() {
+  const [open, setOpen] = useState(false);
+  if (open === true) {
+    return (
+      <>
+        <DefaultButton
+          styling="green"
+          text="Food Waste"
+          onClick={() => setOpen(false)}
+        />
+
+        <div style={{ marginTop: "5%", marginBottom: "5%" }}>
+          <SubButton
+            styling="turquoise"
+            goTo="/food-waste"
+            text="Update Food waste"
+          />
+          <SubButton
+            styling="turquoise"
+            goTo="/food-reduction"
+            text="Food Waste Reduction Tips"
+          />
+
+          <SubButton
+            styling="yellow"
+            goTo="/chart/week"
+            text="Food Waste Performance Chart"
+          />
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <DefaultButton
+        styling="green"
+        text="Food Waste"
+        onClick={() => setOpen(true)}
+      />
+    );
+  }
+}
 
 /* 
   
@@ -47,7 +188,112 @@ import sTFCFoodNetwork from "../../../images/stfcfoodnetwork.png";
 
 */
 
-class Account extends Component {
+function Account(props) {
+  if (!props.auth.uid) {
+    return <Redirect to="/login" />;
+  }
+
+  switch (props.profile.buildingFunction) {
+    case "Farm":
+      console.log(props.auth.uid);
+      return (
+        <>
+          <Container fluid className="web-center">
+            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <FoodBubble />
+            <FoodSurplusBubble />
+            <FoodWasteBubble />
+            <SubButton
+              styling="blue"
+              goTo="/change-password"
+              text="Change Password"
+            />
+          </Container>
+        </>
+      );
+
+    case "Schools":
+      console.log(props.profile.buildingFunction);
+      return (
+        <>
+          <Container fluid className="web-center">
+            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <FoodBubble />
+            <FoodSurplusBubble />
+            <FoodWasteBubble />
+            <SubButton
+              styling="blue"
+              goTo="/change-password"
+              text="Change Password"
+            />
+          </Container>
+        </>
+      );
+
+    //business profile
+    case "Hospitals" ||
+      "Hotels" ||
+      "Offices" ||
+      "Restaurants" ||
+      "Shop/Supermarket" ||
+      "Recreational Centers":
+      console.log(props.profile.buildingFunction);
+      return (
+        <>
+          <Container fluid className="web-center">
+            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <FoodBubble />
+            <FoodSurplusBubble />
+            <FoodWasteBubble />
+            <SubButton
+              styling="blue"
+              goTo="/change-password"
+              text="Change Password"
+            />
+          </Container>
+        </>
+      );
+
+    //personal profile
+    case "Households":
+      console.log(props.auth.uid);
+      return (
+        <>
+          <Container fluid className="web-center">
+            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <FoodBubble />
+            <FoodSurplusBubble />
+            <FoodWasteBubble />
+            <SubButton
+              styling="blue"
+              goTo="/change-password"
+              text="Change Password"
+            />
+          </Container>
+        </>
+      );
+
+    default:
+      console.log(props.profile.buildingFunction);
+      return (
+        <>
+          <Container fluid className="web-center">
+            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <FoodBubble />
+            <FoodSurplusBubble />
+            <FoodWasteBubble />
+            <SubButton
+              styling="blue"
+              goTo="/change-password"
+              text="Change Password"
+            />
+          </Container>
+        </>
+      );
+  }
+}
+
+class Account1 extends Component {
   state = {
     foodBubbleClicked: false,
     foodWasteBubbleClicked: false,
@@ -61,18 +307,7 @@ class Account extends Component {
   };
 
   render() {
-    const { auth, profile, users } = this.props;
-    // console.log(users);
-    // console.log(profile.buildingFunction);
-
-    // var buttonDisplay;
-
-    // if (profile.buildingFunction === "Farm"){
-    //   this.setState({isFarm: true})
-    // } else {
-    //   this.setState({isFarm: false})
-    // }
-
+    const { auth, profile } = this.props;
     if (!auth.uid) return <Redirect to="/login" />;
 
     return (
@@ -96,12 +331,11 @@ class Account extends Component {
                 !
               </h1>
               {/* <h1 className="text-center">Account email: <span >{profile.email}</span></h1>
-                  <h1 className="text-center">Postcode: <span >{profile.postcode}</span></h1> */}   
+                  <h1 className="text-center">Postcode: <span >{profile.postcode}</span></h1> */}
 
               <div>
                 {profile.buildingFunction === "Farm" ? (
-                  
-                //#region FARM ACCOUNT
+                  //#region FARM ACCOUNT
                   <>
                     {this.state.skipPTSCLicked ? (
                       <div
@@ -1664,637 +1898,575 @@ class Account extends Component {
                         }}
                       >
                         <BrowserView>
-                                <Button
-                                  className="custom-btn-2 rounded"
-                                  style={{
-                                    height: "120px",
-                                    width: "100%",
-                                    marginBottom: "2.5%",
-                                    fontWeight: 600,
-                                    fontSize: "200%",
-                                    padding: "5% 0 5% 0",
-                                  }}
-                                  as={Link}
-                                  to="/reserve-items"
-                                >
-                                  Plan to Save
-                                </Button>
+                          <DefaultButton
+                            goTo="/reserve-items"
+                            buttonText="Plan To Save"
+                          />
 
-                                <ListGroup
+                          <ListGroup
+                            style={{
+                              width: "100%",
+                              marginTop: "2%",
+                              marginBottom: "0.5%",
+                            }}
+                          >
+                            <ListGroup.Item
+                              style={{ backgroundColor: "#FF6A63" }}
+                            >
+                              <b>NOTE: </b> This is part of the 'Fail to Plan,
+                              Plan to Fail' campaign, running from October 16th
+                              2021 to January 31st 2021. Click 'Plan to Save' to
+                              express interest in reserving food items from
+                              local sources from June 2022. To go to your
+                              regular Account page, click the 'My Account'
+                              button below.
+                            </ListGroup.Item>
+                          </ListGroup>
+
+                          <div
+                            className="text-center"
+                            style={{ marginBottom: "-2px" }}
+                          >
+                            <span>Campaign Ends: </span>
+                          </div>
+
+                          <div className="text-center">
+                            <DateStyle>
+                              <Countdown
+                                className="date"
+                                date="2022-01-31T23:59:59"
+                                style={{
+                                  fontSize: "200%",
+                                  fontWeight: "200",
+                                }}
+                              />
+                            </DateStyle>
+                          </div>
+
+                          <div className="text-center">
+                            <DateStyle>
+                              <span
+                                className="label"
+                                style={{ backgroundColor: "#CC2E26" }}
+                              >
+                                days : hrs : mins : secs
+                              </span>
+                            </DateStyle>
+                          </div>
+
+                          <Button
+                            variant="secondary"
+                            style={{
+                              width: "45%",
+                              marginLeft: "27.5%",
+                              marginTop: "5%",
+                              marginBottom: "1%",
+                            }}
+                            onClick={() =>
+                              this.setState({
+                                skipPTSCLicked: !this.state.skipPTSCLicked,
+                              })
+                            }
+                          >
+                            My Account
+                          </Button>
+
+                          <Button
+                            className="custom-btn-3 rounded"
+                            style={{
+                              height: "50px",
+                              width: "70%",
+                              marginLeft: "15%",
+                              marginTop: "5%",
+                              marginBottom: "5%",
+                              fontSize: "150%",
+                              backgroundColor: "#AFBA15",
+                            }}
+                            onClick={() =>
+                              this.setState({
+                                PTSInfoClicked: !this.state.PTSInfoClicked,
+                              })
+                            }
+                          >
+                            {" "}
+                            What is the Plan to Save?
+                          </Button>
+
+                          <>
+                            {this.state.PTSInfoClicked ? (
+                              <>
+                                <Card
                                   style={{
                                     width: "100%",
-                                    marginTop: "2%",
-                                    marginBottom: "0.5%",
+                                    height: "1650px",
                                   }}
                                 >
-                                  <ListGroup.Item
-                                    style={{ backgroundColor: "#FF6A63" }}
+                                  <Card.Img variant="top" src={pTSBanner} />
+                                  <div
+                                    className="text-center"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "#05042E",
+                                    }}
                                   >
-                                    <b>NOTE: </b> This is part of the 'Fail to
-                                    Plan, Plan to Fail' campaign, running from
-                                    October 16th 2021 to January 31st 2021.
-                                    Click 'Plan to Save' to express interest in
-                                    reserving food items from local sources from
-                                    June 2022. To go to your regular Account
-                                    page, click the 'My Account' button below.
-                                  </ListGroup.Item>
-                                </ListGroup>
-
-                                <div
-                                  className="text-center"
-                                  style={{ marginBottom: "-2px" }}
-                                >
-                                  <span>Campaign Ends: </span>
-                                </div>
-
-                                <div className="text-center">
-                                  <DateStyle>
-                                    <Countdown
-                                      className="date"
-                                      date="2022-01-31T23:59:59"
+                                    <h1
                                       style={{
-                                        fontSize: "200%",
-                                        fontWeight: "200",
+                                        fontWeight: "700",
+                                        color: "white",
+                                        marginTop: "2%",
                                       }}
-                                    />
-                                  </DateStyle>
-                                </div>
-
-                                <div className="text-center">
-                                  <DateStyle>
-                                    <span
-                                      className="label"
-                                      style={{ backgroundColor: "#CC2E26" }}
                                     >
-                                      days : hrs : mins : secs
-                                    </span>
-                                  </DateStyle>
-                                </div>
+                                      How Does It Work?
+                                    </h1>
+                                    <p
+                                      style={{
+                                        color: "white",
+                                        width: "90%",
+                                        marginLeft: "5%",
+                                      }}
+                                    >
+                                      If you can reserve your fresh food, local
+                                      farmers can plan better in their food
+                                      production to meet your need in the most
+                                      sustainable way. By signing up to the Plan
+                                      to Save campaign and reserving your
+                                      weekly, fortnightly and monthly fresh food
+                                      requirements, we will take the
+                                      responsibility to identify local farmers
+                                      around you or encourage the set up of
+                                      local farmers to supply your reservation,
+                                      ensuring the supply of nutritious food all
+                                      year round for all.
+                                    </p>
+                                  </div>
 
-                                <Button
-                                  variant="secondary"
-                                  style={{
-                                    width: "45%",
-                                    marginLeft: "27.5%",
-                                    marginTop: "5%",
-                                    marginBottom: "1%",
-                                  }}
-                                  onClick={() =>
-                                    this.setState({
-                                      skipPTSCLicked:
-                                        !this.state.skipPTSCLicked,
-                                    })
-                                  }
-                                >
-                                  My Account
-                                </Button>
-
-                                <Button
-                                  className="custom-btn-3 rounded"
-                                  style={{
-                                    height: "50px",
-                                    width: "70%",
-                                    marginLeft: "15%",
-                                    marginTop: "5%",
-                                    marginBottom: "5%",
-                                    fontSize: "150%",
-                                    backgroundColor: "#AFBA15",
-                                  }}
-                                  onClick={() =>
-                                    this.setState({
-                                      PTSInfoClicked:
-                                        !this.state.PTSInfoClicked,
-                                    })
-                                  }
-                                >
-                                  {" "}
-                                  What is the Plan to Save?
-                                </Button>
-
-                                <>
-                                  {this.state.PTSInfoClicked ? (
-                                    <>
-                                      <Card
-                                        style={{
-                                          width: "100%",
-                                          height: "1650px",
-                                        }}
-                                      >
-                                        <Card.Img
-                                          variant="top"
-                                          src={pTSBanner}
-                                        />
-                                        <div
-                                          className="text-center"
+                                  <Card.Header
+                                    style={{
+                                      fontSize: "18px",
+                                      fontWeight: "700",
+                                      color: "#0C0847",
+                                    }}
+                                  >
+                                    The key questions the campaign will be
+                                    seeking to address will be centred around:
+                                  </Card.Header>
+                                  <ListGroup
+                                    variant="flush"
+                                    style={{ fontSize: "15px" }}
+                                  >
+                                    <ListGroup.Item>
+                                      1. Have you witnessed empty shelves in
+                                      your grocery store during the pandemic?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      2. Have you wondered why we waste over 1.3
+                                      billion tonnes of food every year when
+                                      over 800 million people are hungry?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      3. Do you know that our current AgriFood
+                                      production system contribute over 30% of
+                                      Greenhouse gas emission?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      4. Are you are aware that 1 in 5 death is
+                                      linked to malnutrition?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      5. Does the lack of HGV Drivers to support
+                                      the food system create a concern for you?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      6. Are you worried about the future of
+                                      food?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      7. Do you know that you can help address
+                                      most of these problems if you can change
+                                      your attitude to food?
+                                    </ListGroup.Item>
+                                  </ListGroup>
+                                  <div
+                                    className="text-center"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "#AFBA15 ",
+                                      color: "white",
+                                    }}
+                                  >
+                                    <p
+                                      style={{
+                                        width: "90%",
+                                        marginLeft: "5%",
+                                      }}
+                                    >
+                                      The recent UNFAO, UNEP, IPCC and
+                                      IntelliDigest report has highlighted the
+                                      impact of the broken food system on
+                                      climate change and the need for everyone
+                                      to act now to address the challenge.
+                                    </p>
+                                    <p
+                                      style={{
+                                        width: "90%",
+                                        marginLeft: "5%",
+                                      }}
+                                    >
+                                      Evolving a food system that is resilient
+                                      and secure has never been more important
+                                      than during the COVID-19 pandemic and as
+                                      we face the challenges of empty food
+                                      shelves plus labour shortages.
+                                    </p>
+                                  </div>
+                                  <div
+                                    className="text-center"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "white",
+                                      color: "#020113",
+                                    }}
+                                  >
+                                    <h2
+                                      style={{
+                                        fontSize: "20px",
+                                        fontWeight: "700",
+                                        marginTop: "2%",
+                                        marginBottom: "2%",
+                                      }}
+                                    >
+                                      Supported By:
+                                    </h2>
+                                    <Container>
+                                      <Row>
+                                        <Col
                                           style={{
-                                            width: "100%",
-                                            backgroundColor: "#05042E",
-                                          }}
-                                        >
-                                          <h1
-                                            style={{
-                                              fontWeight: "700",
-                                              color: "white",
-                                              marginTop: "2%",
-                                            }}
-                                          >
-                                            How Does It Work?
-                                          </h1>
-                                          <p
-                                            style={{
-                                              color: "white",
-                                              width: "90%",
-                                              marginLeft: "5%",
-                                            }}
-                                          >
-                                            If you can reserve your fresh food,
-                                            local farmers can plan better in
-                                            their food production to meet your
-                                            need in the most sustainable way. By
-                                            signing up to the Plan to Save
-                                            campaign and reserving your weekly,
-                                            fortnightly and monthly fresh food
-                                            requirements, we will take the
-                                            responsibility to identify local
-                                            farmers around you or encourage the
-                                            set up of local farmers to supply
-                                            your reservation, ensuring the
-                                            supply of nutritious food all year
-                                            round for all.
-                                          </p>
-                                        </div>
-
-                                        <Card.Header
-                                          style={{
-                                            fontSize: "18px",
-                                            fontWeight: "700",
-                                            color: "#0C0847",
-                                          }}
-                                        >
-                                          The key questions the campaign will be
-                                          seeking to address will be centred
-                                          around:
-                                        </Card.Header>
-                                        <ListGroup
-                                          variant="flush"
-                                          style={{ fontSize: "15px" }}
-                                        >
-                                          <ListGroup.Item>
-                                            1. Have you witnessed empty shelves
-                                            in your grocery store during the
-                                            pandemic?
-                                          </ListGroup.Item>
-                                          <ListGroup.Item>
-                                            2. Have you wondered why we waste
-                                            over 1.3 billion tonnes of food
-                                            every year when over 800 million
-                                            people are hungry?
-                                          </ListGroup.Item>
-                                          <ListGroup.Item>
-                                            3. Do you know that our current
-                                            AgriFood production system
-                                            contribute over 30% of Greenhouse
-                                            gas emission?
-                                          </ListGroup.Item>
-                                          <ListGroup.Item>
-                                            4. Are you are aware that 1 in 5
-                                            death is linked to malnutrition?
-                                          </ListGroup.Item>
-                                          <ListGroup.Item>
-                                            5. Does the lack of HGV Drivers to
-                                            support the food system create a
-                                            concern for you?
-                                          </ListGroup.Item>
-                                          <ListGroup.Item>
-                                            6. Are you worried about the future
-                                            of food?
-                                          </ListGroup.Item>
-                                          <ListGroup.Item>
-                                            7. Do you know that you can help
-                                            address most of these problems if
-                                            you can change your attitude to
-                                            food?
-                                          </ListGroup.Item>
-                                        </ListGroup>
-                                        <div
-                                          className="text-center"
-                                          style={{
-                                            width: "100%",
-                                            backgroundColor: "#AFBA15 ",
-                                            color: "white",
-                                          }}
-                                        >
-                                          <p
-                                            style={{
-                                              width: "90%",
-                                              marginLeft: "5%",
-                                            }}
-                                          >
-                                            The recent UNFAO, UNEP, IPCC and
-                                            IntelliDigest report has highlighted
-                                            the impact of the broken food system
-                                            on climate change and the need for
-                                            everyone to act now to address the
-                                            challenge.
-                                          </p>
-                                          <p
-                                            style={{
-                                              width: "90%",
-                                              marginLeft: "5%",
-                                            }}
-                                          >
-                                            Evolving a food system that is
-                                            resilient and secure has never been
-                                            more important than during the
-                                            COVID-19 pandemic and as we face the
-                                            challenges of empty food shelves
-                                            plus labour shortages.
-                                          </p>
-                                        </div>
-                                        <div
-                                          className="text-center"
-                                          style={{
-                                            width: "100%",
                                             backgroundColor: "white",
-                                            color: "#020113",
                                           }}
                                         >
-                                          <h2
-                                            style={{
-                                              fontSize: "20px",
-                                              fontWeight: "700",
-                                              marginTop: "2%",
-                                              marginBottom: "2%",
-                                            }}
-                                          >
-                                            Supported By:
-                                          </h2>
-                                          <Container>
-                                            <Row>
-                                              <Col
-                                                style={{
-                                                  backgroundColor: "white",
-                                                }}
-                                              >
-                                                <img
-                                                  src={sTFCFoodNetwork}
-                                                  alt="STFC Food Network"
-                                                  className="img-fluid rounded fix-image"
-                                                  style={{ marginBottom: "5%" }}
-                                                />
-                                              </Col>
-                                              <Col
-                                                style={{
-                                                  backgroundColor: "white",
-                                                }}
-                                              >
-                                                <img
-                                                  src={positivePlanet}
-                                                  alt="Positive Planet"
-                                                  className="img-fluid rounded fix-image"
-                                                  style={{ marginBottom: "2%" }}
-                                                />
-                                              </Col>
-                                            </Row>
-                                          </Container>
-                                        </div>
-                                        <Divider
-                                          style={{ marginBottom: "10px" }}
-                                        />
-                                        <Card.Img
-                                          variant="bottom"
-                                          src={pTSNotebook}
-                                        />
-                                      </Card>
-                                    </>
-                                  ) : (
-                                    <></>
-                                  )}
-                                </>
-                              </BrowserView>
+                                          <img
+                                            src={sTFCFoodNetwork}
+                                            alt="STFC Food Network"
+                                            className="img-fluid rounded fix-image"
+                                            style={{ marginBottom: "5%" }}
+                                          />
+                                        </Col>
+                                        <Col
+                                          style={{
+                                            backgroundColor: "white",
+                                          }}
+                                        >
+                                          <img
+                                            src={positivePlanet}
+                                            alt="Positive Planet"
+                                            className="img-fluid rounded fix-image"
+                                            style={{ marginBottom: "2%" }}
+                                          />
+                                        </Col>
+                                      </Row>
+                                    </Container>
+                                  </div>
+                                  <Divider style={{ marginBottom: "10px" }} />
+                                  <Card.Img
+                                    variant="bottom"
+                                    src={pTSNotebook}
+                                  />
+                                </Card>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        </BrowserView>
 
                         <MobileView>
-                        <Button
-                                      className="custom-btn-2 rounded"
-                                      style={{
-                                        height: "120px",
-                                        width: "100%",
-                                        marginBottom: "2.5%",
-                                        fontWeight: 600,
-                                        fontSize: "200%",
-                                        padding: "5% 0 5% 0",
-                                      }}
-                                      as={Link}
-                                      to="/reserve-items"
-                                    >
-                                      Plan to Save
-                                    </Button>
+                          <DefaultButton
+                            goTo="/reserve-items"
+                            buttonText="Plan To Save"
+                          />
 
-                                    <ListGroup
+                          <ListGroup
+                            style={{
+                              width: "100%",
+                              marginTop: "2%",
+                              marginBottom: "0.5%",
+                            }}
+                          >
+                            <ListGroup.Item
+                              style={{ backgroundColor: "#FF6A63" }}
+                            >
+                              <b>NOTE: </b> This is part of the 'Fail to Plan,
+                              Plan to Fail' campaign, running from October 16th
+                              2021 to January 31st 2021. Click 'Plan to Save' to
+                              express interest in reserving food items from
+                              local sources from June 2022. To go to your
+                              regular Account page, click the 'My Account'
+                              button below.
+                            </ListGroup.Item>
+                          </ListGroup>
+
+                          <div
+                            className="text-center"
+                            style={{ marginBottom: "-2px" }}
+                          >
+                            <span>Campaign Ends: </span>
+                          </div>
+
+                          <div className="text-center">
+                            <DateStyle>
+                              <Countdown
+                                className="date"
+                                date="2022-01-31T23:59:59"
+                                style={{
+                                  fontSize: "200%",
+                                  fontWeight: "200",
+                                }}
+                              />
+                            </DateStyle>
+                          </div>
+
+                          <div className="text-center">
+                            <DateStyle>
+                              <span
+                                className="label"
+                                style={{ backgroundColor: "#CC2E26" }}
+                              >
+                                days : hrs : mins : secs
+                              </span>
+                            </DateStyle>
+                          </div>
+
+                          <Button
+                            variant="secondary"
+                            style={{
+                              width: "45%",
+                              marginLeft: "27.5%",
+                              marginTop: "5%",
+                              marginBottom: "1%",
+                            }}
+                            onClick={() =>
+                              this.setState({
+                                skipPTSCLicked: !this.state.skipPTSCLicked,
+                              })
+                            }
+                          >
+                            My Account
+                          </Button>
+
+                          <Button
+                            className="custom-btn-3 rounded"
+                            style={{
+                              width: "70%",
+                              marginLeft: "15%",
+                              marginTop: "5%",
+                              marginBottom: "5%",
+                              backgroundColor: "#AFBA15",
+                            }}
+                            onClick={() =>
+                              this.setState({
+                                PTSInfoClicked: !this.state.PTSInfoClicked,
+                              })
+                            }
+                          >
+                            {" "}
+                            What is the Plan to Save?
+                          </Button>
+
+                          <>
+                            {this.state.PTSInfoClicked ? (
+                              <>
+                                <Card
+                                  style={{
+                                    width: "100%",
+                                    height: "1650px",
+                                  }}
+                                >
+                                  <Card.Img variant="top" src={pTSBanner} />
+                                  <div
+                                    className="text-center"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "#05042E",
+                                    }}
+                                  >
+                                    <h1
                                       style={{
-                                        width: "100%",
+                                        fontWeight: "700",
+                                        color: "white",
                                         marginTop: "2%",
-                                        marginBottom: "0.5%",
                                       }}
                                     >
-                                      <ListGroup.Item
-                                        style={{ backgroundColor: "#FF6A63" }}
-                                      >
-                                        <b>NOTE: </b> This is part of the 'Fail
-                                        to Plan, Plan to Fail' campaign, running
-                                        from October 16th 2021 to January 31st
-                                        2021. Click 'Plan to Save' to express
-                                        interest in reserving food items from
-                                        local sources from June 2022. To go to
-                                        your regular Account page, click the 'My
-                                        Account' button below.
-                                      </ListGroup.Item>
-                                    </ListGroup>
-
-                                    <div
-                                      className="text-center"
-                                      style={{ marginBottom: "-2px" }}
+                                      How Does It Work?
+                                    </h1>
+                                    <p
+                                      style={{
+                                        color: "white",
+                                        width: "90%",
+                                        marginLeft: "5%",
+                                      }}
                                     >
-                                      <span>Campaign Ends: </span>
-                                    </div>
+                                      If you can reserve your fresh food, local
+                                      farmers can plan better in their food
+                                      production to meet your need in the most
+                                      sustainable way. By signing up to the Plan
+                                      to Save campaign and reserving your
+                                      weekly, fortnightly and monthly fresh food
+                                      requirements, we will take the
+                                      responsibility to identify local farmers
+                                      around you or encourage the set up of
+                                      local farmers to supply your reservation,
+                                      ensuring the supply of nutritious food all
+                                      year round for all.
+                                    </p>
+                                  </div>
 
-                                    <div className="text-center">
-                                      <DateStyle>
-                                        <Countdown
-                                          className="date"
-                                          date="2022-01-31T23:59:59"
+                                  <Card.Header
+                                    style={{
+                                      fontSize: "18px",
+                                      fontWeight: "700",
+                                      color: "#0C0847",
+                                    }}
+                                  >
+                                    The key questions the campaign will be
+                                    seeking to address will be centred around:
+                                  </Card.Header>
+                                  <ListGroup
+                                    variant="flush"
+                                    style={{ fontSize: "15px" }}
+                                  >
+                                    <ListGroup.Item>
+                                      1. Have you witnessed empty shelves in
+                                      your grocery store during the pandemic?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      2. Have you wondered why we waste over 1.3
+                                      billion tonnes of food every year when
+                                      over 800 million people are hungry?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      3. Do you know that our current AgriFood
+                                      production system contribute over 30% of
+                                      Greenhouse gas emission?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      4. Are you are aware that 1 in 5 death is
+                                      linked to malnutrition?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      5. Does the lack of HGV Drivers to support
+                                      the food system create a concern for you?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      6. Are you worried about the future of
+                                      food?
+                                    </ListGroup.Item>
+                                    <ListGroup.Item>
+                                      7. Do you know that you can help address
+                                      most of these problems if you can change
+                                      your attitude to food?
+                                    </ListGroup.Item>
+                                  </ListGroup>
+                                  <div
+                                    className="text-center"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "#AFBA15 ",
+                                      color: "white",
+                                    }}
+                                  >
+                                    <p
+                                      style={{
+                                        width: "90%",
+                                        marginLeft: "5%",
+                                      }}
+                                    >
+                                      The recent UNFAO, UNEP, IPCC and
+                                      IntelliDigest report has highlighted the
+                                      impact of the broken food system on
+                                      climate change and the need for everyone
+                                      to act now to address the challenge.
+                                    </p>
+                                    <p
+                                      style={{
+                                        width: "90%",
+                                        marginLeft: "5%",
+                                      }}
+                                    >
+                                      Evolving a food system that is resilient
+                                      and secure has never been more important
+                                      than during the COVID-19 pandemic and as
+                                      we face the challenges of empty food
+                                      shelves plus labour shortages.
+                                    </p>
+                                  </div>
+                                  <div
+                                    className="text-center"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "white",
+                                      color: "#020113",
+                                    }}
+                                  >
+                                    <h2
+                                      style={{
+                                        fontSize: "20px",
+                                        fontWeight: "700",
+                                        marginTop: "2%",
+                                        marginBottom: "2%",
+                                      }}
+                                    >
+                                      Supported By:
+                                    </h2>
+                                    <Container>
+                                      <Row>
+                                        <Col
                                           style={{
-                                            fontSize: "200%",
-                                            fontWeight: "200",
+                                            backgroundColor: "white",
                                           }}
-                                        />
-                                      </DateStyle>
-                                    </div>
-
-                                    <div className="text-center">
-                                      <DateStyle>
-                                        <span
-                                          className="label"
-                                          style={{ backgroundColor: "#CC2E26" }}
                                         >
-                                          days : hrs : mins : secs
-                                        </span>
-                                      </DateStyle>
-                                    </div>
-
-                                    <Button
-                                      variant="secondary"
-                                      style={{
-                                        width: "45%",
-                                        marginLeft: "27.5%",
-                                        marginTop: "5%",
-                                        marginBottom: "1%",
-                                      }}
-                                      onClick={() =>
-                                        this.setState({
-                                          skipPTSCLicked:
-                                            !this.state.skipPTSCLicked,
-                                        })
-                                      }
-                                    >
-                                      My Account
-                                    </Button>
-
-                                    <Button
-                                      className="custom-btn-3 rounded"
-                                      style={{
-                                        width: "70%",
-                                        marginLeft: "15%",
-                                        marginTop: "5%",
-                                        marginBottom: "5%",
-                                        backgroundColor: "#AFBA15",
-                                      }}
-                                      onClick={() =>
-                                        this.setState({
-                                          PTSInfoClicked:
-                                            !this.state.PTSInfoClicked,
-                                        })
-                                      }
-                                    >
-                                      {" "}
-                                      What is the Plan to Save?
-                                    </Button>
-
-                                    <>
-                                      {this.state.PTSInfoClicked ? (
-                                        <>
-                                          <Card
+                                          <img
+                                            src={sTFCFoodNetwork}
+                                            alt="STFC Food Network"
+                                            className="img-fluid rounded fix-image"
                                             style={{
-                                              width: "100%",
-                                              height: "1650px",
+                                              marginBottom: "5%",
                                             }}
-                                          >
-                                            <Card.Img
-                                              variant="top"
-                                              src={pTSBanner}
-                                            />
-                                            <div
-                                              className="text-center"
-                                              style={{
-                                                width: "100%",
-                                                backgroundColor: "#05042E",
-                                              }}
-                                            >
-                                              <h1
-                                                style={{
-                                                  fontWeight: "700",
-                                                  color: "white",
-                                                  marginTop: "2%",
-                                                }}
-                                              >
-                                                How Does It Work?
-                                              </h1>
-                                              <p
-                                                style={{
-                                                  color: "white",
-                                                  width: "90%",
-                                                  marginLeft: "5%",
-                                                }}
-                                              >
-                                                If you can reserve your fresh
-                                                food, local farmers can plan
-                                                better in their food production
-                                                to meet your need in the most
-                                                sustainable way. By signing up
-                                                to the Plan to Save campaign and
-                                                reserving your weekly,
-                                                fortnightly and monthly fresh
-                                                food requirements, we will take
-                                                the responsibility to identify
-                                                local farmers around you or
-                                                encourage the set up of local
-                                                farmers to supply your
-                                                reservation, ensuring the supply
-                                                of nutritious food all year
-                                                round for all.
-                                              </p>
-                                            </div>
-
-                                            <Card.Header
-                                              style={{
-                                                fontSize: "18px",
-                                                fontWeight: "700",
-                                                color: "#0C0847",
-                                              }}
-                                            >
-                                              The key questions the campaign
-                                              will be seeking to address will be
-                                              centred around:
-                                            </Card.Header>
-                                            <ListGroup
-                                              variant="flush"
-                                              style={{ fontSize: "15px" }}
-                                            >
-                                              <ListGroup.Item>
-                                                1. Have you witnessed empty
-                                                shelves in your grocery store
-                                                during the pandemic?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                2. Have you wondered why we
-                                                waste over 1.3 billion tonnes of
-                                                food every year when over 800
-                                                million people are hungry?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                3. Do you know that our current
-                                                AgriFood production system
-                                                contribute over 30% of
-                                                Greenhouse gas emission?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                4. Are you are aware that 1 in 5
-                                                death is linked to malnutrition?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                5. Does the lack of HGV Drivers
-                                                to support the food system
-                                                create a concern for you?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                6. Are you worried about the
-                                                future of food?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                7. Do you know that you can help
-                                                address most of these problems
-                                                if you can change your attitude
-                                                to food?
-                                              </ListGroup.Item>
-                                            </ListGroup>
-                                            <div
-                                              className="text-center"
-                                              style={{
-                                                width: "100%",
-                                                backgroundColor: "#AFBA15 ",
-                                                color: "white",
-                                              }}
-                                            >
-                                              <p
-                                                style={{
-                                                  width: "90%",
-                                                  marginLeft: "5%",
-                                                }}
-                                              >
-                                                The recent UNFAO, UNEP, IPCC and
-                                                IntelliDigest report has
-                                                highlighted the impact of the
-                                                broken food system on climate
-                                                change and the need for everyone
-                                                to act now to address the
-                                                challenge.
-                                              </p>
-                                              <p
-                                                style={{
-                                                  width: "90%",
-                                                  marginLeft: "5%",
-                                                }}
-                                              >
-                                                Evolving a food system that is
-                                                resilient and secure has never
-                                                been more important than during
-                                                the COVID-19 pandemic and as we
-                                                face the challenges of empty
-                                                food shelves plus labour
-                                                shortages.
-                                              </p>
-                                            </div>
-                                            <div
-                                              className="text-center"
-                                              style={{
-                                                width: "100%",
-                                                backgroundColor: "white",
-                                                color: "#020113",
-                                              }}
-                                            >
-                                              <h2
-                                                style={{
-                                                  fontSize: "20px",
-                                                  fontWeight: "700",
-                                                  marginTop: "2%",
-                                                  marginBottom: "2%",
-                                                }}
-                                              >
-                                                Supported By:
-                                              </h2>
-                                              <Container>
-                                                <Row>
-                                                  <Col
-                                                    style={{
-                                                      backgroundColor: "white",
-                                                    }}
-                                                  >
-                                                    <img
-                                                      src={sTFCFoodNetwork}
-                                                      alt="STFC Food Network"
-                                                      className="img-fluid rounded fix-image"
-                                                      style={{
-                                                        marginBottom: "5%",
-                                                      }}
-                                                    />
-                                                  </Col>
-                                                  <Col
-                                                    style={{
-                                                      backgroundColor: "white",
-                                                    }}
-                                                  >
-                                                    <img
-                                                      src={positivePlanet}
-                                                      alt="Positive Planet"
-                                                      className="img-fluid rounded fix-image"
-                                                      style={{
-                                                        marginBottom: "2%",
-                                                      }}
-                                                    />
-                                                  </Col>
-                                                </Row>
-                                              </Container>
-                                            </div>
-                                            <Divider
-                                              style={{ marginBottom: "10px" }}
-                                            />
-                                            <Card.Img
-                                              variant="bottom"
-                                              src={pTSNotebook}
-                                            />
-                                          </Card>
-                                        </>
-                                      ) : (
-                                        <></>
-                                      )}
-                                    </>
+                                          />
+                                        </Col>
+                                        <Col
+                                          style={{
+                                            backgroundColor: "white",
+                                          }}
+                                        >
+                                          <img
+                                            src={positivePlanet}
+                                            alt="Positive Planet"
+                                            className="img-fluid rounded fix-image"
+                                            style={{
+                                              marginBottom: "2%",
+                                            }}
+                                          />
+                                        </Col>
+                                      </Row>
+                                    </Container>
+                                  </div>
+                                  <Divider style={{ marginBottom: "10px" }} />
+                                  <Card.Img
+                                    variant="bottom"
+                                    src={pTSNotebook}
+                                  />
+                                </Card>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
                         </MobileView>
                       </div>
                     )}
                   </>
-                ) 
-                //#endregion
-                 : (
+                ) : (
+                  //#endregion
                   //#region BUISNESS ACCOUNT
                   <>
                     <div>
@@ -3953,21 +4125,10 @@ class Account extends Component {
                               }}
                             >
                               <BrowserView>
-                                <Button
-                                  className="custom-btn-2 rounded"
-                                  style={{
-                                    height: "120px",
-                                    width: "100%",
-                                    marginBottom: "2.5%",
-                                    fontWeight: 600,
-                                    fontSize: "200%",
-                                    padding: "5% 0 5% 0",
-                                  }}
-                                  as={Link}
-                                  to="/reserve-items"
-                                >
-                                  Plan to Save
-                                </Button>
+                                <DefaultButton
+                                  goTo="/reserve-items"
+                                  buttonText="Plan To Save"
+                                />
 
                                 <ListGroup
                                   style={{
@@ -4261,326 +4422,310 @@ class Account extends Component {
                               </BrowserView>
 
                               <MobileView>
-                              <Button
-                                      className="custom-btn-2 rounded"
+                                <DefaultButton
+                                  goTo="/reserve-items"
+                                  buttonText="Plan To Save"
+                                />
+
+                                <ListGroup
+                                  style={{
+                                    width: "100%",
+                                    marginTop: "2%",
+                                    marginBottom: "0.5%",
+                                  }}
+                                >
+                                  <ListGroup.Item
+                                    style={{ backgroundColor: "#FF6A63" }}
+                                  >
+                                    <b>NOTE: </b> This is part of the 'Fail to
+                                    Plan, Plan to Fail' campaign, running from
+                                    October 16th 2021 to January 31st 2021.
+                                    Click 'Plan to Save' to express interest in
+                                    reserving food items from local sources from
+                                    June 2022. To go to your regular Account
+                                    page, click the 'My Account' button below.
+                                  </ListGroup.Item>
+                                </ListGroup>
+
+                                <div
+                                  className="text-center"
+                                  style={{ marginBottom: "-2px" }}
+                                >
+                                  <span>Campaign Ends: </span>
+                                </div>
+
+                                <div className="text-center">
+                                  <DateStyle>
+                                    <Countdown
+                                      className="date"
+                                      date="2022-01-31T23:59:59"
                                       style={{
-                                        height: "120px",
-                                        width: "100%",
-                                        marginBottom: "2.5%",
-                                        fontWeight: 600,
                                         fontSize: "200%",
-                                        padding: "5% 0 5% 0",
+                                        fontWeight: "200",
                                       }}
-                                      as={Link}
-                                      to="/reserve-items"
+                                    />
+                                  </DateStyle>
+                                </div>
+
+                                <div className="text-center">
+                                  <DateStyle>
+                                    <span
+                                      className="label"
+                                      style={{ backgroundColor: "#CC2E26" }}
                                     >
-                                      Plan to Save
-                                    </Button>
+                                      days : hrs : mins : secs
+                                    </span>
+                                  </DateStyle>
+                                </div>
 
-                                    <ListGroup
-                                      style={{
-                                        width: "100%",
-                                        marginTop: "2%",
-                                        marginBottom: "0.5%",
-                                      }}
-                                    >
-                                      <ListGroup.Item
-                                        style={{ backgroundColor: "#FF6A63" }}
-                                      >
-                                        <b>NOTE: </b> This is part of the 'Fail
-                                        to Plan, Plan to Fail' campaign, running
-                                        from October 16th 2021 to January 31st
-                                        2021. Click 'Plan to Save' to express
-                                        interest in reserving food items from
-                                        local sources from June 2022. To go to
-                                        your regular Account page, click the 'My
-                                        Account' button below.
-                                      </ListGroup.Item>
-                                    </ListGroup>
+                                <Button
+                                  variant="secondary"
+                                  style={{
+                                    width: "45%",
+                                    marginLeft: "27.5%",
+                                    marginTop: "5%",
+                                    marginBottom: "1%",
+                                  }}
+                                  onClick={() =>
+                                    this.setState({
+                                      skipPTSCLicked:
+                                        !this.state.skipPTSCLicked,
+                                    })
+                                  }
+                                >
+                                  My Account
+                                </Button>
 
-                                    <div
-                                      className="text-center"
-                                      style={{ marginBottom: "-2px" }}
-                                    >
-                                      <span>Campaign Ends: </span>
-                                    </div>
+                                <Button
+                                  className="custom-btn-3 rounded"
+                                  style={{
+                                    width: "70%",
+                                    marginLeft: "15%",
+                                    marginTop: "5%",
+                                    marginBottom: "5%",
+                                    backgroundColor: "#AFBA15",
+                                  }}
+                                  onClick={() =>
+                                    this.setState({
+                                      PTSInfoClicked:
+                                        !this.state.PTSInfoClicked,
+                                    })
+                                  }
+                                >
+                                  {" "}
+                                  What is the Plan to Save?
+                                </Button>
 
-                                    <div className="text-center">
-                                      <DateStyle>
-                                        <Countdown
-                                          className="date"
-                                          date="2022-01-31T23:59:59"
-                                          style={{
-                                            fontSize: "200%",
-                                            fontWeight: "200",
-                                          }}
-                                        />
-                                      </DateStyle>
-                                    </div>
-
-                                    <div className="text-center">
-                                      <DateStyle>
-                                        <span
-                                          className="label"
-                                          style={{ backgroundColor: "#CC2E26" }}
-                                        >
-                                          days : hrs : mins : secs
-                                        </span>
-                                      </DateStyle>
-                                    </div>
-
-                                    <Button
-                                      variant="secondary"
-                                      style={{
-                                        width: "45%",
-                                        marginLeft: "27.5%",
-                                        marginTop: "5%",
-                                        marginBottom: "1%",
-                                      }}
-                                      onClick={() =>
-                                        this.setState({
-                                          skipPTSCLicked:
-                                            !this.state.skipPTSCLicked,
-                                        })
-                                      }
-                                    >
-                                      My Account
-                                    </Button>
-
-                                    <Button
-                                      className="custom-btn-3 rounded"
-                                      style={{
-                                        width: "70%",
-                                        marginLeft: "15%",
-                                        marginTop: "5%",
-                                        marginBottom: "5%",
-                                        backgroundColor: "#AFBA15",
-                                      }}
-                                      onClick={() =>
-                                        this.setState({
-                                          PTSInfoClicked:
-                                            !this.state.PTSInfoClicked,
-                                        })
-                                      }
-                                    >
-                                      {" "}
-                                      What is the Plan to Save?
-                                    </Button>
-
+                                <>
+                                  {this.state.PTSInfoClicked ? (
                                     <>
-                                      {this.state.PTSInfoClicked ? (
-                                        <>
-                                          <Card
+                                      <Card
+                                        style={{
+                                          width: "100%",
+                                          height: "1650px",
+                                        }}
+                                      >
+                                        <Card.Img
+                                          variant="top"
+                                          src={pTSBanner}
+                                        />
+                                        <div
+                                          className="text-center"
+                                          style={{
+                                            width: "100%",
+                                            backgroundColor: "#05042E",
+                                          }}
+                                        >
+                                          <h1
                                             style={{
-                                              width: "100%",
-                                              height: "1650px",
+                                              fontWeight: "700",
+                                              color: "white",
+                                              marginTop: "2%",
                                             }}
                                           >
-                                            <Card.Img
-                                              variant="top"
-                                              src={pTSBanner}
-                                            />
-                                            <div
-                                              className="text-center"
-                                              style={{
-                                                width: "100%",
-                                                backgroundColor: "#05042E",
-                                              }}
-                                            >
-                                              <h1
-                                                style={{
-                                                  fontWeight: "700",
-                                                  color: "white",
-                                                  marginTop: "2%",
-                                                }}
-                                              >
-                                                How Does It Work?
-                                              </h1>
-                                              <p
-                                                style={{
-                                                  color: "white",
-                                                  width: "90%",
-                                                  marginLeft: "5%",
-                                                }}
-                                              >
-                                                If you can reserve your fresh
-                                                food, local farmers can plan
-                                                better in their food production
-                                                to meet your need in the most
-                                                sustainable way. By signing up
-                                                to the Plan to Save campaign and
-                                                reserving your weekly,
-                                                fortnightly and monthly fresh
-                                                food requirements, we will take
-                                                the responsibility to identify
-                                                local farmers around you or
-                                                encourage the set up of local
-                                                farmers to supply your
-                                                reservation, ensuring the supply
-                                                of nutritious food all year
-                                                round for all.
-                                              </p>
-                                            </div>
+                                            How Does It Work?
+                                          </h1>
+                                          <p
+                                            style={{
+                                              color: "white",
+                                              width: "90%",
+                                              marginLeft: "5%",
+                                            }}
+                                          >
+                                            If you can reserve your fresh food,
+                                            local farmers can plan better in
+                                            their food production to meet your
+                                            need in the most sustainable way. By
+                                            signing up to the Plan to Save
+                                            campaign and reserving your weekly,
+                                            fortnightly and monthly fresh food
+                                            requirements, we will take the
+                                            responsibility to identify local
+                                            farmers around you or encourage the
+                                            set up of local farmers to supply
+                                            your reservation, ensuring the
+                                            supply of nutritious food all year
+                                            round for all.
+                                          </p>
+                                        </div>
 
-                                            <Card.Header
-                                              style={{
-                                                fontSize: "18px",
-                                                fontWeight: "700",
-                                                color: "#0C0847",
-                                              }}
-                                            >
-                                              The key questions the campaign
-                                              will be seeking to address will be
-                                              centred around:
-                                            </Card.Header>
-                                            <ListGroup
-                                              variant="flush"
-                                              style={{ fontSize: "15px" }}
-                                            >
-                                              <ListGroup.Item>
-                                                1. Have you witnessed empty
-                                                shelves in your grocery store
-                                                during the pandemic?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                2. Have you wondered why we
-                                                waste over 1.3 billion tonnes of
-                                                food every year when over 800
-                                                million people are hungry?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                3. Do you know that our current
-                                                AgriFood production system
-                                                contribute over 30% of
-                                                Greenhouse gas emission?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                4. Are you are aware that 1 in 5
-                                                death is linked to malnutrition?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                5. Does the lack of HGV Drivers
-                                                to support the food system
-                                                create a concern for you?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                6. Are you worried about the
-                                                future of food?
-                                              </ListGroup.Item>
-                                              <ListGroup.Item>
-                                                7. Do you know that you can help
-                                                address most of these problems
-                                                if you can change your attitude
-                                                to food?
-                                              </ListGroup.Item>
-                                            </ListGroup>
-                                            <div
-                                              className="text-center"
-                                              style={{
-                                                width: "100%",
-                                                backgroundColor: "#AFBA15 ",
-                                                color: "white",
-                                              }}
-                                            >
-                                              <p
+                                        <Card.Header
+                                          style={{
+                                            fontSize: "18px",
+                                            fontWeight: "700",
+                                            color: "#0C0847",
+                                          }}
+                                        >
+                                          The key questions the campaign will be
+                                          seeking to address will be centred
+                                          around:
+                                        </Card.Header>
+                                        <ListGroup
+                                          variant="flush"
+                                          style={{ fontSize: "15px" }}
+                                        >
+                                          <ListGroup.Item>
+                                            1. Have you witnessed empty shelves
+                                            in your grocery store during the
+                                            pandemic?
+                                          </ListGroup.Item>
+                                          <ListGroup.Item>
+                                            2. Have you wondered why we waste
+                                            over 1.3 billion tonnes of food
+                                            every year when over 800 million
+                                            people are hungry?
+                                          </ListGroup.Item>
+                                          <ListGroup.Item>
+                                            3. Do you know that our current
+                                            AgriFood production system
+                                            contribute over 30% of Greenhouse
+                                            gas emission?
+                                          </ListGroup.Item>
+                                          <ListGroup.Item>
+                                            4. Are you are aware that 1 in 5
+                                            death is linked to malnutrition?
+                                          </ListGroup.Item>
+                                          <ListGroup.Item>
+                                            5. Does the lack of HGV Drivers to
+                                            support the food system create a
+                                            concern for you?
+                                          </ListGroup.Item>
+                                          <ListGroup.Item>
+                                            6. Are you worried about the future
+                                            of food?
+                                          </ListGroup.Item>
+                                          <ListGroup.Item>
+                                            7. Do you know that you can help
+                                            address most of these problems if
+                                            you can change your attitude to
+                                            food?
+                                          </ListGroup.Item>
+                                        </ListGroup>
+                                        <div
+                                          className="text-center"
+                                          style={{
+                                            width: "100%",
+                                            backgroundColor: "#AFBA15 ",
+                                            color: "white",
+                                          }}
+                                        >
+                                          <p
+                                            style={{
+                                              width: "90%",
+                                              marginLeft: "5%",
+                                            }}
+                                          >
+                                            The recent UNFAO, UNEP, IPCC and
+                                            IntelliDigest report has highlighted
+                                            the impact of the broken food system
+                                            on climate change and the need for
+                                            everyone to act now to address the
+                                            challenge.
+                                          </p>
+                                          <p
+                                            style={{
+                                              width: "90%",
+                                              marginLeft: "5%",
+                                            }}
+                                          >
+                                            Evolving a food system that is
+                                            resilient and secure has never been
+                                            more important than during the
+                                            COVID-19 pandemic and as we face the
+                                            challenges of empty food shelves
+                                            plus labour shortages.
+                                          </p>
+                                        </div>
+                                        <div
+                                          className="text-center"
+                                          style={{
+                                            width: "100%",
+                                            backgroundColor: "white",
+                                            color: "#020113",
+                                          }}
+                                        >
+                                          <h2
+                                            style={{
+                                              fontSize: "20px",
+                                              fontWeight: "700",
+                                              marginTop: "2%",
+                                              marginBottom: "2%",
+                                            }}
+                                          >
+                                            Supported By:
+                                          </h2>
+                                          <Container>
+                                            <Row>
+                                              <Col
                                                 style={{
-                                                  width: "90%",
-                                                  marginLeft: "5%",
+                                                  backgroundColor: "white",
                                                 }}
                                               >
-                                                The recent UNFAO, UNEP, IPCC and
-                                                IntelliDigest report has
-                                                highlighted the impact of the
-                                                broken food system on climate
-                                                change and the need for everyone
-                                                to act now to address the
-                                                challenge.
-                                              </p>
-                                              <p
+                                                <img
+                                                  src={sTFCFoodNetwork}
+                                                  alt="STFC Food Network"
+                                                  className="img-fluid rounded fix-image"
+                                                  style={{
+                                                    marginBottom: "5%",
+                                                  }}
+                                                />
+                                              </Col>
+                                              <Col
                                                 style={{
-                                                  width: "90%",
-                                                  marginLeft: "5%",
+                                                  backgroundColor: "white",
                                                 }}
                                               >
-                                                Evolving a food system that is
-                                                resilient and secure has never
-                                                been more important than during
-                                                the COVID-19 pandemic and as we
-                                                face the challenges of empty
-                                                food shelves plus labour
-                                                shortages.
-                                              </p>
-                                            </div>
-                                            <div
-                                              className="text-center"
-                                              style={{
-                                                width: "100%",
-                                                backgroundColor: "white",
-                                                color: "#020113",
-                                              }}
-                                            >
-                                              <h2
-                                                style={{
-                                                  fontSize: "20px",
-                                                  fontWeight: "700",
-                                                  marginTop: "2%",
-                                                  marginBottom: "2%",
-                                                }}
-                                              >
-                                                Supported By:
-                                              </h2>
-                                              <Container>
-                                                <Row>
-                                                  <Col
-                                                    style={{
-                                                      backgroundColor: "white",
-                                                    }}
-                                                  >
-                                                    <img
-                                                      src={sTFCFoodNetwork}
-                                                      alt="STFC Food Network"
-                                                      className="img-fluid rounded fix-image"
-                                                      style={{
-                                                        marginBottom: "5%",
-                                                      }}
-                                                    />
-                                                  </Col>
-                                                  <Col
-                                                    style={{
-                                                      backgroundColor: "white",
-                                                    }}
-                                                  >
-                                                    <img
-                                                      src={positivePlanet}
-                                                      alt="Positive Planet"
-                                                      className="img-fluid rounded fix-image"
-                                                      style={{
-                                                        marginBottom: "2%",
-                                                      }}
-                                                    />
-                                                  </Col>
-                                                </Row>
-                                              </Container>
-                                            </div>
-                                            <Divider
-                                              style={{ marginBottom: "10px" }}
-                                            />
-                                            <Card.Img
-                                              variant="bottom"
-                                              src={pTSNotebook}
-                                            />
-                                          </Card>
-                                        </>
-                                      ) : (
-                                        <></>
-                                      )}
+                                                <img
+                                                  src={positivePlanet}
+                                                  alt="Positive Planet"
+                                                  className="img-fluid rounded fix-image"
+                                                  style={{
+                                                    marginBottom: "2%",
+                                                  }}
+                                                />
+                                              </Col>
+                                            </Row>
+                                          </Container>
+                                        </div>
+                                        <Divider
+                                          style={{ marginBottom: "10px" }}
+                                        />
+                                        <Card.Img
+                                          variant="bottom"
+                                          src={pTSNotebook}
+                                        />
+                                      </Card>
                                     </>
+                                  ) : (
+                                    <></>
+                                  )}
+                                </>
                               </MobileView>
                             </div>
                           )}
                         </>
-                        // #endregion
                       ) : (
+                        // #endregion
                         // #region UNIVERSITY ACCOUNT
                         <div>
                           {profile.buildingFunction === "Schools" &&
@@ -5324,13 +5469,6 @@ class Account extends Component {
                                                     >
                                                       Yearly
                                                     </DropdownItem>
-
-                                                    {/* <Dropdown.Divider />
-
-                                    <Dropdown.Header>Food Surplus</Dropdown.Header>
-                                    <DropdownItem as={Link} to="/chart/weekSurplusUni">Weekly</DropdownItem>
-                                    <DropdownItem as={Link} to="/chart/monthSurplusUni">Monthly</DropdownItem>
-                                    <DropdownItem as={Link} to="/chart/yearSurplusUni">Yearly</DropdownItem> */}
                                                   </DropdownMenu>
                                                 </Dropdown>
 
@@ -5374,11 +5512,6 @@ class Account extends Component {
                                                     </DropdownItem>
 
                                                     <Dropdown.Divider />
-
-                                                    {/* <Dropdown.Header>Food Surplus</Dropdown.Header>
-                                    <DropdownItem as={Link} to="/chart/weekSurplusGHGUni">Weekly</DropdownItem>
-                                    <DropdownItem as={Link} to="/chart/monthSurplusGHGUni">Monthly</DropdownItem>
-                                    <DropdownItem as={Link} to="/chart/yearSurplusGHGUni">Yearly</DropdownItem> */}
                                                   </DropdownMenu>
                                                 </Dropdown>
 
@@ -5420,13 +5553,6 @@ class Account extends Component {
                                                     >
                                                       Yearly
                                                     </DropdownItem>
-
-                                                    {/* <Dropdown.Divider />
-
-                                    <Dropdown.Header>Food Surplus</Dropdown.Header>
-                                    <DropdownItem as={Link} to="/chart/weekSurplusCostUni">Weekly</DropdownItem>
-                                    <DropdownItem as={Link} to="/chart/monthSurplusCostUni">Monthly</DropdownItem>
-                                    <DropdownItem as={Link} to="/chart/yearSurplusCostUni">Yearly</DropdownItem> */}
                                                   </DropdownMenu>
                                                 </Dropdown>
 
@@ -6472,21 +6598,10 @@ class Account extends Component {
                                   }}
                                 >
                                   <BrowserView>
-                                    <Button
-                                      className="custom-btn-2 rounded"
-                                      style={{
-                                        height: "120px",
-                                        width: "100%",
-                                        marginBottom: "2.5%",
-                                        fontWeight: 600,
-                                        fontSize: "200%",
-                                        padding: "5% 0 5% 0",
-                                      }}
-                                      as={Link}
-                                      to="/reserve-items"
-                                    >
-                                      Plan to Save
-                                    </Button>
+                                    <DefaultButton
+                                      goTo="/reserve-items"
+                                      buttonText="Plan To Save"
+                                    />
 
                                     <ListGroup
                                       style={{
@@ -6789,21 +6904,10 @@ class Account extends Component {
                                   </BrowserView>
 
                                   <MobileView>
-                                  <Button
-                                      className="custom-btn-2 rounded"
-                                      style={{
-                                        height: "120px",
-                                        width: "100%",
-                                        marginBottom: "2.5%",
-                                        fontWeight: 600,
-                                        fontSize: "200%",
-                                        padding: "5% 0 5% 0",
-                                      }}
-                                      as={Link}
-                                      to="/reserve-items"
-                                    >
-                                      Plan to Save
-                                    </Button>
+                                    <DefaultButton
+                                      goTo="/reserve-items"
+                                      buttonText="Plan To Save"
+                                    />
 
                                     <ListGroup
                                       style={{
@@ -7107,8 +7211,8 @@ class Account extends Component {
                                 </div>
                               )}
                             </>
-                            // #endregion
                           ) : (
+                            // #endregion
                             // #region HOUSEHOLD ACCOUNT
                             <div>
                               {profile.buildingFunction === "Households" ? (
@@ -7121,979 +7225,20 @@ class Account extends Component {
                                         marginBottom: "5%",
                                       }}
                                     >
-                                      <Button
-                                        className="custom-btn rounded"
+                                      <FoodBubble />
+                                      <FoodWasteBubble />
+                                      <div
                                         style={{
-                                          height: "120px",
-                                          width: "100%",
-                                          marginBottom: "2.5%",
-                                          fontWeight: 600,
-                                          fontSize: "200%",
+                                          marginTop: "10%",
+                                          marginBottom: "20%",
                                         }}
-                                        onClick={() =>
-                                          this.setState({
-                                            foodBubbleClicked:
-                                              !this.state.foodBubbleClicked,
-                                            foodWasteBubbleClicked: false,
-                                          })
-                                        }
                                       >
-                                        Food
-                                      </Button>
-
-                                      <>
-                                        {this.state.foodBubbleClicked ? (
-                                          <>
-                                            <MobileView>
-                                              <div
-                                                style={{ marginTop: "-1.5%" }}
-                                              >
-                                                <Divider
-                                                  style={{ marginTop: "10px" }}
-                                                />
-
-                                                <Button
-                                                  variant="secondary"
-                                                  style={{
-                                                    width: "45%",
-                                                    marginLeft: "27.5%",
-                                                    marginTop: "1%",
-                                                    marginBottom: "1%",
-                                                  }}
-                                                  onClick={(e) =>
-                                                    this.setState({
-                                                      mobileDisclaimerShown:
-                                                        !this.state
-                                                          .mobileDisclaimerShown,
-                                                    })
-                                                  }
-                                                >
-                                                  DISCLAIMER:{" "}
-                                                  <BsFillExclamationCircleFill />
-                                                </Button>
-
-                                                <Modal
-                                                  show={
-                                                    this.state
-                                                      .mobileDisclaimerShown
-                                                  }
-                                                  onHide={() =>
-                                                    this.setState({
-                                                      mobileDisclaimerShown: false,
-                                                    })
-                                                  }
-                                                >
-                                                  <Modal.Header closeButton>
-                                                    <Modal.Title>
-                                                      DISCLAIMER
-                                                    </Modal.Title>
-                                                  </Modal.Header>
-                                                  <Modal.Body>
-                                                    The Global Food Loss & Waste
-                                                    Tracker is designed, in
-                                                    part, to help users develop
-                                                    healthy eating habits. The
-                                                    nutritional information and
-                                                    dietary recommendations
-                                                    provided are merely
-                                                    suggestions which may or may
-                                                    not improve users' eating
-                                                    habits and/or overall
-                                                    health. This app is a
-                                                    self-regulatory tool, not
-                                                    intended to replace
-                                                    professional medical advice.
-                                                    Please always consult a
-                                                    dietician or medical
-                                                    professional for
-                                                    professional medical advice
-                                                    regarding your health.
-                                                  </Modal.Body>
-                                                  <Modal.Footer>
-                                                    <Button
-                                                      variant="secondary"
-                                                      onClick={() =>
-                                                        this.setState({
-                                                          mobileDisclaimerShown: false,
-                                                        })
-                                                      }
-                                                    >
-                                                      Close
-                                                    </Button>
-                                                  </Modal.Footer>
-                                                </Modal>
-
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(94, 120, 235)",
-                                                    width: "90%",
-                                                    marginLeft: "5%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(94, 120, 235)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/food-intake"
-                                                >
-                                                  Update Food Intake
-                                                </Button>
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(94, 120, 235)",
-                                                    width: "90%",
-                                                    marginLeft: "5%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(94, 120, 235)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/chart/nutrientGap"
-                                                >
-                                                  Nutrient Gap Breakdown
-                                                </Button>
-                                                {/* <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "90%", marginLeft: "5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/food-surplus">Upload Food</Button> */}
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(94, 120, 235)",
-                                                    width: "90%",
-                                                    marginLeft: "5%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(94, 120, 235)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/add-products"
-                                                >
-                                                  Upload Food
-                                                </Button>
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(94, 120, 235)",
-                                                    width: "90%",
-                                                    marginLeft: "5%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(94, 120, 235)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/browse-products"
-                                                >
-                                                  Buy Food
-                                                </Button>
-
-                                                {/* <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "90%", marginLeft: "5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/browse-products">Browse Products: Surplus</Button> */}
-                                                {/* <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "90%", marginLeft: "5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/browse-products-local">Browse Products: Local Produce</Button> */}
-                                                {/* <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "90%", marginLeft: "5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/product-listing">Product Listing</Button> */}
-                                                {/* <Button style={{backgroundColor: "rgb(94, 120, 235)", borderColor: "rgb(94, 120, 235)",  width: "90%", marginLeft: "5%", marginTop: "1%", marginBottom: "1%"}} as={Link} to="/add-products">Add Products</Button> */}
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(145, 26, 224)",
-                                                      fontSize: "85%",
-                                                      marginLeft: "5%",
-                                                      width: "90%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(145, 26, 224)",
-                                                    }}
-                                                  >
-                                                    Food Surplus Weight
-                                                    Performance Charts
-                                                  </DropdownToggle>
-                                                  <DropdownMenu>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/weekSurplus"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/monthSurplus"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/yearSurplus"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(145, 26, 224)",
-                                                      fontSize: "85%",
-                                                      marginLeft: "5%",
-                                                      width: "90%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(145, 26, 224)",
-                                                    }}
-                                                  >
-                                                    Food Surplus GHG Performance
-                                                    Charts
-                                                  </DropdownToggle>
-                                                  <DropdownMenu>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/weekSurplusGHG"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/monthSurplusGHG"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/yearSurplusGHG"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(145, 26, 224)",
-                                                      fontSize: "85%",
-                                                      marginLeft: "5%",
-                                                      width: "90%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(145, 26, 224)",
-                                                    }}
-                                                  >
-                                                    Food Surplus Cost
-                                                    Performance Charts
-                                                  </DropdownToggle>
-                                                  <DropdownMenu>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/weekSurplusCost"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/monthSurplusCost"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/yearSurplusCost"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Divider
-                                                  style={{
-                                                    marginBottom: "10px",
-                                                  }}
-                                                />
-                                              </div>
-                                            </MobileView>
-
-                                            <BrowserView>
-                                              <div
-                                                style={{ marginTop: "-1.5%" }}
-                                              >
-                                                <Divider
-                                                  style={{ marginTop: "10px" }}
-                                                />
-
-                                                <ListGroup
-                                                  style={{
-                                                    width: "105%",
-                                                    marginLeft: "-2.5%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                  }}
-                                                >
-                                                  <ListGroup.Item variant="primary">
-                                                    <b>DISCLAIMER: </b> The
-                                                    Global Food Loss & Waste
-                                                    Tracker is designed, in
-                                                    part, to help users develop
-                                                    healthy eating habits. The
-                                                    nutritional information and
-                                                    dietary recommendations
-                                                    provided are merely
-                                                    suggestions which may or may
-                                                    not improve users' eating
-                                                    habits and/or overall
-                                                    health. This app is a
-                                                    self-regulatory tool, not
-                                                    intended to replace
-                                                    professional medical advice.
-                                                    Please always consult a
-                                                    dietician or medical
-                                                    professional for
-                                                    professional medical advice
-                                                    regarding your health.
-                                                  </ListGroup.Item>
-                                                </ListGroup>
-
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(94, 120, 235)",
-                                                    width: "60%",
-                                                    marginLeft: "20%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(94, 120, 235)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/food-intake"
-                                                >
-                                                  Update Food Intake
-                                                </Button>
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(94, 120, 235)",
-                                                    width: "60%",
-                                                    marginLeft: "20%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(94, 120, 235)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/chart/nutrientGap"
-                                                >
-                                                  Nutrient Gap Breakdown
-                                                </Button>
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(94, 120, 235)",
-                                                    width: "60%",
-                                                    marginLeft: "20%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(94, 120, 235)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/add-products"
-                                                >
-                                                  Upload Food
-                                                </Button>
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(94, 120, 235)",
-                                                    width: "60%",
-                                                    marginLeft: "20%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(94, 120, 235)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/browse-products"
-                                                >
-                                                  Buy Food
-                                                </Button>
-
-                                                {/* <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/browse-products">Browse Products: Surplus</Button> */}
-                                                {/* <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/browse-products-local">Browse Products: Local Produce</Button> */}
-                                                {/* <Button style={{backgroundColor: "rgb(94, 120, 235)",  width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(94, 120, 235)"}} as={Link} to="/product-listing">Product Listing</Button> */}
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(145, 26, 224)",
-                                                      marginLeft: "20%",
-                                                      width: "60%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(145, 26, 224)",
-                                                    }}
-                                                  >
-                                                    View Food Surplus Weight
-                                                    Performance Chart
-                                                  </DropdownToggle>
-                                                  <DropdownMenu>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/weekSurplus"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/monthSurplus"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/yearSurplus"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(145, 26, 224)",
-                                                      marginLeft: "20%",
-                                                      width: "60%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(145, 26, 224)",
-                                                    }}
-                                                  >
-                                                    View Food Surplus GHG
-                                                    Performance Chart
-                                                  </DropdownToggle>
-                                                  <DropdownMenu>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/weekSurplusGHG"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/monthSurplusGHG"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/yearSurplusGHG"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(145, 26, 224)",
-                                                      marginLeft: "20%",
-                                                      width: "60%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(145, 26, 224)",
-                                                    }}
-                                                  >
-                                                    View Food Surplus Cost
-                                                    Performance Chart
-                                                  </DropdownToggle>
-                                                  <DropdownMenu>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/weekSurplusCost"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/monthSurplusCost"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/yearSurplusCost"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Divider
-                                                  style={{
-                                                    marginBottom: "10px",
-                                                  }}
-                                                />
-                                              </div>
-                                            </BrowserView>
-                                          </>
-                                        ) : (
-                                          <></>
-                                        )}
-                                      </>
-
-                                      <Button
-                                        className="custom-btn-2 rounded"
-                                        style={{
-                                          height: "120px",
-                                          width: "100%",
-                                          marginBottom: "2.5%",
-                                          fontWeight: 600,
-                                          fontSize: "200%",
-                                          borderColor: "#aab41e",
-                                        }}
-                                        onClick={() =>
-                                          this.setState({
-                                            foodWasteBubbleClicked:
-                                              !this.state
-                                                .foodWasteBubbleClicked,
-                                            foodBubbleClicked: false,
-                                          })
-                                        }
-                                      >
-                                        Food Waste
-                                      </Button>
-
-                                      <>
-                                        {this.state.foodWasteBubbleClicked ? (
-                                          <>
-                                            <MobileView>
-                                              <div>
-                                                <Divider />
-
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(8, 105, 27)",
-                                                    width: "90%",
-                                                    marginLeft: "5%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(8, 105, 27)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/food-waste"
-                                                >
-                                                  Update Food Waste
-                                                </Button>
-
-                                                {/* <Button style={{backgroundColor: "rgb(8, 105, 27)",  width: "90%", marginLeft: "5%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(8, 105, 27)"}} as={Link} to="/view-map">View Food Waste Map</Button> */}
-
-                                                <Button
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(8, 105, 27)",
-                                                    width: "90%",
-                                                    marginLeft: "5%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(8, 105, 27)",
-                                                  }}
-                                                  as={Link}
-                                                  to="/food-reduction"
-                                                >
-                                                  Food Waste Reduction Tips
-                                                </Button>
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(76, 226, 106)",
-                                                      fontSize: "85%",
-                                                      width: "90%",
-                                                      marginLeft: "5%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(76, 226, 106)",
-                                                    }}
-                                                  >
-                                                    Food Waste Weight
-                                                    Performance Charts
-                                                  </DropdownToggle>
-
-                                                  <DropdownMenu>
-                                                    {/* <Dropdown.Header>Food Waste</Dropdown.Header> */}
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/week"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/month"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/year"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-
-                                                    {/* <Dropdown.Divider />
-
-                              <Dropdown.Header>Food Surplus</Dropdown.Header>
-                              <DropdownItem as={Link} to="/chart/weekSurplus">Weekly</DropdownItem>
-                              <DropdownItem as={Link} to="/chart/monthSurplus">Monthly</DropdownItem>
-                              <DropdownItem as={Link} to="/chart/yearSurplus">Yearly</DropdownItem> */}
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(76, 226, 106)",
-                                                      fontSize: "85%",
-                                                      width: "90%",
-                                                      marginLeft: "5%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(76, 226, 106)",
-                                                    }}
-                                                  >
-                                                    Food Waste GHG Performance
-                                                    Charts
-                                                  </DropdownToggle>
-                                                  <DropdownMenu>
-                                                    {/* <Dropdown.Header>Food Waste</Dropdown.Header> */}
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/weekGHG"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/monthGHG"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/yearGHG"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-
-                                                    {/* <Dropdown.Divider />
-
-                              <Dropdown.Header>Food Surplus</Dropdown.Header>
-                              <DropdownItem as={Link} to="/chart/weekSurplusGHG">Weekly</DropdownItem>
-                              <DropdownItem as={Link} to="/chart/monthSurplusGHG">Monthly</DropdownItem>
-                              <DropdownItem as={Link} to="/chart/yearSurplusGHG">Yearly</DropdownItem> */}
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Dropdown>
-                                                  <DropdownToggle
-                                                    style={{
-                                                      backgroundColor:
-                                                        "rgb(76, 226, 106)",
-                                                      fontSize: "85%",
-                                                      width: "90%",
-                                                      marginLeft: "5%",
-                                                      marginTop: "2%",
-                                                      marginBottom: "2%",
-                                                      borderColor:
-                                                        "rgb(76, 226, 106)",
-                                                    }}
-                                                  >
-                                                    Food Waste Cost Performance
-                                                    Charts
-                                                  </DropdownToggle>
-                                                  <DropdownMenu>
-                                                    {/* <Dropdown.Header>Food Waste</Dropdown.Header> */}
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/weekCost"
-                                                    >
-                                                      Weekly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/monthCost"
-                                                    >
-                                                      Monthly
-                                                    </DropdownItem>
-                                                    <DropdownItem
-                                                      as={Link}
-                                                      to="/chart/yearCost"
-                                                    >
-                                                      Yearly
-                                                    </DropdownItem>
-
-                                                    {/* <Dropdown.Divider />
-
-                              <Dropdown.Header>Food Surplus</Dropdown.Header>
-                              <DropdownItem as={Link} to="/chart/weekSurplusCost">Weekly</DropdownItem>
-                              <DropdownItem as={Link} to="/chart/monthSurplusCost">Monthly</DropdownItem>
-                              <DropdownItem as={Link} to="/chart/yearSurplusCost">Yearly</DropdownItem> */}
-                                                  </DropdownMenu>
-                                                </Dropdown>
-
-                                                <Divider
-                                                  style={{
-                                                    marginBottom: "10px",
-                                                  }}
-                                                />
-                                              </div>
-                                            </MobileView>
-
-                                            <BrowserView>
-                                              <Divider
-                                                style={{ marginTop: "10px" }}
-                                              />
-
-                                              <Button
-                                                style={{
-                                                  backgroundColor:
-                                                    "rgb(8, 105, 27)",
-                                                  width: "60%",
-                                                  marginLeft: "20%",
-                                                  marginTop: "2%",
-                                                  marginBottom: "2%",
-                                                  borderColor:
-                                                    "rgb(8, 105, 27)",
-                                                }}
-                                                as={Link}
-                                                to="/food-waste"
-                                              >
-                                                Update Food Waste
-                                              </Button>
-                                              {/* <Button style={{backgroundColor: "rgb(8, 105, 27)", width: "60%", marginLeft: "20%", marginTop: "2%", marginBottom: "2%", borderColor: "rgb(8, 105, 27)"}} as={Link} to="/view-map">View Food Waste Map</Button> */}
-                                              <Button
-                                                style={{
-                                                  backgroundColor:
-                                                    "rgb(8, 105, 27)",
-                                                  width: "60%",
-                                                  marginLeft: "20%",
-                                                  marginTop: "2%",
-                                                  marginBottom: "2%",
-                                                  borderColor:
-                                                    "rgb(8, 105, 27)",
-                                                }}
-                                                as={Link}
-                                                to="/food-reduction"
-                                              >
-                                                Food Waste Reduction Tips
-                                              </Button>
-
-                                              <Dropdown>
-                                                <DropdownToggle
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(76, 226, 106)",
-                                                    width: "60%",
-                                                    marginLeft: "20%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(76, 226, 106)",
-                                                  }}
-                                                >
-                                                  View Food Waste Weight
-                                                  Performance Chart
-                                                </DropdownToggle>
-
-                                                <DropdownMenu>
-                                                  {/* <Dropdown.Header>Food Waste</Dropdown.Header> */}
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/week"
-                                                  >
-                                                    Weekly
-                                                  </DropdownItem>
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/month"
-                                                  >
-                                                    Monthly
-                                                  </DropdownItem>
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/year"
-                                                  >
-                                                    Yearly
-                                                  </DropdownItem>
-
-                                                  {/* <Dropdown.Divider />
-
-                                <Dropdown.Header>Food Surplus</Dropdown.Header>
-                                <DropdownItem as={Link} to="/chart/weekSurplus">Weekly</DropdownItem>
-                                <DropdownItem as={Link} to="/chart/monthSurplus">Monthly</DropdownItem>
-                                <DropdownItem as={Link} to="/chart/yearSurplus">Yearly</DropdownItem> */}
-                                                </DropdownMenu>
-                                              </Dropdown>
-
-                                              <Dropdown>
-                                                <DropdownToggle
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(76, 226, 106)",
-                                                    width: "60%",
-                                                    marginLeft: "20%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(76, 226, 106)",
-                                                  }}
-                                                >
-                                                  View Food Waste GHG
-                                                  Performance Chart
-                                                </DropdownToggle>
-                                                <DropdownMenu>
-                                                  {/* <Dropdown.Header>Food Waste</Dropdown.Header> */}
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/weekGHG"
-                                                  >
-                                                    Weekly
-                                                  </DropdownItem>
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/monthGHG"
-                                                  >
-                                                    Monthly
-                                                  </DropdownItem>
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/yearGHG"
-                                                  >
-                                                    Yearly
-                                                  </DropdownItem>
-
-                                                  {/* <Dropdown.Divider />
-
-                                  <Dropdown.Header>Food Surplus</Dropdown.Header>
-                                  <DropdownItem as={Link} to="/chart/weekSurplusGHG">Weekly</DropdownItem>
-                                  <DropdownItem as={Link} to="/chart/monthSurplusGHG">Monthly</DropdownItem>
-                                  <DropdownItem as={Link} to="/chart/yearSurplusGHG">Yearly</DropdownItem> */}
-                                                </DropdownMenu>
-                                              </Dropdown>
-
-                                              <Dropdown>
-                                                <DropdownToggle
-                                                  style={{
-                                                    backgroundColor:
-                                                      "rgb(76, 226, 106)",
-                                                    width: "60%",
-                                                    marginLeft: "20%",
-                                                    marginTop: "2%",
-                                                    marginBottom: "2%",
-                                                    borderColor:
-                                                      "rgb(76, 226, 106)",
-                                                  }}
-                                                >
-                                                  View Food Waste Cost
-                                                  Performance Chart
-                                                </DropdownToggle>
-                                                <DropdownMenu>
-                                                  {/* <Dropdown.Header>Food Waste</Dropdown.Header> */}
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/weekCost"
-                                                  >
-                                                    Weekly
-                                                  </DropdownItem>
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/monthCost"
-                                                  >
-                                                    Monthly
-                                                  </DropdownItem>
-                                                  <DropdownItem
-                                                    as={Link}
-                                                    to="/chart/yearCost"
-                                                  >
-                                                    Yearly
-                                                  </DropdownItem>
-
-                                                  {/* <Dropdown.Divider />
-
-                                  <Dropdown.Header>Food Surplus</Dropdown.Header>
-                                  <DropdownItem as={Link} to="/chart/weekSurplusCost">Weekly</DropdownItem>
-                                  <DropdownItem as={Link} to="/chart/monthSurplusCost">Monthly</DropdownItem>
-                                  <DropdownItem as={Link} to="/chart/yearSurplusCost">Yearly</DropdownItem> */}
-                                                </DropdownMenu>
-                                              </Dropdown>
-
-                                              <Divider
-                                                style={{ marginBottom: "10px" }}
-                                              />
-                                            </BrowserView>
-                                          </>
-                                        ) : (
-                                          <></>
-                                        )}
-                                      </>
-
-                                      <BrowserView>
-                                        <Button
-                                          className="custom-btn rounded"
-                                          style={{
-                                            padding: "1.5%",
-                                            height: "60px",
-                                            width: "65%",
-                                            marginLeft: "17.5%",
-                                            marginBottom: "10%",
-                                            fontWeight: 550,
-                                            fontSize: "150%",
-                                          }}
-                                          as={Link}
-                                          to="/change-password"
-                                        >
-                                          Change Your Password
-                                        </Button>
-                                      </BrowserView>
-                                      <MobileView>
-                                        <Button
-                                          className="custom-btn rounded"
-                                          style={{
-                                            padding: "5%",
-                                            height: "60px",
-                                            width: "65%",
-                                            marginLeft: "17.5%",
-                                            marginBottom: "25%",
-                                            fontWeight: 550,
-                                            fontSize: "100%",
-                                          }}
-                                          as={Link}
-                                          to="/change-password"
-                                        >
-                                          Change Password
-                                        </Button>
-                                      </MobileView>
+                                        <SubButton
+                                          styling="blue"
+                                          goTo="/change-password"
+                                          text="Change Password"
+                                        />
+                                      </div>
                                     </div>
                                   ) : (
                                     <div
@@ -8104,21 +7249,11 @@ class Account extends Component {
                                       }}
                                     >
                                       <BrowserView>
-                                        <Button
-                                          className="custom-btn-2 rounded"
-                                          style={{
-                                            height: "120px",
-                                            width: "100%",
-                                            marginBottom: "2.5%",
-                                            fontWeight: 600,
-                                            fontSize: "200%",
-                                            padding: "5% 0 5% 0",
-                                          }}
-                                          as={Link}
-                                          to="/reserve-items"
-                                        >
-                                          Plan to Save
-                                        </Button>
+                                        <DefaultButton
+                                          styling="green"
+                                          goTo="/reserve-items"
+                                          buttonText="Plan To Save"
+                                        />
 
                                         <ListGroup
                                           style={{
@@ -8436,21 +7571,10 @@ class Account extends Component {
                                       </BrowserView>
 
                                       <MobileView>
-                                      <Button
-                                          className="custom-btn-2 rounded"
-                                          style={{
-                                            height: "120px",
-                                            width: "100%",
-                                            marginBottom: "2.5%",
-                                            fontWeight: 600,
-                                            fontSize: "200%",
-                                            padding: "5% 0 5% 0",
-                                          }}
-                                          as={Link}
-                                          to="/reserve-items"
-                                        >
-                                          Plan to Save
-                                        </Button>
+                                        <DefaultButton
+                                          goTo="/reserve-items"
+                                          buttonText="Plan To Save"
+                                        />
 
                                         <ListGroup
                                           style={{
@@ -8769,8 +7893,8 @@ class Account extends Component {
                                     </div>
                                   )}
                                 </>
-                                // #endregion
                               ) : (
+                                // #endregion
                                 <></>
                               )}
                             </div>
