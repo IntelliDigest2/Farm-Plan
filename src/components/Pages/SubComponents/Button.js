@@ -3,7 +3,7 @@ import "./Button.css";
 import { Button } from "react-bootstrap";
 
 //The default buttons we are using are the large dropdown buttons we use on the account page and their small sub buttons
-//when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (Button.css)
+//when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (styles are in Button.css)
 
 // TODO sort out hover and selected colours (defaults to bootstrap primary)
 

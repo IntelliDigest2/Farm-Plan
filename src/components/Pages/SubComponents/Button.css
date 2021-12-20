@@ -1,3 +1,4 @@
+/*button styles*/
 .default-btn {
   width: 100%;
   float: center;
@@ -18,6 +19,7 @@
   border-radius: 8px;
 }
 
+/*button colours*/
 .turquoise {
   background-color: #32797e;
   border-color: #0c656b;
