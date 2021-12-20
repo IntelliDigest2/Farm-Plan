@@ -2,81 +2,92 @@ html {
   background-color: whitesmoke;
 }
 
-body{
+body {
   background-color: whitesmoke;
 }
 
-.warning{
+.warning {
   color: rgb(204, 37, 37);
   font-size: 16px;
 }
 
 /* page not found */
 
-.not-found .page-not-found{
+.not-found .page-not-found {
   font-size: 45px;
   font-weight: 600;
   color: rgb(55, 85, 54);
 }
 
-.not-found .not-found-message{
+.not-found .not-found-message {
   font-size: 23px;
   padding-top: 10px;
 }
 
-
 /* home page */
 
-.home-welcome{
+.home-welcome {
   font-size: 65px;
   width: 70%;
   font-weight: 600;
 }
 
-.update-text{
+.update-text {
   font-size: 18px;
   font-weight: 500;
 }
 
-.home-welcome, .update-text{
+.home-welcome,
+.update-text {
   color: rgb(255, 255, 255);
 }
 
 /* about page */
-.about h1{
-    font-size: 28px;
+.about h1 {
+  font-size: 28px;
 }
 
-.about p{
-    font-size: 17px;
+.about p {
+  font-size: 17px;
 }
 
-.about{
+.about {
   margin: auto;
 }
 
 /* login page and signup page */
 
-.login-graphic,  .signup-graphic, .home, .home-mobile{
-    background-color: rgb(218, 218, 218);
-    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
-    background-repeat: no-repeat;
-    background-size: cover; 
-    background-position: center;
-    height: 100vh;
-  }
+.login-graphic,
+.signup-graphic,
+.home,
+.home-mobile {
+  background-color: rgb(218, 218, 218);
+  background-image: linear-gradient(
+      rgba(51, 47, 47, 0.5),
+      rgba(95, 95, 95, 0.5)
+    ),
+    url("../../images/robot-backgroung.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
 
-  .signup-graphic{
-    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/signup3.jpg");
-    height: 175vh;
-  }
+.signup-graphic {
+  background-image: linear-gradient(
+      rgba(51, 47, 47, 0.5),
+      rgba(95, 95, 95, 0.5)
+    ),
+    url("../../images/signup3.jpg");
+  height: 175vh;
+}
 
-  .new-signup-graphic{
-    background-image: url("../../images/for-website-col-test-9.png");
-    height: 95vh;
-  }
+.new-signup-graphic {
+  background-image: url("../../images/for-website-col-test-9.png");
+  height: 95vh;
+}
 
-  /* .foodpage-graphic{
+/* .foodpage-graphic{
     background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
     height: 100vh;
   }
@@ -86,171 +97,179 @@ body{
     height: 125vh;
   } */
 
-  /* .signup-graphic-confirm{
+/* .signup-graphic-confirm{
     background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/signup3.jpg");
     height: 100vh;
     margin-top: 0%;
     margin-bottom: 0%;
   } */
 
-  .home{
-    background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/for-website.png");
-  }
+.home {
+  background-image: linear-gradient(rgba(92, 92, 92, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../../images/for-website.png");
+}
 
-  .home-mobile{
-    background-image: linear-gradient(rgba(92, 92, 92, 0.5),rgba(0, 0, 0, 0.5)), url("../../images/for-website-2.png");
-  }
+.home-mobile {
+  background-image: linear-gradient(rgba(92, 92, 92, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../../images/for-website-2.png");
+}
 
-  .home-text-mobile{
-    font-size: 3.5vh;
-    font-weight: bold;
-    color: rgb(218, 218, 218);
-  }
+.home-text-mobile {
+  font-size: 3.5vh;
+  font-weight: bold;
+  color: rgb(218, 218, 218);
+}
 
-  .home-update-text-mobile{
-    font-size: 2vh;
-    color: rgb(218, 218, 218);
-  }
+.home-update-text-mobile {
+  font-size: 2vh;
+  color: rgb(218, 218, 218);
+}
 
-  .home-play-store-link{
-    color: #aab41e;
-    font-weight: 600;
-    font-size: 18px;
-    text-decoration: none;
-  }
+.home-play-store-link {
+  color: #aab41e;
+  font-weight: 600;
+  font-size: 18px;
+  text-decoration: none;
+}
 
-  .fix-image{
-    width: 100% \9;
-    object-fit: scale-down;
-  }
+.fix-image {
+  width: 100% \9;
+  object-fit: scale-down;
+}
 
-  .signup .signup-logo{
-    font-size: 38px;
-    color: #333333;
-    padding: 2px 5px 10px 5px;
-  }
+.signup .signup-logo {
+  font-size: 38px;
+  color: #333333;
+  padding: 2px 5px 10px 5px;
+}
 
-  .login p, .signup p{
-    padding-top: 30px;
-    font-size: 17px;
-  }
-  
-  .login h1, .signup h1{
-    padding-top: 5px;
-    font-size: 18px;
-    font-weight: 700;
-  }
-  
-  .signup .header{
-    color: rgb(55, 85, 54);
+.login p,
+.signup p {
+  padding-top: 30px;
+  font-size: 17px;
+}
 
-  }
+.login h1,
+.signup h1 {
+  padding-top: 5px;
+  font-size: 18px;
+  font-weight: 700;
+}
 
-  .login .forgot-password{
-    font-size: 16px;
-    margin-top: 5px;
-    float: right;
-    text-decoration: none;
-    color: rgb(90, 91, 92);
-  }
+.signup .header {
+  color: rgb(55, 85, 54);
+}
 
-  .login .register, .signup .register, .frg-pass .register{
-    color:  #aab41e;
-    font-weight: 600;
-    text-decoration: none;
-  }
+.login .forgot-password {
+  font-size: 16px;
+  margin-top: 5px;
+  float: right;
+  text-decoration: none;
+  color: rgb(90, 91, 92);
+}
 
-  .signup .terms{
-    font-size: 15px;
-    text-decoration: none;
-  }
-  
-  .signup .termcond{
-    color: #757c0e;
-    text-decoration: none;
-  }
+.login .register,
+.signup .register,
+.frg-pass .register {
+  color: #aab41e;
+  font-weight: 600;
+  text-decoration: none;
+}
 
-  /* .signup .confirm-btn{
+.signup .terms {
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.signup .termcond {
+  color: #757c0e;
+  text-decoration: none;
+}
+
+/* .signup .confirm-btn{
     background-color: rgb(13, 27, 92);
     justify-content: center;
   } */
 
-  .terms-link, .privacy-link{
-    color: #aab41e;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-  }  
+.terms-link,
+.privacy-link {
+  color: #aab41e;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
 
-  /* contact page */
-  .contact .contact-logo{
-    /*color: rgb(81, 117, 79);*/
-    color:#aab41e;
-    font-size: 60px;
-    padding: 15px 15px 15px 15px; 
-  }
-  
-  .contact h1{
-    font-size: 20px;
-    color: rgb(55, 85, 54);
-  }
-  .contact .contact-title{
-      font-size: 25px;
-      font-weight: 700;
-      color: black;
-    }
-.contact-text-layout{
+/* contact page */
+.contact .contact-logo {
+  /*color: rgb(81, 117, 79);*/
+  color: #aab41e;
+  font-size: 60px;
+  padding: 15px 15px 15px 15px;
+}
+
+.contact h1 {
+  font-size: 20px;
+  color: rgb(55, 85, 54);
+}
+.contact .contact-title {
+  font-size: 25px;
+  font-weight: 700;
+  color: black;
+}
+.contact-text-layout {
   width: 55%;
   margin: auto;
   padding-top: 30px;
 }
 
-.contact .contact-header{
+.contact .contact-header {
   background-color: white;
   padding: 15px 0 10px 0;
   margin: auto;
 }
 
-.details .contact-footer-icon{
+.details .contact-footer-icon {
   font-size: 30px;
   color: rgb(55, 85, 54);
   padding: 5px 10px 10px 10px;
 }
 
-.details p{
+.details p {
   font-size: 13px;
   padding-top: 5px;
 }
 
-
-.details .other-contact-details{
+.details .other-contact-details {
   border: 1px solid black;
   margin-bottom: 10px;
 }
 
-.details .more-details-header{
+.details .more-details-header {
   font-size: 20px;
 }
 
 /* forgot password page and change password page and user account page */
 
-.frg-pass h1, .change-password h1{
+.frg-pass h1,
+.change-password h1 {
   font-size: 18px;
   font-weight: 700;
 }
 
-.frg-pass .remember-password, .change-password .cancel{
+.frg-pass .remember-password,
+.change-password .cancel {
   font-size: 16px;
   font-weight: 600;
   color: rgb(55, 85, 54);
   text-decoration: none;
 }
 
-.frg-pass .rmb-pass, .change-password .back-to-acc{
+.frg-pass .rmb-pass,
+.change-password .back-to-acc {
   padding-top: 50px;
 }
 
-.frg-pass .no-acc{
+.frg-pass .no-acc {
   padding-top: 28px;
 }
 
@@ -259,54 +278,54 @@ body{
   overflow-y: scroll;
 }
 
-.user-acc h1{
+.user-acc h1 {
   font-size: 20px;
 }
 
-.user-acc h1:last-of-type{
+.user-acc h1:last-of-type {
   padding-bottom: 10px;
   /*border-bottom: 1px solid black;*/
 }
 
-.user-acc .user-acc-title{
+.user-acc .user-acc-title {
   font-size: 30px;
   font-weight: 600;
   margin-top: -20px;
   padding-bottom: 15px;
 }
 
-.user-acc span{
+.user-acc span {
   color: rgb(55, 85, 54);
 }
 
-.user-acc p{
+.user-acc p {
   font-size: 15px;
 }
 
-.user-acc p:first-of-type{
+.user-acc p:first-of-type {
   font-size: 15px;
   padding-top: 5px;
 }
 
-.user-acc p:last-of-type{
+.user-acc p:last-of-type {
   padding-bottom: 5px;
 }
 
-.user-acc .user-acc-opt{
+.user-acc .user-acc-opt {
   color: rgb(7, 7, 77);
   text-decoration: none;
   padding-bottom: 20px;
 }
 
-.user-acc .user-acc-opt:hover{
+.user-acc .user-acc-opt:hover {
   color: rgb(0, 0, 0);
 }
 
-.user-acc .user-acc-opt:visited{
+.user-acc .user-acc-opt:visited {
   color: rgb(7, 7, 77);
 }
 
-.user-acc .initials-logo{
+.user-acc .initials-logo {
   background-color: rgb(13, 27, 92);
   width: 100px;
   height: 100px;
@@ -316,24 +335,52 @@ body{
   margin-bottom: 25px;
 }
 
-.user-acc .initials-logo p{
+.user-acc .initials-logo p {
   color: whitesmoke;
   font-size: 30px;
 }
 
-.user-acc .chart-menu{
+.user-acc .chart-menu {
   /* color: rgb(9, 16, 51); */
   padding-bottom: 15px;
 }
 
-/* .user-acc .new-button{
-  color:rgb(13, 27, 92);
-  margin-right: 5px;
+.disclaimer {
+  color: #32797e;
+  background-color: #c6e5e7;
+  border-color: #32797e;
+  border-radius: 25px;
+  padding: 5px;
 }
 
-.user-acc .new-button-grid{
-  padding: 1px;
-} */
+.countdown {
+  color: #0c656b;
+  font-size: 200%;
+  font-weight: 200;
+  padding: 5px;
+}
+
+.label {
+  background-color: #0c656b;
+  color: white;
+  font-weight: 600;
+  padding-left: 15.5px;
+  padding-right: 15.5px;
+}
+
+.large-img {
+  max-width: 100%;
+  height: auto;
+}
+
+.web-center {
+  text-align: center;
+  float: center;
+  max-width: 600px;
+  margin: auto;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
 
 .custom-btn {
   background-color: rgb(13, 27, 92);
@@ -367,7 +414,7 @@ body{
 }
 
 /* map page */
-.map-data{
+.map-data {
   width: 100%;
   height: 80vh;
 }
@@ -375,18 +422,17 @@ body{
 .popup-data {
   padding: 0px 2px 0px 2px;
   font-size: 15px;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
-.popup-name{
+.popup-name {
   color: rgb(55, 85, 54);
   font-size: 17px;
   font-weight: 600;
   padding: 3px 4px 1px 4px;
 }
 
-
-.auth-error{
+.auth-error {
   color: red;
   font-size: 20px;
   text-align: center;
@@ -394,24 +440,24 @@ body{
 }
 
 @media (max-width: 576px) {
-  .home{
+  .home {
     background-image: none;
     background-color: whitesmoke;
   }
 
-  .home-welcome{
+  .home-welcome {
     font-size: 15px;
     width: 100%;
   }
 
-  .update-text{
+  .update-text {
     font-size: 12px;
   }
 
-  .home-welcome, .update-text{
+  .home-welcome,
+  .update-text {
     color: black;
   }
-
 }
 
 #root {
@@ -433,5 +479,5 @@ body {
 
 .card-design {
   width: "261px";
-  height:'400px';
+  height: "400px";
 }

@@ -1,0 +1,42 @@
+.web-center {
+  text-align: center;
+  float: center;
+  /*600px in center of large page but varies when browser is smaller*/
+  max-width: 600px;
+  margin: auto;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+.disclaimer {
+  color: #32797e;
+  background-color: #c6e5e7;
+  border-color: #32797e;
+  border-radius: 25px;
+  padding: 5px;
+}
+
+.large-img {
+  max-width: 100%;
+  height: auto;
+}
+
+.countdown {
+  color: #0c656b;
+  font-size: 200%;
+  font-weight: 200;
+  padding: 5px;
+}
+
+.label {
+  background-color: #0c656b;
+  color: white;
+  font-weight: 600;
+  padding-left: 15.5px;
+  padding-right: 15.5px;
+}
+
+.profile {
+  background-color: #0c0847;
+  color: white;
+}

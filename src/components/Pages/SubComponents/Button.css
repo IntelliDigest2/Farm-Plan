@@ -1,0 +1,87 @@
+.default-btn {
+  width: 100%;
+  float: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-weight: 600;
+  font-size: 200%;
+  border-radius: 8px;
+  padding: 5% 0 5% 0;
+}
+
+.sub-btn {
+  width: 60%;
+  float: center;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-radius: 8px;
+}
+
+.turquoise {
+  background-color: #32797e;
+  border-color: #0c656b;
+}
+.turquoise:hover {
+  background-color: #0c656b;
+  border-color: white;
+}
+.turquoise:focus {
+  background-color: #0c656b;
+  border-color: white;
+}
+.turquoise:active {
+  background-color: #32797e;
+  border-color: white;
+}
+
+.green {
+  background-color: #afba15;
+  border-color: #95a000;
+}
+.green:hover {
+  background-color: #c5d300;
+  border-color: white;
+}
+.green:focus {
+  background-color: #c5d300;
+  border-color: white;
+}
+.green:active {
+  background-color: #afba15;
+  border-color: white;
+}
+
+.yellow {
+  background-color: #d9a12d;
+  border-color: #c58401;
+}
+.yellow:hover {
+  background-color: #c58401;
+  border-color: white;
+}
+.yellow:focus {
+  background-color: #c58401;
+  border-color: white;
+}
+.yellow:active {
+  background-color: #d9a12d;
+  border-color: white;
+}
+
+.blue {
+  background-color: #0c0847;
+  border-color: #02001a;
+}
+.blue:hover {
+  background-color: #02001a;
+  border-color: white;
+}
+.blue:focus {
+  background-color: #02001a;
+  border-color: white;
+}
+.blue:active {
+  background-color: #0c0847;
+  border-color: white;
+}
