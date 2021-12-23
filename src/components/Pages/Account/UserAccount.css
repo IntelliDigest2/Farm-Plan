@@ -6,6 +6,11 @@
   margin: auto;
   margin-top: 70px;
   margin-bottom: 70px;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.sub-selecton {
+  max-width: 300px;
 }
 
 .disclaimer {
@@ -16,16 +21,46 @@
   padding: 5px;
 }
 
+.profile {
+  max-width: 300px;
+  color: white;
+}
+
 .large-img {
-  max-width: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 100%;
   height: auto;
 }
 
+.small-img {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  max-width: 60%;
+  height: auto;
+}
+
+.green {
+  background-color: #afba15;
+  color: white;
+}
+
+.blue {
+  background-color: #0c0847;
+  color: white;
+}
+
+/*plan to save*/
 .countdown {
   color: #0c656b;
   font-size: 200%;
   font-weight: 200;
   padding: 5px;
+}
+
+.coundown-card {
+  max-width: 50%;
+  margin: auto;
 }
 
 .label {
@@ -36,8 +71,35 @@
   padding-right: 15.5px;
 }
 
-.profile {
-  max-width: 300px;
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.img-overlay {
+  position: absolute;
+  bottom: 20%;
   background-color: #0c0847;
   color: white;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.pts-p-div {
+  text-align: center;
+  float: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.pts-p {
+  font-size: 1.2em;
+}
+
+.support {
+  width: 100%;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }

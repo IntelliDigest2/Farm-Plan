@@ -14,7 +14,10 @@ const NavBar = (props) => {
       <Navbar fixed="top" collapseOnSelect expand="md" className="mr-0 ml-0">
         <Container>
           <BrowserView>
-            <Navbar.Brand className="pl-sm-0 pl-0 pl-md-2 logo" href="/home">
+            <Navbar.Brand
+              className="pl-sm-0 pl-0 pl-md-2 logo navbar-brand"
+              href="/home"
+            >
               IntelliDigest - The Global Food Loss & Waste Tracker
             </Navbar.Brand>
           </BrowserView>

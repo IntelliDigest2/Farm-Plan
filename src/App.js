@@ -24,8 +24,8 @@ import ChangePassword from "./components/Pages/Account/ChangePassword";
 import MapData from "./components/Pages/Account/MapData";
 
 import FoodWaste from "./components/Pages/Account/FoodWaste";
-import FoodLoss from "./components/Pages/Account/FoodLoss";
-import FoodWasteBusiness from "./components/Pages/Account/FoodWasteBusiness";
+import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
+import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWasteBusiness";
 import FoodIntake from "./components/Pages/Account/FoodIntake";
 // import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
@@ -151,13 +151,13 @@ import ProductListing from "./components/Pages/Account/products/ProductListing";
 import ReserveItems from "./components/Pages/Account/ReserveItems";
 
 import AddProducts from "./components/Pages/Account/AddProducts";
-import AddProductsFarm from "./components/Pages/Account/AddProductsFarm";
-import AddProductsBusiness from "./components/Pages/Account/AddProductsBusiness";
-import AddProductsAcademic from "./components/Pages/Account/AddProductsAcademic";
+import AddProductsFarm from "./components/Pages/Account/Farm/AddProductsFarm";
+import AddProductsBusiness from "./components/Pages/Account/Business/AddProductsBusiness";
+import AddProductsAcademic from "./components/Pages/Account/Academic/AddProductsAcademic";
 
-import FoodWasteAcademic from "./components/Pages/Account/FoodWasteAcademic";
-import FoodIntakeAcademic from "./components/Pages/Account/FoodIntakeAcademic";
-import FoodSurplusAcademic from "./components/Pages/Account/FoodSurplusAcademic";
+import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWasteAcademic";
+import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
+import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
 
 import { Notifications } from "react-push-notification";
 

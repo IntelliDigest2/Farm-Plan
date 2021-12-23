@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { DefaultButton, SubButton } from "../SubComponents/Button";
 import "./UserAccount.css";
 
-//import arrows from "../../../images/Arrows.png";
 import positivePlanet from "../../../images/fr_positive-planet.jpg";
-//import pTSField from "../../../images/pts_field_standing.png";
 import pTSNotebook from "../../../images/pts_plate_notebook.png";
-//import pTSFoodWaste from "../../../images/pts_food_waste.jpg";
 import pTSBanner from "../../../images/pts-banner.png";
 import sTFCFoodNetwork from "../../../images/stfcfoodnetwork.png";
 
@@ -15,7 +12,7 @@ import Countdown from "react-countdown";
 
 function PTSCountdown() {
   return (
-    <Card style={{ width: "50%", margin: "auto" }}>
+    <Card className="countdown-card">
       <Countdown className="countdown" date="2022-01-31T23:59:59"></Countdown>
       <span className="label">days : hrs : mins : secs</span>
     </Card>
@@ -43,6 +40,42 @@ function PlanToSave() {
         </div>
         <SubButton styling="blue" goTo="/account" text="My Account" />
         <PTSCountdown />
+        <div className="container">
+          <img className="large-img" src={pTSNotebook} alt="" />
+          <div className="img-overlay blue">
+            <h2>How Does It Work?</h2>
+          </div>
+        </div>
+        <div className="pts-p-div">
+          <p className="pts-p">
+            If you can reserve your fresh food, local farmers can plan better in
+            their food production to meet your need in the most sustainable way.
+            By signing up to the Plan to Save campaign and reserving your
+            weekly, fortnightly and monthly fresh food requirements, we will
+            take the responsibility to identify local farmers around you or
+            encourage the set up of local farmers to supply your reservation,
+            ensuring the supply of nutritious food all year round for all.
+          </p>
+        </div>
+        <div className="support green">
+          <h4>Supported By:</h4>
+        </div>
+        <Row>
+          <Col>
+            <img
+              className="small-img"
+              src={sTFCFoodNetwork}
+              alt="STFC Food Network"
+            />
+          </Col>
+          <Col>
+            <img
+              className="small-img"
+              src={positivePlanet}
+              alt="Positive Planet"
+            />
+          </Col>
+        </Row>
       </Container>
     </>
   );
