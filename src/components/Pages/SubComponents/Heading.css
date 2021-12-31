@@ -1,0 +1,12 @@
+.heading {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: 600;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}

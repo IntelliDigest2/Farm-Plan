@@ -1489,5 +1489,13 @@ const DDMenuStyle = styled.div`
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ collection: "data" }])
+  firestoreConnect((props) => {
+    if (!props.auth.uid) return [];
+    return [
+      {
+        collection: "data",
+        doc: props.auth.uid,
+      },
+    ];
+  })
 )(FoodWaste);

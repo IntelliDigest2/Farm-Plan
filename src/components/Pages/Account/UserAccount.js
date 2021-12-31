@@ -136,5 +136,13 @@ const mapStateToProps = (state) => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([{ collection: "users" }])
+  firestoreConnect((props) => {
+    if (!props.auth.uid) return [];
+    return [
+      {
+        collection: "users",
+        doc: props.auth.uid,
+      },
+    ];
+  })
 )(Account);
