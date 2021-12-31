@@ -272,9 +272,8 @@ class FoodWaste extends Component {
     }
     this.setState({ [typeString]: val }, () => {
       this.handleFoodWasteGHGChange();
-      console.log(this.state.currencyMultiplier + " / " + typeString);
+      this.handleFoodCostChange();
     });
-    this.handleFoodCostChange();
   }
 
   handleFoodCostChange() {
