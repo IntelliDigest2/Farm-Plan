@@ -17,15 +17,14 @@ import { Container } from "react-bootstrap";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 //import { BrowserView, MobileView } from "react-device-detect";
-//import { BsFillExclamationCircleFill } from "react-icons/bs";
+//import { BsFillExclamationCircleFill } from "react-icons/bs"; (le)
 
-//userAccount is built using components called "bubbles", some bubbles are specific to the account type, eg FarmBubble- and these components will be found in the specific account type folder.
+//userAccount is built using components called "bubbles", some bubbles are specific to the account type, eg FarmBubble- and these components will be found in the specific account type folder (components/Pages/Account/[type]).
 
 function Account(props) {
   if (!props.auth.uid) {
     return <Redirect to="/login" />;
   }
-  //so far each of these are identical (needs to be changed)
   switch (props.profile.buildingFunction) {
     case "Farm":
       console.log(props.auth.uid);
