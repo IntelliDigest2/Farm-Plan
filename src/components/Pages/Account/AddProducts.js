@@ -3,8 +3,6 @@ import {
   Form,
   Button,
   Card,
-  Col,
-  Row,
   InputGroup,
   DropdownButton,
   Dropdown,
@@ -14,7 +12,7 @@ import {
   startData,
   createFoodSurplusData,
 } from "../../../store/actions/dataActions";
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -40,9 +38,9 @@ import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 // import {Chart} from "react-google-charts"
 
-const time = moment().format("MMMM Do YYYY, h:mm:ss a");
+//const time = moment().format("MMMM Do YYYY, h:mm:ss a");
 
-const dailyTabTime = moment().format("ddd MMM Do YYYY");
+//const dailyTabTime = moment().format("ddd MMM Do YYYY");
 
 // const chartSubmissionDay = moment().format("ddd")
 // const chartSubmissionWeek = moment().format("W")
