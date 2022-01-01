@@ -1,65 +1,72 @@
-.copy{
-    font-size: 15px;
-    text-align: center;
-    justify-content: center;
-    height: auto;
-    margin: 0 auto;
-    margin-top:10px;
-    margin-bottom: 10px;
-    padding: 8px 15px 8px 15px;
-    color: whitesmoke;
+.copy {
+  font-size: 15px;
+  text-align: center;
+  justify-content: center;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 8px 15px 8px 15px;
+  color: whitesmoke;
 }
 
-.social-media{
-    padding: 0px 10px 0px 10px;
-    color: #b0bb1b;
-    font-size: 20px;
+.social-media {
+  padding: 0px 10px 0px 10px;
+  color: #b0bb1b;
+  font-size: 20px;
 }
 
-
-.social-media:hover{
-    color: #ceda2a;
+.social-media:hover {
+  color: #ceda2a;
 }
 
-.footer-div{
-    /*padding-top: 140px;*/
-    text-align: center;
+.footer-div {
+  /*padding-top: 140px;*/
+  text-align: center;
   justify-content: space-around;
   align-items: center;
 }
 
-footer{
-    /*background-color: rgb(58, 58, 58);*/
-    border-top: 1px solid #1b1b1b;
-    background-color: #333333;
-    /*background-color: rgb(26, 26, 26);*/
-    /* position: absolute; */
-    position: fixed;
-    width: 100%;
+footer {
+  /*background-color: rgb(58, 58, 58);*/
+  border-top: 1px solid #1b1b1b;
+  background-color: #333333;
+  /*background-color: rgb(26, 26, 26);*/
+  /* position: absolute; */
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+/* Styling to better manage footer across all pages rather than individual padding per page */
+.phantom {
+  display: block;
+  padding: 50px;
+  height: 60px;
+  width: 100%;
+}
+
+@media all and (max-width: 800px) {
+  .copy {
+    font-size: 10px;
+    padding: 5px 5px 5px 5px;
+  }
+
+  footer {
     bottom: 0;
     left: 0;
+    width: 100%;
+  }
 }
 
-@media all and (max-width: 800px){
-    .copy{
-        font-size: 10px;
-        padding: 5px 5px 5px 5px;
-    }
-
-    footer{
-        bottom: 0;
-        left: 0;
-        width: 100%;
-    }
-}
-
-@media all and (max-width: 1024px){
-    .copy{
-        padding: 5px 5px 5px 5px;
-    }
-    footer{
-        bottom: 0;
-        left: 0;
-        width: 100%;
-    }
+@media all and (max-width: 1024px) {
+  .copy {
+    padding: 5px 5px 5px 5px;
+  }
+  footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
 }

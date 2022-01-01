@@ -1,0 +1,110 @@
+.web-center {
+  text-align: center;
+  float: center;
+  /*600px in center of large page but varies when browser is smaller*/
+  max-width: 600px;
+  margin: auto;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.sub-selecton {
+  max-width: 300px;
+}
+
+.disclaimer {
+  color: #32797e;
+  background-color: #c6e5e7;
+  border-color: #32797e;
+  border-radius: 25px;
+  padding: 5px;
+}
+
+.profile {
+  max-width: 300px;
+  color: white;
+}
+
+.large-img {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 100%;
+  height: auto;
+}
+
+.small-img {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  max-width: 60%;
+  height: auto;
+}
+
+.white {
+  background-color: white;
+  color: #0c0847;
+}
+
+.green {
+  background-color: #afba15;
+  color: white;
+}
+
+.blue {
+  background-color: #0c0847;
+  color: white;
+}
+
+/*plan to save*/
+.countdown {
+  color: #0c656b;
+  font-size: 200%;
+  font-weight: 200;
+  padding: 5px;
+}
+
+.coundown-card {
+  max-width: 50%;
+  margin: auto;
+}
+
+.label {
+  background-color: #0c656b;
+  color: white;
+  font-weight: 600;
+  padding-left: 15.5px;
+  padding-right: 15.5px;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.img-overlay {
+  position: absolute;
+  bottom: 20%;
+  background-color: #0c0847;
+  color: white;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.pts-p-div {
+  text-align: center;
+  float: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.pts-p {
+  font-size: 1.2em;
+}
+
+.support {
+  width: 100%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}

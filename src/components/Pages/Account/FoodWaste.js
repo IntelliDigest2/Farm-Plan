@@ -1,39 +1,25 @@
 import React, { Component } from "react";
-import {
-  Form,
-  Button,
-  Card,
-  Col,
-  Row,
-  InputGroup,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import { Form, InputGroup, FormGroup, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
   startData,
   createFoodWasteData,
 } from "../../../store/actions/dataActions";
 import { Redirect } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { compose } from "redux";
-import { firestoreConnect } from "react-redux-firebase";
-import styled from "styled-components";
+import { firestoreConnect, getFirebase } from "react-redux-firebase";
 // import { getFirebase} from 'react-redux-firebase'
 // import DisplayError from '../pages/DisplayError'
 import moment from "moment";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
-import {
-  BrowserView,
-  MobileView,
-  isMobile,
-  isBrowser,
-} from "react-device-detect";
+//import { BrowserView, MobileView } from "react-device-detect";
 import { fs } from "../../../config/fbConfig";
-import { Divider } from "@material-ui/core";
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
-import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
+//import { Divider } from "@material-ui/core";
 import addNotification from "react-push-notification";
+import { Card } from "../SubComponents/Card";
+import { InputForm } from "../SubComponents/Form";
+import { Heading } from "../SubComponents/Heading";
+import { Dropdown } from "../SubComponents/Dropdown";
+import { DefaultButton } from "../SubComponents/Button";
 
 // import {Chart} from "react-google-charts"
 
@@ -55,128 +41,139 @@ class FoodWaste extends Component {
     uid: this.props.auth.uid,
     filteredData: [],
 
-    formWidth: "",
-    formHeight: "",
+    collection: "writtenFoodWasteData",
 
     submissionType: "Waste",
+    projectName: "",
+    foodName: "",
 
-    // meal: "Select Meal",
-
-    // foodName: "",
-
-    // checkedA: false,
-    // checkedB: false,
-    // eatingInOrOut: "",
-
-    edibleInedibleSurplus: "Select",
-
-    foodWasteWeight: 0,
-    weightType: "Select Unit",
     weightMultiplier: 0,
-
-    // edibleFoodWasteType: "Select Type",
-    // inedibleFoodWasteType: "Select Type",
-
-    carbsContent: 0,
-    carbsPer: "Select Unit",
-    /*meaning carbs per given unit eg carbs per 100g */
-    carbsMultiplier: 0,
-    proteinContent: 0,
-    proteinPer: "Select Unit",
-    proteinMultiplier: 0,
-    fatContent: 0,
-    fatPer: "Select Unit",
-    fatMultiplier: 0,
-
-    // producedLocally: "Select Local or Non-local",
-
-    expiryDate: "",
-
-    // moisture: 0,
-    // showMoisture: false,
-
-    // inedibleMoisture: 0,
-
-    // volumeOfFoodWaste: 0,
-
     ghg: 0,
-
-    // inedibleGHG: 0,
-    // dailyFoodSurplus: 0,
-
-    foodWasteCost: 0,
-    currency: "Select Currency",
     currencyMultiplier: 0,
-
-    notes: "n/a",
-    projectName: "n/a",
-    foodName: "n/a",
-
-    // costOfInedibleFoodWaste: 0,
-
-    // dropDownValueIFW: "Select Currency",
-    // currencyMultiplierIFW: 0,
-
-    chartSubmissionDay: moment().format("ddd"),
-    chartSubmissionWeek: moment().format("W"),
-    chartSubmissionMonth: moment().format("MMM"),
-    chartSubmissionDate: moment().format("Do"),
-    chartSubmissionYear: moment().format("YYYY"),
-    chartSubmissionFullDate: moment().format("ddd MMM Do YYYY"),
-
+    carbsMultiplier: 0,
+    proteinMultiplier: 0,
+    fatMultiplier: 0,
     totalEdibleWeight: 0,
     totalEdibleGHG: 0,
     totalEdibleCost: 0,
 
     totalInedibleWeight: 0,
     totalInedibleGHG: 0,
-    // totalInedibleCost: 0,
 
-    // totalSurplusWeight: 0,
-    // totalSurplusGHG: 0,
-    // totalSurplusCost: 0,
+    date: "",
+    edibleInedible: "Edible",
+    foodWasteWeight: 0,
+    weightType: "Select Unit",
 
-    // showComposition: false,
+    carbsContent: 0,
+    carbsPerUnit: "Select Unit",
 
-    // dataChartEFW: [['Food Wastage Type', 'Food Wastage Weight']],
+    proteinContent: 0,
+    proteinPerUnit: "Select Unit",
 
-    // autocompleteEntries: [
-    //     {}
-    // ]
+    fatContent: 0,
+    fatPerUnit: "Select Unit",
+
+    expiryDate: "",
+
+    foodWasteCost: 0,
+    currency: "Select Currency",
+  };
+
+  //Copy of empty state for resetting
+  initialState = {
+    name: this.props.user.firstName,
+    email: this.props.auth.email,
+    uid: this.props.auth.uid,
+    filteredData: [],
+
+    collection: "writtenFoodWasteData",
+
+    submissionType: "Waste",
+    projectName: "",
+    foodName: "",
+
+    weightMultiplier: 0,
+    ghg: 0,
+    currencyMultiplier: 0,
+    carbsMultiplier: 0,
+    proteinMultiplier: 0,
+    fatMultiplier: 0,
+
+    totalInedibleWeight: 0,
+    totalInedibleGHG: 0,
+
+    date: getFirebase().firestore.Timestamp.fromDate(new Date()),
+    edibleInedible: "Edible",
+    foodWasteWeight: 0,
+    weightType: "Select Unit",
+
+    carbsContent: 0,
+    carbsPerUnit: "Select Unit",
+
+    proteinContent: 0,
+    proteinPerUnit: "Select Unit",
+
+    fatContent: 0,
+    fatPerUnit: "Select Unit",
+
+    expiryDate: "",
+
+    foodWasteCost: 0,
+    currency: "Select Currency",
+  };
+
+  //Dropdown options
+  dropdown = {
+    measurements: ["kg", "g", "/", "oz", "lbs", "/", "l", "ml"],
+    content: ["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"],
+    currency: ["GBP (£)", "USD ($)", "EUR (€)"],
+  };
+
+  startDataButton = (e) => {
+    e.preventDefault();
+    this.props.startData(this.state);
+  };
+
+  //Change to upload specific data from state
+  handleFoodWasteSubmit = (e) => {
+    e.preventDefault();
+
+    //Setup data to be sent to generic create firestore function (TO BE RENAMED LATER)
+    const data = {
+      uid: this.props.auth.uid,
+      collection: this.state.collection,
+      upload: {
+        date: getFirebase().firestore.Timestamp.fromDate(new Date()),
+        edibleInedible: this.state.edibleInedible,
+        foodWasteWeight: this.state.foodWasteWeight,
+        weightType: this.state.weightType,
+
+        carbsContent: this.state.carbsContent,
+        carbsPerUnit: this.state.carbsPerUnit,
+
+        proteinContent: this.state.proteinContent,
+        proteinPerUnit: this.state.proteinPerUnit,
+
+        fatContent: this.state.fatContent,
+        fatPerUnit: this.state.fatPerUnit,
+
+        expiryDate: this.state.expiryDate,
+
+        foodWasteCost: this.state.foodWasteCost,
+        currency: this.state.currency,
+      },
+    };
+    this.props.createFoodWasteData(data);
+    this.clearEFWForm();
+    this.submitNotification();
   };
 
   clearEFWForm = () => {
-    this.setState({
-      // meal: "Select Meal",
-      // foodName: "",
-      // checkedA: false,
-      // checkedB: false,
-      // eatingInOrOut: "",
-      edibleInedibleSurplus: "Select",
-      foodWasteWeight: 0,
-      weightType: "Select Unit",
-      // producedLocally: "Select Local or Non-local",
-      expiryDate: "",
-      // edibleFoodWasteType: "Select Type",
-      carbsContent: 0,
-      carbsPer: "Select Unit",
-      carbsMultiplier: 0,
-      proteinContent: 0,
-      proteinPer: "Select Unit",
-      proteinMultiplier: 0,
-      fatContent: 0,
-      fatPer: "Select Unit",
-      fatMultiplier: 0,
-      // moisture: 0,
-      ghg: 0,
-      foodWasteCost: 0,
-      currency: "Select Currency",
-      currencyMultiplier: 0,
-      formHeight: "1110px",
-    });
+    this.setState(this.initialState);
   };
 
-  notificationTest = () => {
+  submitNotification = () => {
     addNotification({
       title: "Success!",
       message: "Food Waste successfully updated!",
@@ -189,94 +186,104 @@ class FoodWaste extends Component {
     });
   };
 
-  changeCurrency(text) {
-    this.setState({ currency: text });
+  //Generic setState() function
+  updateStateValue = (e) => {
+    //If text or number
+    if (e.target.textContent) {
+      this.setState({ [e.target.id]: e.target.textContent }, () => {
+        this.handleFoodWasteGHGChange();
+        this.handleFoodCostChange();
+      });
+    } else {
+      //If date
+      let stringval = e.target.value.toString();
+      if (stringval.includes("/")) {
+        this.setState({ [e.target.id]: e.target.value }, () => {
+          this.handleFoodWasteGHGChange();
+          this.handleFoodCostChange();
+        });
+      } else {
+        let val = parseInt(e.target.value, 10);
+        if (isNaN(val)) {
+          this.setState({ [e.target.id]: "" }, () => {
+            this.handleFoodWasteGHGChange();
+            this.handleFoodCostChange();
+          });
+        } else {
+          val = val >= 0 ? val : 0;
+          this.setState({ [e.target.id]: val }, () => {
+            this.handleFoodWasteGHGChange();
+            this.handleFoodCostChange();
+          });
+        }
+      }
+    }
+  };
+
+  convertCurrency(e) {
+    //TODO find a free reliable realtime currency converter
   }
 
-  changeCurrencyMultiplier(value) {
-    this.setState({ currencyMultiplier: value });
-  }
-
-  changeWeightMultiplier(value) {
-    this.setState({ weightMultiplier: value });
-  }
-
-  changeCarbsUnitMultiplier(value) {
-    this.setState({ carbsMultiplier: value });
-  }
-
-  changeProteinUnitMultiplier(value) {
-    this.setState({ proteinMultiplier: value });
-  }
-
-  changeFatUnitMultiplier(value) {
-    this.setState({ fatMultiplier: value });
-  }
-
-  handleChange = (e) => {
-    // console.log(e);
-    this.setState({
-      [e.target.id]: e.target.value,
+  changeMultiplier(e) {
+    let stringArray = e.target.id.toString().split(/PerUnit|Type/);
+    let typeString = stringArray[0] + "Multiplier";
+    let val;
+    switch (e.target.textContent) {
+      //Weight (Food Waste)
+      case "kg":
+      case "l":
+        val = 1;
+        break;
+      case "g":
+      case "ml":
+        val = 0.001;
+        break;
+      case "oz":
+        val = 0.028;
+        break;
+      case "lbs":
+        val = 0.454;
+        break;
+      //Weight Unit (Carbs, Fat, Protein)
+      case "100g":
+      case "100ml":
+        val = 0.01;
+        break;
+      case "500g":
+      case "500ml":
+        val = 0.002;
+        break;
+      case "1l":
+      case "1kg":
+        val = 0.001;
+        break;
+      //Currency Unit (GBP (£), USD ($), EUR (€))
+      case "GBP (£)":
+        val = 1;
+        break;
+      case "USD ($)":
+        val = 1.404;
+        break;
+      case "EUR (€)":
+        val = 1.161;
+        break;
+      default:
+        val = 1;
+    }
+    this.setState({ [typeString]: val }, () => {
+      this.handleFoodWasteGHGChange();
+      this.handleFoodCostChange();
     });
-  };
-
-  handleEdibleInedibleSurplusChange = (e) => {
-    // console.log(e)
-    this.setState({ edibleInedibleSurplus: e });
-  };
-
-  handleWeightUnitChange(text) {
-    this.setState({ weightType: text });
   }
 
-  handleCarbsUnitChange(text) {
-    this.setState({ carbsPer: text });
-  }
-
-  handleProteinUnitChange(text) {
-    this.setState({ proteinPer: text });
-  }
-
-  handleFatUnitChange(text) {
-    this.setState({ fatPer: text });
-  }
-
-  handleFoodCostChange = (e) => {
-    //console.log("food cost changed");
+  handleFoodCostChange() {
     this.setState({
-      [e.target.id]: e.target.value,
-      foodWasteCost: (Number(e.target.value) * 0.85).toFixed(2),
+      foodWasteCost: (Number(this.state.foodWasteWeight) * 0.85).toFixed(2),
     });
-  };
-
-  handleInedibleFoodCostChange = (e) => {
-    //console.log(e);
-    this.setState({
-      [e.target.id]: e.target.value,
-      costOfInedibleFoodWaste: (Number(e.target.value) * 0.85).toFixed(2),
-    });
-  };
-
-  handleFoodWasteWeightChange(event) {
-    this.setState({ foodWasteWeight: event.target.value });
-  }
-
-  handleCarbsContentChange(event) {
-    this.setState({ carbsContent: event.target.value });
-  }
-
-  handleProteinContentChange(event) {
-    this.setState({ proteinContent: event.target.value });
-  }
-
-  handleFatContentChange(event) {
-    this.setState({ fatContent: event.target.value });
   }
 
   handleFoodWasteGHGChange() {
-    //console.log("ghg updated");
-    //need to add short delay so other state updates first???
-    if (this.state.edibleInedibleSurplus === "Edible") {
+    if (this.state.edibleInedible === "Edible") {
       this.setState({
         ghg: Number(
           20 *
@@ -299,23 +306,8 @@ class FoodWaste extends Component {
     }
   }
 
-  pressButton = (e) => {
-    e.preventDefault();
-    this.props.startData(this.state);
-  };
-
-  handleFoodWasteSubmit = (e) => {
-    e.preventDefault();
-    this.setState({});
-    this.props.createFoodWasteData(this.state);
-  };
-
-  handleFormHeight(text) {
-    if (text === "Select" || text === "Edible") {
-      this.setState({ formHeight: "1110px" });
-    } else if (text === "Inedible") {
-      this.setState({ formHeight: "670px" });
-    }
+  componentDidMount() {
+    //this.fetchData();
   }
 
   fetchData = async () => {
@@ -325,11 +317,10 @@ class FoodWaste extends Component {
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
-          var fd = doc.data().FULLDATE;
-          var st = doc.data().SUBMISSIONTYPE;
+          var fd = doc.data().date;
 
-          var weight = doc.data().weight;
-          var wu = doc.data().WEIGHTUNIT;
+          var weight = doc.data().foodWasteWeight;
+          var wu = doc.data().weightType;
           var ghg = doc.data().GHG;
           var cost = doc.data().COST;
           var curr = doc.data().CURRENCY;
@@ -356,17 +347,13 @@ class FoodWaste extends Component {
             newCost = Number((cost / 1.161).toFixed(2));
           }
 
-          if (fd === dailyTabTime && st === "Waste" && eis === "Edible") {
+          if (fd === dailyTabTime && eis === "Edible") {
             this.setState((prevState) => ({
               totalEdibleWeight: (prevState.totalEdibleWeight += newWeight),
               totalEdibleGHG: (prevState.totalEdibleGHG += ghg),
               totalEdibleCost: (prevState.totalEdibleCost += newCost),
             }));
-          } else if (
-            fd === dailyTabTime &&
-            st === "Waste" &&
-            eis === "Inedible"
-          ) {
+          } else if (fd === dailyTabTime && eis === "Inedible") {
             this.setState((prevState) => ({
               totalInedibleWeight: (prevState.totalInedibleWeight += newWeight),
               totalInedibleGHG: (prevState.totalInedibleGHG += ghg),
@@ -378,1363 +365,379 @@ class FoodWaste extends Component {
       .catch((error) => console.log(error));
   };
 
-  componentDidMount() {
-    this.fetchData();
-
-    if (isMobile) {
-      this.setState({ formWidth: "72vw", formHeight: "1110px" });
-    } else if (isBrowser) {
-      this.setState({ formWidth: "261px", formHeight: "1110px" });
-    }
-  }
-
   render() {
     const { data, auth } = this.props;
-    // console.log(data.[auth.uid].writtenFoodWasteData);
-    // console.log(time);
-    // console.log(Date(time));
-    //const { foodWaste, foodSurplus } = this.state;
+
     if (!auth.uid) return <Redirect to="/login" />;
-    if (data) {
-      const filteredData =
-        data && data.filter((datas) => datas.email === auth.email);
-      // console.log(foodWaste);
-      // console.log(foodSurplus);
+    if (!data) return <div></div>;
+    const filteredData =
+      data && data.filter((datas) => datas.email === auth.email);
 
-      // 284 - paddingBottom:
+    return (
+      <Container fluid className="web-center">
+        <Heading priority="2" text="Update Edible/Inedible Food Waste" />
+        <DefaultButton text="Back" styling="green" goTo="/account" />
 
-      return (
-        <div
-          // className="container"
-          style={{ width: "100%", height: "100%" }}
-        >
-          <MobileView>
-            <h6
-              style={{
-                paddingTop: "8vh",
-                color: "black",
-                justifyContent: "center",
-                display: "flex",
-              }}
-            >
-              Update Edible/Inedible Food Waste
-            </h6>
-          </MobileView>
-          <BrowserView>
-            <h4
-              style={{
-                paddingTop: "8vh",
-                color: "black",
-                justifyContent: "center",
-                display: "flex",
-              }}
-            >
-              Update Edible/Inedible Food Waste
-            </h4>
-          </BrowserView>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexWrap: "wrap",
-              width: "100%",
-            }}
-          >
-            <Button
-              style={{ width: this.state.formWidth, borderColor: "#aab41e" }}
-              className="custom-btn-2"
-              as={Link}
-              to="/account"
-            >
-              Back
-            </Button>
-          </div>
-
-          {filteredData.length === 0 ? (
-            <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
-              <Col
-                className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2"
-                xs={12}
-              ></Col>
-              <Col className="mt-5 pt-5" xs={12}></Col>
-              <Col className="" xs={12} lg={4}></Col>
-              <Col
-                className=" justify-content-center align-items-center d-block mt-5 pt-5 mt-lg-0 pt-lg-0"
-                xs={12}
-                lg={4}
-              >
-                <CardStyle>
-                  <Card>
-                    <Card.Body>
-                      <Card.Text className="text-center">
-                        <h1
-                          style={{
-                            fontSize: "33px",
-                            fontWeight: "600",
-                            color: "rgb(55, 85, 54)",
-                          }}
-                        >
-                          Start tracking your food waste now
-                        </h1>
-                        <button
-                          onClick={this.pressButton}
-                          style={{ outline: "none", border: "none" }}
-                        >
-                          Start now
-                        </button>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </CardStyle>
-              </Col>
-              <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
-              <Col className="mt-5 pt-5" xs={12}></Col>
-              <Col className="mt-5 pt-5" xs={12}></Col>
-            </Row>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexWrap: "wrap",
-                width: "100%",
-                height: "190%",
-              }}
-            >
-              {/* <BrowserView> */}
-
-              <Card
-                style={{
-                  // width: "90%",
-                  width: this.state.formWidth,
-                  // height: "100%"
-                  height: this.state.formHeight,
-                  marginBottom: "10vh",
-                  // backgroundColor: 'lightgray'
-                }}
-              >
-                {/* onSubmit={this.handleFoodWasteSubmit}     */}
-                <Form className="form-layout" style={{ padding: "10px" }}>
-                  <h5
-                    className="text-center"
-                    style={{
-                      margin: "30px",
-                      fontSize: "23px",
-                      fontWeight: "600",
+        {filteredData.length === 0 ? (
+          <Card>
+            <Card.Body>
+              <Card.Text className="text-center">
+                <Heading
+                  priority="1"
+                  text="Start tracking your food waste now"
+                />
+                <DefaultButton
+                  text="Start now"
+                  styling="green"
+                  onClick={this.startDataButton}
+                />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        ) : (
+          <Container fluid className="justify-content-md-center">
+            {/* <BrowserView> */}
+            <Card>
+              <InputForm>
+                <Heading priority="1" text="Food Waste" />
+                {/* Edible/Inedible */}
+                <FormGroup>
+                  <Heading priority="6" text="Edible / Inedible" />
+                  <Dropdown
+                    id="edibleInedible"
+                    styling="grey"
+                    data={this.state.edibleInedible}
+                    function={(eventKey, e) => {
+                      this.updateStateValue(e);
                     }}
-                  >
-                    Food Waste
-                  </h5>
-
-                  <div>
-                    <div style={{ padding: "0 10% 0 10%" }}>
-                      Edible or Inedible
-                    </div>
-                    <Form.Group
-                      style={{
-                        padding: "0 10% 0 10%",
-                        display: "flex",
-                      }}
-                    >
+                    items={["Edible", "Inedible"]}
+                  />
+                </FormGroup>
+                {/* Edible Form */}
+                {this.state.edibleInedible !== "Inedible" ? (
+                  <FormGroup>
+                    <Heading priority="6" text="Weight / Volume" />
+                    <InputGroup>
+                      <Form.Control
+                        type="number"
+                        id="foodWasteWeight"
+                        onChange={(e) => {
+                          this.updateStateValue(e);
+                        }}
+                        value={this.state.foodWasteWeight}
+                      />
+                      <Dropdown
+                        id="weightType"
+                        styling="grey dropdown-input-right"
+                        data={this.state.weightType}
+                        function={(eventKey, e) => {
+                          this.updateStateValue(e);
+                          this.changeMultiplier(e);
+                        }}
+                        items={this.dropdown.measurements}
+                      />
+                    </InputGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="Carbs Content" />
                       <InputGroup>
-                        <DDMenuStyle>
-                          <Dropdown>
-                            <DropdownToggle
-                              variant="secondary"
-                              style={{ width: "190px" }}
-                              className="dd"
-                            >
-                              {this.state.edibleInedibleSurplus}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              {/* as="button" */}
-                              <DropdownItem as="button" type="button">
-                                <div
-                                  onClick={(e) => {
-                                    this.handleEdibleInedibleSurplusChange(
-                                      e.target.textContent
-                                    );
-                                    this.handleFormHeight(e.target.textContent);
-                                  }}
-                                >
-                                  Edible
-                                </div>
-                              </DropdownItem>
-
-                              {/* as="button" */}
-                              <DropdownItem as="button" type="button">
-                                <div
-                                  onClick={(e) => {
-                                    this.handleEdibleInedibleSurplusChange(
-                                      e.target.textContent
-                                    );
-                                    this.handleFormHeight(e.target.textContent);
-                                  }}
-                                >
-                                  Inedible
-                                </div>
-                              </DropdownItem>
-
-                              {/* <DropdownItem as="button" type="button">
-                                            <div onClick={(e) => {this.handleEdibleInedibleSurplusChange(e.target.textContent); this.handleFormHeight(e.target.textContent)}}>
-                                                Surplus
-                                            </div>
-                                        </DropdownItem> */}
-                            </DropdownMenu>
-                          </Dropdown>
-                        </DDMenuStyle>
+                        <Form.Control
+                          type="number"
+                          id="carbsContent"
+                          onChange={(e) => {
+                            this.updateStateValue(e);
+                          }}
+                          value={this.state.carbsContent}
+                        />
+                        <Dropdown
+                          id="carbsPerUnit"
+                          styling="grey dropdown-input-right"
+                          data={this.state.carbsPerUnit}
+                          function={(eventKey, e) => {
+                            this.updateStateValue(e);
+                            this.changeMultiplier(e);
+                          }}
+                          items={this.dropdown.content}
+                        />
                       </InputGroup>
-                    </Form.Group>
-
-                    <div>
-                      {this.state.edibleInedibleSurplus === "Edible" ||
-                      this.state.edibleInedibleSurplus === "Select" ? (
-                        <div>
-                          <div style={{ padding: "0 10% 0 10%" }}>
-                            Weight / Volume
-                          </div>
-                          <Form.Group
-                            className="form-layout"
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                              justifyContent: "space-around",
-                            }}
-                          >
-                            <InputGroup>
-                              <Form.Control
-                                type="number"
-                                id="foodWasteWeight"
-                                placeholder="Enter weight of food waste"
-                                onChange={(e) => {
-                                  this.handleFoodWasteWeightChange(e);
-                                  this.handleFoodCostChange(e);
-                                  this.handleFoodWasteGHGChange();
-                                }}
-                                width="100%"
-                                value={this.state.foodWasteWeight}
-                              />
-                              {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>kg</InputGroup.Text>
-                            </InputGroup.Append> */}
-
-                              <DropdownButton
-                                as={InputGroup.Append}
-                                variant="outline-secondary"
-                                title={this.state.weightType}
-                                id="wtdd"
-                              >
-                                <Dropdown.Header>
-                                  Weight (Solids)
-                                </Dropdown.Header>
-
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleWeightUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeWeightMultiplier(1);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    kg
-                                  </div>
-                                </DropdownItem>
-
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleWeightUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeWeightMultiplier(0.001);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    g
-                                  </div>
-                                </DropdownItem>
-
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleWeightUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeWeightMultiplier(0.028);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    oz
-                                  </div>
-                                </DropdownItem>
-
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleWeightUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeWeightMultiplier(0.454);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    lbs
-                                  </div>
-                                </DropdownItem>
-
-                                <Dropdown.Divider />
-
-                                <Dropdown.Header>
-                                  Volume (Liquids)
-                                </Dropdown.Header>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleWeightUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeWeightMultiplier(1);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    l
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleWeightUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeWeightMultiplier(0.001);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    ml
-                                  </div>
-                                </DropdownItem>
-                              </DropdownButton>
-                            </InputGroup>
-                          </Form.Group>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>
-                            Carbs Content per unit, eg carbs per 100g
-                          </div>
-                          <Form.Group
-                            className="form-layout"
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                              justifyContent: "space-around",
-                            }}
-                          >
-                            <InputGroup>
-                              <Form.Control
-                                type="number"
-                                id="carbsContent"
-                                placeholder="Enter carbohydrate content per unit (eg Carbs per 100g)."
-                                onChange={(e) => {
-                                  this.handleCarbsContentChange(e);
-                                  this.handleFoodWasteGHGChange();
-                                }}
-                                width="100%"
-                                value={this.state.carbsContent}
-                              />
-                              <DropdownButton
-                                as={InputGroup.Append}
-                                variant="outline-secondary"
-                                title={this.state.carbsPer}
-                                id="cperu"
-                              >
-                                <Dropdown.Header>
-                                  Weight (Solids)
-                                </Dropdown.Header>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleCarbsUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeCarbsUnitMultiplier(0.01);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    100g
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleCarbsUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeCarbsUnitMultiplier(0.002);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    500g
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleCarbsUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeCarbsUnitMultiplier(0.001);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    1kg
-                                  </div>
-                                </DropdownItem>
-
-                                <Dropdown.Divider />
-
-                                <Dropdown.Header>
-                                  Volume (Liquids)
-                                </Dropdown.Header>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleCarbsUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeCarbsUnitMultiplier(0.01);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    100ml
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleCarbsUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeCarbsUnitMultiplier(0.002);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    500ml
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleCarbsUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeCarbsUnitMultiplier(0.001);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    1L
-                                  </div>
-                                </DropdownItem>
-                              </DropdownButton>
-                            </InputGroup>
-                          </Form.Group>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>
-                            Protein Content
-                          </div>
-                          <Form.Group
-                            className="form-layout"
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                              justifyContent: "space-around",
-                            }}
-                          >
-                            <InputGroup>
-                              <Form.Control
-                                type="number"
-                                id="proteinContent"
-                                placeholder="Enter protein content per unit (eg protein per 100g)."
-                                onChange={(e) => {
-                                  this.handleProteinContentChange(e);
-                                  this.handleFoodWasteGHGChange();
-                                }}
-                                width="100%"
-                                value={this.state.proteinContent}
-                              />
-                              <DropdownButton
-                                as={InputGroup.Append}
-                                variant="outline-secondary"
-                                title={this.state.proteinPer}
-                                id="pperu"
-                              >
-                                <Dropdown.Header>
-                                  Weight (Solids)
-                                </Dropdown.Header>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleProteinUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeProteinUnitMultiplier(0.01);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    100g
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleProteinUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeProteinUnitMultiplier(0.002);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    500g
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleProteinUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeProteinUnitMultiplier(0.001);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    1kg
-                                  </div>
-                                </DropdownItem>
-
-                                <Dropdown.Divider />
-
-                                <Dropdown.Header>
-                                  Volume (Liquids)
-                                </Dropdown.Header>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleProteinUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeProteinUnitMultiplier(0.01);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    100ml
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleProteinUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeProteinUnitMultiplier(0.002);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    500ml
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleProteinUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeProteinUnitMultiplier(0.001);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    1L
-                                  </div>
-                                </DropdownItem>
-                              </DropdownButton>
-                            </InputGroup>
-                          </Form.Group>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>
-                            Fat Content
-                          </div>
-                          <Form.Group
-                            className="form-layout"
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                              justifyContent: "space-around",
-                            }}
-                          >
-                            <InputGroup>
-                              <Form.Control
-                                type="number"
-                                id="fatContent"
-                                placeholder="Enter fat content per unit (eg fat per 100g)."
-                                onChange={(e) => {
-                                  this.handleFatContentChange(e);
-                                  this.handleFoodWasteGHGChange();
-                                }}
-                                width="100%"
-                                value={this.state.fatContent}
-                              />
-                              <DropdownButton
-                                as={InputGroup.Append}
-                                variant="outline-secondary"
-                                title={this.state.fatPer}
-                                id="fperu"
-                              >
-                                <Dropdown.Header>
-                                  Weight (Solids)
-                                </Dropdown.Header>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleFatUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeFatUnitMultiplier(0.01);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    100g
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleFatUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeFatUnitMultiplier(0.002);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    500g
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleFatUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeFatUnitMultiplier(0.001);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    1kg
-                                  </div>
-                                </DropdownItem>
-
-                                <Dropdown.Divider />
-
-                                <Dropdown.Header>
-                                  Volume (Liquids)
-                                </Dropdown.Header>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleFatUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeFatUnitMultiplier(0.01);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    100ml
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleFatUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeFatUnitMultiplier(0.002);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    500ml
-                                  </div>
-                                </DropdownItem>
-
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.handleFatUnitChange(
-                                        e.target.textContent
-                                      );
-                                      this.changeFatUnitMultiplier(0.001);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    1L
-                                  </div>
-                                </DropdownItem>
-                              </DropdownButton>
-                            </InputGroup>
-                          </Form.Group>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>
-                            Expiry Date
-                          </div>
-                          <Form.Group
-                            className="form-layout"
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                              justifyContent: "space-around",
-                            }}
-                          >
-                            <InputGroup>
-                              <Form.Control
-                                id="expiryDate"
-                                placeholder="DD/MM/YYYY"
-                                onChange={(e) => {
-                                  this.handleChange(e);
-                                  this.handleFoodWasteGHGChange();
-                                }}
-                                width="100%"
-                                value={this.state.expiryDate}
-                              />
-                            </InputGroup>
-                          </Form.Group>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>GHG</div>
-                          <Form.Group
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                            }}
-                          >
-                            <InputGroup>
-                              <Form.Control
-                                id="ghg"
-                                placeholder="Enter GHG value"
-                                value={this.state.ghg.toFixed(3)}
-                                //20 *
-                                //16.0424 *
-                                //this.state.weightMultiplier *
-                                //this.state.foodWasteWeight *
-                                //(0.01852 *
-                                //this.state.carbsMultiplier *
-                                //this.state.carbsContent +
-                                //0.01744 *
-                                //this.state.proteinMultiplier *
-                                //this.state.proteinContent +
-                                //0.04608 *
-                                //this.state.fatMultiplier *
-                                //this.state.fatContent)
-                                //).toFixed(3)}
-                                width="100%"
-                                //onChange={(e) => {
-                                //this.handleFoodWasteGHGChange(e);
-                                //}}
-                                title={this.state.ghg}
-                                readOnly
-                              />
-                              {/*<p style={{width:'100px'}}>kg co2</p>*/}
-                              <InputGroup.Append>
-                                <InputGroup.Text>kg co2</InputGroup.Text>
-                              </InputGroup.Append>
-                            </InputGroup>
-                          </Form.Group>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>Cost</div>
-                          <Form.Group
-                            style={{ padding: "0 10% 0 10%", display: "flex" }}
-                          >
-                            <InputGroup>
-                              {/* <InputGroup.Prepend>
-                                <InputGroup.Text>£</InputGroup.Text>
-                            </InputGroup.Prepend> */}
-
-                              <DropdownButton
-                                as={InputGroup.Prepend}
-                                variant="outline-secondary"
-                                title={this.state.currency}
-                                id="input-group-dropdown-1"
-                                // style ={{backgroundColor: 'white'}}
-                              >
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.changeCurrency(e.target.textContent);
-                                      this.changeCurrencyMultiplier(1);
-                                      this.handleFoodWasteGHGChange();
-                                      /*sorry this has to be here for now so that the ghg is fully updated*/
-                                    }}
-                                  >
-                                    GBP (£)
-                                  </div>
-                                </DropdownItem>
-
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.changeCurrency(e.target.textContent);
-                                      this.changeCurrencyMultiplier(1.404);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    USD ($)
-                                  </div>
-                                </DropdownItem>
-
-                                {/* as="button" */}
-                                <DropdownItem as="button" type="button">
-                                  <div
-                                    onClick={(e) => {
-                                      this.changeCurrency(e.target.textContent);
-                                      this.changeCurrencyMultiplier(1.161);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                  >
-                                    EUR (€)
-                                  </div>
-                                </DropdownItem>
-                              </DropdownButton>
-
-                              <Form.Control
-                                id="foodWasteCost"
-                                placeholder="Enter cost of food surplus"
-                                value={(
-                                  this.state.foodWasteCost *
-                                  this.state.currencyMultiplier *
-                                  this.state.weightMultiplier
-                                ).toFixed(2)}
-                                readOnly
-                              />
-                            </InputGroup>
-                          </Form.Group>
-
-                          {/* this.handleFoodWasteSubmit(e); */}
-
-                          <div>
-                            {this.state.edibleInedibleSurplus !== "Select" &&
-                            this.state.foodWasteWeight !== 0 &&
-                            this.state.weightType !== "Select Unit" &&
-                            this.state.expiryDate !== "" &&
-                            this.state.currency !== "Select Currency" ? (
-                              <Button
-                                style={{
-                                  margin: "0 10% 0 10%",
-                                  backgroundColor: "#aab41e",
-                                  width: "80%",
-                                  marginTop: "5px",
-                                }}
-                                onClick={(e) => {
-                                  //this.handleFoodWasteGHGChange();
-                                  this.handleFoodWasteSubmit(e);
-                                  this.notificationTest();
-                                  this.clearEFWForm();
-                                }}
-                                variant="secondary"
-                                type="button"
-                              >
-                                Update
-                              </Button>
-                            ) : (
-                              <Button
-                                style={{
-                                  margin: "0 10% 0 10%",
-                                  width: "80%",
-                                  marginTop: "5px",
-                                }}
-                                variant="secondary"
-                                disabled
-                              >
-                                Update
-                              </Button>
-                            )}
-                          </div>
-
-                          <Divider style={{ marginTop: "25px" }} />
-
-                          <h5
-                            className="text-center"
-                            style={{
-                              marginTop: "25px",
-                              marginBottom: "5px",
-                              fontSize: "16.5px",
-                              fontWeight: "600",
-                            }}
-                          >
-                            Edible Food Waste
-                          </h5>
-                          <h5
-                            className="text-center"
-                            style={{
-                              marginBottom: "25px",
-                              fontSize: "16.5px",
-                              fontWeight: "600",
-                            }}
-                          >
-                            {dailyTabTime}
-                          </h5>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>
-                            Total Weight
-                          </div>
-                          <Form.Group
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                            }}
-                          >
-                            <InputGroup>
-                              <Form.Control
-                                id="totalEdibleWeight"
-                                placeholder=""
-                                value={(
-                                  this.state.totalEdibleWeight +
-                                  this.state.foodWasteWeight *
-                                    this.state.weightMultiplier
-                                ).toFixed(2)}
-                                width="100%"
-                                readOnly
-                              />
-                              {/*<p style={{width:'100px'}}>kg co2</p>*/}
-                              <InputGroup.Append>
-                                <InputGroup.Text>kg</InputGroup.Text>
-                              </InputGroup.Append>
-                            </InputGroup>
-                          </Form.Group>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>
-                            Total GHG
-                          </div>
-                          <Form.Group
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                            }}
-                          >
-                            <InputGroup>
-                              <Form.Control
-                                id="totalEdibleGHG"
-                                placeholder=""
-                                value={(
-                                  this.state.totalEdibleGHG + this.state.ghg
-                                ).toFixed(3)}
-                                width="100%"
-                                readOnly
-                              />
-                              {/*<p style={{width:'100px'}}>kg co2</p>*/}
-                              <InputGroup.Append>
-                                <InputGroup.Text>kg co2</InputGroup.Text>
-                              </InputGroup.Append>
-                            </InputGroup>
-                          </Form.Group>
-
-                          <div style={{ padding: "0 10% 0 10%" }}>
-                            Total Cost
-                          </div>
-                          <Form.Group
-                            style={{
-                              padding: "0 10% 0 10%",
-                              display: "flex",
-                            }}
-                          >
-                            <InputGroup>
-                              <InputGroup.Prepend>
-                                <InputGroup.Text>£</InputGroup.Text>
-                              </InputGroup.Prepend>
-                              <Form.Control
-                                id="totalEdibleCost"
-                                placeholder=""
-                                value={(
-                                  this.state.totalEdibleCost +
-                                  this.state.foodWasteCost *
-                                    this.state.weightMultiplier
-                                ).toFixed(2)}
-                                width="100%"
-                                readOnly
-                              />
-                            </InputGroup>
-                          </Form.Group>
-                        </div>
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="Protein Content" />
+                      <InputGroup>
+                        <Form.Control
+                          type="number"
+                          id="proteinContent"
+                          onChange={(e) => {
+                            this.updateStateValue(e);
+                          }}
+                          value={this.state.proteinContent}
+                        />
+                        <Dropdown
+                          id="proteinPerUnit"
+                          styling="grey dropdown-input-right"
+                          data={this.state.proteinPerUnit}
+                          function={(eventKey, e) => {
+                            this.updateStateValue(e);
+                            this.changeMultiplier(e);
+                          }}
+                          items={this.dropdown.content}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="Fat Content" />
+                      <InputGroup>
+                        <Form.Control
+                          type="number"
+                          id="fatContent"
+                          onChange={(e) => {
+                            this.updateStateValue(e);
+                          }}
+                          value={this.state.fatContent}
+                        />
+                        <Dropdown
+                          id="fatPerUnit"
+                          styling="grey dropdown-input-right"
+                          data={this.state.fatPerUnit}
+                          function={(eventKey, e) => {
+                            this.updateStateValue(e);
+                            this.changeMultiplier(e);
+                          }}
+                          items={this.dropdown.content}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="Expiry Date" />
+                      <Form.Control
+                        id="expiryDate"
+                        placeholder="DD/MM/YYYY"
+                        onChange={(e) => {
+                          this.updateStateValue(e);
+                        }}
+                        value={this.state.expiryDate}
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="GHG" />
+                      <InputGroup>
+                        <Form.Control
+                          id="ghg"
+                          value={this.state.ghg.toFixed(3)}
+                          title={this.state.ghg}
+                          readOnly
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text>kg co2</InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="Cost" />
+                      <InputGroup>
+                        <Dropdown
+                          id="currency"
+                          styling="grey dropdown-input-left"
+                          data={this.state.currency}
+                          function={(eventKey, e) => {
+                            this.updateStateValue(e);
+                            this.changeMultiplier(e);
+                          }}
+                          items={this.dropdown.currency}
+                        />
+                        <Form.Control
+                          id="foodWasteCost"
+                          value={(
+                            this.state.foodWasteCost *
+                            this.state.currencyMultiplier *
+                            this.state.weightMultiplier
+                          ).toFixed(2)}
+                          readOnly
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      {this.state.foodWasteWeight > 0 &&
+                      this.state.weightType !== "Select Unit" &&
+                      this.state.expiryDate !== "" &&
+                      this.state.currency !== "Select Currency" ? (
+                        <DefaultButton
+                          text="Update"
+                          styling="green"
+                          onClick={(e) => {
+                            //this.handleFoodWasteGHGChange();
+                            this.handleFoodWasteSubmit(e);
+                          }}
+                        />
                       ) : (
-                        <>
-                          {this.state.edibleInedibleSurplus === "Inedible" ? (
-                            <div>
-                              <div style={{ padding: "0 10% 0 10%" }}>
-                                Weight / Volume
-                              </div>
-                              <Form.Group
-                                className="form-layout"
-                                style={{
-                                  padding: "0 10% 0 10%",
-                                  display: "flex",
-                                  justifyContent: "space-around",
-                                }}
-                              >
-                                <InputGroup>
-                                  <Form.Control
-                                    type="number"
-                                    id="foodWasteWeight"
-                                    placeholder="Enter weight of food waste"
-                                    onChange={(e) => {
-                                      this.handleFoodWasteWeightChange(e);
-                                      this.handleFoodCostChange(e);
-                                      this.handleFoodWasteGHGChange();
-                                    }}
-                                    width="100%"
-                                    value={this.state.foodWasteWeight}
-                                  />
-                                  {/* <Form.Control type="number" id="weightOfEdibleFoodWaste" placeholder="Enter weight of food waste" onChange={(e) => {this.handleEdibleFoodWasteGHGChange(e); this.handleEdibleFoodCostChange(e)}} width="100%" value={this.state.weightOfEdibleFoodWaste}/>
-                            <InputGroup.Append>
-                                <InputGroup.Text>kg</InputGroup.Text>
-                            </InputGroup.Append> */}
-
-                                  <DropdownButton
-                                    as={InputGroup.Append}
-                                    variant="outline-secondary"
-                                    title={this.state.weightType}
-                                    id="wtdd"
-                                  >
-                                    <Dropdown.Header>
-                                      Weight (Solids)
-                                    </Dropdown.Header>
-
-                                    {/* as="button" */}
-                                    <DropdownItem as="button" type="button">
-                                      <div
-                                        onClick={(e) => {
-                                          this.handleWeightUnitChange(
-                                            e.target.textContent
-                                          );
-                                          this.changeWeightMultiplier(1);
-                                          this.handleFoodWasteGHGChange();
-                                        }}
-                                      >
-                                        kg
-                                      </div>
-                                    </DropdownItem>
-
-                                    {/* as="button" */}
-                                    <DropdownItem as="button" type="button">
-                                      <div
-                                        onClick={(e) => {
-                                          this.handleWeightUnitChange(
-                                            e.target.textContent
-                                          );
-                                          this.changeWeightMultiplier(0.001);
-                                          this.handleFoodWasteGHGChange();
-                                        }}
-                                      >
-                                        g
-                                      </div>
-                                    </DropdownItem>
-
-                                    {/* as="button" */}
-                                    <DropdownItem as="button" type="button">
-                                      <div
-                                        onClick={(e) => {
-                                          this.handleWeightUnitChange(
-                                            e.target.textContent
-                                          );
-                                          this.changeWeightMultiplier(0.028);
-                                          this.handleFoodWasteGHGChange();
-                                        }}
-                                      >
-                                        oz
-                                      </div>
-                                    </DropdownItem>
-
-                                    {/* as="button" */}
-                                    <DropdownItem as="button" type="button">
-                                      <div
-                                        onClick={(e) => {
-                                          this.handleWeightUnitChange(
-                                            e.target.textContent
-                                          );
-                                          this.changeWeightMultiplier(0.454);
-                                          this.handleFoodWasteGHGChange();
-                                        }}
-                                      >
-                                        lbs
-                                      </div>
-                                    </DropdownItem>
-
-                                    <Dropdown.Divider />
-
-                                    <Dropdown.Header>
-                                      Volume (Liquids)
-                                    </Dropdown.Header>
-
-                                    <DropdownItem as="button" type="button">
-                                      <div
-                                        onClick={(e) => {
-                                          this.handleWeightUnitChange(
-                                            e.target.textContent
-                                          );
-                                          this.changeWeightMultiplier(1);
-                                          this.handleFoodWasteGHGChange();
-                                        }}
-                                      >
-                                        l
-                                      </div>
-                                    </DropdownItem>
-
-                                    <DropdownItem as="button" type="button">
-                                      <div
-                                        onClick={(e) => {
-                                          this.handleWeightUnitChange(
-                                            e.target.textContent
-                                          );
-                                          this.changeWeightMultiplier(0.001);
-                                          this.handleFoodWasteGHGChange();
-                                        }}
-                                      >
-                                        ml
-                                      </div>
-                                    </DropdownItem>
-                                  </DropdownButton>
-                                </InputGroup>
-                              </Form.Group>
-
-                              <div style={{ padding: "0 10% 0 10%" }}>GHG</div>
-                              <Form.Group
-                                style={{
-                                  padding: "0 10% 0 10%",
-                                  display: "flex",
-                                }}
-                              >
-                                <InputGroup>
-                                  <Form.Control
-                                    id="ghg"
-                                    placeholder="Enter GHG value"
-                                    value={this.state.ghg}
-                                    //this.state.weightMultiplier *
-                                    //this.state.foodWasteWeight *
-                                    //2.5
-                                    //).toFixed(3)}
-                                    width="100%"
-                                    //onChange={(e) => {
-                                    //this.handleFoodWasteGHGChange(e);
-                                    //}}
-                                    title={this.state.ghg}
-                                    readOnly
-                                  />
-
-                                  {/*<p style={{width:'100px'}}>kg co2</p>*/}
-                                  <InputGroup.Append>
-                                    <InputGroup.Text>kg co2</InputGroup.Text>
-                                  </InputGroup.Append>
-                                </InputGroup>
-                              </Form.Group>
-                              {/* this.handleFoodWasteSubmit(e); this.handleAutoCompleteValueEntry(this.state.foodName);*/}
-
-                              <div>
-                                {this.state.edibleInedibleSurplus ===
-                                  "Inedible" &&
-                                this.state.foodWasteWeight !== 0 &&
-                                this.state.weightType !== "Select Unit" ? (
-                                  <Button
-                                    style={{
-                                      margin: "0 10% 0 10%",
-                                      backgroundColor: "#aab41e",
-                                      width: "80%",
-                                      marginTop: "5px",
-                                    }}
-                                    onClick={(e) => {
-                                      //this.handleFoodWasteGHGChange();
-                                      this.handleFoodWasteSubmit(e);
-                                      this.notificationTest();
-                                      this.clearEFWForm();
-                                    }}
-                                    variant="secondary"
-                                    type="button"
-                                  >
-                                    Update
-                                  </Button>
-                                ) : (
-                                  <Button
-                                    style={{
-                                      margin: "0 10% 0 10%",
-                                      width: "80%",
-                                      marginTop: "5px",
-                                    }}
-                                    variant="secondary"
-                                    disabled
-                                  >
-                                    Update
-                                  </Button>
-                                )}
-                              </div>
-
-                              <Divider style={{ marginTop: "25px" }} />
-
-                              <h5
-                                className="text-center"
-                                style={{
-                                  marginTop: "25px",
-                                  marginBottom: "5px",
-                                  fontSize: "16.5px",
-                                  fontWeight: "600",
-                                }}
-                              >
-                                Inedible Food Waste
-                              </h5>
-                              <h5
-                                className="text-center"
-                                style={{
-                                  marginBottom: "25px",
-                                  fontSize: "16.5px",
-                                  fontWeight: "600",
-                                }}
-                              >
-                                {dailyTabTime}
-                              </h5>
-
-                              <div style={{ padding: "0 10% 0 10%" }}>
-                                Total Weight
-                              </div>
-                              <Form.Group
-                                style={{
-                                  padding: "0 10% 0 10%",
-                                  display: "flex",
-                                }}
-                              >
-                                <InputGroup>
-                                  <Form.Control
-                                    id="totalInedibleWeight"
-                                    placeholder=""
-                                    value={(
-                                      this.state.totalInedibleWeight +
-                                      this.state.foodWasteWeight *
-                                        this.state.weightMultiplier
-                                    ).toFixed(2)}
-                                    width="100%"
-                                    readOnly
-                                  />
-                                  {/*<p style={{width:'100px'}}>kg co2</p>*/}
-                                  <InputGroup.Append>
-                                    <InputGroup.Text>kg</InputGroup.Text>
-                                  </InputGroup.Append>
-                                </InputGroup>
-                              </Form.Group>
-
-                              <div style={{ padding: "0 10% 0 10%" }}>
-                                Total GHG
-                              </div>
-                              <Form.Group
-                                style={{
-                                  padding: "0 10% 0 10%",
-                                  display: "flex",
-                                }}
-                              >
-                                <InputGroup>
-                                  <Form.Control
-                                    id="totalInedibleGHG"
-                                    placeholder=""
-                                    value={(
-                                      this.state.totalInedibleGHG +
-                                      this.state.ghg
-                                    ).toFixed(3)}
-                                    width="100%"
-                                    readOnly
-                                  />
-                                  {/*<p style={{width:'100px'}}>kg co2</p>*/}
-                                  <InputGroup.Append>
-                                    <InputGroup.Text>kg co2</InputGroup.Text>
-                                  </InputGroup.Append>
-                                </InputGroup>
-                              </Form.Group>
-
-                              {/* <div style={{padding: "0 10% 0 10%"}}>Total Cost</div>
-                        <Form.Group 
-                            style={{
-                                padding: "0 10% 0 10%", 
-                                display: "flex"}}
-                        >
-                        <InputGroup>
-                            <InputGroup.Prepend>
-                                <InputGroup.Text>£</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <Form.Control type="number" id="GHG" placeholder="Enter GHG value" value={(this.state.ghg*this.state.weightMultiplier).toFixed(2)} width="100%"/>{/*<p style={{width:'100px'}}>
-                        </InputGroup>
-                        </Form.Group> */}
-                            </div>
-                          ) : (
-                            <></>
-                          )}
-                        </>
+                        <DefaultButton
+                          text="Update"
+                          styling="green"
+                          disabled="true"
+                        />
                       )}
-                    </div>
-                  </div>
-                </Form>
-              </Card>
-              {/* </BrowserView> */}
-            </div>
-          )}
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
+                    </FormGroup>
+                    {/* TOTAL EDIBLE FOOD WASTE
+                    <Divider />
+                    <Heading priority="3" text="Edible Food Waste" />
+                    <Heading priority="4" text={dailyTabTime} />
+                    <FormGroup>
+                      <Heading priority="6" text="Total Weight" />
+                      <InputGroup>
+                        <Form.Control
+                          id="totalEdibleWeight"
+                          value={(
+                            this.state.totalEdibleWeight +
+                            this.state.foodWasteWeight *
+                              this.state.weightMultiplier
+                          ).toFixed(2)}
+                          readOnly
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text>kg</InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="Total GHG" />
+                      <InputGroup>
+                        <Form.Control
+                          id="totalEdibleGHG"
+                          value={(
+                            this.state.totalEdibleGHG + this.state.ghg
+                          ).toFixed(3)}
+                          readOnly
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text>kg co2</InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="Total Cost" />
+                      <InputGroup>
+                        <InputGroup.Prepend>
+                          <InputGroup.Text>£</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control
+                          id="totalEdibleCost"
+                          value={(
+                            this.state.totalEdibleCost +
+                            this.state.foodWasteCost *
+                              this.state.weightMultiplier
+                          ).toFixed(2)}
+                          readOnly
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    */}
+                  </FormGroup>
+                ) : (
+                  <FormGroup>
+                    <Heading priority="6" text="Weight / Volume" />
+                    <FormGroup>
+                      <InputGroup>
+                        <Form.Control
+                          type="number"
+                          id="foodWasteWeight"
+                          onChange={(e) => {
+                            this.updateStateValue(e);
+                            //this.handleFoodCostChange(e);
+                          }}
+                          value={this.state.foodWasteWeight}
+                        />
+                        <Dropdown
+                          id="weightType"
+                          styling="grey dropdown-input-right"
+                          data={this.state.weightType}
+                          function={(eventKey, e) => {
+                            this.updateStateValue(e);
+                            this.changeMultiplier(e);
+                          }}
+                          items={this.dropdown.measurements}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="GHG" />
+                      <InputGroup>
+                        <Form.Control
+                          id="ghg"
+                          placeholder="Enter GHG value"
+                          value={this.state.ghg}
+                          readOnly
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text>kg co2</InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      {this.state.edibleInedible === "Inedible" &&
+                      this.state.foodWasteWeight !== 0 &&
+                      this.state.weightType !== "Select Unit" ? (
+                        <DefaultButton
+                          text="Update"
+                          styling="green"
+                          onClick={(e) => {
+                            //this.handleFoodWasteGHGChange();
+                            this.handleFoodWasteSubmit(e);
+                          }}
+                        />
+                      ) : (
+                        <DefaultButton
+                          text="Update"
+                          styling="green"
+                          disabled="true"
+                        />
+                      )}
+                    </FormGroup>
+                    {/*
+                    <Divider />
+                    <Heading priority="3" text="Inedible Food Waste" />
+                    <Heading priority="4" text={dailyTabTime} />
+                    <FormGroup>
+                      <Heading priority="6" text="Total Weight" />
+                      <InputGroup>
+                        <Form.Control
+                          id="totalInedibleWeight"
+                          value={(
+                            this.state.totalInedibleWeight +
+                            this.state.foodWasteWeight *
+                              this.state.weightMultiplier
+                          ).toFixed(2)}
+                          readOnly
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text>kg</InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Heading priority="6" text="Total GHG" />
+                      <InputGroup>
+                        <Form.Control
+                          id="totalInedibleGHG"
+                          value={(
+                            this.state.totalInedibleGHG + this.state.ghg
+                          ).toFixed(3)}
+                          readOnly
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text>kg co2</InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    </FormGroup>
+                          */}
+                  </FormGroup>
+                )}
+              </InputForm>
+            </Card>
+          </Container>
+        )}
+      </Container>
+    );
   }
 }
-
-//const foodOptions = [
-//{ title: "Cereal" },
-//{ title: "Bacon" },
-//{ title: "Baked Beans" },
-//{ title: "Porridge" },
-//{ title: "Pancake" },
-//{ title: "Beef" },
-//{ title: "Chicken" },
-//{ title: "Pork" },
-//{ title: "Apple" },
-//{ title: "Banana" },
-//{ title: "Orange" },
-//{ title: "Pear" },
-//{ title: "Grapes" },
-//{ title: "Chocolate" },
-//{ title: "Crisps" },
-//{ title: "Pasta" },
-//{ title: "Bolognese" },
-//{ title: "Potato" },
-//{ title: "Chips" },
-//{ title: "Milk" },
-//{ title: "Fruit Juice" },
-//{ title: "Onion" },
-//];
 
 const mapStateToProps = (state) => {
   return {
@@ -1752,46 +755,15 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const CardStyle = styled.div`
-  .card {
-    color: rgb(59, 59, 59);
-    background-color: rgb(238, 238, 238);
-    border: none;
-    border-radius: 5px;
-    padding: 70px 0 50px 0;
-  }
-
-  .card-body {
-    height: 200px;
-  }
-`;
-
-//const FormStyle = styled.div`
-//.form {
-//display: flex;
-//align-items: center;
-//top: 50%;
-//transform: translateY(20%);
-//}
-//`;
-
-//const ChartStyle = styled.div`
-//.chart {
-//position: absolute;
-//left: 17%;
-//padding: 20px;
-// }
-//`;
-
-const DDMenuStyle = styled.div`
-  .dd {
-    background-color: white;
-    color: grey;
-    border-color: grey;
-  }
-`;
-
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ collection: "data" }])
+  firestoreConnect((props) => {
+    if (!props.auth.uid) return [];
+    return [
+      {
+        collection: "data",
+        doc: props.auth.uid,
+      },
+    ];
+  })
 )(FoodWaste);
