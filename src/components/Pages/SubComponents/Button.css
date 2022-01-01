@@ -19,6 +19,12 @@
   border-radius: 8px;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*button colours*/
 .turquoise {
   background-color: #32797e;
@@ -86,4 +92,17 @@
 .blue:active {
   background-color: #0c0847;
   border-color: white;
+}
+
+.default-btn.grey {
+  color: black;
+  background-color: lightgray;
+  border-color: gray;
+}
+.default-btn.grey:hover {
+  background-color: gray;
+  border-color: gray;
+}
+.default-btn.grey:focus {
+  box-shadow: none !important;
 }

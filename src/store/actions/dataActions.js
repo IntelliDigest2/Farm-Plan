@@ -1,18 +1,12 @@
-import { FirebaseAdd } from "./firebaseActions";
-
 export const startData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
-    const profile = getState().firebase.profile;
-    const auth = getState().firebase.auth;
     getFirebase()
       .firestore()
       .collection("data")
       .doc(data.uid)
       .set({
-        user: profile.firstName,
-        email: auth.email,
-        //   date: new Date(),
-        //   updatedAt: null
+        user: data.name,
+        email: data.email,
       })
       .then(() => {
         dispatch({ type: "START_DATA" });
@@ -47,100 +41,18 @@ export const startData = (data) => {
 
 export const createFoodWasteData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
-    const profile = getState().firebase.profile;
-    const auth = getState().firebase.auth;
-
-    // const MEAL = data.meal;
-    // const EATINGINOROUT = data.eatingInOrOut
-
-    const SUBMISSIONTYPE = data.submissionType;
-
-    const PROJECTNAME = data.projectName;
-    const FOODNAME = data.foodName;
-
-    const EDIBLEORINEDIBLE = data.edibleInedibleSurplus;
-    // const LOCALORNOT = data.producedLocally;
-    const GHG = data.ghg;
-    const WDAY = data.chartSubmissionDay;
-    const WEEK = data.chartSubmissionWeek;
-    const MONTH = data.chartSubmissionMonth;
-    const MDATE = data.chartSubmissionDate;
-    const YEAR = data.chartSubmissionYear;
-    const FULLDATE = data.chartSubmissionFullDate;
-
-    const NOTES = data.notes;
-
-    //const CARBSCONTENT = data.carbsContent;
-    //const PROTEINCONTENT = data.proteinContent;
-    //const FATCONTENT = data.fatContent;
-    // const FIBRECONTENT = data.fibreContent;
-
-    // const FWTYPE = data.edibleFoodWasteType;
-
-    const EXPIRYDATE = data.expiryDate;
-    // const MOISTURE = data.moisture;
-    const CURRENCY = data.currency;
-    const COST = (
-      data.foodWasteCost *
-      data.weightMultiplier *
-      data.currencyMultiplier
-    ).toFixed(2);
-    const WEIGHTUNIT = data.weightType;
-
-    const DATE = new Date().getHours();
-    let t = "";
-    if (DATE >= 0 && DATE < 6){ t = "T1"; }
-    else if (DATE >= 6 && DATE < 12){ t = "T2"; }
-    else if (DATE >= 12 && DATE < 18){ t = "T3"; }
-    else{ t = "T4"; }
-
-    // console.log(data.foodWaste);
-    // console.log(data.foodSurplus);
-    
-    //var datetext = date.toTimeString();
-    //var datetext = datetext.split(' ')[0];
-  
-    //console.log(datetext);
-
-    // here
-
-    FirebaseAdd(auth, {
-      date: getFirebase().firestore.Timestamp.fromDate(new Date()),
-      GHG: Number(data.ghg),
-      weight: Number(data.foodWasteWeight),
-      type: t,
-
-      PROJECTNAME: PROJECTNAME,
-      FOODNAME: FOODNAME,
-
-      // MEAL: MEAL,
-      // FOODNAME: FOODNAME,
-      // EATINGINOROUT: EATINGINOROUT,
-      EDIBLEORINEDIBLE: EDIBLEORINEDIBLE,
-      // LOCALORNOT: LOCALORNOT,
-      WDAY: WDAY,
-      WEEK: WEEK,
-      MONTH: MONTH,
-      MDATE: MDATE,
-      YEAR: YEAR,
-      FULLDATE: FULLDATE,
-
-      // CARBSCONTENT: Number(CARBSCONTENT),
-      // PROTEINCONTENT: Number(PROTEINCONTENT),
-      // FATCONTENT: Number(FATCONTENT),
-      // FIBRECONTENT: Number(FIBRECONTENT),
-
-      // FWTYPE: FWTYPE,
-
-      EXPIRYDATE: EXPIRYDATE,
-      // MOISTURE: MOISTURE,
-      CURRENCY: CURRENCY,
-      COST: Number(COST),
-      WEIGHTUNIT: WEIGHTUNIT,
-
-      SUBMISSIONTYPE: SUBMISSIONTYPE,
-      NOTES: NOTES,
-    }, "writtenFoodWasteData", dispatch);
+    getFirebase()
+      .firestore()
+      .collection("data")
+      .doc(data.uid)
+      .collection(data.collection)
+      .add(data.upload)
+      .then(() => {
+        dispatch({ type: "CREATE_DATA" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
   };
 };
 
@@ -174,12 +86,22 @@ export const createFoodLossData = (data) => {
 
     const DATE = new Date().getHours();
     let t = "";
-    if (DATE >= 0 && DATE < 6){ t = "T1"; }
-    else if (DATE >= 6 && DATE < 12){ t = "T2"; }
-    else if (DATE >= 12 && DATE < 18){ t = "T3"; }
-    else{ t = "T4"; }
+    if (DATE >= 0 && DATE < 6) {
+      t = "T1";
+    } else if (DATE >= 6 && DATE < 12) {
+      t = "T2";
+    } else if (DATE >= 12 && DATE < 18) {
+      t = "T3";
+    } else {
+      t = "T4";
+    }
 
-    FirebaseAdd(auth, {
+    getFirebase()
+      .firestore()
+      .collection("data")
+      .doc(auth.uid)
+      .collection("writtenFoodSurplusData")
+      .add({
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         // costInDollars: costInDollars,
         // costInPounds: costInPounds,
@@ -201,7 +123,13 @@ export const createFoodLossData = (data) => {
         CURRENCY: CURRENCY,
         COST: Number(COST),
         WEIGHTUNIT: WEIGHTUNIT,
-      }, "writtenFoodSurplusData");
+      })
+      .then(() => {
+        dispatch({ type: "CREATE_DATA" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
   };
 };
 
@@ -244,10 +172,15 @@ export const createFoodSurplusData = (data) => {
 
     const DATE = new Date().getHours();
     let t = "";
-    if (DATE >= 0 && DATE < 6){ t = "T1"; }
-    else if (DATE >= 6 && DATE < 12){ t = "T2"; }
-    else if (DATE >= 12 && DATE < 18){ t = "T3"; }
-    else{ t = "T4"; }
+    if (DATE >= 0 && DATE < 6) {
+      t = "T1";
+    } else if (DATE >= 6 && DATE < 12) {
+      t = "T2";
+    } else if (DATE >= 12 && DATE < 18) {
+      t = "T3";
+    } else {
+      t = "T4";
+    }
 
     getFirebase()
       .firestore()
@@ -325,10 +258,15 @@ export const createFoodIntakeData = (data) => {
 
     const DATE = new Date().getHours();
     let t = "";
-    if (DATE >= 0 && DATE < 6){ t = "T1"; }
-    else if (DATE >= 6 && DATE < 12){ t = "T2"; }
-    else if (DATE >= 12 && DATE < 18){ t = "T3"; }
-    else{ t = "T4"; }
+    if (DATE >= 0 && DATE < 6) {
+      t = "T1";
+    } else if (DATE >= 6 && DATE < 12) {
+      t = "T2";
+    } else if (DATE >= 12 && DATE < 18) {
+      t = "T3";
+    } else {
+      t = "T4";
+    }
 
     getFirebase()
       .firestore()
@@ -389,10 +327,15 @@ export const createFoodIntakeResearchData = (data) => {
 
     const DATE = new Date().getHours();
     let t = "";
-    if (DATE >= 0 && DATE < 6){ t = "T1"; }
-    else if (DATE >= 6 && DATE < 12){ t = "T2"; }
-    else if (DATE >= 12 && DATE < 18){ t = "T3"; }
-    else{ t = "T4"; }
+    if (DATE >= 0 && DATE < 6) {
+      t = "T1";
+    } else if (DATE >= 6 && DATE < 12) {
+      t = "T2";
+    } else if (DATE >= 12 && DATE < 18) {
+      t = "T3";
+    } else {
+      t = "T4";
+    }
 
     getFirebase()
       .firestore()
@@ -452,10 +395,15 @@ export const createReserveItemsData = (data) => {
 
     const DATE = new Date().getHours();
     let t = "";
-    if (DATE >= 0 && DATE < 6){ t = "T1"; }
-    else if (DATE >= 6 && DATE < 12){ t = "T2"; }
-    else if (DATE >= 12 && DATE < 18){ t = "T3"; }
-    else{ t = "T4"; }
+    if (DATE >= 0 && DATE < 6) {
+      t = "T1";
+    } else if (DATE >= 6 && DATE < 12) {
+      t = "T2";
+    } else if (DATE >= 12 && DATE < 18) {
+      t = "T3";
+    } else {
+      t = "T4";
+    }
 
     getFirebase()
       .firestore()
