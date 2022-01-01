@@ -302,7 +302,6 @@ class ReserveItems extends Component {
             <Card
               style={{
                 width: this.state.formWidth,
-                height: "720px",
                 marginBottom: "10vh",
                 backgroundColor: "#aab41e",
               }}
@@ -784,9 +783,7 @@ class ReserveItems extends Component {
             <Card
               style={{
                 width: this.state.formWidth,
-                // height: "100%"
                 height: "720px",
-                //maxHeight: "300px",
                 marginBottom: "10vh",
                 backgroundColor: "#040335",
                 overflowY: "auto",

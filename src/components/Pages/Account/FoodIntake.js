@@ -10,6 +10,7 @@ import {
   Modal,
   Dropdown,
 } from "react-bootstrap";
+import { DefaultButton } from "../SubComponents/Button";
 //change alerts to react bootstrap also
 import { connect } from "react-redux";
 import {
@@ -32,7 +33,6 @@ import {
   isBrowser,
 } from "react-device-detect";
 // import {fs} from "../../../config/fbConfig"
-import { BsFillQuestionCircleFill } from "react-icons/bs";
 import { Divider, FormControlLabel } from "@material-ui/core";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
@@ -58,7 +58,7 @@ class FoodIntake extends Component {
     filteredData: [],
 
     formWidth: "",
-    formHeight: "",
+    //formHeight: "",
 
     submissionType: "Intake",
 
@@ -155,7 +155,7 @@ class FoodIntake extends Component {
       // foodWasteCost: 0,
       // currency: "Select Currency",
       // currencyMultiplier: 0,
-      formHeight: "545px",
+      //formHeight: "545px",
     });
   };
 
@@ -363,9 +363,9 @@ class FoodIntake extends Component {
 
   componentDidMount() {
     if (isMobile) {
-      this.setState({ formWidth: "72vw", formHeight: "545px" });
+      this.setState({ formWidth: "72vw" /*formHeight: "545px"*/ });
     } else if (isBrowser) {
-      this.setState({ formWidth: "261px", formHeight: "545px" });
+      this.setState({ formWidth: "261px" /*formHeight: "545px"*/ });
     }
   }
 
@@ -385,10 +385,7 @@ class FoodIntake extends Component {
       // 284 - paddingBottom:
 
       return (
-        <div
-          // className="container"
-          style={{ width: "100%", height: "100%" }}
-        >
+        <div style={{ width: "100%", height: "100%" }}>
           <MobileView>
             <h3
               style={{
@@ -417,20 +414,21 @@ class FoodIntake extends Component {
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              margin: "auto",
+              float: "center",
               flexWrap: "wrap",
-              width: "100%",
+              width: this.state.formWidth,
             }}
           >
-            <Button
+            {/*<Button
               style={{ width: this.state.formWidth, borderColor: "#aab41e" }}
               className="custom-btn-2"
               as={Link}
               to="/account"
             >
               Back
-            </Button>
+            </Button>*/}
+            <DefaultButton text="Back" styling="green" goTo="/account" />
           </div>
 
           {filteredData.length === 0 ? (
@@ -492,7 +490,7 @@ class FoodIntake extends Component {
                   // width: "90%",
                   width: this.state.formWidth,
                   // height: "100%"
-                  height: this.state.formHeight,
+                  //height: this.state.formHeight,
                   marginBottom: "10vh",
                   // backgroundColor: 'lightgray'
                 }}

@@ -29,10 +29,12 @@
 .turquoise {
   background-color: #32797e;
   border-color: #0c656b;
+  color: white;
 }
 .turquoise:hover {
   background-color: #0c656b;
   border-color: white;
+  color: white;
 }
 .turquoise:focus {
   background-color: #0c656b;
@@ -46,10 +48,12 @@
 .green {
   background-color: #afba15;
   border-color: #95a000;
+  color: white;
 }
 .green:hover {
   background-color: #c5d300;
   border-color: white;
+  color: white;
 }
 .green:focus {
   background-color: #c5d300;
@@ -63,10 +67,12 @@
 .yellow {
   background-color: #d9a12d;
   border-color: #c58401;
+  color: white;
 }
 .yellow:hover {
   background-color: #c58401;
   border-color: white;
+  color: white;
 }
 .yellow:focus {
   background-color: #c58401;
@@ -80,10 +86,12 @@
 .blue {
   background-color: #0c0847;
   border-color: #02001a;
+  color: white;
 }
 .blue:hover {
   background-color: #02001a;
   border-color: white;
+  color: white;
 }
 .blue:focus {
   background-color: #02001a;

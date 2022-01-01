@@ -1,3 +1,4 @@
+//this page is not being used in the app, you might be looking for AddProducts.js
 import React, { Component } from "react";
 import {
   Form,
@@ -58,7 +59,7 @@ class FoodSurplus extends Component {
     filteredData: [],
 
     formWidth: "",
-    formHeight: "",
+    //formHeight: "",
 
     submissionType: "Surplus",
 
@@ -172,7 +173,7 @@ class FoodSurplus extends Component {
       foodSurplusCost: 0,
       currency: "Select Currency",
       currencyMultiplier: 0,
-      formHeight: "965px",
+      //formHeight: "965px",
     });
   };
 
@@ -325,43 +326,6 @@ class FoodSurplus extends Component {
     this.props.createFoodSurplusData(this.state);
   };
 
-  // handleFoodWasteSubmit = (e) => {
-  //     e.preventDefault();
-  //     this.setState({
-  //     })
-  //     this.props.createFoodWasteData(this.state);
-  // }
-
-  // handleFormHeight(text){
-  //     if (text === "Select" || text === "Edible" || text === "Surplus"){
-  //         this.setState({formHeight: "980px"})
-  //     } else if (text === "Inedible"){
-  //         this.setState({formHeight: "750px"})
-  //     }
-  // }
-
-  // handleCheckboxTick = (e) => {
-  //     if (e.target.name === "checkedA"){
-  //         this.setState({
-  //             [e.target.name]: e.target.checked,
-  //             checkedB: !e.target.checked,
-  //             eatingInOrOut: "Eating In"
-  //         });
-  //     } else if (e.target.name === "checkedB"){
-  //         this.setState({
-  //             [e.target.name]: e.target.checked,
-  //             checkedA: !e.target.checked,
-  //             eatingInOrOut: "Eating Out"
-  //         })
-  //     }
-  // }
-
-  // handleFoodNameEntry(text){
-  //     this.setState({
-  //         foodName: text
-  //     })
-  // }
-
   // handleAutoCompleteValueEntry(text){
   //     this.setState( (prevState) => ({
   //         autocompleteEntries: {...prevState.autocompleteEntries, text}
@@ -448,9 +412,9 @@ class FoodSurplus extends Component {
 
   componentDidMount() {
     if (isMobile) {
-      this.setState({ formWidth: "72vw", formHeight: "695px" });
+      this.setState({ formWidth: "72vw" });
     } else if (isBrowser) {
-      this.setState({ formWidth: "261px", formHeight: "695px" });
+      this.setState({ formWidth: "261px" });
     }
   }
 
@@ -576,8 +540,8 @@ class FoodSurplus extends Component {
                 style={{
                   // width: "90%",
                   width: this.state.formWidth,
-                  // height: "100%"
-                  height: this.state.formHeight,
+                  //height: fitContent,
+                  //height: this.state.formHeight,
                   marginBottom: "10vh",
                   // backgroundColor: 'lightgray'
                 }}
