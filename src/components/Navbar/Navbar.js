@@ -63,6 +63,7 @@ const NavBar = (props) => {
                   >
                     My Account
                   </Nav.Link>
+                  {/*
                   <Nav.Link
                     as={NavLink}
                     eventKey="4"
@@ -73,6 +74,7 @@ const NavBar = (props) => {
                   >
                     View Map
                   </Nav.Link>
+                  */}
                   <Nav.Link
                     as={NavLink}
                     eventKey="5"
