@@ -12,7 +12,7 @@ function Profile(props) {
         <Card.Img src={blueberries} alt="" />
         <Card.ImgOverlay>
           <Card.Title>My Account</Card.Title>
-          <Card.Body>Welcome, {props.name}!</Card.Body>
+          <Card.Body>Welcome, {props.name}</Card.Body>
         </Card.ImgOverlay>
       </Card>
       <Divider />

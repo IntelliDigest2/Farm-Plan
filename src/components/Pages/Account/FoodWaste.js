@@ -11,9 +11,9 @@ import { firestoreConnect, getFirebase } from "react-redux-firebase";
 // import { getFirebase} from 'react-redux-firebase'
 // import DisplayError from '../pages/DisplayError'
 import moment from "moment";
-import { BrowserView, MobileView } from "react-device-detect";
+//import { BrowserView, MobileView } from "react-device-detect";
 import { fs } from "../../../config/fbConfig";
-import { Divider } from "@material-ui/core";
+//import { Divider } from "@material-ui/core";
 import addNotification from "react-push-notification";
 import { Card } from "../SubComponents/Card";
 import { InputForm } from "../SubComponents/Form";

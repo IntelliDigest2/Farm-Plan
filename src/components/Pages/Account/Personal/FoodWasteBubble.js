@@ -28,7 +28,17 @@ function FoodWasteBubble() {
           <SubButton
             styling="yellow"
             goTo="/chart/week"
-            text="Food Waste Performance Chart"
+            text="Food Waste Weight Performance Chart"
+          />
+          <SubButton
+            styling="yellow"
+            goTo="/chart/weekGHG"
+            text="Food Waste GHG Performance Chart"
+          />
+          <SubButton
+            styling="yellow"
+            goTo="/chart/weekCost"
+            text="Food Waste Cost Performance Chart"
           />
         </div>
       </>

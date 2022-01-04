@@ -40,6 +40,11 @@
   height: auto;
 }
 
+.white {
+  background-color: white;
+  color: #0c0847;
+}
+
 .green {
   background-color: #afba15;
   color: white;

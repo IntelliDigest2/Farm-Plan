@@ -162,7 +162,7 @@ class AddProducts extends Component {
       fibreContent: 0,
       fatContent: 0,
       showComposition: false,
-      formHeight: "885px",
+      //formHeight: "885px",
     });
   };
 
@@ -357,13 +357,13 @@ class AddProducts extends Component {
     if (isMobile) {
       this.setState({
         formWidth: "90vw",
-        formHeight: "885px",
+        //formHeight: "885px",
         dropdownWidth: "241px",
       });
     } else if (isBrowser) {
       this.setState({
         formWidth: "783px",
-        formHeight: "885px",
+        //formHeight: "885px",
         dropdownWidth: "610px",
       });
     }
@@ -478,7 +478,7 @@ class AddProducts extends Component {
               // width: "90%",
               width: this.state.formWidth,
               // height: "100%"
-              height: this.state.formHeight,
+              //height: this.state.formHeight,
               marginBottom: "10vh",
               backgroundColor: "#aab41e",
             }}
@@ -663,7 +663,7 @@ class AddProducts extends Component {
                         onClick={() =>
                           this.setState({
                             showComposition: !this.state.showComposition,
-                            formHeight: "885px",
+                            //formHeight: "885px",
                           })
                         }
                         style={{ padding: "0 10% 0 10%", fontWeight: "bold" }}
@@ -675,7 +675,7 @@ class AddProducts extends Component {
                         onClick={() =>
                           this.setState({
                             showComposition: !this.state.showComposition,
-                            formHeight: "1245px",
+                            //formHeight: "1245px",
                           })
                         }
                         style={{ padding: "0 10% 0 10%", fontWeight: "bold" }}
