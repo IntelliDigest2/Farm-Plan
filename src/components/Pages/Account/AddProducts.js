@@ -496,12 +496,11 @@ class AddProducts extends Component {
                   <Autocomplete
                     // multiple
                     id="foodName"
-                    options={this.state.foodOptions} //.map((option) => option.name)}
+                    options={this.state.foodOptions}
                     getOptionLabel={(option) => option.name}
                     filterOptions={(x) => x}
                     freeSolo
                     // limitTags={1}
-                    // getOptionLabel={(option) => option.name}
                     style={{ width: "100%", backgroundColor: "white" }}
                     size="small"
                     onInputChange={(e) => this.handleChange(e)}
@@ -1034,36 +1033,6 @@ class AddProducts extends Component {
                     </DropdownButton>
                   </InputGroup>
                 </Form.Group>
-
-                {/* <div style={{padding: "0 10% 0 10%"}}>Local Produce or Surplus?</div>
-                        <Form.Group 
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex"
-                            }}>
-                            <InputGroup>
-                                <DropdownButton
-                                    variant="outline-secondary"
-                                    title={this.state.producedLocally}
-                                    id="lnldd"
-                                    style={{width: "100%"}}
-                                >
-                                    <DropdownItem as="button" type="button">
-                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
-                                            Local Produce
-                                        </div>
-                                    </DropdownItem>
-
-                                    <DropdownItem as="button" type="button">
-                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
-                                            Surplus
-                                        </div>
-                                    </DropdownItem>
-
-                                </DropdownButton>
-                            </InputGroup>
-
-                        </Form.Group> */}
 
                 <div style={{ padding: "0 10% 0 10%" }}>Upload Type</div>
                 <Form.Group

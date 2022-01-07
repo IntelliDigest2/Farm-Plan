@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { DefaultButton, SubButton } from "../../SubComponents/Button";
-import { FoodSurplusBubble } from "./FoodSurplusBubble";
+import { DefaultButton } from "../../SubComponents/Button";
+//import { FoodSurplusBubble } from "./FoodSurplusBubble";
 import { FoodBubble } from "./FoodBubble";
 import { FoodWasteBubble } from "./FoodWasteBubble";
 import "../UserAccount.css";
@@ -19,7 +19,6 @@ function PersonalBubble() {
         />
         <Container fluid className="sub-selection">
           <FoodBubble />
-          <FoodSurplusBubble />
           <FoodWasteBubble />
         </Container>
       </>
