@@ -19,7 +19,6 @@ function PersonalBubble() {
         />
         <Container fluid className="sub-selection">
           <FoodBubble />
-          <FoodSurplusBubble />
           <FoodWasteBubble />
         </Container>
       </>

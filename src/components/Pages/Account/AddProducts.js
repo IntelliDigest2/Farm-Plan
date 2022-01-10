@@ -89,7 +89,7 @@ class AddProducts extends Component {
     ghg: 0,
 
     foodSurplusCost: 0,
-    currency: "Select Currency",
+    currency: "Select Currency *",
     currencyMultiplier: 0,
 
     notes: "n/a",
@@ -155,7 +155,7 @@ class AddProducts extends Component {
       expiryDate: "",
       ghg: 0,
       foodSurplusCost: 0,
-      currency: "Select Currency",
+      currency: "Select Currency *",
       currencyMultiplier: 0,
       carbsContent: 0,
       proteinContent: 0,
@@ -195,7 +195,13 @@ class AddProducts extends Component {
     this.setState({ weightMultiplier: value });
   }
 
-  handleChange = async (e) => {
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  handleFoodApi = async (e) => {
     const resp = await fetch("https://web-wrggqo5tiq-lz.a.run.app/completion", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors",
@@ -493,7 +499,7 @@ class AddProducts extends Component {
               </h5>
 
               <div>
-                <div style={{ padding: "0 10% 0 10%" }}>Food Name</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Food Name *</div>
                 <Form.Group style={{ padding: "0 10% 0 10%", display: "flex" }}>
                   <Autocomplete
                     // multiple
@@ -506,7 +512,7 @@ class AddProducts extends Component {
                     // getOptionLabel={(option) => option.name}
                     style={{ width: "100%", backgroundColor: "white" }}
                     size="small"
-                    onInputChange={(e) => this.handleChange(e)}
+                    onInputChange={(e) => this.handleFoodApi(e)}
                     onChange={(e) =>
                       this.setState({ foodName: e.target.textContent })
                     }
@@ -526,7 +532,7 @@ class AddProducts extends Component {
                   />
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Food Category</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Food Category *</div>
                 <Form.Group
                   style={{
                     padding: "0 10% 0 10%",
@@ -634,7 +640,7 @@ class AddProducts extends Component {
                   </InputGroup>
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Postcode</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Postcode *</div>
                 <Form.Group
                   className="form-layout"
                   style={{
@@ -921,7 +927,7 @@ class AddProducts extends Component {
                   )}
                 </>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Weight / Volume</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Weight / Volume *</div>
                 <Form.Group
                   className="form-layout"
                   style={{
@@ -1067,7 +1073,7 @@ class AddProducts extends Component {
 
                         </Form.Group> */}
 
-                <div style={{ padding: "0 10% 0 10%" }}>Upload Type</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Upload Type *</div>
                 <Form.Group
                   style={{
                     padding: "0 10% 0 10%",
@@ -1126,7 +1132,7 @@ class AddProducts extends Component {
                   </InputGroup>
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Price</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Price *</div>
                 <Form.Group
                   className="form-layout"
                   style={{
@@ -1154,7 +1160,7 @@ class AddProducts extends Component {
                   </InputGroup>
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Expiry Date</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Expiry Date *</div>
                 <Form.Group
                   className="form-layout"
                   style={{
@@ -1219,10 +1225,6 @@ class AddProducts extends Component {
                 <div style={{ padding: "0 10% 0 10%" }}>Cost</div>
                 <Form.Group style={{ padding: "0 10% 0 10%", display: "flex" }}>
                   <InputGroup>
-                    {/* <InputGroup.Prepend>
-                                <InputGroup.Text>£</InputGroup.Text>
-                            </InputGroup.Prepend> */}
-
                     <DropdownButton
                       as={InputGroup.Prepend}
                       variant="outline-secondary"
@@ -1301,7 +1303,7 @@ class AddProducts extends Component {
                   this.state.producedLocally !== "Select" &&
                   this.state.price !== 0.0 &&
                   this.state.expiryDate !== "" &&
-                  this.state.currency !== "Select Currency" ? (
+                  this.state.currency !== "Select Currency *" ? (
                     <Button
                       style={{
                         margin: "0 10% 0 10%",
