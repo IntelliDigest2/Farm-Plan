@@ -126,7 +126,6 @@ class FoodIntake extends Component {
     // autocompleteEntries: [
     //     {}
     // ]
-    foodOptions: [],
   };
 
   // handleChartSubmit(label, column){
