@@ -37,6 +37,9 @@ function FoodBubble() {
             goTo="/chart/nutrientGap"
             text="Nutrient Gap Breakdown"
           />
+
+          {/* food surplus */}
+
           <SubButton
             styling="turquoise"
             goTo="/add-products"

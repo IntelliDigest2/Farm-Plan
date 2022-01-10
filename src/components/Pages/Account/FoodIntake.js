@@ -118,6 +118,7 @@ class FoodIntake extends Component {
     chartSubmissionYear: moment().format("YYYY"),
     chartSubmissionFullDate: moment().format("ddd MMM Do YYYY"),
 
+    foodOptions: [],
     // showComposition: false,
 
     // dataChartEFW: [['Food Wastage Type', 'Food Wastage Weight']],
@@ -199,6 +200,29 @@ class FoodIntake extends Component {
 
   handleChange = async (e) => {
     // console.log(e);
+    const resp = await fetch("https://web-wrggqo5tiq-lz.a.run.app/completion", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors",
+      headers: {
+        //'Content-Type': 'application/json',
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `food=${e.target.value}`,
+    });
+    //console.log(resp);
+    const data = await resp.json();
+    //console.table(data);
+    //this.foodOptions = data;
+    this.state.foodOptions = data;
+    //console.log(this.foodOptions);
+
+    //          .then((res) => console.log(res.items));
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  handleFoodApi = async (e) => {
     const resp = await fetch("https://web-wrggqo5tiq-lz.a.run.app/completion", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors",
@@ -562,7 +586,9 @@ class FoodIntake extends Component {
                       <Autocomplete
                         // multiple
                         id="foodName"
+
                         options={this.state.foodOptions}
+
                         getOptionLabel={(option) => option.name}
                         filterOptions={(x) => x}
                         freeSolo
@@ -570,10 +596,12 @@ class FoodIntake extends Component {
                         // getOptionLabel={(option) => option.name}
                         style={{ width: "100%" }}
                         size="small"
-                        onChange={(e) => {
-                          this.setState({ foodName: e.target.textContent });
-                        }}
-                        onInputChange={(e) => this.handleChange(e)}
+
+                        onChange={(e) =>
+                          this.setState({ foodName: e.target.textContent })
+                        }
+                        onInputChange={(e) => this.handleFoodApi(e)}
+
                         // renderTags={(value, getTagProps) =>
                         //     value.map((option, index) => (
                         //       <Chip variant="outlined" label={option} {...getTagProps({ index })} />

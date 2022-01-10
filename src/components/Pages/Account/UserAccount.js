@@ -67,7 +67,7 @@ function Account(props) {
       "Restaurants" ||
       "Shop/Supermarket" ||
       "Recreational Centers":
-      console.log(props.profile.buildingFunction);
+      //console.log(props.profile.buildingFunction);
       return (
         <>
           <Container fluid className="web-center">
