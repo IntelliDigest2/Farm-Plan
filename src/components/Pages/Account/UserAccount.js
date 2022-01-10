@@ -110,7 +110,6 @@ function Account(props) {
           <Container fluid className="web-center">
             <Profile name={props.profile.firstName + props.profile.lastName} />
             <FoodBubble />
-            <FoodSurplusBubble />
             <FoodWasteBubble />
             <SubButton
               styling="blue"

@@ -1,23 +1,22 @@
-import React, {Component} from 'react'
-import { BrowserView, MobileView } from 'react-device-detect'
-import {Chart} from "react-google-charts"
-import styled from "styled-components"
-import { Button, ButtonGroup } from 'react-bootstrap';
-import "../../../../Pages.css"
+import React, { Component } from "react";
+import { BrowserView, MobileView } from "react-device-detect";
+import { Chart } from "react-google-charts";
+import styled from "styled-components";
+import { Button, ButtonGroup } from "react-bootstrap";
+import "../../../../Pages.css";
 import "../../../../../../App.css";
-import {Link} from "react-router-dom"
-import {Card} from "react-bootstrap"
+import { Link } from "react-router-dom";
+import { Card } from "react-bootstrap";
 
-import moment from "moment"
+import moment from "moment";
 
-import { connect } from 'react-redux';
-import {fs} from "../../../../../../config/fbConfig"
+import { connect } from "react-redux";
+import { fs } from "../../../../../../config/fbConfig";
 
-const time = moment().format("MMM")
-const fullMonth = moment().format("MMMM")
+const time = moment().format("MMM");
+const fullMonth = moment().format("MMMM");
 
 class Chart2 extends Component {
-
   // var weekNo1 = moment("01-06-2021", "DD-MM-YYYY").week(); // 23
   // var weekNo2 = moment("14-06-2021", "DD-MM-YYYY").week(); // 25
   // var weekNo3 = moment("20-06-2021", "DD-MM-YYYY").week(); // 26
@@ -36,7 +35,7 @@ class Chart2 extends Component {
     // week5Weight: 0,
     // chartData: [["Week/Period", "Food Wastage Weight"]],
     monthEnd: "",
-  }
+  };
 
   // fetch db.json data
   fetchData = async () => {
@@ -63,32 +62,33 @@ class Chart2 extends Component {
     //   }
     // })
 
-    fs.collection('data').doc(this.state.uid).collection('writtenFoodWasteData')
+    fs.collection("data")
+      .doc(this.state.uid)
+      .collection("writtenFoodWasteData")
       .get()
-      .then( snapshot => {
-        snapshot.forEach(doc => {
-
-          var month = doc.data().MONTH
-          var mdate = doc.data().MDATE
-          var weight = doc.data().weight
-          var wu = doc.data().WEIGHTUNIT
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          var month = doc.data().MONTH;
+          var mdate = doc.data().MDATE;
+          var weight = doc.data().weight;
+          var wu = doc.data().WEIGHTUNIT;
           // var isSurplus = doc.data().EDIBLEORINEDIBLE
 
-          var st = doc.data().SUBMISSIONTYPE
+          var st = doc.data().SUBMISSIONTYPE;
 
-          var newWeight = 0
+          var newWeight = 0;
 
-          if (wu === "kg" || wu === "l"){
-            newWeight = Number(weight * 1)
+          if (wu === "kg" || wu === "l") {
+            newWeight = Number(weight * 1);
             // console.log(newWeight)
-          } else if (wu === "g" || wu === "ml"){
-            newWeight = Number((weight * 0.001).toFixed(3))
+          } else if (wu === "g" || wu === "ml") {
+            newWeight = Number((weight * 0.001).toFixed(3));
             // console.log(newWeight)
-          } else if (wu === "oz"){
-            newWeight = Number((weight * 0.028).toFixed(3))
+          } else if (wu === "oz") {
+            newWeight = Number((weight * 0.028).toFixed(3));
             // console.log(newWeight)
-          } else if (wu === "lbs"){
-            newWeight = Number((weight * 0.454).toFixed(3))
+          } else if (wu === "lbs") {
+            newWeight = Number((weight * 0.454).toFixed(3));
             // console.log(newWeight)
           }
 
@@ -97,26 +97,68 @@ class Chart2 extends Component {
           // var fatCon = doc.data().FATCONTENT
           // var fibCon = doc.data().FIBRECONTENT
 
-          if (month === time && (mdate === "1st" || mdate === "2nd" || mdate === "3rd" || mdate === "4th" || mdate === "5th" || mdate === "6th" || mdate === "7th") && st === "Waste"){
-            this.setState( (prevState) => ({
-              week1Weight: prevState.week1Weight += newWeight
+          if (
+            month === time &&
+            (mdate === "1st" ||
+              mdate === "2nd" ||
+              mdate === "3rd" ||
+              mdate === "4th" ||
+              mdate === "5th" ||
+              mdate === "6th" ||
+              mdate === "7th") &&
+            st === "Waste"
+          ) {
+            this.setState((prevState) => ({
+              week1Weight: (prevState.week1Weight += newWeight),
             }));
-          } else if (month === time && (mdate === "8th" || mdate === "9th" || mdate === "10th" || mdate === "11th" || mdate === "12th" || mdate === "13th" || mdate === "14th") && st === "Waste"){
-            this.setState( (prevState) => ({
-              week2Weight: prevState.week2Weight += newWeight
+          } else if (
+            month === time &&
+            (mdate === "8th" ||
+              mdate === "9th" ||
+              mdate === "10th" ||
+              mdate === "11th" ||
+              mdate === "12th" ||
+              mdate === "13th" ||
+              mdate === "14th") &&
+            st === "Waste"
+          ) {
+            this.setState((prevState) => ({
+              week2Weight: (prevState.week2Weight += newWeight),
             }));
-          } else if (month === time && (mdate === "15th" || mdate === "16th" || mdate === "17th" || mdate === "18th" || mdate === "19th" || mdate === "20th" || mdate === "21st") && st === "Waste"){
-            this.setState( (prevState) => ({
-              week3Weight: prevState.week3Weight += newWeight
+          } else if (
+            month === time &&
+            (mdate === "15th" ||
+              mdate === "16th" ||
+              mdate === "17th" ||
+              mdate === "18th" ||
+              mdate === "19th" ||
+              mdate === "20th" ||
+              mdate === "21st") &&
+            st === "Waste"
+          ) {
+            this.setState((prevState) => ({
+              week3Weight: (prevState.week3Weight += newWeight),
             }));
-          } else if (month === time && (mdate === "22nd" || mdate === "23rd" || mdate === "24th" || mdate === "25th" || mdate === "26th" || mdate === "27th" || mdate === "28th" || mdate === "29th" || mdate === "30th" || mdate === "31st") && st === "Waste"){
-            this.setState( (prevState) => ({
-              week4Weight: prevState.week4Weight += newWeight
+          } else if (
+            month === time &&
+            (mdate === "22nd" ||
+              mdate === "23rd" ||
+              mdate === "24th" ||
+              mdate === "25th" ||
+              mdate === "26th" ||
+              mdate === "27th" ||
+              mdate === "28th" ||
+              mdate === "29th" ||
+              mdate === "30th" ||
+              mdate === "31st") &&
+            st === "Waste"
+          ) {
+            this.setState((prevState) => ({
+              week4Weight: (prevState.week4Weight += newWeight),
             }));
-          } 
-
-        })
-      })
+          }
+        });
+      });
 
     // var tempWeeks = []
 
@@ -165,17 +207,30 @@ class Chart2 extends Component {
 
     // console.log(this.state.weeks)
     // return data
-  }
-  
-  componentDidMount(){
+  };
+
+  componentDidMount() {
     this.fetchData();
 
-    if (time === "Jan" || time === "Mar" || time === "May" || time === "Jul" || time === "Aug" || time === "Oct" || time === "Dec"){
-      this.setState({monthEnd: "31st"})
-    } else if (time === "Apr" || time === "Jun" || time === "Sep" || time === "Nov"){
-      this.setState({monthEnd: "30th"})
-    } else if (time === "Feb"){
-      this.setState({monthEnd: "28th"})
+    if (
+      time === "Jan" ||
+      time === "Mar" ||
+      time === "May" ||
+      time === "Jul" ||
+      time === "Aug" ||
+      time === "Oct" ||
+      time === "Dec"
+    ) {
+      this.setState({ monthEnd: "31st" });
+    } else if (
+      time === "Apr" ||
+      time === "Jun" ||
+      time === "Sep" ||
+      time === "Nov"
+    ) {
+      this.setState({ monthEnd: "30th" });
+    } else if (time === "Feb") {
+      this.setState({ monthEnd: "28th" });
     }
   }
 
@@ -187,18 +242,18 @@ class Chart2 extends Component {
   //     // return data
   // }
 
-  render(){
+  render() {
     return (
       <React.Fragment className="row">
-        <br/>
-        <br/>
-        <br/>
+        <br />
+        <br />
+        <br />
         {/* <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
           <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
           <Col className="mt-5 pt-5" xs={12}></Col> 
           <Col className="" xs={12} lg={4}></Col>
           <Col className=" justify-content-center display-flex align-items-center d-block mt-5 pt-5 mt-lg-0 pt-lg-0 center text-center" xs={90} lg={4}> */}
-            {/* <CardStyle>
+        {/* <CardStyle>
               <Card>
                 <Card.Body>
                   <Card.Text className="text-center">
@@ -209,7 +264,7 @@ class Chart2 extends Component {
               </Card>
             </CardStyle> */}
 
-            {/* <Chart
+        {/* <Chart
             className="row"
             style={{width:'1684px', height:'650px'}}
               chartType="AreaChart"
@@ -252,102 +307,164 @@ class Chart2 extends Component {
               // For tests
               rootProps={{ 'data-testid': '1' }}
             /> */}
-          <BrowserView>
-            {/* <ChartStyle> */}
-            <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
+        <BrowserView>
+          {/* <ChartStyle> */}
+          <div
+            style={{ height: "120%", marginBottom: "2.5%", marginLeft: "10%" }}
+          >
+            <Chart
+              className="bar-chart"
+              width={"78vw"}
+              height={"600px"}
+              chartType="ColumnChart"
+              loader={<div>Loading Chart</div>}
+              data={[
+                ["Week/Period", "Food Wastage Weight"],
+                ["1st-7th", this.state.week1Weight],
+                ["8th-14th", this.state.week2Weight],
+                ["15th-21st", this.state.week3Weight],
+                ["22nd-" + this.state.monthEnd, this.state.week4Weight],
+              ]}
+              options={{
+                // backgroundColor: 'lightgray',
+                title:
+                  "This month's Food Wastage Performance (" +
+                  fullMonth +
+                  " 2021)",
+                chartArea: { width: "50%" },
+                colors: ["#aab41e"],
+                hAxis: {
+                  title: "Week/Period of " + fullMonth,
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: "Weight of Food Wastage (kg)",
+                },
+              }}
+              legendToggle
+            />
+          </div>
+          {/* </ChartStyle> */}
 
+          <div style={{ height: "40px", marginBottom: "10%" }}>
+            <Card
+              style={{
+                width: "78vw",
+                height: "35px",
+                marginBottom: "10%",
+                marginLeft: "10%",
+                padding: "2.5% 5% 2.5% 5%",
+                justifyContent: "center",
+              }}
+            >
+              <ButtonGroup>
+                <Button
+                  style={{ width: "15%" }}
+                  className="custom-btn"
+                  as={Link}
+                  to="/chart/week"
+                >
+                  View Previous (Weekly Weight)
+                </Button>
+                <Button
+                  style={{ width: "7.5%" }}
+                  className="custom-btn"
+                  as={Link}
+                  to="/account"
+                >
+                  Back
+                </Button>
+                <Button
+                  style={{ width: "15%" }}
+                  className="custom-btn"
+                  as={Link}
+                  to="/chart/year"
+                >
+                  View Next (Yearly Weight)
+                </Button>
+              </ButtonGroup>
+            </Card>
+          </div>
+        </BrowserView>
 
-              <Chart className='bar-chart'
-                width={'78vw'}
-                height={'600px'}
-                chartType="ColumnChart"
-                loader={<div>Loading Chart</div>}
-                data={[
-                  ['Week/Period', 'Food Wastage Weight'],
-                  ['1st-7th', this.state.week1Weight],
-                  ['8th-14th', this.state.week2Weight],
-                  ['15th-21st', this.state.week3Weight],
-                  ['22nd-'+this.state.monthEnd, this.state.week4Weight],
-                ]}
-                options={{
-                  // backgroundColor: 'lightgray',
-                  title: 'This month\'s Food Wastage Performance (' + fullMonth + ' 2021)',
-                  chartArea: { width: '50%' },
-                  colors: ['#aab41e'],
-                  hAxis: {
-                    title: 'Week/Period of ' + fullMonth,
-                    minValue: 0,
-                  },
-                  vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
-                  },
-                }}
-                legendToggle
-              />
+        <MobileView>
+          {/* <ChartStyle> */}
+          <div
+            style={{ height: "120%", marginBottom: "2.5%", marginLeft: "10%" }}
+          >
+            <Chart
+              className="bar-chart"
+              width={"78vw"}
+              height={"600px"}
+              chartType="ColumnChart"
+              loader={<div>Loading Chart</div>}
+              data={[
+                ["Week/Period", "Weight "],
+                ["1st-7th", this.state.week1Weight],
+                ["8th-14th", this.state.week2Weight],
+                ["15th-21st", this.state.week3Weight],
+                ["22nd-" + this.state.monthEnd, this.state.week4Weight],
+              ]}
+              options={{
+                // backgroundColor: 'lightgray',
+                title: "Food Wastage Performance (" + fullMonth + " 2021)",
+                chartArea: { width: "50%" },
+                legend: "none",
+                colors: ["#aab41e"],
+                hAxis: {
+                  title: "Week/Period of " + fullMonth,
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: "Weight of Food Wastage (kg)",
+                },
+              }}
+              // legendToggle
+            />
+          </div>
+          {/* </ChartStyle> */}
 
-            </div>
-            {/* </ChartStyle> */}
-
-            <div style={{height: "40px", marginBottom: "10%"}}>
-              <Card  style={{width: '78vw', height: '35px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
-                <ButtonGroup>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/week">View Previous (Weekly Weight)</Button>
-                  <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/year">View Next (Yearly Weight)</Button>
-                </ButtonGroup>
-              </Card>
-            </div>
-
-          </BrowserView>
-
-          <MobileView>
-            {/* <ChartStyle> */}
-            <div style={{height: "120%", marginBottom: "2.5%", marginLeft: "10%"}}>
-
-              <Chart className='bar-chart'
-                width={'78vw'}
-                height={'600px'}
-                chartType="ColumnChart"
-                loader={<div>Loading Chart</div>}
-                data={[
-                  ['Week/Period', 'Weight '],
-                  ['1st-7th', this.state.week1Weight],
-                  ['8th-14th', this.state.week2Weight],
-                  ['15th-21st', this.state.week3Weight],
-                  ['22nd-'+this.state.monthEnd, this.state.week4Weight],
-                ]}
-                options={{
-                  // backgroundColor: 'lightgray',
-                  title: 'Food Wastage Performance (' + fullMonth + ' 2021)',
-                  chartArea: { width: '50%' },
-                  legend: 'none',
-                  colors: ['#aab41e'],
-                  hAxis: {
-                    title: 'Week/Period of ' + fullMonth,
-                    minValue: 0,
-                  },
-                  vAxis: {
-                    title: 'Weight of Food Wastage (kg)',
-                  },
-                }}
-                // legendToggle
-              />
-
-            </div>
-            {/* </ChartStyle> */}
-
-            <div style={{height: "95px", marginBottom: "10%"}}>
-              <Card  style={{width: '78vw', height: '95px', marginBottom: "10%", marginLeft: '10%', padding: "2.5% 5% 2.5% 5%", justifyContent: "center"}}>
-                <ButtonGroup>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/week">Prev</Button>
-                  <Button style={{width: "7.5%"}} className="custom-btn" as={Link} to="/account">Back</Button>
-                  <Button style={{width: "15%"}} className="custom-btn" as={Link} to="/chart/year">Next</Button>
-                </ButtonGroup>
-              </Card>
-            </div>
-
-          </MobileView>
-            {/* <Chart
+          <div style={{ height: "95px", marginBottom: "10%" }}>
+            <Card
+              style={{
+                width: "78vw",
+                height: "95px",
+                marginBottom: "10%",
+                marginLeft: "10%",
+                padding: "2.5% 5% 2.5% 5%",
+                justifyContent: "center",
+              }}
+            >
+              <ButtonGroup>
+                <Button
+                  style={{ width: "15%" }}
+                  className="custom-btn"
+                  as={Link}
+                  to="/chart/week"
+                >
+                  Prev
+                </Button>
+                <Button
+                  style={{ width: "7.5%" }}
+                  className="custom-btn"
+                  as={Link}
+                  to="/account"
+                >
+                  Back
+                </Button>
+                <Button
+                  style={{ width: "15%" }}
+                  className="custom-btn"
+                  as={Link}
+                  to="/chart/year"
+                >
+                  Next
+                </Button>
+              </ButtonGroup>
+            </Card>
+          </div>
+        </MobileView>
+        {/* <Chart
             className="row"
             style={{width:'1684px', height:'650px', alignItems:'center', justifyContent:'center', display:'flex'}}
               chartType="AreaChart"
@@ -391,38 +508,37 @@ class Chart2 extends Component {
               rootProps={{ 'data-testid': '1' }}
             /> */}
 
-          {/* </Col>
+        {/* </Col>
           <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
           <Col className="mt-5 pt-5" xs={12}></Col>
           <Col className="mt-5 pt-5" xs={12}></Col>
         </Row> */}
-        <br/>
-        <br/>
-        <br/>
+        <br />
+        <br />
+        <br />
       </React.Fragment>
-        
-    )
+    );
   }
 }
 
 const ChartStyle = styled.div`
-.bar-chart{
-  position: absolute;
-  left: 50%;
-  right: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
+  .bar-chart {
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-  .area-chart{
+  .area-chart {
     padding: 10px;
   }
 `;
 
-const mapStateToProps = (state) => { 
-  return{
-      auth: state.firebase.auth,
-  }
-}
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
 
 export default connect(mapStateToProps, null)(Chart2);

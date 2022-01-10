@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { DefaultButton, SubButton } from "../../SubComponents/Button";
-import { FoodSurplusBubble } from "./FoodSurplusBubble";
+import { DefaultButton } from "../../SubComponents/Button";
+//import { FoodSurplusBubble } from "./FoodSurplusBubble";
 import { FoodBubble } from "./FoodBubble";
 import { FoodWasteBubble } from "./FoodWasteBubble";
 import "../UserAccount.css";

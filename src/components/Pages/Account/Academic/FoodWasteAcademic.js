@@ -39,7 +39,7 @@ import { TextField } from "@material-ui/core";
 
 // import {Chart} from "react-google-charts"
 
-const time = moment().format("MMMM Do YYYY, h:mm:ss a");
+//const time = moment().format("MMMM Do YYYY, h:mm:ss a");
 
 const dailyTabTime = moment().format("ddd MMM Do YYYY");
 
@@ -58,7 +58,6 @@ class FoodWaste extends Component {
     filteredData: [],
 
     formWidth: "",
-    formHeight: "",
 
     submissionType: "Waste Academic",
 
@@ -171,7 +170,6 @@ class FoodWaste extends Component {
       currency: "Select Currency",
       currencyMultiplier: 0,
       notes: "",
-      formHeight: "1110px",
     });
   };
 
@@ -275,20 +273,6 @@ class FoodWaste extends Component {
     this.props.createFoodWasteData(this.state);
   };
 
-  handleFormHeight(text) {
-    if (text === "Select" || text === "Edible") {
-      this.setState({ formHeight: "1110px" });
-    } else if (text === "Inedible") {
-      this.setState({ formHeight: "900px" });
-    }
-  }
-
-  handleNotesHeightChange(val) {
-    this.setState({
-      formHeight: this.state.formHeight + val,
-    });
-  }
-
   // handleSubmit = (e) => {
   //     e.preventDefault();
   // //    console.log(this.state);
@@ -366,9 +350,9 @@ class FoodWaste extends Component {
     this.fetchData();
 
     if (isMobile) {
-      this.setState({ formWidth: "72vw", formHeight: "1110px" });
+      this.setState({ formWidth: "72vw" });
     } else if (isBrowser) {
-      this.setState({ formWidth: "261px", formHeight: "1110px" });
+      this.setState({ formWidth: "261px" });
     }
   }
 
@@ -495,7 +479,6 @@ class FoodWaste extends Component {
                   // width: "90%",
                   width: this.state.formWidth,
                   // height: "100%"
-                  height: this.state.formHeight,
                   marginBottom: "10vh",
                   // backgroundColor: 'lightgray'
                 }}
@@ -594,7 +577,6 @@ class FoodWaste extends Component {
                                     this.handleEdibleInedibleSurplusChange(
                                       e.target.textContent
                                     );
-                                    this.handleFormHeight(e.target.textContent);
                                   }}
                                 >
                                   Edible
@@ -608,7 +590,6 @@ class FoodWaste extends Component {
                                     this.handleEdibleInedibleSurplusChange(
                                       e.target.textContent
                                     );
-                                    this.handleFormHeight(e.target.textContent);
                                   }}
                                 >
                                   Inedible

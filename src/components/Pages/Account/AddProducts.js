@@ -3,8 +3,6 @@ import {
   Form,
   Button,
   Card,
-  Col,
-  Row,
   InputGroup,
   DropdownButton,
   Dropdown,
@@ -14,7 +12,7 @@ import {
   startData,
   createFoodSurplusData,
 } from "../../../store/actions/dataActions";
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -40,9 +38,9 @@ import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 // import {Chart} from "react-google-charts"
 
-const time = moment().format("MMMM Do YYYY, h:mm:ss a");
+//const time = moment().format("MMMM Do YYYY, h:mm:ss a");
 
-const dailyTabTime = moment().format("ddd MMM Do YYYY");
+//const dailyTabTime = moment().format("ddd MMM Do YYYY");
 
 // const chartSubmissionDay = moment().format("ddd")
 // const chartSubmissionWeek = moment().format("W")
@@ -504,12 +502,11 @@ class AddProducts extends Component {
                   <Autocomplete
                     // multiple
                     id="foodName"
-                    options={this.state.foodOptions} //.map((option) => option.name)}
+                    options={this.state.foodOptions}
                     getOptionLabel={(option) => option.name}
                     filterOptions={(x) => x}
                     freeSolo
                     // limitTags={1}
-                    // getOptionLabel={(option) => option.name}
                     style={{ width: "100%", backgroundColor: "white" }}
                     size="small"
                     onInputChange={(e) => this.handleFoodApi(e)}
@@ -1043,37 +1040,8 @@ class AddProducts extends Component {
                   </InputGroup>
                 </Form.Group>
 
-                {/* <div style={{padding: "0 10% 0 10%"}}>Local Produce or Surplus?</div>
-                        <Form.Group 
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex"
-                            }}>
-                            <InputGroup>
-                                <DropdownButton
-                                    variant="outline-secondary"
-                                    title={this.state.producedLocally}
-                                    id="lnldd"
-                                    style={{width: "100%"}}
-                                >
-                                    <DropdownItem as="button" type="button">
-                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
-                                            Local Produce
-                                        </div>
-                                    </DropdownItem>
-
-                                    <DropdownItem as="button" type="button">
-                                        <div onClick={(e) => this.handleProducedLocallyChange(e.target.textContent)}>
-                                            Surplus
-                                        </div>
-                                    </DropdownItem>
-
-                                </DropdownButton>
-                            </InputGroup>
-
-                        </Form.Group> */}
-
                 <div style={{ padding: "0 10% 0 10%" }}>Upload Type *</div>
+
                 <Form.Group
                   style={{
                     padding: "0 10% 0 10%",

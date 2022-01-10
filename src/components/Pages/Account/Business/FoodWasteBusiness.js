@@ -57,7 +57,6 @@ class FoodWasteBusiness extends Component {
     filteredData: [],
 
     formWidth: "",
-    formHeight: "",
 
     submissionType: "Waste Business",
 
@@ -156,7 +155,6 @@ class FoodWasteBusiness extends Component {
       foodWasteCost: 0,
       currency: "Select Currency",
       currencyMultiplier: 0,
-      formHeight: "590px",
     });
   };
 
@@ -312,14 +310,6 @@ class FoodWasteBusiness extends Component {
     this.props.createFoodWasteData(this.state);
   };
 
-  handleFormHeight(text) {
-    if (text === "Select" || text === "Edible") {
-      this.setState({ formHeight: "590px" });
-    } else if (text === "Inedible") {
-      this.setState({ formHeight: "445px" });
-    }
-  }
-
   handleCheckboxTick = (e) => {
     if (e.target.name === "checkedA") {
       this.setState({
@@ -364,9 +354,9 @@ class FoodWasteBusiness extends Component {
 
   componentDidMount() {
     if (isMobile) {
-      this.setState({ formWidth: "72vw", formHeight: "590px" });
+      this.setState({ formWidth: "72vw" });
     } else if (isBrowser) {
-      this.setState({ formWidth: "261px", formHeight: "590px" });
+      this.setState({ formWidth: "261px" });
     }
   }
 
@@ -493,7 +483,6 @@ class FoodWasteBusiness extends Component {
                   // width: "90%",
                   width: this.state.formWidth,
                   // height: "100%"
-                  height: this.state.formHeight,
                   marginBottom: "10vh",
                   // backgroundColor: 'lightgray'
                 }}
@@ -618,7 +607,6 @@ class FoodWasteBusiness extends Component {
                                     this.handleEdibleInedibleSurplusChange(
                                       e.target.textContent
                                     );
-                                    this.handleFormHeight(e.target.textContent);
                                   }}
                                 >
                                   Edible
@@ -632,7 +620,6 @@ class FoodWasteBusiness extends Component {
                                     this.handleEdibleInedibleSurplusChange(
                                       e.target.textContent
                                     );
-                                    this.handleFormHeight(e.target.textContent);
                                   }}
                                 >
                                   Inedible
