@@ -6,10 +6,9 @@ import "../UserAccount.css";
 
 import { connect } from "react-redux";
 import { fs } from "../../../../config/fbConfig";
+import { getFirestoreData } from "../../../../store/actions/dataActions";
 
-import moment from "moment";
-
-const time = moment().format("W");
+// Use Date() functionality instead of Moment. Look up documentation on sub-functions such as .GetMonth() or .GetFullYear() etc.
 
 function MyChart(props) {
   return (
@@ -69,7 +68,7 @@ function MyChart(props) {
           }
         });
       }) */
-function WeekWeight(props) {
+const WeekWeight = (props) => {
   //this creates the state
   const [chart, setChart] = useState([]);
   const [mon, setMon] = useState(0);
@@ -117,7 +116,7 @@ function WeekWeight(props) {
       }}
     />
   );
-}
+};
 
 function ChartView() {
   return (
@@ -150,10 +149,24 @@ const ChartStyle = styled.div`
   }
 `;
 
+// Maps values in store to props in this file
+/*
+ * Example using auth:
+ * in class component, accessed via: this.props.auth
+ * in functional component, accessed via: props.auth
+ */
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
+    data: state.data.getData,
   };
 };
 
-export default connect(mapStateToProps, null)(WeekWeight);
+//Maps specific function calls to dispatch (I think...)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getFirestoreData: (product) => dispatch(getFirestoreData(product)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WeekWeight);
