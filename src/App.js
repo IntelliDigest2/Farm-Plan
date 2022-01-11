@@ -13,6 +13,7 @@ import Footer from "./components/Footer/Footer";
 import Home from "./components/Pages/Home";
 import About from "./components/Pages/About";
 import Login from "./components/Pages/Auth/Login";
+import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/SignUp";
 import NotFound from "./components/Pages/NotFound";
@@ -201,7 +202,7 @@ class App extends Component {
                   this.state.isLoggedIn ? (
                     <Redirect to="/pts" />
                   ) : (
-                    <Redirect to="/login" />
+                    <Redirect to="/landing" />
                   )
                 }
               />
@@ -215,6 +216,7 @@ class App extends Component {
               <Route path="/home" exact component={Home} />
               <Route path="/about" exact component={About} />
               <Route path="/login" exact component={Login} />
+              <Route path="/landing" exact component={LandingPage} />
               <Route path="/signup" exact component={SignUp} />
               <Route path="/contact" exact component={Contact} />
               <Route

@@ -1,16 +1,15 @@
-
-*{
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 15px;
   font-weight: 400;
   box-sizing: border-box;
   /* background-color: whitesmoke; */
 }
 
-
-#root ,body {
+#root,
+body {
   min-height: 100%;
   width: 100%;
 }
@@ -22,20 +21,21 @@ html {
   background-color: whitesmoke;
 }
 
-body{
+body {
   margin: 0;
   padding: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif, "Source Serif Pro";
   font-size: 15px;
   font-weight: 400;
   box-sizing: border-box;
   background-color: whitesmoke;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-.row, .col{
+.row,
+.col {
   background-color: whitesmoke;
 }
