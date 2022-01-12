@@ -26,7 +26,7 @@ export const signIn = (credentials) => {
   };
 
   export const updatePassword = (credentials) => {
-    return (dispatch, getState, { getFirebase }) => {
+    return (dispatch, getState, { getFirebase }) => { 
       const firebase = getFirebase();      
       firebase
       .auth()

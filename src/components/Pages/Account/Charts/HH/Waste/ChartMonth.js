@@ -271,7 +271,7 @@ class Chart2 extends Component {
                 ]}
                 options={{
                   // backgroundColor: 'lightgray',
-                  title: 'This month\'s Food Wastage Performance (' + fullMonth + ' 2021)',
+                  title: 'This month\'s Food Wastage Performance (' + fullMonth + ' 2022)',
                   chartArea: { width: '50%' },
                   colors: ['#aab41e'],
                   hAxis: {
