@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,6 +8,8 @@ import {
 import "./App.css";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+//* Pages
 import NavBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./components/Pages/Home";
@@ -163,7 +165,6 @@ import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplus
 import { Notifications } from "react-push-notification";
 
 import { connect } from "react-redux";
-import { auth } from "./config/fbConfig";
 import {
   BrowserView,
   MobileView,
@@ -171,314 +172,316 @@ import {
   isBrowser,
 } from "react-device-detect";
 
-class App extends Component {
-  state = {
-    uid: this.props.auth.uid,
-    isLoggedIn: false,
-  };
+//* Cloud Messaging
+import { Toast } from "react-bootstrap";
+import { getToken, onMessageListener } from "./config/fbConfig";
 
-  componentDidMount() {
-    if (auth.uid) {
-      this.setState({ isLoggedIn: true });
-    } else {
-      this.setState({ isLoggedIn: false });
-    }
-  }
+const App = (props) => {
+  const [uid, setUid] = useState(props.auth.uid);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  render() {
-    const { auth } = this.props;
+  useEffect(() => {
+    if (props.auth.uid) setIsLoggedIn(true);
+  }, []);
 
-    return (
-      <React.Fragment>
-        <Notifications />
-        <Router>
-          <NavBar />
-          <div>
-            <MobileView>
-              <Route
-                exact
-                path="/"
-                render={() =>
-                  this.state.isLoggedIn ? (
-                    <Redirect to="/pts" />
-                  ) : (
-                    <Redirect to="/landing" />
-                  )
-                }
-              />
-            </MobileView>
+  //Google Cloud Messaging code
+  const [show, setShow] = useState(false);
+  const [notification, setNotification] = useState({
+    title: "",
+    body: "",
+    image: "",
+  });
+  const [isTokenFound, setTokenFound] = useState(false);
+  getToken(setTokenFound);
 
-            <BrowserView>
-              <Route exact path="/" render={() => <Redirect to="/home" />} />
-            </BrowserView>
+  onMessageListener()
+    .then((payload) => {
+      setShow(true);
+      setNotification({
+        image: payload.notification.image,
+        title: payload.notification.title,
+        body: payload.notification.body,
+      });
+      console.log(payload);
+    })
+    .catch((err) => console.log("failed: ", err));
 
-            <Switch>
-              <Route path="/home" exact component={Home} />
-              <Route path="/about" exact component={About} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/landing" exact component={LandingPage} />
-              <Route path="/signup" exact component={SignUp} />
-              <Route path="/contact" exact component={Contact} />
-              <Route
-                path="/terms-and-privacy"
-                exact
-                component={TermsAndPrivacy}
-              />
-              <Route path="/forgot-password" exact component={ForgotPassword} />
-              <Route path="/account" exact component={Account} />
-              <Route path="/pts" exact component={PlanToSave} />
-              <Route path="/change-password" exact component={ChangePassword} />
-              <Route path="/view-map" exact component={MapData} />
+  return (
+    <React.Fragment>
+      <Notifications />
+      <Router>
+        <NavBar />
+        <Toast
+          onClose={() => setShow(false)}
+          show={show}
+          delay={3000}
+          autohide
+          animation
+          style={{
+            position: "absolute",
+            top: 70,
+            right: 20,
+            width: 300,
+          }}
+        >
+          <Toast.Header>
+            <img
+              src={notification.image}
+              className="rounded me-2"
+              alt=""
+              style={{ width: 20, height: 20, margin: 10 }}
+            />
+            <strong className="mr-auto">{notification.title}</strong>
+            <small>just now</small>
+          </Toast.Header>
+          <Toast.Body>{notification.body}</Toast.Body>
+        </Toast>
+        <div>
+          <MobileView>
+            <Route
+              exact
+              path="/"
+              render={() =>
+                isLoggedIn ? <Redirect to="/pts" /> : <Redirect to="/landing" />
+              }
+            />
+          </MobileView>
 
-              <Route path="/food-waste" exact component={FoodWaste} />
-              <Route path="/food-loss" exact component={FoodLoss} />
-              <Route
-                path="/food-wasteBusiness"
-                exact
-                component={FoodWasteBusiness}
-              />
-              <Route path="/food-intake" exact component={FoodIntake} />
-              {/* <Route path="/food-surplus" exact component={FoodSurplus}/> */}
-              <Route path="/table" component={InfoTable} />
+          <BrowserView>
+            <Route exact path="/" render={() => <Redirect to="/home" />} />
+          </BrowserView>
 
-              <Route path="/chart/year" exact component={Chart1} />
-              <Route path="/chart/month" exact component={Chart2} />
-              <Route path="/chart/week" exact component={Chart3} />
-              {/* <Route path="/chart/day" exact component={Chart4} /> */}
+          <Switch>
+            <Route path="/home" exact component={Home} />
+            <Route path="/about" exact component={About} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/landing" exact component={LandingPage} />
+            <Route path="/signup" exact component={SignUp} />
+            <Route path="/contact" exact component={Contact} />
+            <Route
+              path="/terms-and-privacy"
+              exact
+              component={TermsAndPrivacy}
+            />
+            <Route path="/forgot-password" exact component={ForgotPassword} />
+            <Route path="/account" exact component={Account} />
+            <Route path="/pts" exact component={PlanToSave} />
+            <Route path="/change-password" exact component={ChangePassword} />
+            <Route path="/view-map" exact component={MapData} />
 
-              <Route path="/chart/yearGHG" exact component={Chart5} />
-              <Route path="/chart/monthGHG" exact component={Chart6} />
-              <Route path="/chart/weekGHG" exact component={Chart7} />
-              {/* <Route path="/chart/dayGHG" exact component={Chart8} /> */}
+            <Route path="/food-waste" exact component={FoodWaste} />
+            <Route path="/food-loss" exact component={FoodLoss} />
+            <Route
+              path="/food-wasteBusiness"
+              exact
+              component={FoodWasteBusiness}
+            />
+            <Route path="/food-intake" exact component={FoodIntake} />
+            {/* <Route path="/food-surplus" exact component={FoodSurplus}/> */}
+            <Route path="/table" component={InfoTable} />
 
-              <Route path="/chart/yearCost" exact component={Chart9} />
-              <Route path="/chart/monthCost" exact component={Chart10} />
-              <Route path="/chart/weekCost" exact component={Chart11} />
-              {/* <Route path="/chart/dayCost" exact component={Chart12} /> */}
+            <Route path="/chart/year" exact component={Chart1} />
+            <Route path="/chart/month" exact component={Chart2} />
+            <Route path="/chart/week" exact component={Chart3} />
+            {/* <Route path="/chart/day" exact component={Chart4} /> */}
 
-              <Route path="/chart/yearSurplus" exact component={Chart13} />
-              <Route path="/chart/monthSurplus" exact component={Chart14} />
-              <Route path="/chart/weekSurplus" exact component={Chart15} />
-              {/* <Route path="/chart/daySurplus" exact component={Chart16} /> */}
+            <Route path="/chart/yearGHG" exact component={Chart5} />
+            <Route path="/chart/monthGHG" exact component={Chart6} />
+            <Route path="/chart/weekGHG" exact component={Chart7} />
+            {/* <Route path="/chart/dayGHG" exact component={Chart8} /> */}
 
-              <Route path="/chart/yearSurplusGHG" exact component={Chart17} />
-              <Route path="/chart/monthSurplusGHG" exact component={Chart18} />
-              <Route path="/chart/weekSurplusGHG" exact component={Chart19} />
-              {/* <Route path="/chart/daySurplusGHG" exact component={Chart20} /> */}
+            <Route path="/chart/yearCost" exact component={Chart9} />
+            <Route path="/chart/monthCost" exact component={Chart10} />
+            <Route path="/chart/weekCost" exact component={Chart11} />
+            {/* <Route path="/chart/dayCost" exact component={Chart12} /> */}
 
-              <Route path="/chart/yearSurplusCost" exact component={Chart21} />
-              <Route path="/chart/monthSurplusCost" exact component={Chart22} />
-              <Route path="/chart/weekSurplusCost" exact component={Chart23} />
-              {/* <Route path="/chart/daySurplusCost" exact component={Chart24} /> */}
+            <Route path="/chart/yearSurplus" exact component={Chart13} />
+            <Route path="/chart/monthSurplus" exact component={Chart14} />
+            <Route path="/chart/weekSurplus" exact component={Chart15} />
+            {/* <Route path="/chart/daySurplus" exact component={Chart16} /> */}
 
-              {/* <Route path="/chart/dayBusiness" exact component={Chart25} />
+            <Route path="/chart/yearSurplusGHG" exact component={Chart17} />
+            <Route path="/chart/monthSurplusGHG" exact component={Chart18} />
+            <Route path="/chart/weekSurplusGHG" exact component={Chart19} />
+            {/* <Route path="/chart/daySurplusGHG" exact component={Chart20} /> */}
+
+            <Route path="/chart/yearSurplusCost" exact component={Chart21} />
+            <Route path="/chart/monthSurplusCost" exact component={Chart22} />
+            <Route path="/chart/weekSurplusCost" exact component={Chart23} />
+            {/* <Route path="/chart/daySurplusCost" exact component={Chart24} /> */}
+
+            {/* <Route path="/chart/dayBusiness" exact component={Chart25} />
             <Route path="/chart/dayBusinessCost" exact component={Chart26} />
             <Route path="/chart/dayBusinessGHG" exact component={Chart27} /> */}
 
-              <Route path="/chart/yearLoss" exact component={Chart28} />
-              <Route path="/chart/monthLoss" exact component={Chart29} />
-              <Route path="/chart/weekLoss" exact component={Chart30} />
-              <Route path="/chart/dayLoss" exact component={Chart31} />
+            <Route path="/chart/yearLoss" exact component={Chart28} />
+            <Route path="/chart/monthLoss" exact component={Chart29} />
+            <Route path="/chart/weekLoss" exact component={Chart30} />
+            <Route path="/chart/dayLoss" exact component={Chart31} />
 
-              <Route path="/chart/yearLossGHG" exact component={Chart32} />
-              <Route path="/chart/monthLossGHG" exact component={Chart33} />
-              <Route path="/chart/weekLossGHG" exact component={Chart34} />
-              <Route path="/chart/dayLossGHG" exact component={Chart35} />
+            <Route path="/chart/yearLossGHG" exact component={Chart32} />
+            <Route path="/chart/monthLossGHG" exact component={Chart33} />
+            <Route path="/chart/weekLossGHG" exact component={Chart34} />
+            <Route path="/chart/dayLossGHG" exact component={Chart35} />
 
-              <Route path="/chart/yearLossCost" exact component={Chart36} />
-              <Route path="/chart/monthLossCost" exact component={Chart37} />
-              <Route path="/chart/weekLossCost" exact component={Chart38} />
-              <Route path="/chart/dayLossCost" exact component={Chart39} />
+            <Route path="/chart/yearLossCost" exact component={Chart36} />
+            <Route path="/chart/monthLossCost" exact component={Chart37} />
+            <Route path="/chart/weekLossCost" exact component={Chart38} />
+            <Route path="/chart/dayLossCost" exact component={Chart39} />
 
-              <Route path="/chart/nutrientGap" exact component={Chart40} />
+            <Route path="/chart/nutrientGap" exact component={Chart40} />
 
-              <Route path="/chart/yearUni" exact component={Chart41} />
-              <Route path="/chart/monthUni" exact component={Chart42} />
-              <Route path="/chart/weekUni" exact component={Chart43} />
+            <Route path="/chart/yearUni" exact component={Chart41} />
+            <Route path="/chart/monthUni" exact component={Chart42} />
+            <Route path="/chart/weekUni" exact component={Chart43} />
 
-              <Route path="/chart/yearGHGUni" exact component={Chart44} />
-              <Route path="/chart/monthGHGUni" exact component={Chart45} />
-              <Route path="/chart/weekGHGUni" exact component={Chart46} />
+            <Route path="/chart/yearGHGUni" exact component={Chart44} />
+            <Route path="/chart/monthGHGUni" exact component={Chart45} />
+            <Route path="/chart/weekGHGUni" exact component={Chart46} />
 
-              <Route path="/chart/yearCostUni" exact component={Chart47} />
-              <Route path="/chart/monthCostUni" exact component={Chart48} />
-              <Route path="/chart/weekCostUni" exact component={Chart49} />
+            <Route path="/chart/yearCostUni" exact component={Chart47} />
+            <Route path="/chart/monthCostUni" exact component={Chart48} />
+            <Route path="/chart/weekCostUni" exact component={Chart49} />
 
-              <Route path="/chart/yearSurplusUni" exact component={Chart50} />
-              <Route path="/chart/monthSurplusUni" exact component={Chart51} />
-              <Route path="/chart/weekSurplusUni" exact component={Chart52} />
+            <Route path="/chart/yearSurplusUni" exact component={Chart50} />
+            <Route path="/chart/monthSurplusUni" exact component={Chart51} />
+            <Route path="/chart/weekSurplusUni" exact component={Chart52} />
 
-              <Route
-                path="/chart/yearSurplusGHGUni"
-                exact
-                component={Chart53}
-              />
-              <Route
-                path="/chart/monthSurplusGHGUni"
-                exact
-                component={Chart54}
-              />
-              <Route
-                path="/chart/weekSurplusGHGUni"
-                exact
-                component={Chart55}
-              />
+            <Route path="/chart/yearSurplusGHGUni" exact component={Chart53} />
+            <Route path="/chart/monthSurplusGHGUni" exact component={Chart54} />
+            <Route path="/chart/weekSurplusGHGUni" exact component={Chart55} />
 
-              <Route
-                path="/chart/yearSurplusCostUni"
-                exact
-                component={Chart56}
-              />
-              <Route
-                path="/chart/monthSurplusCostUni"
-                exact
-                component={Chart57}
-              />
-              <Route
-                path="/chart/weekSurplusCostUni"
-                exact
-                component={Chart58}
-              />
+            <Route path="/chart/yearSurplusCostUni" exact component={Chart56} />
+            <Route
+              path="/chart/monthSurplusCostUni"
+              exact
+              component={Chart57}
+            />
+            <Route path="/chart/weekSurplusCostUni" exact component={Chart58} />
 
-              <Route path="/chart/yearBusiness" exact component={Chart59} />
-              <Route path="/chart/monthBusiness" exact component={Chart60} />
-              <Route path="/chart/weekBusiness" exact component={Chart61} />
+            <Route path="/chart/yearBusiness" exact component={Chart59} />
+            <Route path="/chart/monthBusiness" exact component={Chart60} />
+            <Route path="/chart/weekBusiness" exact component={Chart61} />
 
-              <Route path="/chart/yearGHGBusiness" exact component={Chart62} />
-              <Route path="/chart/monthGHGBusiness" exact component={Chart63} />
-              <Route path="/chart/weekGHGBusiness" exact component={Chart64} />
+            <Route path="/chart/yearGHGBusiness" exact component={Chart62} />
+            <Route path="/chart/monthGHGBusiness" exact component={Chart63} />
+            <Route path="/chart/weekGHGBusiness" exact component={Chart64} />
 
-              <Route path="/chart/yearCostBusiness" exact component={Chart65} />
-              <Route
-                path="/chart/monthCostBusiness"
-                exact
-                component={Chart66}
-              />
-              <Route path="/chart/weekCostBusiness" exact component={Chart67} />
+            <Route path="/chart/yearCostBusiness" exact component={Chart65} />
+            <Route path="/chart/monthCostBusiness" exact component={Chart66} />
+            <Route path="/chart/weekCostBusiness" exact component={Chart67} />
 
-              <Route
-                path="/chart/yearSurplusBusiness"
-                exact
-                component={Chart68}
-              />
-              <Route
-                path="/chart/monthSurplusBusiness"
-                exact
-                component={Chart69}
-              />
-              <Route
-                path="/chart/weekSurplusBusiness"
-                exact
-                component={Chart70}
-              />
+            <Route
+              path="/chart/yearSurplusBusiness"
+              exact
+              component={Chart68}
+            />
+            <Route
+              path="/chart/monthSurplusBusiness"
+              exact
+              component={Chart69}
+            />
+            <Route
+              path="/chart/weekSurplusBusiness"
+              exact
+              component={Chart70}
+            />
 
-              <Route
-                path="/chart/yearSurplusGHGBusiness"
-                exact
-                component={Chart71}
-              />
-              <Route
-                path="/chart/monthSurplusGHGBusiness"
-                exact
-                component={Chart72}
-              />
-              <Route
-                path="/chart/weekSurplusGHGBusiness"
-                exact
-                component={Chart73}
-              />
+            <Route
+              path="/chart/yearSurplusGHGBusiness"
+              exact
+              component={Chart71}
+            />
+            <Route
+              path="/chart/monthSurplusGHGBusiness"
+              exact
+              component={Chart72}
+            />
+            <Route
+              path="/chart/weekSurplusGHGBusiness"
+              exact
+              component={Chart73}
+            />
 
-              <Route
-                path="/chart/yearSurplusCostBusiness"
-                exact
-                component={Chart74}
-              />
-              <Route
-                path="/chart/monthSurplusCostBusiness"
-                exact
-                component={Chart75}
-              />
-              <Route
-                path="/chart/weekSurplusCostBusiness"
-                exact
-                component={Chart76}
-              />
+            <Route
+              path="/chart/yearSurplusCostBusiness"
+              exact
+              component={Chart74}
+            />
+            <Route
+              path="/chart/monthSurplusCostBusiness"
+              exact
+              component={Chart75}
+            />
+            <Route
+              path="/chart/weekSurplusCostBusiness"
+              exact
+              component={Chart76}
+            />
 
-              <Route path="/chart/yearSurplusFarm" exact component={Chart77} />
-              <Route path="/chart/monthSurplusFarm" exact component={Chart78} />
-              <Route path="/chart/weekSurplusFarm" exact component={Chart79} />
+            <Route path="/chart/yearSurplusFarm" exact component={Chart77} />
+            <Route path="/chart/monthSurplusFarm" exact component={Chart78} />
+            <Route path="/chart/weekSurplusFarm" exact component={Chart79} />
 
-              <Route
-                path="/chart/yearSurplusGHGFarm"
-                exact
-                component={Chart80}
-              />
-              <Route
-                path="/chart/monthSurplusGHGFarm"
-                exact
-                component={Chart81}
-              />
-              <Route
-                path="/chart/weekSurplusGHGFarm"
-                exact
-                component={Chart82}
-              />
+            <Route path="/chart/yearSurplusGHGFarm" exact component={Chart80} />
+            <Route
+              path="/chart/monthSurplusGHGFarm"
+              exact
+              component={Chart81}
+            />
+            <Route path="/chart/weekSurplusGHGFarm" exact component={Chart82} />
 
-              <Route
-                path="/chart/yearSurplusCostFarm"
-                exact
-                component={Chart83}
-              />
-              <Route
-                path="/chart/monthSurplusCostFarm"
-                exact
-                component={Chart84}
-              />
-              <Route
-                path="/chart/weekSurplusCostFarm"
-                exact
-                component={Chart85}
-              />
+            <Route
+              path="/chart/yearSurplusCostFarm"
+              exact
+              component={Chart83}
+            />
+            <Route
+              path="/chart/monthSurplusCostFarm"
+              exact
+              component={Chart84}
+            />
+            <Route
+              path="/chart/weekSurplusCostFarm"
+              exact
+              component={Chart85}
+            />
 
-              <Route path="/food-reduction" component={FoodReduction} />
+            <Route path="/food-reduction" component={FoodReduction} />
 
-              <Route path="/browse-products" component={BrowseProducts} />
-              {/* <Route path="/browse-products-local" component={BrowseProductsLocalProduce} /> */}
+            <Route path="/browse-products" component={BrowseProducts} />
+            {/* <Route path="/browse-products-local" component={BrowseProductsLocalProduce} /> */}
 
-              <Route path="/product-listing" component={ProductListing} />
+            <Route path="/product-listing" component={ProductListing} />
 
-              <Route path="/reserve-items" component={ReserveItems} />
+            <Route path="/reserve-items" component={ReserveItems} />
 
-              <Route path="/add-products" component={AddProducts} />
-              <Route path="/add-products-farm" component={AddProductsFarm} />
-              <Route
-                path="/add-products-business"
-                component={AddProductsBusiness}
-              />
-              <Route
-                path="/add-products-academic"
-                component={AddProductsAcademic}
-              />
+            <Route path="/add-products" component={AddProducts} />
+            <Route path="/add-products-farm" component={AddProductsFarm} />
+            <Route
+              path="/add-products-business"
+              component={AddProductsBusiness}
+            />
+            <Route
+              path="/add-products-academic"
+              component={AddProductsAcademic}
+            />
 
-              <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
-              <Route
-                path="/food-intakeAcademic"
-                component={FoodIntakeAcademic}
-              />
-              <Route
-                path="/food-surplusAcademic"
-                component={FoodSurplusAcademic}
-              />
+            <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
+            <Route path="/food-intakeAcademic" component={FoodIntakeAcademic} />
+            <Route
+              path="/food-surplusAcademic"
+              component={FoodSurplusAcademic}
+            />
 
-              <Route component={NotFound} />
-            </Switch>
-          </div>
-          <Footer />
-        </Router>
-      </React.Fragment>
-    );
-  }
-}
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+        <Footer />
+      </Router>
+    </React.Fragment>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
