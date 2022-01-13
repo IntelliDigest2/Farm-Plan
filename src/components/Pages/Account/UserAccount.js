@@ -27,7 +27,7 @@ function Account(props) {
   }
   switch (props.profile.buildingFunction) {
     case "Farm":
-      console.log(props.auth.uid);
+      //console.log(props.auth.uid);
       return (
         <>
           <Container fluid className="web-center">
@@ -44,7 +44,7 @@ function Account(props) {
       );
 
     case "Schools":
-      console.log(props.profile.buildingFunction);
+      //console.log(props.profile.buildingFunction);
       return (
         <>
           <Container fluid className="web-center">
@@ -67,7 +67,7 @@ function Account(props) {
       "Restaurants" ||
       "Shop/Supermarket" ||
       "Recreational Centers":
-      console.log(props.profile.buildingFunction);
+      //console.log(props.profile.buildingFunction);
       return (
         <>
           <Container fluid className="web-center">
@@ -85,7 +85,7 @@ function Account(props) {
 
     //personal profile
     case "Households":
-      console.log(props.auth.uid);
+      //console.log(props.auth.uid);
       return (
         <>
           <Container fluid className="web-center">
@@ -93,7 +93,6 @@ function Account(props) {
               name={props.profile.firstName + " " + props.profile.lastName}
             />
             <FoodBubble />
-            <FoodSurplusBubble />
             <FoodWasteBubble />
             <SubButton
               styling="blue"
@@ -105,13 +104,12 @@ function Account(props) {
       );
 
     default:
-      console.log(props.profile.buildingFunction);
+      //console.log(props.profile.buildingFunction);
       return (
         <>
           <Container fluid className="web-center">
             <Profile name={props.profile.firstName + props.profile.lastName} />
             <FoodBubble />
-            <FoodSurplusBubble />
             <FoodWasteBubble />
             <SubButton
               styling="blue"

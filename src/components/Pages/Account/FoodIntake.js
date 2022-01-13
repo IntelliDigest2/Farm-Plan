@@ -118,6 +118,7 @@ class FoodIntake extends Component {
     chartSubmissionYear: moment().format("YYYY"),
     chartSubmissionFullDate: moment().format("ddd MMM Do YYYY"),
 
+    foodOptions: [],
     // showComposition: false,
 
     // dataChartEFW: [['Food Wastage Type', 'Food Wastage Weight']],
@@ -196,8 +197,48 @@ class FoodIntake extends Component {
     this.setState({ weightMultiplier: value });
   }
 
-  handleChange = (e) => {
+  handleChange = async (e) => {
     // console.log(e);
+    const resp = await fetch("https://web-wrggqo5tiq-lz.a.run.app/completion", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors",
+      headers: {
+        //'Content-Type': 'application/json',
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `food=${e.target.value}`,
+    });
+    //console.log(resp);
+    const data = await resp.json();
+    //console.table(data);
+    //this.foodOptions = data;
+    this.state.foodOptions = data;
+    //console.log(this.foodOptions);
+
+    //          .then((res) => console.log(res.items));
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  handleFoodApi = async (e) => {
+    const resp = await fetch("https://web-wrggqo5tiq-lz.a.run.app/completion", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors",
+      headers: {
+        //'Content-Type': 'application/json',
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `food=${e.target.value}`,
+    });
+    //console.log(resp);
+    const data = await resp.json();
+    //console.table(data);
+    //this.foodOptions = data;
+    this.state.foodOptions = data;
+    //console.log(this.foodOptions);
+
+    //          .then((res) => console.log(res.items));
     this.setState({
       [e.target.id]: e.target.value,
     });
@@ -256,14 +297,6 @@ class FoodIntake extends Component {
     });
   };
 
-  // handleInedibleFoodWasteGHGChange = (e) => {
-  //     //console.log(e);
-  //     this.setState({
-  //         [e.target.id]: e.target.value,
-  //         inedibleGHG: Number(e.target.value) * 2.5,
-  //     })
-  // }
-
   handleFoodCostChange = (e) => {
     //console.log(e);
     this.setState({
@@ -280,44 +313,16 @@ class FoodIntake extends Component {
     });
   };
 
-  // handleTimeChange = (e) => {
-  //     this.setState({
-  //         chartSubmissionDay: moment().format("ddd"),
-  //         chartSubmissionWeek: moment().format("W"),
-  //         chartSubmissionMonth: moment().format("MMM"),
-  //         chartSubmissionDate: moment().format("Do"),
-  //         chartSubmissionYear: moment().format("YYYY"),
-  //         chartSubmissionFullDate: moment().format("ddd MMM Do YYYY")
-  //     });
-  // }
-
-  // ===========================================================================
-
   pressButton = (e) => {
     e.preventDefault();
     this.props.startData(this.state);
   };
-
-  // handleFoodSurplusSubmit = (e) => {
-  //     e.preventDefault();
-  //     this.setState({
-  //     })
-  //     this.props.createFoodSurplusData(this.state);
-  // }
 
   handleFoodIntakeSubmit = (e) => {
     e.preventDefault();
     this.setState({});
     this.props.createFoodIntakeData(this.state);
   };
-
-  // handleFormHeight(text){
-  //     if (text === "Select" || text === "Edible" || text === "Surplus"){
-  //         this.setState({formHeight: "665px"})
-  //     } else if (text === "Inedible"){
-  //         this.setState({formHeight: "520px"})
-  //     }
-  // }
 
   handleCheckboxTick = (e) => {
     if (e.target.name === "checkedA") {
@@ -580,16 +585,22 @@ class FoodIntake extends Component {
                       <Autocomplete
                         // multiple
                         id="foodName"
-                        options={foodOptions.map((option) => option.title)}
+
+                        options={this.state.foodOptions}
+
+                        getOptionLabel={(option) => option.name}
+                        filterOptions={(x) => x}
                         freeSolo
                         // limitTags={1}
                         // getOptionLabel={(option) => option.name}
                         style={{ width: "100%" }}
                         size="small"
+
                         onChange={(e) =>
                           this.setState({ foodName: e.target.textContent })
                         }
-                        onInputChange={(e) => this.handleChange(e)}
+                        onInputChange={(e) => this.handleFoodApi(e)}
+
                         // renderTags={(value, getTagProps) =>
                         //     value.map((option, index) => (
                         //       <Chip variant="outlined" label={option} {...getTagProps({ index })} />
@@ -777,7 +788,7 @@ class FoodIntake extends Component {
   }
 }
 
-const foodOptions = [
+/*const foodOptions = [
   { title: "Cereal" },
   { title: "Bacon" },
   { title: "Baked Beans" },
@@ -800,7 +811,7 @@ const foodOptions = [
   { title: "Milk" },
   { title: "Fruit Juice" },
   { title: "Onion" },
-];
+]; */
 
 const mapStateToProps = (state) => {
   return {
