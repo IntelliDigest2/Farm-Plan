@@ -14,12 +14,12 @@ import moment from "moment";
 //import { BrowserView, MobileView } from "react-device-detect";
 import { fs } from "../../../config/fbConfig";
 //import { Divider } from "@material-ui/core";
-import addNotification from "react-push-notification";
 import { Card } from "../SubComponents/Card";
 import { InputForm } from "../SubComponents/Form";
 import { Heading } from "../SubComponents/Heading";
 import { Dropdown } from "../SubComponents/Dropdown";
 import { DefaultButton } from "../SubComponents/Button";
+import { submitNotification } from "../../lib/Notifications";
 
 // import {Chart} from "react-google-charts"
 
@@ -142,6 +142,7 @@ class FoodWaste extends Component {
     //Setup data to be sent to generic create firestore function (TO BE RENAMED LATER)
     const data = {
       uid: this.props.auth.uid,
+      masterCollection: "data",
       collection: this.state.collection,
       upload: {
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
@@ -166,24 +167,11 @@ class FoodWaste extends Component {
     };
     this.props.createFoodWasteData(data);
     this.clearEFWForm();
-    this.submitNotification();
+    submitNotification("Success", "Food Waste successfully uploaded!");
   };
 
   clearEFWForm = () => {
     this.setState(this.initialState);
-  };
-
-  submitNotification = () => {
-    addNotification({
-      title: "Success!",
-      message: "Food Waste successfully updated!",
-      // theme: 'darkblue',
-      // native: false,
-      backgroundTop: "#aab41e", //optional, background color of top container.
-      backgroundBottom: "#aab41e", //optional, background color of bottom container.
-      closeButton: "Close",
-      duration: 4000,
-    });
   };
 
   //Generic setState() function

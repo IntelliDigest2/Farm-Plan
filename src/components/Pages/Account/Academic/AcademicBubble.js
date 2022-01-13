@@ -24,22 +24,6 @@ function AcademicSurplus() {
           goTo="/browse-products"
           text="Buy Food"
         />
-
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplusUni"
-          text="View Food Surplus Weight Performance Chart"
-        />
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplusGHGUni"
-          text="View Food Surplus GHG Performance Chart"
-        />
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplusCostUni"
-          text="View Food Surplus Cost Performance Chart"
-        />
       </>
     );
   } else {
@@ -74,22 +58,6 @@ function AcademicWaste() {
             styling="turquoise"
             goTo="/food-reduction"
             text="Food Waste Reduction Tips"
-          />
-
-          <SubButton
-            styling="yellow"
-            goTo="/chart/weekUni"
-            text="Food Waste Weight Performance Chart"
-          />
-          <SubButton
-            styling="yellow"
-            goTo="/chart/weekGHGUni"
-            text="Food Waste GHG Performance Chart"
-          />
-          <SubButton
-            styling="yellow"
-            goTo="/chart/weekCostUni"
-            text="Food Waste Cost Performance Chart"
           />
         </div>
       </>
