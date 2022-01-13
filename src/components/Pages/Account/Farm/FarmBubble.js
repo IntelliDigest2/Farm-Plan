@@ -21,22 +21,6 @@ function FoodLossBubble() {
             goTo="/food-loss"
             text="Update Food loss"
           />
-
-          <SubButton
-            styling="yellow"
-            goTo="/chart/dayLoss"
-            text="Food Loss Weight Performance Chart"
-          />
-          <SubButton
-            styling="yellow"
-            goTo="/chart/dayLossGHG"
-            text="Food Loss Weight GHG Performance Chart"
-          />
-          <SubButton
-            styling="yellow"
-            goTo="/chart/dayLossCost"
-            text="Food Loss Weight Cost Performance Chart"
-          />
         </div>
       </>
     );

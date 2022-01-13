@@ -3,8 +3,6 @@ import {
   Form,
   Button,
   Card,
-  Col,
-  Row,
   InputGroup,
   DropdownButton,
   Dropdown,
@@ -14,7 +12,7 @@ import {
   startData,
   createFoodSurplusData,
 } from "../../../../store/actions/dataActions";
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -34,7 +32,7 @@ import { Divider } from "@material-ui/core";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { Autocomplete } from "@material-ui/lab";
-import { TextField, Checkbox } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import addNotification from "react-push-notification";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
@@ -290,7 +288,7 @@ class AddProductsAcademic extends Component {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           var st = doc.data().SUBMISSIONTYPE;
-          var los = doc.data().LOCALORNOT;
+          //var los = doc.data().LOCALORNOT;
 
           var weight = doc.data().weight;
           var wu = doc.data().WEIGHTUNIT;
@@ -1478,7 +1476,6 @@ class AddProductsAcademic extends Component {
                             marginTop: "-22.5%",
                             fontSize: "85%",
                             marginBottom: "1.5%",
-                            fontSize: "90%",
                           }}
                         >
                           Price: £{product.price}

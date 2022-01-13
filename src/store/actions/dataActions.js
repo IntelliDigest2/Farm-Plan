@@ -43,7 +43,7 @@ export const createFoodWasteData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()
       .firestore()
-      .collection("data")
+      .collection(data.masterCollection)
       .doc(data.uid)
       .collection(data.collection)
       .add(data.upload)
@@ -52,6 +52,27 @@ export const createFoodWasteData = (data) => {
       })
       .catch((err) => {
         dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+};
+
+export const getFirestoreData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection(data.masterCollection)
+      .doc(data.uid)
+      .collection(data.collection)
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_DATA", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
       });
   };
 };

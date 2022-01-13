@@ -24,22 +24,6 @@ function BusinessSurplus() {
           goTo="/browse-products"
           text="Buy Food"
         />
-
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplusBusiness"
-          text="View Food Surplus Weight Performance Chart"
-        />
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplusGHGBusiness"
-          text="View Food Surplus GHG Performance Chart"
-        />
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplusCostBusiness"
-          text="View Food Surplus Cost Performance Chart"
-        />
       </>
     );
   } else {
