@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../App.css";
 import "./Pages.css";
-import { Row, Col, Table, Dropdown, Button } from "react-bootstrap";
+import { Row, Col, Table, Dropdown } from "react-bootstrap";
 import { Layout } from "../Layout/Layout";
 import logo from "../../images/intellidigest-logo.png";
 import placeholder from "../../images/help2.jpg";
@@ -18,7 +18,7 @@ import carbs from "../../images/carbs.jpg";
 import protein from "../../images/protein.png";
 import fibre from "../../images/fibre.jpeg";
 import fat from "../../images/fat.jpeg";
-import pts from "../../images/button-design-6.png";
+//import pts from "../../images/button-design-6.png";
 import pts2 from "../../images/pts-banner.png";
 
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
@@ -30,8 +30,8 @@ import { Divider } from "@material-ui/core";
 import {
   BrowserView,
   MobileView,
-  isMobile,
-  isBrowser,
+  //isMobile,
+  //isBrowser,
 } from "react-device-detect";
 import styled from "styled-components";
 

@@ -2,7 +2,7 @@ import React from "react";
 import "./Landing.css";
 import { SubButton } from "../../SubComponents/Button";
 
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import peppers from "../../../../images/peppers.jpg";
@@ -19,7 +19,7 @@ function LandingPage(props) {
 
   return (
     <div>
-      <img className="landing" src={peppers} alt="mama mia" />
+      <img className="landing" src={peppers} alt="" />
       <div className="title">
         <h1>IntelliDigest</h1>
         <h2>Empowering Global</h2>
