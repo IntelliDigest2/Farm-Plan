@@ -16,6 +16,7 @@ import Login from "./components/Pages/Auth/Login";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/SignUp";
+import SignUpMob from "./components/Pages/Auth/Mobile/SignUpMob";
 import NotFound from "./components/Pages/NotFound";
 import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
 import ForgotPassword from "./components/Pages/ForgotPassword";
@@ -167,8 +168,8 @@ import { auth } from "./config/fbConfig";
 import {
   BrowserView,
   MobileView,
-  isMobile,
-  isBrowser,
+  //isMobile,
+  //isBrowser,
 } from "react-device-detect";
 
 class App extends Component {
@@ -218,6 +219,7 @@ class App extends Component {
               <Route path="/login" exact component={Login} />
               <Route path="/landing" exact component={LandingPage} />
               <Route path="/signup" exact component={SignUp} />
+              <Route path="/signup-mob" exact component={SignUpMob} />
               <Route path="/contact" exact component={Contact} />
               <Route
                 path="/terms-and-privacy"

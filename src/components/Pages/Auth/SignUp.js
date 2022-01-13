@@ -94,7 +94,6 @@ class SignUp extends Component {
                 {!this.state.isConfirming ? (
                   <Form>
                     {" "}
-                    {/* onSubmit={this.handleSubmit} */}
                     <Form.Row>
                       <Form.Group as={Col}>
                         <Form.Label>Name</Form.Label>
@@ -124,7 +123,6 @@ class SignUp extends Component {
                       <div>
                         <Form.Label>Building function</Form.Label>
                       </div>
-                      {/* <Form.Control type="text" id="firstName" placeholder="Name" required onChange={this.handleChange}/> */}
                       <select
                         required
                         name="product"
