@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { fs } from "../../../../../../config/fbConfig";
 import { getFirestoreData } from "../../../../../../store/actions/dataActions";
 
 const time = new Date();
@@ -29,7 +28,6 @@ const Chart1 = (props) => {
   const [decWeight, setDecWeight] = useState(0);
 
   function fetchData() {
-    //TODO get this working by converting to function instead of class
     var data = {
       masterCollection: "data",
       collection: "writtenFoodWasteData",
