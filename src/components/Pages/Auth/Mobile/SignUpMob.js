@@ -17,6 +17,8 @@ import {
 } from "react-router-dom";
 import { signUp } from "../../../../store/actions/authActions";
 
+//DOM ROUTING ISNT WORKING THE WAY I WANT, USE ACCORDION?
+
 function SignUpMob(props) {
   /*The `url` lets us build relative links. This is so we do not interfere with app.js routing.*/
   let { path, url } = useRouteMatch();
@@ -54,10 +56,7 @@ function SignUpMob(props) {
             </Button>
           </div>
         </Route>
-        <Route path={`${path}/:stageId`}>
-          <Stage />
-        </Route>
-        {/*<Route path={`${path}/stage1`}>
+        <Route path={`${path}/stage1`}>
           <Stage1 />
           <div className="center">
             <Button
@@ -122,23 +121,10 @@ function SignUpMob(props) {
               Next
             </Button>
           </div>
-      </Route> */}
+        </Route>
       </Switch>
     </Container>
   );
-}
-
-function Stage() {
-  // The <Route> that rendered this component has a
-  // path of `/stage/:stageId`. The `:stageId` portion
-  // of the URL indicates a placeholder that we can
-  // get from `useParams()`.
-  let { stageId } = useParams();
-
-  switch (stageId) {
-    case 1:
-      render;
-  }
 }
 
 //different stages of the signup form
