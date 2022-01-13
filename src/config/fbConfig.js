@@ -18,12 +18,13 @@ firebase.initializeApp(fbConfig);
 
 const messaging = firebase.messaging();
 
-const { REACT_APP_VAPID_KEY } = process.env;
-const publicKey = REACT_APP_VAPID_KEY;
+// Pretty sure this is not necessary.
+// const { REACT_APP_VAPID_KEY } = process.env;
+// const publicKey = REACT_APP_VAPID_KEY;
 
 export const getToken = (setTokenFound) => {
   return messaging
-    .getToken({ vapidKey: publicKey })
+    .getToken()
     .then((currentToken) => {
       if (currentToken) {
         console.log("current token for client: ", currentToken);

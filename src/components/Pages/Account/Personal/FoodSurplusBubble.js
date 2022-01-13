@@ -23,22 +23,6 @@ function FoodSurplusBubble() {
           goTo="/browse-products"
           text="Buy Food"
         />
-
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplus"
-          text="View Food Surplus Weight Performance Chart"
-        />
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplusGHG"
-          text="View Food Surplus GHG Performance Chart"
-        />
-        <SubButton
-          styling="yellow"
-          goTo="/chart/weekSurplusCost"
-          text="View Food Surplus Cost Performance Chart"
-        />
       </>
     );
   } else {

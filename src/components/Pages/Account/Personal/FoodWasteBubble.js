@@ -20,25 +20,14 @@ function FoodWasteBubble() {
             text="Update Food waste"
           />
           <SubButton
-            styling="turquoise"
-            goTo="/food-reduction"
-            text="Food Waste Reduction Tips"
-          />
-
-          <SubButton
             styling="yellow"
-            goTo="/chart/week"
+            goTo="/chart"
             text="Food Waste Weight Performance Chart"
           />
           <SubButton
-            styling="yellow"
-            goTo="/chart/weekGHG"
-            text="Food Waste GHG Performance Chart"
-          />
-          <SubButton
-            styling="yellow"
-            goTo="/chart/weekCost"
-            text="Food Waste Cost Performance Chart"
+            styling="turquoise"
+            goTo="/food-reduction"
+            text="Food Waste Reduction Tips"
           />
         </div>
       </>
