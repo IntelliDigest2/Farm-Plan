@@ -17,6 +17,36 @@ function Stage1(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  function handleSubmit() {
+    var data = {
+      firstName: firstName,
+      lastName: lastName,
+      initials: firstName[0] + lastName[0],
+      email: email,
+      password: password,
+      postcode: "",
+      address: "",
+      function: "",
+      organisation: "",
+      schoolType: "",
+      department: "",
+      uniRole: "",
+      city: "",
+      country: "",
+      type: "user",
+    };
+    if (
+      firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      password !== ""
+    ) {
+      props.signUp(data);
+    } else {
+      console.log("error");
+    }
+  }
+
   //make sure the user isn't already logged in
   useEffect(() => {
     if (props.auth.uid) return <Redirect to="/account" />;
@@ -84,7 +114,7 @@ function Stage1(props) {
             href="/signup-2"
             onClick={(e) => {
               e.preventDefault();
-              props.signUp({ firstName, lastName, email, password });
+              handleSubmit();
             }}
           >
             Next
