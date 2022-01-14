@@ -163,6 +163,10 @@ import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWasteAcad
 import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
 import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
 
+import NewAccount from "./components/Pages/Account/Account";
+
+import NewSignUp from "./components/Pages/Auth/Mobile/SignUp/NewSignUp";
+
 import { Notifications } from "react-push-notification";
 
 import { connect } from "react-redux";
@@ -270,6 +274,10 @@ const App = (props) => {
             />
             <Route path="/forgot-password" exact component={ForgotPassword} />
             <Route path="/account" exact component={Account} />
+            {/* New Account Page */}
+            <Route path="/newaccount" exact component={NewAccount} />
+            {/* New SignUp */}
+            <Route path="/newSignUp" exact component={NewSignUp} />
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />
             <Route path="/view-map" exact component={MapData} />
