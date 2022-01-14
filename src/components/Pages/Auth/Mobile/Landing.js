@@ -1,22 +1,12 @@
-import React from "react";
+import { React, useState } from "react";
 import "./Landing.css";
 import { SubButton } from "../../SubComponents/Button";
 
-//import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import peppers from "../../../../images/peppers.jpg";
 
 function LandingPage(props) {
-  /*const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (props.auth.uid) {
-      setLoggedIn(true);
-    } else {
-    }
-  }, [props.auth.uid]);*/
-
   return (
     <div>
       <img className="landing" src={peppers} alt="" />
@@ -28,7 +18,7 @@ function LandingPage(props) {
       </div>
       <div className="buttons">
         <SubButton styling="blue" goTo="/login" text="Log In" />
-        <SubButton styling="blue" goTo="/signup" text="Sign Up" />
+        <SubButton styling="blue" goTo="/signup-1" text="Sign Up" />
       </div>
     </div>
   );

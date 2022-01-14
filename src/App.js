@@ -18,7 +18,7 @@ import Login from "./components/Pages/Auth/Login";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/SignUp";
-import SignUpMob from "./components/Pages/Auth/Mobile/SignUpMob";
+import Stage1 from "./components/Pages/Auth/Mobile/SignUp/Stage1";
 import NotFound from "./components/Pages/NotFound";
 import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
 import ForgotPassword from "./components/Pages/ForgotPassword";
@@ -261,7 +261,7 @@ const App = (props) => {
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
-            <Route path="/signup-mob" exact component={SignUpMob} />
+            <Route path="/signup-1" exact component={Stage1} />
             <Route path="/contact" exact component={Contact} />
             <Route
               path="/terms-and-privacy"
