@@ -1,12 +1,59 @@
 .web-center {
-  text-align: center;
-  float: center;
+  /* float: center; */
+  display: block;
+  justify-content: center;
+  align-items: center;
   /*600px in center of large page but varies when browser is smaller*/
-  max-width: 600px;
-  margin: auto;
-  margin-top: 70px;
-  margin-bottom: 70px;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
   font-family: "Source Sans Pro", sans-serif;
+}
+
+/* Phones */
+@media screen and (max-width: 600px) {
+  .web-center {
+    max-width: 100%;
+  }
+}
+
+/* Portrait Tablet and Large Phones */
+@media screen and (min-width: 600px) {
+  .web-center {
+    max-width: 100%;
+  }
+}
+
+/* Landscape Tablet */
+@media screen and (min-width: 768px) {
+  .web-center {
+    max-width: 90%;
+  }
+}
+
+/* Laptop/Desktop */
+@media screen and (min-width: 992px) {
+  .web-center {
+    max-width: 70%;
+  }
+}
+
+/* Large Laptop/Desktop */
+@media screen and (min-width: 1200px) {
+  .web-center {
+    max-width: 50%;
+  }
+}
+
+.profile {
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 4px 5px 5px -2px rgba(0, 0, 0, 0.5);
 }
 
 .sub-selecton {
@@ -19,11 +66,6 @@
   border-color: #32797e;
   border-radius: 25px;
   padding: 5px;
-}
-
-.profile {
-  max-width: 300px;
-  color: white;
 }
 
 .large-img {
@@ -74,11 +116,6 @@
   font-weight: 600;
   padding-left: 15.5px;
   padding-right: 15.5px;
-}
-
-.container {
-  position: relative;
-  width: 100%;
 }
 
 .img-overlay {

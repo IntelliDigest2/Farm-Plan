@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
-import { Tabs, Tab, Container, Row, Col, Nav } from "react-bootstrap";
+import { Tab, Container, Nav } from "react-bootstrap";
 import styled from "styled-components";
 import "../UserAccount.css";
 

@@ -31,7 +31,7 @@ function Account(props) {
       return (
         <>
           <Container fluid className="web-center">
-            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <Profile profile={props.profile} />
             <FarmBubble />
             <PersonalBubble />
             <SubButton
@@ -48,7 +48,7 @@ function Account(props) {
       return (
         <>
           <Container fluid className="web-center">
-            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <Profile profile={props.profile} />
             <AcademicBubble />
             <PersonalBubble />
             <SubButton
@@ -71,7 +71,7 @@ function Account(props) {
       return (
         <>
           <Container fluid className="web-center">
-            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <Profile profile={props.profile} />
             <BusinessBubble />
             <PersonalBubble />
             <SubButton
@@ -85,30 +85,12 @@ function Account(props) {
 
     //personal profile
     case "Households":
+    default:
       //console.log(props.auth.uid);
       return (
         <>
           <Container fluid className="web-center">
-            <Profile
-              name={props.profile.firstName + " " + props.profile.lastName}
-            />
-            <FoodBubble />
-            <FoodWasteBubble />
-            <SubButton
-              styling="blue"
-              goTo="/change-password"
-              text="Change Password"
-            />
-          </Container>
-        </>
-      );
-
-    default:
-      //console.log(props.profile.buildingFunction);
-      return (
-        <>
-          <Container fluid className="web-center">
-            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <Profile profile={props.profile} />
             <FoodBubble />
             <FoodWasteBubble />
             <SubButton

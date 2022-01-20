@@ -17,12 +17,28 @@ function Dropdown(props) {
     }
   });
 
+  if (props.disabled) {
+    return (
+      <BootstrapDropdownButton
+        title={props.data}
+        onSelect={props.function}
+        className={["dropdown center", props.styling]}
+        variant="default"
+        disabled
+        drop="down"
+      >
+        {comp}
+      </BootstrapDropdownButton>
+    );
+  }
+
   return (
     <BootstrapDropdownButton
       title={props.data}
       onSelect={props.function}
       className={["dropdown center", props.styling]}
       variant="default"
+      drop="down"
     >
       {comp}
     </BootstrapDropdownButton>
