@@ -66,7 +66,8 @@ function Account(props) {
       "Offices" ||
       "Restaurants" ||
       "Shop/Supermarket" ||
-      "Recreational Centers":
+      "Recreational Centers" ||
+      "Business":
       //console.log(props.profile.buildingFunction);
       return (
         <>
