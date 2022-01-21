@@ -7,6 +7,7 @@ import "../UserAccount.css";
 import { connect } from "react-redux";
 import { getFirestoreData } from "../../../../store/actions/dataActions";
 import { DefaultButton } from "../../SubComponents/Button";
+import { Dropdown } from "../../SubComponents/Dropdown";
 
 // Get current Date and week number
 const currentDate = new Date();
@@ -47,7 +48,7 @@ const ChartBuilder = (props) => {
         legend: "none",
         colors: ["#aab41e"],
         hAxis: { title: props.title, minValue: 0 },
-        vAxis: { title: "Weight of Food Wastage (kg)" },
+        vAxis: { title: props.dropdownType + " of Food Wastage " + props.unit },
       }}
     />
   );
@@ -92,6 +93,39 @@ function ChartView(props) {
   const [nov, setNov] = useState(0);
   const [dec, setDec] = useState(0);
 
+  function clearState() {
+    //Days
+    setMon(0);
+    setTue(0);
+    setWed(0);
+    setThur(0);
+    setFri(0);
+    setSat(0);
+    setSun(0);
+    //Weeks
+    setFirst(0);
+    setSecond(0);
+    setThird(0);
+    setFourth(0);
+    //Months
+    setJan(0);
+    setFeb(0);
+    setMar(0);
+    setApr(0);
+    setMay(0);
+    setJun(0);
+    setJul(0);
+    setAug(0);
+    setSep(0);
+    setOct(0);
+    setNov(0);
+    setDec(0);
+  }
+
+  //Weight-GHG-Cost
+  const [dropdownType, setDropdownType] = useState("Weight");
+  const [unit, setUnit] = useState("KG");
+
   //this defines fetchCharts method, maybe bring out method into chartfunction specific folder so that this can be generalised.
   function fetchData() {
     var data = {
@@ -109,9 +143,10 @@ function ChartView(props) {
   }, []);
 
   useEffect(() => {
+    clearState();
     updateCharts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.data]);
+  }, [props.data, dropdownType]);
 
   const updateCharts = async () => {
     props.data.forEach((doc) => {
@@ -128,66 +163,163 @@ function ChartView(props) {
 
       var weight = doc.foodWasteWeight;
       var wu = doc.weightType;
+      var wm = 0;
 
-      var newWeight = 0;
+      var edibleIndeible = doc.edibleIndeible;
 
-      //Calculate weight conversions
+      var cpu = doc.carbsPerUnit;
+      var cc = doc.carbsContent;
+      var cm = 0;
+      var fpu = doc.fatPerUnit;
+      var fc = doc.fatContent;
+      var fm = 0;
+      var ppu = doc.proteinPerUnit;
+      var pc = doc.proteinContent;
+      var pm = 0;
+
+      var cost = doc.foodWasteCost;
+      var currency = doc.currency;
+      var curm = 0;
+
+      var newValue = 0;
+
+      //Multipliers
       switch (wu) {
+        default:
         case "kg":
         case "l":
-        default:
-          newWeight = Number(weight * 1);
+          wm = 1;
           break;
         case "g":
         case "ml":
-          newWeight = Number((weight * 0.001).toFixed(3));
+          wm = 0.001;
           break;
         case "oz":
-          newWeight = Number((weight * 0.028).toFixed(3));
+          wm = 0.028;
           break;
         case "lbs":
-          newWeight = Number((weight * 0.454).toFixed(3));
+          wm = 0.454;
           break;
+      }
+      switch (cpu) {
+        default:
+        case "100g":
+        case "100ml":
+          cm = 0.01;
+          break;
+        case "500g":
+        case "500ml":
+          cm = 0.002;
+          break;
+        case "1l":
+        case "1kg":
+          cm = 0.001;
+          break;
+      }
+      switch (fpu) {
+        default:
+        case "100g":
+        case "100ml":
+          fm = 0.01;
+          break;
+        case "500g":
+        case "500ml":
+          fm = 0.002;
+          break;
+        case "1l":
+        case "1kg":
+          fm = 0.001;
+          break;
+      }
+      switch (ppu) {
+        default:
+        case "100g":
+        case "100ml":
+          pm = 0.01;
+          break;
+        case "500g":
+        case "500ml":
+          pm = 0.002;
+          break;
+        case "1l":
+        case "1kg":
+          pm = 0.001;
+          break;
+      }
+      switch (currency) {
+        case "GBP (£)":
+          curm = 1;
+          break;
+        case "USD ($)":
+          curm = 1.404;
+          break;
+        case "EUR (€)":
+          curm = 1.161;
+          break;
+        default:
+          curm = 1;
+      }
+
+      //Weight-GHG-Cost
+      if (dropdownType === "Weight") {
+        newValue = Number((weight * wm).toFixed(3));
+        setUnit("(KG)");
+      } else if (dropdownType === "GHG") {
+        if (edibleIndeible === "Edible") {
+          newValue = Number(
+            20 *
+              16.0424 *
+              wm *
+              weight *
+              (0.01852 * cm * cc + 0.01744 * pm * pc + 0.04608 * fm * fc)
+          );
+        } else {
+          newValue = Number(weight * wm * 2.5);
+        }
+        setUnit("(KG CO2)");
+      } else {
+        newValue = Number(cost * curm * wm);
+        setUnit("(£)");
       }
 
       //Update Monthly
       if (year === currentDate.getFullYear()) {
         switch (month) {
           case 0:
-            setJan((jan) => jan + newWeight);
+            setJan((jan) => jan + newValue);
             break;
           case 1:
-            setFeb((feb) => feb + newWeight);
+            setFeb((feb) => feb + newValue);
             break;
           case 2:
-            setMar((mar) => mar + newWeight);
+            setMar((mar) => mar + newValue);
             break;
           case 3:
-            setApr((apr) => apr + newWeight);
+            setApr((apr) => apr + newValue);
             break;
           case 4:
-            setMay((may) => may + newWeight);
+            setMay((may) => may + newValue);
             break;
           case 5:
-            setJun((jun) => jun + newWeight);
+            setJun((jun) => jun + newValue);
             break;
           case 6:
-            setJul((jul) => jul + newWeight);
+            setJul((jul) => jul + newValue);
             break;
           case 7:
-            setAug((aug) => aug + newWeight);
+            setAug((aug) => aug + newValue);
             break;
           case 8:
-            setSep((sep) => sep + newWeight);
+            setSep((sep) => sep + newValue);
             break;
           case 9:
-            setOct((oct) => oct + newWeight);
+            setOct((oct) => oct + newValue);
             break;
           case 10:
-            setNov((nov) => nov + newWeight);
+            setNov((nov) => nov + newValue);
             break;
           case 11:
-            setDec((dec) => dec + newWeight);
+            setDec((dec) => dec + newValue);
             break;
           default:
             break;
@@ -199,13 +331,13 @@ function ChartView(props) {
         month === currentDate.getMonth()
       ) {
         if (dayOfMonth >= 0 && dayOfMonth <= 7) {
-          setFirst((first) => first + newWeight);
+          setFirst((first) => first + newValue);
         } else if (dayOfMonth >= 8 && dayOfMonth <= 14) {
-          setSecond((second) => second + newWeight);
+          setSecond((second) => second + newValue);
         } else if (dayOfMonth >= 15 && dayOfMonth <= 21) {
-          setThird((third) => third + newWeight);
+          setThird((third) => third + newValue);
         } else {
-          setFourth((fourth) => fourth + newWeight);
+          setFourth((fourth) => fourth + newValue);
         }
       }
 
@@ -213,25 +345,25 @@ function ChartView(props) {
       if (year === currentDate.getFullYear() && currentWeek === week) {
         switch (day) {
           case 0:
-            setSun((sun) => sun + newWeight);
+            setSun((sun) => sun + newValue);
             break;
           case 1:
-            setMon((mon) => mon + newWeight);
+            setMon((mon) => mon + newValue);
             break;
           case 2:
-            setTue((tue) => tue + newWeight);
+            setTue((tue) => tue + newValue);
             break;
           case 3:
-            setWed((wed) => wed + newWeight);
+            setWed((wed) => wed + newValue);
             break;
           case 4:
-            setThur((thur) => thur + newWeight);
+            setThur((thur) => thur + newValue);
             break;
           case 5:
-            setFri((fri) => fri + newWeight);
+            setFri((fri) => fri + newValue);
             break;
           case 6:
-            setSat((sat) => sat + newWeight);
+            setSat((sat) => sat + newValue);
             break;
           default:
             break;
@@ -242,7 +374,7 @@ function ChartView(props) {
 
   //Daily
   const dailyChart = [
-    ["Day", "Weight "],
+    ["Day", dropdownType],
     ["Mon", mon],
     ["Tue", tue],
     ["Wed", wed],
@@ -254,7 +386,7 @@ function ChartView(props) {
 
   // Weekly LOOK AT CHARTMONTH.JS
   const weeklyChart = [
-    ["Week", "Weight "],
+    ["Week", dropdownType],
     ["1st-7th", first],
     ["8th-14th", second],
     ["15th-21st", third],
@@ -263,7 +395,7 @@ function ChartView(props) {
 
   //Monthly
   const monthlyChart = [
-    ["Month", "Weight "],
+    ["Month", dropdownType],
     ["Jan", jan],
     ["Feb", feb],
     ["Mar", mar],
@@ -295,12 +427,24 @@ function ChartView(props) {
     //tabbed window with daily weekly monthly yearly
     <Container fluid className="web-center">
       <DefaultButton text="Back" styling="green" goTo="/account" />
+      <Dropdown
+        id="Chart Switch"
+        styling="grey"
+        data={dropdownType}
+        items={["Weight", "GHG", "Cost"]}
+        function={(eventKey, e) => {
+          setDropdownType(e.target.textContent);
+          // forceUpdate();
+        }}
+      />
       <Tab.Container defaultActiveKey="daily">
         <Tab.Content>
           <Tab.Pane eventKey="daily" title="Daily">
             <ChartBuilder
               title="Daily"
               chartType={chartType("Daily")}
+              dropdownType={dropdownType}
+              unit={unit}
               {...props}
             />
           </Tab.Pane>
@@ -310,6 +454,8 @@ function ChartView(props) {
             <ChartBuilder
               title="Weekly"
               chartType={chartType("Weekly")}
+              dropdownType={dropdownType}
+              unit={unit}
               {...props}
             />
           </Tab.Pane>
@@ -319,6 +465,8 @@ function ChartView(props) {
             <ChartBuilder
               title="Monthly"
               chartType={chartType("Monthly")}
+              dropdownType={dropdownType}
+              unit={unit}
               {...props}
             />
           </Tab.Pane>

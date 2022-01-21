@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -10,7 +10,7 @@ import "../Pages.css";
 import { SubButton } from "../SubComponents/Button";
 
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import { Box, Tabs, Tab } from "@material-ui/core";
+import { Tab } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core";
 
