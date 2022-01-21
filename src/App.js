@@ -15,10 +15,12 @@ import Footer from "./components/Footer/Footer";
 import Home from "./components/Pages/Home";
 import About from "./components/Pages/About";
 import Login from "./components/Pages/Auth/Login";
+import LogInMob from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/SignUp";
-import Stage1 from "./components/Pages/Auth/Mobile/SignUp/Stage1";
+import SignUpMob from "./components/Pages/Auth/Mobile/SignUpMob";
+import Settings from "./components/Pages/Auth/Settings";
 import NotFound from "./components/Pages/NotFound";
 import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
 import ForgotPassword from "./components/Pages/ForgotPassword";
@@ -165,8 +167,6 @@ import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplus
 
 import NewAccount from "./components/Pages/Account/Account";
 
-import NewSignUp from "./components/Pages/Auth/Mobile/SignUp/NewSignUp";
-
 import { Notifications } from "react-push-notification";
 
 import { connect } from "react-redux";
@@ -263,9 +263,11 @@ const App = (props) => {
             <Route path="/home" exact component={Home} />
             <Route path="/about" exact component={About} />
             <Route path="/login" exact component={Login} />
+            <Route path="/login-mob" exact component={LogInMob} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
-            <Route path="/signup-1" exact component={Stage1} />
+            <Route path="/signup-mob" exact component={SignUpMob} />
+            <Route path="/settings" exact component={Settings} />
             <Route path="/contact" exact component={Contact} />
             <Route
               path="/terms-and-privacy"
@@ -275,9 +277,7 @@ const App = (props) => {
             <Route path="/forgot-password" exact component={ForgotPassword} />
             <Route path="/account" exact component={Account} />
             {/* New Account Page */}
-            <Route path="/newaccount" exact component={NewAccount} />
-            {/* New SignUp */}
-            <Route path="/newSignUp" exact component={NewSignUp} />
+            <Route path="/newaccount" exact component={NewAccount}
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />
             <Route path="/view-map" exact component={MapData} />

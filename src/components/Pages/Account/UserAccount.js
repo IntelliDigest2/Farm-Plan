@@ -6,7 +6,7 @@ import "./UserAccount.css";
 import "../Pages.css";
 import { FoodBubble } from "./Personal/FoodBubble";
 import { FoodWasteBubble } from "./Personal/FoodWasteBubble";
-import { FoodSurplusBubble } from "./Personal/FoodSurplusBubble";
+//import { FoodSurplusBubble } from "./Personal/FoodSurplusBubble";
 import { PersonalBubble } from "./Personal/PersonalBubble";
 import { FarmBubble } from "./Farm/FarmBubble";
 import { BusinessBubble } from "./Business/BusinessBubble";
@@ -43,8 +43,8 @@ function Account(props) {
         </>
       );
 
-    case "Schools":
-      //console.log(props.profile.buildingFunction);
+    case "Schools" || "Academic":
+      //console.log(props.profile);
       return (
         <>
           <Container fluid className="web-center">
@@ -66,7 +66,8 @@ function Account(props) {
       "Offices" ||
       "Restaurants" ||
       "Shop/Supermarket" ||
-      "Recreational Centers":
+      "Recreational Centers" ||
+      "Business":
       //console.log(props.profile.buildingFunction);
       return (
         <>
@@ -85,7 +86,6 @@ function Account(props) {
 
     //personal profile
     case "Households":
-      //console.log(props.auth.uid);
       return (
         <>
           <Container fluid className="web-center">

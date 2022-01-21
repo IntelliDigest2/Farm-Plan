@@ -63,27 +63,28 @@ const NavBar = (props) => {
                   >
                     My Account
                   </Nav.Link>
-                  {/*
-                  <Nav.Link
-                    as={NavLink}
-                    eventKey="4"
-                    className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link"
-                    to="/view-map"
-                    activeClassName="active"
-                    exact={true}
-                  >
-                    View Map
-                  </Nav.Link>
-                  */}
-                  <Nav.Link
-                    as={NavLink}
-                    eventKey="5"
-                    className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link logout"
-                    to="/login"
-                    onClick={props.signOut}
-                  >
-                    Logout
-                  </Nav.Link>
+                  <BrowserView>
+                    <Nav.Link
+                      as={NavLink}
+                      eventKey="5"
+                      className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link logout"
+                      to="/login"
+                      onClick={props.signOut}
+                    >
+                      Logout
+                    </Nav.Link>
+                  </BrowserView>
+                  <MobileView>
+                    <Nav.Link
+                      as={NavLink}
+                      eventKey="5"
+                      className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link logout"
+                      to="/landing"
+                      onClick={props.signOut}
+                    >
+                      Logout
+                    </Nav.Link>
+                  </MobileView>
                 </>
               ) : (
                 <Nav.Link
