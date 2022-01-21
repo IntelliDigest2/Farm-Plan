@@ -165,7 +165,7 @@ const App = (props) => {
             />
             <Route path="/forgot-password" exact component={ForgotPassword} />
             <Route path="/account" exact component={NewAccount} />
-            {/* Old Account Page */}
+            {/* Old Bubble Account Page */}
             {/* <Route path="/newaccount" exact component={Account} /> */}
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />

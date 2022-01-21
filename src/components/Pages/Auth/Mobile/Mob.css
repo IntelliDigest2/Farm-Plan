@@ -1,0 +1,189 @@
+.signup-mobile {
+  position: absolute;
+  width: 100%;
+  justify-content: center;
+  float: center;
+  top: 8%;
+}
+
+.mobile-style {
+  margin-top: 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: white;
+  border-radius: 25px;
+  padding: 2%;
+}
+
+.signup-center {
+  position: relative;
+  text-align: center;
+  justify-content: center;
+  float: center;
+}
+
+/*only in case of bottom bar*/
+.signup-buffer {
+  margin-bottom: 15%;
+}
+
+.titles {
+  position: relative;
+  width: 75%;
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+  float: center;
+}
+.titles h1 {
+  font-weight: 700;
+  font-size: 3.5rem;
+  letter-spacing: -0.1rem;
+}
+.titles h2 {
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -0.1rem;
+  color: #0c0847;
+  margin-top: 5%;
+}
+
+.logo {
+  width: 100%;
+  height: auto;
+  position: static;
+  float: center;
+  overflow: hidden;
+  border-radius: 25px;
+
+  font-weight: 700;
+  font-size: 3.5rem;
+  letter-spacing: -0.1rem;
+  color: #0c0847;
+}
+
+.subtitles {
+  font-weight: 700;
+  color: #0c0847;
+  font-size: 1.5rem;
+  margin-top: 5%;
+}
+
+.signup-btn {
+  width: 30%;
+  float: center;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: 1rem;
+  border-radius: 8px;
+
+  background-color: #afba15;
+  border-color: #02001a;
+  color: #0c0847;
+}
+.signup-btn:hover {
+  background-color: #02001a;
+  border-color: white;
+  color: white;
+}
+.signup-btn:focus {
+  background-color: #02001a;
+  border-color: white;
+}
+.signup-btn:active {
+  background-color: #0c0847;
+  border-color: white;
+}
+
+.signup-confirm {
+  width: 60%;
+  float: center;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: 1rem;
+  border-radius: 8px;
+
+  background-color: #0c0847;
+  border-color: #02001a;
+  color: white;
+}
+.signup-confirm:hover {
+  background-color: #02001a;
+  border-color: white;
+  color: white;
+}
+.signup-confirm:focus {
+  background-color: #02001a;
+  border-color: white;
+}
+.signup-confirm:active {
+  background-color: #0c0847;
+  border-color: white;
+}
+
+.signup-skip {
+  width: 60%;
+  float: center;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: 1rem;
+  border-radius: 8px;
+
+  background-color: white;
+  border-color: #02001a;
+  color: #0c0847;
+}
+.signup-skip:hover {
+  border-color: white;
+}
+.signup-skip:focus {
+  border-color: white;
+}
+.signup-skip:active {
+  border-color: white;
+}
+
+.signup-dropdown {
+  border-radius: 0.25rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: lightgray;
+}
+.signup-dropdown:hover {
+  background-color: gray;
+}
+
+.row {
+  flex-direction: row;
+  justify-content: center;
+  float: center;
+  background-color: white;
+  width: 80%;
+  margin: auto;
+}
+.col {
+  flex-direction: column;
+  justify-content: center;
+  float: center;
+  background-color: white;
+  width: 80%;
+  margin: auto;
+}
+
+.auth-error {
+  color: red;
+  font-size: 20px;
+  float: center;
+  text-align: center;
+  justify-content: center;
+  font-weight: 600;
+  margin: auto;
+}

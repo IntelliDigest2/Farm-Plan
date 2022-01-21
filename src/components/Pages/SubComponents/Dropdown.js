@@ -10,7 +10,7 @@ function Dropdown(props) {
       return <BootstrapDropdown.Divider />;
     } else {
       return (
-        <BootstrapDropdown.Item id={props.id} eventKey={item}>
+        <BootstrapDropdown.Item id={props.id} eventKey={item} key={item}>
           {item}
         </BootstrapDropdown.Item>
       );

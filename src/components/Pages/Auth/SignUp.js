@@ -22,7 +22,12 @@ class SignUp extends Component {
     uniRole: "choose",
     city: "",
     country: "",
-    // wasteMethod: "choose",
+    region: "",
+    sixteenPlus: "",
+    arrangement: "",
+    buildingType: "",
+    shopAt: "",
+    shopPerWeek: "",
     isConfirming: false,
   };
 
