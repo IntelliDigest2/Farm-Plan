@@ -35,117 +35,6 @@ import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWasteBusi
 import FoodIntake from "./components/Pages/Account/FoodIntake";
 // import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
-import Chart1 from "./components/Pages/Account/Charts/HH/Waste/ChartYear";
-import Chart2 from "./components/Pages/Account/Charts/HH/Waste/ChartMonth";
-import Chart3 from "./components/Pages/Account/Charts/HH/Waste/ChartWeek";
-// import Chart4 from "./components/Pages/Account/ChartDay";
-
-import Chart5 from "./components/Pages/Account/Charts/HH/Waste/ChartYearGHG";
-import Chart6 from "./components/Pages/Account/Charts/HH/Waste/ChartMonthGHG";
-import Chart7 from "./components/Pages/Account/Charts/HH/Waste/ChartWeekGHG";
-// import Chart8 from "./components/Pages/Account/ChartDayGHG";
-
-import Chart9 from "./components/Pages/Account/Charts/HH/Waste/ChartYearCost";
-import Chart10 from "./components/Pages/Account/Charts/HH/Waste/ChartMonthCost";
-import Chart11 from "./components/Pages/Account/Charts/HH/Waste/ChartWeekCost";
-// import Chart12 from "./components/Pages/Account/ChartDayCost";
-
-import Chart13 from "./components/Pages/Account/Charts/HH/Surplus/ChartYearSurplus";
-import Chart14 from "./components/Pages/Account/Charts/HH/Surplus/ChartMonthSurplus";
-import Chart15 from "./components/Pages/Account/Charts/HH/Surplus/ChartWeekSurplus";
-// import Chart16 from "./components/Pages/Account/ChartDaySurplus";
-
-import Chart17 from "./components/Pages/Account/Charts/HH/Surplus/ChartYearSurplusGHG";
-import Chart18 from "./components/Pages/Account/Charts/HH/Surplus/ChartMonthSurplusGHG";
-import Chart19 from "./components/Pages/Account/Charts/HH/Surplus/ChartWeekSurplusGHG";
-// import Chart20 from "./components/Pages/Account/ChartDaySurplusGHG";
-
-import Chart21 from "./components/Pages/Account/Charts/HH/Surplus/ChartYearSurplusCost";
-import Chart22 from "./components/Pages/Account/Charts/HH/Surplus/ChartMonthSurplusCost";
-import Chart23 from "./components/Pages/Account/Charts/HH/Surplus/ChartWeekSurplusCost";
-// import Chart24 from "./components/Pages/Account/ChartDaySurplusCost";
-
-// import Chart25 from "./components/Pages/Account/ChartDayBusiness";
-// import Chart26 from "./components/Pages/Account/ChartDayCostBusiness";
-// import Chart27 from "./components/Pages/Account/ChartDayGHGBusiness";
-
-import Chart28 from "./components/Pages/Account/Charts/Farm/Loss/ChartYearLoss";
-import Chart29 from "./components/Pages/Account/Charts/Farm/Loss/ChartMonthLoss";
-import Chart30 from "./components/Pages/Account/Charts/Farm/Loss/ChartWeekLoss";
-import Chart31 from "./components/Pages/Account/Charts/Farm/Loss/ChartDayLoss";
-
-import Chart32 from "./components/Pages/Account/Charts/Farm/Loss/ChartYearLossGHG";
-import Chart33 from "./components/Pages/Account/Charts/Farm/Loss/ChartMonthLossGHG";
-import Chart34 from "./components/Pages/Account/Charts/Farm/Loss/ChartWeekLossGHG";
-import Chart35 from "./components/Pages/Account/Charts/Farm/Loss/ChartDayLossGHG";
-
-import Chart36 from "./components/Pages/Account/Charts/Farm/Loss/ChartYearLossCost";
-import Chart37 from "./components/Pages/Account/Charts/Farm/Loss/ChartMonthLossCost";
-import Chart38 from "./components/Pages/Account/Charts/Farm/Loss/ChartWeekLossCost";
-import Chart39 from "./components/Pages/Account/Charts/Farm/Loss/ChartDayLossCost";
-
-import Chart40 from "./components/Pages/Account/NutrientGapChart";
-
-import Chart41 from "./components/Pages/Account/Charts/Uni/Waste/ChartYearUni";
-import Chart42 from "./components/Pages/Account/Charts/Uni/Waste/ChartMonthUni";
-import Chart43 from "./components/Pages/Account/Charts/Uni/Waste/ChartWeekUni";
-
-import Chart44 from "./components/Pages/Account/Charts/Uni/Waste/ChartYearGHGUni";
-import Chart45 from "./components/Pages/Account/Charts/Uni/Waste/ChartMonthGHGUni";
-import Chart46 from "./components/Pages/Account/Charts/Uni/Waste/ChartWeekGHGUni";
-
-import Chart47 from "./components/Pages/Account/Charts/Uni/Waste/ChartYearCostUni";
-import Chart48 from "./components/Pages/Account/Charts/Uni/Waste/ChartMonthCostUni";
-import Chart49 from "./components/Pages/Account/Charts/Uni/Waste/ChartWeekCostUni";
-
-import Chart50 from "./components/Pages/Account/Charts/Uni/Surplus/ChartYearSurplusUni";
-import Chart51 from "./components/Pages/Account/Charts/Uni/Surplus/ChartMonthSurplusUni";
-import Chart52 from "./components/Pages/Account/Charts/Uni/Surplus/ChartWeekSurplusUni";
-
-import Chart53 from "./components/Pages/Account/Charts/Uni/Surplus/ChartYearSurplusGHGUni";
-import Chart54 from "./components/Pages/Account/Charts/Uni/Surplus/ChartMonthSurplusGHGUni";
-import Chart55 from "./components/Pages/Account/Charts/Uni/Surplus/ChartWeekSurplusGHGUni";
-
-import Chart56 from "./components/Pages/Account/Charts/Uni/Surplus/ChartYearSurplusCostUni";
-import Chart57 from "./components/Pages/Account/Charts/Uni/Surplus/ChartMonthSurplusCostUni";
-import Chart58 from "./components/Pages/Account/Charts/Uni/Surplus/ChartWeekSurplusCostUni";
-
-import Chart59 from "./components/Pages/Account/Charts/Business/Waste/ChartYearBusiness";
-import Chart60 from "./components/Pages/Account/Charts/Business/Waste/ChartMonthBusiness";
-import Chart61 from "./components/Pages/Account/Charts/Business/Waste/ChartWeekBusiness";
-
-import Chart62 from "./components/Pages/Account/Charts/Business/Waste/ChartYearGHGBusiness";
-import Chart63 from "./components/Pages/Account/Charts/Business/Waste/ChartMonthGHGBusiness";
-import Chart64 from "./components/Pages/Account/Charts/Business/Waste/ChartWeekGHGBusiness";
-
-import Chart65 from "./components/Pages/Account/Charts/Business/Waste/ChartYearCostBusiness";
-import Chart66 from "./components/Pages/Account/Charts/Business/Waste/ChartMonthCostBusiness";
-import Chart67 from "./components/Pages/Account/Charts/Business/Waste/ChartWeekCostBusiness";
-
-import Chart68 from "./components/Pages/Account/Charts/Business/Surplus/ChartYearSurplusBusiness";
-import Chart69 from "./components/Pages/Account/Charts/Business/Surplus/ChartMonthSurplusBusiness";
-import Chart70 from "./components/Pages/Account/Charts/Business/Surplus/ChartWeekSurplusBusiness";
-
-import Chart71 from "./components/Pages/Account/Charts/Business/Surplus/ChartYearSurplusGHGBusiness";
-import Chart72 from "./components/Pages/Account/Charts/Business/Surplus/ChartMonthSurplusGHGBusiness";
-import Chart73 from "./components/Pages/Account/Charts/Business/Surplus/ChartWeekSurplusGHGBusiness";
-
-import Chart74 from "./components/Pages/Account/Charts/Business/Surplus/ChartYearSurplusCostBusiness";
-import Chart75 from "./components/Pages/Account/Charts/Business/Surplus/ChartMonthSurplusCostBusiness";
-import Chart76 from "./components/Pages/Account/Charts/Business/Surplus/ChartWeekSurplusCostBusiness";
-
-import Chart77 from "./components/Pages/Account/Charts/Farm/Surplus/ChartYearSurplusFarm";
-import Chart78 from "./components/Pages/Account/Charts/Farm/Surplus/ChartMonthSurplusFarm";
-import Chart79 from "./components/Pages/Account/Charts/Farm/Surplus/ChartWeekSurplusFarm";
-
-import Chart80 from "./components/Pages/Account/Charts/Farm/Surplus/ChartYearSurplusGHGFarm";
-import Chart81 from "./components/Pages/Account/Charts/Farm/Surplus/ChartMonthSurplusGHGFarm";
-import Chart82 from "./components/Pages/Account/Charts/Farm/Surplus/ChartWeekSurplusGHGFarm";
-
-import Chart83 from "./components/Pages/Account/Charts/Farm/Surplus/ChartYearSurplusCostFarm";
-import Chart84 from "./components/Pages/Account/Charts/Farm/Surplus/ChartMonthSurplusCostFarm";
-import Chart85 from "./components/Pages/Account/Charts/Farm/Surplus/ChartWeekSurplusCostFarm";
-
 import FoodReduction from "./components/Pages/FoodReduction";
 import InfoTable from "./components/Pages/InfoTable";
 
@@ -275,9 +164,9 @@ const App = (props) => {
               component={TermsAndPrivacy}
             />
             <Route path="/forgot-password" exact component={ForgotPassword} />
-            <Route path="/account" exact component={Account} />
-            {/* New Account Page */}
-            <Route path="/newaccount" exact component={NewAccount}
+            <Route path="/account" exact component={NewAccount} />
+            {/* Old Account Page */}
+            {/* <Route path="/newaccount" exact component={Account} /> */}
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />
             <Route path="/view-map" exact component={MapData} />
