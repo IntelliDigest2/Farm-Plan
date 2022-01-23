@@ -13,38 +13,42 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 export function Food() {
   return (
     <Container className="tab-box">
-      <Accordion
-        style={{
-          width: "80%",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "block",
-          margin: "auto",
-          backgroundColor: Colors.brandGreen,
-        }}
-      >
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="panel1a-header">
-          <Typography>Disclaimer</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            <b>DISCLAIMER: </b>The Global Food Loss & Waste Tracker is designed,
-            in part, to help users develop healthy eating habits. The
-            nutritional information and dietary recommendations provided are
-            merely suggestions which may or may not improve users' eating habits
-            and/or overall health. This app is a self-regulatory tool, not
-            intended to replace professional medical advice. Please always
-            consult a dietician or medical professional for professional medical
-            advice regarding your health.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <IconButton
-        icon="surplus"
-        label="Upload Food Surplus"
-        goTo="/add-products"
-      />
-      <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
+      <div className="row">
+        <Accordion
+          style={{
+            width: "80%",
+            justifyContent: "center",
+            alignItems: "center",
+            display: "block",
+            margin: "auto",
+            backgroundColor: Colors.brandGreen,
+          }}
+        >
+          <AccordionSummary expandIcon={<ExpandMoreIcon />} id="panel1a-header">
+            <Typography>Disclaimer</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              <b>DISCLAIMER: </b>The Global Food Loss & Waste Tracker is
+              designed, in part, to help users develop healthy eating habits.
+              The nutritional information and dietary recommendations provided
+              are merely suggestions which may or may not improve users' eating
+              habits and/or overall health. This app is a self-regulatory tool,
+              not intended to replace professional medical advice. Please always
+              consult a dietician or medical professional for professional
+              medical advice regarding your health.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <IconButton
+          icon="surplus"
+          label="Upload Food Surplus"
+          goTo="/add-products"
+        />
+      </div>
+      <div className="row">
+        <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
+      </div>
     </Container>
   );
 }
