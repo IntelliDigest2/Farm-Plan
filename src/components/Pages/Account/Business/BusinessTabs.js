@@ -1,75 +1,33 @@
-import React, { useState } from "react";
-import { SubButton, IconButton } from "../../SubComponents/Button";
+import React from "react";
+import { IconButton } from "../../SubComponents/Button";
 import "../UserAccount.css";
-import { Colors } from "../../../lib/Colors";
+//import { Colors } from "../../../lib/Colors";
 
-import { Grid } from "@mui/material";
+import { Container } from "react-bootstrap";
 
 export function Food() {
   return (
-    <>
-      <Grid
-        container
-        className="center"
-        spacing={2}
-        style={{ marginTop: "1rem" }}
-      >
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="surplus"
-            label="Upload Food Surplus"
-            goTo="/add-products-business"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="buy"
-            label="Buy Food"
-            goTo="/browse-products"
-          />
-        </Grid>
-      </Grid>
-    </>
+    <Container className="tab-box">
+      <IconButton
+        icon="surplus"
+        label="Upload Food Surplus"
+        goTo="/add-products-business"
+      />
+      <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
+    </Container>
   );
 }
 
 export function FoodWaste() {
   return (
-    <>
-      <Grid
-        container
-        className="center"
-        spacing={2}
-        style={{ marginTop: "1rem" }}
-      >
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="delete"
-            label="Update Food Waste"
-            goTo="/food-wasteBusiness"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandGreen}
-            icon="info"
-            label="Food Waste Reduction Tips"
-            goTo="/food-reduction"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandYellow}
-            icon="chart"
-            label="Food Waste Chart"
-            goTo="/chart"
-          />
-        </Grid>
-      </Grid>
-    </>
+    <Container className="tab-box">
+      <IconButton
+        icon="delete"
+        label="Update Food Waste"
+        goTo="/food-wasteBusiness"
+      />
+      <IconButton icon="chart" label="Food Waste Chart" goTo="/chart" />
+    </Container>
   );
 }
 
@@ -78,5 +36,13 @@ export function Health() {
 }
 
 export function Environment() {
-  return <></>;
+  return (
+    <Container className="tab-box">
+      <IconButton
+        icon="info"
+        label="Food Waste Reduction Tips"
+        goTo="/food-reduction"
+      />
+    </Container>
+  );
 }

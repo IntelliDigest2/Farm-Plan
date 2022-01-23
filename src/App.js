@@ -25,7 +25,8 @@ import NotFound from "./components/Pages/NotFound";
 import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave";
-import Account from "./components/Pages/Account/UserAccount";
+//old account
+//import Account from "./components/Pages/Account/UserAccount";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import MapData from "./components/Pages/Account/MapData";
 

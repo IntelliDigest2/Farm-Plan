@@ -1,50 +1,33 @@
-import React, { useState } from "react";
-import { SubButton, IconButton } from "../../SubComponents/Button";
+import React from "react";
+import { IconButton } from "../../SubComponents/Button";
 import "../UserAccount.css";
-import { Colors } from "../../../lib/Colors";
+//import { Colors } from "../../../lib/Colors";
 
 import { Container } from "react-bootstrap";
-import { Grid } from "@mui/material";
 
 export function Food() {
   return (
-    <>
-      <Grid
-        container
-        className="center"
-        spacing={2}
-        style={{ marginTop: "1rem" }}
-      >
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="surplus"
-            label="Update Food Surplus"
-            goTo="/add-products-farm"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="buy"
-            label="Buy Food"
-            goTo="/browse-products"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandYellow}
-            icon="chart"
-            label="Food Waste Chart"
-            goTo="/chart"
-          />
-        </Grid>
-      </Grid>
-    </>
+    <Container className="tab-box">
+      <IconButton
+        icon="surplus"
+        label="Upload Food Surplus"
+        goTo="/add-products-farm"
+      />
+      <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
+    </Container>
   );
 }
 
 export function FoodWaste() {
+  return (
+    <Container className="tab-box">
+      <IconButton icon="delete" label="Update Food Loss" goTo="/food-loss" />
+      <IconButton icon="chart" label="Food Loss Chart" goTo="/chart" />
+    </Container>
+  );
+}
+
+/*export function FoodWaste() {
   return (
     <>
       <SubButton
@@ -71,7 +54,7 @@ export function FoodWaste() {
       />
     </>
   );
-}
+}*/
 
 export function Health() {
   return <></>;

@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "../SubComponents/Profile";
 import "../Pages.css";
 import { SubButton } from "../SubComponents/Button";
+import blueberries from "../../../images/Blueberries.png";
 
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { Tab } from "@material-ui/core";
@@ -20,7 +21,7 @@ import * as Farm from "./Farm/FarmTabs";
 import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Academic/AcademicTabs";
 
-import { Colors } from "../../lib/Colors";
+//import { Colors } from "../../lib/Colors";
 
 const NewAccount = (props) => {
   //AccountType/BuildingFunction Management
@@ -34,11 +35,12 @@ const NewAccount = (props) => {
       case "Restaurants":
       case "Shop/Supermarket":
       case "Recreational Centers":
+      case "Business":
         setType("Business");
         break;
       default:
-        let a = props.profile.buildingFunction;
-        setType(a);
+        //let a = props.profile.buildingFunction;
+        setType(props.profile.buildingFunction);
         break;
     }
   }, [props.profile.buildingFunction]);
@@ -63,7 +65,8 @@ const NewAccount = (props) => {
   }
 
   return (
-    <Container className="web-center">
+    <Container className="user-account">
+      <img className="blueberries" src={blueberries} alt="" />
       <Profile
         profile={props.profile}
         type={type}
@@ -71,44 +74,41 @@ const NewAccount = (props) => {
           setType(e.target.textContent);
         }}
       />
-      <TabContext value={value}>
-        <TabList
-          TabIndicatorProps={{
-            style: {
-              backgroundColor: Colors.brandGreen,
-            },
-          }}
-          variant="fullWidth"
-          onChange={handleChange}
-        >
-          <Tab disableRipple label={<Heading priority="6" text="Food" />} />
-          <Tab
-            disableRipple
-            label={<Heading priority="6" text="Food Waste" />}
+      <div className="tabs">
+        <TabContext value={value}>
+          <TabList
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "",
+              },
+            }}
+            variant="fullWidth"
+            onChange={handleChange}
+          >
+            <Tab disableRipple label={<Heading priority="6" text="Food" />} />
+            <Tab
+              disableRipple
+              label={<Heading priority="6" text="Food Waste" />}
+            />
+            <Tab disableRipple label={<Heading priority="6" text="Health" />} />
+            <Tab
+              disableRipple
+              label={<Heading priority="6" text="Environment" />}
+            />
+          </TabList>
+          <AccountType
+            type={type}
+            value={value}
+            theme={theme}
+            handleChangeIndex={handleChangeIndex}
           />
-          <Tab
-            disabled
-            disableRipple
-            label={<Heading priority="6" text="Health" />}
+          <SubButton
+            styling="blue"
+            goTo="/change-password"
+            text="Change Password"
           />
-          <Tab
-            disabled
-            disableRipple
-            label={<Heading priority="6" text="Environment" />}
-          />
-        </TabList>
-        <AccountType
-          type={type}
-          value={value}
-          theme={theme}
-          handleChangeIndex={handleChangeIndex}
-        />
-        <SubButton
-          styling="blue center"
-          goTo="/change-password"
-          text="Change Password"
-        />
-      </TabContext>
+        </TabContext>
+      </div>
     </Container>
   );
 };

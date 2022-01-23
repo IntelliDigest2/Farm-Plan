@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Collapse } from "react-bootstrap";
-import { SubButton, IconButton } from "../../SubComponents/Button";
+import React from "react";
+import { Container } from "react-bootstrap";
+import { IconButton } from "../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
@@ -9,11 +9,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Grid } from "@mui/material";
 
 export function Food() {
   return (
-    <>
+    <Container className="tab-box">
       <Accordion
         style={{
           width: "80%",
@@ -40,84 +39,41 @@ export function Food() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-
-      <Grid
-        container
-        className="center"
-        spacing={2}
-        style={{ marginTop: "1rem" }}
-      >
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="food"
-            label="Update Food Intake"
-            goTo="/food-intake"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="surplus"
-            label="Upload Food Surplus"
-            goTo="/add-products"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="buy"
-            label="Buy Food"
-            goTo="/browse-products"
-          />
-        </Grid>
-      </Grid>
-    </>
+      <IconButton
+        icon="surplus"
+        label="Upload Food Surplus"
+        goTo="/add-products"
+      />
+      <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
+    </Container>
   );
 }
 
 export function FoodWaste() {
   return (
-    <>
-      <Grid
-        container
-        className="center"
-        spacing={2}
-        style={{ marginTop: "1rem" }}
-      >
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="delete"
-            label="Update Food Waste"
-            goTo="/food-waste"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandYellow}
-            icon="chart"
-            label="Food Waste Chart"
-            goTo="/chart"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandGreen}
-            icon="info"
-            label="Food Waste Reduction Tips"
-            goTo="/food-reduction"
-          />
-        </Grid>
-      </Grid>
-    </>
+    <Container className="tab-box">
+      <IconButton icon="delete" label="Update Food Waste" goTo="/food-waste" />
+      <IconButton icon="chart" label="Food Waste Chart" goTo="/chart" />
+    </Container>
   );
 }
 
 export function Health() {
-  return <></>;
+  return (
+    <Container className="tab-box">
+      <IconButton icon="food" label="Update Food Intake" goTo="/food-intake" />
+    </Container>
+  );
 }
 
 export function Environment() {
-  return <></>;
+  return (
+    <Container className="tab-box">
+      <IconButton
+        icon="info"
+        label="Food Waste Reduction Tips"
+        goTo="/food-reduction"
+      />
+    </Container>
+  );
 }

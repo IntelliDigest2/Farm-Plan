@@ -9,65 +9,42 @@ import { Grid } from "@mui/material";
 
 export function Food() {
   return (
-    <>
-      <Grid
-        container
-        className="center"
-        spacing={2}
-        style={{ marginTop: "1rem" }}
-      >
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="surplus"
-            label="Update Food Surplus"
-            goTo="/add-products-academic"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="buy"
-            label="Buy Food"
-            goTo="/browse-products"
-          />
-        </Grid>
-      </Grid>
-    </>
+    <Container className="tab-box">
+      <IconButton
+        icon="surplus"
+        label="Upload Food Surplus"
+        goTo="/add-products-academic"
+      />
+      <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
+    </Container>
   );
 }
+
 export function FoodWaste() {
   return (
-    <>
-      <Grid
-        container
-        className="center"
-        spacing={2}
-        style={{ marginTop: "1rem" }}
-      >
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandTurqoise}
-            icon="delete"
-            label="Update Food Waste"
-            goTo="/food-wasteAcademic"
-          />
-        </Grid>
-        <Grid item sx="auto">
-          <IconButton
-            bgc={Colors.brandGreen}
-            icon="info"
-            label="Food Waste Reduction Tips"
-            goTo="/food-reduction"
-          />
-        </Grid>
-      </Grid>
-    </>
+    <Container className="tab-box">
+      <IconButton
+        icon="delete"
+        label="Update Food Waste"
+        goTo="/food-wasteAcademic"
+      />
+      <IconButton icon="chart" label="Food Waste Chart" goTo="/chart" />
+    </Container>
   );
 }
+
 export function Health() {
   return <></>;
 }
+
 export function Environment() {
-  return <></>;
+  return (
+    <Container className="tab-box">
+      <IconButton
+        icon="info"
+        label="Food Waste Reduction Tips"
+        goTo="/food-reduction"
+      />
+    </Container>
+  );
 }

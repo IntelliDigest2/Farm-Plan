@@ -38,7 +38,14 @@
 .grey {
   background-color: lightgray;
 }
-
 .grey:hover {
   background-color: gray;
+}
+
+.green {
+  color: #0c0847;
+  background-color: #afba15;
+}
+.green:hover {
+  background-color: #889113;
 }

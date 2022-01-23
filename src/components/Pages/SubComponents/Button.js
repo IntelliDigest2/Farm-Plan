@@ -1,6 +1,6 @@
 import React from "react";
 import "./Button.css";
-import { Button as BootstrapButton } from "react-bootstrap";
+import { Button as BootstrapButton, Col } from "react-bootstrap";
 import { Colors } from "../../lib/Colors";
 
 import { IconButton as IButton, Typography } from "@mui/material";
@@ -60,126 +60,61 @@ function IconButton(props) {
     default:
     case "delete":
       return (
-        <IButton
-          className="icon-btn center"
-          href={props.goTo}
-          style={{
-            backgroundColor: props.bgc,
-            borderRadius: "15px",
-          }}
-        >
-          <Stack className="center">
-            <DeleteIconOutlined
-              style={{
-                fontSize: 100,
-                color: "white",
-              }}
-            />
-            <Typography color={"white"} gutterBottom variant="subtitle1">
-              {props.label}
-            </Typography>
-          </Stack>
-        </IButton>
+        <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
+          <div className="turquoise">
+            <DeleteIconOutlined sx={{ fontSize: 90 }} />
+            {props.label}
+          </div>
+        </BootstrapButton>
       );
     case "chart":
       return (
-        <IButton
-          className="icon-btn center"
-          href={props.goTo}
-          style={{ backgroundColor: props.bgc, borderRadius: "15px" }}
-        >
-          <Stack className="center">
-            <BarChartOutlined
-              style={{
-                fontSize: 100,
-                color: "white",
-              }}
-            />
-            <Typography color={"white"} gutterBottom variant="subtitle1">
-              {props.label}
-            </Typography>
-          </Stack>
-        </IButton>
+        <BootstrapButton className="icon-btn yellow" href={props.goTo}>
+          <div className="yellow">
+            <BarChartOutlined sx={{ fontSize: 90 }} />
+            {props.label}
+          </div>
+        </BootstrapButton>
       );
     case "food":
       return (
-        <IButton
-          className="icon-btn center"
-          href={props.goTo}
-          style={{ backgroundColor: props.bgc, borderRadius: "15px" }}
-        >
-          <Stack className="center">
-            <RestaurantOutlined
-              style={{
-                fontSize: 100,
-                color: "white",
-              }}
-            />
-            <Typography color={"white"} gutterBottom variant="subtitle1">
-              {props.label}
-            </Typography>
-          </Stack>
-        </IButton>
+        <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
+          <div className="turquoise">
+            <RestaurantOutlined sx={{ fontSize: 90 }} />
+            {props.label}
+          </div>
+        </BootstrapButton>
       );
     case "surplus":
       return (
-        <IButton
-          className="icon-btn center"
-          href={props.goTo}
-          style={{ backgroundColor: props.bgc, borderRadius: "15px" }}
-        >
-          <Stack className="center">
-            <AddCircleOutlineOutlined
-              style={{
-                fontSize: 100,
-                color: "white",
-              }}
-            />
-            <Typography color={"white"} gutterBottom variant="subtitle1">
-              {props.label}
-            </Typography>
-          </Stack>
-        </IButton>
+        <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
+          <div className="turquoise">
+            <AddCircleOutlineOutlined sx={{ fontSize: 90 }} />
+            {props.label}
+          </div>
+        </BootstrapButton>
       );
     case "buy":
       return (
-        <IButton
-          className="icon-btn center"
+        <BootstrapButton
+          className="icon-btn turquoise"
           href={props.goTo}
           style={{ backgroundColor: props.bgc, borderRadius: "15px" }}
         >
-          <Stack className="center">
-            <ShoppingBasketOutlined
-              style={{
-                fontSize: 100,
-                color: "white",
-              }}
-            />
-            <Typography color={"white"} gutterBottom variant="subtitle1">
-              {props.label}
-            </Typography>
-          </Stack>
-        </IButton>
+          <div className="turquoise">
+            <ShoppingBasketOutlined sx={{ fontSize: 90 }} />
+            {props.label}
+          </div>
+        </BootstrapButton>
       );
     case "info":
       return (
-        <IButton
-          className="icon-btn center"
-          href={props.goTo}
-          style={{ backgroundColor: props.bgc, borderRadius: "15px" }}
-        >
-          <Stack className="center">
-            <InfoOutlined
-              style={{
-                fontSize: 100,
-                color: "white",
-              }}
-            />
-            <Typography color={"white"} gutterBottom variant="subtitle1">
-              {props.label}
-            </Typography>
-          </Stack>
-        </IButton>
+        <BootstrapButton className="icon-btn green" href={props.goTo}>
+          <div className="green">
+            <InfoOutlined sx={{ fontSize: 72 }} />
+            {props.label}
+          </div>
+        </BootstrapButton>
       );
   }
 }
