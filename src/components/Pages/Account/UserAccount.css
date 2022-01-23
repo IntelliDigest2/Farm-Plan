@@ -9,8 +9,15 @@
   font-family: "Source Sans Pro", sans-serif;
 }
 
+.user-account {
+  justify-content: center;
+}
+
 /* Phones */
 @media screen and (max-width: 600px) {
+  .user-account {
+    max-width: 100%;
+  }
   .web-center {
     max-width: 100%;
   }
@@ -18,6 +25,9 @@
 
 /* Portrait Tablet and Large Phones */
 @media screen and (min-width: 600px) {
+  .user-account {
+    max-width: 100%;
+  }
   .web-center {
     max-width: 100%;
   }
@@ -25,6 +35,9 @@
 
 /* Landscape Tablet */
 @media screen and (min-width: 768px) {
+  .user-account {
+    max-width: 90%;
+  }
   .web-center {
     max-width: 90%;
   }
@@ -32,6 +45,9 @@
 
 /* Laptop/Desktop */
 @media screen and (min-width: 992px) {
+  .user-account {
+    max-width: 70%;
+  }
   .web-center {
     max-width: 70%;
   }
@@ -39,6 +55,9 @@
 
 /* Large Laptop/Desktop */
 @media screen and (min-width: 1200px) {
+  .user-account {
+    max-width: 50%;
+  }
   .web-center {
     max-width: 50%;
   }
@@ -66,17 +85,16 @@
 }
 
 .box {
-  /*float: center;*/
+  float: center;
   display: flex;
   flex-direction: column;
   position: absolute;
-  width: 85%;
   margin: auto;
   height: 30%;
-  top: 9%;
+  top: 8%;
   justify-content: flex-start;
   background-color: white;
-  margin-bottom: 1rem;
+  margin-bottom: 8%;
   padding: 3%;
   border-radius: 15px;
   /*box-shadow: 4px 5px 5px -2px rgba(4, 23, 51, 0.5);*/
@@ -86,8 +104,8 @@
   position: fixed;
   width: 100%;
   text-align: center;
-  bottom: 4%;
-  min-height: 50%;
+  bottom: 3%;
+  max-height: 55%;
   left: 0px;
   background-color: white;
 }
