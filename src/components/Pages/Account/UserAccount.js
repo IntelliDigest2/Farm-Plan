@@ -1,3 +1,5 @@
+//NOT IN USE
+
 import React from "react";
 import "../../../App.css";
 import { connect } from "react-redux";
@@ -6,7 +8,7 @@ import "./UserAccount.css";
 import "../Pages.css";
 import { FoodBubble } from "./Personal/FoodBubble";
 import { FoodWasteBubble } from "./Personal/FoodWasteBubble";
-import { FoodSurplusBubble } from "./Personal/FoodSurplusBubble";
+//import { FoodSurplusBubble } from "./Personal/FoodSurplusBubble";
 import { PersonalBubble } from "./Personal/PersonalBubble";
 import { FarmBubble } from "./Farm/FarmBubble";
 import { BusinessBubble } from "./Business/BusinessBubble";
@@ -31,7 +33,7 @@ function Account(props) {
       return (
         <>
           <Container fluid className="web-center">
-            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <Profile profile={props.profile} />
             <FarmBubble />
             <PersonalBubble />
             <SubButton
@@ -43,12 +45,12 @@ function Account(props) {
         </>
       );
 
-    case "Schools":
-      //console.log(props.profile.buildingFunction);
+    case "Schools" || "Academic":
+      //console.log(props.profile);
       return (
         <>
           <Container fluid className="web-center">
-            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <Profile profile={props.profile} />
             <AcademicBubble />
             <PersonalBubble />
             <SubButton
@@ -66,12 +68,13 @@ function Account(props) {
       "Offices" ||
       "Restaurants" ||
       "Shop/Supermarket" ||
-      "Recreational Centers":
+      "Recreational Centers" ||
+      "Business":
       //console.log(props.profile.buildingFunction);
       return (
         <>
           <Container fluid className="web-center">
-            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <Profile profile={props.profile} />
             <BusinessBubble />
             <PersonalBubble />
             <SubButton
@@ -85,30 +88,12 @@ function Account(props) {
 
     //personal profile
     case "Households":
+    default:
       //console.log(props.auth.uid);
       return (
         <>
           <Container fluid className="web-center">
-            <Profile
-              name={props.profile.firstName + " " + props.profile.lastName}
-            />
-            <FoodBubble />
-            <FoodWasteBubble />
-            <SubButton
-              styling="blue"
-              goTo="/change-password"
-              text="Change Password"
-            />
-          </Container>
-        </>
-      );
-
-    default:
-      //console.log(props.profile.buildingFunction);
-      return (
-        <>
-          <Container fluid className="web-center">
-            <Profile name={props.profile.firstName + props.profile.lastName} />
+            <Profile profile={props.profile} />
             <FoodBubble />
             <FoodWasteBubble />
             <SubButton

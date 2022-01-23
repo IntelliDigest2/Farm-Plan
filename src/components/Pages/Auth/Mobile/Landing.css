@@ -10,7 +10,6 @@
   background: center fixed;
   background-size: cover;
   background-origin: content-box;
-  background-image: url("../../../../images/peppers.jpg");
   object-fit: cover;
 }
 

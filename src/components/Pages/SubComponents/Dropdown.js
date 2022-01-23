@@ -10,12 +10,27 @@ function Dropdown(props) {
       return <BootstrapDropdown.Divider />;
     } else {
       return (
-        <BootstrapDropdown.Item id={props.id} eventKey={item}>
+        <BootstrapDropdown.Item id={props.id} eventKey={item} key={item}>
           {item}
         </BootstrapDropdown.Item>
       );
     }
   });
+
+  if (props.disabled) {
+    return (
+      <BootstrapDropdownButton
+        title={props.data}
+        onSelect={props.function}
+        className={["dropdown center", props.styling]}
+        variant="default"
+        disabled
+        drop="down"
+      >
+        {comp}
+      </BootstrapDropdownButton>
+    );
+  }
 
   return (
     <BootstrapDropdownButton
@@ -23,6 +38,7 @@ function Dropdown(props) {
       onSelect={props.function}
       className={["dropdown center", props.styling]}
       variant="default"
+      drop="down"
     >
       {comp}
     </BootstrapDropdownButton>

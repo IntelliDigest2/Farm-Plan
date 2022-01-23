@@ -1,12 +1,114 @@
 .web-center {
-  text-align: center;
-  float: center;
+  /* float: center; */
+  display: block;
+  justify-content: center;
+  align-items: center;
   /*600px in center of large page but varies when browser is smaller*/
-  max-width: 600px;
-  margin: auto;
-  margin-top: 70px;
-  margin-bottom: 70px;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
   font-family: "Source Sans Pro", sans-serif;
+}
+
+/* Phones */
+@media screen and (max-width: 600px) {
+  .web-center {
+    max-width: 100%;
+  }
+}
+
+/* Portrait Tablet and Large Phones */
+@media screen and (min-width: 600px) {
+  .web-center {
+    max-width: 100%;
+  }
+}
+
+/* Landscape Tablet */
+@media screen and (min-width: 768px) {
+  .web-center {
+    max-width: 90%;
+  }
+}
+
+/* Laptop/Desktop */
+@media screen and (min-width: 992px) {
+  .web-center {
+    max-width: 70%;
+  }
+}
+
+/* Large Laptop/Desktop */
+@media screen and (min-width: 1200px) {
+  .web-center {
+    max-width: 50%;
+  }
+}
+
+.profile {
+  width: 100%;
+  margin-left: 0px;
+  left: 0px;
+}
+
+.blueberries {
+  position: absolute;
+  float: center;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: -8px;
+  background: center fixed;
+  background-size: cover;
+  background-origin: content-box;
+  object-fit: cover;
+}
+
+.box {
+  /*float: center;*/
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 85%;
+  margin: auto;
+  height: 30%;
+  top: 9%;
+  justify-content: flex-start;
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 3%;
+  border-radius: 15px;
+  /*box-shadow: 4px 5px 5px -2px rgba(4, 23, 51, 0.5);*/
+}
+
+.tabs {
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  bottom: 4%;
+  min-height: 50%;
+  left: 0px;
+  background-color: white;
+}
+
+.tab-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.col {
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .sub-selecton {
@@ -21,9 +123,9 @@
   padding: 5px;
 }
 
-.profile {
-  max-width: 300px;
-  color: white;
+.disclaimer-btn {
+  margin-top: 2%;
+  width: 100%;
 }
 
 .large-img {
@@ -74,11 +176,6 @@
   font-weight: 600;
   padding-left: 15.5px;
   padding-right: 15.5px;
-}
-
-.container {
-  position: relative;
-  width: 100%;
 }
 
 .img-overlay {
