@@ -62,7 +62,7 @@ function IconButton(props) {
       return (
         <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
           <div className="turquoise">
-            <DeleteIconOutlined sx={{ fontSize: 75 }} />
+            <DeleteIconOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
         </BootstrapButton>
@@ -71,7 +71,7 @@ function IconButton(props) {
       return (
         <BootstrapButton className="icon-btn yellow" href={props.goTo}>
           <div className="yellow">
-            <BarChartOutlined sx={{ fontSize: 75 }} />
+            <BarChartOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
         </BootstrapButton>
@@ -80,7 +80,7 @@ function IconButton(props) {
       return (
         <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
           <div className="turquoise">
-            <RestaurantOutlined sx={{ fontSize: 75 }} />
+            <RestaurantOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
         </BootstrapButton>
@@ -89,7 +89,7 @@ function IconButton(props) {
       return (
         <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
           <div className="turquoise">
-            <AddCircleOutlineOutlined sx={{ fontSize: 75 }} />
+            <AddCircleOutlineOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
         </BootstrapButton>
@@ -102,7 +102,7 @@ function IconButton(props) {
           style={{ backgroundColor: props.bgc, borderRadius: "15px" }}
         >
           <div className="turquoise">
-            <ShoppingBasketOutlined sx={{ fontSize: 75 }} />
+            <ShoppingBasketOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
         </BootstrapButton>
