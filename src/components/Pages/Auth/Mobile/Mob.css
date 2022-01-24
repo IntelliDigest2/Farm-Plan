@@ -161,23 +161,6 @@
   background-color: gray;
 }
 
-.row {
-  flex-direction: row;
-  justify-content: center;
-  float: center;
-  background-color: white;
-  width: 80%;
-  margin: auto;
-}
-.col {
-  flex-direction: column;
-  justify-content: center;
-  float: center;
-  background-color: white;
-  width: 80%;
-  margin: auto;
-}
-
 .auth-error {
   color: red;
   font-size: 20px;

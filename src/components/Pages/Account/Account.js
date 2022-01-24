@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -21,7 +21,7 @@ import * as Farm from "./Farm/FarmTabs";
 import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Academic/AcademicTabs";
 
-//import { Colors } from "../../lib/Colors";
+import { Colors } from "../../lib/Colors";
 
 const NewAccount = (props) => {
   //AccountType/BuildingFunction Management
@@ -60,13 +60,13 @@ const NewAccount = (props) => {
   };
 
   //Render
-  if (!props.auth) {
+  if (!props.auth.uid) {
+    console.log("TEst");
     return <Redirect to="/login" />;
   }
 
   return (
-    <Container className="user-account">
-      <img className="blueberries" src={blueberries} alt="" />
+    <Container className="web-center">
       <Profile
         profile={props.profile}
         type={type}
@@ -79,7 +79,7 @@ const NewAccount = (props) => {
           <TabList
             TabIndicatorProps={{
               style: {
-                backgroundColor: "",
+                backgroundColor: Colors.brandGreen,
               },
             }}
             variant="fullWidth"

@@ -61,7 +61,7 @@ function IconButton(props) {
     case "delete":
       return (
         <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
-          <div className="turquoise">
+          <div>
             <DeleteIconOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
@@ -70,7 +70,7 @@ function IconButton(props) {
     case "chart":
       return (
         <BootstrapButton className="icon-btn yellow" href={props.goTo}>
-          <div className="yellow">
+          <div>
             <BarChartOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
@@ -79,7 +79,7 @@ function IconButton(props) {
     case "food":
       return (
         <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
-          <div className="turquoise">
+          <div>
             <RestaurantOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
@@ -88,7 +88,7 @@ function IconButton(props) {
     case "surplus":
       return (
         <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
-          <div className="turquoise">
+          <div>
             <AddCircleOutlineOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
@@ -96,12 +96,8 @@ function IconButton(props) {
       );
     case "buy":
       return (
-        <BootstrapButton
-          className="icon-btn turquoise"
-          href={props.goTo}
-          style={{ backgroundColor: props.bgc, borderRadius: "15px" }}
-        >
-          <div className="turquoise">
+        <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
+          <div>
             <ShoppingBasketOutlined sx={{ fontSize: 90 }} />
             {props.label}
           </div>
@@ -110,7 +106,7 @@ function IconButton(props) {
     case "info":
       return (
         <BootstrapButton className="icon-btn green" href={props.goTo}>
-          <div className="green">
+          <div>
             <InfoOutlined sx={{ fontSize: 72 }} />
             {props.label}
           </div>

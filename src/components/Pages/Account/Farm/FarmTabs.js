@@ -7,23 +7,23 @@ import { Container } from "react-bootstrap";
 
 export function Food() {
   return (
-    <Container className="tab-box">
+    <>
       <IconButton
         icon="surplus"
         label="Upload Food Surplus"
         goTo="/add-products-farm"
       />
       <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
-    </Container>
+    </>
   );
 }
 
 export function FoodWaste() {
   return (
-    <Container className="tab-box">
+    <>
       <IconButton icon="delete" label="Update Food Loss" goTo="/food-loss" />
       <IconButton icon="chart" label="Food Loss Chart" goTo="/chart" />
-    </Container>
+    </>
   );
 }
 
