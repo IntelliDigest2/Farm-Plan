@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { Tab, Container, Nav } from "react-bootstrap";
-import styled from "styled-components";
 import "../UserAccount.css";
+import { Colors } from "../../../lib/Colors";
 
 import { connect } from "react-redux";
 import { getFirestoreData } from "../../../../store/actions/dataActions";
 import { DefaultButton } from "../../SubComponents/Button";
-import { Dropdown } from "../../SubComponents/Dropdown";
 
 // Get current Date and week number
 const currentDate = new Date();
@@ -45,10 +44,10 @@ const ChartBuilder = (props) => {
       data={props.chartType}
       options={{
         title: `${props.title} Food Waste Performance`,
-        legend: "none",
-        colors: ["#aab41e"],
+        legend: "bottom",
+        colors: [Colors.brandTurqoise, Colors.brandYellow, Colors.brandGreen],
         hAxis: { title: props.title, minValue: 0 },
-        vAxis: { title: props.dropdownType + " of Food Wastage " + props.unit },
+        vAxis: { title: "Food Wastage" },
       }}
     />
   );
@@ -72,12 +71,34 @@ function ChartView(props) {
   const [fri, setFri] = useState(0);
   const [sat, setSat] = useState(0);
   const [sun, setSun] = useState(0);
+  const [monGHG, setMonGHG] = useState(0);
+  const [tueGHG, setTueGHG] = useState(0);
+  const [wedGHG, setWedGHG] = useState(0);
+  const [thurGHG, setThurGHG] = useState(0);
+  const [friGHG, setFriGHG] = useState(0);
+  const [satGHG, setSatGHG] = useState(0);
+  const [sunGHG, setSunGHG] = useState(0);
+  const [monCost, setMonCost] = useState(0);
+  const [tueCost, setTueCost] = useState(0);
+  const [wedCost, setWedCost] = useState(0);
+  const [thurCost, setThurCost] = useState(0);
+  const [friCost, setFriCost] = useState(0);
+  const [satCost, setSatCost] = useState(0);
+  const [sunCost, setSunCost] = useState(0);
 
   //Weekly State
   const [first, setFirst] = useState(0);
   const [second, setSecond] = useState(0);
   const [third, setThird] = useState(0);
   const [fourth, setFourth] = useState(0);
+  const [firstGHG, setFirstGHG] = useState(0);
+  const [secondGHG, setSecondGHG] = useState(0);
+  const [thirdGHG, setThirdGHG] = useState(0);
+  const [fourthGHG, setFourthGHG] = useState(0);
+  const [firstCost, setFirstCost] = useState(0);
+  const [secondCost, setSecondCost] = useState(0);
+  const [thirdCost, setThirdCost] = useState(0);
+  const [fourthCost, setFourthCost] = useState(0);
 
   //Monthly State
   const [jan, setJan] = useState(0);
@@ -92,6 +113,30 @@ function ChartView(props) {
   const [oct, setOct] = useState(0);
   const [nov, setNov] = useState(0);
   const [dec, setDec] = useState(0);
+  const [janGHG, setJanGHG] = useState(0);
+  const [febGHG, setFebGHG] = useState(0);
+  const [marGHG, setMarGHG] = useState(0);
+  const [aprGHG, setAprGHG] = useState(0);
+  const [mayGHG, setMayGHG] = useState(0);
+  const [junGHG, setJunGHG] = useState(0);
+  const [julGHG, setJulGHG] = useState(0);
+  const [augGHG, setAugGHG] = useState(0);
+  const [sepGHG, setSepGHG] = useState(0);
+  const [octGHG, setOctGHG] = useState(0);
+  const [novGHG, setNovGHG] = useState(0);
+  const [decGHG, setDecGHG] = useState(0);
+  const [janCost, setJanCost] = useState(0);
+  const [febCost, setFebCost] = useState(0);
+  const [marCost, setMarCost] = useState(0);
+  const [aprCost, setAprCost] = useState(0);
+  const [mayCost, setMayCost] = useState(0);
+  const [junCost, setJunCost] = useState(0);
+  const [julCost, setJulCost] = useState(0);
+  const [augCost, setAugCost] = useState(0);
+  const [sepCost, setSepCost] = useState(0);
+  const [octCost, setOctCost] = useState(0);
+  const [novCost, setNovCost] = useState(0);
+  const [decCost, setDecCost] = useState(0);
 
   function clearState() {
     //Days
@@ -102,11 +147,34 @@ function ChartView(props) {
     setFri(0);
     setSat(0);
     setSun(0);
+    setMonGHG(0);
+    setTueGHG(0);
+    setWedGHG(0);
+    setThurGHG(0);
+    setFriGHG(0);
+    setSatGHG(0);
+    setSunGHG(0);
+    setMonCost(0);
+    setTueCost(0);
+    setWedCost(0);
+    setThurCost(0);
+    setFriCost(0);
+    setSatCost(0);
+    setSunCost(0);
     //Weeks
     setFirst(0);
     setSecond(0);
     setThird(0);
     setFourth(0);
+    setFirstGHG(0);
+    setSecondGHG(0);
+    setThirdGHG(0);
+    setFourthGHG(0);
+    setFirstCost(0);
+    setSecondCost(0);
+    setThirdCost(0);
+    setFourthCost(0);
+
     //Months
     setJan(0);
     setFeb(0);
@@ -120,11 +188,31 @@ function ChartView(props) {
     setOct(0);
     setNov(0);
     setDec(0);
+    setJanGHG(0);
+    setFebGHG(0);
+    setMarGHG(0);
+    setAprGHG(0);
+    setMayGHG(0);
+    setJunGHG(0);
+    setJulGHG(0);
+    setAugGHG(0);
+    setSepGHG(0);
+    setOctGHG(0);
+    setNovGHG(0);
+    setDecGHG(0);
+    setJanCost(0);
+    setFebCost(0);
+    setMarCost(0);
+    setAprCost(0);
+    setMayCost(0);
+    setJunCost(0);
+    setJulCost(0);
+    setAugCost(0);
+    setSepCost(0);
+    setOctCost(0);
+    setNovCost(0);
+    setDecCost(0);
   }
-
-  //Weight-GHG-Cost
-  const [dropdownType, setDropdownType] = useState("Weight");
-  const [unit, setUnit] = useState("KG");
 
   //this defines fetchCharts method, maybe bring out method into chartfunction specific folder so that this can be generalised.
   function fetchData() {
@@ -146,7 +234,7 @@ function ChartView(props) {
     clearState();
     updateCharts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.data, dropdownType]);
+  }, [props.data]);
 
   const updateCharts = async () => {
     props.data.forEach((doc) => {
@@ -159,6 +247,7 @@ function ChartView(props) {
         var week = getWeekNumber(date, year, day);
       } catch (err) {
         console.error(err);
+        return;
       }
 
       var weight = doc.foodWasteWeight;
@@ -181,7 +270,9 @@ function ChartView(props) {
       var currency = doc.currency;
       var curm = 0;
 
-      var newValue = 0;
+      var newWeight = 0;
+      var newGHG = 0;
+      var newCost = 0;
 
       //Multipliers
       switch (wu) {
@@ -261,65 +352,82 @@ function ChartView(props) {
       }
 
       //Weight-GHG-Cost
-      if (dropdownType === "Weight") {
-        newValue = Number((weight * wm).toFixed(3));
-        setUnit("(KG)");
-      } else if (dropdownType === "GHG") {
-        if (edibleIndeible === "Edible") {
-          newValue = Number(
-            20 *
-              16.0424 *
-              wm *
-              weight *
-              (0.01852 * cm * cc + 0.01744 * pm * pc + 0.04608 * fm * fc)
-          );
-        } else {
-          newValue = Number(weight * wm * 2.5);
-        }
-        setUnit("(KG CO2)");
+      newWeight = Number((weight * wm).toFixed(3));
+      if (edibleIndeible === "Edible") {
+        newGHG = Number(
+          20 *
+            16.0424 *
+            wm *
+            weight *
+            (0.01852 * cm * cc + 0.01744 * pm * pc + 0.04608 * fm * fc)
+        );
       } else {
-        newValue = Number(cost * curm * wm);
-        setUnit("(£)");
+        newGHG = Number(weight * wm * 2.5);
       }
+      newCost = Number(cost * curm * wm);
 
       //Update Monthly
       if (year === currentDate.getFullYear()) {
         switch (month) {
           case 0:
-            setJan((jan) => jan + newValue);
+            setJan((jan) => jan + newWeight);
+            setJanGHG((janGHG) => janGHG + newGHG);
+            setJanCost((janCost) => janCost + newCost);
             break;
           case 1:
-            setFeb((feb) => feb + newValue);
+            setFeb((feb) => feb + newWeight);
+            setFebGHG((febGHG) => febGHG + newGHG);
+            setFebCost((febCost) => febCost + newCost);
             break;
           case 2:
-            setMar((mar) => mar + newValue);
+            setMar((mar) => mar + newWeight);
+            setMarGHG((marGHG) => marGHG + newGHG);
+            setMarCost((marCost) => marCost + newCost);
             break;
           case 3:
-            setApr((apr) => apr + newValue);
+            setApr((apr) => apr + newWeight);
+            setAprGHG((aprGHG) => aprGHG + newGHG);
+            setAprCost((aprCost) => aprCost + newCost);
             break;
           case 4:
-            setMay((may) => may + newValue);
+            setMay((may) => may + newWeight);
+            setMayGHG((mayGHG) => mayGHG + newGHG);
+            setMayCost((mayCost) => mayCost + newCost);
             break;
           case 5:
-            setJun((jun) => jun + newValue);
+            setJun((jun) => jun + newWeight);
+            setJunGHG((junGHG) => junGHG + newGHG);
+            setJunCost((junCost) => junCost + newCost);
             break;
           case 6:
-            setJul((jul) => jul + newValue);
+            setJul((jul) => jul + newWeight);
+            setJulGHG((julGHG) => julGHG + newGHG);
+            setJulCost((julCost) => julCost + newCost);
             break;
           case 7:
-            setAug((aug) => aug + newValue);
+            setAug((aug) => aug + newWeight);
+            setAugGHG((augGHG) => augGHG + newGHG);
+            setAugCost((augCost) => augCost + newCost);
             break;
           case 8:
-            setSep((sep) => sep + newValue);
+            setSep((sep) => sep + newWeight);
+            setSepGHG((sepGHG) => sepGHG + newGHG);
+            setSepCost((sepCost) => sepCost + newCost);
             break;
           case 9:
-            setOct((oct) => oct + newValue);
+            setOct((oct) => oct + newWeight);
+            setOctGHG((octGHG) => octGHG + newGHG);
+            setOctCost((octCost) => octCost + newCost);
             break;
           case 10:
-            setNov((nov) => nov + newValue);
+            setNov((nov) => nov + newWeight);
+            setNovGHG((novGHG) => novGHG + newGHG);
+            setNovCost((novCost) => novCost + newCost);
             break;
           case 11:
-            setDec((dec) => dec + newValue);
+            setDec((dec) => dec + newWeight);
+            setDecGHG((decGHG) => decGHG + newGHG);
+            setDecCost((decCost) => decCost + newCost);
             break;
           default:
             break;
@@ -331,39 +439,62 @@ function ChartView(props) {
         month === currentDate.getMonth()
       ) {
         if (dayOfMonth >= 0 && dayOfMonth <= 7) {
-          setFirst((first) => first + newValue);
+          setFirst((first) => first + newWeight);
+          setFirstGHG((firstGHG) => firstGHG + newGHG);
+          setFirstCost((firstCost) => firstCost + newCost);
         } else if (dayOfMonth >= 8 && dayOfMonth <= 14) {
-          setSecond((second) => second + newValue);
+          setSecond((second) => second + newWeight);
+          setSecondGHG((secondGHG) => secondGHG + newGHG);
+          setSecondCost((secondCost) => secondCost + newCost);
         } else if (dayOfMonth >= 15 && dayOfMonth <= 21) {
-          setThird((third) => third + newValue);
+          setThird((third) => third + newWeight);
+          setThirdGHG((thirdGHG) => thirdGHG + newGHG);
+          setThirdCost((thirdCost) => thirdCost + newCost);
         } else {
-          setFourth((fourth) => fourth + newValue);
+          setFourth((fourth) => fourth + newWeight);
+          setFourthGHG((fourthGHG) => fourthGHG + newGHG);
+          setFourthCost((fourthCost) => fourthCost + newCost);
         }
       }
 
       //Update Daily
       if (year === currentDate.getFullYear() && currentWeek === week) {
+        console.log(currentWeek + "/" + week);
         switch (day) {
           case 0:
-            setSun((sun) => sun + newValue);
+            setSun((sun) => sun + newWeight);
+            setSunGHG((sunGHG) => sunGHG + newGHG);
+            setSunCost((sunCost) => sunCost + newCost);
             break;
           case 1:
-            setMon((mon) => mon + newValue);
+            setMon((mon) => mon + newWeight);
+            setMonGHG((monGHG) => monGHG + newGHG);
+            setMonCost((monCost) => monCost + newCost);
             break;
           case 2:
-            setTue((tue) => tue + newValue);
+            setTue((tue) => tue + newWeight);
+            setTueGHG((tueGHG) => tueGHG + newGHG);
+            setTueCost((tueCost) => tueCost + newCost);
             break;
           case 3:
-            setWed((wed) => wed + newValue);
+            setWed((wed) => wed + newWeight);
+            setWedGHG((wedGHG) => wedGHG + newGHG);
+            setWedCost((wedCost) => wedCost + newCost);
             break;
           case 4:
-            setThur((thur) => thur + newValue);
+            setThur((thur) => thur + newWeight);
+            setThurGHG((thurGHG) => thurGHG + newGHG);
+            setThurCost((thurCost) => thurCost + newCost);
             break;
           case 5:
-            setFri((fri) => fri + newValue);
+            setFri((fri) => fri + newWeight);
+            setFriGHG((friGHG) => friGHG + newGHG);
+            setFriCost((friCost) => friCost + newCost);
             break;
           case 6:
-            setSat((sat) => sat + newValue);
+            setSat((sat) => sat + newWeight);
+            setSatGHG((satGHG) => satGHG + newGHG);
+            setSatCost((satCost) => satCost + newCost);
             break;
           default:
             break;
@@ -374,40 +505,40 @@ function ChartView(props) {
 
   //Daily
   const dailyChart = [
-    ["Day", dropdownType],
-    ["Mon", mon],
-    ["Tue", tue],
-    ["Wed", wed],
-    ["Thu", thur],
-    ["Fri", fri],
-    ["Sat", sat],
-    ["Sun", sun],
+    ["Day", "Weight (KG)", "GHG (KG/CO2)", "Cost (£)"],
+    ["Mon", mon, monGHG, monCost],
+    ["Tue", tue, tueGHG, tueCost],
+    ["Wed", wed, wedGHG, wedCost],
+    ["Thu", thur, thurGHG, thurCost],
+    ["Fri", fri, friGHG, friCost],
+    ["Sat", sat, satGHG, satCost],
+    ["Sun", sun, sunGHG, sunCost],
   ];
 
   // Weekly LOOK AT CHARTMONTH.JS
   const weeklyChart = [
-    ["Week", dropdownType],
-    ["1st-7th", first],
-    ["8th-14th", second],
-    ["15th-21st", third],
-    ["22nd-31st", fourth],
+    ["Week", "Weight (KG)", "GHG (KG/CO2)", "Cost (£)"],
+    ["1st-7th", first, firstGHG, firstCost],
+    ["8th-14th", second, secondGHG, secondCost],
+    ["15th-21st", third, thirdGHG, thirdCost],
+    ["22nd-31st", fourth, fourthGHG, fourthCost],
   ];
 
   //Monthly
   const monthlyChart = [
-    ["Month", dropdownType],
-    ["Jan", jan],
-    ["Feb", feb],
-    ["Mar", mar],
-    ["Apr", apr],
-    ["May", may],
-    ["Jun", jun],
-    ["Jul", jul],
-    ["Aug", aug],
-    ["Sep", sep],
-    ["Oct", oct],
-    ["Nov", nov],
-    ["Dec", dec],
+    ["Month", "Weight (KG)", "GHG (KG/CO2)", "Cost (£)"],
+    ["Jan", jan, janGHG, janCost],
+    ["Feb", feb, febGHG, febCost],
+    ["Mar", mar, marGHG, marCost],
+    ["Apr", apr, aprGHG, aprCost],
+    ["May", may, mayGHG, mayCost],
+    ["Jun", jun, junGHG, junCost],
+    ["Jul", jul, julGHG, julCost],
+    ["Aug", aug, augGHG, augCost],
+    ["Sep", sep, sepGHG, sepCost],
+    ["Oct", oct, octGHG, octCost],
+    ["Nov", nov, novGHG, novCost],
+    ["Dec", dec, decGHG, decCost],
   ];
 
   function chartType(title) {
@@ -427,24 +558,12 @@ function ChartView(props) {
     //tabbed window with daily weekly monthly yearly
     <Container fluid className="web-center">
       <DefaultButton text="Back" styling="green" goTo="/account" />
-      <Dropdown
-        id="Chart Switch"
-        styling="grey"
-        data={dropdownType}
-        items={["Weight", "GHG", "Cost"]}
-        function={(eventKey, e) => {
-          setDropdownType(e.target.textContent);
-          // forceUpdate();
-        }}
-      />
       <Tab.Container defaultActiveKey="daily">
         <Tab.Content>
           <Tab.Pane eventKey="daily" title="Daily">
             <ChartBuilder
               title="Daily"
               chartType={chartType("Daily")}
-              dropdownType={dropdownType}
-              unit={unit}
               {...props}
             />
           </Tab.Pane>
@@ -454,8 +573,6 @@ function ChartView(props) {
             <ChartBuilder
               title="Weekly"
               chartType={chartType("Weekly")}
-              dropdownType={dropdownType}
-              unit={unit}
               {...props}
             />
           </Tab.Pane>
@@ -465,8 +582,6 @@ function ChartView(props) {
             <ChartBuilder
               title="Monthly"
               chartType={chartType("Monthly")}
-              dropdownType={dropdownType}
-              unit={unit}
               {...props}
             />
           </Tab.Pane>

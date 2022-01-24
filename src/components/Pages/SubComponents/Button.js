@@ -11,6 +11,11 @@ import RestaurantOutlined from "@mui/icons-material/RestaurantOutlined";
 import AddCircleOutlineOutlined from "@mui/icons-material/AddCircleOutlineOutlined";
 import ShoppingBasketOutlined from "@mui/icons-material/ShoppingBasketOutlined";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
+import PublicOutlined from "@mui/icons-material/PublicOutlined";
+import MenuBookOutlined from "@mui/icons-material/MenuBookOutlined";
+import SpaOutlined from "@mui/icons-material/SpaOutlined";
+import KitchenOutlined from "@mui/icons-material/KitchenOutlined";
+import ShoppingBagOutlined from "@mui/icons-material/ShoppingBagOutlined";
 
 //The default buttons we are using are the large dropdown buttons we use on the account page and their small sub buttons
 //when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (styles are in Button.css)
@@ -56,63 +61,47 @@ function SubButton(props) {
 }
 
 function IconButton(props) {
-  switch (props.icon) {
-    default:
-    case "delete":
-      return (
-        <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
-          <div>
-            <DeleteIconOutlined sx={{ fontSize: 90 }} />
-            {props.label}
-          </div>
-        </BootstrapButton>
-      );
-    case "chart":
-      return (
-        <BootstrapButton className="icon-btn yellow" href={props.goTo}>
-          <div>
-            <BarChartOutlined sx={{ fontSize: 90 }} />
-            {props.label}
-          </div>
-        </BootstrapButton>
-      );
-    case "food":
-      return (
-        <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
-          <div>
-            <RestaurantOutlined sx={{ fontSize: 90 }} />
-            {props.label}
-          </div>
-        </BootstrapButton>
-      );
-    case "surplus":
-      return (
-        <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
-          <div>
-            <AddCircleOutlineOutlined sx={{ fontSize: 90 }} />
-            {props.label}
-          </div>
-        </BootstrapButton>
-      );
-    case "buy":
-      return (
-        <BootstrapButton className="icon-btn turquoise" href={props.goTo}>
-          <div>
-            <ShoppingBasketOutlined sx={{ fontSize: 90 }} />
-            {props.label}
-          </div>
-        </BootstrapButton>
-      );
-    case "info":
-      return (
-        <BootstrapButton className="icon-btn green" href={props.goTo}>
-          <div>
-            <InfoOutlined sx={{ fontSize: 72 }} />
-            {props.label}
-          </div>
-        </BootstrapButton>
-      );
+  function IconType() {
+    switch (props.icon) {
+      default:
+      case "waste":
+        return <DeleteIconOutlined sx={{ fontSize: 90 }} />;
+      case "chart":
+        return <BarChartOutlined sx={{ fontSize: 90 }} />;
+      case "food":
+        return <RestaurantOutlined sx={{ fontSize: 90 }} />;
+      case "surplus":
+        return <AddCircleOutlineOutlined sx={{ fontSize: 90 }} />;
+      case "buy":
+        return <ShoppingBasketOutlined sx={{ fontSize: 90 }} />;
+      case "info":
+        return <InfoOutlined sx={{ fontSize: 90 }} />;
+      case "world":
+        return <PublicOutlined sx={{ fontSize: 90 }} />;
+      case "book":
+        return <MenuBookOutlined sx={{ fontSize: 90 }} />;
+      case "plant":
+        return <SpaOutlined sx={{ fontSize: 90 }} />;
+      case "kitchen":
+        return <KitchenOutlined sx={{ fontSize: 90 }} />;
+      case "product":
+        return <ShoppingBagOutlined sx={{ fontSize: 90 }} />;
+    }
   }
+
+  return (
+    <BootstrapButton
+      variant="default"
+      className={["icon-btn", props.color]}
+      href={props.goTo}
+      disabled={props.disabled}
+    >
+      <div>
+        <IconType />
+        {props.label}
+      </div>
+    </BootstrapButton>
+  );
 }
 
 export { DefaultButton, SubButton, IconButton };

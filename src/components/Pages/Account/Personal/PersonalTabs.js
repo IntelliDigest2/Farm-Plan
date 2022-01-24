@@ -1,5 +1,4 @@
 import React from "react";
-import { Container } from "react-bootstrap";
 import { IconButton } from "../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
@@ -13,6 +12,84 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 export function Food() {
   return (
     <>
+      <IconButton
+        icon="food"
+        label="Food Intake"
+        color="turquoise"
+        goTo="/food-intake"
+      />
+      <IconButton
+        icon="buy"
+        label="Buy Food"
+        color="turquoise"
+        goTo="/browse-products"
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
+      />
+    </>
+  );
+}
+
+export function Environment() {
+  return (
+    <>
+      <IconButton
+        icon="waste"
+        label="Food Waste"
+        color="turquoise"
+        goTo="/food-waste"
+      />
+      <IconButton
+        icon="chart"
+        label="Waste Chart"
+        color="yellow"
+        goTo="/chart"
+      />
+      <IconButton
+        icon="world"
+        label="Waste Map"
+        color="yellow"
+        disabled="true"
+        goTo="/view-map"
+      />
+      <IconButton
+        icon="info"
+        label="Waste Tips"
+        color="green"
+        goTo="/food-reduction"
+      />
+    </>
+  );
+}
+
+export function Health() {
+  return (
+    <>
+      <IconButton
+        icon="plant"
+        label="Nutrient Gap"
+        color="yellow"
+        goTo="/"
+        disabled="true"
+      />
+      <IconButton
+        icon="book"
+        label="Recipes"
+        color="yellow"
+        goTo="/"
+        disabled="true"
+      />
+      <IconButton
+        icon="product"
+        label="Products"
+        color="yellow"
+        goTo="/"
+        disabled="true"
+      />
       <Accordion
         style={{
           width: "80%",
@@ -39,41 +116,6 @@ export function Food() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <IconButton
-        icon="surplus"
-        label="Upload Food Surplus"
-        goTo="/add-products"
-      />
-      <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
-    </>
-  );
-}
-
-export function FoodWaste() {
-  return (
-    <>
-      <IconButton icon="delete" label="Update Food Waste" goTo="/food-waste" />
-      <IconButton icon="chart" label="Food Waste Chart" goTo="/chart" />
-    </>
-  );
-}
-
-export function Health() {
-  return (
-    <>
-      <IconButton icon="food" label="Update Food Intake" goTo="/food-intake" />
-    </>
-  );
-}
-
-export function Environment() {
-  return (
-    <>
-      <IconButton
-        icon="info"
-        label="Food Waste Reduction Tips"
-        goTo="/food-reduction"
-      />
     </>
   );
 }
