@@ -140,7 +140,7 @@ function Settings(props) {
       );
     case "changeEmail":
       return (
-        <MobileStyle>
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
@@ -167,7 +167,7 @@ function Settings(props) {
               }}
             />
           </div>
-        </MobileStyle>
+        </MobileWrap>
       );
     case "signInP":
       return (
@@ -297,7 +297,7 @@ function Settings(props) {
       );
     default:
       return (
-        <MobileStyle>
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
@@ -308,7 +308,7 @@ function Settings(props) {
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
           />
-        </MobileStyle>
+        </MobileWrap>
       );
   }
   //}
