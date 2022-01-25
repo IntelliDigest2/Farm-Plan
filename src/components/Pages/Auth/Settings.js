@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+import "./Mobile/Mob.css";
 import "./Settings.css";
+import { MobileWrap } from "./Mobile/MobComponents";
 import { SubButton } from "../SubComponents/Button";
 import { Dropdown } from "../SubComponents/Dropdown";
 
@@ -14,15 +16,21 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import EmailIcon from "@mui/icons-material/Email";
+import PasswordIcon from "@mui/icons-material/Password";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 
-import { MobileView, BrowserView, isMobile } from "react-device-detect";
+//import { MobileView, BrowserView, isMobile } from "react-device-detect";
 
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
-import { getUserData } from "../../../store/actions/authActions";
+import {
+  getUserData,
+  updatePassword,
+  signIn,
+} from "../../../store/actions/authActions";
 
 function Settings(props) {
   //auth
@@ -30,6 +38,7 @@ function Settings(props) {
   const [lastName, setLastName] = useState(props.profile.lastName);
   const [email, setEmail] = useState(props.profile.email);
   const [password, setPassword] = useState(props.profile.password);
+  const [oldPassword, setOldPassword] = useState("");
 
   //address
   const [town, setTown] = useState(props.profile.city);
@@ -44,12 +53,39 @@ function Settings(props) {
   //rerender on form change
   useEffect(() => {}, [form]);
 
+  const { auth, authError } = props;
+
+  function HandlePassword() {
+    var data = {
+      password: password,
+    };
+    console.log(password);
+    props.updatePassword(data);
+    /*if (oldPassword === props.profile.password) {
+      props.updatePassword(password);
+      console.log(password);
+    } else {
+      console.log("password incorrect");
+    }*/
+  }
+
+  function HandleSignIn() {
+    var data = {
+      email: email,
+      password: password,
+    };
+    const sign = new Promise(() => props.signIn(data));
+    sign.then(() => {
+      console.log("changePassword");
+    });
+  }
+
   //mobile view first of all, this will eventually be split into two with the same components
   //if (isMobile) {
   switch (form) {
     case "changeName":
       return (
-        <MobileStyle>
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
@@ -69,17 +105,42 @@ function Settings(props) {
             setForm={setForm}
           />
           <div className="center">
+            <SubButton styling="blue" text="Confirm" />
+          </div>
+        </MobileWrap>
+      );
+    case "signInE":
+      return (
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
+          <SettingsList
+            firstName={props.profile.firstName}
+            lastName={props.profile.lastName}
+            email={props.profile.email}
+            town={props.profile.city}
+            region={props.profile.region}
+            country={props.profile.country}
+            buildingFunction={props.profile.buildingFunction}
+            setForm={setForm}
+          />
+          <Divider variant="middle" />
+          <SignIn setPassword={setPassword} setEmail={setEmail} />
+          <div className="center">
             <SubButton
               styling="blue"
-              text="Confirm"
-              onMouseDown={console.log("clicky")}
+              text="Sign In"
+              onClick={() => {
+                HandleSignIn();
+              }}
             />
           </div>
-        </MobileStyle>
+          <div className="auth-error">
+            {authError ? <p> {authError}</p> : null}
+          </div>
+        </MobileWrap>
       );
     case "changeEmail":
       return (
-        <MobileStyle>
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
@@ -106,11 +167,72 @@ function Settings(props) {
               }}
             />
           </div>
-        </MobileStyle>
+        </MobileWrap>
+      );
+    case "signInP":
+      return (
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
+          <SettingsList
+            firstName={props.profile.firstName}
+            lastName={props.profile.lastName}
+            email={props.profile.email}
+            town={props.profile.city}
+            region={props.profile.region}
+            country={props.profile.country}
+            buildingFunction={props.profile.buildingFunction}
+            setForm={setForm}
+          />
+          <Divider variant="middle" />
+          <SignIn setPassword={setPassword} setEmail={setEmail} />
+          <div className="center">
+            <SubButton
+              styling="blue"
+              text="Sign In"
+              onClick={(e) => {
+                e.preventDefault();
+                HandleSignIn();
+              }}
+            />
+          </div>
+          <div className="auth-error">
+            {authError ? <p> {authError}</p> : null}
+          </div>
+        </MobileWrap>
+      );
+
+    case "changePassword":
+      return (
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
+          <SettingsList
+            firstName={props.profile.firstName}
+            lastName={props.profile.lastName}
+            email={props.profile.email}
+            town={props.profile.city}
+            region={props.profile.region}
+            country={props.profile.country}
+            buildingFunction={props.profile.buildingFunction}
+            setForm={setForm}
+          />
+          <Divider variant="middle" />
+          <Password setPassword={setPassword} setOldPassword={setOldPassword} />
+          <div className="center">
+            <SubButton
+              styling="blue"
+              text="Confirm"
+              onClick={(e) => {
+                e.preventDefault();
+                HandlePassword();
+              }}
+            />
+          </div>
+          <div className="auth-error">
+            {authError ? <p> {authError}</p> : null}
+          </div>
+        </MobileWrap>
       );
     case "changeLocation":
       return (
-        <MobileStyle>
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
@@ -141,11 +263,11 @@ function Settings(props) {
               }}
             />
           </div>
-        </MobileStyle>
+        </MobileWrap>
       );
     case "changeAccountType":
       return (
-        <MobileStyle>
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
@@ -171,11 +293,11 @@ function Settings(props) {
               }}
             />
           </div>
-        </MobileStyle>
+        </MobileWrap>
       );
     default:
       return (
-        <MobileStyle>
+        <MobileWrap header="Settings" subtitle="What would you like to change?">
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
@@ -186,35 +308,11 @@ function Settings(props) {
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
           />
-        </MobileStyle>
+        </MobileWrap>
       );
   }
   //}
 }
-
-const MobileStyle = (props) => {
-  return (
-    <>
-      <div className="collumn">
-        <div className="top">
-          <div style={{ width: "50%" }}>
-            <SubButton styling="green" goTo="/account" text="Back" />
-          </div>
-          <h5>Settings</h5>
-        </div>
-        <Divider />
-      </div>
-      <Container className="mobile-style">
-        <div className="center">
-          <h2 style={{ color: "#0c0847" }}>What would you like to change?</h2>
-        </div>
-        <Divider variant="middle" />
-        {props.children}
-        <Divider variant="middle" />
-      </Container>
-    </>
-  );
-};
 
 const SettingsList = (props) => {
   return (
@@ -244,6 +342,18 @@ const SettingsList = (props) => {
               <EmailIcon />
             </ListItemIcon>
             <ListItemText>{props.email}</ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton
+            onClick={() => {
+              props.setForm("signInP");
+            }}
+          >
+            <ListItemIcon>
+              <PasswordIcon />
+            </ListItemIcon>
+            <ListItemText>Password</ListItemText>
           </ListItemButton>
         </ListItem>
         <ListItem className="space-between">
@@ -332,8 +442,65 @@ const Email = (props) => {
 
         {/*confirm with password*/}
         <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Confirm Password</Form.Label>
           <Form.Control type="password" placeholder="Password" required />
+        </Form.Group>
+      </Form>
+    </div>
+  );
+};
+
+const SignIn = (props) => {
+  return (
+    <Form>
+      <h4 style={{ color: "#0c0847" }}>Sign in to change your details.</h4>
+      <Form.Group className="mb-3">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control
+          type="email"
+          placeholder="Enter email"
+          required
+          onChange={(e) => props.setEmail(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Password"
+          required
+          onChange={(e) => props.setPassword(e.target.value)}
+        />
+      </Form.Group>
+      <Link to="/forgot-password" style={{ color: "#AFBA15" }}>
+        Forgot your password?
+      </Link>
+    </Form>
+  );
+};
+
+const Password = (props) => {
+  return (
+    <div>
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Old Password"
+            onChange={(e) => props.setOldPassword(e.target.value)}
+          />
+        </Form.Group>
+
+        {/*confirm with password*/}
+        <Form.Group className="mb-3">
+          <Form.Label>New Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="New Password"
+            onChange={(e) => props.setPassword(e.target.value)}
+          />
         </Form.Group>
       </Form>
     </div>
@@ -422,11 +589,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getUserData: (product) => dispatch(getUserData(product)),
+    updatePassword: (creds) => dispatch(updatePassword(creds)),
+    signIn: (creds) => dispatch(signIn(creds)),
   };
 };
 
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect((props) => {
     if (!props.auth.uid) return [];
     return [

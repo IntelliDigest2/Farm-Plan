@@ -1,33 +1,23 @@
 import React from "react";
 import { IconButton } from "../../SubComponents/Button";
 import "../UserAccount.css";
-//import { Colors } from "../../../lib/Colors";
-
-import { Container } from "react-bootstrap";
 
 export function Food() {
   return (
-    <Container className="tab-box">
+    <>
       <IconButton
         icon="surplus"
-        label="Upload Food Surplus"
+        label="Food Surplus"
+        color="turquoise"
         goTo="/add-products-business"
       />
-      <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
-    </Container>
-  );
-}
-
-export function FoodWaste() {
-  return (
-    <Container className="tab-box">
       <IconButton
-        icon="delete"
-        label="Update Food Waste"
-        goTo="/food-wasteBusiness"
+        icon="buy"
+        label="Buy Food"
+        color="turquoise"
+        goTo="/browse-products"
       />
-      <IconButton icon="chart" label="Food Waste Chart" goTo="/chart" />
-    </Container>
+    </>
   );
 }
 
@@ -37,12 +27,25 @@ export function Health() {
 
 export function Environment() {
   return (
-    <Container className="tab-box">
+    <>
+      <IconButton
+        icon="waste"
+        label="Food Waste"
+        color="turquoise"
+        goTo="/food-wasteBusiness"
+      />
+      <IconButton
+        icon="chart"
+        label="Waste Chart"
+        color="yellow"
+        goTo="/chart"
+      />
       <IconButton
         icon="info"
         label="Food Waste Reduction Tips"
+        color="green"
         goTo="/food-reduction"
       />
-    </Container>
+    </>
   );
 }

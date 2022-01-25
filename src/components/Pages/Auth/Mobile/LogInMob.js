@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import "../../Account/UserAccount.css";
 import "./Mob.css";
-import { Title } from "./SubComponents/Title";
+import { Title } from "./MobComponents";
 
-import logo from "../../../../images/intellidigest-logo-small.png";
-
-import { Form, Col, Container, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";

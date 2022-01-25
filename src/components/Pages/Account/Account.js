@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -21,7 +21,7 @@ import * as Farm from "./Farm/FarmTabs";
 import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Academic/AcademicTabs";
 
-//import { Colors } from "../../lib/Colors";
+import { Colors } from "../../lib/Colors";
 
 const NewAccount = (props) => {
   //AccountType/BuildingFunction Management
@@ -60,13 +60,12 @@ const NewAccount = (props) => {
   };
 
   //Render
-  if (!props.auth) {
+  if (!props.auth.uid) {
     return <Redirect to="/login" />;
   }
 
   return (
-    <Container className="user-account">
-      <img className="blueberries" src={blueberries} alt="" />
+    <Container className="web-center">
       <Profile
         profile={props.profile}
         type={type}
@@ -79,7 +78,7 @@ const NewAccount = (props) => {
           <TabList
             TabIndicatorProps={{
               style: {
-                backgroundColor: "",
+                backgroundColor: Colors.brandGreen,
               },
             }}
             variant="fullWidth"
@@ -88,13 +87,9 @@ const NewAccount = (props) => {
             <Tab disableRipple label={<Heading priority="6" text="Food" />} />
             <Tab
               disableRipple
-              label={<Heading priority="6" text="Food Waste" />}
-            />
-            <Tab disableRipple label={<Heading priority="6" text="Health" />} />
-            <Tab
-              disableRipple
               label={<Heading priority="6" text="Environment" />}
             />
+            <Tab disableRipple label={<Heading priority="6" text="Health" />} />
           </TabList>
           <AccountType
             type={type}
@@ -126,13 +121,10 @@ const AccountType = (props) => {
             <Farm.Food />
           </TabPanel>
           <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-            <Farm.FoodWaste />
+            <Farm.Environment />
           </TabPanel>
           <TabPanel value={props.value} index={2} dir={props.theme.direction}>
             <Farm.Health />
-          </TabPanel>
-          <TabPanel value={props.value} index={3} dir={props.theme.direction}>
-            <Farm.Environment />
           </TabPanel>
         </SwipeableViews>
       );
@@ -147,13 +139,10 @@ const AccountType = (props) => {
             <Business.Food />
           </TabPanel>
           <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-            <Business.FoodWaste />
+            <Business.Environment />
           </TabPanel>
           <TabPanel value={props.value} index={2} dir={props.theme.direction}>
             <Business.Health />
-          </TabPanel>
-          <TabPanel value={props.value} index={3} dir={props.theme.direction}>
-            <Business.Environment />
           </TabPanel>
         </SwipeableViews>
       );
@@ -168,13 +157,10 @@ const AccountType = (props) => {
             <Schools.Food />
           </TabPanel>
           <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-            <Schools.FoodWaste />
+            <Schools.Environment />
           </TabPanel>
           <TabPanel value={props.value} index={2} dir={props.theme.direction}>
             <Schools.Health />
-          </TabPanel>
-          <TabPanel value={props.value} index={3} dir={props.theme.direction}>
-            <Schools.Environment />
           </TabPanel>
         </SwipeableViews>
       );
@@ -190,13 +176,10 @@ const AccountType = (props) => {
             <Households.Food />
           </TabPanel>
           <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-            <Households.FoodWaste />
+            <Households.Environment />
           </TabPanel>
           <TabPanel value={props.value} index={2} dir={props.theme.direction}>
             <Households.Health />
-          </TabPanel>
-          <TabPanel value={props.value} index={3} dir={props.theme.direction}>
-            <Households.Environment />
           </TabPanel>
         </SwipeableViews>
       );
