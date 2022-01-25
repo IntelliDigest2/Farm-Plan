@@ -1,9 +1,7 @@
 .signup-mobile {
-  position: absolute;
-  width: 100%;
+  position: relative;
   justify-content: center;
-  float: center;
-  top: 8%;
+  margin-top: 8%;
 }
 
 .mobile-style {
@@ -35,7 +33,6 @@
   margin: auto;
   text-align: center;
   justify-content: center;
-  float: center;
 }
 .titles h1 {
   font-weight: 700;
@@ -73,7 +70,6 @@
 
 .signup-btn {
   width: 30%;
-  float: center;
   margin: auto;
   margin-top: 2%;
   margin-bottom: 2%;
@@ -99,8 +95,6 @@
 }
 
 .signup-confirm {
-  width: 60%;
-  float: center;
   margin: auto;
   margin-top: 2%;
   margin-bottom: 2%;
@@ -164,18 +158,25 @@
 .row {
   flex-direction: row;
   justify-content: center;
-  float: center;
-  background-color: white;
-  width: 80%;
   margin: auto;
 }
+
 .col {
   flex-direction: column;
   justify-content: center;
-  float: center;
-  background-color: white;
-  width: 80%;
   margin: auto;
+}
+
+.center {
+  text-align: center;
+  flex-direction: row;
+}
+
+.top {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
 }
 
 .auth-error {

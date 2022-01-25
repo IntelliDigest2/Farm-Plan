@@ -20,6 +20,7 @@ import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/SignUp";
 import SignUpMob from "./components/Pages/Auth/Mobile/SignUpMob";
+import ConfirmSignIn from "./components/Pages/Auth/ConfirmSignIn";
 import Settings from "./components/Pages/Auth/Settings";
 import NotFound from "./components/Pages/NotFound";
 import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
@@ -157,6 +158,7 @@ const App = (props) => {
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/signup-mob" exact component={SignUpMob} />
+            <Route path="/confirm-signin" exact compnent={ConfirmSignIn} />
             <Route path="/settings" exact component={Settings} />
             <Route path="/contact" exact component={Contact} />
             <Route
