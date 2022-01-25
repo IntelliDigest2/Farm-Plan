@@ -42,7 +42,7 @@ function PlanToSave() {
         <PTSCountdown />
         <div className="container">
           <img className="large-img" src={pTSNotebook} alt="" />
-          <div className="img-overlay blue">
+          <div className="blue">
             <h2>How Does It Work?</h2>
           </div>
         </div>
