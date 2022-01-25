@@ -17,28 +17,6 @@ export const startData = (data) => {
   };
 };
 
-//   export const startData =  (data) => {
-//     return(dispatch, getState,  {getFirebase} ) => {
-//         const profile = getState().firebase.profile;
-//         const auth = getState().firebase.auth;
-//         getFirebase().firestore().collection('data').add({
-//             connected: "true", //instantiates product to datastore for creation of product id to be included in mail properties.
-//         }).then((resp) => {
-//             return getFirebase().firestore().collection('data').doc(data.uid).set({
-//               user: data.name,
-//               email: data.email,
-//             //   date: new Date(),
-//             //   updatedAt: null
-//             })
-//         })
-//         .then(()=> {
-//             dispatch({type: 'START_DATA'});
-//         }).catch((err) => {
-//             dispatch({type: 'START_DATA_ERROR', err});
-//         })
-//     }
-//   };
-
 export const createFoodWasteData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()
@@ -52,6 +30,40 @@ export const createFoodWasteData = (data) => {
       })
       .catch((err) => {
         dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+};
+
+export const createMapData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection(data.masterCollection)
+      .add(data.upload)
+      .then(() => {
+        dispatch({ type: "CREATE_DATA" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+};
+
+export const getMapData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection(data.masterCollection)
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_DATA", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
       });
   };
 };
@@ -207,7 +219,7 @@ export const createFoodSurplusData = (data) => {
       .firestore()
       .collection("data")
       .doc(auth.uid)
-      .collection("writtenFoodWasteData")
+      .collection("writtenFoodSurplusData")
       .add({
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         // costInDollars: costInDollars,
@@ -293,7 +305,7 @@ export const createFoodIntakeData = (data) => {
       .firestore()
       .collection("data")
       .doc(auth.uid)
-      .collection("writtenFoodWasteData")
+      .collection("writtenFoodIntakeData")
       .add({
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         type: t,
@@ -362,7 +374,7 @@ export const createFoodIntakeResearchData = (data) => {
       .firestore()
       .collection("data")
       .doc(auth.uid)
-      .collection("writtenFoodWasteData")
+      .collection("writtenFoodIntakeAcademicData")
       .add({
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         type: t,
@@ -430,7 +442,7 @@ export const createReserveItemsData = (data) => {
       .firestore()
       .collection("data")
       .doc(auth.uid)
-      .collection("writtenFoodWasteData")
+      .collection("writtenReserveFoodData")
       .add({
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         type: t,

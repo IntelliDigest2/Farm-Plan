@@ -1,50 +1,45 @@
 import React, { useState } from "react";
-import { SubButton, IconButton } from "../../SubComponents/Button";
+import { IconButton } from "../../SubComponents/Button";
 import "../UserAccount.css";
-import { Colors } from "../../../lib/Colors";
-
-import { Container } from "react-bootstrap";
-
-import { Grid } from "@mui/material";
 
 export function Food() {
   return (
-    <Container className="tab-box">
+    <>
       <IconButton
         icon="surplus"
-        label="Upload Food Surplus"
+        label="Food Surplus"
+        color="turquoise"
         goTo="/add-products-academic"
       />
-      <IconButton icon="buy" label="Buy Food" goTo="/browse-products" />
-    </Container>
+      <IconButton
+        icon="buy"
+        label="Buy Food"
+        color="turquoise"
+        goTo="/browse-products"
+      />
+    </>
   );
 }
 
-export function FoodWaste() {
+export function Environment() {
   return (
-    <Container className="tab-box">
+    <>
       <IconButton
-        icon="delete"
-        label="Update Food Waste"
+        icon="waste"
+        label="Food Waste"
+        color="turquoise"
         goTo="/food-wasteAcademic"
       />
-      <IconButton icon="chart" label="Food Waste Chart" goTo="/chart" />
-    </Container>
+      <IconButton
+        icon="info"
+        label="Waste Tips"
+        color="green"
+        goTo="/food-reduction"
+      />
+    </>
   );
 }
 
 export function Health() {
   return <></>;
-}
-
-export function Environment() {
-  return (
-    <Container className="tab-box">
-      <IconButton
-        icon="info"
-        label="Food Waste Reduction Tips"
-        goTo="/food-reduction"
-      />
-    </Container>
-  );
 }
