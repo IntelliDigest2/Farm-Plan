@@ -1,21 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.5458dac5.chunk.css",
-    "main.js": "/static/js/main.9a67f0df.chunk.js",
-    "main.js.map": "/static/js/main.9a67f0df.chunk.js.map",
+    "main.css": "/static/css/main.56905b73.chunk.css",
+    "main.js": "/static/js/main.fac509f2.chunk.js",
+    "main.js.map": "/static/js/main.fac509f2.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.41ca3394.js",
     "runtime-main.js.map": "/static/js/runtime-main.41ca3394.js.map",
     "static/css/2.136cc95c.chunk.css": "/static/css/2.136cc95c.chunk.css",
-    "static/js/2.27fc6224.chunk.js": "/static/js/2.27fc6224.chunk.js",
-    "static/js/2.27fc6224.chunk.js.map": "/static/js/2.27fc6224.chunk.js.map",
+    "static/js/2.b6792651.chunk.js": "/static/js/2.b6792651.chunk.js",
+    "static/js/2.b6792651.chunk.js.map": "/static/js/2.b6792651.chunk.js.map",
     "static/js/3.39044438.chunk.js": "/static/js/3.39044438.chunk.js",
     "static/js/3.39044438.chunk.js.map": "/static/js/3.39044438.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.136cc95c.chunk.css.map": "/static/css/2.136cc95c.chunk.css.map",
-    "static/css/main.5458dac5.chunk.css.map": "/static/css/main.5458dac5.chunk.css.map",
-    "static/js/2.27fc6224.chunk.js.LICENSE.txt": "/static/js/2.27fc6224.chunk.js.LICENSE.txt",
+    "static/css/main.56905b73.chunk.css.map": "/static/css/main.56905b73.chunk.css.map",
+    "static/js/2.b6792651.chunk.js.LICENSE.txt": "/static/js/2.b6792651.chunk.js.LICENSE.txt",
     "static/media/Blueberries.a563943b.png": "/static/media/Blueberries.a563943b.png",
-    "static/media/button-design-6.e09e6c6a.png": "/static/media/button-design-6.e09e6c6a.png",
     "static/media/edible-foodwaste.89148b83.jpeg": "/static/media/edible-foodwaste.89148b83.jpeg",
     "static/media/ediblefoodloss.e934f552.jpeg": "/static/media/ediblefoodloss.e934f552.jpeg",
     "static/media/fat.65c52b95.jpeg": "/static/media/fat.65c52b95.jpeg",
@@ -28,6 +27,7 @@
     "static/media/inediblefoodloss.cf77239b.jpeg": "/static/media/inediblefoodloss.cf77239b.jpeg",
     "static/media/intellidigest-logo.6aa2ff18.png": "/static/media/intellidigest-logo.6aa2ff18.png",
     "static/media/moist.0d833e1b.jpeg": "/static/media/moist.0d833e1b.jpeg",
+    "static/media/Landing.css": "/static/media/peppers.65825e19.jpg",
     "static/media/protein.b99e1fed.png": "/static/media/protein.b99e1fed.png",
     "static/media/pts-banner.a6e618cb.png": "/static/media/pts-banner.a6e618cb.png",
     "static/media/pts-button-2.443a18a4.png": "/static/media/pts-button-2.443a18a4.png",
@@ -44,8 +44,8 @@
   "entrypoints": [
     "static/js/runtime-main.41ca3394.js",
     "static/css/2.136cc95c.chunk.css",
-    "static/js/2.27fc6224.chunk.js",
-    "static/css/main.5458dac5.chunk.css",
-    "static/js/main.9a67f0df.chunk.js"
+    "static/js/2.b6792651.chunk.js",
+    "static/css/main.56905b73.chunk.css",
+    "static/js/main.fac509f2.chunk.js"
   ]
 }

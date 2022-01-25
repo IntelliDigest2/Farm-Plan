@@ -1,0 +1,46 @@
+.mobile-style {
+  margin-top: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: white;
+  border-radius: 25px;
+  padding: 2%;
+}
+
+.browser-style-outer {
+  margin-top: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  background-color: white;
+  border-radius: 25px;
+  padding: 2%;
+}
+
+.top {
+  margin-top: 12%;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.center {
+  text-align: center;
+  flex-direction: row;
+}
+
+.collumn {
+  flex-direction: column;
+}
+
+.list {
+  width: 100%;
+}
+
+.space-between {
+  justify-content: space-between;
+}

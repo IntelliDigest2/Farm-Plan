@@ -374,12 +374,16 @@ body {
 }
 
 .web-center {
+  /* float: center; */
+  display: block;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  float: center;
-  max-width: 600px;
-  margin: auto;
-  margin-top: 70px;
-  margin-bottom: 70px;
+  max-width: 70%;
+  /*600px in center of large page but varies when browser is smaller*/
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 .custom-btn {
