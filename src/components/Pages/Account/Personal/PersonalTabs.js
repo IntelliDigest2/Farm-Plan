@@ -53,7 +53,6 @@ export function Environment() {
         icon="world"
         label="Waste Map"
         color="yellow"
-        disabled="true"
         goTo="/view-map"
       />
       <IconButton

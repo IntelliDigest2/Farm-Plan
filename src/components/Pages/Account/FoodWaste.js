@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   startData,
   createFoodWasteData,
+  createMapData,
 } from "../../../store/actions/dataActions";
 import { Redirect } from "react-router-dom";
 import { compose } from "redux";
@@ -139,6 +140,15 @@ class FoodWaste extends Component {
   handleFoodWasteSubmit = (e) => {
     e.preventDefault();
 
+    const mapData = {
+      masterCollection: "mapData",
+      upload: {
+        foodWasteWeight: this.state.foodWasteWeight,
+        weightType: this.state.weightType,
+        location: this.props.profile.city,
+      },
+    };
+
     //Setup data to be sent to generic create firestore function (TO BE RENAMED LATER)
     const data = {
       uid: this.props.auth.uid,
@@ -166,6 +176,7 @@ class FoodWaste extends Component {
       },
     };
     this.props.createFoodWasteData(data);
+    this.props.createMapData(mapData);
     this.clearEFWForm();
     submitNotification("Success", "Food Waste successfully uploaded!");
   };
@@ -739,6 +750,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     startData: (product) => dispatch(startData(product)),
     createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
+    createMapData: (product) => dispatch(createMapData(product)),
     // createFoodSurplusData: (product) => dispatch(createFoodSurplusData(product)),
   };
 };
