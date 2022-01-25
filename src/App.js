@@ -20,6 +20,7 @@ import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/SignUp";
 import SignUpMob from "./components/Pages/Auth/Mobile/SignUpMob";
+import ConfirmSignIn from "./components/Pages/Auth/ConfirmSignIn";
 import Settings from "./components/Pages/Auth/Settings";
 import NotFound from "./components/Pages/NotFound";
 import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
@@ -28,7 +29,7 @@ import PlanToSave from "./components/Pages/Account/PlanToSave";
 //old account
 //import Account from "./components/Pages/Account/UserAccount";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
-import MapData from "./components/Pages/Account/MapData";
+import Map from "./components/Pages/Account/Map";
 
 import FoodWaste from "./components/Pages/Account/FoodWaste";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
@@ -112,7 +113,7 @@ const App = (props) => {
         <Toast
           onClose={() => setShow(false)}
           show={show}
-          delay={3000}
+          delay={10000}
           autohide
           animation
           style={{
@@ -157,6 +158,7 @@ const App = (props) => {
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/signup-mob" exact component={SignUpMob} />
+            <Route path="/confirm-signin" exact compnent={ConfirmSignIn} />
             <Route path="/settings" exact component={Settings} />
             <Route path="/contact" exact component={Contact} />
             <Route
@@ -170,7 +172,7 @@ const App = (props) => {
             {/* <Route path="/newaccount" exact component={Account} /> */}
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />
-            <Route path="/view-map" exact component={MapData} />
+            <Route path="/view-map" exact component={Map} />
 
             <Route path="/food-waste" exact component={FoodWaste} />
             <Route path="/food-loss" exact component={FoodLoss} />

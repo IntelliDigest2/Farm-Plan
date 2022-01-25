@@ -3,21 +3,9 @@ import "../Account/UserAccount.css";
 import blueberries from "../../../images/Blueberries.png";
 import { Colors } from "../../lib/Colors";
 
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
-import { Avatar, CardHeader, Divider } from "@mui/material";
-
-// --- Material Ui Imports --- //
-/*import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import makeStyles from "@mui/material/styles/makeStyles";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";*/
+import { Avatar } from "@mui/material";
 
 import { Heading } from "./Heading";
 import { Dropdown } from "./Dropdown";
@@ -46,36 +34,51 @@ export function Profile(props) {
   }
 
   return (
-    <Container className="profile">
-      <div className="box">
-        <div className="row">
-          <div className="col">
-            <Avatar
-              className="center"
-              alt={props.profile.initials}
-              src=""
-              sx={{ width: 75, height: 75, bgcolor: Colors.brandGreen }}
-            >
-              <Heading priority="2" text={props.profile.initials} />
-            </Avatar>
-          </div>
-          <div className="col">
-            <Heading
-              priority="4"
-              text={props.profile.firstName + " " + props.profile.lastName}
-            />
-            <Heading priority="5" text={props.profile.email} />
-          </div>
-        </div>
-        <Dropdown
-          id="Account Switch"
-          styling="green"
-          data={props.type}
-          items={types}
-          disabled={isDisabled}
-          function={props.function}
-        />
-      </div>
+    <Container fluid className="profile">
+      <Row
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Col xs="auto">
+          <Avatar
+            className="center"
+            alt={props.profile.initials}
+            src=""
+            sx={{ width: 75, height: 75, bgcolor: Colors.brandGreen }}
+          >
+            <Heading priority="2" text={props.profile.initials} />
+          </Avatar>
+        </Col>
+        <Col xs="auto">
+          <Heading
+            priority="4"
+            text={props.profile.firstName + " " + props.profile.lastName}
+          />
+          <Heading priority="5" text={props.profile.email} />
+        </Col>
+      </Row>
+      <Row
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "1rem",
+        }}
+      >
+        <Col xs={4}>
+          <Dropdown
+            id="Account Switch"
+            styling="green"
+            data={props.type}
+            items={types}
+            disabled={isDisabled}
+            function={props.function}
+          />
+        </Col>
+      </Row>
     </Container>
   );
 }
