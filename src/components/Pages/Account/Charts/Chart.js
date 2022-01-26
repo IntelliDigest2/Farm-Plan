@@ -44,7 +44,7 @@ const ChartBuilder = (props) => {
       data={props.chartType}
       options={{
         title: `${props.title} Food Waste Performance`,
-        legend: "bottom",
+        legend: { position: "top", maxLines: 5 },
         colors: [Colors.brandTurqoise, Colors.brandYellow, Colors.brandGreen],
         hAxis: { title: props.title, minValue: 0 },
         vAxis: { title: "Food Wastage" },
