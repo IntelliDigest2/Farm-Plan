@@ -90,6 +90,10 @@ const NewAccount = (props) => {
               label={<Heading priority="6" text="Environment" />}
             />
             <Tab disableRipple label={<Heading priority="6" text="Health" />} />
+            <Tab
+              disableRipple
+              label={<Heading priority="6" text="Sustainability" />}
+            />
           </TabList>
           <AccountType
             type={type}
@@ -180,6 +184,9 @@ const AccountType = (props) => {
           </TabPanel>
           <TabPanel value={props.value} index={2} dir={props.theme.direction}>
             <Households.Health />
+          </TabPanel>
+          <TabPanel value={props.value} index={3} dir={props.theme.direction}>
+            <Households.Sustainability />
           </TabPanel>
         </SwipeableViews>
       );

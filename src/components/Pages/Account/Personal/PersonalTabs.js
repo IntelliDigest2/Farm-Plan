@@ -24,12 +24,6 @@ export function Food() {
         color="turquoise"
         goTo="/browse-products"
       />
-      <IconButton
-        icon="kitchen"
-        label="Plan to Save"
-        color="turquoise"
-        goTo="/pts"
-      />
     </>
   );
 }
@@ -115,6 +109,40 @@ export function Health() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+    </>
+  );
+}
+
+export function Sustainability() {
+  return (
+    <>
+      <IconButton
+        icon="book"
+        label="Masterclasses"
+        color="turquoise"
+        disabled="true"
+        goTo="/"
+      />
+      <IconButton
+        icon="plant"
+        label="Agrifood Technpreneur"
+        color="turquoise"
+        disabled="true"
+        goTo="/"
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
+      />
+      <IconButton
+        icon="info"
+        label="FISI"
+        color="green"
+        disabled="true"
+        goTo="/"
+      />
     </>
   );
 }
