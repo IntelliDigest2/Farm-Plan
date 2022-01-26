@@ -140,11 +140,30 @@ class FoodWaste extends Component {
   handleFoodWasteSubmit = (e) => {
     e.preventDefault();
 
+    var wm;
+    switch (this.state.weightType) {
+      default:
+      case "kg":
+      case "l":
+        wm = 1;
+        break;
+      case "g":
+      case "ml":
+        wm = 0.001;
+        break;
+      case "oz":
+        wm = 0.028;
+        break;
+      case "lbs":
+        wm = 0.454;
+        break;
+    }
+
     const mapData = {
       masterCollection: "mapData",
+      uid: this.props.auth.uid,
       upload: {
-        foodWasteWeight: this.state.foodWasteWeight,
-        weightType: this.state.weightType,
+        foodWasteWeight: this.state.foodWasteWeight * wm,
         location: this.props.profile.city,
       },
     };

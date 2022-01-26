@@ -36,10 +36,15 @@ export const createFoodWasteData = (data) => {
 
 export const createMapData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
+    const increment = getFirebase().firestore.FieldValue.increment(
+      data.upload.foodWasteWeight
+    );
+    console.log("catch");
     getFirebase()
       .firestore()
       .collection(data.masterCollection)
-      .add(data.upload)
+      .doc(data.uid)
+      .set({ ...data.upload, foodWasteWeight: increment }, { merge: true })
       .then(() => {
         dispatch({ type: "CREATE_DATA" });
       })
