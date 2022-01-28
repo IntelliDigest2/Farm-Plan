@@ -39,6 +39,7 @@ import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { Autocomplete } from "@material-ui/lab";
 import { TextField, Checkbox } from "@material-ui/core";
 import addNotification from "react-push-notification";
+import { Heading } from "../SubComponents/Heading";
 
 // import {Chart} from "react-google-charts"
 
@@ -437,46 +438,21 @@ class FoodIntake extends Component {
           </div>
 
           {filteredData.length === 0 ? (
-            <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
-              <Col
-                className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2"
-                xs={12}
-              ></Col>
-              <Col className="mt-5 pt-5" xs={12}></Col>
-              <Col className="" xs={12} lg={4}></Col>
-              <Col
-                className=" justify-content-center align-items-center d-block mt-5 pt-5 mt-lg-0 pt-lg-0"
-                xs={12}
-                lg={4}
-              >
-                <CardStyle>
-                  <Card>
-                    <Card.Body>
-                      <Card.Text className="text-center">
-                        <h1
-                          style={{
-                            fontSize: "33px",
-                            fontWeight: "600",
-                            color: "rgb(55, 85, 54)",
-                          }}
-                        >
-                          Start tracking your food intake now
-                        </h1>
-                        <button
-                          onClick={this.pressButton}
-                          style={{ outline: "none", border: "none" }}
-                        >
-                          Start now
-                        </button>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </CardStyle>
-              </Col>
-              <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
-              <Col className="mt-5 pt-5" xs={12}></Col>
-              <Col className="mt-5 pt-5" xs={12}></Col>
-            </Row>
+            <Card>
+              <Card.Body>
+                <Card.Text className="text-center">
+                  <Heading
+                    priority="1"
+                    text="Start tracking your food waste now"
+                  />
+                  <DefaultButton
+                    text="Start now"
+                    styling="green"
+                    onClick={this.pressButton}
+                  />
+                </Card.Text>
+              </Card.Body>
+            </Card>
           ) : (
             <div
               style={{
@@ -585,9 +561,7 @@ class FoodIntake extends Component {
                       <Autocomplete
                         // multiple
                         id="foodName"
-
                         options={this.state.foodOptions}
-
                         getOptionLabel={(option) => option.name}
                         filterOptions={(x) => x}
                         freeSolo
@@ -595,12 +569,10 @@ class FoodIntake extends Component {
                         // getOptionLabel={(option) => option.name}
                         style={{ width: "100%" }}
                         size="small"
-
                         onChange={(e) =>
                           this.setState({ foodName: e.target.textContent })
                         }
                         onInputChange={(e) => this.handleFoodApi(e)}
-
                         // renderTags={(value, getTagProps) =>
                         //     value.map((option, index) => (
                         //       <Chip variant="outlined" label={option} {...getTagProps({ index })} />
