@@ -66,13 +66,7 @@ const NewAccount = (props) => {
 
   return (
     <Container className="web-center">
-      <Profile
-        profile={props.profile}
-        type={type}
-        function={(eventKey, e) => {
-          setType(e.target.textContent);
-        }}
-      />
+      <Profile profile={props.profile} type={type} />
       <div className="tabs">
         <TabContext value={value}>
           <TabList

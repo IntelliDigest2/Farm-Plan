@@ -26,13 +26,6 @@ import { Dropdown } from "./Dropdown";
 // }
 
 export function Profile(props) {
-  let isDisabled = false;
-  let types = ["Households", props.profile.buildingFunction];
-  if (props.profile.buildingFunction === "Households") {
-    types = ["Households"];
-    isDisabled = true;
-  }
-
   return (
     <Container fluid className="profile">
       <Row
@@ -58,25 +51,6 @@ export function Profile(props) {
             text={props.profile.firstName + " " + props.profile.lastName}
           />
           <Heading priority="5" text={props.profile.email} />
-        </Col>
-      </Row>
-      <Row
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "1rem",
-        }}
-      >
-        <Col xs={4}>
-          <Dropdown
-            id="Account Switch"
-            styling="green"
-            data={props.type}
-            items={types}
-            disabled={isDisabled}
-            function={props.function}
-          />
         </Col>
       </Row>
     </Container>
