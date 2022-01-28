@@ -135,3 +135,31 @@ export const getUserData = (data) => {
       });
   };
 };
+
+export const updateProfile = (users) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    firebase
+      .auth()
+      .currentUser.updateProfile(
+        users.firstName,
+        users.lastName,
+        users.initials,
+        users.email,
+        users.city,
+        users.country,
+        users.region
+        /*users.sixteenPlus,
+        users.arrangement,
+        users.buildingType,
+        users.shopAt,
+        users.shopPerWeek*/
+      )
+      .then(() => {
+        dispatch({ type: "CHANGE_SUCCESS" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CHANGE_ERROR", err });
+      });
+  };
+};
