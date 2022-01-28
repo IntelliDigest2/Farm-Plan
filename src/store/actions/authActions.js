@@ -43,14 +43,26 @@ export const updatePassword = (credentials) => {
 export const updateEmail = (credentials) => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+
+    const creds = firebase.auth.EmailAuthProvider.credential(
+      credentials.email,
+      credentials.password
+    );
     firebase
       .auth()
-      .currentUser.updateEmail(credentials.Email)
+      .currentUser.reauthenticateWithCredential(creds)
       .then(() => {
-        dispatch({ type: "CHANGE_SUCCESS" });
-      })
-      .catch((err) => {
-        dispatch({ type: "CHANGE_ERROR", err });
+        firebase
+          .auth()
+          .currentUser.updateEmail(credentials.newEmail)
+          .then(() => {
+            console.log("here");
+            dispatch({ type: "CHANGE_SUCCESS" });
+          })
+          .catch((err) => {
+            console.log(err);
+            dispatch({ type: "CHANGE_ERROR", err });
+          });
       });
   };
 };

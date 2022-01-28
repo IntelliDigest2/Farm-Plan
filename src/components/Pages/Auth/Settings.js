@@ -32,6 +32,7 @@ function Settings(props) {
   const [firstName, setFirstName] = useState(props.profile.firstName);
   const [lastName, setLastName] = useState(props.profile.lastName);
   const [email, setEmail] = useState(props.auth.email);
+  const [password, setPassword] = useState("");
 
   //address
   const [town, setTown] = useState(props.profile.city);
@@ -53,19 +54,22 @@ function Settings(props) {
 
   function HandleEmail() {
     var data0 = {
-      email: email,
+      auth: props.auth,
+      email: props.auth.email,
+      newEmail: email,
+      password: password,
     };
-    var data1 = {
-      firstName: props.profile.firstName,
-      lastName: props.profile.lastName,
-      initials: props.profile.firstName[0] + props.profile.lastName[0],
-      email: email,
-      city: props.profile.city,
-      country: props.profile.country,
-      region: props.profile.region,
-    };
+    // var data1 = {
+    //   firstName: props.profile.firstName,
+    //   lastName: props.profile.lastName,
+    //   initials: props.profile.firstName[0] + props.profile.lastName[0],
+    //   email: email,
+    //   city: props.profile.city,
+    //   country: props.profile.country,
+    //   region: props.profile.region,
+    // };
     props.updateEmail(data0);
-    props.updateProfile(data1);
+    //props.updateProfile(data1);
   }
 
   function HandlePassword() {
@@ -155,16 +159,21 @@ function Settings(props) {
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
-            email={props.profile.email}
+            email={props.auth.email}
             town={props.profile.city}
             region={props.profile.region}
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
-            HandleEmail={HandleEmail}
             setForm={setForm}
           />
           <Divider variant="middle" />
-          <Email email={email} setEmail={setEmail} setForm={setForm} />
+          <Email
+            email={email}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            setForm={setForm}
+            HandleEmail={HandleEmail}
+          />
           <div className="auth-error">
             {props.authError ? <p> {props.authError}</p> : null}
           </div>
@@ -363,8 +372,12 @@ const Email = (props) => {
           <Form.Control
             type="email"
             placeholder="Enter email"
-            defaultValue={props.email}
-            // onChange={(e) => props.setEmail(e.target.textContent)}
+            onChange={(e) => props.setEmail(e.target.value)}
+          />
+          <Form.Control
+            type="password"
+            placeholder="Enter Password"
+            onChange={(e) => props.setPassword(e.target.value)}
           />
           <SubButton
             styling="blue"
