@@ -34,7 +34,8 @@ function PlanToSave() {
             <b>NOTE:</b>This is part of the 'Fail to Plan, Plan to Fail'
             campaign, running from October 16th 2021 to January 31st 2021. Click
             'Plan to Save' to express interest in reserving food items from
-            local sources from June 2022. To go to your regular Account page,
+            local sources, we have extended to campaign to June 2022 with sales
+            commencing in January 2023. To go to your regular Account page,
             click the 'My Account' button below.
           </p>
         </div>
