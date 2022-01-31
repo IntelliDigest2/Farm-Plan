@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "../../Account/UserAccount.css";
 import "./Mob.css";
 import { Dropdown } from "../../SubComponents/Dropdown";
-import { Title } from "./SubComponents/Title";
+import { Title } from "./MobComponents";
 
 import { Form, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { signUp } from "../../../../store/actions/authActions";
 
-const SignUpMob = (props) => {
+const SignUp = (props) => {
   //Stage1
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -177,10 +177,10 @@ const SignUpMob = (props) => {
             buildingFunction={buildingFunction}
           />
           <div className="signup-center">
-            <div className="auth-error row">
+            <div className="auth-error">
               {authError ? <p> {authError}</p> : null}
             </div>
-            <div className="row">
+            <div>
               <Button
                 style={{ width: "30%" }}
                 variant="default"
@@ -626,4 +626,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpMob);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

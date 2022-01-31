@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   startData,
   createFoodWasteData,
+  createMapData,
 } from "../../../store/actions/dataActions";
 import { Redirect } from "react-router-dom";
 import { compose } from "redux";
@@ -14,7 +15,7 @@ import moment from "moment";
 //import { BrowserView, MobileView } from "react-device-detect";
 import { fs } from "../../../config/fbConfig";
 //import { Divider } from "@material-ui/core";
-import { Card } from "../SubComponents/Card";
+import { Card } from "react-bootstrap";
 import { InputForm } from "../SubComponents/Form";
 import { Heading } from "../SubComponents/Heading";
 import { Dropdown } from "../SubComponents/Dropdown";
@@ -34,6 +35,7 @@ const dailyTabTime = moment().format("ddd MMM Do YYYY");
 // const chartSubmissionYear = moment().format("YYYY")
 // const chartSubmissionFullDate = moment().format("ddd MMM Do YYYY")
 
+let firstTime = false;
 class FoodWaste extends Component {
   state = {
     name: this.props.user.firstName,
@@ -132,12 +134,45 @@ class FoodWaste extends Component {
 
   startDataButton = (e) => {
     e.preventDefault();
-    this.props.startData(this.state);
+    var data = {
+      uid: this.props.auth.uid,
+      name: this.props.user.firstName,
+      email: this.props.auth.email,
+    };
+    this.props.startData(data);
   };
 
   //Change to upload specific data from state
   handleFoodWasteSubmit = (e) => {
     e.preventDefault();
+
+    var wm;
+    switch (this.state.weightType) {
+      default:
+      case "kg":
+      case "l":
+        wm = 1;
+        break;
+      case "g":
+      case "ml":
+        wm = 0.001;
+        break;
+      case "oz":
+        wm = 0.028;
+        break;
+      case "lbs":
+        wm = 0.454;
+        break;
+    }
+
+    const mapData = {
+      masterCollection: "mapData",
+      uid: this.props.auth.uid,
+      upload: {
+        foodWasteWeight: this.state.foodWasteWeight * wm,
+        location: this.props.profile.city,
+      },
+    };
 
     //Setup data to be sent to generic create firestore function (TO BE RENAMED LATER)
     const data = {
@@ -166,6 +201,7 @@ class FoodWaste extends Component {
       },
     };
     this.props.createFoodWasteData(data);
+    this.props.createMapData(mapData);
     this.clearEFWForm();
     submitNotification("Success", "Food Waste successfully uploaded!");
   };
@@ -357,6 +393,7 @@ class FoodWaste extends Component {
     const { data, auth } = this.props;
 
     if (!auth.uid) return <Redirect to="/login" />;
+
     if (!data) return <div></div>;
     const filteredData =
       data && data.filter((datas) => datas.email === auth.email);
@@ -739,6 +776,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     startData: (product) => dispatch(startData(product)),
     createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
+    createMapData: (product) => dispatch(createMapData(product)),
     // createFoodSurplusData: (product) => dispatch(createFoodSurplusData(product)),
   };
 };

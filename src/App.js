@@ -18,9 +18,9 @@ import Login from "./components/Pages/Auth/Login";
 import LogInMob from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
-import SignUp from "./components/Pages/Auth/SignUp";
-import SignUpMob from "./components/Pages/Auth/Mobile/SignUpMob";
+import SignUp from "./components/Pages/Auth/Mobile/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
+import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
 import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
 import ForgotPassword from "./components/Pages/ForgotPassword";
@@ -28,7 +28,7 @@ import PlanToSave from "./components/Pages/Account/PlanToSave";
 //old account
 //import Account from "./components/Pages/Account/UserAccount";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
-import MapData from "./components/Pages/Account/MapData";
+import Map from "./components/Pages/Account/Map";
 
 import FoodWaste from "./components/Pages/Account/FoodWaste";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
@@ -80,7 +80,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (props.auth.uid) setIsLoggedIn(true);
-  }, []);
+  }, [props.auth.uid]);
 
   //Google Cloud Messaging code
   const [show, setShow] = useState(false);
@@ -100,7 +100,6 @@ const App = (props) => {
         title: payload.notification.title,
         body: payload.notification.body,
       });
-      console.log(payload);
     })
     .catch((err) => console.log("failed: ", err));
 
@@ -112,7 +111,7 @@ const App = (props) => {
         <Toast
           onClose={() => setShow(false)}
           show={show}
-          delay={3000}
+          delay={10000}
           autohide
           animation
           style={{
@@ -120,6 +119,7 @@ const App = (props) => {
             top: 70,
             right: 20,
             width: 300,
+            zIndex: 1,
           }}
         >
           <Toast.Header>
@@ -132,7 +132,9 @@ const App = (props) => {
             <strong className="mr-auto">{notification.title}</strong>
             <small>just now</small>
           </Toast.Header>
-          <Toast.Body>{notification.body}</Toast.Body>
+          <Toast.Body style={{ backgroundColor: "white" }}>
+            {notification.body}
+          </Toast.Body>
         </Toast>
         <div>
           <MobileView>
@@ -156,8 +158,8 @@ const App = (props) => {
             <Route path="/login-mob" exact component={LogInMob} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
-            <Route path="/signup-mob" exact component={SignUpMob} />
             <Route path="/settings" exact component={Settings} />
+            <Route path="/questionnaire" exact component={Questionnaire} />
             <Route path="/contact" exact component={Contact} />
             <Route
               path="/terms-and-privacy"
@@ -170,7 +172,7 @@ const App = (props) => {
             {/* <Route path="/newaccount" exact component={Account} /> */}
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />
-            <Route path="/view-map" exact component={MapData} />
+            <Route path="/view-map" exact component={Map} />
 
             <Route path="/food-waste" exact component={FoodWaste} />
             <Route path="/food-loss" exact component={FoodLoss} />

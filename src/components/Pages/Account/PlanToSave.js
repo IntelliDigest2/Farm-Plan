@@ -13,7 +13,7 @@ import Countdown from "react-countdown";
 function PTSCountdown() {
   return (
     <Card className="countdown-card">
-      <Countdown className="countdown" date="2022-01-31T23:59:59"></Countdown>
+      <Countdown className="countdown" date="2022-06-30T23:59:59"></Countdown>
       <span className="label">days : hrs : mins : secs</span>
     </Card>
   );

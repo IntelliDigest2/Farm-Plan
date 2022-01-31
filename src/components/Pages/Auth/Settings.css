@@ -1,5 +1,6 @@
 .mobile-style {
   margin-top: 1%;
+  margin-bottom: 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,20 +22,9 @@
   padding: 2%;
 }
 
-.top {
-  margin-top: 12%;
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-}
-
 .center {
   text-align: center;
   flex-direction: row;
-}
-
-.collumn {
-  flex-direction: column;
 }
 
 .list {

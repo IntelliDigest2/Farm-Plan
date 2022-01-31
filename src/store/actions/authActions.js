@@ -43,18 +43,80 @@ export const updatePassword = (credentials) => {
 export const updateEmail = (credentials) => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+    const firestore = getFirebase().firestore();
+
+    const creds = firebase.auth.EmailAuthProvider.credential(
+      credentials.email,
+      credentials.password
+    );
+
     firebase
       .auth()
-      .currentUser.updateEmail(credentials.Email)
+      .currentUser.reauthenticateWithCredential(creds)
       .then(() => {
-        dispatch({ type: "CHANGE_SUCCESS" });
-      })
-      .catch((err) => {
-        dispatch({ type: "CHANGE_ERROR", err });
+        firebase
+          .auth()
+          .currentUser.verifyBeforeUpdateEmail(credentials.newEmail)
+          .then(() => {
+            return firestore.collection("users").doc(credentials.uid).update({
+              email: credentials.newEmail,
+            });
+          })
+          .then(() => {
+            dispatch({ type: "CHANGE_EMAIL_SUCCESS" });
+          })
+          .catch((err) => {
+            dispatch({ type: "CHANGE_EMAIL_ERROR", err });
+          });
       });
   };
 };
 
+export const updateProfile = (users) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+    firestore
+      .collection("users")
+      .doc(users.uid)
+      .set({ ...users.profile }, { merge: true })
+      .then(() => {
+        dispatch({ type: "CHANGE_PROFILE_SUCCESS" });
+        console.log("here");
+      })
+      .catch((err) => {
+        console.log("err");
+        dispatch({ type: "CHANGE_PROFILE_ERROR", err });
+      });
+
+    // firestore
+    //   .collection("users")
+    //   .doc(users.uid)
+    //   .update({
+    //     firstName: users.firstName,
+    //     lastName: users.lastName,
+    //     initials: users.initials,
+    //     city: users.city,
+    //     country: users.country,
+    //     region: users.region,
+    //     /*users.sixteenPlus,
+    //         users.arrangement,
+    //         users.buildingType,
+    //         users.shopAt,
+    //         users.shopPerWeek*/
+    //   })
+    //   .then(() => {
+    //     dispatch({ type: "CHANGE_PROFILE_SUCCESS" });
+    //     console.log("here");
+    //   })
+    //   .catch((err) => {
+    //     console.log("err");
+    //     dispatch({ type: "CHANGE_PROFILE_ERROR", err });
+    //   });
+  };
+};
+
+//not currently working
 export const resetPassword = (credentials) => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
