@@ -66,13 +66,7 @@ const NewAccount = (props) => {
 
   return (
     <Container className="web-center">
-      <Profile
-        profile={props.profile}
-        type={type}
-        function={(eventKey, e) => {
-          setType(e.target.textContent);
-        }}
-      />
+      <Profile profile={props.profile} type={type} />
       <div className="tabs">
         <TabContext value={value}>
           <TabList
@@ -90,17 +84,16 @@ const NewAccount = (props) => {
               label={<Heading priority="6" text="Environment" />}
             />
             <Tab disableRipple label={<Heading priority="6" text="Health" />} />
+            <Tab
+              disableRipple
+              label={<Heading priority="6" text="Sustainability" />}
+            />
           </TabList>
           <AccountType
             type={type}
             value={value}
             theme={theme}
             handleChangeIndex={handleChangeIndex}
-          />
-          <SubButton
-            styling="blue"
-            goTo="/change-password"
-            text="Change Password"
           />
         </TabContext>
       </div>
@@ -180,6 +173,9 @@ const AccountType = (props) => {
           </TabPanel>
           <TabPanel value={props.value} index={2} dir={props.theme.direction}>
             <Households.Health />
+          </TabPanel>
+          <TabPanel value={props.value} index={3} dir={props.theme.direction}>
+            <Households.Sustainability />
           </TabPanel>
         </SwipeableViews>
       );

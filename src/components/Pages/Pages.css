@@ -420,7 +420,16 @@ body {
 /* map page */
 .map-data {
   width: 100%;
-  height: 70vh;
+  height: 60vh;
+}
+
+/* Map Clusters */
+.marker-cluster div {
+  background-color: #afba15 !important;
+}
+
+.marker-cluster {
+  background-color: #afba15 !important;
 }
 
 .popup-data {

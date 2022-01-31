@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../Pages.css";
+
 import { Container } from "react-bootstrap";
 import {
   MapContainer,
@@ -8,6 +8,9 @@ import {
   useMap,
   CircleMarker,
 } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import "react-leaflet-markercluster/dist/styles.min.css";
+import "../Pages.css";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
@@ -51,37 +54,19 @@ const Map = (props) => {
     props.data.forEach((doc) => {
       var index = locationArray.findIndex((x) => x.location === doc.location);
 
-      var wm = 0;
-
-      switch (doc.weightType) {
-        default:
-        case "kg":
-        case "l":
-          wm = 1;
-          break;
-        case "g":
-        case "ml":
-          wm = 0.001;
-          break;
-        case "oz":
-          wm = 0.028;
-          break;
-        case "lbs":
-          wm = 0.454;
-          break;
-      }
-
-      var foodWasteWeight = Number((doc.foodWasteWeight * wm).toFixed(3));
-
       var obj = {
-        foodWasteWeight: foodWasteWeight,
+        foodWasteWeight: doc.foodWasteWeight,
         location: doc.location,
+        users: 1,
       };
 
       //If location does not exist, add to array, if exists, add to location total weight
-      index === -1
-        ? locationArray.push(obj)
-        : (locationArray[index].foodWasteWeight += foodWasteWeight);
+      if (index === -1) {
+        locationArray.push(obj);
+      } else {
+        locationArray[index].foodWasteWeight += doc.foodWasteWeight;
+        locationArray[index].users += 1;
+      }
     });
 
     //Foreach location, get lat and lng, add all data to location state variable
@@ -89,10 +74,11 @@ const Map = (props) => {
       Geocode.fromAddress(doc.location).then((response) => {
         const { lat, lng } = response.results[0].geometry.location;
         const foodWasteWeight = doc.foodWasteWeight;
+        const users = doc.users;
         const location = response.results[0].address_components[0].long_name;
         setLocation((oldArray) => [
           ...oldArray,
-          { lat, lng, foodWasteWeight, location },
+          { lat, lng, foodWasteWeight, users, location },
         ]);
       });
     });
@@ -119,6 +105,9 @@ const Map = (props) => {
       color = redColor;
     }
 
+    var _users = "User";
+    if (props.users > 1) _users = "Users";
+
     return (
       <CircleMarker
         center={[props.lat, props.lng]}
@@ -126,7 +115,7 @@ const Map = (props) => {
         radius={15}
       >
         <Popup>
-          {props.location}: {props.foodWasteWeight} KG
+          {props.location}: {props.users} {_users}
         </Popup>
       </CircleMarker>
     );
@@ -149,14 +138,19 @@ const Map = (props) => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> IntelliDigest - iTracker'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {location.map(({ lat, lng, foodWasteWeight, location }, index) => (
-          <MyComponent
-            lat={lat}
-            lng={lng}
-            foodWasteWeight={foodWasteWeight}
-            location={location}
-          />
-        ))}
+        <MarkerClusterGroup>
+          {location.map(
+            ({ lat, lng, foodWasteWeight, location, users }, index) => (
+              <MyComponent
+                lat={lat}
+                lng={lng}
+                foodWasteWeight={foodWasteWeight}
+                location={location}
+                users={users}
+              />
+            )
+          )}
+        </MarkerClusterGroup>
       </MapContainer>
     </Container>
   );

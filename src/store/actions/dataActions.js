@@ -34,12 +34,35 @@ export const createFoodWasteData = (data) => {
   };
 };
 
+export const createResearchData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    console.log("man with a spyglass emoji");
+    getFirebase()
+      .firestore()
+      .collection("data")
+      .doc(data.uid)
+      .collection("researchData")
+      .add(data.upload)
+      .then(() => {
+        dispatch({ type: "CREATE_DATA" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+};
+
 export const createMapData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
+    const increment = getFirebase().firestore.FieldValue.increment(
+      data.upload.foodWasteWeight
+    );
+    console.log("catch");
     getFirebase()
       .firestore()
       .collection(data.masterCollection)
-      .add(data.upload)
+      .doc(data.uid)
+      .set({ ...data.upload, foodWasteWeight: increment }, { merge: true })
       .then(() => {
         dispatch({ type: "CREATE_DATA" });
       })

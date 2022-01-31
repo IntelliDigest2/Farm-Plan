@@ -18,7 +18,7 @@ function LandingPage(props) {
       </div>
       <div className="buttons">
         <SubButton styling="blue" goTo="/login-mob" text="Log In" />
-        <SubButton styling="blue" goTo="/signup-mob" text="Sign Up" />
+        <SubButton styling="blue" goTo="/signup" text="Sign Up" />
       </div>
     </div>
   );

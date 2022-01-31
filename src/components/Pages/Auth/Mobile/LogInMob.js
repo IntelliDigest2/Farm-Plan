@@ -62,10 +62,8 @@ function LogInMob(props) {
           </Link>
         </div>
       </Form>
-      <div className="auth-error row">
-        {authError ? <p> {authError}</p> : null}
-      </div>
-      <div className="row">
+      <div className="auth-error">{authError ? <p> {authError}</p> : null}</div>
+      <div>
         <Button
           style={{ fontWeight: "700" }}
           variant="default"

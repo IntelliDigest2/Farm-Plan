@@ -1,7 +1,7 @@
-import authReducer from "./authReducer";
 import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
 import { firebaseReducer } from "react-redux-firebase";
+import authReducer from "./authReducer";
 import mapReducer from "./mapReducer";
 import dataReducer from "./dataReducer";
 
