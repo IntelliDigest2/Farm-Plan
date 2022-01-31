@@ -100,7 +100,6 @@ const App = (props) => {
         title: payload.notification.title,
         body: payload.notification.body,
       });
-      console.log(payload);
     })
     .catch((err) => console.log("failed: ", err));
 
@@ -120,6 +119,7 @@ const App = (props) => {
             top: 70,
             right: 20,
             width: 300,
+            zIndex: 1,
           }}
         >
           <Toast.Header>
@@ -132,7 +132,9 @@ const App = (props) => {
             <strong className="mr-auto">{notification.title}</strong>
             <small>just now</small>
           </Toast.Header>
-          <Toast.Body>{notification.body}</Toast.Body>
+          <Toast.Body style={{ backgroundColor: "white" }}>
+            {notification.body}
+          </Toast.Body>
         </Toast>
         <div>
           <MobileView>
