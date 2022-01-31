@@ -124,7 +124,7 @@ const Map = (props) => {
   //Redirect if not logged in
   if (!props.auth.uid) return <Redirect to="/login" />;
   return (
-    <Container className="web-center">
+    <Container className="web-center" style={{zIndex: "-3", marginBottom: "100px"}}>
       <DefaultButton text="Back" styling="green" goTo="/account" />
       <MapContainer
         className="map-data"
