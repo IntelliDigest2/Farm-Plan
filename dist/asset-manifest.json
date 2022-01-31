@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.7de24e4a.chunk.css",
-    "main.js": "/static/js/main.65b6249b.chunk.js",
-    "main.js.map": "/static/js/main.65b6249b.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.2f373269.js",
-    "runtime-main.js.map": "/static/js/runtime-main.2f373269.js.map",
-    "static/css/2.1e13a434.chunk.css": "/static/css/2.1e13a434.chunk.css",
-    "static/js/2.ec9c0893.chunk.js": "/static/js/2.ec9c0893.chunk.js",
-    "static/js/2.ec9c0893.chunk.js.map": "/static/js/2.ec9c0893.chunk.js.map",
-    "static/js/3.914b4e5c.chunk.js": "/static/js/3.914b4e5c.chunk.js",
-    "static/js/3.914b4e5c.chunk.js.map": "/static/js/3.914b4e5c.chunk.js.map",
+    "main.css": "/static/css/main.78085fa4.chunk.css",
+    "main.js": "/static/js/main.3b58f08b.chunk.js",
+    "main.js.map": "/static/js/main.3b58f08b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.d0c08d22.js",
+    "runtime-main.js.map": "/static/js/runtime-main.d0c08d22.js.map",
+    "static/css/2.b67ad7ab.chunk.css": "/static/css/2.b67ad7ab.chunk.css",
+    "static/js/2.5a7b172c.chunk.js": "/static/js/2.5a7b172c.chunk.js",
+    "static/js/2.5a7b172c.chunk.js.map": "/static/js/2.5a7b172c.chunk.js.map",
+    "static/js/3.cbc781d0.chunk.js": "/static/js/3.cbc781d0.chunk.js",
+    "static/js/3.cbc781d0.chunk.js.map": "/static/js/3.cbc781d0.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/2.1e13a434.chunk.css.map": "/static/css/2.1e13a434.chunk.css.map",
-    "static/css/main.7de24e4a.chunk.css.map": "/static/css/main.7de24e4a.chunk.css.map",
-    "static/js/2.ec9c0893.chunk.js.LICENSE.txt": "/static/js/2.ec9c0893.chunk.js.LICENSE.txt",
+    "static/css/2.b67ad7ab.chunk.css.map": "/static/css/2.b67ad7ab.chunk.css.map",
+    "static/css/main.78085fa4.chunk.css.map": "/static/css/main.78085fa4.chunk.css.map",
+    "static/js/2.5a7b172c.chunk.js.LICENSE.txt": "/static/js/2.5a7b172c.chunk.js.LICENSE.txt",
     "static/media/UserAccount.css": "/static/media/Blueberries.a563943b.png",
     "static/media/edible-foodwaste.89148b83.jpeg": "/static/media/edible-foodwaste.89148b83.jpeg",
     "static/media/ediblefoodloss.e934f552.jpeg": "/static/media/ediblefoodloss.e934f552.jpeg",
@@ -43,10 +43,10 @@
     "static/media/waste.e81a28a0.jpeg": "/static/media/waste.e81a28a0.jpeg"
   },
   "entrypoints": [
-    "static/js/runtime-main.2f373269.js",
-    "static/css/2.1e13a434.chunk.css",
-    "static/js/2.ec9c0893.chunk.js",
-    "static/css/main.7de24e4a.chunk.css",
-    "static/js/main.65b6249b.chunk.js"
+    "static/js/runtime-main.d0c08d22.js",
+    "static/css/2.b67ad7ab.chunk.css",
+    "static/js/2.5a7b172c.chunk.js",
+    "static/css/main.78085fa4.chunk.css",
+    "static/js/main.3b58f08b.chunk.js"
   ]
 }
