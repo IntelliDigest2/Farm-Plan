@@ -20,6 +20,7 @@ import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/Mobile/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
+import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
 import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
 import ForgotPassword from "./components/Pages/ForgotPassword";
@@ -79,7 +80,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (props.auth.uid) setIsLoggedIn(true);
-  }, []);
+  }, [props.auth.uid]);
 
   //Google Cloud Messaging code
   const [show, setShow] = useState(false);
@@ -156,6 +157,7 @@ const App = (props) => {
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/settings" exact component={Settings} />
+            <Route path="/questionnaire" exact component={Questionnaire} />
             <Route path="/contact" exact component={Contact} />
             <Route
               path="/terms-and-privacy"

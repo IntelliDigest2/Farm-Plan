@@ -42,6 +42,30 @@ const authReducer = (state = initState, action) => {
         ...state,
         authError: null,
       };
+    case "CHANGE_EMAIL_ERROR":
+      console.log("change email error");
+      return {
+        ...state,
+        authError: "Changing email failed",
+      };
+    case "CHANGE_EMAIL_SUCCESS":
+      console.log("change email success");
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CHANGE_PROFILE_ERROR":
+      console.log("change email error");
+      return {
+        ...state,
+        authError: "Changing profile failed",
+      };
+    case "CHANGE_PROFILE_SUCCESS":
+      console.log("change profile success");
+      return {
+        ...state,
+        authError: null,
+      };
     case "RESET_ERROR":
       console.log("reset password error");
       return {

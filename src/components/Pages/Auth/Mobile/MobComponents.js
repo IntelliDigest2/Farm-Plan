@@ -28,7 +28,7 @@ export const MobileWrap = (props) => {
       <div className="col">
         <div className="top">
           <div style={{ width: "50%" }}>
-            <SubButton styling="green" goTo="/account" text="Back" />
+            <SubButton styling="green" goTo={props.goTo} text="Back" />
           </div>
           <h5>{props.header}</h5>
         </div>

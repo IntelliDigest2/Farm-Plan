@@ -6,6 +6,8 @@ import { Colors } from "../../lib/Colors";
 import { Container, Row, Col } from "react-bootstrap";
 
 import { Avatar } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
 import { Heading } from "./Heading";
 import { Dropdown } from "./Dropdown";
@@ -51,6 +53,9 @@ export function Profile(props) {
             text={props.profile.firstName + " " + props.profile.lastName}
           />
           <Heading priority="5" text={props.profile.email} />
+          <IconButton href="/settings" component="a" style={{ float: "right" }}>
+            <SettingsApplicationsIcon />
+          </IconButton>
         </Col>
       </Row>
     </Container>

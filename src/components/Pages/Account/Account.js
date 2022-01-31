@@ -95,11 +95,6 @@ const NewAccount = (props) => {
             theme={theme}
             handleChangeIndex={handleChangeIndex}
           />
-          <SubButton
-            styling="blue"
-            goTo="/change-password"
-            text="Change Password"
-          />
         </TabContext>
       </div>
     </Container>

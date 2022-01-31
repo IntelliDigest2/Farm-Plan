@@ -176,3 +176,13 @@
   font-weight: 600;
   margin: auto;
 }
+
+.success {
+  color: #afba15;
+  font-size: 20px;
+  float: center;
+  text-align: center;
+  justify-content: center;
+  font-weight: 600;
+  margin: auto;
+}

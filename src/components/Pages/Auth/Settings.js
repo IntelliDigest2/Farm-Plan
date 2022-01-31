@@ -17,6 +17,7 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
+import QuizIcon from "@mui/icons-material/Quiz";
 
 //import { MobileView, BrowserView, isMobile } from "react-device-detect";
 
@@ -41,35 +42,28 @@ function Settings(props) {
 
   const [form, setForm] = useState(null);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   //rerender on form change, reset error message
   useEffect(() => {
     setError("");
-  }, [form]);
-
-  useEffect(() => {
-    console.log(props.auth);
-    console.log(props.profile);
-  }, [props]);
+    setSuccess(false);
+  }, [form, props.profile]);
 
   function HandleEmail() {
-    var data0 = {
+    var data = {
       auth: props.auth,
       email: props.auth.email,
       newEmail: email,
+      uid: props.auth.uid,
       password: password,
     };
-    // var data1 = {
-    //   firstName: props.profile.firstName,
-    //   lastName: props.profile.lastName,
-    //   initials: props.profile.firstName[0] + props.profile.lastName[0],
-    //   email: email,
-    //   city: props.profile.city,
-    //   country: props.profile.country,
-    //   region: props.profile.region,
-    // };
-    props.updateEmail(data0);
-    //props.updateProfile(data1);
+    props.updateEmail(data);
+    if (!props.authError) {
+      setSuccess(true);
+    } else {
+      setError(props.authError);
+    }
   }
 
   function HandlePassword() {
@@ -85,48 +79,50 @@ function Settings(props) {
 
   function HandleName() {
     var data = {
-      firstName: firstName,
-      lastName: lastName,
-      initials: firstName[0] + lastName[0],
-      email: props.auth.email,
-      city: props.profile.town,
-      country: props.profile.country,
-      region: props.profile.region,
-      /*sixteenPlus: sixteenPlus,
-        arrangement: arrangement,
-        buildingType: buildingType,
-        shopAt: shopAt,
-        shopPerWeek: shopPerWeek,*/
+      uid: props.auth.uid,
+      profile: {
+        firstName: firstName,
+        lastName: lastName,
+        initials: firstName[0] + lastName[0],
+      },
     };
     props.updateProfile(data);
+    if (!props.authError) {
+      setSuccess(true);
+    } else {
+      setError(props.authError);
+    }
   }
 
   function HandleLocation() {
     var data = {
-      firstName: props.profile.firstName,
-      lastName: props.profile.lastName,
-      initials: props.profile.firstName[0] + props.profile.lastName[0],
-      email: props.auth.email,
-      city: town,
-      country: country,
-      region: region,
-      /*sixteenPlus: sixteenPlus,
-      arrangement: arrangement,
-      buildingType: buildingType,
-      shopAt: shopAt,
-      shopPerWeek: shopPerWeek,*/
+      uid: props.auth.uid,
+      profile: {
+        city: town,
+        country: country,
+        region: region,
+      },
     };
     props.updateProfile(data);
+    if (!props.authError) {
+      setSuccess(true);
+    } else {
+      setError(props.authError);
+    }
   }
 
   switch (form) {
     case "changeName":
       return (
-        <MobileWrap header="Settings" subtitle="What would you like to change?">
+        <MobileWrap
+          header="Settings"
+          subtitle="What would you like to change?"
+          goTo="/account"
+        >
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
-            email={props.profile.email}
+            email={props.auth.email}
             town={props.profile.city}
             region={props.profile.region}
             country={props.profile.country}
@@ -151,11 +147,21 @@ function Settings(props) {
               }}
             />
           </div>
+          <div className="auth-error">
+            {props.authError ? <p> {props.authError}</p> : null}
+          </div>
+          <div className="success">
+            {success ? <p>Change Success</p> : null}
+          </div>
         </MobileWrap>
       );
     case "changeEmail":
       return (
-        <MobileWrap header="Settings" subtitle="What would you like to change?">
+        <MobileWrap
+          header="Settings"
+          subtitle="What would you like to change?"
+          goTo="/account"
+        >
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
@@ -174,18 +180,37 @@ function Settings(props) {
             setForm={setForm}
             HandleEmail={HandleEmail}
           />
+          <div className="center">
+            <SubButton
+              styling="blue"
+              text="Confirm"
+              onClick={(e) => {
+                e.preventDefault();
+                HandleEmail();
+              }}
+            />
+          </div>
           <div className="auth-error">
             {props.authError ? <p> {props.authError}</p> : null}
+          </div>
+          <div className="success">
+            {success ? (
+              <p>We sent you an email to verify this change!</p>
+            ) : null}
           </div>
         </MobileWrap>
       );
     case "changePassword":
       return (
-        <MobileWrap header="Settings" subtitle="What would you like to change?">
+        <MobileWrap
+          header="Settings"
+          subtitle="What would you like to change?"
+          goTo="/account"
+        >
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
-            email={props.profile.email}
+            email={props.auth.email}
             town={props.profile.city}
             region={props.profile.region}
             country={props.profile.country}
@@ -212,11 +237,15 @@ function Settings(props) {
       );
     case "changeLocation":
       return (
-        <MobileWrap header="Settings" subtitle="What would you like to change?">
+        <MobileWrap
+          header="Settings"
+          subtitle="What would you like to change?"
+          goTo="/account"
+        >
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
-            email={props.profile.email}
+            email={props.auth.email}
             town={props.profile.city}
             region={props.profile.region}
             country={props.profile.country}
@@ -237,26 +266,50 @@ function Settings(props) {
             <SubButton
               styling="blue"
               text="Confirm"
-              onClick={() => {
-                setForm(null);
+              onClick={(e) => {
+                e.preventDefault();
+                HandleLocation();
               }}
             />
+          </div>
+          <div className="auth-error">
+            {props.authError ? <p> {props.authError}</p> : null}
+          </div>
+          <div className="success">
+            {success ? <p>Change Success</p> : null}
           </div>
         </MobileWrap>
       );
     default:
       return (
-        <MobileWrap header="Settings" subtitle="What would you like to change?">
+        <MobileWrap
+          header="Settings"
+          subtitle="What would you like to change?"
+          goTo="/account"
+        >
           <SettingsList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
-            email={props.profile.email}
+            email={props.auth.email}
             town={props.profile.city}
             region={props.profile.region}
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
           />
+          <Divider variant="middle" />
+          <List>
+            <ListItem>
+              <ListItemButton href="/questionnaire" component="a">
+                <ListItemIcon>
+                  <QuizIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  Help out our research by answering this short questionnaire.
+                </ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </List>
         </MobileWrap>
       );
   }
@@ -314,7 +367,7 @@ const SettingsList = (props) => {
               <EditLocationAltIcon />
             </ListItemIcon>
             <ListItemText>
-              {props.town} {props.country} {props.region}
+              {props.town}, {props.country}, {props.region}
             </ListItemText>
           </ListItemButton>
         </ListItem>
@@ -371,21 +424,16 @@ const Email = (props) => {
           <Form.Label>Email address</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Enter email"
+            placeholder="Enter new email"
             onChange={(e) => props.setEmail(e.target.value)}
           />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Enter Password"
             onChange={(e) => props.setPassword(e.target.value)}
-          />
-          <SubButton
-            styling="blue"
-            text="Confirm"
-            onClick={(e) => {
-              e.preventDefault();
-              props.HandleEmail();
-            }}
           />
         </Form.Group>
       </Form>
