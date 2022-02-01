@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Mob.css";
 import { MobileWrap } from "./MobComponents";
 import { SubButton } from "../../SubComponents/Button";
+import { submitNotification } from "../../../lib/Notifications";
 
 import { Form } from "react-bootstrap";
 
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createResearchData } from "../../../../store/actions/dataActions";
 
@@ -15,6 +17,8 @@ function Questionnaire(props) {
   const [buildingType, setBuildingType] = useState("");
   const [shopAt, setShopAt] = useState("");
   const [shopPerWeek, setShopPerWeek] = useState("");
+
+  const [complete, setComplete] = useState(false);
 
   function HandleSubmit() {
     var data = {
@@ -28,6 +32,11 @@ function Questionnaire(props) {
       },
     };
     props.createResearchData(data);
+    submitNotification(
+      "Thanks!",
+      "By answering this questionnaire you have helped us conduct our research on how to arrange the food system in a more sustainable way!"
+    );
+    setComplete(true);
   }
 
   return (
@@ -146,11 +155,11 @@ function Questionnaire(props) {
           styling="green"
           text="Submit"
           onClick={(e) => {
-            e.preventDefault();
             HandleSubmit();
           }}
         />
       </div>
+      <div className="success">{complete ? <p>Thanks!</p> : null}</div>
     </MobileWrap>
   );
 }

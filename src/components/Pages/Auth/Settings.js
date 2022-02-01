@@ -28,6 +28,10 @@ import {
   updateProfile,
 } from "../../../store/actions/authActions";
 
+//The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
+//It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
+// "Name", "Email", "Password" and "Location".
+
 function Settings(props) {
   //auth
   const [firstName, setFirstName] = useState(props.profile.firstName);
@@ -153,6 +157,8 @@ function Settings(props) {
           <div className="success">
             {success ? <p>Change Success</p> : null}
           </div>
+          <Divider variant="middle" />
+          <Research />
         </MobileWrap>
       );
     case "changeEmail":
@@ -198,6 +204,8 @@ function Settings(props) {
               <p>We sent you an email to verify this change!</p>
             ) : null}
           </div>
+          <Divider variant="middle" />
+          <Research />
         </MobileWrap>
       );
     case "changePassword":
@@ -233,6 +241,8 @@ function Settings(props) {
             {error ? <p> {error}</p> : null}
             {props.authError ? <p> {props.authError}</p> : null}
           </div>
+          <Divider variant="middle" />
+          <Research />
         </MobileWrap>
       );
     case "changeLocation":
@@ -278,6 +288,8 @@ function Settings(props) {
           <div className="success">
             {success ? <p>Change Success</p> : null}
           </div>
+          <Divider variant="middle" />
+          <Research />
         </MobileWrap>
       );
     default:
@@ -298,18 +310,7 @@ function Settings(props) {
             setForm={setForm}
           />
           <Divider variant="middle" />
-          <List>
-            <ListItem>
-              <ListItemButton href="/questionnaire" component="a">
-                <ListItemIcon>
-                  <QuizIcon />
-                </ListItemIcon>
-                <ListItemText>
-                  Help out our research by answering this short questionnaire.
-                </ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </List>
+          <Research />
         </MobileWrap>
       );
   }
@@ -373,6 +374,24 @@ const SettingsList = (props) => {
         </ListItem>
       </List>
     </div>
+  );
+};
+
+const Research = (props) => {
+  return (
+    <List>
+      <ListItem>
+        <ListItemButton href="/questionnaire" component="a">
+          <ListItemIcon>
+            <QuizIcon />
+          </ListItemIcon>
+          <ListItemText>
+            Help us to offer your greater value by answering this short
+            questionnaire.
+          </ListItemText>
+        </ListItemButton>
+      </ListItem>
+    </List>
   );
 };
 
