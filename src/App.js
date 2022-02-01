@@ -142,7 +142,11 @@ const App = (props) => {
               exact
               path="/"
               render={() =>
-                isLoggedIn ? <Redirect to="/pts" /> : <Redirect to="/landing" />
+                isLoggedIn ? (
+                  <Redirect to="/account" />
+                ) : (
+                  <Redirect to="/landing" />
+                )
               }
             />
           </MobileView>
