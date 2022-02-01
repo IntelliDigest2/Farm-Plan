@@ -103,9 +103,11 @@ const App = (props) => {
     })
     .catch((err) => console.log("failed: ", err));
 
+  //Local Notificaiton
+
   return (
     <React.Fragment>
-      <Notifications />
+      <Notifications position="top-right" />
       <Router>
         <NavBar />
         <Toast
