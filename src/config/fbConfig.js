@@ -16,40 +16,49 @@ var fbConfig = {
 firebase.initializeApp(fbConfig);
 // firebase.firestore;
 
-const messaging = firebase.messaging();
+//Check browser compatability (FCM will not work on mobile)
+const messaging = firebase.messaging.isSupported()
+  ? firebase.messaging()
+  : null;
 
 // Pretty sure this is not necessary.
 // const { REACT_APP_VAPID_KEY } = process.env;
 // const publicKey = REACT_APP_VAPID_KEY;
 
 export const getToken = (setTokenFound) => {
-  return messaging
-    .getToken()
-    .then((currentToken) => {
-      if (currentToken) {
-        console.log("current token for client: ", currentToken);
-        setTokenFound(true);
-        // Track the token -> client mapping, by sending to backend server
-        // show on the UI that permission is secured
-      } else {
-        console.log(
-          "No registration token available. Request permission to generate one."
-        );
-        setTokenFound(false);
-        // shows on the UI that permission is required
-      }
-    })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
-      // catch error while creating client token
-    });
+  if (messaging != null) {
+    return messaging
+      .getToken()
+      .then((currentToken) => {
+        if (currentToken) {
+          console.log("current token for client: ", currentToken);
+          setTokenFound(true);
+          // Track the token -> client mapping, by sending to backend server
+          // show on the UI that permission is secured
+        } else {
+          console.log(
+            "No registration token available. Request permission to generate one."
+          );
+          setTokenFound(false);
+          // shows on the UI that permission is required
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred while retrieving token. ", err);
+        // catch error while creating client token
+      });
+  } else {
+    console.log("FCM Not supported");
+  }
 };
 
 export const onMessageListener = () =>
   new Promise((resolve) => {
-    messaging.onMessage((payload) => {
-      resolve(payload);
-    });
+    if (messaging != null) {
+      messaging.onMessage((payload) => {
+        resolve(payload);
+      });
+    }
   });
 
 export default fbConfig;
