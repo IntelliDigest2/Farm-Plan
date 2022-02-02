@@ -13,14 +13,16 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+
+//list icons
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import QuizIcon from "@mui/icons-material/Quiz";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 //import { MobileView, BrowserView, isMobile } from "react-device-detect";
-
 import { connect } from "react-redux";
 import {
   resetPassword,
@@ -53,7 +55,18 @@ function Settings(props) {
   useEffect(() => {
     setError("");
     setSuccess(false);
-  }, [form, props.profile]);
+  }, [form]);
+
+  //handles the way each setting opens and closes, if not open => open, if open => close and if a different item => open different item.
+  function HandleButtonState(changeTo) {
+    if (!form) {
+      setForm(changeTo);
+    } else if (form === changeTo) {
+      setForm(null);
+    } else if (form !== changeTo && form) {
+      setForm(changeTo);
+    }
+  }
 
   useEffect(() => {
     if (!props.auth.uid) {
@@ -141,6 +154,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Name
@@ -186,6 +200,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Email
@@ -231,6 +246,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Password setEmail={setEmail} />
@@ -268,6 +284,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Location
@@ -315,6 +332,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Research />
@@ -330,7 +348,7 @@ const SettingsList = (props) => {
         <ListItem>
           <ListItemButton
             onClick={() => {
-              props.setForm("changeName");
+              props.HandleButtonState("changeName");
             }}
           >
             <ListItemIcon>
@@ -344,7 +362,7 @@ const SettingsList = (props) => {
         <ListItem>
           <ListItemButton
             onClick={() => {
-              props.setForm("changeEmail");
+              props.HandleButtonState("changeEmail");
             }}
           >
             <ListItemIcon>
@@ -356,7 +374,7 @@ const SettingsList = (props) => {
         <ListItem>
           <ListItemButton
             onClick={() => {
-              props.setForm("changePassword");
+              props.HandleButtonState("changePassword");
             }}
           >
             <ListItemIcon>
@@ -368,7 +386,7 @@ const SettingsList = (props) => {
         <ListItem className="space-between">
           <ListItemButton
             onClick={() => {
-              props.setForm("changeLocation");
+              props.HandleButtonState("changeLocation");
             }}
           >
             <ListItemIcon>
@@ -379,6 +397,20 @@ const SettingsList = (props) => {
             </ListItemText>
           </ListItemButton>
         </ListItem>
+        <Divider variant="middle" />
+        {/* <ListItem className="space-between">
+          <ListItemButton
+            onClick={() => {
+              props.HandleButtonState("changeLocation");
+            }}
+          >
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText>Logout</ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <Divider variant="middle" /> */}
       </List>
     </div>
   );
