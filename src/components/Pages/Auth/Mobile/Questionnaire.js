@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import "./Mob.css";
 import { MobileWrap } from "./MobComponents";
@@ -7,7 +7,6 @@ import { submitNotification } from "../../../lib/Notifications";
 
 import { Form } from "react-bootstrap";
 
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createResearchData } from "../../../../store/actions/dataActions";
 

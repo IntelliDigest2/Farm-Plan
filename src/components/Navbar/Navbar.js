@@ -57,7 +57,7 @@ const NavBar = (props) => {
                     as={NavLink}
                     eventKey="3"
                     className="pl-sm-0 pl-0 pl-md-4 pl-lg-5 nav-link"
-                    to="/pts"
+                    to="/account"
                     activeClassName="active"
                     exact={true}
                   >
