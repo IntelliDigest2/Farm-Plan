@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./Mob.css";
 import { MobileWrap } from "./MobComponents";
 import { SubButton } from "../../SubComponents/Button";
+import { submitNotification } from "../../../lib/Notifications";
 
 import { Form } from "react-bootstrap";
 
@@ -16,6 +17,8 @@ function Questionnaire(props) {
   const [shopAt, setShopAt] = useState("");
   const [shopPerWeek, setShopPerWeek] = useState("");
 
+  const [complete, setComplete] = useState(false);
+
   function HandleSubmit() {
     var data = {
       uid: props.auth.uid,
@@ -28,6 +31,11 @@ function Questionnaire(props) {
       },
     };
     props.createResearchData(data);
+    submitNotification(
+      "Thanks!",
+      "By answering this questionnaire you have helped us conduct our research on how to arrange the food system in a more sustainable way!"
+    );
+    setComplete(true);
   }
 
   return (
@@ -146,11 +154,11 @@ function Questionnaire(props) {
           styling="green"
           text="Submit"
           onClick={(e) => {
-            e.preventDefault();
             HandleSubmit();
           }}
         />
       </div>
+      <div className="success">{complete ? <p>Thanks!</p> : null}</div>
     </MobileWrap>
   );
 }

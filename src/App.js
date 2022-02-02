@@ -103,9 +103,11 @@ const App = (props) => {
     })
     .catch((err) => console.log("failed: ", err));
 
+  //Local Notificaiton
+
   return (
     <React.Fragment>
-      <Notifications />
+      <Notifications position="top-right" />
       <Router>
         <NavBar />
         <Toast
@@ -142,7 +144,11 @@ const App = (props) => {
               exact
               path="/"
               render={() =>
-                isLoggedIn ? <Redirect to="/pts" /> : <Redirect to="/landing" />
+                isLoggedIn ? (
+                  <Redirect to="/account" />
+                ) : (
+                  <Redirect to="/landing" />
+                )
               }
             />
           </MobileView>

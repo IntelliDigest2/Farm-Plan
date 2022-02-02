@@ -75,19 +75,14 @@ const NewAccount = (props) => {
                 backgroundColor: Colors.brandGreen,
               },
             }}
-            variant="fullWidth"
+            variant="standard"
             onChange={handleChange}
+            centered
           >
-            <Tab disableRipple label={<Heading priority="6" text="Food" />} />
-            <Tab
-              disableRipple
-              label={<Heading priority="6" text="Environment" />}
-            />
-            <Tab disableRipple label={<Heading priority="6" text="Health" />} />
-            <Tab
-              disableRipple
-              label={<Heading priority="6" text="Sustainability" />}
-            />
+            <Tab disableRipple label="Food" />
+            <Tab disableRipple label="Environment" />
+            <Tab disableRipple label="Health" />
+            <Tab disableRipple label="Sustainability" />
           </TabList>
           <AccountType
             type={type}

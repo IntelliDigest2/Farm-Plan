@@ -13,20 +13,27 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+
+//list icons
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import QuizIcon from "@mui/icons-material/Quiz";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 //import { MobileView, BrowserView, isMobile } from "react-device-detect";
-
 import { connect } from "react-redux";
 import {
   resetPassword,
   updateEmail,
   updateProfile,
 } from "../../../store/actions/authActions";
+import { Redirect } from "react-router-dom";
+
+//The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
+//It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
+// "Name", "Email", "Password" and "Location".
 
 function Settings(props) {
   //auth
@@ -48,7 +55,24 @@ function Settings(props) {
   useEffect(() => {
     setError("");
     setSuccess(false);
-  }, [form, props.profile]);
+  }, [form]);
+
+  //handles the way each setting opens and closes, if not open => open, if open => close and if a different item => open different item.
+  function HandleButtonState(changeTo) {
+    if (!form) {
+      setForm(changeTo);
+    } else if (form === changeTo) {
+      setForm(null);
+    } else if (form !== changeTo && form) {
+      setForm(changeTo);
+    }
+  }
+
+  useEffect(() => {
+    if (!props.auth.uid) {
+      return <Redirect to="/login" />;
+    }
+  }, [props.auth.uid]);
 
   function HandleEmail() {
     var data = {
@@ -111,6 +135,8 @@ function Settings(props) {
     }
   }
 
+  if (!props.auth.uid) return <Redirect to="/login" />;
+
   switch (form) {
     case "changeName":
       return (
@@ -128,6 +154,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Name
@@ -153,6 +180,8 @@ function Settings(props) {
           <div className="success">
             {success ? <p>Change Success</p> : null}
           </div>
+          <Divider variant="middle" />
+          <Research />
         </MobileWrap>
       );
     case "changeEmail":
@@ -171,6 +200,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Email
@@ -194,10 +224,10 @@ function Settings(props) {
             {props.authError ? <p> {props.authError}</p> : null}
           </div>
           <div className="success">
-            {success ? (
-              <p>We sent you an email to verify this change!</p>
-            ) : null}
+            {success ? <p>Your email has been updated!</p> : null}
           </div>
+          <Divider variant="middle" />
+          <Research />
         </MobileWrap>
       );
     case "changePassword":
@@ -216,6 +246,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Password setEmail={setEmail} />
@@ -233,6 +264,8 @@ function Settings(props) {
             {error ? <p> {error}</p> : null}
             {props.authError ? <p> {props.authError}</p> : null}
           </div>
+          <Divider variant="middle" />
+          <Research />
         </MobileWrap>
       );
     case "changeLocation":
@@ -251,6 +284,7 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
           <Location
@@ -278,6 +312,8 @@ function Settings(props) {
           <div className="success">
             {success ? <p>Change Success</p> : null}
           </div>
+          <Divider variant="middle" />
+          <Research />
         </MobileWrap>
       );
     default:
@@ -296,20 +332,10 @@ function Settings(props) {
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
+            HandleButtonState={HandleButtonState}
           />
           <Divider variant="middle" />
-          <List>
-            <ListItem>
-              <ListItemButton href="/questionnaire" component="a">
-                <ListItemIcon>
-                  <QuizIcon />
-                </ListItemIcon>
-                <ListItemText>
-                  Help out our research by answering this short questionnaire.
-                </ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </List>
+          <Research />
         </MobileWrap>
       );
   }
@@ -322,7 +348,7 @@ const SettingsList = (props) => {
         <ListItem>
           <ListItemButton
             onClick={() => {
-              props.setForm("changeName");
+              props.HandleButtonState("changeName");
             }}
           >
             <ListItemIcon>
@@ -336,7 +362,7 @@ const SettingsList = (props) => {
         <ListItem>
           <ListItemButton
             onClick={() => {
-              props.setForm("changeEmail");
+              props.HandleButtonState("changeEmail");
             }}
           >
             <ListItemIcon>
@@ -348,7 +374,7 @@ const SettingsList = (props) => {
         <ListItem>
           <ListItemButton
             onClick={() => {
-              props.setForm("changePassword");
+              props.HandleButtonState("changePassword");
             }}
           >
             <ListItemIcon>
@@ -360,7 +386,7 @@ const SettingsList = (props) => {
         <ListItem className="space-between">
           <ListItemButton
             onClick={() => {
-              props.setForm("changeLocation");
+              props.HandleButtonState("changeLocation");
             }}
           >
             <ListItemIcon>
@@ -371,8 +397,40 @@ const SettingsList = (props) => {
             </ListItemText>
           </ListItemButton>
         </ListItem>
+        <Divider variant="middle" />
+        {/* <ListItem className="space-between">
+          <ListItemButton
+            onClick={() => {
+              props.HandleButtonState("changeLocation");
+            }}
+          >
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText>Logout</ListItemText>
+          </ListItemButton>
+        </ListItem>
+        <Divider variant="middle" /> */}
       </List>
     </div>
+  );
+};
+
+const Research = (props) => {
+  return (
+    <List>
+      <ListItem>
+        <ListItemButton href="/questionnaire" component="a">
+          <ListItemIcon>
+            <QuizIcon />
+          </ListItemIcon>
+          <ListItemText>
+            Help us to offer your greater value by answering this short
+            questionnaire.
+          </ListItemText>
+        </ListItemButton>
+      </ListItem>
+    </List>
   );
 };
 

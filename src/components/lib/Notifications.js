@@ -1,15 +1,15 @@
 import addNotification from "react-push-notification";
-import { Colors } from "./Colors";
 
 const submitNotification = (title, message) => {
   addNotification({
     title: title,
     message: message,
-    backgroundTop: Colors.brandBlue, //optional, background color of top container.
-    backgroundBottom: Colors.brandGreen, //optional, background color of bottom container.
-    closeButton: "Close",
-    duration: 4000,
-    native: true,
+    backgroundTop: "white", //optional, background color of top container.
+    backgroundBottom: "white", //optional, background color of bottom container.
+    colorTop: "black", //optional, font color of top container.
+    colorBottom: "black",
+    closeButton: "X",
+    duration: 10000,
   });
 };
 
