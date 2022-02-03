@@ -31,7 +31,6 @@ import {
   updateProfile,
   signOut,
 } from "../../../store/actions/authActions";
-import { Redirect } from "react-router-dom";
 
 //The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
 //It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
@@ -52,7 +51,6 @@ function Settings(props) {
   const [form, setForm] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   //rerender on form change, reset error message
   useEffect(() => {
