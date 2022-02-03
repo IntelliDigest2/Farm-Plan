@@ -4,6 +4,7 @@ import "./Mobile/Mob.css";
 import "./Settings.css";
 import { MobileWrap } from "./Mobile/MobComponents";
 import { SubButton } from "../SubComponents/Button";
+import { LogOutPopUp } from "../SubComponents/PopUp";
 
 import { Form, Col } from "react-bootstrap";
 
@@ -20,14 +21,15 @@ import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import QuizIcon from "@mui/icons-material/Quiz";
-import LogoutIcon from "@mui/icons-material/Logout";
 
 //import { MobileView, BrowserView, isMobile } from "react-device-detect";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   resetPassword,
   updateEmail,
   updateProfile,
+  signOut,
 } from "../../../store/actions/authActions";
 
 //The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
@@ -49,6 +51,7 @@ function Settings(props) {
   const [form, setForm] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   //rerender on form change, reset error message
   useEffect(() => {
@@ -136,7 +139,7 @@ function Settings(props) {
           subtitle="What would you like to change?"
           goTo="/account"
         >
-          <SettingsList
+          <ProfileList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
             email={props.auth.email}
@@ -146,33 +149,32 @@ function Settings(props) {
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
-          />
-          <Divider variant="middle" />
-          <Name
-            firstName={firstName}
-            setFirstName={setFirstName}
-            lastName={lastName}
-            setLastName={setLastName}
-            setForm={setForm}
-          />
-          <div className="center">
-            <SubButton
-              styling="blue"
-              text="Confirm"
-              onClick={(e) => {
-                e.preventDefault();
-                HandleName();
-              }}
+          >
+            <Divider variant="middle" />
+            <Name
+              firstName={firstName}
+              setFirstName={setFirstName}
+              lastName={lastName}
+              setLastName={setLastName}
+              setForm={setForm}
             />
-          </div>
-          <div className="auth-error">
-            {props.authError ? <p> {props.authError}</p> : null}
-          </div>
-          <div className="success">
-            {success ? <p>Change Success</p> : null}
-          </div>
-          <Divider variant="middle" />
-          <Research />
+            <div className="center">
+              <SubButton
+                styling="blue"
+                text="Confirm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  HandleName();
+                }}
+              />
+            </div>
+            <div className="auth-error">
+              {props.authError ? <p> {props.authError}</p> : null}
+            </div>
+            <div className="success">
+              {success ? <p>Change Success</p> : null}
+            </div>
+          </ProfileList>
         </MobileWrap>
       );
     case "changeEmail":
@@ -182,7 +184,7 @@ function Settings(props) {
           subtitle="What would you like to change?"
           goTo="/account"
         >
-          <SettingsList
+          <ProfileList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
             email={props.auth.email}
@@ -192,35 +194,34 @@ function Settings(props) {
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
-          />
-          <Divider variant="middle" />
-          <Email
-            email={email}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            setForm={setForm}
-            HandleEmail={HandleEmail}
-          />
-          <div className="center">
-            <SubButton
-              styling="blue"
-              text="Confirm"
-              onClick={(e) => {
-                e.preventDefault();
-                HandleEmail();
-              }}
+          >
+            <Divider variant="middle" />
+            <Email
+              email={email}
+              setEmail={setEmail}
+              setPassword={setPassword}
+              setForm={setForm}
+              HandleEmail={HandleEmail}
             />
-          </div>
-          <div className="auth-error">
-            {props.authError ? <p> {props.authError}</p> : null}
-          </div>
-          <div className="success">
-            {success ? (
-              <p>We sent you an email to verify this change!</p>
-            ) : null}
-          </div>
-          <Divider variant="middle" />
-          <Research />
+            <div className="center">
+              <SubButton
+                styling="blue"
+                text="Confirm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  HandleEmail();
+                }}
+              />
+            </div>
+            <div className="auth-error">
+              {props.authError ? <p> {props.authError}</p> : null}
+            </div>
+            <div className="success">
+              {success ? (
+                <p>We sent you an email to verify this change!</p>
+              ) : null}
+            </div>
+          </ProfileList>
         </MobileWrap>
       );
     case "changePassword":
@@ -230,7 +231,7 @@ function Settings(props) {
           subtitle="What would you like to change?"
           goTo="/account"
         >
-          <SettingsList
+          <ProfileList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
             email={props.auth.email}
@@ -240,25 +241,24 @@ function Settings(props) {
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
-          />
-          <Divider variant="middle" />
-          <Password setEmail={setEmail} />
-          <div className="center">
-            <SubButton
-              styling="blue"
-              text="Confirm"
-              onClick={(e) => {
-                e.preventDefault();
-                HandlePassword();
-              }}
-            />
-          </div>
-          <div className="auth-error">
-            {error ? <p> {error}</p> : null}
-            {props.authError ? <p> {props.authError}</p> : null}
-          </div>
-          <Divider variant="middle" />
-          <Research />
+          >
+            <Divider variant="middle" />
+            <Password setEmail={setEmail} />
+            <div className="center">
+              <SubButton
+                styling="blue"
+                text="Confirm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  HandlePassword();
+                }}
+              />
+            </div>
+            <div className="auth-error">
+              {error ? <p> {error}</p> : null}
+              {props.authError ? <p> {props.authError}</p> : null}
+            </div>
+          </ProfileList>
         </MobileWrap>
       );
     case "changeLocation":
@@ -268,7 +268,7 @@ function Settings(props) {
           subtitle="What would you like to change?"
           goTo="/account"
         >
-          <SettingsList
+          <ProfileList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
             email={props.auth.email}
@@ -278,35 +278,34 @@ function Settings(props) {
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
-          />
-          <Divider variant="middle" />
-          <Location
-            town={town}
-            setTown={setTown}
-            country={country}
-            setCountry={setCountry}
-            region={region}
-            setRegion={setRegion}
-            setForm={setForm}
-          />
-          <div className="center">
-            <SubButton
-              styling="blue"
-              text="Confirm"
-              onClick={(e) => {
-                e.preventDefault();
-                HandleLocation();
-              }}
+          >
+            <Divider variant="middle" />
+            <Location
+              town={town}
+              setTown={setTown}
+              country={country}
+              setCountry={setCountry}
+              region={region}
+              setRegion={setRegion}
+              setForm={setForm}
             />
-          </div>
-          <div className="auth-error">
-            {props.authError ? <p> {props.authError}</p> : null}
-          </div>
-          <div className="success">
-            {success ? <p>Change Success</p> : null}
-          </div>
-          <Divider variant="middle" />
-          <Research />
+            <div className="center">
+              <SubButton
+                styling="blue"
+                text="Confirm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  HandleLocation();
+                }}
+              />
+            </div>
+            <div className="auth-error">
+              {props.authError ? <p> {props.authError}</p> : null}
+            </div>
+            <div className="success">
+              {success ? <p>Change Success</p> : null}
+            </div>
+          </ProfileList>
         </MobileWrap>
       );
     default:
@@ -316,7 +315,7 @@ function Settings(props) {
           subtitle="What would you like to change?"
           goTo="/account"
         >
-          <SettingsList
+          <ProfileList
             firstName={props.profile.firstName}
             lastName={props.profile.lastName}
             email={props.auth.email}
@@ -326,92 +325,69 @@ function Settings(props) {
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
+            HandleSignOut={props.signOut}
           />
-          <Divider variant="middle" />
-          <Research />
         </MobileWrap>
       );
   }
 }
 
-const SettingsList = (props) => {
-  return (
-    <div className="list">
-      <List>
-        <ListItem>
-          <ListItemButton
-            onClick={() => {
-              props.HandleButtonState("changeName");
-            }}
-          >
-            <ListItemIcon>
-              <DriveFileRenameOutlineIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {props.firstName} {props.lastName}
-            </ListItemText>
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton
-            onClick={() => {
-              props.HandleButtonState("changeEmail");
-            }}
-          >
-            <ListItemIcon>
-              <EmailIcon />
-            </ListItemIcon>
-            <ListItemText>{props.email}</ListItemText>
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton
-            onClick={() => {
-              props.HandleButtonState("changePassword");
-            }}
-          >
-            <ListItemIcon>
-              <PasswordIcon />
-            </ListItemIcon>
-            <ListItemText>Password</ListItemText>
-          </ListItemButton>
-        </ListItem>
-        <ListItem className="space-between">
-          <ListItemButton
-            onClick={() => {
-              props.HandleButtonState("changeLocation");
-            }}
-          >
-            <ListItemIcon>
-              <EditLocationAltIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {props.town}, {props.country}, {props.region}
-            </ListItemText>
-          </ListItemButton>
-        </ListItem>
-        <Divider variant="middle" />
-        {/* <ListItem className="space-between">
-          <ListItemButton
-            onClick={() => {
-              props.HandleButtonState("changeLocation");
-            }}
-          >
-            <ListItemIcon>
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText>Logout</ListItemText>
-          </ListItemButton>
-        </ListItem>
-        <Divider variant="middle" /> */}
-      </List>
-    </div>
-  );
-};
+function ButtonList(props) {
+  let list;
+  list = props.listItems.map((items) => {
+    return (
+      <ListItem key={items.key}>
+        <ListItemButton
+          onClick={() => {
+            props.HandleButtonState(items.change);
+          }}
+        >
+          <ListItemIcon>{items.icon}</ListItemIcon>
+          <ListItemText>{items.item}</ListItemText>
+        </ListItemButton>
+      </ListItem>
+    );
+  });
 
-const Research = (props) => {
+  return <List>{list}</List>;
+}
+
+const ProfileList = (props) => {
+  const items = [
+    {
+      key: "name",
+      item: props.firstName + " " + props.lastName,
+      change: "changeName",
+      icon: <DriveFileRenameOutlineIcon />,
+    },
+    {
+      key: "email",
+      item: props.email,
+      change: "changeEmail",
+      icon: <EmailIcon />,
+    },
+    {
+      key: "password",
+      item: "Password",
+      change: "changePassword",
+      icon: <PasswordIcon />,
+    },
+    {
+      key: "location",
+      item: props.town + ", " + props.country + ", " + props.region,
+      change: "changeLocation",
+      icon: <EditLocationAltIcon />,
+    },
+  ];
+
   return (
-    <List>
+    <>
+      <ButtonList
+        listItems={items}
+        HandleButtonState={props.HandleButtonState}
+      />
+      {props.children}
+      <Divider variant="middle" />
       <ListItem>
         <ListItemButton href="/questionnaire" component="a">
           <ListItemIcon>
@@ -423,7 +399,9 @@ const Research = (props) => {
           </ListItemText>
         </ListItemButton>
       </ListItem>
-    </List>
+      <Divider variant="middle" />
+      <LogOutPopUp handleSignOut={props.HandleSignOut} to="/login" />
+    </>
   );
 };
 
@@ -496,7 +474,11 @@ const Password = (props) => {
   return (
     <div>
       <Form>
-        <h4>Follow the email instructions to reset your password.</h4>
+        <div className="center">
+          <h5>
+            <b>Follow the email instructions to reset your password.</b>
+          </h5>
+        </div>
         <Form.Group className="mb-3">
           <Form.Control
             type="email"
@@ -565,6 +547,7 @@ const mapDispatchToProps = (dispatch) => {
     resetPassword: (creds) => dispatch(resetPassword(creds)),
     updateEmail: (creds) => dispatch(updateEmail(creds)),
     updateProfile: (users) => dispatch(updateProfile(users)),
+    signOut: () => dispatch(signOut()),
   };
 };
 

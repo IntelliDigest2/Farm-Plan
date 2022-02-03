@@ -1,43 +1,78 @@
-// import React from "react";
+import React, { useState } from "react";
 
-// import Dialog from '@mui/material/Dialog';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import { SubButton } from "./Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
-// import { signOut } from "../../../store/actions/authActions";
-// import { connect } from "react-redux";
+import { SubButton } from "./Button";
 
-// function PopUp(props) {
+function PopUp(props) {
+  const { open, onClose, handleButtonClick, to, text } = props;
 
-//     const { open, handleButtonClick } = props
+  return (
+    <Dialog open={open}>
+      <DialogTitle sx={{ m: 0, p: 2 }}>
+        {props.children}
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: "static",
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <SubButton
+        styling="blue"
+        text={text}
+        onClick={handleButtonClick}
+        goTo={to}
+      />
+    </Dialog>
+  );
+}
 
-//     return (
-//         <Dialog open={open}>
-//             <DialogTitle>{props.title}</DialogTitle>
-//             <SubButton styling="blue" text="Log Out" onClick={() => handleButtonClick} />
-//         </Dialog>
-//     )
-// }
+export function LogOutPopUp(props) {
+  const [open, setOpen] = useState(false);
 
-// function LogOutPopUp(props) {
-//     const { onClose, open} = props;
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-//     const handleClose = () => {
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//       signOut: () => dispatch(signOut()),
-//     };
-//   };
-
-//   const mapStateToProps = (state) => {
-//     // console.log(state);
-//     return {
-//       auth: state.firebase.auth,
-//     };
-//   };
-
-//   export default connect(mapStateToProps, mapDispatchToProps)(PopUp);
+  return (
+    <>
+      <List>
+        <ListItem className="space-between">
+          <ListItemButton onClick={handleClickOpen}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText>Logout</ListItemText>
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <PopUp
+        open={open}
+        onClose={handleClose}
+        text="Log Out"
+        handleButtonClick={props.handleSignOut}
+        to={props.to}
+      >
+        Are you sure you want to log out?
+      </PopUp>
+    </>
+  );
+}
