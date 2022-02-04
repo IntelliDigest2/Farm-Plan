@@ -88,31 +88,6 @@ export const updateProfile = (users) => {
         console.log("err");
         dispatch({ type: "CHANGE_PROFILE_ERROR", err });
       });
-
-    // firestore
-    //   .collection("users")
-    //   .doc(users.uid)
-    //   .update({
-    //     firstName: users.firstName,
-    //     lastName: users.lastName,
-    //     initials: users.initials,
-    //     city: users.city,
-    //     country: users.country,
-    //     region: users.region,
-    //     /*users.sixteenPlus,
-    //         users.arrangement,
-    //         users.buildingType,
-    //         users.shopAt,
-    //         users.shopPerWeek*/
-    //   })
-    //   .then(() => {
-    //     dispatch({ type: "CHANGE_PROFILE_SUCCESS" });
-    //     console.log("here");
-    //   })
-    //   .catch((err) => {
-    //     console.log("err");
-    //     dispatch({ type: "CHANGE_PROFILE_ERROR", err });
-    //   });
   };
 };
 
