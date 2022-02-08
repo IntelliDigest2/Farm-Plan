@@ -5,9 +5,9 @@ import "./Footer.css";
 
 function Footer({ title, message }) {
   return (
-    <div className="footer-div" >
+    <div className="footer-div">
       <div>
-        <footer style={{zIndex: "1000"}}>
+        <footer>
           <i className="fa fa-copyright copy">
             {" "}
             Copyright - IntelliDigest 2021

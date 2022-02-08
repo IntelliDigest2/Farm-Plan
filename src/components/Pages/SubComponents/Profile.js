@@ -48,16 +48,14 @@ export function Profile(props) {
           </Avatar>
         </Col>
         <Col xs="auto">
-          <div style={{display: "flex", justifyContent: "space-between"}}>
           <Heading
             priority="4"
             text={props.profile.firstName + " " + props.profile.lastName}
-          /><IconButton href="/settings" component="a" style={{ float: "right" }}>
-          <SettingsApplicationsIcon />
-        </IconButton>
-        </div>
+          />
           <Heading priority="5" text={props.profile.email} />
-          
+          <IconButton href="/settings" component="a" style={{ float: "right" }}>
+            <SettingsApplicationsIcon />
+          </IconButton>
         </Col>
       </Row>
     </Container>
