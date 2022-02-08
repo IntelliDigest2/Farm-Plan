@@ -36,6 +36,7 @@ export const createFoodWasteData = (data) => {
 
 export const createResearchData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
+    console.log("man with a spyglass emoji");
     getFirebase()
       .firestore()
       .collection("data")

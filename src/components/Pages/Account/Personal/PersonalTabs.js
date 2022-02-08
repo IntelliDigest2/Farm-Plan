@@ -45,7 +45,7 @@ export function Environment() {
       />
       <IconButton
         icon="world"
-        label="Users Map"
+        label="Waste Map"
         color="yellow"
         goTo="/view-map"
       />
