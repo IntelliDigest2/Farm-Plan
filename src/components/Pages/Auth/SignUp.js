@@ -8,9 +8,6 @@ import styled from "styled-components";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Divider } from "@material-ui/core";
 
-import { createMapData } from "../../../store/actions/dataActions";
-import Geocode from "react-geocode";
-
 class SignUp extends Component {
   state = {
     email: "",
@@ -73,22 +70,6 @@ class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    Geocode.fromAddress(this.state.city + " " + this.state.country).then(
-      (response) => {
-        var upload = {
-          masterCollection: "mapData",
-          uid: props.auth.uid,
-          upload: {
-            location: response.results[0].address_components[0].long_name,
-            coords: [
-              response.results[0].geometry.location.lat,
-              response.results[0].geometry.location.lng,
-            ],
-          },
-        };
-        props.createMapData(upload);
-      }
-    );
     this.props.signUp(this.state);
   };
 
@@ -778,7 +759,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     signUp: (newUser) => dispatch(signUp(newUser)),
-    createMapData: (mapdata) => dispatch(createMapData(mapdata)),
   };
 };
 

@@ -10,9 +10,25 @@
   padding: 2%;
 }
 
+.browser-style-outer {
+  margin-top: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  background-color: white;
+  border-radius: 25px;
+  padding: 2%;
+}
+
 .center {
   text-align: center;
   flex-direction: row;
+}
+
+.list {
+  width: 100%;
 }
 
 .space-between {
