@@ -11,7 +11,7 @@ import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import { DefaultButton } from "../SubComponents/Button";
 
-import { createMapData, getMapData } from "../../../store/actions/dataActions";
+import { getMapData } from "../../../store/actions/dataActions";
 
 //Map component
 const Map = (props) => {
@@ -197,7 +197,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMapData: (product) => dispatch(getMapData(product)),
-    createMapData: (product) => dispatch(createMapData(product)),
   };
 };
 
