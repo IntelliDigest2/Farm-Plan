@@ -1,5 +1,3 @@
-import { Redirect } from "react-router-dom";
-
 export const signIn = (credentials) => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
@@ -56,21 +54,20 @@ export const updateEmail = (credentials) => {
       .auth()
       .currentUser.reauthenticateWithCredential(creds)
       .then(() => {
-        firebase.auth().currentUser.updateEmail(credentials.newEmail);
-      })
-      .then(() => {
-        firestore.collection("users").doc(credentials.uid).update({
-          email: credentials.newEmail,
-        });
-        firestore.collection("data").doc(credentials.uid).update({
-          email: credentials.newEmail,
-        });
-      })
-      .then(() => {
-        dispatch({ type: "CHANGE_EMAIL_SUCCESS" });
-      })
-      .catch((err) => {
-        dispatch({ type: "CHANGE_EMAIL_ERROR", err });
+        firebase
+          .auth()
+          .currentUser.verifyBeforeUpdateEmail(credentials.newEmail)
+          .then(() => {
+            return firestore.collection("users").doc(credentials.uid).update({
+              email: credentials.newEmail,
+            });
+          })
+          .then(() => {
+            dispatch({ type: "CHANGE_EMAIL_SUCCESS" });
+          })
+          .catch((err) => {
+            dispatch({ type: "CHANGE_EMAIL_ERROR", err });
+          });
       });
   };
 };
