@@ -1,0 +1,11 @@
+.top {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  /* margin-top: 4rem; */
+}
+
+.center {
+  text-align: center;
+  flex-direction: row;
+}
