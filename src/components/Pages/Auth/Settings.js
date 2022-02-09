@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import "./Mobile/Mob.css";
 import "./Settings.css";
-import { MobileWrap } from "./Mobile/MobComponents";
 import { SubButton } from "../SubComponents/Button";
 import { LogOutPopUp } from "../SubComponents/PopUp";
+import { PageWrap } from "../SubComponents/PageWrap";
 
 import { Form, Col } from "react-bootstrap";
 
@@ -21,6 +21,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import QuizIcon from "@mui/icons-material/Quiz";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 
 //import { MobileView, BrowserView, isMobile } from "react-device-detect";
 import { Redirect } from "react-router-dom";
@@ -164,7 +165,7 @@ function Settings(props) {
   switch (form) {
     case "changeName":
       return (
-        <MobileWrap
+        <PageWrap
           header="Settings"
           subtitle="What would you like to change?"
           goTo="/account"
@@ -205,11 +206,11 @@ function Settings(props) {
               {success ? <p>Change Success</p> : null}
             </div>
           </ProfileList>
-        </MobileWrap>
+        </PageWrap>
       );
     case "changeEmail":
       return (
-        <MobileWrap
+        <PageWrap
           header="Settings"
           subtitle="What would you like to change?"
           goTo="/account"
@@ -250,11 +251,11 @@ function Settings(props) {
               {success ? <p>Your email has been updated!</p> : null}
             </div>
           </ProfileList>
-        </MobileWrap>
+        </PageWrap>
       );
     case "changePassword":
       return (
-        <MobileWrap
+        <PageWrap
           header="Settings"
           subtitle="What would you like to change?"
           goTo="/account"
@@ -287,11 +288,11 @@ function Settings(props) {
               {props.authError ? <p> {props.authError}</p> : null}
             </div>
           </ProfileList>
-        </MobileWrap>
+        </PageWrap>
       );
     case "changeLocation":
       return (
-        <MobileWrap
+        <PageWrap
           header="Settings"
           subtitle="What would you like to change?"
           goTo="/account"
@@ -334,11 +335,11 @@ function Settings(props) {
               {success ? <p>Change Success</p> : null}
             </div>
           </ProfileList>
-        </MobileWrap>
+        </PageWrap>
       );
     default:
       return (
-        <MobileWrap
+        <PageWrap
           header="Settings"
           subtitle="What would you like to change?"
           goTo="/account"
@@ -355,7 +356,7 @@ function Settings(props) {
             HandleButtonState={HandleButtonState}
             HandleSignOut={props.signOut}
           />
-        </MobileWrap>
+        </PageWrap>
       );
   }
 }
@@ -425,6 +426,15 @@ const ProfileList = (props) => {
             Help us to offer your greater value by answering this short
             questionnaire.
           </ListItemText>
+        </ListItemButton>
+      </ListItem>
+      <Divider variant="middle" />
+      <ListItem>
+        <ListItemButton href="/contact" component="a">
+          <ListItemIcon>
+            <ContactSupportIcon />
+          </ListItemIcon>
+          <ListItemText>Contact Us</ListItemText>
         </ListItemButton>
       </ListItem>
       <Divider variant="middle" />

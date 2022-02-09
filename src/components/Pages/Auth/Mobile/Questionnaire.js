@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
 import "./Mob.css";
-import { MobileWrap } from "./MobComponents";
+import { PageWrap } from "../../SubComponents/PageWrap";
 import { SubButton } from "../../SubComponents/Button";
-import { submitNotification } from "../../../lib/Notifications";
 import { Dropdown } from "../../SubComponents/Dropdown";
+import { submitNotification } from "../../../lib/Notifications";
 
-import { Form } from "react-bootstrap";
 import Divider from "@mui/material/Divider";
+import { Form } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { createResearchData } from "../../../../store/actions/dataActions";
@@ -17,9 +17,8 @@ function Questionnaire(props) {
   const [arrangement, setArrangement] = useState("");
   const [ages, setAges] = useState("");
   const [buildingType, setBuildingType] = useState("");
-  const [shopAt, setShopAt] = useState("Choose");
+  const [shopAt, setShopAt] = useState("");
   const [shopPerWeek, setShopPerWeek] = useState("");
-  const [foodWaste, setFoodWaste] = useState("");
 
   const [complete, setComplete] = useState(false);
 
@@ -33,7 +32,6 @@ function Questionnaire(props) {
         buildingType: buildingType,
         shopAt: shopAt,
         shopPerWeek: shopPerWeek,
-        foodWaste: foodWaste,
       },
     };
     props.createResearchData(data);
@@ -43,35 +41,6 @@ function Questionnaire(props) {
     );
     setComplete(true);
   }
-
-  //optional question appears if family
-  const Ages = () => {
-    if (arrangement === "family") {
-      return (
-        <Form.Group>
-          <Form.Label>
-            Are there any children under 16 in your household?
-          </Form.Label>
-          <Form.Check
-            label="Yes"
-            name="Ages in household"
-            type="radio"
-            id="Living with under 16's"
-            onClick={(e) => setAges(e.target.id)}
-          />
-          <Form.Check
-            label="No"
-            name="Ages in household"
-            type="radio"
-            id="16+ household"
-            onClick={(e) => setAges(e.target.id)}
-          />
-        </Form.Group>
-      );
-    } else {
-      return null;
-    }
-  };
 
   //data for dropdown
   const dropdown = {
@@ -88,7 +57,7 @@ function Questionnaire(props) {
   };
 
   return (
-    <MobileWrap header="Questionnaire" subtitle="" goTo="/settings">
+    <PageWrap header="Questionnaire" subtitle="" goTo="/settings">
       <Form>
         <div key="inline-radio" className="mb-3">
           <Form.Group>
@@ -110,9 +79,6 @@ function Questionnaire(props) {
               onClick={(e) => setSixteenPlus(false)}
             />
           </Form.Group>
-
-          <Divider variant="middle" />
-
           <Form.Group>
             <Form.Label>What is your current living arrangement?</Form.Label>
             <Form.Check
@@ -137,7 +103,27 @@ function Questionnaire(props) {
               onClick={(e) => setArrangement(e.target.id)}
             />
           </Form.Group>
-          <Ages />
+          {arrangement === "family" ? (
+            <Form.Group>
+              <Form.Label>
+                Are there any children under 16 in your household?
+              </Form.Label>
+              <Form.Check
+                label="Yes"
+                name="Ages in household"
+                type="radio"
+                id="Living with under 16's"
+                onClick={(e) => setAges(e.target.id)}
+              />
+              <Form.Check
+                label="No"
+                name="Ages in household"
+                type="radio"
+                id="16+ household"
+                onClick={(e) => setAges(e.target.id)}
+              />
+            </Form.Group>
+          ) : null}
 
           <Divider variant="middle" />
 
@@ -168,16 +154,13 @@ function Questionnaire(props) {
               onClick={(e) => setBuildingType(e.target.id)}
             />
           </Form.Group>
-
-          <Divider variant="middle" />
-
           <Form.Group className="mb-3">
             <Form.Label>
               Where do you go shopping for your groceries?
             </Form.Label>
             <Dropdown
               id="shopAt"
-              styling="grey dropdown-input-right"
+              styling="grey"
               data={shopAt}
               function={(e) => {
                 setShopAt(e);
@@ -211,33 +194,6 @@ function Questionnaire(props) {
               onClick={(e) => setShopPerWeek(e.target.id)}
             />
           </Form.Group>
-          <Divider variant="middle" />
-
-          <Form.Group>
-            <Form.Label>How do you manage your food waste?</Form.Label>
-            <Form.Check
-              label="Food waste collection"
-              name="food waste"
-              type="radio"
-              id="Food waste collection"
-              onClick={(e) => setFoodWaste(e.target.id)}
-            />
-            <Form.Check
-              label="Composting"
-              name="food waste"
-              type="radio"
-              id="Composting"
-              onClick={(e) => setFoodWaste(e.target.id)}
-            />
-            <Form.Check
-              label="Landfill"
-              name="food waste"
-              type="radio"
-              id="Landfill"
-              onClick={(e) => setFoodWaste(e.target.id)}
-            />
-          </Form.Group>
-          <Divider variant="middle" />
         </div>
       </Form>
       <div className="success">{complete ? <p>Thanks!</p> : null}</div>
@@ -250,7 +206,7 @@ function Questionnaire(props) {
           }}
         />
       </div>
-    </MobileWrap>
+    </PageWrap>
   );
 }
 

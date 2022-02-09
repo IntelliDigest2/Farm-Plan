@@ -200,34 +200,32 @@ body {
 }
 
 /* contact page */
+.contact {
+  margin: auto;
+  width: 95%;
+  text-align: center;
+}
+
 .contact .contact-logo {
   /*color: rgb(81, 117, 79);*/
   color: #aab41e;
-  font-size: 60px;
+  font-size: 50px;
   padding: 15px 15px 15px 15px;
 }
 
 .contact h1 {
-  font-size: 20px;
+  font-size: 1.2rem;
   color: rgb(55, 85, 54);
 }
-.contact .contact-title {
-  font-size: 25px;
-  font-weight: 700;
-  color: black;
-}
+
 .contact-text-layout {
-  width: 55%;
   margin: auto;
-  padding-top: 30px;
+  padding-top: 2%;
 }
 
-.contact .contact-header {
-  background-color: white;
-  padding: 15px 0 10px 0;
-  margin: auto;
+.details {
+  text-align: center;
 }
-
 .details .contact-footer-icon {
   font-size: 30px;
   color: rgb(55, 85, 54);
@@ -237,11 +235,6 @@ body {
 .details p {
   font-size: 13px;
   padding-top: 5px;
-}
-
-.details .other-contact-details {
-  border: 1px solid black;
-  margin-bottom: 10px;
 }
 
 .details .more-details-header {
