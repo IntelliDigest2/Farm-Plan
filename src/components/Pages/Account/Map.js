@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import { Container } from "react-bootstrap";
-import {
-  MapContainer,
-  TileLayer,
-  Popup,
-  useMap,
-  CircleMarker,
-} from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
+import L from "leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import "react-leaflet-markercluster/dist/styles.min.css";
-import "../Pages.css";
+import "./Map.css";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
@@ -18,12 +13,9 @@ import { DefaultButton } from "../SubComponents/Button";
 
 import { getMapData } from "../../../store/actions/dataActions";
 
-import Geocode from "react-geocode";
-import { Colors } from "../../lib/Colors";
-
 //Map component
 const Map = (props) => {
-  const [location, setLocation] = useState([]);
+  const [locationstate, setLocation] = useState([]);
 
   //Get MapData from firebase
   function fetchData() {
@@ -33,17 +25,15 @@ const Map = (props) => {
     props.getMapData(data);
   }
 
-  //Setup get and Geocode
+  //Get data from firestore
   useEffect(() => {
     if (props.data.length <= 0) fetchData();
-
-    Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
-    Geocode.setLocationType("ROOFTOP");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //handle data from firebase
   useEffect(() => {
+    setLocation([]);
     updateMap();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.data]);
@@ -57,6 +47,7 @@ const Map = (props) => {
       var obj = {
         foodWasteWeight: doc.foodWasteWeight,
         location: doc.location,
+        coords: doc.coords,
         users: 1,
       };
 
@@ -69,42 +60,40 @@ const Map = (props) => {
       }
     });
 
-    //Foreach location, get lat and lng, add all data to location state variable
     locationArray.forEach((doc) => {
-      Geocode.fromAddress(doc.location).then((response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        const foodWasteWeight = doc.foodWasteWeight;
-        const users = doc.users;
-        const location = response.results[0].address_components[0].long_name;
-        setLocation((oldArray) => [
-          ...oldArray,
-          { lat, lng, foodWasteWeight, users, location },
-        ]);
-      });
+      try {
+        var obj = {
+          lat: doc.coords[0],
+          lng: doc.coords[1],
+          location: doc.location,
+          users: doc.users,
+          foodWasteWeight: doc.foodWasteWeight,
+        };
+        setLocation((oldArray) => [...oldArray, obj]);
+      } catch (err) {
+        console.log(err);
+      }
     });
   };
 
   //Marker colours
-  const redColor = { color: "red", fillColor: "red" };
-  const yellowColor = {
-    color: Colors.brandYellow,
-    fillColor: Colors.brandYellow,
-  };
-  const greenColor = { color: Colors.brandGreen, fillColor: Colors.brandGreen };
+  //const large = { color: "#ffffff", fillColor: "#ec7063", fillOpacity: 0.5 };
+  const medium = { color: "#ffffff", fillColor: "#f5b041", fillOpacity: 0.5 };
+  const small = { color: "#ffffff", fillColor: "#58d68d", fillOpacity: 0.5 };
 
-  //Map marker
-  function MyComponent(props) {
-    const map = useMap();
-    map.setMaxBounds(map.getBounds());
+  //Map Marker
+  function MapMarker(props) {
+    //Handle Marker Color based on users
     var color;
-    if (props.foodWasteWeight <= 1000) {
-      color = greenColor;
-    } else if (props.foodWasteWeight <= 10000) {
-      color = yellowColor;
+    if (props.users <= 10) {
+      color = small;
+      // } else if (props.foodWasteWeight <= 100) {
+      //   color = medium;
     } else {
-      color = redColor;
+      color = medium;
     }
 
+    //If only 1 user, or many users
     var _users = "User";
     if (props.users > 1) _users = "Users";
 
@@ -112,14 +101,40 @@ const Map = (props) => {
       <CircleMarker
         center={[props.lat, props.lng]}
         pathOptions={color}
-        radius={15}
+        radius={18}
       >
-        <Popup>
+        <Tooltip>
           {props.location}: {props.users} {_users}
-        </Popup>
+        </Tooltip>
       </CircleMarker>
     );
   }
+
+  //Cluster Marker
+  const createClusterCustomIcon = function (cluster) {
+    var children = cluster.getAllChildMarkers();
+    var sum = 0;
+
+    children.forEach((child) => {
+      sum += child._tooltip.options.children[2];
+    });
+
+    //Color based on no of users
+    var c = " ";
+    if (sum < 10) {
+      c += "small";
+      // } else if (sum < 100) {
+      //   c += "medium";
+    } else {
+      c += "medium";
+    }
+
+    return L.divIcon({
+      html: `<b>${sum}</b>`,
+      className: "marker-cluster-custom" + c,
+      iconSize: L.point(40, 40, true),
+    });
+  };
 
   //Redirect if not logged in
   if (!props.auth.uid) return <Redirect to="/login" />;
@@ -130,18 +145,32 @@ const Map = (props) => {
         className="map-data"
         center={[0, 0]}
         zoom={1.4}
-        maxZoom={12}
         minZoom={1.4}
+        maxZoom={12}
         scrollWheelZoom={true}
+        maxBounds={[
+          [84.865782, -179.632962],
+          [-84.865782, 199.335822],
+        ]}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> IntelliDigest - iTracker'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MarkerClusterGroup>
-          {location.map(
+        <MarkerClusterGroup
+          iconCreateFunction={createClusterCustomIcon}
+          polygonOptions={{
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.5,
+            smoothFactor: 20,
+          }}
+          showCoverageOnHover={true}
+          maxClusterRadius={50}
+        >
+          {locationstate.map(
             ({ lat, lng, foodWasteWeight, location, users }, index) => (
-              <MyComponent
+              <MapMarker
                 lat={lat}
                 lng={lng}
                 foodWasteWeight={foodWasteWeight}

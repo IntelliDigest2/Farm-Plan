@@ -21,6 +21,9 @@ import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { signUp } from "../../../../store/actions/authActions";
 
+import { createMapData } from "../../../../store/actions/dataActions";
+import Geocode from "react-geocode";
+
 const SignUp = (props) => {
   //Stage1
   const [firstName, setFirstName] = useState("");
@@ -73,6 +76,20 @@ const SignUp = (props) => {
       email !== "" &&
       password !== ""
     ) {
+      Geocode.fromAddress(town + " " + country).then((response) => {
+        var upload = {
+          masterCollection: "mapData",
+          uid: props.auth.uid,
+          upload: {
+            location: response.results[0].address_components[0].long_name,
+            coords: [
+              response.results[0].geometry.location.lat,
+              response.results[0].geometry.location.lng,
+            ],
+          },
+        };
+        props.createMapData(upload);
+      });
       props.signUp(data);
     } else {
       console.log("error");
@@ -623,6 +640,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     signUp: (newUser) => dispatch(signUp(newUser)),
+    createMapData: (mapdata) => dispatch(createMapData(mapdata)),
   };
 };
 

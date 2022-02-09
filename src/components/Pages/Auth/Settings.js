@@ -31,6 +31,8 @@ import {
   updateProfile,
   signOut,
 } from "../../../store/actions/authActions";
+import { createMapData } from "../../../store/actions/dataActions";
+import Geocode from "react-geocode";
 
 //The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
 //It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
@@ -74,6 +76,12 @@ function Settings(props) {
       return <Redirect to="/login" />;
     }
   }, [props.auth.uid]);
+
+  //Setup geocode for getting coords when changing location
+  useEffect(() => {
+    Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
+    Geocode.setLocationType("ROOFTOP");
+  }, []);
 
   function HandleEmail() {
     var data = {
@@ -120,6 +128,21 @@ function Settings(props) {
   }
 
   function HandleLocation() {
+    Geocode.fromAddress(town + " " + country).then((response) => {
+      var upload = {
+        masterCollection: "mapData",
+        uid: props.auth.uid,
+        upload: {
+          location: response.results[0].address_components[0].long_name,
+          coords: [
+            response.results[0].geometry.location.lat,
+            response.results[0].geometry.location.lng,
+          ],
+        },
+      };
+      props.createMapData(upload);
+    });
+
     var data = {
       uid: props.auth.uid,
       profile: {
@@ -553,6 +576,7 @@ const mapDispatchToProps = (dispatch) => {
     updateEmail: (creds) => dispatch(updateEmail(creds)),
     updateProfile: (users) => dispatch(updateProfile(users)),
     signOut: () => dispatch(signOut()),
+    createMapData: (product) => dispatch(createMapData(product)),
   };
 };
 
