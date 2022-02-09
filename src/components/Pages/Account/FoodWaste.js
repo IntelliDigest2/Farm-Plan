@@ -170,7 +170,6 @@ class FoodWaste extends Component {
       uid: this.props.auth.uid,
       upload: {
         foodWasteWeight: this.state.foodWasteWeight * wm,
-        location: this.props.profile.city,
       },
     };
 
