@@ -76,20 +76,6 @@ const SignUp = (props) => {
       email !== "" &&
       password !== ""
     ) {
-      Geocode.fromAddress(town + " " + country).then((response) => {
-        var upload = {
-          masterCollection: "mapData",
-          uid: props.auth.uid,
-          upload: {
-            location: response.results[0].address_components[0].long_name,
-            coords: [
-              response.results[0].geometry.location.lat,
-              response.results[0].geometry.location.lng,
-            ],
-          },
-        };
-        props.createMapData(upload);
-      });
       props.signUp(data);
     } else {
       console.log("error");
@@ -99,9 +85,34 @@ const SignUp = (props) => {
   const { auth, authError } = props;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  //make sure the user isn't already logged in
+  //Setup geocode for getting coords when changing location
   useEffect(() => {
-    if (props.auth.uid) setIsLoggedIn(true);
+    Geocode.setApiKey("AIzaSyA7vyoyDlw8wHqveKrfkkeku_46bdR_aPk");
+    Geocode.setLocationType("ROOFTOP");
+  }, []);
+
+  //make sure the user isn't already logged in and if they are a new account, createMapData document for them.
+  useEffect(() => {
+    if (props.auth.uid) {
+      setIsLoggedIn(true);
+      if (town !== "" && country !== "") {
+        Geocode.fromAddress(town + " " + country).then((response) => {
+          var upload = {
+            masterCollection: "mapData",
+            uid: props.auth.uid,
+            upload: {
+              foodWasteWeight: 0,
+              location: response.results[0].address_components[0].long_name,
+              coords: [
+                response.results[0].geometry.location.lat,
+                response.results[0].geometry.location.lng,
+              ],
+            },
+          };
+          props.createMapData(upload);
+        });
+      }
+    }
   }, [props.auth.uid]);
 
   //rerender every time the stage changes
