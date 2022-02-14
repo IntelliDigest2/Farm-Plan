@@ -1,5 +1,6 @@
 import React from "react";
-import { DefaultButton, SubButton } from "../SubComponents/Button";
+import { DefaultButton } from "../SubComponents/Button";
+import { PageWrap } from "../SubComponents/PageWrap";
 import "./UserAccount.css";
 
 import positivePlanet from "../../../images/fr_positive-planet.jpg";
@@ -7,7 +8,7 @@ import pTSNotebook from "../../../images/pts_plate_notebook.png";
 import pTSBanner from "../../../images/pts-banner.png";
 import sTFCFoodNetwork from "../../../images/stfcfoodnetwork.png";
 
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import Countdown from "react-countdown";
 
 function PTSCountdown() {
@@ -22,12 +23,16 @@ function PTSCountdown() {
 function PlanToSave() {
   return (
     <>
-      <Container fluid className="web-center">
-        <img className="large-img" src={pTSBanner} alt="Plan To Save" />
+      <PageWrap header="The Plan to Save Campaign" goTo="/account">
+        <img
+          className="large-img"
+          src={pTSBanner}
+          alt="Plan to Save promotional banner"
+        />
         <DefaultButton
           styling="green"
           goTo="/reserve-items"
-          text="Plan To Save"
+          text="Plan your items here!"
         />
         <div className="disclaimer">
           <p>
@@ -35,11 +40,9 @@ function PlanToSave() {
             campaign, running from October 16th 2021 to January 31st 2021. Click
             'Plan to Save' to express interest in reserving food items from
             local sources, we have extended to campaign to June 2022 with sales
-            commencing in January 2023. To go to your regular Account page,
-            click the 'My Account' button below.
+            commencing in January 2023.
           </p>
         </div>
-        <SubButton styling="blue" goTo="/account" text="My Account" />
         <PTSCountdown />
         <div className="container">
           <img className="large-img" src={pTSNotebook} alt="" />
@@ -77,7 +80,7 @@ function PlanToSave() {
             />
           </Col>
         </Row>
-      </Container>
+      </PageWrap>
     </>
   );
 }

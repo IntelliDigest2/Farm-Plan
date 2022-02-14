@@ -5,7 +5,75 @@
   /* margin-top: 4rem; */
 }
 
+.logo {
+  height: auto;
+  position: static;
+  overflow: hidden;
+  border-radius: 25px;
+  margin: auto;
+}
+
 .center {
   text-align: center;
   flex-direction: row;
+}
+
+.mobile-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: white;
+  border-radius: 25px;
+  padding: 2%;
+}
+
+/* Phones */
+@media screen and (max-width: 600px) {
+  .mobile-style {
+    max-width: 100%;
+  }
+  .logo {
+    max-width: 100%;
+  }
+}
+
+/* Portrait Tablet and Large Phones */
+@media screen and (min-width: 600px) {
+  .mobile-style {
+    max-width: 100%;
+  }
+  .logo {
+    max-width: 100%;
+  }
+}
+
+/* Landscape Tablet */
+@media screen and (min-width: 768px) {
+  .mobile-style {
+    max-width: 90%;
+  }
+  .logo {
+    max-width: 90%;
+  }
+}
+
+/* Laptop/Desktop */
+@media screen and (min-width: 992px) {
+  .mobile-style {
+    max-width: 70%;
+  }
+  .logo {
+    max-width: 70%;
+  }
+}
+
+/* Large Laptop/Desktop */
+@media screen and (min-width: 1200px) {
+  .mobile-style {
+    max-width: 50%;
+  }
+  .logo {
+    max-width: 50%;
+  }
 }

@@ -8,10 +8,9 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 function Contact(props) {
+  const { profile } = props;
   const [email, setEmail] = useState(props.auth.email);
-  const [name, setName] = useState(
-    props.profile.firstName + " " + props.profile.lastName
-  );
+  const [name, setName] = useState(profile.firstName + " " + profile.lastName);
 
   function SendEmail(e) {
     e.preventDefault();
@@ -119,10 +118,8 @@ function Contact(props) {
         <h1 className="more-details-header">More Contact Details</h1>
       </div>
 
-      <Row className="mr-0 ml-0 pt-1 mb-5 pb-5 justify-content-top align-items-top text-center details">
-        <Col xs={12} lg={3}></Col>
-
-        <Col xs={12} lg={2}>
+      <Row>
+        <Col>
           <CardStyle>
             <Card onClick={() => OpenTel()}>
               <Card.Body>
@@ -135,7 +132,7 @@ function Contact(props) {
             </Card>
           </CardStyle>
         </Col>
-        <Col xs={12} lg={2}>
+        <Col>
           <CardStyle>
             <Card onClick={() => OpenEmail()}>
               <Card.Body>
@@ -148,7 +145,7 @@ function Contact(props) {
             </Card>
           </CardStyle>
         </Col>
-        <Col xs={12} lg={2}>
+        <Col>
           <CardStyle>
             <Card>
               <Card.Body>
@@ -164,7 +161,6 @@ function Contact(props) {
             </Card>
           </CardStyle>
         </Col>
-        <Col xs={12} lg={3}></Col>
       </Row>
     </PageWrap>
   );
@@ -176,7 +172,6 @@ const CardStyle = styled.div`
     color: rgb(59, 59, 59);
     background-color: rgb(238, 238, 238);
     border: 1px solid rgb(77, 109, 77);
-    width:
 
     &:hover {
       background-color: rgb(207, 207, 207);

@@ -22,7 +22,7 @@ function LogInMob(props) {
     props.signIn(data);
   }
 
-  const { auth, authError } = props;
+  const { authError } = props;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   //make sure the user isn't already logged in
@@ -63,19 +63,17 @@ function LogInMob(props) {
         </div>
       </Form>
       <div className="auth-error">{authError ? <p> {authError}</p> : null}</div>
-      <div>
-        <Button
-          style={{ fontWeight: "700" }}
-          variant="default"
-          className="signup-confirm"
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          Confirm
-        </Button>
-      </div>
+      <Button
+        style={{ fontWeight: "700" }}
+        variant="default"
+        className="signup-confirm"
+        onClick={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        Confirm
+      </Button>
     </Title>
   );
 }

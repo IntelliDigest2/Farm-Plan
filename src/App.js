@@ -10,9 +10,9 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //* Pages
-import NavBar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import Home from "./components/Pages/Home";
+// import NavBar from "./components/Navbar/Navbar";
+// import Footer from "./components/Footer/Footer";
+// import Home from "./components/Pages/Home";
 import About from "./components/Pages/About";
 import Login from "./components/Pages/Auth/Login";
 import LogInMob from "./components/Pages/Auth/Mobile/LogInMob";
@@ -110,7 +110,7 @@ const App = (props) => {
     <React.Fragment>
       <Notifications position="top-right" />
       <Router>
-        <NavBar />
+        {/* <NavBar /> */}
         <Toast
           onClose={() => setShow(false)}
           show={show}
@@ -159,7 +159,7 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
-            <Route path="/home" exact component={Home} />
+            {/* <Route path="/home" exact component={Home} /> */}
             <Route path="/about" exact component={About} />
             <Route path="/login" exact component={Login} />
             <Route path="/login-mob" exact component={LogInMob} />
@@ -224,7 +224,7 @@ const App = (props) => {
             <Route component={NotFound} />
           </Switch>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </React.Fragment>
   );

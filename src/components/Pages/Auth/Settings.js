@@ -134,6 +134,7 @@ function Settings(props) {
         masterCollection: "mapData",
         uid: props.auth.uid,
         upload: {
+          foodWasteWeight: 0,
           location: response.results[0].address_components[0].long_name,
           coords: [
             response.results[0].geometry.location.lat,
@@ -438,7 +439,7 @@ const ProfileList = (props) => {
         </ListItemButton>
       </ListItem>
       <Divider variant="middle" />
-      <LogOutPopUp handleSignOut={props.HandleSignOut} to="/login" />
+      <LogOutPopUp handleSignOut={props.HandleSignOut} to="/landing" />
     </>
   );
 };
