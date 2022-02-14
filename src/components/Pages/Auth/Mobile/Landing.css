@@ -1,12 +1,7 @@
 .landing {
   position: absolute;
-  float: center;
   overflow: hidden;
   text-align: center;
-  width: 100%;
-  height: 100%;
-  left: 0px;
-  top: -8px;
   background: center fixed;
   background-size: cover;
   background-origin: content-box;
@@ -15,12 +10,8 @@
 
 .title {
   position: absolute;
-  width: 75%;
-  margin-left: 12.5%;
   text-align: center;
   justify-content: center;
-  float: center;
-  top: 8%;
 }
 
 .title h1 {
@@ -51,15 +42,105 @@
   font-weight: 400;
   font-size: 1.2rem;
   line-height: 25px;
-
   color: #0c0847;
 }
 
 .buttons {
   position: absolute;
-  width: 100%;
   text-align: center;
   justify-content: center;
-  float: center;
-  top: 75%;
+}
+
+/* Phones */
+@media screen and (max-width: 600px) {
+  .title {
+    width: 100%;
+    top: 5%;
+  }
+  .landing {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: -8px;
+  }
+  .buttons {
+    width: 100%;
+    top: 78%;
+  }
+}
+
+/* Portrait Tablet and Large Phones */
+@media screen and (min-width: 600px) {
+  .title {
+    width: 90%;
+    margin-left: 5%;
+    top: 3%;
+  }
+  .landing {
+    width: 90%;
+    height: 100%;
+    left: 5%;
+  }
+  .buttons {
+    width: 40%;
+    left: 30%;
+    top: 75%;
+  }
+}
+
+/* Landscape Tablet */
+@media screen and (min-width: 768px) {
+  .title {
+    width: 75%;
+    margin-left: 12.5%;
+    top: 3%;
+  }
+  .landing {
+    width: 80%;
+    height: 100%;
+    left: 10%;
+  }
+  .buttons {
+    width: 40%;
+    left: 30%;
+    top: 75%;
+  }
+}
+
+/* Laptop/Desktop */
+@media screen and (min-width: 992px) {
+  .title {
+    width: 75%;
+    margin-left: 12.5%;
+    top: 1%;
+  }
+  .landing {
+    width: 50%;
+    height: 100%;
+    left: 25%;
+  }
+  .buttons {
+    width: 40%;
+    left: 30%;
+    top: 75%;
+  }
+}
+
+/* Large Laptop/Desktop */
+@media screen and (min-width: 1200px) {
+  .title {
+    width: 75%;
+    margin-left: 12.5%;
+    top: 5%;
+  }
+  .landing {
+    width: 40%;
+    height: 100%;
+    left: 30%;
+  }
+  .buttons {
+    width: 40%;
+    left: 30%;
+    top: 75%;
+  }
 }

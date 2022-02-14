@@ -438,7 +438,7 @@ const ProfileList = (props) => {
         </ListItemButton>
       </ListItem>
       <Divider variant="middle" />
-      <LogOutPopUp handleSignOut={props.HandleSignOut} to="/login" />
+      <LogOutPopUp handleSignOut={props.HandleSignOut} to="/landing" />
     </>
   );
 };
