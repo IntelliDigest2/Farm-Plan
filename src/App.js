@@ -80,7 +80,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (props.auth.uid) setIsLoggedIn(true);
-    if (!props.auth.uid) return <Redirect to="/login" />;
+    if (!props.auth.uid) return <Redirect to="/login-mob" />;
   }, [props.auth.uid]);
 
   //Google Cloud Messaging code
