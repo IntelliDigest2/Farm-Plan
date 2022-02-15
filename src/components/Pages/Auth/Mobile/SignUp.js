@@ -37,13 +37,6 @@ const SignUp = (props) => {
   const [region, setRegion] = useState("");
   const [buildingFunction, setBuildingFunction] = useState("");
 
-  //Stage3
-  const [sixteenPlus, setSixteenPlus] = useState(Boolean);
-  const [arrangement, setArrangement] = useState("");
-  const [buildingType, setBuildingType] = useState("");
-  const [shopAt, setShopAt] = useState("");
-  const [shopPerWeek, setShopPerWeek] = useState("");
-
   const [stage, setStage] = useState(1);
 
   function handleSubmit() {
@@ -53,21 +46,10 @@ const SignUp = (props) => {
       initials: firstName[0] + lastName[0],
       email: email,
       password: password,
-      postcode: "",
-      address: "",
       function: buildingFunction,
-      organisation: "",
-      schoolType: "",
-      department: "",
-      uniRole: "",
       city: town,
       country: country,
       region: region,
-      sixteenPlus: sixteenPlus,
-      arrangement: arrangement,
-      buildingType: buildingType,
-      shopAt: shopAt,
-      shopPerWeek: shopPerWeek,
       type: "user",
     };
     if (
@@ -82,7 +64,7 @@ const SignUp = (props) => {
     }
   }
 
-  const { auth, authError } = props;
+  const { authError } = props;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   //Setup geocode for getting coords when changing location
@@ -172,29 +154,10 @@ const SignUp = (props) => {
     case 3:
       return (
         <Title subtitle="Sign Up">
-          <div className="signup-center subtitles col">
-            <p>
-              <b>We would like to get to know more about you.</b>
-            </p>
-            <p>(You can change these settings later)</p>
-          </div>
-          <Stage3
-            setStage={setStage}
-            setSixteenPlus={setSixteenPlus}
-            setArrangement={setArrangement}
-            setBuildingType={setBuildingType}
-            setShopAt={setShopAt}
-            setShopPerWeek={setShopPerWeek}
-          />
-        </Title>
-      );
-    case 4:
-      return (
-        <Title subtitle="Sign Up">
           <div className="signup-center subtitles">
             <h5>Confirmation</h5>
           </div>
-          <Stage4
+          <Stage3
             setStage={setStage}
             firstName={firstName}
             lastName={lastName}
@@ -415,167 +378,6 @@ const Stage2 = (props) => {
 };
 
 const Stage3 = (props) => {
-  return (
-    <div className="signup-buffer">
-      {/*<div className="center">
-        <Button
-        variant="default"
-        className="signup-skip"
-        onClick={(e) => {
-          e.preventDefault();
-          //skip to confirm
-          props.setStage(4);
-        }}
-        >
-        Skip
-        </Button>
-      </div> */}
-      <FormStyle>
-        <Form>
-          <div key="inline-radio" className="mb-3">
-            <Form.Group>
-              <Form.Label>Are you 16 years old or above?</Form.Label>
-              <div className="row">
-                <Form.Check
-                  type="radio"
-                  inline
-                  label="Yes"
-                  name="16 or above"
-                  id="yes"
-                  onClick={(e) => props.setSixteenPlus(true)}
-                />
-                <Form.Check
-                  type="radio"
-                  inline
-                  label="No"
-                  name="16 or above"
-                  id="no"
-                  onClick={(e) => props.setSixteenPlus(false)}
-                />
-              </div>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>What is your current living arrangement?</Form.Label>
-              <Form.Check
-                label="I live alone"
-                name="living arrangement"
-                type="radio"
-                id="alone"
-                onClick={(e) => props.setArrangement(e.target.id)}
-              />
-              <Form.Check
-                label="I live with family"
-                name="living arrangement"
-                type="radio"
-                id="family"
-                onClick={(e) => props.setArrangement(e.target.id)}
-              />
-              <Form.Check
-                label="Mixed residence"
-                name="living arrangement"
-                type="radio"
-                id="mixed"
-                onClick={(e) => props.setArrangement(e.target.id)}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>What is your building type?</Form.Label>
-              <div className="row">
-                <Form.Check
-                  inline
-                  label="Flat"
-                  name="building type"
-                  type="radio"
-                  id="flat"
-                  onClick={(e) => props.setBuildingType(e.target.id)}
-                />
-                <Form.Check
-                  inline
-                  label="House"
-                  name="building type"
-                  type="radio"
-                  id="house"
-                  onClick={(e) => props.setBuildingType(e.target.id)}
-                />
-                <Form.Check
-                  inline
-                  label="Other"
-                  name="building type"
-                  type="radio"
-                  id="other"
-                  onClick={(e) => props.setBuildingType(e.target.id)}
-                />
-              </div>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>
-                Where do you go shopping for your groceries?
-              </Form.Label>
-              <Form.Control
-                placeholder=""
-                onChange={(e) => props.setShopAt(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>
-                How often do you go shopping for groceries per week?
-              </Form.Label>
-              <Form.Check
-                label="1 or 2 visits"
-                name="how often"
-                type="radio"
-                id="1 or 2 visits"
-                onClick={(e) => props.setShopPerWeek(e.target.id)}
-              />
-              <Form.Check
-                label="3 or more visits"
-                name="how often"
-                type="radio"
-                id="3 or more visits"
-                onClick={(e) => props.setShopPerWeek(e.target.id)}
-              />
-              <Form.Check
-                label="Weekends only"
-                name="how often"
-                type="radio"
-                id="Weekends only"
-                onClick={(e) => props.setShopPerWeek(e.target.id)}
-              />
-            </Form.Group>
-          </div>
-        </Form>
-      </FormStyle>
-      <div className="signup-center">
-        <div className="row">
-          <Button
-            variant="default"
-            className="signup-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              //Previous Stage
-              props.setStage(2);
-            }}
-          >
-            Back
-          </Button>
-          <Button
-            variant="default"
-            className="signup-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              //Next Stage
-              props.setStage(4);
-            }}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const Stage4 = (props) => {
   return (
     <div>
       <List>
