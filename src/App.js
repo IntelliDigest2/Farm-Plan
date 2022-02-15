@@ -155,7 +155,7 @@ const App = (props) => {
           </MobileView>
 
           <BrowserView>
-            <Route exact path="/" render={() => <Redirect to="/home" />} />
+            <Route exact path="/" render={() => <Redirect to="/landing" />} />
           </BrowserView>
 
           <Switch>
