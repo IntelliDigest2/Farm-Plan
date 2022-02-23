@@ -7,7 +7,7 @@ import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "../SubComponents/Profile";
 import "../Pages.css";
-import { SubButton } from "../SubComponents/Button";
+import { PageWrapMini } from "../SubComponents/PageWrap";
 import blueberries from "../../../images/Blueberries.png";
 
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
@@ -65,34 +65,36 @@ const NewAccount = (props) => {
   }
 
   return (
-    <Container className="web-center">
-      <Profile profile={props.profile} type={type} />
-      <div className="tabs">
-        <TabContext value={value}>
-          <TabList
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: Colors.brandGreen,
-              },
-            }}
-            variant="standard"
-            onChange={handleChange}
-            centered
-          >
-            <Tab disableRipple label="Food" />
-            <Tab disableRipple label="Environment" />
-            <Tab disableRipple label="Health" />
-            <Tab disableRipple label="Sustainability" />
-          </TabList>
-          <AccountType
-            type={type}
-            value={value}
-            theme={theme}
-            handleChangeIndex={handleChangeIndex}
-          />
-        </TabContext>
-      </div>
-    </Container>
+    <PageWrapMini>
+      <Container className="web-center">
+        <Profile profile={props.profile} type={type} />
+        <div className="tabs">
+          <TabContext value={value}>
+            <TabList
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: Colors.brandGreen,
+                },
+              }}
+              variant="standard"
+              onChange={handleChange}
+              centered
+            >
+              <Tab disableRipple label="Food" />
+              <Tab disableRipple label="Environment" />
+              <Tab disableRipple label="Health" />
+              <Tab disableRipple label="Sustainability" />
+            </TabList>
+            <AccountType
+              type={type}
+              value={value}
+              theme={theme}
+              handleChangeIndex={handleChangeIndex}
+            />
+          </TabContext>
+        </div>
+      </Container>
+    </PageWrapMini>
   );
 };
 

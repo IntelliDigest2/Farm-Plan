@@ -28,6 +28,29 @@
   padding: 2%;
 }
 
+.account-style {
+  margin-top: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: white;
+  border-radius: 25px;
+  padding: 2%;
+}
+
+.modal {
+  overflow: scroll;
+}
+.modal h4 {
+  padding: 5% 0 2% 0;
+  font-weight: 700;
+  color: #0c0847;
+}
+.modal ol {
+  padding-left: 5%;
+}
+
 /* Phones */
 @media screen and (max-width: 600px) {
   .mobile-style {

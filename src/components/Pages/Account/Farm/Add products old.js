@@ -1,18 +1,14 @@
-import React, { Component } from "react";
-import {
-  Form,
-  Button,
-  Card,
-  InputGroup,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import React, { Component, useState } from "react";
+
+import { PageWrap } from "../../SubComponents/PageWrap";
+import { Dropdown } from "../../SubComponents/Dropdown";
+
+import { Form, Button, Card, InputGroup } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
   startData,
   createFoodSurplusData,
-} from "../../../store/actions/dataActions";
-//import { Redirect } from "react-router-dom";
+} from "../../../../store/actions/dataActions";
 import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -20,36 +16,26 @@ import styled from "styled-components";
 // import { getFirebase} from 'react-redux-firebase'
 // import DisplayError from '../pages/DisplayError'
 import moment from "moment";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import {
   BrowserView,
   MobileView,
   isMobile,
   isBrowser,
 } from "react-device-detect";
-import { fs } from "../../../config/fbConfig";
+import { fs } from "../../../../config/fbConfig";
 import { Divider } from "@material-ui/core";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { Autocomplete } from "@material-ui/lab";
-import { TextField, Checkbox } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import addNotification from "react-push-notification";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
-// import {Chart} from "react-google-charts"
+const time = moment().format("MMMM Do YYYY, h:mm:ss a");
 
-//const time = moment().format("MMMM Do YYYY, h:mm:ss a");
+const dailyTabTime = moment().format("ddd MMM Do YYYY");
 
-//const dailyTabTime = moment().format("ddd MMM Do YYYY");
-
-// const chartSubmissionDay = moment().format("ddd")
-// const chartSubmissionWeek = moment().format("W")
-// const chartSubmissionMonth = moment().format("MMM")
-// const chartSubmissionDate = moment().format("Do")
-// const chartSubmissionYear = moment().format("YYYY")
-// const chartSubmissionFullDate = moment().format("ddd MMM Do YYYY")
-
-class AddProducts extends Component {
+class AddProductsFarm extends Component {
   state = {
     // name: this.props.user.firstName,
     // email: this.props.auth.email,
@@ -57,10 +43,9 @@ class AddProducts extends Component {
     // filteredData: [],
 
     formWidth: "",
-    formHeight: "",
     dropdownWidth: "",
 
-    submissionType: "Surplus",
+    submissionType: "Surplus Farm",
 
     foodName: "",
     foodCategory: "Select Category",
@@ -87,7 +72,7 @@ class AddProducts extends Component {
     ghg: 0,
 
     foodSurplusCost: 0,
-    currency: "Select Currency *",
+    currency: "GBP (£)",
     currencyMultiplier: 0,
 
     notes: "n/a",
@@ -138,7 +123,6 @@ class AddProducts extends Component {
       },
     ],
     myProducts: [],
-    foodOptions: [],
   };
 
   clearEFWForm = () => {
@@ -153,14 +137,13 @@ class AddProducts extends Component {
       expiryDate: "",
       ghg: 0,
       foodSurplusCost: 0,
-      currency: "Select Currency *",
+      currency: "GBP (£)",
       currencyMultiplier: 0,
       carbsContent: 0,
       proteinContent: 0,
       fibreContent: 0,
       fatContent: 0,
       showComposition: false,
-      //formHeight: "885px",
     });
   };
 
@@ -177,10 +160,6 @@ class AddProducts extends Component {
     });
   };
 
-  // changeMeal(text){
-  //     this.setState({meal: text})
-  // }
-
   changeCurrency(text) {
     this.setState({ currency: text });
   }
@@ -194,29 +173,7 @@ class AddProducts extends Component {
   }
 
   handleChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  handleFoodApi = async (e) => {
-    const resp = await fetch("https://web-wrggqo5tiq-lz.a.run.app/completion", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors",
-      headers: {
-        //'Content-Type': 'application/json',
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `food=${e.target.value}`,
-    });
-    //console.log(resp);
-    const data = await resp.json();
-    //console.table(data);
-    //this.foodOptions = data;
-    this.state.foodOptions = data;
-    //console.log(this.foodOptions);
-
-    //          .then((res) => console.log(res.items));
+    // console.log(e);
     this.setState({
       [e.target.id]: e.target.value,
     });
@@ -299,12 +256,6 @@ class AddProducts extends Component {
     this.props.createFoodSurplusData(this.state);
   };
 
-  // handleSubmitTest = (e) => {
-  //     this.setState( (prevState) => ({
-  //         myProducts: prevState.myProducts.concat({foodName: this.state.foodName, category: this.state.foodCategory, weight: this.state.foodSurplusWeight, wtUnit: this.state.weightType, price: this.state.price, postcode: this.state.postcode, expiryDate: this.state.expiryDate})
-  //     }))
-  // }
-
   fetchMyProductsData = async () => {
     fs.collection("data")
       .doc(this.state.uid)
@@ -326,9 +277,7 @@ class AddProducts extends Component {
           var pr = doc.data().PRICE;
           var pc = doc.data().POSTCODE;
 
-          if (st === "Surplus") {
-            // console.log(newExp)
-
+          if (st === "Surplus Farm") {
             this.setState((prevState) => ({
               myProducts: prevState.myProducts.concat({
                 foodName: name,
@@ -346,13 +295,6 @@ class AddProducts extends Component {
       .catch((error) => console.log(error));
   };
 
-  // changeCharTest(date){
-  //     // var parts = ["a", "i", "d", "a", "n"]
-  //     var newString = date.split('-').join('/')
-
-  //     console.log(newString)
-  // }
-
   componentDidMount() {
     this.fetchMyProductsData();
 
@@ -361,21 +303,17 @@ class AddProducts extends Component {
     if (isMobile) {
       this.setState({
         formWidth: "90vw",
-        //formHeight: "885px",
         dropdownWidth: "241px",
       });
     } else if (isBrowser) {
       this.setState({
         formWidth: "783px",
-        //formHeight: "885px",
         dropdownWidth: "610px",
       });
     }
   }
 
   render() {
-    const { data, auth } = this.props;
-
     return (
       <div
         // className="container"
@@ -390,7 +328,7 @@ class AddProducts extends Component {
               display: "flex",
             }}
           >
-            Upload Food
+            Upload Food (Farm)
           </h6>
         </MobileView>
         <BrowserView>
@@ -402,7 +340,7 @@ class AddProducts extends Component {
               display: "flex",
             }}
           >
-            Upload Food
+            Upload Food (Farm)
           </h4>
         </BrowserView>
 
@@ -428,30 +366,6 @@ class AddProducts extends Component {
           </Button>
         </div>
 
-        {/* {filteredData.length === 0 ? <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
-        <Col className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2" xs={12}></Col>
-        <Col className="mt-5 pt-5" xs={12}></Col>
-          <Col className="" xs={12} lg={4}></Col>
-                  <Col className=" justify-content-center align-items-center d-block mt-5 pt-5 mt-lg-0 pt-lg-0" xs={12} lg={4}>
-
-            <CardStyle>
-                <Card>
-                    <Card.Body>
-                   <Card.Text className="text-center">
-                   <h1 style={{fontSize: "33px",fontWeight: "600", color: "rgb(55, 85, 54)",}}>Start tracking your food waste and food surplus now</h1>
-                    <button onClick={this.pressButton} style={{outline: 'none', border: 'none'}}>Start now</button>
-                   </Card.Text> 
-                  </Card.Body>
-                </Card>
-            </CardStyle>
-      
-                  </Col>
-                  <Col className="mt-5 pt-5" xs={12} lg={4}></Col>
-                  <Col className="mt-5 pt-5" xs={12}></Col>
-            <Col className="mt-5 pt-5" xs={12}></Col>
-              </Row> 
-              :  */}
-
         <div
           style={{
             display: "flex",
@@ -469,7 +383,6 @@ class AddProducts extends Component {
               // width: "90%",
               width: this.state.formWidth,
               // height: "100%"
-              //height: this.state.formHeight,
               marginBottom: "10vh",
               backgroundColor: "#aab41e",
             }}
@@ -484,22 +397,22 @@ class AddProducts extends Component {
               </h5>
 
               <div>
-                <div style={{ padding: "0 10% 0 10%" }}>Food Name *</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Food Name</div>
                 <Form.Group style={{ padding: "0 10% 0 10%", display: "flex" }}>
                   <Autocomplete
                     // multiple
                     id="foodName"
-                    options={this.state.foodOptions}
-                    getOptionLabel={(option) => option.name}
-                    filterOptions={(x) => x}
+                    options={foodOptions.map((option) => option.title)}
                     freeSolo
                     // limitTags={1}
+                    // getOptionLabel={(option) => option.name}
                     style={{ width: "100%", backgroundColor: "white" }}
                     size="small"
-                    onInputChange={(e) => this.handleFoodApi(e)}
-                    onChange={(e) =>
-                      this.setState({ foodName: e.target.textContent })
-                    }
+                    onChange={(e) => {
+                      this.setState({ foodName: e.target.textContent });
+                      console.log(this.state.foodName);
+                    }}
+                    onInputChange={(e) => this.handleChange(e)}
                     // renderTags={(value, getTagProps) =>
                     //     value.map((option, index) => (
                     //       <Chip variant="outlined" label={option} {...getTagProps({ index })} />
@@ -512,7 +425,7 @@ class AddProducts extends Component {
                   />
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Food Category *</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Food Category</div>
                 <Form.Group
                   style={{
                     padding: "0 10% 0 10%",
@@ -620,7 +533,7 @@ class AddProducts extends Component {
                   </InputGroup>
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Postcode *</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Postcode</div>
                 <Form.Group
                   className="form-layout"
                   style={{
@@ -649,7 +562,6 @@ class AddProducts extends Component {
                         onClick={() =>
                           this.setState({
                             showComposition: !this.state.showComposition,
-                            //formHeight: "885px",
                           })
                         }
                         style={{ padding: "0 10% 0 10%", fontWeight: "bold" }}
@@ -661,7 +573,6 @@ class AddProducts extends Component {
                         onClick={() =>
                           this.setState({
                             showComposition: !this.state.showComposition,
-                            //formHeight: "1245px",
                           })
                         }
                         style={{ padding: "0 10% 0 10%", fontWeight: "bold" }}
@@ -670,22 +581,6 @@ class AddProducts extends Component {
                       </div>
                     )}
                   </>
-
-                  {/* <Modal show={this.state.showComposition} onHide={() => this.setState({showComposition: !this.state.showComposition})}>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Food Waste Composition Guide</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <p>For help with filling out this section of the form as accurately as possible,
-                                        consult the 'About' page for further info on Food Waste, Macronutrients, etc.
-                                    </p>
-                                    <p>Note: make sure your entries total to 100</p>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={() => this.setState({showComposition: false})}>Close</Button>
-                                </Modal.Footer>
-                            </Modal> */}
-
                   <>
                     {" "}
                     {this.state.showComposition ? (
@@ -907,7 +802,7 @@ class AddProducts extends Component {
                   )}
                 </>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Weight / Volume *</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Weight / Volume</div>
                 <Form.Group
                   className="form-layout"
                   style={{
@@ -1023,8 +918,7 @@ class AddProducts extends Component {
                   </InputGroup>
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Upload Type *</div>
-
+                <div style={{ padding: "0 10% 0 10%" }}>Upload Type</div>
                 <Form.Group
                   style={{
                     padding: "0 10% 0 10%",
@@ -1083,7 +977,7 @@ class AddProducts extends Component {
                   </InputGroup>
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Price *</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Price</div>
                 <Form.Group
                   className="form-layout"
                   style={{
@@ -1111,7 +1005,7 @@ class AddProducts extends Component {
                   </InputGroup>
                 </Form.Group>
 
-                <div style={{ padding: "0 10% 0 10%" }}>Expiry Date *</div>
+                <div style={{ padding: "0 10% 0 10%" }}>Expiry Date</div>
                 <Form.Group
                   className="form-layout"
                   style={{
@@ -1131,19 +1025,6 @@ class AddProducts extends Component {
                     />
                   </InputGroup>
                 </Form.Group>
-
-                {/* <div style={{padding: "0 10% 0 10%"}}>Expiry Date</div>
-                        <Form.Group className="form-layout"
-                            style={{
-                                padding: "0 10% 0 10%",
-                                display: "flex",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                        <InputGroup>
-                            <Form.Control id="expiryDate" placeholder="DD/MM/YYYY" type="date" onChange={(e) => this.handleChange(e)} width="100%" value={this.state.expiryDate} />
-                        </InputGroup>
-                        </Form.Group> */}
 
                 <div style={{ padding: "0 10% 0 10%" }}>GHG</div>
                 <Form.Group
@@ -1176,6 +1057,10 @@ class AddProducts extends Component {
                 <div style={{ padding: "0 10% 0 10%" }}>Cost</div>
                 <Form.Group style={{ padding: "0 10% 0 10%", display: "flex" }}>
                   <InputGroup>
+                    {/* <InputGroup.Prepend>
+                                <InputGroup.Text>£</InputGroup.Text>
+                            </InputGroup.Prepend> */}
+
                     <DropdownButton
                       as={InputGroup.Prepend}
                       variant="outline-secondary"
@@ -1254,7 +1139,7 @@ class AddProducts extends Component {
                   this.state.producedLocally !== "Select" &&
                   this.state.price !== 0.0 &&
                   this.state.expiryDate !== "" &&
-                  this.state.currency !== "Select Currency *" ? (
+                  this.state.currency !== "Select Currency" ? (
                     <Button
                       style={{
                         margin: "0 10% 0 10%",
@@ -1371,7 +1256,7 @@ class AddProducts extends Component {
                           className="exp-date"
                           style={{
                             marginLeft: "80%",
-                            height: "60px",
+                            height: "20px",
                             width: "15%",
                             marginTop: "-11%",
                           }}
@@ -1379,7 +1264,19 @@ class AddProducts extends Component {
                           Price: £{product.price}
                         </div>
 
-                        {/* <Button style={{marginLeft: "80%", width: "15%", marginTop: "1.5%", backgroundColor: "rgb(122, 174, 233)", borderColor: "black", borderWidth: "2px", borderRadius: 12}}>Buy</Button> */}
+                        <Button
+                          style={{
+                            marginLeft: "80%",
+                            width: "15%",
+                            marginTop: "1.5%",
+                            backgroundColor: "rgb(122, 174, 233)",
+                            borderColor: "black",
+                            borderWidth: "2px",
+                            borderRadius: 12,
+                          }}
+                        >
+                          Buy
+                        </Button>
                       </div>
                     </Card>
                   </BrowserView>
@@ -1453,7 +1350,19 @@ class AddProducts extends Component {
                           Price: £{product.price}
                         </div>
 
-                        {/* <Button style={{marginLeft: "72.5%", width: "25%", marginTop: "1.5%", backgroundColor: "rgb(122, 174, 233)", borderColor: "black", borderWidth: "2px", borderRadius: 12}}>Buy</Button> */}
+                        <Button
+                          style={{
+                            marginLeft: "72.5%",
+                            width: "25%",
+                            marginTop: "1.5%",
+                            backgroundColor: "rgb(122, 174, 233)",
+                            borderColor: "black",
+                            borderWidth: "2px",
+                            borderRadius: 12,
+                          }}
+                        >
+                          Buy
+                        </Button>
                       </div>
                     </Card>
                   </MobileView>
@@ -1467,30 +1376,30 @@ class AddProducts extends Component {
   }
 }
 
-/*const foodOptions = [
-    {title: "Cereal"},
-    {title: "Bacon"},
-    {title: "Baked Beans"},
-    {title: "Porridge"},
-    {title: "Pancake"}, 
-    {title: "Beef"},
-    {title: "Chicken"},
-    {title: "Pork"},
-    {title: "Apple"},
-    {title: "Banana"},
-    {title: "Orange"},
-    {title: "Pear"},
-    {title: "Grapes"},
-    {title: "Chocolate"},
-    {title: "Crisps"},
-    {title: "Pasta"},
-    {title: "Bolognese"},
-    {title: "Potato"},
-    {title: "Chips"},
-    {title: "Milk"},
-    {title: "Fruit Juice"},
-    {title: "Onion"},
-]*/
+const foodOptions = [
+  { title: "Cereal" },
+  { title: "Bacon" },
+  { title: "Baked Beans" },
+  { title: "Porridge" },
+  { title: "Pancake" },
+  { title: "Beef" },
+  { title: "Chicken" },
+  { title: "Pork" },
+  { title: "Apple" },
+  { title: "Banana" },
+  { title: "Orange" },
+  { title: "Pear" },
+  { title: "Grapes" },
+  { title: "Chocolate" },
+  { title: "Crisps" },
+  { title: "Pasta" },
+  { title: "Bolognese" },
+  { title: "Potato" },
+  { title: "Chips" },
+  { title: "Milk" },
+  { title: "Fruit Juice" },
+  { title: "Onion" },
+];
 
 const mapStateToProps = (state) => {
   return {
@@ -1558,5 +1467,5 @@ export default compose(
       },
     ];
   })
-)(AddProducts);
-// export default AddProducts
+)(AddProductsFarm);
+// export default AddProductsFarm

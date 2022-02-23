@@ -78,6 +78,18 @@ const authReducer = (state = initState, action) => {
         ...state,
         authError: null,
       };
+    case "SELLER_ERROR":
+      console.log("change email error");
+      return {
+        ...state,
+        authError: "Please accept the terms and conditions",
+      };
+    case "SELLER_SUCCESS":
+      console.log("Successfully became a seller.");
+      return {
+        ...state,
+        authError: null,
+      };
     default:
       return state;
   }

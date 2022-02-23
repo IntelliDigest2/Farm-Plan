@@ -82,11 +82,35 @@ export const updateProfile = (users) => {
       .set({ ...users.profile }, { merge: true })
       .then(() => {
         dispatch({ type: "CHANGE_PROFILE_SUCCESS" });
-        console.log("here");
       })
       .catch((err) => {
         console.log("err");
         dispatch({ type: "CHANGE_PROFILE_ERROR", err });
+      });
+  };
+};
+
+//sets isSeller in "users" and the profile in "marketplace"
+export const becomeSeller = (seller) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+    firestore
+      .collection("users")
+      .doc(seller.uid)
+      .set({ ...seller.profile }, { merge: true })
+      .then(() => {
+        return firestore.collection("marketplace").doc(seller.uid).set({
+          Email: seller.email,
+          Location: seller.location,
+        });
+      })
+      .then(() => {
+        dispatch({ type: "SELLER_SUCCESS" });
+      })
+      .catch((err) => {
+        console.log("err");
+        dispatch({ type: "SELLER_ERROR", err });
       });
   };
 };
@@ -128,6 +152,12 @@ export const signUp = (newUser) => {
             country: newUser.country,
             region: newUser.region,
             type: "user",
+          })
+          .then(() => {
+            return firestore.collection("data").doc(resp.user.uid).set({
+              user: newUser.firstName,
+              email: newUser.email,
+            });
           });
       })
       .then(() => {

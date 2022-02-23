@@ -1,3 +1,5 @@
+//startData has been moved to happen within authActions/signup but has been left here for now as some accounts still need to use it currently.
+//Feel free to delete in the future
 export const startData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()
@@ -25,6 +27,23 @@ export const createFoodWasteData = (data) => {
       .doc(data.uid)
       .collection(data.collection)
       .add(data.upload)
+      .then(() => {
+        dispatch({ type: "CREATE_DATA" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+};
+
+export const createMarketplaceData = (product) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(product.uid)
+      .collection("products")
+      .add(product.upload)
       .then(() => {
         dispatch({ type: "CREATE_DATA" });
       })
