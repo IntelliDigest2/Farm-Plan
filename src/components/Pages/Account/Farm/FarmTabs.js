@@ -12,6 +12,12 @@ export function Food() {
         goTo="/add-products-farm"
       />
       <IconButton
+        icon="my-products"
+        label="My Products"
+        color="turquoise"
+        goTo="/view-products"
+      />
+      <IconButton
         icon="buy"
         label="Marketplace"
         color="turquoise"

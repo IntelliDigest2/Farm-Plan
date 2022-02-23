@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { PageWrap } from "../../SubComponents/PageWrap";
-import { Card } from "../../SubComponents/Card";
+import { ProductCard } from "../../SubComponents/Card";
 
 import { getFirestoreData } from "../../../../store/actions/dataActions";
 import { connect } from "react-redux";
@@ -62,19 +62,20 @@ export function ViewProducts(props) {
   return (
     <PageWrap goTo="/account" header="Sell Products" subtitle="My Products">
       {myProducts.map((product) => (
-        <Card styling="product" key={product.id}>
-          <p>{product.food}</p>
-          <p>
-            {product.weight} {product.unit}
-          </p>
-          <p>{product.category}</p>
+        <ProductCard styling="product" key={product.id}>
+          <h1>
+            {product.food}: {product.weight}
+            {product.unit}
+          </h1>
+          <h6>{product.category}</h6>
           <p> expiry date: {product.expires}</p>
-          <p>
-            {product.currency} {product.price}
-          </p>
+          <h2>
+            {product.currency}
+            {product.price}
+          </h2>
           {/* if produced locally have a lil tick thing */}
           <p>{product.comment}</p>
-        </Card>
+        </ProductCard>
       ))}
     </PageWrap>
   );
