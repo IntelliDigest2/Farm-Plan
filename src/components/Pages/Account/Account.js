@@ -23,6 +23,8 @@ import * as Schools from "./Academic/AcademicTabs";
 
 import { Colors } from "../../lib/Colors";
 
+import { createSubAccount } from "../../../store/actions/authActions";
+
 const NewAccount = (props) => {
   //AccountType/BuildingFunction Management
   const [type, setType] = useState("");
@@ -186,8 +188,14 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createSubAccount: (product) => dispatch(createSubAccount(product)),
+  };
+};
+
 export default compose(
-  connect(mapStateToProps)
+  connect(mapStateToProps, mapDispatchToProps)
   // firestoreConnect((props) => {
   //   if (!props.auth.uid) return [];
   //   return [
