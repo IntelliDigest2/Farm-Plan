@@ -13,7 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { SubButton } from "./Button";
 
-function PopUp(props) {
+export function PopUp(props) {
   const { open, onClose, handleButtonClick, to, text } = props;
 
   return (

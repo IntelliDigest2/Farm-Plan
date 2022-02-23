@@ -1,7 +1,6 @@
 /*button styles*/
 .default-btn {
   width: 100%;
-  float: center;
   margin-top: 2%;
   margin-bottom: 2%;
   font-weight: 600;
@@ -12,7 +11,6 @@
 
 .sub-btn {
   width: 60%;
-  float: center;
   margin: auto;
   margin-top: 2%;
   margin-bottom: 2%;

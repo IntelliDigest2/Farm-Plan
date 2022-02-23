@@ -7,7 +7,7 @@ import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "../SubComponents/Profile";
 import "../Pages.css";
-import { SubButton } from "../SubComponents/Button";
+import { PageWrapMini } from "../SubComponents/PageWrap";
 import blueberries from "../../../images/Blueberries.png";
 
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
@@ -23,27 +23,15 @@ import * as Schools from "./Academic/AcademicTabs";
 
 import { Colors } from "../../lib/Colors";
 
+import { createSubAccount } from "../../../store/actions/authActions";
+
 const NewAccount = (props) => {
   //AccountType/BuildingFunction Management
-  const [type, setType] = useState("");
+  const [type, setType] = useState(props.profile.type);
 
   useEffect(() => {
-    switch (props.profile.buildingFunction) {
-      case "Hospitals":
-      case "Hotels":
-      case "Offices":
-      case "Restaurants":
-      case "Shop/Supermarket":
-      case "Recreational Centers":
-      case "Business":
-        setType("Business");
-        break;
-      default:
-        //let a = props.profile.buildingFunction;
-        setType(props.profile.buildingFunction);
-        break;
-    }
-  }, [props.profile.buildingFunction]);
+    setType(props.profile.type);
+  }, [props.profile.type]);
 
   useEffect(() => {}, [type]);
 
@@ -65,40 +53,43 @@ const NewAccount = (props) => {
   }
 
   return (
-    <Container className="web-center">
-      <Profile profile={props.profile} type={type} />
-      <div className="tabs">
-        <TabContext value={value}>
-          <TabList
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: Colors.brandGreen,
-              },
-            }}
-            variant="standard"
-            onChange={handleChange}
-            centered
-          >
-            <Tab disableRipple label="Food" />
-            <Tab disableRipple label="Environment" />
-            <Tab disableRipple label="Health" />
-            <Tab disableRipple label="Sustainability" />
-          </TabList>
-          <AccountType
-            type={type}
-            value={value}
-            theme={theme}
-            handleChangeIndex={handleChangeIndex}
-          />
-        </TabContext>
-      </div>
-    </Container>
+    <PageWrapMini>
+      <Container className="web-center">
+        <Profile profile={props.profile} type={type} />
+        <div className="tabs">
+          <TabContext value={value}>
+            <TabList
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: Colors.brandGreen,
+                },
+              }}
+              variant="standard"
+              onChange={handleChange}
+              centered
+            >
+              <Tab disableRipple label="Food" />
+              <Tab disableRipple label="Environment" />
+              <Tab disableRipple label="Health" />
+              <Tab disableRipple label="Sustainability" />
+            </TabList>
+            <AccountType
+              type={type}
+              value={value}
+              theme={theme}
+              handleChangeIndex={handleChangeIndex}
+            />
+          </TabContext>
+        </div>
+      </Container>
+    </PageWrapMini>
   );
 };
 
 const AccountType = (props) => {
   switch (props.type) {
-    case "Farm":
+    case "farm_admin":
+    case "farm_sub":
       return (
         <SwipeableViews
           axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -116,7 +107,8 @@ const AccountType = (props) => {
           </TabPanel>
         </SwipeableViews>
       );
-    case "Business":
+    case "business_admin":
+    case "business_sub":
       return (
         <SwipeableViews
           axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -134,7 +126,8 @@ const AccountType = (props) => {
           </TabPanel>
         </SwipeableViews>
       );
-    case "Schools":
+    case "academic_admin":
+    case "academic_sub":
       return (
         <SwipeableViews
           axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -152,7 +145,8 @@ const AccountType = (props) => {
           </TabPanel>
         </SwipeableViews>
       );
-    case "Households":
+    case "household_admin":
+    case "household_sub":
     default:
       return (
         <SwipeableViews
@@ -184,8 +178,14 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createSubAccount: (product) => dispatch(createSubAccount(product)),
+  };
+};
+
 export default compose(
-  connect(mapStateToProps)
+  connect(mapStateToProps, mapDispatchToProps)
   // firestoreConnect((props) => {
   //   if (!props.auth.uid) return [];
   //   return [

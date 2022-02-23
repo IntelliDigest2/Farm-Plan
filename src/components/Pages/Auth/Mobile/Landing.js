@@ -2,7 +2,8 @@ import { React } from "react";
 import "./Landing.css";
 
 import { SubButton } from "../../SubComponents/Button";
-import { Copyright } from "../../SubComponents/Copyright";
+import { PageWrapMini } from "../../SubComponents/PageWrap";
+//import { Copyright } from "../../SubComponents/Copyright";
 
 import { connect } from "react-redux";
 

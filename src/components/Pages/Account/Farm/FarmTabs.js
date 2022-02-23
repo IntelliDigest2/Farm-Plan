@@ -7,13 +7,19 @@ export function Food() {
     <>
       <IconButton
         icon="surplus"
-        label="Food Surplus"
+        label="Sell Products"
         color="turquoise"
         goTo="/add-products-farm"
       />
       <IconButton
+        icon="my-products"
+        label="My Products"
+        color="turquoise"
+        goTo="/view-products"
+      />
+      <IconButton
         icon="buy"
-        label="Buy Food"
+        label="Marketplace"
         color="turquoise"
         goTo="/browse-products"
       />

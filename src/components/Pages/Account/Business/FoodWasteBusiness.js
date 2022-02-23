@@ -18,7 +18,7 @@ import {
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { compose } from "redux";
-import { firestoreConnect } from "react-redux-firebase";
+import { firestoreConnect, getFirebase } from "react-redux-firebase";
 import styled from "styled-components";
 // import { getFirebase} from 'react-redux-firebase'
 // import DisplayError from '../pages/DisplayError'
@@ -38,6 +38,7 @@ import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { Autocomplete } from "@material-ui/lab";
 import { TextField, Checkbox } from "@material-ui/core";
 import addNotification from "react-push-notification";
+import { submitNotification } from "../../../lib/Notifications";
 
 // import {Chart} from "react-google-charts"
 
@@ -55,6 +56,8 @@ class FoodWasteBusiness extends Component {
     email: this.props.auth.email,
     uid: this.props.auth.uid,
     filteredData: [],
+
+    collection: "writtenFoodWasteData",
 
     formWidth: "",
 
@@ -306,8 +309,67 @@ class FoodWasteBusiness extends Component {
 
   handleFoodWasteSubmit = (e) => {
     e.preventDefault();
-    this.setState({});
-    this.props.createFoodWasteData(this.state);
+
+    //If sub account, use admin uid, if admin or personal use your own
+    var uid, masterCollection;
+    switch (this.props.profile.type) {
+      case "business_admin":
+        masterCollection = "business_users";
+        uid = this.props.auth.uid;
+        break;
+      case "business_sub":
+        masterCollection = "business_users";
+        uid = this.props.profile.admin;
+        break;
+      case "academic_admin":
+        masterCollection = "academic_users";
+        uid = this.props.auth.uid;
+        break;
+      case "academic_sub":
+        masterCollection = "academic_users";
+        uid = this.props.profile.admin;
+        break;
+      case "farm_admin":
+        masterCollection = "farm_users";
+        uid = this.props.auth.uid;
+        break;
+      case "farm_sub":
+        masterCollection = "farm_users";
+        uid = this.props.profile.admin;
+        break;
+      case "household_admin":
+        masterCollection = "household_users";
+        uid = this.props.auth.uid;
+        break;
+      case "household_sub":
+        masterCollection = "household_users";
+        uid = this.props.profile.admin;
+        break;
+      default:
+        masterCollection = "data";
+        uid = this.props.auth.uid;
+        break;
+    }
+
+    const data = {
+      uid: uid,
+      masterCollection: masterCollection,
+      collection: this.state.collection,
+      upload: {
+        date: getFirebase().firestore.Timestamp.fromDate(new Date()),
+        edibleInedibleSurplus: this.state.edibleInedibleSurplus,
+        foodWasteWeight: this.state.foodWasteWeight,
+        weightType: this.state.weightType,
+        expiryDate: this.state.expiryDate,
+        ghg: this.state.ghg,
+        foodWasteCost: this.state.foodWasteCost,
+        currency: this.state.currency,
+        currencyMultiplier: this.state.currencyMultiplier,
+        notes: this.state.notes,
+      },
+    };
+    this.props.createFoodWasteData(data);
+    submitNotification("Success", "Food Waste successfully uploaded!");
   };
 
   handleCheckboxTick = (e) => {

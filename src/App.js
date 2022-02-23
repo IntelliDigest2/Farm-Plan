@@ -22,7 +22,6 @@ import SignUp from "./components/Pages/Auth/Mobile/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
 import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
-import TermsAndPrivacy from "./components/Pages/TermsAndPrivacy";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave";
 //old account
@@ -48,6 +47,7 @@ import ReserveItems from "./components/Pages/Account/ReserveItems";
 
 import AddProducts from "./components/Pages/Account/AddProducts";
 import AddProductsFarm from "./components/Pages/Account/Farm/AddProductsFarm";
+import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 import AddProductsBusiness from "./components/Pages/Account/Business/AddProductsBusiness";
 import AddProductsAcademic from "./components/Pages/Account/Academic/AddProductsAcademic";
 
@@ -168,11 +168,6 @@ const App = (props) => {
             <Route path="/settings" exact component={Settings} />
             <Route path="/questionnaire" exact component={Questionnaire} />
             <Route path="/contact" exact component={Contact} />
-            <Route
-              path="/terms-and-privacy"
-              exact
-              component={TermsAndPrivacy}
-            />
             <Route path="/forgot-password" exact component={ForgotPassword} />
             <Route path="/account" exact component={NewAccount} />
             {/* Old Bubble Account Page */}
@@ -205,6 +200,7 @@ const App = (props) => {
 
             <Route path="/add-products" component={AddProducts} />
             <Route path="/add-products-farm" component={AddProductsFarm} />
+            <Route path="/view-products" component={ViewProducts} />
             <Route
               path="/add-products-business"
               component={AddProductsBusiness}

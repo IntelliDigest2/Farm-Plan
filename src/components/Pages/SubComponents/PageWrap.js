@@ -30,7 +30,7 @@ export const PageWrap = (props) => {
   );
 };
 
-export const PageWrapMini = (props) => {
+export const PageWrapTop = (props) => {
   return (
     <div>
       <div className="top">
@@ -43,4 +43,8 @@ export const PageWrapMini = (props) => {
       {props.children}
     </div>
   );
+};
+
+export const PageWrapMini = (props) => {
+  return <Container className="account-style">{props.children}</Container>;
 };

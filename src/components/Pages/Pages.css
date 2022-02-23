@@ -374,7 +374,7 @@ body {
   text-align: center;
   max-width: 70%;
   /*600px in center of large page but varies when browser is smaller*/
-  margin-top: 5rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   font-family: "Source Sans Pro", sans-serif;
 }

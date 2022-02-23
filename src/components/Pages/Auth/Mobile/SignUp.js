@@ -333,6 +333,7 @@ const Stage2 = (props) => {
               }}
               items={[
                 "Households",
+                "Personal",
                 "Hospitals",
                 "Schools",
                 "Hotels",

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../../App.css";
 import "../Pages.css";
-import { PageWrapMini } from "../SubComponents/PageWrap";
+import { PageWrapTop } from "../SubComponents/PageWrap";
 import {
   Button,
   Card,
@@ -76,7 +76,7 @@ class BrowseProducts extends Component {
           </Modal.Footer>
         </Modal>
 
-        <PageWrapMini goTo="/account" header="Marketplace">
+        <PageWrapTop goTo="/account" header="Marketplace">
           <BrowserView>
             <div className="main-div-layout">
               <h1
@@ -1053,7 +1053,7 @@ class BrowseProducts extends Component {
               </Accordion>
             </div>
           </MobileView>
-        </PageWrapMini>
+        </PageWrapTop>
       </>
     );
   }

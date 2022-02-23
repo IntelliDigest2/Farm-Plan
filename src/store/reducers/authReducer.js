@@ -30,6 +30,17 @@ const authReducer = (state = initState, action) => {
         ...state,
         authError: action.err.message,
       };
+    case "CREATE_SUBACCOUNT":
+      console.log("subaccount success");
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CREATE_SUBACCOUNT_ERROR":
+      return {
+        ...state,
+        authError: action.err.message,
+      };
     case "CHANGE_ERROR":
       console.log("change password error");
       return {
@@ -74,6 +85,18 @@ const authReducer = (state = initState, action) => {
       };
     case "RESET_SUCCESS":
       console.log("reset password success");
+      return {
+        ...state,
+        authError: null,
+      };
+    case "SELLER_ERROR":
+      console.log("change email error");
+      return {
+        ...state,
+        authError: "Please accept the terms and conditions",
+      };
+    case "SELLER_SUCCESS":
+      console.log("Successfully became a seller.");
       return {
         ...state,
         authError: null,

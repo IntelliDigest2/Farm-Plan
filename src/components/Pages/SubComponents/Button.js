@@ -15,6 +15,7 @@ import MenuBookOutlined from "@mui/icons-material/MenuBookOutlined";
 import SpaOutlined from "@mui/icons-material/SpaOutlined";
 import KitchenOutlined from "@mui/icons-material/KitchenOutlined";
 import ShoppingBagOutlined from "@mui/icons-material/ShoppingBagOutlined";
+import CategoryIcon from "@mui/icons-material/Category";
 
 //The default buttons we are using are the large dropdown buttons we use on the account page and their small sub buttons
 //when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (styles are in Button.css)
@@ -85,6 +86,8 @@ function IconButton(props) {
         return <KitchenOutlined sx={{ fontSize: 90 }} />;
       case "product":
         return <ShoppingBagOutlined sx={{ fontSize: 90 }} />;
+      case "my-products":
+        return <CategoryIcon sx={{ fontSize: 90 }} />;
     }
   }
 
