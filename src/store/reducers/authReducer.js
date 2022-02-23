@@ -30,6 +30,17 @@ const authReducer = (state = initState, action) => {
         ...state,
         authError: action.err.message,
       };
+    case "CREATE_SUBACCOUNT":
+      console.log("subaccount success");
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CREATE_SUBACCOUNT_ERROR":
+      return {
+        ...state,
+        authError: action.err.message,
+      };
     case "CHANGE_ERROR":
       console.log("change password error");
       return {
