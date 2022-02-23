@@ -19,6 +19,7 @@ export const startData = (data) => {
   };
 };
 
+//Works for new Admin/Sub acount structure
 export const createFoodWasteData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()
@@ -109,6 +110,7 @@ export const getMapData = (data) => {
   };
 };
 
+//Works for new Admin/Sub acount structure
 export const getFirestoreData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()

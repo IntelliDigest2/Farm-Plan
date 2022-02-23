@@ -174,9 +174,50 @@ class FoodWaste extends Component {
     };
 
     //Setup data to be sent to generic create firestore function (TO BE RENAMED LATER)
+    //If sub account, use admin uid, if admin or personal use your own
+    var uid, masterCollection;
+    switch (this.props.profile.type) {
+      case "business_admin":
+        masterCollection = "business_users";
+        uid = this.props.auth.uid;
+        break;
+      case "business_sub":
+        masterCollection = "business_users";
+        uid = this.props.profile.admin;
+        break;
+      case "academic_admin":
+        masterCollection = "academic_users";
+        uid = this.props.auth.uid;
+        break;
+      case "academic_sub":
+        masterCollection = "academic_users";
+        uid = this.props.profile.admin;
+        break;
+      case "farm_admin":
+        masterCollection = "farm_users";
+        uid = this.props.auth.uid;
+        break;
+      case "farm_sub":
+        masterCollection = "farm_users";
+        uid = this.props.profile.admin;
+        break;
+      case "household_admin":
+        masterCollection = "household_users";
+        uid = this.props.auth.uid;
+        break;
+      case "household_sub":
+        masterCollection = "household_users";
+        uid = this.props.profile.admin;
+        break;
+      default:
+        masterCollection = "data";
+        uid = this.props.auth.uid;
+        break;
+    }
+
     const data = {
-      uid: this.props.auth.uid,
-      masterCollection: "data",
+      uid: uid,
+      masterCollection: masterCollection,
       collection: this.state.collection,
       upload: {
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),

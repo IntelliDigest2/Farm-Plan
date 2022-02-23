@@ -154,6 +154,7 @@ export const signUp = (newUser) => {
         type = "farm_admin";
         break;
       case "Households":
+        type = "household_admin";
       default:
         type = "user";
         break;
@@ -188,6 +189,8 @@ export const signUp = (newUser) => {
           adminCollection = "academic_users";
         } else if (type === "farm_admin") {
           adminCollection = "farm_users";
+        } else if (type === "household_admin") {
+          adminCollection = "household_users";
         } else {
           adminCollection = "user";
         }
@@ -294,6 +297,9 @@ export const createSubAccount = (data) => {
             admin: data.uid,
             type: data.type,
           });
+      })
+      .then(() => {
+        secondaryApp.auth().currentUser.sendEmailVerification();
       })
       .then(() => {
         secondaryApp.auth().signOut();

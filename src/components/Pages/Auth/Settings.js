@@ -6,7 +6,7 @@ import { SubButton } from "../SubComponents/Button";
 import { LogOutPopUp } from "../SubComponents/PopUp";
 import { PageWrap } from "../SubComponents/PageWrap";
 
-import { Form, Col } from "react-bootstrap";
+import { Form, Col, ListGroup, Badge, FormGroup } from "react-bootstrap";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -34,8 +34,12 @@ import {
   signOut,
   createSubAccount,
 } from "../../../store/actions/authActions";
-import { createMapData } from "../../../store/actions/dataActions";
+import {
+  createMapData,
+  getFirestoreData,
+} from "../../../store/actions/dataActions";
 import Geocode from "react-geocode";
+import { Heading } from "../SubComponents/Heading";
 
 //The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
 //It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
@@ -55,6 +59,7 @@ function Settings(props) {
   const [subEmail, setSubEmail] = useState("");
   const [subPassword, setSubPassword] = useState("");
   const [subRole, setSubRole] = useState("");
+  const [subAccountsList, setSubAccountsList] = useState([]);
 
   //address
   const [town, setTown] = useState(props.profile.city);
@@ -64,6 +69,53 @@ function Settings(props) {
   const [form, setForm] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+
+  //Get subAccounts
+  function fetchData() {
+    var masterCollection;
+    switch (props.profile.type) {
+      case "business_admin":
+        masterCollection = "business_users";
+        break;
+      case "academic_admin":
+        masterCollection = "academic_users";
+        break;
+      case "farm_admin":
+        masterCollection = "farm_users";
+        break;
+      case "household_admin":
+        masterCollection = "household_users";
+        break;
+      default:
+        masterCollection = "";
+        break;
+    }
+
+    var data = {
+      uid: props.auth.uid,
+      masterCollection: masterCollection,
+      collection: "sub_accounts",
+    };
+    if (masterCollection !== "") props.getFirestoreData(data);
+  }
+
+  //Get data from firestore
+  useEffect(() => {
+    if (props.data.length <= 0) fetchData();
+  }, [props.profile]);
+
+  //handle data from firebase
+  useEffect(() => {
+    setSubAccountsList([]);
+    updateSubAccounts();
+  }, [props.data]);
+
+  const updateSubAccounts = async () => {
+    var subAccountsArray = [];
+    props.data.forEach((doc) => {
+      setSubAccountsList((oldArray) => [...oldArray, doc]);
+    });
+  };
 
   //rerender on form change, reset error message
   useEffect(() => {
@@ -182,6 +234,9 @@ function Settings(props) {
     } else if (props.profile.type === "farm_admin") {
       adminCollection = "farm_users";
       subType = "farm_sub";
+    } else if (props.profile.type === "household_admin") {
+      adminCollection = "household_users";
+      subType = "household_sub";
     }
 
     var data = {
@@ -202,6 +257,11 @@ function Settings(props) {
     props.createSubAccount(data);
     if (!props.authError) {
       setSuccess(true);
+      setSubFirstName("");
+      setSubLastName("");
+      setSubEmail("");
+      setSubPassword("");
+      setSubRole("");
     } else {
       setError(props.authError);
     }
@@ -414,6 +474,12 @@ function Settings(props) {
               setSubEmail={setSubEmail}
               setSubPassword={setSubPassword}
               setSubRole={setSubRole}
+              subAccounts={subAccountsList}
+              subFirstName={subFirstName}
+              subLastName={subLastName}
+              subEmail={subEmail}
+              subPassword={subPassword}
+              subRole={subRole}
             />
             <div className="center">
               <SubButton
@@ -513,7 +579,7 @@ const ProfileList = (props) => {
         listItems={items}
         HandleButtonState={props.HandleButtonState}
       />
-      {props.type !== "user" ? (
+      {String(props.type).includes("admin") ? (
         <ListItem key="subaccounts">
           <ListItemButton
             onClick={() => {
@@ -689,58 +755,91 @@ const SubAccounts = (props) => {
   return (
     <div>
       <Form>
-        <Form.Row>
-          <Form.Group
-            className="mb-3"
-            style={{ backgroundColor: "white" }}
-            as={Col}
-          >
-            <Form.Label style={{ backgroundColor: "white" }}>Name</Form.Label>
+        <FormGroup className="mb-3">
+          <Form.Label>
+            <Heading priority="3" text="Sub Accounts" />
+          </Form.Label>
+          <ListGroup>
+            {props.subAccounts.map((sub, index) => (
+              <ListGroup.Item
+                action
+                as="li"
+                className="d-flex justify-content-between align-items-start"
+              >
+                <div className="ms-2 me-auto">
+                  <div className="fw-bold">{sub.name}</div>
+                  {sub.email}
+                </div>
+                <Badge variant="primary" pill>
+                  {sub.role}
+                </Badge>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </FormGroup>
+        <Divider />
+        <FormGroup className="mb-3">
+          <Form.Label>
+            <Heading priority="3" text="Create Sub Account" />
+          </Form.Label>
+          <Form.Row className="mb-3">
+            <Form.Group
+              className="mb-3"
+              style={{ backgroundColor: "white" }}
+              as={Col}
+            >
+              <Form.Label style={{ backgroundColor: "white" }}>Name</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter Name"
+                value={props.subFirstName}
+                onChange={(e) => props.setSubFirstName(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              style={{ backgroundColor: "white" }}
+              as={Col}
+            >
+              <Form.Label style={{ backgroundColor: "white" }}>
+                Surname
+              </Form.Label>
+              <Form.Control
+                type="surname"
+                placeholder="Enter Surname"
+                value={props.subLastName}
+                onChange={(e) => props.setSubLastName(e.target.value)}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Group className="mb-3">
+            <Form.Label>Email address</Form.Label>
             <Form.Control
-              type="name"
-              placeholder="Enter Name"
-              onChange={(e) => props.setSubFirstName(e.target.value)}
+              type="email"
+              placeholder="Enter Email"
+              value={props.subEmail}
+              onChange={(e) => props.setSubEmail(e.target.value)}
             />
           </Form.Group>
-          <Form.Group
-            className="mb-3"
-            style={{ backgroundColor: "white" }}
-            as={Col}
-          >
-            <Form.Label style={{ backgroundColor: "white" }}>
-              Surname
-            </Form.Label>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
             <Form.Control
-              type="surname"
-              placeholder="Enter Surname"
-              onChange={(e) => props.setSubLastName(e.target.value)}
+              type="password"
+              placeholder="Enter Password"
+              value={props.subPassword}
+              onChange={(e) => props.setSubPassword(e.target.value)}
             />
           </Form.Group>
-        </Form.Row>
-        <Form.Group className="mb-3">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter Email"
-            onChange={(e) => props.setSubEmail(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter Password"
-            onChange={(e) => props.setSubPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Role</Form.Label>
-          <Form.Control
-            type="role"
-            placeholder="Enter Role"
-            onChange={(e) => props.setSubRole(e.target.value)}
-          />
-        </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Role</Form.Label>
+            <Form.Control
+              type="role"
+              placeholder="Enter Role"
+              value={props.subRole}
+              onChange={(e) => props.setSubRole(e.target.value)}
+            />
+          </Form.Group>
+        </FormGroup>
       </Form>
     </div>
   );
@@ -752,6 +851,7 @@ const mapStateToProps = (state) => {
     authError: state.auth.authError,
     profile: state.firebase.profile,
     users: state.firestore.ordered.users,
+    data: state.data.getData,
   };
 };
 
@@ -763,6 +863,7 @@ const mapDispatchToProps = (dispatch) => {
     signOut: () => dispatch(signOut()),
     createMapData: (product) => dispatch(createMapData(product)),
     createSubAccount: (creds) => dispatch(createSubAccount(creds)),
+    getFirestoreData: (data) => dispatch(getFirestoreData(data)),
   };
 };
 

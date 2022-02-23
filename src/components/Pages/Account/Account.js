@@ -27,25 +27,11 @@ import { createSubAccount } from "../../../store/actions/authActions";
 
 const NewAccount = (props) => {
   //AccountType/BuildingFunction Management
-  const [type, setType] = useState("");
+  const [type, setType] = useState(props.profile.type);
 
   useEffect(() => {
-    switch (props.profile.buildingFunction) {
-      case "Hospitals":
-      case "Hotels":
-      case "Offices":
-      case "Restaurants":
-      case "Shop/Supermarket":
-      case "Recreational Centers":
-      case "Business":
-        setType("Business");
-        break;
-      default:
-        //let a = props.profile.buildingFunction;
-        setType(props.profile.buildingFunction);
-        break;
-    }
-  }, [props.profile.buildingFunction]);
+    setType(props.profile.type);
+  }, [props.profile.type]);
 
   useEffect(() => {}, [type]);
 
@@ -102,7 +88,8 @@ const NewAccount = (props) => {
 
 const AccountType = (props) => {
   switch (props.type) {
-    case "Farm":
+    case "farm_admin":
+    case "farm_sub":
       return (
         <SwipeableViews
           axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -120,7 +107,8 @@ const AccountType = (props) => {
           </TabPanel>
         </SwipeableViews>
       );
-    case "Business":
+    case "business_admin":
+    case "business_sub":
       return (
         <SwipeableViews
           axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -138,7 +126,8 @@ const AccountType = (props) => {
           </TabPanel>
         </SwipeableViews>
       );
-    case "Schools":
+    case "academic_admin":
+    case "academic_sub":
       return (
         <SwipeableViews
           axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -156,7 +145,8 @@ const AccountType = (props) => {
           </TabPanel>
         </SwipeableViews>
       );
-    case "Households":
+    case "household_admin":
+    case "household_sub":
     default:
       return (
         <SwipeableViews
