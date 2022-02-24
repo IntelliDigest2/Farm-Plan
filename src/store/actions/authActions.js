@@ -310,7 +310,7 @@ export const createSubAccount = (data) => {
       .then(() => {
         dispatch({ type: "CREATE_SUBACCOUNT" });
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({ type: "CREATE_SUBACCOUNT_ERROR", err });
       });
   };
