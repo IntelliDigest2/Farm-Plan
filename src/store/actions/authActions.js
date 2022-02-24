@@ -155,6 +155,7 @@ export const signUp = (newUser) => {
         break;
       case "Households":
         type = "household_admin";
+        break;
       default:
         type = "user";
         break;
@@ -263,28 +264,32 @@ export const createSubAccount = (data) => {
 
     let secondaryApp = firebase.initializeApp(config, "second");
 
+    var subUid;
+
     secondaryApp
       .auth()
       .createUserWithEmailAndPassword(data.email, data.password)
-      .then((userCredential) => {
+      .then((resp) => {
+        subUid = resp.user.uid;
         //Create user document inside Admin's 'sub_accounts' collection
         getFirebase()
           .firestore()
           .collection(data.masterCollection)
           .doc(data.uid)
           .collection("sub_accounts")
-          .doc(userCredential.user.uid)
+          .doc(resp.user.uid)
           .set({
             email: data.email,
             name: data.firstName + " " + data.lastName,
             role: data.role,
           });
-
+      })
+      .then(() => {
         //Create user document inside 'users' base collection
         getFirebase()
           .firestore()
           .collection("users")
-          .doc(userCredential.user.uid)
+          .doc(subUid)
           .set({
             firstName: data.firstName,
             lastName: data.lastName,

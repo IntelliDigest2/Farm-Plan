@@ -41,6 +41,8 @@ import {
 import Geocode from "react-geocode";
 import { Heading } from "../SubComponents/Heading";
 
+import { submitNotification } from "../../lib/Notifications";
+
 //The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
 //It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
 // "Name", "Email", "Password" and "Location".
@@ -111,7 +113,6 @@ function Settings(props) {
   }, [props.data]);
 
   const updateSubAccounts = async () => {
-    var subAccountsArray = [];
     props.data.forEach((doc) => {
       setSubAccountsList((oldArray) => [...oldArray, doc]);
     });
@@ -168,6 +169,7 @@ function Settings(props) {
     };
     if (email === props.auth.email) {
       props.resetPassword(data);
+      submitNotification("Success", "A Password reset Email has been sent!");
     } else {
       setError("This email does not match this account.");
     }
@@ -185,6 +187,7 @@ function Settings(props) {
     props.updateProfile(data);
     if (!props.authError) {
       setSuccess(true);
+      submitNotification("Success", "Name Successfully Updated!");
     } else {
       setError(props.authError);
     }
@@ -218,6 +221,7 @@ function Settings(props) {
     props.updateProfile(data);
     if (!props.authError) {
       setSuccess(true);
+      submitNotification("Success", "Location Sucessfully Updated!");
     } else {
       setError(props.authError);
     }
@@ -257,6 +261,7 @@ function Settings(props) {
     props.createSubAccount(data);
     if (!props.authError) {
       setSuccess(true);
+      submitNotification("Success", "Sub Account Sucessfully Created!");
       setSubFirstName("");
       setSubLastName("");
       setSubEmail("");
@@ -763,6 +768,7 @@ const SubAccounts = (props) => {
             {props.subAccounts.map((sub, index) => (
               <ListGroup.Item
                 action
+                key={index}
                 as="li"
                 className="d-flex justify-content-between align-items-start"
               >
