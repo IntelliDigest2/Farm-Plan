@@ -17,14 +17,16 @@ export function PopUp(props) {
   const { open, onClose, handleButtonClick, to, text } = props;
 
   return (
-    <Dialog open={open}>
-      <DialogTitle sx={{ m: 0, p: 2 }}>
+    <Dialog open={open} maxWidth="xs" fullWidth>
+      <DialogTitle>
         {props.children}
         <IconButton
           aria-label="close"
           onClick={onClose}
           sx={{
-            position: "static",
+            position: "absolute",
+            right: 8,
+            top: 8,
             color: (theme) => theme.palette.grey[500],
           }}
         >
