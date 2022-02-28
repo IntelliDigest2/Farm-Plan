@@ -787,7 +787,7 @@ const SubAccounts = (props) => {
     handleClose();
   };
 
-  var test = Object.values(props.subAccounts);
+  if (props.subAccounts !== null) var test = Object.values(props.subAccounts);
 
   return (
     <div>
@@ -797,7 +797,7 @@ const SubAccounts = (props) => {
             <Heading priority="3" text="Sub Accounts" />
           </Form.Label>
           <ListGroup>
-            {test.map((sub, index) => (
+            {test?.map((sub, index) => (
               <ListGroup.Item
                 action
                 key={index}
