@@ -27,12 +27,15 @@ import GroupIcon from "@mui/icons-material/Group";
 //import { MobileView, BrowserView, isMobile } from "react-device-detect";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
 import {
   resetPassword,
   updateEmail,
   updateProfile,
   signOut,
   createSubAccount,
+  deleteSubAccount,
 } from "../../../store/actions/authActions";
 import {
   createMapData,
@@ -42,6 +45,14 @@ import Geocode from "react-geocode";
 import { Heading } from "../SubComponents/Heading";
 
 import { submitNotification } from "../../lib/Notifications";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 //The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
 //It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
@@ -53,7 +64,6 @@ function Settings(props) {
   const [lastName, setLastName] = useState(props.profile.lastName);
   const [email, setEmail] = useState(props.auth.email);
   const [password, setPassword] = useState("");
-  const [type, setType] = useState(props.profile.type);
 
   //sub
   const [subFirstName, setSubFirstName] = useState("");
@@ -61,7 +71,7 @@ function Settings(props) {
   const [subEmail, setSubEmail] = useState("");
   const [subPassword, setSubPassword] = useState("");
   const [subRole, setSubRole] = useState("");
-  const [subAccountsList, setSubAccountsList] = useState([]);
+  const [subAccountsList, setSubAccountsList] = useState();
 
   //address
   const [town, setTown] = useState(props.profile.city);
@@ -72,51 +82,12 @@ function Settings(props) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  //Get subAccounts
-  function fetchData() {
-    var masterCollection;
-    switch (props.profile.type) {
-      case "business_admin":
-        masterCollection = "business_users";
-        break;
-      case "academic_admin":
-        masterCollection = "academic_users";
-        break;
-      case "farm_admin":
-        masterCollection = "farm_users";
-        break;
-      case "household_admin":
-        masterCollection = "household_users";
-        break;
-      default:
-        masterCollection = "";
-        break;
-    }
-
-    var data = {
-      uid: props.auth.uid,
-      masterCollection: masterCollection,
-      collection: "sub_accounts",
-    };
-    if (masterCollection !== "") props.getFirestoreData(data);
-  }
-
-  //Get data from firestore
-  useEffect(() => {
-    if (props.data.length <= 0) fetchData();
-  }, [props.profile]);
-
   //handle data from firebase
   useEffect(() => {
-    setSubAccountsList([]);
-    updateSubAccounts();
+    if (props.data !== undefined || props.data !== null) {
+      setSubAccountsList(props.data);
+    }
   }, [props.data]);
-
-  const updateSubAccounts = async () => {
-    props.data.forEach((doc) => {
-      setSubAccountsList((oldArray) => [...oldArray, doc]);
-    });
-  };
 
   //rerender on form change, reset error message
   useEffect(() => {
@@ -258,17 +229,27 @@ function Settings(props) {
       region: props.profile.region,
       type: subType,
     };
-    props.createSubAccount(data);
-    if (!props.authError) {
-      setSuccess(true);
-      submitNotification("Success", "Sub Account Sucessfully Created!");
-      setSubFirstName("");
-      setSubLastName("");
-      setSubEmail("");
-      setSubPassword("");
-      setSubRole("");
+    if (
+      subFirstName !== "" &&
+      subLastName !== "" &&
+      subEmail != "" &&
+      subPassword !== "" &&
+      subRole !== ""
+    ) {
+      props.createSubAccount(data);
+      if (!props.authError) {
+        setSuccess(true);
+        submitNotification("Success", "Sub Account Sucessfully Created!");
+        setSubFirstName("");
+        setSubLastName("");
+        setSubEmail("");
+        setSubPassword("");
+        setSubRole("");
+      } else {
+        setError(props.authError);
+      }
     } else {
-      setError(props.authError);
+      submitNotification("Error", "Please ensure the form is completed.");
     }
   }
 
@@ -485,6 +466,9 @@ function Settings(props) {
               subEmail={subEmail}
               subPassword={subPassword}
               subRole={subRole}
+              profile={props.profile}
+              uid={props.auth.uid}
+              deleteSubAccount={props.deleteSubAccount}
             />
             <div className="center">
               <SubButton
@@ -500,7 +484,7 @@ function Settings(props) {
               {props.authError ? <p> {props.authError}</p> : null}
             </div>
             <div className="success">
-              {success ? <p>Change Success</p> : null}
+              {success ? <p>Account Created</p> : null}
             </div>
           </ProfileList>
         </PageWrap>
@@ -580,27 +564,33 @@ const ProfileList = (props) => {
 
   return (
     <>
-      <ButtonList
-        listItems={items}
-        HandleButtonState={props.HandleButtonState}
-      />
-      {String(props.type).includes("admin") ? (
-        <ListItem key="subaccounts">
-          <ListItemButton
-            onClick={() => {
-              props.HandleButtonState("changeSubAccounts");
-            }}
-          >
-            <ListItemIcon>
-              <GroupIcon />
-            </ListItemIcon>
-            <ListItemText>Sub Accounts</ListItemText>
-          </ListItemButton>
-        </ListItem>
-      ) : (
+      {String(props.type).includes("sub") ? (
         <></>
+      ) : (
+        <>
+          <ButtonList
+            listItems={items}
+            HandleButtonState={props.HandleButtonState}
+          />
+          {String(props.type).includes("admin") ? (
+            <ListItem key="subaccounts">
+              <ListItemButton
+                onClick={() => {
+                  props.HandleButtonState("changeSubAccounts");
+                }}
+              >
+                <ListItemIcon>
+                  <GroupIcon />
+                </ListItemIcon>
+                <ListItemText>Sub Accounts</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          ) : (
+            <></>
+          )}
+          {props.children}
+        </>
       )}
-      {props.children}
       <Divider variant="middle" />
       <ListItem>
         <ListItemButton href="/questionnaire" component="a">
@@ -757,6 +747,48 @@ const Location = (props) => {
 };
 
 const SubAccounts = (props) => {
+  const [open, setOpen] = useState(false);
+  const [sub, setSub] = useState([]);
+  const [subPassword, setSubPassword] = useState("");
+
+  const handleClickOpen = (sub) => {
+    setOpen(true);
+    setSub(sub);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDeleteAccount = () => {
+    var masterCollection;
+    switch (props.profile.type) {
+      case "business_admin":
+        masterCollection = "business_users";
+        break;
+      case "academic_admin":
+        masterCollection = "academic_users";
+        break;
+      case "farm_admin":
+        masterCollection = "farm_users";
+        break;
+      case "household_admin":
+        masterCollection = "household_users";
+        break;
+    }
+
+    var data = {
+      masterCollection: masterCollection,
+      uid: props.uid,
+      email: sub.email,
+      password: subPassword,
+    };
+    props.deleteSubAccount(data);
+    handleClose();
+  };
+
+  var test = Object.values(props.subAccounts);
+
   return (
     <div>
       <Form>
@@ -765,12 +797,13 @@ const SubAccounts = (props) => {
             <Heading priority="3" text="Sub Accounts" />
           </Form.Label>
           <ListGroup>
-            {props.subAccounts.map((sub, index) => (
+            {test.map((sub, index) => (
               <ListGroup.Item
                 action
                 key={index}
                 as="li"
                 className="d-flex justify-content-between align-items-start"
+                onClick={() => handleClickOpen(sub)}
               >
                 <div className="ms-2 me-auto">
                   <div className="fw-bold">{sub.name}</div>
@@ -847,6 +880,40 @@ const SubAccounts = (props) => {
           </Form.Group>
         </FormGroup>
       </Form>
+      <Dialog onClose={handleClose} open={open} maxWidth="xs" fullWidth>
+        <DialogTitle>
+          Delete '{sub.email}' account?
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Form.Group>
+            <Form.Label>Sub Account Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter Password"
+              onChange={(e) => setSubPassword(e.target.value)}
+            />
+          </Form.Group>
+        </DialogContent>
+        <DialogActions>
+          <SubButton
+            styling="blue"
+            text="Delete Account"
+            onClick={handleDeleteAccount}
+          />
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
@@ -857,7 +924,8 @@ const mapStateToProps = (state) => {
     authError: state.auth.authError,
     profile: state.firebase.profile,
     users: state.firestore.ordered.users,
-    data: state.data.getData,
+    // data: state.data.getData,
+    data: state.firestore.data.SubAccounts,
   };
 };
 
@@ -869,8 +937,40 @@ const mapDispatchToProps = (dispatch) => {
     signOut: () => dispatch(signOut()),
     createMapData: (product) => dispatch(createMapData(product)),
     createSubAccount: (creds) => dispatch(createSubAccount(creds)),
+    deleteSubAccount: (creds) => dispatch(deleteSubAccount(creds)),
     getFirestoreData: (data) => dispatch(getFirestoreData(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+// export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect((props) => {
+    var masterCollection;
+    switch (props.profile.type) {
+      case "business_admin":
+        masterCollection = "business_users";
+        break;
+      case "academic_admin":
+        masterCollection = "academic_users";
+        break;
+      case "farm_admin":
+        masterCollection = "farm_users";
+        break;
+      case "household_admin":
+      default:
+        masterCollection = "household_users";
+        break;
+    }
+    if (!props.auth.uid) return [];
+    return [
+      {
+        collection: masterCollection,
+        doc: props.auth.uid,
+        subcollections: [{ collection: "sub_accounts" }],
+        storeAs: "SubAccounts",
+      },
+    ];
+  })
+)(Settings);

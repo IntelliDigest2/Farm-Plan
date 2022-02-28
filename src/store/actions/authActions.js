@@ -320,3 +320,72 @@ export const createSubAccount = (data) => {
       });
   };
 };
+
+export const deleteSubAccount = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    /* 
+    Initialize a secondary firebase app instance
+    in order to delete a sub account without
+    automatically signing in as the sub account
+    before deletion.
+
+    Then complete all actions to remove data from
+    firebase collections before deleting the account 
+    and then deleting the secondary firebase app 
+    instance.
+
+    This solution was found @:
+    https://stackoverflow.com/questions/38800414/delete-a-specific-user-from-firebase
+    */
+
+    var config = {
+      apiKey: "AIzaSyDuu8Fpwa2gYlCKcL-LlN-uqH5seEJpk9w",
+      authDomain: "itracker-development.firebaseapp.com",
+      projectId: "itracker-development",
+      storageBucket: "itracker-development.appspot.com",
+      messagingSenderId: "57163396396",
+      appId: "1:57163396396:web:dd800621173f5733a4a889",
+    };
+
+    let secondaryApp = firebase.initializeApp(config, "second");
+
+    var subUid;
+
+    secondaryApp
+      .auth()
+      .signInWithEmailAndPassword(data.email, data.password)
+      .then(() => {
+        subUid = secondaryApp.auth().currentUser.uid;
+
+        console.log(subUid);
+
+        //Delete user document inside Admin's 'sub_accounts' collection
+        getFirebase()
+          .firestore()
+          .collection(data.masterCollection)
+          .doc(data.uid)
+          .collection("sub_accounts")
+          .doc(subUid)
+          .delete();
+      })
+      .then(() => {
+        //Create user document inside 'users' base collection
+        getFirebase().firestore().collection("users").doc(subUid).delete();
+      })
+      .then(() => {
+        secondaryApp.auth().currentUser.delete();
+      })
+      .then(() => {
+        secondaryApp.auth().signOut();
+      })
+      .then(() => {
+        secondaryApp.delete();
+      })
+      .then(() => {
+        dispatch({ type: "DELETE_SUBACCOUNT" });
+      })
+      .catch((err) => {
+        dispatch({ type: "DELETE_SUBACCOUNT_ERROR", err });
+      });
+  };
+};
