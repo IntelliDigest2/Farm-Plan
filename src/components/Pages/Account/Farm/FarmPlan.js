@@ -25,7 +25,7 @@ const dailyTabTime = moment().format("ddd MMM Do YYYY");
 
 //for autocomplete, have the food options be every item that they have sold in the past (getFirebase, forEach doc etcetc)
 
-const AddProductsFarm = (props) => {
+const FarmPlan = (props) => {
   //I'm going to change autocomplete function here to mui rather than bootstrap (theirs is better)
   const [food, setFood] = useState("");
   const [category, setCategory] = useState("Vegetables");
@@ -320,4 +320,4 @@ export default compose(
       },
     ];
   })
-)(AddProductsFarm);
+)(FarmPlan);
