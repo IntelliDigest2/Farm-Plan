@@ -314,11 +314,21 @@ const Stage2 = (props) => {
 
           <Form.Group className="mb-3">
             <Form.Label>Region</Form.Label>
-            <Form.Control
-              type="address"
-              placeholder="Region"
-              defaultValue={props.region}
-              onChange={(e) => props.setRegion(e.target.value)}
+            <Dropdown
+              id="region"
+              styling="green dropdown-input-right"
+              data={props.region}
+              function={(e) => {
+                props.setRegion(e);
+              }}
+              items={[
+                "Asia",
+                "Africa",
+                "Australia",
+                "Europe",
+                "North America",
+                "South America",
+              ]}
             />
           </Form.Group>
 
@@ -326,7 +336,7 @@ const Stage2 = (props) => {
             <Form.Label>What kind of account are you creating?</Form.Label>
             <Dropdown
               id="buildingFunction"
-              styling="grey dropdown-input-right"
+              styling="green dropdown-input-right"
               data={props.buildingFunction}
               function={(e) => {
                 props.setBuildingFunction(e);

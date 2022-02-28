@@ -7,7 +7,6 @@ import { IconButton as IButton, Typography } from "@mui/material";
 import DeleteIconOutlined from "@mui/icons-material/DeleteOutlined";
 import BarChartOutlined from "@mui/icons-material/BarChartOutlined";
 import RestaurantOutlined from "@mui/icons-material/RestaurantOutlined";
-import AddCircleOutlineOutlined from "@mui/icons-material/AddCircleOutlineOutlined";
 import ShoppingBasketOutlined from "@mui/icons-material/ShoppingBasketOutlined";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import PublicOutlined from "@mui/icons-material/PublicOutlined";
@@ -16,6 +15,7 @@ import SpaOutlined from "@mui/icons-material/SpaOutlined";
 import KitchenOutlined from "@mui/icons-material/KitchenOutlined";
 import ShoppingBagOutlined from "@mui/icons-material/ShoppingBagOutlined";
 import CategoryIcon from "@mui/icons-material/Category";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 //The default buttons we are using are the large dropdown buttons we use on the account page and their small sub buttons
 //when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (styles are in Button.css)
@@ -71,7 +71,7 @@ function IconButton(props) {
       case "food":
         return <RestaurantOutlined sx={{ fontSize: 90 }} />;
       case "surplus":
-        return <AddCircleOutlineOutlined sx={{ fontSize: 90 }} />;
+        return <CalendarTodayIcon sx={{ fontSize: 90 }} />;
       case "buy":
         return <ShoppingBasketOutlined sx={{ fontSize: 90 }} />;
       case "info":
