@@ -29,7 +29,7 @@ import PlanToSave from "./components/Pages/Account/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 
-import FoodWaste from "./components/Pages/Account/FoodWaste";
+import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWasteBusiness";
 import FoodIntake from "./components/Pages/Account/FoodIntake";
