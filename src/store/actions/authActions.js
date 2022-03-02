@@ -277,12 +277,24 @@ export const createSubAccount = (data) => {
           .collection(data.masterCollection)
           .doc(data.uid)
           .collection("sub_accounts")
-          .doc(resp.user.uid)
+          .doc(subUid)
           .set({
             email: data.email,
             name: data.firstName + " " + data.lastName,
             role: data.role,
           });
+
+        //Add sub UID to admin user document
+        getFirebase()
+          .firestore()
+          .collection("users")
+          .doc(data.uid)
+          .set(
+            {
+              subAccounts: { [subUid]: data.email },
+            },
+            { merge: true }
+          );
       })
       .then(() => {
         //Create user document inside 'users' base collection
@@ -366,6 +378,21 @@ export const deleteSubAccount = (data) => {
           .doc(subUid)
           .delete();
 
+        //Remove sub UID from admin account user document
+        getFirebase()
+          .firestore()
+          .collection("users")
+          .doc(data.uid)
+          .set(
+            {
+              subAccounts: {
+                [subUid]: firebase.firestore.FieldValue.delete(),
+              },
+            },
+            { merge: true }
+          );
+
+        //Delete sub accounts user document
         getFirebase().firestore().collection("users").doc(subUid).delete();
       })
       .then(() => {

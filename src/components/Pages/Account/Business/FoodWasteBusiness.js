@@ -486,7 +486,7 @@ class FoodWasteBusiness extends Component {
             </Button>
           </div>
 
-          {filteredData.length === 0 ? (
+          {false ? (
             <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
               <Col
                 className="mt-0 pt-0 mb-0 pb-0 mt-lg-2 pt-lg-2"
