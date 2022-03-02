@@ -14,6 +14,20 @@ import { DefaultButton } from "../../SubComponents/Button";
 import { Divider } from "@mui/material";
 
 const FoodWaste = (props) => {
+  const [redirectTo, setRedirectTo] = useState(false);
+  //useEffect to redirect if not correct account type
+  useEffect(() => {
+    if (props.profile.type) {
+      if (
+        !String(props.profile.type).includes("household") &&
+        !String(props.profile.type).includes("user")
+      ) {
+        console.log(props.profile.type);
+        // setRedirectTo(true);
+      }
+    }
+  }, [props.profile]);
+
   const defaultUpload = {
     edibleInedible: "Edible",
     foodWasteWeight: 0,
@@ -229,7 +243,11 @@ const FoodWaste = (props) => {
     setMultipliers(defaultMultipliers);
   };
 
+  //Redirect if not loged in
   if (!props.auth.uid) return <Redirect to="/login" />;
+
+  //Redirect if not a personal/household account
+  if (redirectTo) return <Redirect to="/account" />;
 
   return (
     <PageWrap

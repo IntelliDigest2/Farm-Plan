@@ -14,6 +14,16 @@ import { DefaultButton } from "../../SubComponents/Button";
 import { Divider } from "@mui/material";
 
 const FoodWaste = (props) => {
+  const [redirectTo, setRedirectTo] = useState(false);
+  //useEffect to redirect if not correct account type
+  useEffect(() => {
+    if (props.profile.type) {
+      if (!String(props.profile.type).includes("business")) {
+        setRedirectTo(true);
+      }
+    }
+  }, [props.profile]);
+
   const defaultUpload = {
     edibleInedible: "Edible",
     foodWasteWeight: 0,
@@ -183,7 +193,11 @@ const FoodWaste = (props) => {
     notesRef.current.value = "";
   };
 
+  //Redirect if not logged in
   if (!props.auth.uid) return <Redirect to="/login" />;
+
+  //Redirect if not a business user
+  if (redirectTo) return <Redirect to="/account" />;
 
   return (
     <PageWrap

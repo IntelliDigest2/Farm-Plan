@@ -32,7 +32,7 @@ import Map from "./components/Pages/Account/Map";
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
-import FoodIntake from "./components/Pages/Account/FoodIntake";
+import FoodIntake from "./components/Pages/Account/Personal/FoodIntake";
 // import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
 import FoodReduction from "./components/Pages/FoodReduction";
