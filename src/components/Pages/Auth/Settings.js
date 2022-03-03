@@ -787,7 +787,8 @@ const SubAccounts = (props) => {
     handleClose();
   };
 
-  var subs = Object.values(props.subAccounts);
+  if (props.subAccounts !== null && props.subAccounts !== undefined)
+    var subs = Object.values(props.subAccounts);
 
   return (
     <div>
