@@ -86,6 +86,8 @@ function Settings(props) {
   useEffect(() => {
     if (props.data !== undefined && props.data !== null) {
       setSubAccountsList(props.data);
+    } else {
+      setSubAccountsList({});
     }
   }, [props.data]);
 
