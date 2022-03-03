@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, InputGroup, FormGroup, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
@@ -12,12 +12,12 @@ import { Dropdown } from "../../SubComponents/Dropdown";
 import { DefaultButton } from "../../SubComponents/Button";
 import { Divider } from "@mui/material";
 
-const FoodLoss = (props) => {
+const FoodWaste = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);
   //useEffect to redirect if not correct account type
   useEffect(() => {
     if (props.profile.type) {
-      if (!String(props.profile.type).includes("farm")) {
+      if (!String(props.profile.type).includes("academic")) {
         setRedirectTo(true);
       }
     }
@@ -25,6 +25,7 @@ const FoodLoss = (props) => {
 
   const defaultUpload = {
     edibleInedible: "Edible",
+    projectName: "",
     foodName: "",
     foodWasteWeight: 0,
     weightType: "Select Unit",
@@ -32,6 +33,7 @@ const FoodLoss = (props) => {
     ghg: 0,
     foodWasteCost: 0,
     currency: "Select Currency",
+    notes: "",
   };
 
   const defaultMultipliers = {
@@ -44,6 +46,9 @@ const FoodLoss = (props) => {
 
   //Multiplier state
   const [multipliers, setMultipliers] = useState(defaultMultipliers);
+
+  //Reference to Notes input
+  const notesRef = useRef(null);
 
   //Update foodWasteCost and ghg when edibleInedible or foodWasteWeight or weightType changes
   useEffect(() => {
@@ -183,7 +188,7 @@ const FoodLoss = (props) => {
     const data = {
       uid: uid,
       masterCollection: masterCollection,
-      collection: "writtenFoodLossData",
+      collection: "writtenFoodWasteData",
       upload: {
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         ...upload,
@@ -194,6 +199,7 @@ const FoodLoss = (props) => {
     props.createMapData(mapData);
     setUpload(defaultUpload);
     setMultipliers(defaultMultipliers);
+    notesRef.current.value = "";
   };
 
   //Redirect if not logged in
@@ -210,6 +216,19 @@ const FoodLoss = (props) => {
     >
       <Container fluid className="web-center">
         <Form>
+          <FormGroup className="mb-3">
+            <Form.Label style={{ backgroundColor: "white" }}>
+              Project Name
+            </Form.Label>
+            <Form.Control
+              type="text"
+              id="projectName"
+              onChange={(e) => {
+                updateStateValue(e);
+              }}
+              value={upload.projectName}
+            />
+          </FormGroup>
           <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Food Name
@@ -281,6 +300,18 @@ const FoodLoss = (props) => {
                 <InputGroup.Text>kg co2</InputGroup.Text>
               </InputGroup.Append>
             </InputGroup>
+          </FormGroup>
+          <FormGroup className="mb-3">
+            <Form.Label style={{ backgroundColor: "white" }}>Notes</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              id="notes"
+              ref={notesRef}
+              onChange={(e) => {
+                updateStateValue(e);
+              }}
+            />
           </FormGroup>
           <EnableSubmit
             upload={upload}
@@ -404,4 +435,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodLoss);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodWaste);

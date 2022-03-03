@@ -7,6 +7,9 @@ import { Colors } from "../../../lib/Colors";
 import { connect } from "react-redux";
 import { getFirestoreData } from "../../../../store/actions/dataActions";
 import { DefaultButton } from "../../SubComponents/Button";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { PageWrap } from "../../SubComponents/PageWrap";
 
 // Get current Date and week number
 const currentDate = new Date();
@@ -85,6 +88,25 @@ function ChartView(props) {
   const [friCost, setFriCost] = useState(0);
   const [satCost, setSatCost] = useState(0);
   const [sunCost, setSunCost] = useState(0);
+
+  const defaultDaily = {
+    mon: 0,
+    tue: 0,
+    wed: 0,
+    thur: 0,
+    fri: 0,
+    sat: 0,
+    sun: 0,
+  };
+
+  //* REPLACEMENT CODE FOR SETTING DAILY-MONTHLY-YEARLY
+  // const [dailyWeight, setDailyWeight] = useState({ ...defaultDaily });
+  // const [dailyGHG, setDailyGHG] = useState({ ...defaultDaily });
+  // const [dailyCost, setDailyCost] = useState({ ...defaultDaily });
+  // setDailyWeight({
+  //   ...dailyWeight,
+  //   sun: dailyWeight.sun + newWeight,
+  // });
 
   //Weekly State
   const [first, setFirst] = useState(0);
@@ -225,19 +247,22 @@ function ChartView(props) {
   }
 
   //this sends data request
-  useEffect(() => {
-    if (props.data.length <= 0) fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (props.data.length <= 0) fetchData();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     clearState();
-    updateCharts();
+    if (props.data !== undefined && props.data !== null) {
+      updateCharts();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.data]);
 
   const updateCharts = async () => {
-    props.data.forEach((doc) => {
+    var data = Object.values(props.data);
+    data.forEach((doc) => {
       try {
         var date = new Date(doc.date.seconds * 1000);
         var year = date.getFullYear();
@@ -556,8 +581,11 @@ function ChartView(props) {
 
   return (
     //tabbed window with daily weekly monthly yearly
-    <Container fluid className="web-center">
-      <DefaultButton text="Back" styling="green" goTo="/account" />
+    <PageWrap
+      header="Food Waste/Loss Chart"
+      subtitle="View Food Waste/Loss"
+      goTo="/account"
+    >
       <Tab.Container defaultActiveKey="daily">
         <Tab.Content>
           <Tab.Pane eventKey="daily" title="Daily">
@@ -604,7 +632,7 @@ function ChartView(props) {
           </Nav.Item>
         </Nav>
       </Tab.Container>
-    </Container>
+    </PageWrap>
   );
 }
 
@@ -617,7 +645,8 @@ function ChartView(props) {
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
-    data: state.data.getData,
+    profile: state.firebase.profile,
+    data: state.firestore.data.FoodData,
   };
 };
 
@@ -628,4 +657,60 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChartView);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect((props) => {
+    var uid,
+      masterCollection,
+      subColection = "writtenFoodWasteData";
+    switch (props.profile.type) {
+      case "business_admin":
+        masterCollection = "business_users";
+        uid = props.auth.uid;
+        break;
+      case "business_sub":
+        masterCollection = "business_users";
+        uid = props.profile.admin;
+        break;
+      case "academic_admin":
+        masterCollection = "academic_users";
+        uid = props.auth.uid;
+        break;
+      case "academic_sub":
+        masterCollection = "academic_users";
+        uid = props.profile.admin;
+        break;
+      case "farm_admin":
+        masterCollection = "farm_users";
+        subColection = "writtenFoodLossData";
+        uid = props.auth.uid;
+        break;
+      case "farm_sub":
+        masterCollection = "farm_users";
+        subColection = "writtenFoodLossData";
+        uid = props.profile.admin;
+        break;
+      case "household_admin":
+        masterCollection = "household_users";
+        uid = props.auth.uid;
+        break;
+      case "household_sub":
+        masterCollection = "household_users";
+        uid = props.profile.admin;
+        break;
+      default:
+        masterCollection = "data";
+        uid = props.auth.uid;
+        break;
+    }
+    if (!props.auth.uid) return [];
+    return [
+      {
+        collection: masterCollection,
+        doc: uid,
+        subcollections: [{ collection: subColection }],
+        storeAs: "FoodData",
+      },
+    ];
+  })
+)(ChartView);

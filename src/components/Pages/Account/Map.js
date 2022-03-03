@@ -12,36 +12,27 @@ import { Redirect } from "react-router-dom";
 import { DefaultButton } from "../SubComponents/Button";
 
 import { getMapData } from "../../../store/actions/dataActions";
+import { firestoreConnect } from "react-redux-firebase";
 
 //Map component
 const Map = (props) => {
   const [locationstate, setLocation] = useState([]);
 
-  //Get MapData from firebase
-  function fetchData() {
-    var data = {
-      masterCollection: "mapData",
-    };
-    props.getMapData(data);
-  }
-
-  //Get data from firestore
-  useEffect(() => {
-    if (props.data.length <= 0) fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   //handle data from firebase
   useEffect(() => {
     setLocation([]);
-    updateMap();
+    if (props.data !== null && props.data !== undefined) {
+      updateMap();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.data]);
 
   //Handle data from firebase
   const updateMap = async () => {
+    var mapData = Object.values(props.data);
+
     var locationArray = [];
-    props.data.forEach((doc) => {
+    mapData.forEach((doc) => {
       var index = locationArray.findIndex((x) => x.location === doc.location);
 
       var obj = {
@@ -71,7 +62,7 @@ const Map = (props) => {
         };
         setLocation((oldArray) => [...oldArray, obj]);
       } catch (err) {
-        console.log(err);
+        //console.log(err);
       }
     });
   };
@@ -171,6 +162,7 @@ const Map = (props) => {
           {locationstate.map(
             ({ lat, lng, foodWasteWeight, location, users }, index) => (
               <MapMarker
+                key={index}
                 lat={lat}
                 lng={lng}
                 foodWasteWeight={foodWasteWeight}
@@ -190,7 +182,8 @@ const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
-    data: state.data.getData,
+    // data: state.data.getData,
+    data: state.firestore.data.mapData,
   };
 };
 
@@ -200,4 +193,15 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Map);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect((props) => {
+    if (!props.auth) return [];
+    return [
+      {
+        collection: "mapData",
+        storeAs: "mapData",
+      },
+    ];
+  })
+)(Map);

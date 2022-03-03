@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Form, InputGroup, FormGroup, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
-  startData,
   createFoodWasteData,
   createMapData,
 } from "./../../../../store/actions/dataActions";
@@ -150,10 +149,12 @@ const FoodWaste = (props) => {
     setUpload({
       ...upload,
       ghg: ghg,
-      foodWasteCost:
-        (Number(upload.foodWasteWeight) * 0.85).toFixed(2) *
+      foodWasteCost: (
+        Number(upload.foodWasteWeight) *
+        0.85 *
         multipliers.weightMultiplier *
-        multipliers.currencyMultiplier,
+        multipliers.currencyMultiplier
+      ).toFixed(2),
     });
   };
 
@@ -468,7 +469,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    startData: (product) => dispatch(startData(product)),
     createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
     createMapData: (product) => dispatch(createMapData(product)),
   };

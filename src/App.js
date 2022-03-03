@@ -51,7 +51,7 @@ import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 import AddProductsBusiness from "./components/Pages/Account/Business/AddProductsBusiness";
 import AddProductsAcademic from "./components/Pages/Account/Academic/AddProductsAcademic";
 
-import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWasteAcademic";
+import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
 import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
 import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
 
@@ -103,8 +103,6 @@ const App = (props) => {
       });
     })
     .catch((err) => console.log("failed: ", err));
-
-  //Local Notificaiton
 
   return (
     <React.Fragment>

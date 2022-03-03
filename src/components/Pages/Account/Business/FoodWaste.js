@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, InputGroup, FormGroup, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
-  startData,
   createFoodWasteData,
   createMapData,
 } from "./../../../../store/actions/dataActions";
@@ -46,12 +45,19 @@ const FoodWaste = (props) => {
   //Multiplier state
   const [multipliers, setMultipliers] = useState(defaultMultipliers);
 
+  //Reference to Notes input
   const notesRef = useRef(null);
 
   //Update foodWasteCost and ghg when edibleInedible or foodWasteWeight or weightType changes
   useEffect(() => {
     handleCostGHGChange();
-  }, [upload.edibleInedible, upload.foodWasteWeight, upload.weightType]);
+    console.log(upload.currency);
+  }, [
+    upload.edibleInedible,
+    upload.foodWasteWeight,
+    upload.weightType,
+    upload.currency,
+  ]);
 
   const updateStateValue = (e) => {
     if (e.target.textContent) {
@@ -101,10 +107,12 @@ const FoodWaste = (props) => {
     setUpload({
       ...upload,
       ghg: Number(upload.foodWasteWeight * multipliers.weightMultiplier * 2.5),
-      foodWasteCost:
-        (Number(upload.foodWasteWeight) * 0.85).toFixed(2) *
+      foodWasteCost: (
+        Number(upload.foodWasteWeight) *
+        0.85 *
         multipliers.weightMultiplier *
-        multipliers.currencyMultiplier,
+        multipliers.currencyMultiplier
+      ).toFixed(2),
     });
   };
 
@@ -391,7 +399,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    startData: (product) => dispatch(startData(product)),
     createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
     createMapData: (product) => dispatch(createMapData(product)),
   };
