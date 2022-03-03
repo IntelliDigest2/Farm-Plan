@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import { DefaultButton } from "../SubComponents/Button";
+import { PageWrap } from "../SubComponents/PageWrap";
 
 import { getMapData } from "../../../store/actions/dataActions";
 import { firestoreConnect } from "react-redux-firebase";
@@ -130,8 +131,7 @@ const Map = (props) => {
   //Redirect if not logged in
   if (!props.auth.uid) return <Redirect to="/login" />;
   return (
-    <Container className="web-center">
-      <DefaultButton text="Back" styling="green" goTo="/account" />
+    <PageWrap header="Users Map" goTo="/account">
       <MapContainer
         className="map-data"
         center={[0, 0]}
@@ -173,7 +173,7 @@ const Map = (props) => {
           )}
         </MarkerClusterGroup>
       </MapContainer>
-    </Container>
+    </PageWrap>
   );
 };
 
