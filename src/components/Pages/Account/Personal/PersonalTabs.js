@@ -14,16 +14,69 @@ export function Food() {
     <>
       <IconButton
         icon="food"
-        label="Food Intake"
+        label="Food Diary"
         color="turquoise"
         goTo="/food-intake"
       />
       <IconButton
-        icon="buy"
-        label="Buy Food"
+        icon="kitchen"
+        label="Plan to Save"
         color="turquoise"
-        goTo="/browse-products"
+        goTo="/pts"
       />
+    </>
+  );
+}
+
+export function Health() {
+  return (
+    <>
+      <IconButton
+        icon="plant"
+        label="Nutrient Gap"
+        color="yellow"
+        goTo="/"
+        disabled="true"
+      />
+      <IconButton
+        icon="book"
+        label="Recipes"
+        color="yellow"
+        goTo="/"
+        disabled="true"
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
+      />
+      <Accordion
+        style={{
+          width: "80%",
+          justifyContent: "center",
+          alignItems: "center",
+          display: "block",
+          margin: "auto",
+          backgroundColor: Colors.brandGreen,
+        }}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="panel1a-header">
+          <Typography>Disclaimer</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            <b>DISCLAIMER: </b>The Global Food Loss & Waste Tracker is designed,
+            in part, to help users develop healthy eating habits. The
+            nutritional information and dietary recommendations provided are
+            merely suggestions which may or may not improve users' eating habits
+            and/or overall health. This app is a self-regulatory tool, not
+            intended to replace professional medical advice. Please always
+            consult a dietician or medical professional for professional medical
+            advice regarding your health.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
     </>
   );
 }
@@ -55,60 +108,12 @@ export function Environment() {
         color="green"
         goTo="/food-reduction"
       />
-    </>
-  );
-}
-
-export function Health() {
-  return (
-    <>
       <IconButton
-        icon="plant"
-        label="Nutrient Gap"
-        color="yellow"
-        goTo="/"
-        disabled="true"
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
       />
-      <IconButton
-        icon="book"
-        label="Recipes"
-        color="yellow"
-        goTo="/"
-        disabled="true"
-      />
-      <IconButton
-        icon="product"
-        label="Products"
-        color="yellow"
-        goTo="/"
-        disabled="true"
-      />
-      <Accordion
-        style={{
-          width: "80%",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "block",
-          margin: "auto",
-          backgroundColor: Colors.brandGreen,
-        }}
-      >
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="panel1a-header">
-          <Typography>Disclaimer</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            <b>DISCLAIMER: </b>The Global Food Loss & Waste Tracker is designed,
-            in part, to help users develop healthy eating habits. The
-            nutritional information and dietary recommendations provided are
-            merely suggestions which may or may not improve users' eating habits
-            and/or overall health. This app is a self-regulatory tool, not
-            intended to replace professional medical advice. Please always
-            consult a dietician or medical professional for professional medical
-            advice regarding your health.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
     </>
   );
 }
