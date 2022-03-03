@@ -319,23 +319,10 @@ const FoodWaste = (props) => {
               </InputGroup.Append>
             </InputGroup>
           </FormGroup>
-          <FormGroup className="mb-3">
-            <Divider />
-            {upload.foodWasteWeight > 0 &&
-            upload.weightType !== "Select Unit" &&
-            upload.expiryDate !== "" &&
-            upload.currency !== "Select Currency" ? (
-              <DefaultButton
-                text="Update"
-                styling="green"
-                onClick={(e) => {
-                  handleFoodWasteSubmit();
-                }}
-              />
-            ) : (
-              <DefaultButton text="Update" styling="green" disabled="true" />
-            )}
-          </FormGroup>
+          <EnableSubmit
+            upload={upload}
+            handleFoodWasteSubmit={handleFoodWasteSubmit}
+          />
         </Form>
       </Container>
     </PageWrap>
@@ -458,6 +445,52 @@ const EdibleInedible = (props) => {
     );
   } else {
     return null;
+  }
+};
+
+const EnableSubmit = (props) => {
+  if (props.upload.edibleInedible === "Edible") {
+    if (
+      props.upload.foodWasteWeight > 0 &&
+      props.upload.weightType !== "Select Unit" &&
+      props.upload.expiryDate !== "" &&
+      props.upload.currency !== "Select Currency"
+    ) {
+      return (
+        <FormGroup className="mb-3">
+          <Divider />
+          <DefaultButton
+            text="Update"
+            styling="green"
+            onClick={(e) => {
+              props.handleFoodWasteSubmit();
+            }}
+          />
+        </FormGroup>
+      );
+    } else {
+      return <DefaultButton text="Update" styling="green" disabled="true" />;
+    }
+  } else {
+    if (
+      props.upload.foodWasteWeight > 0 &&
+      props.upload.weightType !== "Select Unit"
+    ) {
+      return (
+        <FormGroup className="mb-3">
+          <Divider />
+          <DefaultButton
+            text="Update"
+            styling="green"
+            onClick={(e) => {
+              props.handleFoodWasteSubmit();
+            }}
+          />
+        </FormGroup>
+      );
+    } else {
+      return <DefaultButton text="Update" styling="green" disabled="true" />;
+    }
   }
 };
 

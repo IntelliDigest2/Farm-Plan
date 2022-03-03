@@ -317,9 +317,6 @@ const FoodWaste = (props) => {
           </FormGroup>
           <EnableSubmit
             upload={upload}
-            multipliers={multipliers}
-            changeMultiplier={changeMultiplier}
-            updateStateValue={updateStateValue}
             handleFoodWasteSubmit={handleFoodWasteSubmit}
           />
         </Form>
