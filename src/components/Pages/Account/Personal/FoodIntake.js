@@ -12,6 +12,7 @@ import { PageWrap } from "../../SubComponents/PageWrap";
 import { Dropdown } from "../../SubComponents/Dropdown";
 import { DefaultButton } from "../../SubComponents/Button";
 import { Divider } from "@mui/material";
+import { submitNotification } from "../../../lib/Notifications";
 
 const FoodIntake = (props) => {
   const defaultUpload = {
@@ -92,6 +93,7 @@ const FoodIntake = (props) => {
       },
     };
     props.createFoodWasteData(data);
+    submitNotification("Success", "Food Diary successfully updated!");
     setUpload(defaultUpload);
   };
 

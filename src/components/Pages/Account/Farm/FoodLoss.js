@@ -11,6 +11,7 @@ import { PageWrap } from "../../SubComponents/PageWrap";
 import { Dropdown } from "../../SubComponents/Dropdown";
 import { DefaultButton } from "../../SubComponents/Button";
 import { Divider } from "@mui/material";
+import { submitNotification } from "../../../lib/Notifications";
 
 const FoodLoss = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);
@@ -192,6 +193,7 @@ const FoodLoss = (props) => {
 
     props.createFoodWasteData(data);
     props.createMapData(mapData);
+    submitNotification("Success", "Food Loss successfully uploaded!");
     setUpload(defaultUpload);
     setMultipliers(defaultMultipliers);
   };
