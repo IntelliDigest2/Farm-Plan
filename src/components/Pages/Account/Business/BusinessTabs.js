@@ -7,26 +7,28 @@ export function Food() {
     <>
       <IconButton
         icon="notes"
-        label="My Farm Plan"
+        label="Meal Plan"
         color="turquoise"
-        goTo="/farm-plan"
+        goTo="/"
+        disabled
       />
       <IconButton
         icon="my-products"
-        label="Food Sold"
+        label="Meal Sold"
         color="turquoise"
-        goTo="/view-products"
+        goTo="/"
+        disabled
       />
       <IconButton
         icon="my-products"
-        label="Food Returned"
+        label="Meal Returned"
         color="turquoise"
-        goTo="/view-products"
+        goTo="/"
         disabled
       />
       <IconButton
         icon="chart"
-        label="Produce Chart"
+        label="Meal Chart"
         color="yellow"
         goTo="/"
         disabled
@@ -41,7 +43,7 @@ export function Food() {
       <IconButton
         icon="notes"
         label="Profit"
-        color="turqoise"
+        color="turquoise"
         goTo="/"
         disabled
       />

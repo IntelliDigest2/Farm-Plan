@@ -13,16 +13,92 @@ export function Food() {
   return (
     <>
       <IconButton
-        icon="surplus"
-        label="Food Surplus"
+        icon="notes"
+        label="Meal Plan"
         color="turquoise"
-        goTo="/add-products-academic"
+        goTo="/farm-plan"
       />
       <IconButton
-        icon="buy"
-        label="Buy Food"
+        icon="my-products"
+        label="Meal Sold"
         color="turquoise"
-        goTo="/browse-products"
+        goTo="/view-products"
+      />
+      <IconButton
+        icon="my-products"
+        label="Meal Returned"
+        color="turquoise"
+        goTo="/view-products"
+        disabled
+      />
+      <IconButton
+        icon="chart"
+        label="Meal Chart"
+        color="yellow"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="notes"
+        label="Turnover"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="notes"
+        label="Profit"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
+      />
+    </>
+  );
+}
+
+export function Research() {
+  return (
+    <>
+      <IconButton
+        icon="notes"
+        label="Research Plan"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="my-products"
+        label="Food Items Used"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="my-products"
+        label="Food Items Not Used"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton icon="chart" label="Chart" color="yellow" goTo="/" disabled />
+      <IconButton
+        icon="notes"
+        label="Research Cost"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
       />
     </>
   );
@@ -35,34 +111,19 @@ export function Environment() {
         icon="waste"
         label="Food Waste"
         color="turquoise"
-        goTo="/food-wasteAcademic"
+        goTo="/food-wasteBusiness"
+      />
+      <IconButton
+        icon="chart"
+        label="Waste Chart"
+        color="yellow"
+        goTo="/chart"
       />
       <IconButton
         icon="info"
-        label="Waste Tips"
+        label="Food Waste Reduction Tips"
         color="green"
         goTo="/food-reduction"
-      />
-    </>
-  );
-}
-
-export function Health() {
-  return (
-    <>
-      <IconButton
-        icon="plant"
-        label="Nutrient Gap"
-        color="yellow"
-        goTo="/"
-        disabled="true"
-      />
-      <IconButton
-        icon="book"
-        label="Recipes"
-        color="yellow"
-        goTo="/"
-        disabled="true"
       />
       <IconButton
         icon="kitchen"
@@ -70,32 +131,40 @@ export function Health() {
         color="turquoise"
         goTo="/pts"
       />
-      <Accordion
-        style={{
-          width: "80%",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "block",
-          margin: "auto",
-          backgroundColor: Colors.brandGreen,
-        }}
-      >
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} id="panel1a-header">
-          <Typography>Disclaimer</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            <b>DISCLAIMER: </b>The Global Food Loss & Waste Tracker is designed,
-            in part, to help users develop healthy eating habits. The
-            nutritional information and dietary recommendations provided are
-            merely suggestions which may or may not improve users' eating habits
-            and/or overall health. This app is a self-regulatory tool, not
-            intended to replace professional medical advice. Please always
-            consult a dietician or medical professional for professional medical
-            advice regarding your health.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+    </>
+  );
+}
+
+export function FISP() {
+  return (
+    <>
+      <IconButton
+        icon="plant"
+        label="Agrifood Technpreneur"
+        color="turquoise"
+        disabled="true"
+        goTo="/"
+      />
+      <IconButton
+        icon="book"
+        label="Masterclasses"
+        color="turquoise"
+        disabled="true"
+        goTo="/"
+      />
+      <IconButton
+        icon="info"
+        label="FISI"
+        color="green"
+        disabled="true"
+        goTo="/"
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
+      />
     </>
   );
 }

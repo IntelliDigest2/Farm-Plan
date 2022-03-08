@@ -41,7 +41,7 @@ export function Food() {
       <IconButton
         icon="notes"
         label="Profit"
-        color="turqoise"
+        color="turquoise"
         goTo="/"
         disabled
       />

@@ -155,9 +155,10 @@ const AccountType = (props) => {
             onChange={props.handleChange}
             centered
           >
-            <Tab disableRipple label="Food" value="0" />
-            <Tab disableRipple label="Health" value="1" />
+            <Tab disableRipple label="Food Business" value="0" />
+            <Tab disableRipple label="Research" value="1" />
             <Tab disableRipple label="Environment" value="2" />
+            <Tab disableRipple label="FISP" value="3" />
           </TabList>
           <SwipeableViews
             axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -167,11 +168,14 @@ const AccountType = (props) => {
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
               <Schools.Food />
             </TabPanel>
-            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
-              <Schools.Health />
-            </TabPanel>
             <TabPanel value={props.value} index={1} dir={props.theme.direction}>
+              <Schools.Research />
+            </TabPanel>
+            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Schools.Environment />
+            </TabPanel>
+            <TabPanel value={props.value} index={3} dir={props.theme.direction}>
+              <Schools.FISP />
             </TabPanel>
           </SwipeableViews>
         </>
