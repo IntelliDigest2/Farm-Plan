@@ -94,11 +94,19 @@ function IconButton(props) {
     }
   }
 
+  var target;
+  if (String(props.goTo).startsWith("/")) {
+    target = null;
+  } else {
+    target = "_blank";
+  }
+
   return (
     <BootstrapButton
       variant="default"
       className={["icon-btn", props.color]}
       href={props.goTo}
+      target={target}
       disabled={props.disabled}
     >
       <div>
