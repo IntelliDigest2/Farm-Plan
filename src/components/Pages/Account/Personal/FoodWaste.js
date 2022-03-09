@@ -64,6 +64,7 @@ const FoodWaste = (props) => {
     upload.edibleInedible,
     upload.foodWasteWeight,
     upload.weightType,
+    upload.currency,
     upload.carbsContent,
     upload.carbsPerUnit,
     upload.proteinContent,
@@ -132,21 +133,21 @@ const FoodWaste = (props) => {
   };
 
   const handleGHGChange = () => {
-    if (upload.edibleInedible === "Edible") {
-      var ghg = Number(
-        20 *
-          16.0424 *
-          multipliers.weightMultiplier *
-          upload.foodWasteWeight *
-          (0.01852 * multipliers.carbsMultiplier * upload.carbsContent +
-            0.01744 * multipliers.proteinMultiplier * upload.proteinContent +
-            0.04608 * multipliers.fatMultiplier * upload.fatContent)
-      );
-    } else {
-      var ghg = Number(
-        upload.foodWasteWeight * multipliers.weightMultiplier * 2.5
-      );
-    }
+    // if (upload.edibleInedible === "Edible") {
+    //   var ghg = Number(
+    //     20 *
+    //       16.0424 *
+    //       multipliers.weightMultiplier *
+    //       upload.foodWasteWeight *
+    //       (0.01852 * multipliers.carbsMultiplier * upload.carbsContent +
+    //         0.01744 * multipliers.proteinMultiplier * upload.proteinContent +
+    //         0.04608 * multipliers.fatMultiplier * upload.fatContent)
+    //   );
+    // } else {
+    var ghg = Number(
+      upload.foodWasteWeight * multipliers.weightMultiplier * 2.5
+    );
+    // }
     setUpload({
       ...upload,
       ghg: ghg,
@@ -333,7 +334,7 @@ const EdibleInedible = (props) => {
   if (props.upload.edibleInedible === "Edible") {
     return (
       <>
-        <FormGroup className="mb-3">
+        {/* <FormGroup className="mb-3">
           <Form.Label style={{ backgroundColor: "white" }}>
             Carbs Content
           </Form.Label>
@@ -407,7 +408,7 @@ const EdibleInedible = (props) => {
               items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
             />
           </InputGroup>
-        </FormGroup>
+        </FormGroup> */}
         <FormGroup className="mb-3">
           <Form.Label style={{ backgroundColor: "white" }}>
             Expiry Date

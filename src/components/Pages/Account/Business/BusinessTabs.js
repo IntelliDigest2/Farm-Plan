@@ -79,6 +79,12 @@ export function Environment() {
         goTo="/food-reduction"
       />
       <IconButton
+        icon="world"
+        label="Users Map"
+        color="yellow"
+        goTo="/view-map"
+      />
+      <IconButton
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"

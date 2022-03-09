@@ -111,7 +111,7 @@ export function Environment() {
         icon="waste"
         label="Food Waste"
         color="turquoise"
-        goTo="/food-wasteBusiness"
+        goTo="/food-wasteAcademic"
       />
       <IconButton
         icon="chart"
@@ -124,6 +124,12 @@ export function Environment() {
         label="Food Waste Reduction Tips"
         color="green"
         goTo="/food-reduction"
+      />
+      <IconButton
+        icon="world"
+        label="Users Map"
+        color="yellow"
+        goTo="/view-map"
       />
       <IconButton
         icon="kitchen"
