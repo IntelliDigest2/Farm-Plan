@@ -277,7 +277,7 @@ export const createSubAccount = (data) => {
           .collection(data.masterCollection)
           .doc(data.uid)
           .collection("sub_accounts")
-          .doc(resp.user.uid)
+          .doc(subUid)
           .set({
             email: data.email,
             name: data.firstName + " " + data.lastName,
@@ -357,8 +357,6 @@ export const deleteSubAccount = (data) => {
       .then(() => {
         subUid = secondaryApp.auth().currentUser.uid;
 
-        console.log(subUid);
-
         //Delete user document inside Admin's 'sub_accounts' collection
         getFirebase()
           .firestore()
@@ -367,9 +365,8 @@ export const deleteSubAccount = (data) => {
           .collection("sub_accounts")
           .doc(subUid)
           .delete();
-      })
-      .then(() => {
-        //Create user document inside 'users' base collection
+
+        //Delete sub accounts user document
         getFirebase().firestore().collection("users").doc(subUid).delete();
       })
       .then(() => {

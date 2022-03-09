@@ -13,24 +13,33 @@ import { DefaultButton } from "../../SubComponents/Button";
 import { Divider } from "@mui/material";
 import { submitNotification } from "../../../lib/Notifications";
 
-const FoodLoss = (props) => {
+const FoodWaste = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);
   //useEffect to redirect if not correct account type
   useEffect(() => {
     if (props.profile.type) {
-      if (!String(props.profile.type).includes("farm")) {
-        setRedirectTo(true);
+      if (
+        !String(props.profile.type).includes("household") &&
+        !String(props.profile.type).includes("user")
+      ) {
+        console.log(props.profile.type);
+        // setRedirectTo(true);
       }
     }
   }, [props.profile]);
 
   const defaultUpload = {
     edibleInedible: "Edible",
-    foodName: "",
     foodWasteWeight: 0,
     weightType: "Select Unit",
-    expiryDate: "",
+    carbsContent: 0,
+    carbsPerUnit: "Select Unit",
+    proteinContent: 0,
+    proteinPerUnit: "Select Unit",
+    fatContent: 0,
+    fatPerUnit: "Select Unit",
     ghg: 0,
+    expiryDate: "",
     foodWasteCost: 0,
     currency: "Select Currency",
   };
@@ -38,24 +47,32 @@ const FoodLoss = (props) => {
   const defaultMultipliers = {
     weightMultiplier: 0,
     currencyMultiplier: 0,
+    carbsMultiplier: 0,
+    proteinMultiplier: 0,
+    fatMultiplier: 0,
   };
 
   //Upload state
-  const [upload, setUpload] = useState(defaultUpload);
+  const [upload, setUpload] = useState({ ...defaultUpload });
 
   //Multiplier state
-  const [multipliers, setMultipliers] = useState(defaultMultipliers);
+  const [multipliers, setMultipliers] = useState({ ...defaultMultipliers });
 
-  //Update foodWasteCost and ghg when edibleInedible or foodWasteWeight or weightType changes
   useEffect(() => {
-    handleCostGHGChange();
+    handleGHGChange();
   }, [
     upload.edibleInedible,
     upload.foodWasteWeight,
     upload.weightType,
-    upload.currency,
+    upload.carbsContent,
+    upload.carbsPerUnit,
+    upload.proteinContent,
+    upload.proteinPerUnit,
+    upload.fatContent,
+    upload.fatPerUnit,
   ]);
 
+  //Update upload state
   const updateStateValue = (e) => {
     if (e.target.textContent) {
       setUpload({ ...upload, [e.target.id]: e.target.textContent });
@@ -64,6 +81,7 @@ const FoodLoss = (props) => {
     }
   };
 
+  //Change multiplier values
   const changeMultiplier = (e) => {
     let stringArray = e.target.id.toString().split(/PerUnit|Type/);
     let typeString = stringArray[0] + "Multiplier";
@@ -84,6 +102,19 @@ const FoodLoss = (props) => {
       case "lbs":
         val = 0.454;
         break;
+      //Weight Unit (Carbs, Fat, Protein)
+      case "100g":
+      case "100ml":
+        val = 0.01;
+        break;
+      case "500g":
+      case "500ml":
+        val = 0.002;
+        break;
+      case "1l":
+      case "1kg":
+        val = 0.001;
+        break;
       //Currency Unit (GBP (£), USD ($), EUR (€))
       case "GBP (£)":
         val = 1;
@@ -100,10 +131,25 @@ const FoodLoss = (props) => {
     setMultipliers({ ...multipliers, [typeString]: val });
   };
 
-  const handleCostGHGChange = () => {
+  const handleGHGChange = () => {
+    if (upload.edibleInedible === "Edible") {
+      var ghg = Number(
+        20 *
+          16.0424 *
+          multipliers.weightMultiplier *
+          upload.foodWasteWeight *
+          (0.01852 * multipliers.carbsMultiplier * upload.carbsContent +
+            0.01744 * multipliers.proteinMultiplier * upload.proteinContent +
+            0.04608 * multipliers.fatMultiplier * upload.fatContent)
+      );
+    } else {
+      var ghg = Number(
+        upload.foodWasteWeight * multipliers.weightMultiplier * 2.5
+      );
+    }
     setUpload({
       ...upload,
-      ghg: Number(upload.foodWasteWeight * multipliers.weightMultiplier * 2.5),
+      ghg: ghg,
       foodWasteCost: (
         Number(upload.foodWasteWeight) *
         0.85 *
@@ -141,6 +187,8 @@ const FoodLoss = (props) => {
       },
     };
 
+    //Setup data to be sent to generic create firestore function (TO BE RENAMED LATER)
+    //If sub account, use admin uid, if admin or personal use your own
     var uid, masterCollection;
     switch (props.profile.type) {
       case "business_admin":
@@ -184,7 +232,7 @@ const FoodLoss = (props) => {
     const data = {
       uid: uid,
       masterCollection: masterCollection,
-      collection: "writtenFoodLossData",
+      collection: "writtenFoodWasteData",
       upload: {
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         ...upload,
@@ -193,15 +241,15 @@ const FoodLoss = (props) => {
 
     props.createFoodWasteData(data);
     props.createMapData(mapData);
-    submitNotification("Success", "Food Loss successfully uploaded!");
+    submitNotification("Success", "Food Waste successfully uploaded!");
     setUpload(defaultUpload);
     setMultipliers(defaultMultipliers);
   };
 
-  //Redirect if not logged in
+  //Redirect if not loged in
   if (!props.auth.uid) return <Redirect to="/login" />;
 
-  //Redirect if not an academic user
+  //Redirect if not a personal/household account
   if (redirectTo) return <Redirect to="/account" />;
 
   return (
@@ -214,20 +262,7 @@ const FoodLoss = (props) => {
         <Form>
           <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
-              Food Name
-            </Form.Label>
-            <Form.Control
-              type="text"
-              id="foodName"
-              onChange={(e) => {
-                updateStateValue(e);
-              }}
-              value={upload.foodName}
-            />
-          </FormGroup>
-          <FormGroup className="mb-3">
-            <Form.Label style={{ backgroundColor: "white" }}>
-              Edible or Inedibe
+              Edible or Inedible
             </Form.Label>
             <Dropdown
               id="edibleInedible"
@@ -300,6 +335,81 @@ const EdibleInedible = (props) => {
       <>
         <FormGroup className="mb-3">
           <Form.Label style={{ backgroundColor: "white" }}>
+            Carbs Content
+          </Form.Label>
+          <InputGroup>
+            <Form.Control
+              type="number"
+              id="carbsContent"
+              onChange={(e) => {
+                props.updateStateValue(e);
+              }}
+              value={props.upload.carbsContent}
+            />
+            <Dropdown
+              id="carbsPerUnit"
+              styling="grey dropdown-input-right"
+              data={props.upload.carbsPerUnit}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
+            Protein Content
+          </Form.Label>
+          <InputGroup>
+            <Form.Control
+              type="number"
+              id="proteinContent"
+              onChange={(e) => {
+                props.updateStateValue(e);
+              }}
+              value={props.upload.proteinContent}
+            />
+            <Dropdown
+              id="proteinPerUnit"
+              styling="grey dropdown-input-right"
+              data={props.upload.proteinPerUnit}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
+            Fat Content
+          </Form.Label>
+          <InputGroup>
+            <Form.Control
+              type="number"
+              id="fatContent"
+              onChange={(e) => {
+                props.updateStateValue(e);
+              }}
+              value={props.upload.fatContent}
+            />
+            <Dropdown
+              id="fatPerUnit"
+              styling="grey dropdown-input-right"
+              data={props.upload.fatPerUnit}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
             Expiry Date
           </Form.Label>
           <Form.Control
@@ -341,8 +451,6 @@ const EdibleInedible = (props) => {
 const EnableSubmit = (props) => {
   if (props.upload.edibleInedible === "Edible") {
     if (
-      props.upload.projectName !== "" &&
-      props.upload.foodName !== "" &&
       props.upload.foodWasteWeight > 0 &&
       props.upload.weightType !== "Select Unit" &&
       props.upload.expiryDate !== "" &&
@@ -365,8 +473,6 @@ const EnableSubmit = (props) => {
     }
   } else {
     if (
-      props.upload.projectName !== "" &&
-      props.upload.foodName !== "" &&
       props.upload.foodWasteWeight > 0 &&
       props.upload.weightType !== "Select Unit"
     ) {
@@ -403,4 +509,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodLoss);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodWaste);

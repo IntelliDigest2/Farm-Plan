@@ -6,23 +6,55 @@ export function Food() {
   return (
     <>
       <IconButton
-        icon="surplus"
-        label="Food Surplus"
+        icon="notes"
+        label="Meal Plan"
         color="turquoise"
-        goTo="/add-products-business"
+        goTo="/"
+        disabled
       />
       <IconButton
-        icon="buy"
-        label="Buy Food"
+        icon="my-products"
+        label="Meal Sold"
         color="turquoise"
-        goTo="/browse-products"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="my-products"
+        label="Meal Returned"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="chart"
+        label="Meal Chart"
+        color="yellow"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="notes"
+        label="Turnover"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="notes"
+        label="Profit"
+        color="turquoise"
+        goTo="/"
+        disabled
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
       />
     </>
   );
-}
-
-export function Health() {
-  return <></>;
 }
 
 export function Environment() {
@@ -45,6 +77,52 @@ export function Environment() {
         label="Food Waste Reduction Tips"
         color="green"
         goTo="/food-reduction"
+      />
+      <IconButton
+        icon="world"
+        label="Users Map"
+        color="yellow"
+        goTo="/view-map"
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
+      />
+    </>
+  );
+}
+
+export function FISP() {
+  return (
+    <>
+      <IconButton
+        icon="plant"
+        label="Agrifood Technpreneur"
+        color="turquoise"
+        disabled="true"
+        goTo="/"
+      />
+      <IconButton
+        icon="book"
+        label="Masterclasses"
+        color="turquoise"
+        disabled="true"
+        goTo="/"
+      />
+      <IconButton
+        icon="info"
+        label="FISI"
+        color="green"
+        disabled="true"
+        goTo="/"
+      />
+      <IconButton
+        icon="kitchen"
+        label="Plan to Save"
+        color="turquoise"
+        goTo="/pts"
       />
     </>
   );

@@ -29,10 +29,10 @@ import PlanToSave from "./components/Pages/Account/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 
-import FoodWaste from "./components/Pages/Account/FoodWaste";
+import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
-import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWasteBusiness";
-import FoodIntake from "./components/Pages/Account/FoodIntake";
+import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
+import FoodIntake from "./components/Pages/Account/Personal/FoodIntake";
 // import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
 import FoodReduction from "./components/Pages/FoodReduction";
@@ -51,7 +51,7 @@ import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 import AddProductsBusiness from "./components/Pages/Account/Business/AddProductsBusiness";
 import AddProductsAcademic from "./components/Pages/Account/Academic/AddProductsAcademic";
 
-import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWasteAcademic";
+import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
 import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
 import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
 
@@ -103,8 +103,6 @@ const App = (props) => {
       });
     })
     .catch((err) => console.log("failed: ", err));
-
-  //Local Notificaiton
 
   return (
     <React.Fragment>

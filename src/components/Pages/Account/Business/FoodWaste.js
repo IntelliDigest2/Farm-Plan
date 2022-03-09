@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, InputGroup, FormGroup, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
@@ -13,12 +13,12 @@ import { DefaultButton } from "../../SubComponents/Button";
 import { Divider } from "@mui/material";
 import { submitNotification } from "../../../lib/Notifications";
 
-const FoodLoss = (props) => {
+const FoodWaste = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);
   //useEffect to redirect if not correct account type
   useEffect(() => {
     if (props.profile.type) {
-      if (!String(props.profile.type).includes("farm")) {
+      if (!String(props.profile.type).includes("business")) {
         setRedirectTo(true);
       }
     }
@@ -26,13 +26,13 @@ const FoodLoss = (props) => {
 
   const defaultUpload = {
     edibleInedible: "Edible",
-    foodName: "",
     foodWasteWeight: 0,
     weightType: "Select Unit",
     expiryDate: "",
     ghg: 0,
     foodWasteCost: 0,
     currency: "Select Currency",
+    notes: "",
   };
 
   const defaultMultipliers = {
@@ -46,9 +46,13 @@ const FoodLoss = (props) => {
   //Multiplier state
   const [multipliers, setMultipliers] = useState(defaultMultipliers);
 
+  //Reference to Notes input
+  const notesRef = useRef(null);
+
   //Update foodWasteCost and ghg when edibleInedible or foodWasteWeight or weightType changes
   useEffect(() => {
     handleCostGHGChange();
+    console.log(upload.currency);
   }, [
     upload.edibleInedible,
     upload.foodWasteWeight,
@@ -184,7 +188,7 @@ const FoodLoss = (props) => {
     const data = {
       uid: uid,
       masterCollection: masterCollection,
-      collection: "writtenFoodLossData",
+      collection: "writtenFoodWasteData",
       upload: {
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         ...upload,
@@ -193,38 +197,26 @@ const FoodLoss = (props) => {
 
     props.createFoodWasteData(data);
     props.createMapData(mapData);
-    submitNotification("Success", "Food Loss successfully uploaded!");
+    submitNotification("Success", "Food Waste successfully uploaded!");
     setUpload(defaultUpload);
     setMultipliers(defaultMultipliers);
+    notesRef.current.value = "";
   };
 
   //Redirect if not logged in
   if (!props.auth.uid) return <Redirect to="/login" />;
 
-  //Redirect if not an academic user
+  //Redirect if not a business user
   if (redirectTo) return <Redirect to="/account" />;
 
   return (
     <PageWrap
       header="Update Food Waste"
-      subtitle="Upload Edible or Inedible Food Waste"
+      subtitle="Upload Edible or Inedibe Food Waste"
       goTo="/account"
     >
       <Container fluid className="web-center">
         <Form>
-          <FormGroup className="mb-3">
-            <Form.Label style={{ backgroundColor: "white" }}>
-              Food Name
-            </Form.Label>
-            <Form.Control
-              type="text"
-              id="foodName"
-              onChange={(e) => {
-                updateStateValue(e);
-              }}
-              value={upload.foodName}
-            />
-          </FormGroup>
           <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Edible or Inedibe
@@ -284,6 +276,18 @@ const FoodLoss = (props) => {
               </InputGroup.Append>
             </InputGroup>
           </FormGroup>
+          <FormGroup className="mb-3">
+            <Form.Label style={{ backgroundColor: "white" }}>Notes</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              id="notes"
+              ref={notesRef}
+              onChange={(e) => {
+                updateStateValue(e);
+              }}
+            />
+          </FormGroup>
           <EnableSubmit
             upload={upload}
             handleFoodWasteSubmit={handleFoodWasteSubmit}
@@ -341,8 +345,6 @@ const EdibleInedible = (props) => {
 const EnableSubmit = (props) => {
   if (props.upload.edibleInedible === "Edible") {
     if (
-      props.upload.projectName !== "" &&
-      props.upload.foodName !== "" &&
       props.upload.foodWasteWeight > 0 &&
       props.upload.weightType !== "Select Unit" &&
       props.upload.expiryDate !== "" &&
@@ -365,8 +367,6 @@ const EnableSubmit = (props) => {
     }
   } else {
     if (
-      props.upload.projectName !== "" &&
-      props.upload.foodName !== "" &&
       props.upload.foodWasteWeight > 0 &&
       props.upload.weightType !== "Select Unit"
     ) {
@@ -403,4 +403,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodLoss);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodWaste);

@@ -84,8 +84,10 @@ function Settings(props) {
 
   //handle data from firebase
   useEffect(() => {
-    if (props.data !== undefined || props.data !== null) {
+    if (props.data !== undefined && props.data !== null) {
       setSubAccountsList(props.data);
+    } else {
+      setSubAccountsList({});
     }
   }, [props.data]);
 
@@ -787,7 +789,8 @@ const SubAccounts = (props) => {
     handleClose();
   };
 
-  var test = Object.values(props.subAccounts);
+  if (props.subAccounts !== null && props.subAccounts !== undefined)
+    var subs = Object.values(props.subAccounts);
 
   return (
     <div>
@@ -797,7 +800,7 @@ const SubAccounts = (props) => {
             <Heading priority="3" text="Sub Accounts" />
           </Form.Label>
           <ListGroup>
-            {test.map((sub, index) => (
+            {subs?.map((sub, index) => (
               <ListGroup.Item
                 action
                 key={index}
@@ -923,7 +926,6 @@ const mapStateToProps = (state) => {
     auth: state.firebase.auth,
     authError: state.auth.authError,
     profile: state.firebase.profile,
-    users: state.firestore.ordered.users,
     // data: state.data.getData,
     data: state.firestore.data.SubAccounts,
   };

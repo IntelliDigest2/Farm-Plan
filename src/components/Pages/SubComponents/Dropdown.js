@@ -5,12 +5,12 @@ import { Dropdown as BootstrapDropdown } from "react-bootstrap";
 
 function Dropdown(props) {
   let comp;
-  comp = props.items.map((item) => {
+  comp = props.items.map((item, index) => {
     if (item === "/") {
-      return <BootstrapDropdown.Divider />;
+      return <BootstrapDropdown.Divider key={index} />;
     } else {
       return (
-        <BootstrapDropdown.Item id={props.id} eventKey={item} key={item}>
+        <BootstrapDropdown.Item id={props.id} eventKey={item} key={index}>
           {item}
         </BootstrapDropdown.Item>
       );
