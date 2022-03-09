@@ -60,9 +60,9 @@ export function Environment() {
     <>
       <IconButton
         icon="waste"
-        label="Food Waste"
+        label="Food Loss"
         color="turquoise"
-        goTo="/food-wasteBusiness"
+        goTo="/food-loss"
       />
       <IconButton
         icon="chart"

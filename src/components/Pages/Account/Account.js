@@ -207,10 +207,10 @@ const AccountType = (props) => {
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
               <Households.Food />
             </TabPanel>
-            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
+            <TabPanel value={props.value} index={1} dir={props.theme.direction}>
               <Households.Health />
             </TabPanel>
-            <TabPanel value={props.value} index={1} dir={props.theme.direction}>
+            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Households.Environment />
             </TabPanel>
           </SwipeableViews>

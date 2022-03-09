@@ -111,7 +111,7 @@ export function Environment() {
         icon="waste"
         label="Food Waste"
         color="turquoise"
-        goTo="/food-wasteBusiness"
+        goTo="/food-wasteAcademic"
       />
       <IconButton
         icon="chart"
