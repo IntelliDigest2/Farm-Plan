@@ -148,22 +148,19 @@ export function FISP() {
         icon="plant"
         label="Agrifood Technpreneur"
         color="turquoise"
-        disabled="true"
-        goTo="/"
+        goTo="https://intellidigest.com/services/food-system-sustainability/agrifood-techpreneur-club/"
       />
       <IconButton
         icon="book"
         label="Masterclasses"
         color="turquoise"
-        disabled="true"
-        goTo="/"
+        goTo="https://intellidigest.com/masterclasses-overview/"
       />
       <IconButton
         icon="info"
         label="FISI"
         color="green"
-        disabled="true"
-        goTo="/"
+        goTo="https://intellidigest.com/services/food-system-sustainability/"
       />
       <IconButton
         icon="kitchen"
