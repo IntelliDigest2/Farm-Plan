@@ -4,7 +4,7 @@ import "../../SubComponents/Button.css";
 import { PageWrap } from "../../SubComponents/PageWrap";
 import { Dropdown } from "../../SubComponents/Dropdown";
 import { PopUp } from "../../SubComponents/PopUp";
-import SellerAuth from "./SellerAuth";
+import SellerAuth from "./Marketplace/SellerAuth";
 
 import { Form, Button, InputGroup } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -98,7 +98,7 @@ const FarmPlan = (props) => {
   } else {
     return (
       <>
-        <PageWrap goTo="/account" header="Sell Products" subtitle="Add an Item">
+        <PageWrap goTo="/account" header="My Farm Plan" subtitle="Add an Item">
           <Form
             className="form-layout"
             style={{ padding: "10px" }}

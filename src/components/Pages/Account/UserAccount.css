@@ -160,6 +160,15 @@
   padding-right: 10%;
 }
 
+.pts-info {
+  text-align: center;
+  border-radius: 25px;
+  background-color: #0c0847;
+  color: white;
+  padding: 4%;
+  margin-bottom: 2%;
+}
+
 .pts-p-div {
   text-align: center;
   float: center;
