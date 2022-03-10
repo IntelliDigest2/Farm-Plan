@@ -34,11 +34,7 @@ const FoodIntake = (props) => {
   };
 
   const handleCheckboxTick = (e) => {
-    if (e.target.id === "0") {
-      setUpload({ ...upload, [e.target.name]: true });
-    } else {
-      setUpload({ ...upload, [e.target.name]: false });
-    }
+    setUpload({ ...upload, [e.target.name]: !upload[[e.target.name]] });
   };
 
   const handleFoodIntakeSubmit = () => {
@@ -139,7 +135,6 @@ const FoodIntake = (props) => {
             <Form.Check
               name="local"
               type="radio"
-              id="0"
               label="Local"
               checked={upload.local}
               onChange={(e) => {
@@ -149,7 +144,6 @@ const FoodIntake = (props) => {
             <Form.Check
               name="local"
               type="radio"
-              id="1"
               label="Non-Local"
               onChange={(e) => {
                 handleCheckboxTick(e);
@@ -163,7 +157,6 @@ const FoodIntake = (props) => {
             <Form.Check
               name="eatingIn"
               type="radio"
-              id="0"
               label="Eating In"
               checked={upload.eatingIn}
               onChange={(e) => {
@@ -173,7 +166,6 @@ const FoodIntake = (props) => {
             <Form.Check
               name="eatingIn"
               type="radio"
-              id="1"
               label="Eating Out"
               onChange={(e) => {
                 handleCheckboxTick(e);
