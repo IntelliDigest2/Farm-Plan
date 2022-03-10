@@ -68,8 +68,10 @@ const SignUp = (props) => {
 
   //If error, send notification
   useEffect(() => {
-    if (errorNotification) submitNotification("Error", errorNotification);
-    setErrorNotification();
+    if (errorNotification) {
+      submitNotification("Error", errorNotification);
+      setErrorNotification();
+    }
   }, [errorNotification]);
 
   //Form validation (Preferably change this to use bootstrap validation)
