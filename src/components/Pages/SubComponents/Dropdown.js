@@ -64,6 +64,7 @@ function Select(props) {
 
   return (
     <Form.Control
+      id={props.id}
       disabled={props.disabled}
       onChange={props.function}
       as="select"

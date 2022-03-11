@@ -9,10 +9,13 @@ import {
 import { Redirect } from "react-router-dom";
 import { getFirebase } from "react-redux-firebase";
 import { PageWrap } from "../../SubComponents/PageWrap";
-import { Dropdown } from "../../SubComponents/Dropdown";
+import { Select } from "../../SubComponents/Dropdown";
 import { DefaultButton } from "../../SubComponents/Button";
 import { Divider } from "@mui/material";
 import { submitNotification } from "../../../lib/Notifications";
+
+//Typeahead documentation/examples found at: https://ericgio.github.io/react-bootstrap-typeahead/
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
 
 const FoodIntake = (props) => {
   const defaultUpload = {
@@ -22,15 +25,43 @@ const FoodIntake = (props) => {
     eatingIn: true,
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+
+  //API CALL
+  const handleSearch = (query) => {
+    setIsLoading(true);
+    fetch("https://web-wrggqo5tiq-lz.a.run.app/completion", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors",
+      headers: {
+        //'Content-Type': 'application/json',
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `food=${query}`,
+    })
+      .then((resp) =>
+        resp.json().then((data) => ({ data: data, status: resp.status }))
+      )
+      .then((res) => {
+        const options = res.data.map((i) => ({
+          food_id: i.food_id,
+          name: i.name,
+        }));
+
+        setOptions(options);
+        setIsLoading(false);
+      });
+    setUpload({ ...upload, foodName: query });
+  };
+
+  const filterBy = () => true;
+
   //Upload state
   const [upload, setUpload] = useState(defaultUpload);
 
   const updateStateValue = (e) => {
-    if (e.target.textContent) {
-      setUpload({ ...upload, [e.target.id]: e.target.textContent });
-    } else {
-      setUpload({ ...upload, [e.target.id]: e.target.value });
-    }
+    setUpload({ ...upload, [e.target.id]: e.target.value });
   };
 
   const handleCheckboxTick = (e) => {
@@ -91,7 +122,10 @@ const FoodIntake = (props) => {
     props.createFoodWasteData(data);
     submitNotification("Success", "Food Diary successfully updated!");
     setUpload(defaultUpload);
+    foodNameRef.current.clear();
   };
+
+  const foodNameRef = useRef();
 
   if (!props.auth.uid) return <Redirect to="/login" />;
 
@@ -105,13 +139,13 @@ const FoodIntake = (props) => {
         <Form>
           <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>Meal</Form.Label>
-            <Dropdown
+            <Select
               id="meal"
-              styling="grey dropdown-input"
-              data={upload.meal}
-              function={(ekey, e) => {
+              function={(e) => {
                 updateStateValue(e);
               }}
+              value={upload.meal}
+              placeholder="Please select a meal"
               items={["Breakfast", "Lunch", "Dinner", "Other"]}
             />
           </FormGroup>
@@ -119,13 +153,20 @@ const FoodIntake = (props) => {
             <Form.Label style={{ backgroundColor: "white" }}>
               Food Name
             </Form.Label>
-            <Form.Control
-              type="text"
+            <AsyncTypeahead
+              filterBy={filterBy}
               id="foodName"
+              isLoading={isLoading}
+              labelKey="name"
+              minLength={3}
+              onSearch={handleSearch}
               onChange={(e) => {
-                updateStateValue(e);
+                setUpload({ ...upload, foodName: e[0].name });
               }}
+              options={options}
+              placeholder="Enter a food name"
               value={upload.foodName}
+              ref={foodNameRef}
             />
           </FormGroup>
           <FormGroup className="mb-3">
