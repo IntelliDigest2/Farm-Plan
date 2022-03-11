@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "../../Account/UserAccount.css";
 import "./Mob.css";
-import { Dropdown } from "../../SubComponents/Dropdown";
+import { Dropdown, Select } from "../../SubComponents/Dropdown";
 import { Title } from "./MobComponents";
 
 import { Form, Col, Button } from "react-bootstrap";
@@ -23,6 +23,10 @@ import { signUp } from "../../../../store/actions/authActions";
 
 import { createMapData } from "../../../../store/actions/dataActions";
 import Geocode from "react-geocode";
+import { countryNames, regionNames } from "../../../lib/Countries";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import { submitNotification } from "../../../lib/Notifications";
+import TermsAndCons from "../../SubComponents/TermsAndConditions";
 
 const SignUp = (props) => {
   //Stage1
@@ -39,6 +43,8 @@ const SignUp = (props) => {
 
   const [stage, setStage] = useState(1);
 
+  const [errorNotification, setErrorNotification] = useState();
+
   function handleSubmit() {
     var data = {
       firstName: firstName,
@@ -52,17 +58,63 @@ const SignUp = (props) => {
       region: region,
       type: "user",
     };
-    if (
-      firstName !== "" &&
-      lastName !== "" &&
-      email !== "" &&
-      password !== ""
-    ) {
-      props.signUp(data);
+    if (validation()) {
+      console.log("signup");
+      //props.signUp(data);
     } else {
       console.log("error");
     }
   }
+
+  //If error, send notification
+  useEffect(() => {
+    if (errorNotification) {
+      submitNotification("Error", errorNotification);
+      setErrorNotification();
+    }
+  }, [errorNotification]);
+
+  //Form validation (Preferably change this to use bootstrap validation)
+  const validation = () => {
+    //no regex
+    const no = /^[0-9\b]+$/;
+    //Email regex
+    const em =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+    var s1 =
+      firstName !== "" && lastName !== "" && email !== "" && password !== "";
+
+    var s2 =
+      town !== "" && country !== "" && region !== "" && buildingFunction !== "";
+
+    var s3 = em.test(email);
+
+    var s4 = !no.test(lastName) && !no.test(firstName);
+
+    var s5 = !no.test(town);
+
+    if (s1 && s2 && s3 && s4 && s5) {
+      return true;
+    } else {
+      if (!s1) {
+        setErrorNotification("Please enter a valid name, email, and password.");
+      } else if (!s2) {
+        setErrorNotification(
+          "Please enter a valid town, country, region, and account type."
+        );
+      } else if (!s3) {
+        setErrorNotification("Please enter a valid email address.");
+      } else if (!s4) {
+        setErrorNotification("Please enter a valid name.");
+      } else if (!s5) {
+        setErrorNotification("Please enter a valid town.");
+      } else {
+        setErrorNotification("Please enter valid information.");
+      }
+      return false;
+    }
+  };
 
   const { authError } = props;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -148,6 +200,7 @@ const SignUp = (props) => {
             setBuildingFunction={setBuildingFunction}
             buildingFunction={buildingFunction}
             setStage={setStage}
+            countries={countryNames}
           />
         </Title>
       );
@@ -213,7 +266,7 @@ const Stage1 = (props) => {
             >
               <Form.Label style={{ backgroundColor: "white" }}>Name</Form.Label>
               <Form.Control
-                type="name"
+                type="text"
                 placeholder="Enter name"
                 defaultValue={props.firstName}
                 required
@@ -229,7 +282,7 @@ const Stage1 = (props) => {
                 Surname
               </Form.Label>
               <Form.Control
-                type="surname"
+                type="text"
                 placeholder="Enter surname"
                 defaultValue={props.lastName}
                 required
@@ -291,9 +344,10 @@ const Stage2 = (props) => {
           <Form.Group className="mb-3">
             <Form.Label>Town</Form.Label>
             <Form.Control
-              type="address"
+              type="text"
               placeholder="Town"
               defaultValue={props.town}
+              required
               onChange={(e) => {
                 props.setTown(e.target.value);
               }}
@@ -302,45 +356,39 @@ const Stage2 = (props) => {
 
           <Form.Group className="mb-3">
             <Form.Label>Country</Form.Label>
-            <Form.Control
-              type="address"
-              placeholder="Country"
-              defaultValue={props.country}
-              onChange={(e) => {
+            <Select
+              id="country"
+              function={(e) => {
                 props.setCountry(e.target.value);
               }}
+              value={props.country}
+              placeholder="Please Select a Country"
+              items={countryNames}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Region</Form.Label>
-            <Dropdown
+            <Select
               id="region"
-              styling="green dropdown-input-right"
-              data={props.region}
               function={(e) => {
-                props.setRegion(e);
+                props.setRegion(e.target.value);
               }}
-              items={[
-                "Asia",
-                "Africa",
-                "Australia",
-                "Europe",
-                "North America",
-                "South America",
-              ]}
+              value={props.region}
+              placeholder="Please Select a Region"
+              items={regionNames}
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>What kind of account are you creating?</Form.Label>
-            <Dropdown
+            <Select
               id="buildingFunction"
-              styling="green dropdown-input-right"
-              data={props.buildingFunction}
               function={(e) => {
-                props.setBuildingFunction(e);
+                props.setBuildingFunction(e.target.value);
               }}
+              value={props.buildingFunction}
+              placeholder="Please Select an Account Type"
               items={[
                 "Households",
                 "Personal",

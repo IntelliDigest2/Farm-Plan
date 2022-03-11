@@ -92,7 +92,7 @@ export function Environment() {
   );
 }
 
-export function FISP() {
+export function FSSP() {
   return (
     <>
       <IconButton
@@ -111,7 +111,7 @@ export function FISP() {
         icon="info"
         label="FISI"
         color="green"
-        goTo="https://intellidigest.com/services/food-system-sustainability/"
+        goTo="https://intellidigest.com/services/food-system-sustainability/food-industry-sustainability-index/"
       />
       <IconButton
         icon="kitchen"
