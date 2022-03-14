@@ -5,12 +5,13 @@ import { TickList } from "../../../SubComponents/TickList";
 import { Form, Button, InputGroup } from "react-bootstrap";
 
 export function ExistingFarmer(props) {
-  const updateStateValue = (e) => {
-    if (e.target.textContent !== null) {
-    }
-  };
   return (
-    <Form onSubmit={props.HandleSubmit}>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.HandleSubmit();
+      }}
+    >
       <Form.Group>
         <Form.Label>What location will you be selling from?</Form.Label>
         <Form.Control
@@ -45,6 +46,7 @@ export function ExistingFarmer(props) {
       <Form.Group>
         <Form.Label>What farming sector?</Form.Label>
         <Dropdown
+          required
           id="category"
           styling="green"
           data={props.sector}
@@ -120,6 +122,7 @@ export function ExistingFarmer(props) {
       <Form.Group>
         <Form.Label>What food items do you produce?</Form.Label>
         <Dropdown
+          required
           id="category"
           styling="green"
           data={props.foodItems}
@@ -140,53 +143,35 @@ export function ExistingFarmer(props) {
       </Form.Group>
 
       <Form.Group>
-        <Form.Label>How often is your harvest and what size?</Form.Label>
-        <Form.Check
-          type="radio"
-          name="frequency"
-          label="Weekly"
-          onClick={() => props.setFrequency("Now")}
+        <Form.Label>Harvest frequency and size</Form.Label>
+        <Dropdown
+          required
+          id="harvestFrequency"
+          styling="green dropdown-input-right"
+          function={(e) => props.setHarvestFreq(e)}
+          data={props.harvestFreq}
+          items={["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"]}
         />
-        <Form.Check
-          type="radio"
-          name="frequency"
-          label="Monthly"
-          onClick={() => props.setFrequency("Monthly")}
-        />
-        <Form.Check
-          type="radio"
-          name="frequency"
-          label="Yearly"
-          onClick={() => props.setFrequency("Yearly")}
-        />
-        <Form.Check
-          type="radio"
-          name="frequency"
-          label="Quarterly"
-          onClick={() => props.setFrequency("Quarterly")}
-        />
-      </Form.Group>
-
-      <Form.Group>
-        {/* Linked to last question */}
         <InputGroup>
           <Form.Control
             type="number"
-            placeholder="General harvest size"
-            id="size"
-            onChange={(e) => props.setSize(e.target.value)}
+            id="harvestSize"
+            placeholder="Enter harvest size."
             required
+            onChange={(e) => props.setHarvestSize(e.target.value)}
           />
           <Dropdown
-            id="category"
-            styling="green dropdown-input-right"
-            data={props.unit}
-            function={(e) => {
-              props.setUnit(e);
-            }}
-            items={["g", "kg", "tons", "/", "l", "ml"]}
+            id="harvestUnit"
+            styling="grey dropdown-input-right"
+            data={props.harvestUnit}
+            items={["g", "kg", "tons"]}
           />
         </InputGroup>
+        <p>
+          Farmers can be harvesting weekly, monthly, quarterly and yearly for
+          different food items and be tied to customers that select their
+          harvest days for pick up of that particular food item.
+        </p>
       </Form.Group>
 
       <TickList
@@ -206,35 +191,39 @@ export function ExistingFarmer(props) {
       <Form.Group>
         <Form.Label>Do you have any food quality certifications?</Form.Label>
         <Form.Check
+          required
           type="radio"
           name="quality certification"
           label="Yes"
           onClick={() => props.setQuality(true)}
         />
         <Form.Check
+          required
           type="radio"
           name="quality certification"
           label="No"
           onClick={() => props.setQuality(false)}
         />
-        {props.quality ? (
-          <Form.Control
-            as="textarea"
-            rows={2}
-            placeholder="List here"
-            id="quality"
-            onChange={(e) => props.setQualityCert(e.target.value)}
-          />
-        ) : null
-        // <>
-        //   <p>Consider the following certifications;</p>
-        //   <div style={{ marginLeft: "4%" }}>
-        //     <ul>
-        //       <li>example</li>
-        //       <li>example</li>
-        //     </ul>
-        //   </div>
-        // </>
+        {
+          props.quality ? (
+            <Form.Control
+              required
+              as="textarea"
+              rows={2}
+              placeholder="List here"
+              id="quality"
+              onChange={(e) => props.setQualityCert(e.target.value)}
+            />
+          ) : null
+          // <>
+          //   <p>Consider the following certifications;</p>
+          //   <div style={{ marginLeft: "4%" }}>
+          //     <ul>
+          //       <li>example</li>
+          //       <li>example</li>
+          //     </ul>
+          //   </div>
+          // </>
         }
       </Form.Group>
       <TermsAndCons />

@@ -4,7 +4,7 @@ import "../../../SubComponents/Button.css";
 import "../../UserAccount.css";
 
 import { PageWrap } from "../../../SubComponents/PageWrap";
-import { ExistingFarmer } from "./ExsitingFarm";
+import { ExistingFarmer } from "./ExistingFarm";
 import { NewFarmer } from "./NewFarm";
 
 import { Form, Button } from "react-bootstrap";
@@ -29,15 +29,19 @@ function SellerAuth(props) {
   const [town, setTown] = useState("");
   const [postcode, setPostcode] = useState("");
   const [sector, setSector] = useState("Horticulture");
+
   const [subsector, setSubsector] = useState("select");
   const [foodItems, setFoodItems] = useState("");
   const [input, setInput] = useState("");
-  const [frequency, setFrequency] = useState("");
-  const [size, setSize] = useState(0);
-  const [unit, setUnit] = useState("kg");
   const [quality, setQuality] = useState(false);
   const [qualityCert, setQualityCert] = useState("");
   const [infr, setInfr] = useState(false);
+  const [practiceEffective, setPracticeEffective] = useState("");
+  const [farmSize, setFarmSize] = useState(0);
+  const [harvestFreq, setHarvestFreq] = useState("daily");
+  const [harvestSize, setHarvestSize] = useState(0);
+  const [growthTime, setGrowthTime] = useState(0);
+  const [harvestUnit, setHarvestUnit] = useState("kg");
 
   const practices = [
     "Permaculture",
@@ -87,6 +91,8 @@ function SellerAuth(props) {
     nutrients = [""];
   }
 
+  const soilNutrients = ["(List of soil nutrients)"];
+
   //handles the state of items in the checklist
   const [practice, setPractice] = useState(
     new Array(practices.length).fill(false)
@@ -103,11 +109,12 @@ function SellerAuth(props) {
   const [productType, setProductType] = useState(
     new Array(productTypes.length).fill(false)
   );
-  // useEffect(() => {
-  //   console.log(practice);
-  // }, [practice]);
-
-  const [practiceEffective, setPracticeEffective] = useState("");
+  const [nutrient, setNutrient] = useState(
+    new Array(nutrients.length).fill(false)
+  );
+  const [soilComp, setSoilComp] = useState(
+    new Array(soilNutrients.length).fill(false)
+  );
 
   const uploadFiles = (file) => {
     //uploads document to firebase storage and gives feedback to the user
@@ -137,32 +144,61 @@ function SellerAuth(props) {
   };
 
   const HandleSubmit = (e) => {
-    var data = {
-      uid: props.auth.uid,
-      email: props.auth.email,
-      location: [address1, address2, town, postcode],
-      membership: [member, organisation],
-      registered: registered,
-      farmInput: input,
-      practice: practice,
-      futurePractice: futurePractice,
-      practiceEffective: practiceEffective,
-      file: `/farmer-auth/${file.name}`,
-      harvestFrequency: frequency,
-      harvestSize: [size, unit],
-      processing: processing,
-      qualityCertification: [quality, qualityCert],
-      profile: {
-        isSeller: true,
-      },
-    };
-    const submit = e.currentTarget;
-    if (submit.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    let data;
+    if (registered) {
+      data = {
+        uid: props.auth.uid,
 
-    props.becomeSeller(data);
+        info: {
+          email: props.auth.email,
+
+          membership: [member, organisation],
+          registered: registered,
+          certificate: `/farmer-auth/${file.name}`,
+
+          location: [address1, address2, town, postcode],
+          sector: sector,
+          practice: practice,
+          futurePractice: futurePractice,
+          practiceEffective: practiceEffective,
+          farmInput: input,
+          foodItems: foodItems,
+          harvestFreq: harvestFreq,
+          harvestSize: harvestSize,
+          harvestUnit: harvestUnit,
+          processing: processing,
+          preservation: preservation,
+          quality: quality,
+          qualityCert: qualityCert,
+        },
+
+        profile: { isSeller: true },
+      };
+      props.becomeSeller(data);
+    } else {
+      data = {
+        uid: props.auth.uid,
+        email: props.auth.email,
+
+        membership: [member, organisation],
+        registered: registered,
+
+        location: [address1, address2, town, postcode],
+        sector: sector,
+        subsector: subsector,
+        infrastructure: infr,
+        productType: productType,
+        nutrient: nutrient,
+        soilComp: soilComp,
+        farmSize: farmSize,
+        growthTime: growthTime,
+        harvestFreq: harvestFreq,
+        harvestSize: harvestSize,
+        harvestUnit: harvestUnit,
+        profile: { isSeller: true },
+      };
+      props.becomeSeller(data);
+    }
   };
 
   const validate = (e) => {
@@ -170,9 +206,9 @@ function SellerAuth(props) {
     if (!submit.checkValidity()) {
       e.preventDefault();
       e.stopPropagation();
+    } else {
+      setValidated(true);
     }
-
-    setValidated(true);
   };
 
   const handleNext = (e) => {
@@ -242,10 +278,11 @@ function SellerAuth(props) {
             setInput={setInput}
             foodItems={foodItems}
             setFoodItems={setFoodItems}
-            setFrequency={setFrequency}
-            setSize={setSize}
-            unit={unit}
-            setUnit={setUnit}
+            harvestFreq={harvestFreq}
+            setHarvestFreq={setHarvestFreq}
+            setHarvestSize={setHarvestSize}
+            harvestUnit={harvestUnit}
+            setHarvestUnit={setHarvestUnit}
             processes={processes}
             processing={processing}
             setProcessing={setProcessing}
@@ -278,6 +315,20 @@ function SellerAuth(props) {
             productType={productType}
             setProductType={setProductType}
             nutrients={nutrients}
+            nutrient={nutrient}
+            setNutrient={setNutrient}
+            soilNutrients={soilNutrients}
+            soilComp={soilComp}
+            setSoilComp={setSoilComp}
+            farmSize={farmSize}
+            setFarmSize={setFarmSize}
+            growthTime={growthTime}
+            setGrowthTime={setGrowthTime}
+            harvestFreq={harvestFreq}
+            setHarvestFreq={setHarvestFreq}
+            setHarvestSize={setHarvestSize}
+            harvestUnit={harvestUnit}
+            setHarvestUnit={setHarvestUnit}
           />
         </PageWrap>
       );
@@ -313,7 +364,7 @@ function FormStart(props) {
             <Form.Control
               required
               type="text"
-              placeholder="Which one?"
+              placeholder="Which local food system association?"
               id="organisation"
               onChange={(e) => props.setOrganisation(e.target.value)}
               onBlur={props.validate}

@@ -102,10 +102,10 @@ export const becomeSeller = (seller) => {
       .doc(seller.uid)
       .set({ ...seller.profile }, { merge: true })
       .then(() => {
-        return firestore.collection("marketplace").doc(seller.uid).set({
-          Email: seller.email,
-          Location: seller.location,
-        });
+        return firestore
+          .collection("marketplace")
+          .doc(seller.uid)
+          .set({ ...seller.info }, { merge: true });
       })
       .then(() => {
         dispatch({ type: "SELLER_SUCCESS" });

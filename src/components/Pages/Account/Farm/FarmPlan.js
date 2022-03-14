@@ -25,7 +25,7 @@ const dailyTabTime = moment().format("ddd MMM Do YYYY");
 
 //for autocomplete, have the food options be every item that they have sold in the past (getFirebase, forEach doc etcetc)
 
-const FarmPlan = (props) => {
+const AddProductsFarm = (props) => {
   //I'm going to change autocomplete function here to mui rather than bootstrap (theirs is better)
   const [food, setFood] = useState("");
   const [category, setCategory] = useState("Vegetables");
@@ -98,7 +98,7 @@ const FarmPlan = (props) => {
   } else {
     return (
       <>
-        <PageWrap goTo="/account" header="My Farm Plan" subtitle="Add an Item">
+        <PageWrap goTo="/account" header="Sell Products" subtitle="Add an Item">
           <Form
             className="form-layout"
             style={{ padding: "10px" }}
@@ -320,4 +320,4 @@ export default compose(
       },
     ];
   })
-)(FarmPlan);
+)(AddProductsFarm);

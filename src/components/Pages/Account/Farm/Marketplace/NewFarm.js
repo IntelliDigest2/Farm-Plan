@@ -2,51 +2,339 @@ import React from "react";
 import TermsAndCons from "../../../SubComponents/TermsAndConditions";
 import { Dropdown } from "../../../SubComponents/Dropdown";
 import { TickList } from "../../../SubComponents/TickList";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, InputGroup } from "react-bootstrap";
 
 function SectorSwitch(props) {
-  if (props.sector === "Horticulture") {
-    return (
-      <>
-        <TickList
-          label="What type of crop, vegetable and fruit?"
-          list={props.productTypes}
-          checkedState={props.productType}
-          setCheckedState={props.setProductType}
-        />
-        <TickList
-          label="Determine nutrient requirement for the crop, vegetable and fruit growth."
-          list={props.productTypes}
-          checkedState={props.productType}
-          setCheckedState={props.setProductType}
-        />
-      </>
-    );
-  } else if (props.sector === "Aquaculture" || "Insect farm") {
-    return (
-      <>
-        <TickList
-          label="What type of fish/insect?"
-          list={props.productTypes}
-          checkedState={props.productType}
-          setCheckedState={props.setProductType}
-        />
-        <TickList
-          label="Determine nutrient requirement for the fish/insect."
-          list={props.productTypes}
-          checkedState={props.productType}
-          setCheckedState={props.setProductType}
-        />
-      </>
-    );
-  } else {
-    return null;
+  switch (props.sector) {
+    default:
+    case "Horticulture":
+      return <Horticulture {...props} />;
+    case "Hydroponics":
+      return <Hydroponics {...props} />;
+    case "Aquaculture":
+    case "Insect Farm":
+      return <AquaInsect {...props} />;
   }
 }
 
+//horticulture and hydroponics are the same up until recommended energy sources
+//Aquaculture and insect farms do not differ other than listed items (controlled in SellerAuth) so I have grouped them together.
+const Horticulture = (props) => {
+  return (
+    <>
+      <TickList
+        label="What type of crop, vegetable and fruit?"
+        list={props.productTypes}
+        checkedState={props.productType}
+        setCheckedState={props.setProductType}
+      />
+      <TickList
+        label="Determine nutrient requirement for the crop, vegetable and fruit growth."
+        list={props.nutrients}
+        checkedState={props.nutrient}
+        setCheckedState={props.setNutrient}
+      />
+      <TickList
+        label="What is your current soil composition?"
+        list={props.soilNutrients}
+        checkedState={props.soilComp}
+        setCheckedState={props.setSoilComp}
+      />
+      <p>
+        (Here we give you information based on your soil composition and the
+        crops you grow on what biofertilizers and other sustainable products
+        that will help you optimize growth.)
+      </p>
+      {/* Since this feature does not exsist I have only hardcoded it */}
+      <p>Key Items needed for crop growth:</p>
+      <div style={{ marginLeft: "4%" }}>
+        <ul>
+          <li>List of nature-based pesticides </li>
+          <li>List of renewable energy sources</li>
+        </ul>
+      </div>
+      <p>
+        <b>Planning for daily Harvest</b>
+      </p>
+      <Form.Group>
+        <Form.Label>Size of farm</Form.Label>
+        <InputGroup>
+          <Form.Control
+            type="number"
+            id="farmSize"
+            step={10}
+            required
+            onChange={(e) => {
+              props.setFarmSize(e.target.value);
+            }}
+            value={props.farmSize}
+          />
+          <Dropdown
+            disabled
+            id="sizeUnit"
+            styling="grey dropdown-input-right"
+            data="acres"
+            items={["acres"]}
+          />
+        </InputGroup>
+      </Form.Group>
+      <Form.Group>
+        {/* this should be done once for each different crop type */}
+        <Form.Label>Duration of crop, vegatable and fruit growth</Form.Label>
+        <InputGroup>
+          <Form.Control
+            required
+            type="number"
+            id="growthTime"
+            step={1}
+            onChange={(e) => {
+              props.setGrowthTime(e.target.value);
+            }}
+            value={props.growthTime}
+          />
+          <Dropdown
+            disabled
+            id="sizeUnit"
+            styling="grey dropdown-input-right"
+            data="days"
+            items={["days"]}
+          />
+        </InputGroup>
+      </Form.Group>
+      <Harvest {...props} />
+    </>
+  );
+};
+
+const Hydroponics = (props) => {
+  return (
+    <>
+      <TickList
+        label="What type of crop, vegetable and fruit?"
+        list={props.productTypes}
+        checkedState={props.productType}
+        setCheckedState={props.setProductType}
+      />
+      <TickList
+        label="Determine nutrient requirement for the crop, vegetable and fruit growth."
+        list={props.nutrients}
+        checkedState={props.nutrient}
+        setCheckedState={props.setNutrient}
+      />
+      <TickList
+        label="What is your current soil composition?"
+        list={props.soilNutrients}
+        checkedState={props.soilComp}
+        setCheckedState={props.setSoilComp}
+      />
+      <p>
+        (Here we give you information based on your soil composition and the
+        crops you grow on what biofertilizers and other sustainable products
+        that will help you optimize growth.)
+      </p>
+      <p>Key Items needed for crop growth:</p>
+      <div style={{ marginLeft: "4%" }}>
+        <ul>
+          <li>List of nature-based pesticides </li>
+          <li>List of renewable energy sources</li>
+          <li>List of energy saving Leds lights</li>
+          <li>List of upcyclable hydroponic farm equipment</li>
+        </ul>
+      </div>
+      <p>
+        <b>Planning for daily Harvest</b>
+      </p>
+      <Form.Group>
+        <Form.Label>Size of farm</Form.Label>
+        <InputGroup>
+          <Form.Control
+            required
+            type="number"
+            id="farmSize"
+            step={10}
+            onChange={(e) => {
+              props.setFarmSize(e.target.value);
+            }}
+            value={props.farmSize}
+          />
+          <Dropdown
+            disabled
+            id="sizeUnit"
+            styling="grey dropdown-input-right"
+            data="acres"
+            items={["acres"]}
+          />
+        </InputGroup>
+      </Form.Group>
+      <Form.Group>
+        {/* this should be done once for each different crop type */}
+        <Form.Label>Duration of crop, vegatable and fruit growth</Form.Label>
+        <InputGroup>
+          <Form.Control
+            required
+            type="number"
+            id="growthTime"
+            step={1}
+            onChange={(e) => {
+              props.setGrowthTime(e.target.value);
+            }}
+            value={props.growthTime}
+          />
+          <Dropdown
+            disabled
+            id="sizeUnit"
+            styling="grey dropdown-input-right"
+            data="days"
+            items={["days"]}
+          />
+        </InputGroup>
+      </Form.Group>
+      <Harvest {...props} />
+    </>
+  );
+};
+
+const AquaInsect = (props) => {
+  return (
+    <>
+      <TickList
+        label="What type of fish/insect?"
+        list={props.productTypes}
+        checkedState={props.productType}
+        setCheckedState={props.setProductType}
+      />
+      <TickList
+        label="Determine nutrient requirement for the fish/insect."
+        list={props.nutrients}
+        checkedState={props.nutrient}
+        setCheckedState={props.setNutrient}
+      />
+      <p>
+        (Here we give you information based on your fish/insect type about
+        sustainable products that will help you optimize growth.)
+      </p>
+      <p>Key Items needed for fish/insect growth:</p>
+      <div style={{ marginLeft: "4%" }}>
+        <ul>
+          <li>List of renewable energy sources</li>
+          <li>List of upcyclable insect/fish farm equipment</li>
+        </ul>
+      </div>
+      <p>
+        <b>Planning for daily Harvest</b>
+      </p>
+      <Form.Group>
+        <Form.Label>Size of farm</Form.Label>
+        <InputGroup>
+          <Form.Control
+            required
+            type="number"
+            id="farmSize"
+            step={10}
+            onChange={(e) => {
+              props.setFarmSize(e.target.value);
+            }}
+            value={props.farmSize}
+          />
+          <Dropdown
+            disabled
+            id="sizeUnit"
+            styling="grey dropdown-input-right"
+            data="acres"
+            items={["acres"]}
+          />
+        </InputGroup>
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Duration of fish/Insect growth</Form.Label>
+        <InputGroup>
+          <Form.Control
+            required
+            type="number"
+            id="growthTime"
+            step={1}
+            onChange={(e) => {
+              props.setGrowthTime(e.target.value);
+            }}
+            value={props.growthTime}
+          />
+          <Dropdown
+            disabled
+            id="sizeUnit"
+            styling="grey dropdown-input-right"
+            data="days"
+            items={["days"]}
+          />
+        </InputGroup>
+      </Form.Group>
+      <Harvest {...props} />
+    </>
+  );
+};
+
+const Harvest = (props) => {
+  return (
+    // {/* Use the size of farm and duration of growth to determine the Daily, Weekly, Monthly, Quarterly and Yearly produce */}
+    <div style={{ border: "5px", borderColor: "#0c0847" }}>
+      <Form.Group>
+        <Form.Label>Harvest frequency and size</Form.Label>
+        <Dropdown
+          id="harvestFrequency"
+          styling="green dropdown-input-right"
+          function={(e) => {
+            props.setHarvestFreq(e);
+          }}
+          data={props.harvestFreq}
+          items={["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"]}
+        />
+        <InputGroup>
+          <Form.Control
+            type="number"
+            id="harvestSize"
+            placeholder="Enter harvest size."
+            onChange={(e) => props.setHarvestSize(e.target.value)}
+          />
+          {/* need a unit converter function */}
+          <Dropdown
+            id="harvestUnit"
+            styling="grey dropdown-input-right"
+            function={(e) => {
+              props.setHarvestUnit(e);
+            }}
+            data={props.harvestUnit}
+            items={["g", "kg", "tons"]}
+          />
+        </InputGroup>
+        <p>
+          Farmers can be harvesting weekly, monthly, quarterly and yearly for
+          different food items and be tied to customers that select their
+          harvest days for pick up of that particular food item.
+        </p>
+      </Form.Group>
+      <p>Key items needed for crop, vegetable and fruit for harvest:</p>
+      <p>(List of farm inputs and suppliers)</p>
+      <p>Key items needed for crop, vegetable and fruit for processing:</p>
+      <p>(List of farm inputs and suppliers)</p>
+      <p>
+        {" "}
+        Key items needed for crop, vegetable and fruit for preservation before
+        sales:
+      </p>
+      <p>(List of farm inputs and suppliers)</p>
+      <p>Required food quality certifications:</p>
+      <p>(List of relevant certifications)</p>
+    </div>
+  );
+};
+
 export function NewFarmer(props) {
   return (
-    <Form onSubmit={props.HandleSubmit}>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.HandleSubmit();
+      }}
+    >
       <Form.Group>
         <Form.Label>What location will you be selling from?</Form.Label>
         <Form.Control
@@ -81,6 +369,7 @@ export function NewFarmer(props) {
       <Form.Group>
         <Form.Label>What farming sector?</Form.Label>
         <Dropdown
+          required
           id="sector"
           styling="green"
           data={props.sector}
@@ -89,6 +378,7 @@ export function NewFarmer(props) {
           }}
           items={[
             "Horticulture",
+            "Hydroponics",
             "Livestock",
             "Aquaculture",
             "Insect farm",
@@ -144,12 +434,7 @@ export function NewFarmer(props) {
         ) : null}
       </Form.Group>
 
-      <SectorSwitch
-        sector={props.sector}
-        productTypes={props.productTypes}
-        productType={props.productType}
-        setProductType={props.setProductType}
-      />
+      <SectorSwitch {...props} />
 
       <TermsAndCons />
 
@@ -167,5 +452,3 @@ export function NewFarmer(props) {
     </Form>
   );
 }
-
-//instead of Sector switch, have a function for each of the sectors and just switch it inside the function itself
