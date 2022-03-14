@@ -60,9 +60,9 @@ export function Environment() {
     <>
       <IconButton
         icon="waste"
-        label="Food Waste"
+        label="Food Loss"
         color="turquoise"
-        goTo="/food-wasteBusiness"
+        goTo="/food-loss"
       />
       <IconButton
         icon="chart"
@@ -92,29 +92,26 @@ export function Environment() {
   );
 }
 
-export function FISP() {
+export function FSSP() {
   return (
     <>
       <IconButton
         icon="plant"
         label="Agrifood Technpreneur"
         color="turquoise"
-        disabled="true"
-        goTo="/"
+        goTo="https://intellidigest.com/services/food-system-sustainability/agrifood-techpreneur-club/"
       />
       <IconButton
         icon="book"
         label="Masterclasses"
         color="turquoise"
-        disabled="true"
-        goTo="/"
+        goTo="https://intellidigest.com/masterclasses-overview/"
       />
       <IconButton
         icon="info"
         label="FISI"
         color="green"
-        disabled="true"
-        goTo="/"
+        goTo="https://intellidigest.com/services/food-system-sustainability/food-industry-sustainability-index/"
       />
       <IconButton
         icon="kitchen"

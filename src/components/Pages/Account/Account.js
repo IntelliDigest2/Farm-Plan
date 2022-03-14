@@ -87,7 +87,7 @@ const AccountType = (props) => {
           >
             <Tab disableRipple label="Food" value="0" />
             <Tab disableRipple label="Environment" value="1" />
-            <Tab disableRipple label="FISP" value="2" />
+            <Tab disableRipple label="FSSP" value="2" />
           </TabList>
           <SwipeableViews
             axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -101,7 +101,7 @@ const AccountType = (props) => {
               <Farm.Environment />
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
-              <Farm.FISP />
+              <Farm.FSSP />
             </TabPanel>
           </SwipeableViews>
         </>
@@ -122,7 +122,7 @@ const AccountType = (props) => {
           >
             <Tab disableRipple label="Food" value="0" />
             <Tab disableRipple label="Environment" value="1" />
-            <Tab disableRipple label="FISP" value="2" />
+            <Tab disableRipple label="FSSP" value="2" />
           </TabList>
           <SwipeableViews
             axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -136,7 +136,7 @@ const AccountType = (props) => {
               <Business.Environment />
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
-              <Business.FISP />
+              <Business.FSSP />
             </TabPanel>
           </SwipeableViews>
         </>
@@ -158,7 +158,7 @@ const AccountType = (props) => {
             <Tab disableRipple label="Food Business" value="0" />
             <Tab disableRipple label="Research" value="1" />
             <Tab disableRipple label="Environment" value="2" />
-            <Tab disableRipple label="FISP" value="3" />
+            <Tab disableRipple label="FSSP" value="3" />
           </TabList>
           <SwipeableViews
             axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -175,7 +175,7 @@ const AccountType = (props) => {
               <Schools.Environment />
             </TabPanel>
             <TabPanel value={props.value} index={3} dir={props.theme.direction}>
-              <Schools.FISP />
+              <Schools.FSSP />
             </TabPanel>
           </SwipeableViews>
         </>
@@ -207,10 +207,10 @@ const AccountType = (props) => {
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
               <Households.Food />
             </TabPanel>
-            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
+            <TabPanel value={props.value} index={1} dir={props.theme.direction}>
               <Households.Health />
             </TabPanel>
-            <TabPanel value={props.value} index={1} dir={props.theme.direction}>
+            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Households.Environment />
             </TabPanel>
           </SwipeableViews>
