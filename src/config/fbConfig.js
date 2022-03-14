@@ -1,4 +1,5 @@
 import firebase from "firebase/app";
+import "firebase/storage";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/messaging";
@@ -15,6 +16,9 @@ var fbConfig = {
 // Initialize Firebase
 firebase.initializeApp(fbConfig);
 // firebase.firestore;
+
+//for uploading documents to fb storage
+export const storage = firebase.storage();
 
 //Check browser compatability (FCM will not work on mobile)
 const messaging = firebase.messaging.isSupported()
