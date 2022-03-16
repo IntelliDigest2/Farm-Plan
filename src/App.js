@@ -14,8 +14,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // import Footer from "./components/Footer/Footer";
 // import Home from "./components/Pages/Home";
 import About from "./components/Pages/About";
-import Login from "./components/Pages/Auth/Login";
-import LogInMob from "./components/Pages/Auth/Mobile/LogInMob";
+import Login from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/Mobile/SignUp";
@@ -80,7 +79,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (props.auth.uid) setIsLoggedIn(true);
-    if (!props.auth.uid) return <Redirect to="/login-mob" />;
+    if (!props.auth.uid) return <Redirect to="/login" />;
   }, [props.auth.uid]);
 
   //Google Cloud Messaging code
@@ -160,7 +159,6 @@ const App = (props) => {
             {/* <Route path="/home" exact component={Home} /> */}
             <Route path="/about" exact component={About} />
             <Route path="/login" exact component={Login} />
-            <Route path="/login-mob" exact component={LogInMob} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/settings" exact component={Settings} />

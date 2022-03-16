@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { signIn } from "../../../../store/actions/authActions";
 
-function LogInMob(props) {
+function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -90,4 +90,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogInMob);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
