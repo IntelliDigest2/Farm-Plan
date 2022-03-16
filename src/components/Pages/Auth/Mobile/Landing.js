@@ -24,7 +24,7 @@ function LandingPage(props) {
         <p>Welcome to the Food Loss & Waste Tracker App.</p>
       </div>
       <div className="buttons">
-        <SubButton styling="blue" goTo="/login-mob" text="Log In" />
+        <SubButton styling="blue" goTo="/login" text="Log In" />
         <SubButton styling="blue" goTo="/signup" text="Sign Up" />
       </div>
     </div>

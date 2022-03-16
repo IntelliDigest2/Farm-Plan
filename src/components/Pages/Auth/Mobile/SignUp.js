@@ -60,7 +60,7 @@ const SignUp = (props) => {
     };
     if (validation()) {
       console.log("signup");
-      //props.signUp(data);
+      props.signUp(data);
     } else {
       console.log("error");
     }
