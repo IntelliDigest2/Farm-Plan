@@ -56,6 +56,7 @@ function SellerAuth(props) {
     "Natural pest management",
     "Natural fish harvest",
     "Others",
+    "None",
   ];
 
   const processes = ["Washing", "Packaging", "None of the above"];
@@ -234,12 +235,18 @@ function SellerAuth(props) {
         <PageWrap goTo="account" header="My Farm Plan" subtitle="Plan To Save">
           <div className="pts-info">
             <p style={{ fontSize: "1.1rem" }}>
-              The "Plan To Save" Campaign is our plan to coordinate
-              communication between farmers and consumers. We will gather data
-              in your local area and recommend what crops for you to grow based
-              on demand, and through our marketplace system people will be able
-              to come directly to you to buy their food and reduce food waste
-              from transportation and supermarket loss.
+              The "Plan To Save" Campaign is helping food consumers (Users) to
+              appreciate the health and environmental impact of the food they
+              eat through pre-planning, pre-ordering and monitoring of their
+              food consumption while helping food producers (farmers) pre-plan
+              and sustainably produce food to meet the consumption demand of the
+              users. We will gather data in your local area and recommend what
+              crops for you to grow based on demand. More importantly, you can
+              sell directly to the consumers through our automated AI driven
+              market places that matches demand from local consumers with supply
+              from local farmers, boosting your sales revenue at no additional
+              marketing cost. Join us today so that we can support you farm
+              sustainably.
             </p>
           </div>
           <FormStart

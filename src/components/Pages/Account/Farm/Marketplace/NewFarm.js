@@ -137,7 +137,7 @@ const Hydroponics = (props) => {
         <ul>
           <li>List of nature-based pesticides </li>
           <li>List of renewable energy sources</li>
-          <li>List of energy saving Leds lights</li>
+          <li>List of energy saving LED lights</li>
           <li>List of upcyclable hydroponic farm equipment</li>
         </ul>
       </div>

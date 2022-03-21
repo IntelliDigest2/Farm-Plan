@@ -134,7 +134,7 @@ export function ExistingFarmer(props) {
             "Drinks",
             "Fish and Seafood",
             "Fruits",
-            "Grains, Bean and Nuts",
+            "Grains, Beans and Nuts",
             "Meat and Poultry",
             "Pet Foods",
             "Vegetables",
