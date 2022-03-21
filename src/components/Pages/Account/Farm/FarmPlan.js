@@ -93,143 +93,143 @@ const AddProductsFarm = (props) => {
     currencies: ["GBP (£)", "USD ($)", "EUR (€)"],
   };
 
-  // if (!props.profile.isSeller) {
-  return <SellerAuth />;
-  // } else {
-  //   return (
-  //     <>
-  //       <PageWrap goTo="/account" header="Sell Products" subtitle="Add an Item">
-  //         <Form
-  //           className="form-layout"
-  //           style={{ padding: "10px" }}
-  //           onSubmit={(e) => {
-  //             e.preventDefault();
-  //             HandleSubmit();
-  //           }}
-  //         >
-  //           <Form.Group>
-  //             <Form.Label>Food Name</Form.Label>
-  //             <Form.Control
-  //               type="text"
-  //               id="food"
-  //               onChange={(e) => setFood(e.target.value)}
-  //               value={food}
-  //               required
-  //             />
-  //           </Form.Group>
+  if (!props.profile.isSeller) {
+    return <SellerAuth />;
+  } else {
+    return (
+      <>
+        <PageWrap goTo="/account" header="Sell Products" subtitle="Add an Item">
+          <Form
+            className="form-layout"
+            style={{ padding: "10px" }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              HandleSubmit();
+            }}
+          >
+            <Form.Group>
+              <Form.Label>Food Name</Form.Label>
+              <Form.Control
+                type="text"
+                id="food"
+                onChange={(e) => setFood(e.target.value)}
+                value={food}
+                required
+              />
+            </Form.Group>
 
-  //           <Form.Group className="mb-3">
-  //             <Form.Label>Food Category</Form.Label>
-  //             <Dropdown
-  //               id="category"
-  //               styling="green"
-  //               data={category}
-  //               function={(e) => {
-  //                 setCategory(e);
-  //               }}
-  //               items={dropdown.categories}
-  //             />
-  //           </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Food Category</Form.Label>
+              <Dropdown
+                id="category"
+                styling="green"
+                data={category}
+                function={(e) => {
+                  setCategory(e);
+                }}
+                items={dropdown.categories}
+              />
+            </Form.Group>
 
-  //           <Form.Group>
-  //             <Form.Label>Weight</Form.Label>
-  //             <InputGroup>
-  //               <Form.Control
-  //                 type="number"
-  //                 id="weight"
-  //                 onChange={(e) => setWeight(e.target.value)}
-  //                 value={weight}
-  //                 required
-  //               />
-  //               <Dropdown
-  //                 id="unit"
-  //                 styling="green dropdown-input-right"
-  //                 data={unit}
-  //                 function={(e) => {
-  //                   setUnit(e);
-  //                 }}
-  //                 items={dropdown.measurements}
-  //               />
-  //             </InputGroup>
-  //           </Form.Group>
+            <Form.Group>
+              <Form.Label>Weight</Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type="number"
+                  id="weight"
+                  onChange={(e) => setWeight(e.target.value)}
+                  value={weight}
+                  required
+                />
+                <Dropdown
+                  id="unit"
+                  styling="green dropdown-input-right"
+                  data={unit}
+                  function={(e) => {
+                    setUnit(e);
+                  }}
+                  items={dropdown.measurements}
+                />
+              </InputGroup>
+            </Form.Group>
 
-  //           <Form.Group>
-  //             <Form.Label>Price</Form.Label>
-  //             <InputGroup>
-  //               <Dropdown
-  //                 id="currency"
-  //                 styling="green dropdown-input-left"
-  //                 data={currency}
-  //                 function={(e) => {
-  //                   setCurrency(e);
-  //                 }}
-  //                 items={dropdown.currencies}
-  //               />
-  //               <Form.Control
-  //                 type="number"
-  //                 id="price"
-  //                 required
-  //                 step={0.1}
-  //                 precision={2}
-  //                 onChange={(e) => {
-  //                   setPrice(e.target.value);
-  //                 }}
-  //                 value={price}
-  //               />
-  //             </InputGroup>
-  //           </Form.Group>
+            <Form.Group>
+              <Form.Label>Price</Form.Label>
+              <InputGroup>
+                <Dropdown
+                  id="currency"
+                  styling="green dropdown-input-left"
+                  data={currency}
+                  function={(e) => {
+                    setCurrency(e);
+                  }}
+                  items={dropdown.currencies}
+                />
+                <Form.Control
+                  type="number"
+                  id="price"
+                  required
+                  step={0.1}
+                  precision={2}
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                  }}
+                  value={price}
+                />
+              </InputGroup>
+            </Form.Group>
 
-  //           <Form.Group>
-  //             <Form.Label>Expiry Date</Form.Label>
-  //             <Form.Control
-  //               id="expires"
-  //               type="date"
-  //               value={expires}
-  //               required
-  //               onChange={(e) => {
-  //                 setExpires(e.target.value);
-  //               }}
-  //             />
-  //           </Form.Group>
+            <Form.Group>
+              <Form.Label>Expiry Date</Form.Label>
+              <Form.Control
+                id="expires"
+                type="date"
+                value={expires}
+                required
+                onChange={(e) => {
+                  setExpires(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-  //           <Form.Group>
-  //             <Form.Check
-  //               type="checkbox"
-  //               id="producedLocally"
-  //               label="This item was produced locally."
-  //               onClick={(e) => setProducedLocally(true)}
-  //             />
-  //           </Form.Group>
+            <Form.Group>
+              <Form.Check
+                type="checkbox"
+                id="producedLocally"
+                label="This item was produced locally."
+                onClick={(e) => setProducedLocally(true)}
+              />
+            </Form.Group>
 
-  //           <Form.Group>
-  //             <Form.Control
-  //               as="textarea"
-  //               rows={6}
-  //               placeholder="Any Comments?"
-  //               id="comment"
-  //               name="comment"
-  //               onChange={(e) => {
-  //                 setComment(e.target.value);
-  //               }}
-  //             />
-  //           </Form.Group>
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                rows={6}
+                placeholder="Any Comments?"
+                id="comment"
+                name="comment"
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-  //           <Button type="submit" className="sub-btn blue">
-  //             Submit
-  //           </Button>
-  //         </Form>
-  //       </PageWrap>
-  //       <PopUp
-  //         open={open}
-  //         onClose={handleClose}
-  //         text="View my products"
-  //         to="/view-products"
-  //       >
-  //         Item Successfully Submitted!
-  //       </PopUp>
-  //     </>
-  //   );
-  // }
+            <Button type="submit" className="sub-btn blue">
+              Submit
+            </Button>
+          </Form>
+        </PageWrap>
+        <PopUp
+          open={open}
+          onClose={handleClose}
+          text="View my products"
+          to="/view-products"
+        >
+          Item Successfully Submitted!
+        </PopUp>
+      </>
+    );
+  }
 };
 
 const foodOptions = [

@@ -13,6 +13,12 @@ export function Food() {
   return (
     <>
       <IconButton
+        icon="notes"
+        label="My Meal Plan"
+        color="turquoise"
+        goTo="/meal-plan"
+      />
+      <IconButton
         icon="food"
         label="Food Diary"
         color="turquoise"
