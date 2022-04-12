@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
-import "../../SubComponents/Button.css";
-import { PageWrap } from "../../SubComponents/PageWrap";
-import { Dropdown } from "../../SubComponents/Dropdown";
-import { PopUp } from "../../SubComponents/PopUp";
-import SellerAuth from "./Marketplace/SellerAuth";
+import "../../../SubComponents/Button.css";
+import { Pests } from "./pests";
+import { PageWrap } from "../../../SubComponents/PageWrap";
+import { Dropdown } from "../../../SubComponents/Dropdown";
+import { PopUp } from "../../../SubComponents/PopUp";
+import SellerAuth from "./SellerAuth";
 
 import { Form, Button, InputGroup } from "react-bootstrap";
 import { connect } from "react-redux";
-import { createMarketplaceData } from "../../../../store/actions/dataActions";
+import { createMarketplaceData } from "../../../../../store/actions/dataActions";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
-import styled from "styled-components";
 // import { getFirebase} from 'react-redux-firebase'
 // import DisplayError from '../pages/DisplayError'
 import moment from "moment";
@@ -23,10 +23,7 @@ import moment from "moment";
 
 const dailyTabTime = moment().format("ddd MMM Do YYYY");
 
-//for autocomplete, have the food options be every item that they have sold in the past (getFirebase, forEach doc etcetc)
-
 const AddProductsFarm = (props) => {
-  //I'm going to change autocomplete function here to mui rather than bootstrap (theirs is better)
   const [food, setFood] = useState("");
   const [category, setCategory] = useState("Vegetables");
 
@@ -45,7 +42,7 @@ const AddProductsFarm = (props) => {
   // set a "my products" list to update whenever someone uploads an item, so they can see all of their available listings (and sold products?)
   //put ghg things in a separate lil box so it's obvious that they are not form items
   //on hover make it have a little detail about why we include the info.
-  const [ghg, setGhg] = useState([0, "kgCO2", 1.54, "£"]);
+  // const [ghg, setGhg] = useState([0, "kgCO2", 1.54, "£"]);
 
   //pop up
   const [open, setOpen] = useState(false);
@@ -107,17 +104,6 @@ const AddProductsFarm = (props) => {
               HandleSubmit();
             }}
           >
-            <Form.Group>
-              <Form.Label>Food Name</Form.Label>
-              <Form.Control
-                type="text"
-                id="food"
-                onChange={(e) => setFood(e.target.value)}
-                value={food}
-                required
-              />
-            </Form.Group>
-
             <Form.Group className="mb-3">
               <Form.Label>Food Category</Form.Label>
               <Dropdown
@@ -128,6 +114,19 @@ const AddProductsFarm = (props) => {
                   setCategory(e);
                 }}
                 items={dropdown.categories}
+              />
+            </Form.Group>
+
+            <Pests category={category} />
+
+            <Form.Group>
+              <Form.Label>Food Name</Form.Label>
+              <Form.Control
+                type="text"
+                id="food"
+                onChange={(e) => setFood(e.target.value)}
+                value={food}
+                required
               />
             </Form.Group>
 
@@ -232,31 +231,6 @@ const AddProductsFarm = (props) => {
   }
 };
 
-const foodOptions = [
-  { title: "Cereal" },
-  { title: "Bacon" },
-  { title: "Baked Beans" },
-  { title: "Porridge" },
-  { title: "Pancake" },
-  { title: "Beef" },
-  { title: "Chicken" },
-  { title: "Pork" },
-  { title: "Apple" },
-  { title: "Banana" },
-  { title: "Orange" },
-  { title: "Pear" },
-  { title: "Grapes" },
-  { title: "Chocolate" },
-  { title: "Crisps" },
-  { title: "Pasta" },
-  { title: "Bolognese" },
-  { title: "Potato" },
-  { title: "Chips" },
-  { title: "Milk" },
-  { title: "Fruit Juice" },
-  { title: "Onion" },
-];
-
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
@@ -270,44 +244,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createMarketplaceData(product)),
   };
 };
-
-const ExpDate = styled.div`
-  .exp-date {
-    display: flex;
-    flex-direction: column;
-    width: 6.5rem;
-    height: 6.5rem;
-    border: 1px solid #ececec;
-    background-color: rgb(15, 62, 115);
-    color: white;
-    border-radius: 12px;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .exp-date__month {
-    font-size: 0.75rem;
-    font-weight: bold;
-    margin-bottom: -0.5rem;
-  }
-
-  .exp-date__year {
-    font-size: 0.75rem;
-  }
-
-  .exp-date__day {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-`;
-
-const DDMenuStyle = styled.div`
-  .dd {
-    background-color: white;
-    color: grey;
-    border-color: grey;
-  }
-`;
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
