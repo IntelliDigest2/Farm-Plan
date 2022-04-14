@@ -1,107 +1,107 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
-import "./App.css";
-import "./index.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+} from "react-router-dom"
+import "./App.css"
+import "./index.css"
+import "bootstrap/dist/css/bootstrap.min.css"
 
 //* Pages
 // import NavBar from "./components/Navbar/Navbar";
 // import Footer from "./components/Footer/Footer";
 // import Home from "./components/Pages/Home";
-import About from "./components/Pages/About";
-import Login from "./components/Pages/Auth/Mobile/LogInMob";
-import LandingPage from "./components/Pages/Auth/Mobile/Landing";
-import Contact from "./components/Pages/Contact";
-import SignUp from "./components/Pages/Auth/Mobile/SignUp";
-import Settings from "./components/Pages/Auth/Settings";
-import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
-import NotFound from "./components/Pages/NotFound";
-import ForgotPassword from "./components/Pages/ForgotPassword";
-import PlanToSave from "./components/Pages/Account/PlanToSave";
+import About from "./components/Pages/About"
+import Login from "./components/Pages/Auth/Mobile/LogInMob"
+import LandingPage from "./components/Pages/Auth/Mobile/Landing"
+import Contact from "./components/Pages/Contact"
+import SignUp from "./components/Pages/Auth/Mobile/SignUp"
+import Settings from "./components/Pages/Auth/Settings"
+import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire"
+import NotFound from "./components/Pages/NotFound"
+import ForgotPassword from "./components/Pages/ForgotPassword"
+import PlanToSave from "./components/Pages/Account/PlanToSave"
 //old account
 //import Account from "./components/Pages/Account/UserAccount";
-import ChangePassword from "./components/Pages/Account/ChangePassword";
-import Map from "./components/Pages/Account/Map";
+import ChangePassword from "./components/Pages/Account/ChangePassword"
+import Map from "./components/Pages/Account/Map"
 
-import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
-import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
-import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
-import FoodIntake from "./components/Pages/Account/Personal/FoodIntake";
+import FoodWaste from "./components/Pages/Account/Personal/FoodWaste"
+import FoodLoss from "./components/Pages/Account/Farm/FoodLoss"
+import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste"
+import FoodIntake from "./components/Pages/Account/Personal/FoodIntake"
 // import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
-import FoodReduction from "./components/Pages/FoodReduction";
-import InfoTable from "./components/Pages/InfoTable";
+import FoodReduction from "./components/Pages/FoodReduction"
+import InfoTable from "./components/Pages/InfoTable"
 
-import BrowseProducts from "./components/Pages/Account/BrowseProducts";
+import BrowseProducts from "./components/Pages/Account/BrowseProducts"
 // import BrowseProductsLocalProduce from "./components/Pages/Account/BrowseProductsLocalProduce";
 
-import ProductListing from "./components/Pages/Account/products/ProductListing";
+import ProductListing from "./components/Pages/Account/products/ProductListing"
 
-import ReserveItems from "./components/Pages/Account/ReserveItems";
+import ReserveItems from "./components/Pages/Account/ReserveItems"
 
-import AddProducts from "./components/Pages/Account/AddProducts";
-import FarmPlan from "./components/Pages/Account/Farm/FarmPlan";
-import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
-import AddProductsBusiness from "./components/Pages/Account/Business/AddProductsBusiness";
-import AddProductsAcademic from "./components/Pages/Account/Academic/AddProductsAcademic";
+import AddProducts from "./components/Pages/Account/AddProducts"
+import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan"
+import ViewProducts from "./components/Pages/Account/Farm/ViewProducts"
+import AddProductsBusiness from "./components/Pages/Account/Business/AddProductsBusiness"
+import AddProductsAcademic from "./components/Pages/Account/Academic/AddProductsAcademic"
 
-import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
-import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
-import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
+import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste"
+import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic"
+import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic"
 
-import NewAccount from "./components/Pages/Account/Account";
+import NewAccount from "./components/Pages/Account/Account"
 
-import { Notifications } from "react-push-notification";
+import { Notifications } from "react-push-notification"
 
-import { connect } from "react-redux";
+import { connect } from "react-redux"
 import {
   BrowserView,
   MobileView,
   //isMobile,
   //isBrowser,
-} from "react-device-detect";
+} from "react-device-detect"
 
 //* Cloud Messaging
-import { Toast } from "react-bootstrap";
-import { getToken, onMessageListener } from "./config/fbConfig";
+import { Toast } from "react-bootstrap"
+import { getToken, onMessageListener } from "./config/fbConfig"
 
 //* Chart.js
-import ChartView from "./components/Pages/Account/Charts/Chart";
+import ChartView from "./components/Pages/Account/Charts/Chart"
 
 const App = (props) => {
-  const [uid, setUid] = useState(props.auth.uid);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [uid, setUid] = useState(props.auth.uid)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    if (props.auth.uid) setIsLoggedIn(true);
-    if (!props.auth.uid) return <Redirect to="/login" />;
-  }, [props.auth.uid]);
+    if (props.auth.uid) setIsLoggedIn(true)
+    if (!props.auth.uid) return <Redirect to="/login" />
+  }, [props.auth.uid])
 
   //Google Cloud Messaging code
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
   const [notification, setNotification] = useState({
     title: "",
     body: "",
     image: "",
-  });
-  const [isTokenFound, setTokenFound] = useState(false);
-  getToken(setTokenFound);
+  })
+  const [isTokenFound, setTokenFound] = useState(false)
+  getToken(setTokenFound)
 
   onMessageListener()
     .then((payload) => {
-      setShow(true);
+      setShow(true)
       setNotification({
         image: payload.notification.image,
         title: payload.notification.title,
         body: payload.notification.body,
-      });
+      })
     })
-    .catch((err) => console.log("failed: ", err));
+    .catch((err) => console.log("failed: ", err))
 
   return (
     <React.Fragment>
@@ -219,13 +219,13 @@ const App = (props) => {
         {/* <Footer /> */}
       </Router>
     </React.Fragment>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, null)(App)
