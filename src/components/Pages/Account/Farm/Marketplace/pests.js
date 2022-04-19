@@ -21,7 +21,11 @@ export const Pests = (props) => {
         <ListSubheader>Susceptible Pests</ListSubheader>
 
         {props.category &&
-          props.category.map((pest) => <ListItem key={pest}>{pest}</ListItem>)}
+          props.category.map((pest) => (
+            <ListItem key={pest}>
+              <a href={`https://www.google.com/search?q=${pest}`}>{pest}</a>
+            </ListItem>
+          ))}
       </List>
     </div>
   )

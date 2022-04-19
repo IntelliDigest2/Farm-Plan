@@ -19,8 +19,6 @@ import moment from "moment"
 // import { Autocomplete } from "@material-ui/lab";
 // import { TextField } from "@material-ui/core";
 
-//const time = moment().format("MMMM Do YYYY, h:mm:ss a");
-
 const cropDB = require("./crops.json")
 
 const dailyTabTime = moment().format("ddd MMM Do YYYY")
