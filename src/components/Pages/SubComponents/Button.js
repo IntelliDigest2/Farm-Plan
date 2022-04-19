@@ -17,18 +17,19 @@ import ShoppingBagOutlined from "@mui/icons-material/ShoppingBagOutlined";
 import CategoryIcon from "@mui/icons-material/Category";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
+import AddIcon from "@mui/icons-material/Add";
 
 //The default buttons we are using are the large dropdown buttons we use on the account page and their small sub buttons
 //when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (styles are in Button.css)
 
 // TODO sort out hover and selected colours (defaults to bootstrap primary)
 
-function DefaultButton(props) {
+export function DefaultButton(props) {
   if (props.disabled) {
     return (
       <BootstrapButton
         variant="default"
-        className={["default-btn", props.styling]}
+        className={["default-btn", `${props.styling}-btn`]}
         disabled
       >
         {props.text}
@@ -38,7 +39,7 @@ function DefaultButton(props) {
     return (
       <BootstrapButton
         variant="default"
-        className={["default-btn", props.styling]}
+        className={["default-btn", `${props.styling}-btn`]}
         href={props.goTo}
         onClick={props.onClick}
       >
@@ -48,11 +49,11 @@ function DefaultButton(props) {
   }
 }
 
-function SubButton(props) {
+export function SubButton(props) {
   return (
     <BootstrapButton
       variant="default"
-      className={["sub-btn", props.styling]}
+      className={["sub-btn", `${props.styling}-btn`]}
       href={props.goTo}
       onClick={props.onClick}
     >
@@ -61,7 +62,21 @@ function SubButton(props) {
   );
 }
 
-function IconButton(props) {
+export function AddButton({ onClick }) {
+  return (
+    <BootstrapButton
+      variant="default"
+      className={["add-btn", "green-btn"]}
+      onClick={onClick}
+    >
+      <div>
+        <AddIcon sx={{ fontSize: 30 }} />
+      </div>
+    </BootstrapButton>
+  );
+}
+
+export function IconButton(props) {
   function IconType() {
     switch (props.icon) {
       default:
@@ -104,7 +119,7 @@ function IconButton(props) {
   return (
     <BootstrapButton
       variant="default"
-      className={["icon-btn", props.color]}
+      className={["icon-btn", `${props.color}-btn`]}
       href={props.goTo}
       target={target}
       disabled={props.disabled}
@@ -116,5 +131,3 @@ function IconButton(props) {
     </BootstrapButton>
   );
 }
-
-export { DefaultButton, SubButton, IconButton };

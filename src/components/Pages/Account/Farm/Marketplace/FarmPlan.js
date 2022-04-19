@@ -213,7 +213,7 @@ const AddProductsFarm = (props) => {
               />
             </Form.Group>
 
-            <Button type="submit" className="sub-btn blue">
+            <Button type="submit" className="sub-btn blue-btn">
               Submit
             </Button>
           </Form>

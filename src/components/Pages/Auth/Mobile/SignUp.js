@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "../../Account/UserAccount.css";
 import "./Mob.css";
-import { Dropdown, Select } from "../../SubComponents/Dropdown";
+import { Select } from "../../SubComponents/Dropdown";
 import { Title } from "./MobComponents";
 
 import { Form, Col, Button } from "react-bootstrap";
@@ -26,7 +26,7 @@ import Geocode from "react-geocode";
 import { countryNames, regionNames } from "../../../lib/Countries";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { submitNotification } from "../../../lib/Notifications";
-import TermsAndCons from "../../SubComponents/TermsAndConditions";
+//import TermsAndCons from "../../SubComponents/TermsAndConditions";
 
 const SignUp = (props) => {
   //Stage1

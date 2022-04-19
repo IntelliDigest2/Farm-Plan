@@ -28,6 +28,14 @@
   box-shadow: 4px 5px 5px -2px rgba(0, 0, 0, 0.5);
 }
 
+.add-btn {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 0 0 5%;
+  padding: 0rem;
+  border-radius: 10px;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -35,78 +43,82 @@
 }
 
 /*button colours*/
-.turquoise {
+.turquoise-btn {
   background-color: #32797e;
   border-color: #0c656b;
   color: white;
+  transition: transform 0.5s;
 }
-.turquoise:hover {
+.turquoise-btn:hover {
   background-color: #0c656b;
-  border-color: white;
   color: white;
+  transform: scale(0.95);
 }
-.turquoise:focus {
+.turquoise-btn:focus {
   background-color: #0c656b;
   border-color: white;
 }
-.turquoise:active {
+.turquoise-btn:active {
   background-color: #32797e;
   border-color: white;
 }
 
-.green {
+.green-btn {
   background-color: #afba15;
-  border-color: #95a000;
+  border-color: #afba15;
+  color: white;
+  transition: transform 0.5s;
+}
+.green-btn:hover {
+  background-color: #c5d300;
+  transform: scale(0.95);
   color: white;
 }
-.green:hover {
-  background-color: #c5d300;
-  border-color: white;
-  color: white;
-}
-.green:focus {
+.green-btn:focus {
   background-color: #c5d300;
   border-color: white;
 }
-.green:active {
+.green-btn:active {
   background-color: #afba15;
   border-color: white;
 }
 
-.yellow {
+.yellow-btn {
   background-color: #d9a12d;
   border-color: #c58401;
   color: white;
+  transition: transform 0.5s;
 }
-.yellow:hover {
+.yellow-btn:hover {
   background-color: #c58401;
-  border-color: white;
+  transform: scale(0.95);
   color: white;
 }
-.yellow:focus {
+.yellow-btn:focus {
   background-color: #c58401;
   border-color: white;
 }
-.yellow:active {
+.yellow-btn:active {
   background-color: #d9a12d;
   border-color: white;
 }
 
-.blue {
+.blue-btn {
   background-color: #0c0847;
   border-color: #02001a;
   color: white;
+  transition: transform 0.5s;
 }
-.blue:hover {
+.blue-btn:hover {
   background-color: #02001a;
-  border-color: white;
+  transform: scale(0.95);
   color: white;
 }
-.blue:focus {
+.blue-btn:focus {
   background-color: #02001a;
   border-color: white;
 }
-.blue:active {
+.blue-btn:active {
   background-color: #0c0847;
   border-color: white;
 }

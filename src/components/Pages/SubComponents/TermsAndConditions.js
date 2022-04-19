@@ -3,7 +3,6 @@ import "./PageWrap.css";
 
 import Button from "@mui/material/Button";
 import { Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 function TermsAndConsModal(props) {
   return (
