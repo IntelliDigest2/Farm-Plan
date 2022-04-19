@@ -8,77 +8,7 @@ import { fs } from "../../../../../config/fbConfig"
 import { connect } from "react-redux"
 import { getFirestoreData } from "../../../../../store/actions/dataActions"
 
-var thePests = require("./pests.json")
-
 export const Pests = (props) => {
-  // when fetching data, use the function setPests to create array of pests
-  const [pests, setPests] = useState([])
-
-  useEffect(() => {
-
-    thePests.categories.forEach((pest) => {
-      console.log(pest)
-    })
-
-    // getCategories()
-    // putFakeData()
-    // putNewCollection()
-
-    //use fetch request here, useEffect means that the list will update whenever the food category is changed (I'm assuming category is the deciding factor in deciding the pests- if not we can just change that)
-    setPests(["red", "blue", "yellow", "green"])
-  }, [props.category])
-
-  // const getCategories = async () => {
-  //   let theNutrients = []
-  //   nutrients.forEach((nutrient) => {
-  //     fs.collection("crops")
-  //       .doc(nutrient.grouping)
-  //       .collection(nutrient.crop)
-  //       .doc(nutrient.crop)
-  //       .get()
-  //       .then((snapshot) => {
-  //         theNutrients.push(nutrient.crop)
-  //         console.log(snapshot.data())
-  //       })
-  //       .catch((error) => console.log(error))
-  //   })
-  //   console.log(theNutrients)
-  //   return theNutrients
-  // }
-
-  // const putNewCollection = async () => {
-  //   nutrients.forEach((nutrient) => {
-  //     fs.collection("crops")
-  //       .doc(nutrient.grouping)
-  //       .collection(nutrient.crop)
-  //       .doc(nutrient.crop)
-  //       .set(
-  //         {
-  //           nitrogen: nutrient.nitrogen,
-  //           phosphorus: nutrient.phosphorus,
-  //           potassium: nutrient.potassium,
-  //         },
-  //         { merge: true }
-  //       )
-  //       .then((snapshot) => {
-  //         console.log(snapshot)
-  //       })
-  //       .catch((error) => console.log(error))
-  //   })
-  // }
-
-  // const putFakeData = async () => {
-  //   fs.collection("pests")
-  //     .doc("Herbs")
-  //     .collection("Parsley")
-  //     .doc("Parsley")
-  //     .set({ pests: ["789", "10"] }, { merge: true })
-  //     .then((snapshot) => {
-  //       console.log(snapshot)
-  //     })
-  //     .catch((error) => console.log(error))
-  // }
-
   return (
     <div
       style={{
@@ -89,25 +19,12 @@ export const Pests = (props) => {
     >
       <List>
         <ListSubheader>Susceptible Pests</ListSubheader>
-        {pests.map((pest) => (
-          <ListItem key={pest}>{pest}</ListItem>
-        ))}
+
+        {props.category &&
+          props.category.map((pest) => <ListItem key={pest}>{pest}</ListItem>)}
       </List>
     </div>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.firebase.auth,
-  }
-}
-
-// Maps specific function calls to dispatch
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getFirestoreData: (product) => dispatch(getFirestoreData(product)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Pests)
+export default Pests

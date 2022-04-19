@@ -1,24 +1,24 @@
-import React from "react";
-import "./Dropdown.css";
+import React from "react"
+import "./Dropdown.css"
 import {
   DropdownButton as BootstrapDropdownButton,
   Form,
-} from "react-bootstrap";
-import { Dropdown as BootstrapDropdown } from "react-bootstrap";
+} from "react-bootstrap"
+import { Dropdown as BootstrapDropdown } from "react-bootstrap"
 
 function Dropdown(props) {
-  let comp;
+  let comp
   comp = props.items.map((item, index) => {
     if (item === "/") {
-      return <BootstrapDropdown.Divider key={index} />;
+      return <BootstrapDropdown.Divider key={index} />
     } else {
       return (
         <BootstrapDropdown.Item id={props.id} eventKey={item} key={index}>
           {item}
         </BootstrapDropdown.Item>
-      );
+      )
     }
-  });
+  })
 
   if (props.disabled) {
     return (
@@ -32,7 +32,7 @@ function Dropdown(props) {
       >
         {comp}
       </BootstrapDropdownButton>
-    );
+    )
   }
 
   return (
@@ -45,22 +45,22 @@ function Dropdown(props) {
     >
       {comp}
     </BootstrapDropdownButton>
-  );
+  )
 }
 
 function Select(props) {
-  let comp;
+  let comp
   comp = props.items.map((item, index) => {
     if (item === "/") {
-      return <option disabled>──────────</option>;
+      return <option disabled>──────────</option>
     } else {
       return (
         <option id={props.id} key={index}>
           {item}
         </option>
-      );
+      )
     }
-  });
+  })
 
   return (
     <Form.Control
@@ -80,7 +80,7 @@ function Select(props) {
       </option>
       {comp}
     </Form.Control>
-  );
+  )
 }
 
-export { Dropdown, Select };
+export { Dropdown, Select }
