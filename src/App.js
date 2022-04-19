@@ -45,7 +45,8 @@ import ProductListing from "./components/Pages/Account/products/ProductListing";
 import ReserveItems from "./components/Pages/Account/ReserveItems";
 
 import AddProducts from "./components/Pages/Account/AddProducts";
-import FarmPlan from "./components/Pages/Account/Farm/FarmPlan";
+import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
+import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlan";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 import AddProductsBusiness from "./components/Pages/Account/Business/AddProductsBusiness";
 import AddProductsAcademic from "./components/Pages/Account/Academic/AddProductsAcademic";
@@ -196,6 +197,7 @@ const App = (props) => {
 
             <Route path="/add-products" component={AddProducts} />
             <Route path="/farm-plan" component={FarmPlan} />
+            <Route path="/meal-plan" component={MealPlan} />
             <Route path="/view-products" component={ViewProducts} />
             <Route
               path="/add-products-business"

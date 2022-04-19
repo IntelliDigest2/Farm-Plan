@@ -110,6 +110,48 @@ export const getMapData = (data) => {
   };
 };
 
+export const createMealPlanData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(data.uid)
+      .collection("mealPlanData")
+      .doc(data.month)
+      .collection(data.day)
+      .add(data.upload)
+      .then(() => {
+        dispatch({ type: "CREATE_DATA" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+};
+
+export const getMealData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(data.uid)
+      .collection("mealPlanData")
+      .doc(data.month)
+      .collection(data.day)
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_DATA", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
+      });
+  };
+};
+
 //Works for new Admin/Sub acount structure
 export const getFirestoreData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
