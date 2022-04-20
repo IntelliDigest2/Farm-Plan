@@ -8,7 +8,7 @@ import { Profile } from "../SubComponents/Profile"
 import "../Pages.css"
 import { PageWrapMini } from "../SubComponents/PageWrap"
 
-import logo from "../../../images/tracker.png"
+import logo from "../../../images/Logo.svg"
 
 import { TabContext, TabList, TabPanel } from "@material-ui/lab"
 import { Tab } from "@material-ui/core"

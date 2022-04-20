@@ -41,7 +41,8 @@ a {
     border-bottom: 1px solid #252525;
   }
   .flex img{
-    background: #afba15;
+    /* background: #afba15; */
+    max-width: 400px;
   }
   .profile {
     box-shadow: none !important;
