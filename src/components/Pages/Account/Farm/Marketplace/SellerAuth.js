@@ -179,25 +179,30 @@ function SellerAuth(props) {
     } else {
       data = {
         uid: props.auth.uid,
-        email: props.auth.email,
 
-        membership: [member, organisation],
-        registered: registered,
+        info: {
+          email: props.auth.email,
 
-        location: [address1, address2, town, postcode],
-        sector: sector,
-        subsector: subsector,
-        infrastructure: infr,
-        productType: productType,
-        nutrient: nutrient,
-        soilComp: soilComp,
-        farmSize: farmSize,
-        growthTime: growthTime,
-        harvestFreq: harvestFreq,
-        harvestSize: harvestSize,
-        harvestUnit: harvestUnit,
+          membership: [member, organisation],
+          registered: registered,
+
+          location: [address1, address2, town, postcode],
+          sector: sector,
+          subsector: subsector,
+          infrastructure: infr,
+          productType: productType,
+          nutrient: nutrient,
+          soilComp: soilComp,
+          farmSize: farmSize,
+          growthTime: growthTime,
+          harvestFreq: harvestFreq,
+          harvestSize: harvestSize,
+          harvestUnit: harvestUnit,
+        },
+
         profile: { isSeller: true },
       };
+
       props.becomeSeller(data);
     }
   };
@@ -424,7 +429,7 @@ function FormStart(props) {
               }}
             />
             <Button
-              className="sub-btn green"
+              className="sub-btn green-btn"
               style={{ width: "20%" }}
               onClick={props.handleFile}
             >
@@ -442,7 +447,7 @@ function FormStart(props) {
         <div className="auth-error">
           {props.error ? <p> {props.error}</p> : null}
         </div>
-        <Button type="submit" className="sub-btn blue">
+        <Button type="submit" className="sub-btn blue-btn">
           Next
         </Button>
       </Form>

@@ -117,6 +117,31 @@ export const becomeSeller = (seller) => {
   };
 };
 
+//sets isConsumer in "users" and the profile in "marketplace"
+export const becomeConsumer = (consumer) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+    firestore
+      .collection("users")
+      .doc(consumer.uid)
+      .set({ ...consumer.profile }, { merge: true })
+      .then(() => {
+        return firestore
+          .collection("marketplace")
+          .doc(consumer.uid)
+          .set({ ...consumer.upload }, { merge: true });
+      })
+      .then(() => {
+        dispatch({ type: "CONSUMER_SUCCESS" });
+      })
+      .catch((err) => {
+        console.log("err");
+        dispatch({ type: "CONSUMER_ERROR", err });
+      });
+  };
+};
+
 //not currently working
 export const resetPassword = (credentials) => {
   return (dispatch, getState, { getFirebase }) => {
