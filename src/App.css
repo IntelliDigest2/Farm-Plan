@@ -34,3 +34,16 @@ body {
 a {
   text-decoration: none;
 }
+
+@media screen and (min-width: 600px) {
+  .flex{
+    display: flex;
+    border-bottom: 1px solid #252525;
+  }
+  .flex img{
+    background: #afba15;
+  }
+  .profile {
+    box-shadow: none !important;
+  }
+}
