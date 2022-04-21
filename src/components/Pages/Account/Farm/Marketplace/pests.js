@@ -9,6 +9,7 @@ import { connect } from "react-redux"
 import { getFirestoreData } from "../../../../../store/actions/dataActions"
 
 export const Pests = (props) => {
+  console.log(props.category)
   return (
     <div
       style={{
@@ -26,6 +27,7 @@ export const Pests = (props) => {
               <a href={`https://www.google.com/search?q=${pest}`}>{pest}</a>
             </ListItem>
           ))}
+        {!props.category && <p>No data available</p>}
       </List>
     </div>
   )
