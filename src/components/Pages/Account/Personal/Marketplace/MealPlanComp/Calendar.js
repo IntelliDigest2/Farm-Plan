@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import "./Mealplan.css";
-import { AddButton } from "./../../../../SubComponents/Button";
 import { AddMealModal } from "./AddMealModal";
 
 import buildCalendar from "./Build";
@@ -13,6 +12,12 @@ import MyMeals from "./meals";
 export const Calendar = ({ value, onChange }) => {
   const [calendar, setCalendar] = useState([]);
   const [show, setShow] = useState(false);
+
+  const [update, setUpdate] = useState(0);
+  //sorry about this, I couldn't be bothered to move all of the update meals functions inside meal.js up one level to pass it to other components so instead I have set it to update whenever the state of "update" changes.
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
 
   function chosenDay() {
     return value.format("dddd DD/MM");
@@ -27,8 +32,13 @@ export const Calendar = ({ value, onChange }) => {
       <div className="display">
         <div className="plan-box">
           <div className="header">{chosenDay()}</div>
-          <MyMeals value={value} show={show} />
-          <AddMealModal value={value} show={show} setShow={setShow} />
+          <MyMeals value={value} show={show} update={update} />
+          <AddMealModal
+            value={value}
+            show={show}
+            setShow={setShow}
+            forceUpdate={forceUpdate}
+          />
         </div>
         <div className="calendar">
           <CalendarHeader value={value} setValue={onChange} />
