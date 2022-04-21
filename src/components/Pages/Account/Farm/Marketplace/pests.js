@@ -9,7 +9,6 @@ import { connect } from "react-redux"
 import { getFirestoreData } from "../../../../../store/actions/dataActions"
 
 export const Pests = (props) => {
-  console.log(props.category)
   return (
     <div
       style={{

@@ -18,13 +18,11 @@ const Weather = () => {
       .then((data) => {
         // We will receivbe a different object structure depending on the query we performed
         let areaKeyCode = Array.isArray(data) ? data[0].Key : data.Key
-        console.log(data)
 
         if (!areaKeyCode) return // If we don't have an area key code, we cannot fetch the weather
         fetch(weatherFetchURL + areaKeyCode + "?apikey=" + accuweatherKey)
           .then((response) => response.json())
           .then((data) => {
-            console.log(data)
             setHeadline({ message: data.Headline.Text, class: "success" })
           })
           .catch((err) => {
