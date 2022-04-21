@@ -4,11 +4,15 @@ import { Form, InputGroup, Button } from "react-bootstrap";
 import "./../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
-import { createMealPlanData } from "../../../../../../store/actions/dataActions";
+import {
+  createMealPlanData,
+  createSavedMeal,
+} from "../../../../../../store/actions/dataActions";
 
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");
   const [ingredients, setIngredients] = useState([]);
+  const [save, setSave] = useState(false);
 
   const defaultLocal = {
     item: "",
@@ -70,6 +74,19 @@ function AddMealForm(props) {
     };
 
     props.createMealPlanData(data);
+    props.forceUpdate();
+
+    if (save) {
+      props.createSavedMeal(data);
+    }
+  };
+
+  const handleSave = () => {
+    if (!save) {
+      setSave(true);
+    } else {
+      setSave(false);
+    }
   };
 
   return (
@@ -121,7 +138,7 @@ function AddMealForm(props) {
             id="unit"
             styling="grey dropdown-input"
             data={local.unit}
-            items={["g", "kg", "/", "mL", "L", "cups", " "]}
+            items={["g", "kg", "/", "mL", "L", "cups", "pcs"]}
             function={(e) => {
               setLocal({ ...local, unit: e });
             }}
@@ -142,6 +159,14 @@ function AddMealForm(props) {
         </Button>
       </Form.Group>
 
+      <Form.Group>
+        <Form.Check
+          type="checkbox"
+          label="Save meal"
+          onClick={() => handleSave()}
+        />
+      </Form.Group>
+
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn" type="submit">
           Done
@@ -160,6 +185,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createMealPlanData: (data) => dispatch(createMealPlanData(data)),
+    createSavedMeal: (data) => dispatch(createSavedMeal(data)),
   };
 };
 

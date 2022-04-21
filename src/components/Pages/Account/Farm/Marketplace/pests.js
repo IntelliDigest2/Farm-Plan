@@ -26,6 +26,7 @@ export const Pests = (props) => {
               <a href={`https://www.google.com/search?q=${pest}`}>{pest}</a>
             </ListItem>
           ))}
+        {!props.category && <p>No data available</p>}
       </List>
     </div>
   )

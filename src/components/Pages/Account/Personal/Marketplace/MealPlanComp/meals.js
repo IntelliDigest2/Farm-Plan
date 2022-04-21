@@ -50,7 +50,7 @@ function MyMeals(props) {
   //this sends data request
   useEffect(() => {
     fetchMeals();
-  }, [props.value]);
+  }, [props.value, props.update]);
 
   const updateMeals = async () => {
     //clears the meals array before each update- IMPORTANT
