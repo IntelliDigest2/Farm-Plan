@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 
 import "../../../SubComponents/Button.css"
 import { Pests } from "./pests"
+import Weather from "./Weather"
+
 import { PageWrap } from "../../../SubComponents/PageWrap"
 import { Dropdown } from "../../../SubComponents/Dropdown"
 import { PopUp } from "../../../SubComponents/PopUp"
@@ -143,6 +145,7 @@ const AddProductsFarm = (props) => {
             </Form.Group>
 
             <Pests category={pests} />
+            <Weather />
 
             <Form.Group>
               <Form.Label>Food Name</Form.Label>
