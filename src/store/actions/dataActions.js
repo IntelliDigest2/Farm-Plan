@@ -129,6 +129,23 @@ export const createMealPlanData = (data) => {
   };
 };
 
+export const createSavedMeal = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(data.uid)
+      .collection("mySavedMeals")
+      .add(data.upload)
+      .then(() => {
+        dispatch({ type: "CREATE_DATA" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+};
+
 export const getMealData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()
