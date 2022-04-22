@@ -1,15 +1,17 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 
 const cats = [
   "Grains",
   "Oil",
-  "Other",
   "Root vegetables",
   "Soft fruits",
   "Vegetables",
+  "Other",
 ]
 
 const CropCategories = (props) => {
+  const [selected, setSelected] = useState("Grains")
+
   return (
     <section>
       <article className="flex" style={{ justifyContent: "space-evenly" }}>
@@ -20,8 +22,10 @@ const CropCategories = (props) => {
               alt={cat}
               height={50}
               width={50}
+              className={selected == cat ? "crop-selected" : ""}
               onClick={(e) => {
                 console.log(cat)
+                setSelected(cat)
                 props.onClick(cat)
               }}
             />

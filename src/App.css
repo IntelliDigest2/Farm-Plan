@@ -35,6 +35,13 @@ a {
   text-decoration: none;
 }
 
+.crop-selected{
+  outline: 2px solid #afba15;
+    outline-offset: 1px;
+    border-radius: 100%;
+    background: #0c0847;
+}
+
 @media screen and (min-width: 600px) {
   .flex{
     display: flex;
