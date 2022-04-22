@@ -38,10 +38,11 @@ a {
 @media screen and (min-width: 600px) {
   .flex{
     display: flex;
-    border-bottom: 1px solid #252525;
+  }
+  .crops .dropdown {
+    flex-basis: 400px;
   }
   .flex img{
-    /* background: #afba15; */
     max-width: 400px;
   }
   .profile {

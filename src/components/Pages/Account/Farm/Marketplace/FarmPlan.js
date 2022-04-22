@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import "../../../SubComponents/Button.css"
 import { Pests } from "./pests"
 import Weather from "./Weather"
+import CropCategories from "./CropCategories"
 
 import { PageWrap } from "../../../SubComponents/PageWrap"
 import { Dropdown } from "../../../SubComponents/Dropdown"
@@ -17,6 +18,7 @@ import { firestoreConnect } from "react-redux-firebase"
 // import { getFirebase} from 'react-redux-firebase'
 // import DisplayError from '../pages/DisplayError'
 import moment from "moment"
+import { Crop } from "@mui/icons-material"
 // import { fs } from "../../../../config/fbConfig";
 // import { Autocomplete } from "@material-ui/lab";
 // import { TextField } from "@material-ui/core";
@@ -118,45 +120,40 @@ const AddProductsFarm = (props) => {
           >
             <Form.Group className="mb-3">
               <Form.Label>Crop Category</Form.Label>
-              <Dropdown
-                id="category"
-                styling="green"
-                data={cropCategory}
-                function={(e) => {
+              <CropCategories
+                onClick={(e) => {
                   setCropCategory(e)
                 }}
-                items={Object.keys(cropDB.categories)}
               />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Crop</Form.Label>
-              <Dropdown
-                id="crop"
-                styling="green"
-                data={crop}
-                function={(e) => {
-                  setCrop(e)
-                }}
-                items={cropDB.categories[cropCategory].map((item) => {
-                  return item.crop
-                })}
-              />
+              <div className="flex crops">
+                <Dropdown
+                  id="crop"
+                  styling="green"
+                  data={crop}
+                  function={(e) => {
+                    setCrop(e)
+                  }}
+                  items={cropDB.categories[cropCategory].map((item) => {
+                    return item.crop
+                  })}
+                />
+
+                <Form.Control
+                  type="text"
+                  id="food"
+                  className="ml-2"
+                  onChange={(e) => setCrop(e.target.value)}
+                  value={crop}
+                  required
+                />
+              </div>
             </Form.Group>
 
             <Pests category={pests} />
-            <Weather />
-
-            <Form.Group>
-              <Form.Label>Food Name</Form.Label>
-              <Form.Control
-                type="text"
-                id="food"
-                onChange={(e) => setCrop(e.target.value)}
-                value={crop}
-                required
-              />
-            </Form.Group>
 
             <Form.Group>
               <Form.Label>Weight</Form.Label>
@@ -180,59 +177,13 @@ const AddProductsFarm = (props) => {
               </InputGroup>
             </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Price</Form.Label>
-              <InputGroup>
-                <Dropdown
-                  id="currency"
-                  styling="green dropdown-input-left"
-                  data={currency}
-                  function={(e) => {
-                    setCurrency(e)
-                  }}
-                  items={dropdown.currencies}
-                />
-                <Form.Control
-                  type="number"
-                  id="price"
-                  required
-                  step={0.1}
-                  precision={2}
-                  onChange={(e) => {
-                    setPrice(e.target.value)
-                  }}
-                  value={price}
-                />
-              </InputGroup>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Expiry Date</Form.Label>
-              <Form.Control
-                id="expires"
-                type="date"
-                value={expires}
-                required
-                onChange={(e) => {
-                  setExpires(e.target.value)
-                }}
-              />
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Check
-                type="checkbox"
-                id="producedLocally"
-                label="This item was produced locally."
-                onClick={(e) => setProducedLocally(true)}
-              />
-            </Form.Group>
+            <Weather />
 
             <Form.Group>
               <Form.Control
                 as="textarea"
                 rows={6}
-                placeholder="Any Comments?"
+                placeholder="Comments"
                 id="comment"
                 name="comment"
                 onChange={(e) => {
