@@ -1,69 +1,70 @@
 import React, { useState, useEffect, useRef } from "react"
 
-const accuweatherKey = "HCq07IWvsiEgRYm0Q6ZSgusqPdjXNBME" // accuweather - store this somewhere?
-const locationFetchURL =
-  "http://dataservice.accuweather.com/locations/v1/cities"
-const weatherFetchURL =
-  "http://dataservice.accuweather.com/forecasts/v1/daily/5day/"
-
 const Weather = () => {
-  const [location, setLocation] = useState("")
+  const [location, setLocation] = useState({ zip: "" })
   const [headline, setHeadline] = useState("")
 
-  const getWeather = (e) => {
+  let openWeatherKey = "5e08f390d68d20c770a7727d2bafe3b1" // openweathermap API key - store this somewhere?
+
+  const locationFetchURL = `http://api.openweathermap.org/geo/1.0/zip?zip=${location.zip},GB&appid=${openWeatherKey}`
+  const weatherFetchURL = `https://api.openweathermap.org/data/2.5/onecall?exclude=minutely,hourly&&units=metric&lat=${location.lat}&lon=${location.lon}&&appid=${openWeatherKey}`
+
+  const getWeatherFromPostCode = (e) => {
     e.preventDefault()
 
-    fetch(getLocationFetchURL())
+    fetch(locationFetchURL)
       .then((res) => res.json())
       .then((data) => {
-        // We will receivbe a different object structure depending on the query we performed
-        let areaKeyCode = Array.isArray(data) ? data[0].Key : data.Key
+        console.log(data)
 
-        if (!areaKeyCode) return // If we don't have an area key code, we cannot fetch the weather
-        fetch(weatherFetchURL + areaKeyCode + "?apikey=" + accuweatherKey)
-          .then((response) => response.json())
-          .then((data) => {
-            setHeadline({ message: data.Headline.Text, class: "success" })
-          })
-          .catch((err) => {
-            setHeadline({ message: "Weather fetch error", class: "danger" })
-            console.error("Weather error: " + err)
-          })
+        if (!data.zip) {
+          setHeadline({ message: "Invalid postcal code", class: "danger" })
+          return
+        }
+
+        setLocation({
+          ...location,
+          lat: data.lat,
+          lon: data.lon,
+        })
       })
       .catch((err) => {
         setHeadline({ message: "Geolocation fetch error", class: "danger" })
-        console.error("Geolocation error: " + err)
       })
   }
+
+  useEffect(() => {
+    if (!location.lat) return
+
+    fetch(weatherFetchURL)
+      .then((response) => response.json())
+      .then((data) => {
+        let weather = ""
+        data.daily.forEach((day, i) => {
+          weather += "Day " + (i + 1) + ": " + day.weather[0].main + " "
+        })
+        setHeadline({ message: weather, class: "success" })
+      })
+      .catch((err) => {
+        setHeadline({ message: "Weather fetch error", class: "danger" })
+      })
+  }, [location.lat])
 
   // Function to request the location of the user based on their browser GEO Location
   const getLocation = (e) => {
     e.preventDefault()
     if (navigator.geolocation)
-      navigator.geolocation.getCurrentPosition(showPosition)
-    else setLocation("Geolocation not supported")
+      navigator.geolocation.getCurrentPosition(updatePosition)
+    else setHeadline({ message: "geolocation not supported", class: "danger" })
   }
 
   // Function to submit the weather request with a given location
-  const showPosition = (position) => {
-    setLocation(position.coords.latitude + ", " + position.coords.longitude)
-    document.getElementById("getWeather").click()
-  }
-
-  // Function to create the API request URL based on the location provided
-  const getLocationFetchURL = () => {
-    // This tests if we are sending a lat/lon address and updates the query accordingly
-    let geoText =
-      location.replace(/[^0-9]/g, "").length > 4 ? "/geoposition" : ""
-
-    return (
-      locationFetchURL +
-      geoText +
-      "/search?apikey=" +
-      accuweatherKey +
-      "&q=" +
-      location
-    )
+  const updatePosition = (position) => {
+    setLocation({
+      ...location,
+      lat: position.coords.latitude,
+      lon: position.coords.longitude,
+    })
   }
 
   return (
@@ -73,19 +74,19 @@ const Weather = () => {
         type="text"
         name="location"
         id="location"
-        placeholder="Location"
+        placeholder="Post code"
         className="p-1 pl-2"
         onChange={(e) => {
-          setLocation(e.target.value)
+          setLocation({ ...location, zip: e.target.value })
         }}
-        value={location}
+        value={location.zip}
       />
       <button
         id="getWeather"
         className="ml-3 mr-1 btn blue-btn"
-        onClick={getWeather}
+        onClick={getWeatherFromPostCode}
       >
-        Get weather
+        Get weather for post code
       </button>
       <button className="btn green-btn" onClick={getLocation}>
         Use my location
