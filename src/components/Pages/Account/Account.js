@@ -1,54 +1,54 @@
-import React, { useState, useEffect, Fragment } from "react"
-import { Redirect } from "react-router-dom"
-import { connect } from "react-redux"
+import React, { useState, useEffect, Fragment } from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-import { Container } from "react-bootstrap"
-import "bootstrap/dist/css/bootstrap.min.css"
-import { Profile } from "../SubComponents/Profile"
-import "../Pages.css"
-import { PageWrapMini } from "../SubComponents/PageWrap"
+import { Container } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Profile } from "../SubComponents/Profile";
+import "../Pages.css";
+import { PageWrapMini } from "../SubComponents/PageWrap";
 
-import logo from "../../../images/Logo.svg"
+import logo from "../../../images/Logo.svg";
 
-import { TabContext, TabList, TabPanel } from "@material-ui/lab"
-import { Tab } from "@material-ui/core"
-import SwipeableViews from "react-swipeable-views"
-import { useTheme } from "@material-ui/core"
+import { TabContext, TabList, TabPanel } from "@material-ui/lab";
+import { Tab } from "@material-ui/core";
+import SwipeableViews from "react-swipeable-views";
+import { useTheme } from "@material-ui/core";
 
-import * as Households from "./Personal/PersonalTabs"
-import * as Farm from "./Farm/FarmTabs"
-import * as Business from "./Business/BusinessTabs"
-import * as Schools from "./Academic/AcademicTabs"
+import * as Households from "./Personal/PersonalTabs";
+import * as Farm from "./Farm/FarmTabs";
+import * as Business from "./Business/BusinessTabs";
+import * as Schools from "./Academic/AcademicTabs";
 
-import { Colors } from "../../lib/Colors"
+import { Colors } from "../../lib/Colors";
 
-import { createSubAccount } from "../../../store/actions/authActions"
+import { createSubAccount } from "../../../store/actions/authActions";
 
 const NewAccount = (props) => {
   //AccountType/BuildingFunction Management
-  const [type, setType] = useState(props.profile.type)
+  const [type, setType] = useState(props.profile.type);
 
   useEffect(() => {
-    setType(props.profile.type)
-  }, [props.profile.type])
+    setType(props.profile.type);
+  }, [props.profile.type]);
 
-  useEffect(() => {}, [type])
+  useEffect(() => {}, [type]);
 
   //Tab Management
-  const theme = useTheme()
-  const [value, setValue] = useState("0")
+  const theme = useTheme();
+  const [value, setValue] = useState("0");
 
   const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   const handleChangeIndex = (index) => {
-    setValue(String(index))
-  }
+    setValue(String(index));
+  };
 
   //Render
   if (!props.auth.uid) {
-    return <Redirect to="/login" />
+    return <Redirect to="/login" />;
   }
 
   return (
@@ -71,13 +71,14 @@ const NewAccount = (props) => {
               theme={theme}
               handleChange={handleChange}
               handleChangeIndex={handleChangeIndex}
+              isConsumer={props.profile.isConsumer}
             />
           </TabContext>
         </div>
       </Container>
     </PageWrapMini>
-  )
-}
+  );
+};
 
 const AccountType = (props) => {
   switch (props.type) {
@@ -115,7 +116,7 @@ const AccountType = (props) => {
             </TabPanel>
           </SwipeableViews>
         </>
-      )
+      );
     case "business_admin":
     case "business_sub":
       return (
@@ -150,7 +151,7 @@ const AccountType = (props) => {
             </TabPanel>
           </SwipeableViews>
         </>
-      )
+      );
     case "academic_admin":
     case "academic_sub":
       return (
@@ -189,7 +190,7 @@ const AccountType = (props) => {
             </TabPanel>
           </SwipeableViews>
         </>
-      )
+      );
     case "household_admin":
     case "household_sub":
     default:
@@ -215,7 +216,7 @@ const AccountType = (props) => {
             onChangeIndex={props.handleChangeIndex}
           >
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <Households.Food />
+              <Households.Food isConsumer={props.isConsumer} />
             </TabPanel>
             <TabPanel value={props.value} index={1} dir={props.theme.direction}>
               <Households.Health />
@@ -225,21 +226,21 @@ const AccountType = (props) => {
             </TabPanel>
           </SwipeableViews>
         </>
-      )
+      );
   }
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
     profile: state.firebase.profile,
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createSubAccount: (product) => dispatch(createSubAccount(product)),
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewAccount)
+export default connect(mapStateToProps, mapDispatchToProps)(NewAccount);

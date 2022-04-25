@@ -9,14 +9,14 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-export function Food() {
+export function Food({ isConsumer }) {
   return (
     <>
       <IconButton
         icon="notes"
         label="My Meal Plan"
         color="turquoise"
-        goTo="/meal-plan"
+        goTo={isConsumer ? "meal-plan" : "cons-auth"}
       />
       <IconButton
         icon="food"

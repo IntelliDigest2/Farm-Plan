@@ -169,6 +169,27 @@ export const getMealData = (data) => {
   };
 };
 
+export const getSavedMeals = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(data.uid)
+      .collection("mySavedMeals")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_DATA", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
+      });
+  };
+};
+
 //Works for new Admin/Sub acount structure
 export const getFirestoreData = (data) => {
   return (dispatch, getState, { getFirebase }) => {
