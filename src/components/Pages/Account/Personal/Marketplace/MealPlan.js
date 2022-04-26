@@ -31,7 +31,7 @@ export default function MealPlan() {
         </Tab>
         <Tab eventKey="saved-meals" title="My Saved Meals">
           {/* saved meals */}
-          <SavedMeals value={value} tab={tab} />
+          <SavedMeals value={value} tab={tab} onChange={setValue} />
         </Tab>
       </Tabs>
 
