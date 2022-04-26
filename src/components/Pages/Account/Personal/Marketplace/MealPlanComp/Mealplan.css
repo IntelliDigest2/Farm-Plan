@@ -218,6 +218,7 @@
   color: #3e3c5c;
   margin: 0.5rem;
   padding: 1rem 1rem 0 1rem;
+  transition: transform 0.5s;
 }
 
 .meal-box .ingrs {
@@ -228,4 +229,8 @@
 
 .saved-meals .meal-box {
   background-color: #e2b458ec;
+}
+.meal-box:hover {
+  background-color: #d9a12d;
+  transform: scale(0.95);
 }

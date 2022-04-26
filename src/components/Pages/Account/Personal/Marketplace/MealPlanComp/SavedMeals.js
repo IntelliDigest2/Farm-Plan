@@ -86,8 +86,12 @@ const SavedMeals = (props) => {
         }}
       >
         <div className="saved-meals">
-          {sMeals.sort().map((newMeal, index) => (
-            <div className="meal-box" key={`meal-box${index}`}>
+          {sMeals.sort(sMeals.meal).map((newMeal, index) => (
+            <div
+              className="meal-box"
+              key={`meal-box${index}`}
+              title="Add to Calendar"
+            >
               <p key={`meal${index}`}>
                 <b>{newMeal.meal}</b>
               </p>

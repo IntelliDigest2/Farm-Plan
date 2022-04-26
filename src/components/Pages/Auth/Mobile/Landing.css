@@ -14,37 +14,6 @@
   justify-content: center;
 }
 
-.title h1 {
-  font-family: "Source Serif Pro";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 4rem;
-  line-height: 2.8rem;
-  letter-spacing: -0.1rem;
-
-  color: #afba15;
-}
-
-.title h2 {
-  font-family: "Source Serif Pro";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 2.1rem;
-  word-spacing: -0.3rem;
-  line-height: 2rem;
-
-  color: #afba15;
-}
-
-.title p {
-  font-family: Source Sans Pro;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 1.2rem;
-  line-height: 25px;
-  color: #0c0847;
-}
-
 .buttons {
   position: absolute;
   text-align: center;
@@ -55,8 +24,12 @@
 @media screen and (max-width: 600px) {
   .title {
     width: 100%;
-    top: 5%;
+    top: 0%;
   }
+  .title img {
+    max-width: 75%;
+  }
+
   .landing {
     width: 100%;
     height: 100%;
@@ -74,17 +47,21 @@
   .title {
     width: 90%;
     margin-left: 5%;
-    top: 3%;
+    top: 0%;
   }
+  .title img {
+    max-width: 75%;
+  }
+
   .landing {
-    width: 90%;
+    width: 80%;
     height: 100%;
-    left: 5%;
+    left: 10%;
   }
   .buttons {
-    width: 40%;
-    left: 30%;
-    top: 75%;
+    width: 50%;
+    left: 25%;
+    top: 78%;
   }
 }
 
@@ -93,17 +70,21 @@
   .title {
     width: 75%;
     margin-left: 12.5%;
-    top: 3%;
+    top: 0%;
   }
+  .title img {
+    max-width: 70%;
+  }
+
   .landing {
-    width: 80%;
+    width: 70%;
     height: 100%;
-    left: 10%;
+    left: 15%;
   }
   .buttons {
-    width: 40%;
-    left: 30%;
-    top: 75%;
+    width: 50%;
+    left: 25%;
+    top: 78%;
   }
 }
 
@@ -112,7 +93,32 @@
   .title {
     width: 75%;
     margin-left: 12.5%;
-    top: 1%;
+    top: -2%;
+  }
+  .title img {
+    max-width: 50%;
+  }
+  .landing {
+    width: 60%;
+    height: 100%;
+    left: 20%;
+  }
+  .buttons {
+    width: 50%;
+    left: 25%;
+    top: 78%;
+  }
+}
+
+/* Large Laptop/Desktop */
+@media screen and (min-width: 1200px) {
+  .title {
+    width: 75%;
+    margin-left: 12.5%;
+    top: -2%;
+  }
+  .title img {
+    max-width: 45%;
   }
   .landing {
     width: 50%;
@@ -122,25 +128,6 @@
   .buttons {
     width: 40%;
     left: 30%;
-    top: 75%;
-  }
-}
-
-/* Large Laptop/Desktop */
-@media screen and (min-width: 1200px) {
-  .title {
-    width: 75%;
-    margin-left: 12.5%;
-    top: 5%;
-  }
-  .landing {
-    width: 40%;
-    height: 100%;
-    left: 30%;
-  }
-  .buttons {
-    width: 40%;
-    left: 30%;
-    top: 75%;
+    top: 78%;
   }
 }
