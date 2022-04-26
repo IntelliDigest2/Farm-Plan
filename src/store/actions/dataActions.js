@@ -43,7 +43,7 @@ export const createMarketplaceData = (product) => {
       .firestore()
       .collection("marketplace")
       .doc(product.uid)
-      .collection("products")
+      .collection("farmPlanData")
       .add(product.upload)
       .then(() => {
         dispatch({ type: "CREATE_DATA" });
