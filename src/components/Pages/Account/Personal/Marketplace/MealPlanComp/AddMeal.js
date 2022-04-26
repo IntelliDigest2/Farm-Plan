@@ -12,12 +12,12 @@ import {
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");
   const [ingredients, setIngredients] = useState([]);
-  const [save, setSave] = useState(false);
+  const [save, setSave] = useState(true);
 
   const defaultLocal = {
     item: "",
     number: 0,
-    unit: "kg",
+    unit: "g",
   };
   const [local, setLocal] = useState(defaultLocal);
   const handleLocal = (e) => {
@@ -162,6 +162,7 @@ function AddMealForm(props) {
       <Form.Group>
         <Form.Check
           type="checkbox"
+          defaultChecked
           label="Save meal"
           onClick={() => handleSave()}
         />

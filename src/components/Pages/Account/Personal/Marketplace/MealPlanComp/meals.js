@@ -49,8 +49,8 @@ function MyMeals(props) {
 
   //this sends data request
   useEffect(() => {
-    fetchMeals();
-  }, [props.value, props.update]);
+    if (props.tab === 0) fetchMeals();
+  }, [props.value, props.update, props.tab]);
 
   const updateMeals = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -77,16 +77,16 @@ function MyMeals(props) {
 
   return (
     // <p>hewwp me</p>
-    <div style={{ paddingBottom: "3rem" }}>
+    <div className="box">
       {meals.map((newMeal, index) => (
-        <div className="meal-box">
-          <p key={index}>
+        <div className="meal-box" key={`meal-box${index}`}>
+          <p key={`meal${index}`}>
             <b>{newMeal.meal}</b>
           </p>
-          <List>
+          <List key={`ingrs${index}`}>
             {newMeal.ingredients.map((ingredient, index) => (
-              <ListItem key={index} className="ingrs">
-                <ListItemIcon>
+              <ListItem key={`item${index}`} className="ingrs">
+                <ListItemIcon key={`icon${index}`}>
                   <CheckBoxOutlineBlankIcon fontSize="1rem" />
                 </ListItemIcon>
                 {ingredient.item}: {ingredient.number}
