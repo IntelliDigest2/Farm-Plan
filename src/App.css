@@ -58,14 +58,11 @@ a {
   min-width: 90px;
 }
 .crops .form-group:first-of-type{
-  display: grid;
   text-align: center;
   font-weight: bold;
   font-size: 25px;
 }
-.crops .form-group:first-of-type img{
-  margin-bottom: -30px;
-}
+
 .crops span.range-slider__wrap {
   margin: 5px;
 }
@@ -136,5 +133,26 @@ a {
   }
   .profile {
     box-shadow: none !important;
+  }
+  .crops .form-group:first-of-type img{
+    margin-bottom: -30px;
+  }
+  .crops .form-group:first-of-type{
+    display: grid;
+  }
+}
+
+/* Mobile only */
+@media screen and (max-width: 600px) {
+  .crops .form-group {
+    display: block;
+    text-align: center;
+  }
+  .crops span.range-slider__wrap, .react-numeric-input{
+    display: block !important;
+    width: 100%;
+  }
+  input[type="text"] {
+      min-width: 200px;
   }
 }
