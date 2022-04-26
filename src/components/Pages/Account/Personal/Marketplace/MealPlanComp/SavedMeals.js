@@ -86,7 +86,7 @@ const SavedMeals = (props) => {
         }}
       >
         <div className="saved-meals">
-          {sMeals.sort(sMeals.meal).map((newMeal, index) => (
+          {sMeals.map((newMeal, index) => (
             <div
               className="meal-box"
               key={`meal-box${index}`}
