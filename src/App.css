@@ -153,6 +153,6 @@ a {
     width: 100%;
   }
   input[type="text"] {
-      min-width: 200px;
+      min-width: 150px;
   }
 }

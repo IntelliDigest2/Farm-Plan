@@ -133,9 +133,7 @@ const CropCategories = (props) => {
 
       <Modal show={showNutrients} onHide={() => setShowNutrients(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            Soil nutrient requirements to grow {props.cat}
-          </Modal.Title>
+          <Modal.Title>Soil nutrient requirements to grow {crop}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Nutrients data={cropData.categories[props.cat][cropIndex]} />
