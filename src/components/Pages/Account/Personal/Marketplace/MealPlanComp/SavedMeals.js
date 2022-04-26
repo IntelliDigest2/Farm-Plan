@@ -69,8 +69,8 @@ const SavedMeals = (props) => {
   };
 
   useEffect(() => {
-    updateSMeals();
-    console.log(props.data);
+    const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
+    updateSMeals().then(setSMeals(sorted));
   }, [props.data]);
 
   return (
