@@ -13,13 +13,11 @@ export const Pests = (props) => {
     <div
       style={{
         overflowY: "scroll",
-        height: "10rem",
+        height: "20rem",
         marginBottom: "2%",
       }}
     >
       <List>
-        <ListSubheader>Susceptible Pests</ListSubheader>
-
         {props.category &&
           props.category.map((pest) => (
             <ListItem key={pest}>
