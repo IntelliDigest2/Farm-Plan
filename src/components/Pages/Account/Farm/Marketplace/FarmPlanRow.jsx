@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react"
 import { Pests } from "./pests"
 import Nutrients from "./Nutrients.jsx"
-import { Form, Button, InputGroup, Modal } from "react-bootstrap"
+import {
+  Form,
+  Button,
+  InputGroup,
+  Modal,
+  Row,
+  Col,
+  Container,
+} from "react-bootstrap"
 import { Dropdown } from "../../../SubComponents/Dropdown"
 
 import NumericInput from "react-numeric-input"
@@ -63,85 +71,77 @@ const CropCategories = (props) => {
   }
 
   return (
-    <section>
-      <article className="" style={{ justifyContent: "space-evenly" }}>
-        <div key={props.cat} className="flex">
-          <Form.Group>
-            <div className="flex crops">
-              <Form.Group>
-                <img
-                  src={require(`./Crop Images/${props.cat}-01.png`).default}
-                  alt={props.cat}
-                  height={70}
-                  width={70}
-                />
-                {props.index + 1}
-              </Form.Group>
+    <Row key={props.cat} className="farm-row">
+      <Col>
+        <img
+          src={require(`./Crop Images/${props.cat}-01.png`).default}
+          alt={props.cat}
+          height={70}
+          width={70}
+        />
+        {props.index + 1}
+      </Col>
 
-              <Form.Group>
-                <Dropdown
-                  id="crop"
-                  styling="green"
-                  data={`Select ${props.cat}`}
-                  function={(e) => {
-                    setCrop(e)
-                  }}
-                  items={cropData.categories[props.cat].map((item) => {
-                    return item.crop
-                  })}
-                />
+      <Col>
+        <Dropdown
+          id="crop"
+          styling="green"
+          data={`Select ${props.cat}`}
+          function={(e) => {
+            setCrop(e)
+          }}
+          items={cropData.categories[props.cat].map((item) => {
+            return item.crop
+          })}
+        />
 
-                <Form.Control
-                  type="text"
-                  id="food"
-                  className="mt-2"
-                  onChange={(e) => setCrop(e.target.value)}
-                  value={crop}
-                  required
-                />
-              </Form.Group>
+        <Form.Control
+          type="text"
+          id="food"
+          className="mt-2"
+          onChange={(e) => setCrop(e.target.value)}
+          value={crop}
+          required
+        />
+      </Col>
 
-              <Form.Group>
-                <p>Select amount of total land</p>
-                <RangeSlider
-                  value={amount}
-                  className="slider"
-                  onChange={(e) => setAmount(Number(e.target.value).toFixed(1))}
-                />
-                <label htmlFor="amount">
-                  <NumericInput
-                    name="amount"
-                    min={0}
-                    max={100}
-                    value={amount}
-                    onChange={(e) => setAmount(Number(e).toFixed(1))}
-                  />
-                  <span>%</span>
-                </label>
-              </Form.Group>
-              <Form.Group>
-                <Button
-                  onClick={() => {
-                    setShowPests(true)
-                  }}
-                  className="sub-btn blue-btn"
-                >
-                  Pests
-                </Button>
-                <Button
-                  onClick={() => {
-                    setShowNutrients(true)
-                  }}
-                  className="sub-btn green-btn"
-                >
-                  Nutrient requirement
-                </Button>
-              </Form.Group>
-
-            </div>
-          </Form.Group>
+      <Col>
+        <label htmlFor="amount">
+          <NumericInput
+            name="amount"
+            min={0}
+            max={100}
+            value={amount}
+            onChange={(e) => setAmount(Number(e).toFixed(1))}
+          />
+          <span>%</span>
+        </label>
+        <RangeSlider
+          value={amount}
+          className="slider"
+          onChange={(e) => setAmount(Number(e.target.value).toFixed(1))}
+        />
+      </Col>
+      <Col>
+        <div className="d-grid gap-2">
+          <Button
+            onClick={() => {
+              setShowPests(true)
+            }}
+            className="sub-btn blue-btn"
+          >
+            Pests
+          </Button>
+          <Button
+            onClick={() => {
+              setShowNutrients(true)
+            }}
+            className="sub-btn green-btn"
+          >
+            Nutrient requirement
+          </Button>
         </div>
-      </article>
+      </Col>
 
       <Modal show={showPests} onHide={() => setShowPests(false)}>
         <Modal.Header closeButton>
@@ -182,7 +182,7 @@ const CropCategories = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </section>
+    </Row>
   )
 }
 

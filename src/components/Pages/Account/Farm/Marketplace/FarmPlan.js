@@ -11,7 +11,7 @@ import NumericInput from "react-numeric-input"
 import { PopUp } from "../../../SubComponents/PopUp"
 import SellerAuth from "./SellerAuth"
 
-import { Form, Button, InputGroup } from "react-bootstrap"
+import { Form, Button, InputGroup, Row, Col, Container } from "react-bootstrap"
 import { connect } from "react-redux"
 import { createMarketplaceData } from "../../../../../store/actions/dataActions"
 import { compose } from "redux"
@@ -57,18 +57,18 @@ const AddProductsFarm = (props) => {
 
   function mergeJson(target) {
     for (var argi = 1; argi < arguments.length; argi++) {
-        var source = arguments[argi];
-        for (var key in source) {
-            if (!(key in target)) {
-                target[key] = [];
-            }
-            for (var i = 0; i < source[key].length; i++) {
-                target[key].push(source[key][i]);
-            }
+      var source = arguments[argi]
+      for (var key in source) {
+        if (!(key in target)) {
+          target[key] = []
         }
+        for (var i = 0; i < source[key].length; i++) {
+          target[key].push(source[key][i])
+        }
+      }
     }
-    return target;
-}
+    return target
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -102,11 +102,7 @@ const AddProductsFarm = (props) => {
           header="Sell Products"
           subtitle="Build your plan"
         >
-          <Form
-            className="form-layout"
-            style={{ padding: "10px" }}
-            onSubmit={handleSubmit}
-          >
+          <Form onSubmit={handleSubmit}>
             <p>
               We recommend that you plant a range of different crops within your
               field. Crop rotation has been proven to increase yield and
@@ -137,9 +133,16 @@ const AddProductsFarm = (props) => {
               </InputGroup>
             </Form.Group>
 
-            {Object.keys(cropDB.categories).map((category, index) => (
-              <Form.Group className="farm-row" key={category}>
+            <Container className="p-0 text-center ">
+              <Row className="mb-2 farm-row farm-header d-none d-sm-flex">
+                <Col>Plot</Col>
+                <Col>Crop</Col>
+                <Col>% of total land</Col>
+                <Col>Info</Col>
+              </Row>
+              {Object.keys(cropDB.categories).map((category, index) => (
                 <FarmPlanRow
+                  key={category}
                   rows={rows}
                   cat={category}
                   index={index}
@@ -149,8 +152,8 @@ const AddProductsFarm = (props) => {
                   land={land}
                   unit={unit}
                 />
-              </Form.Group>
-            ))}
+              ))}
+            </Container>
 
             <h3 className={totalUsed > 100 ? "auth-error" : "success"}>
               Total of land used: {totalUsed.toFixed(0)}%
