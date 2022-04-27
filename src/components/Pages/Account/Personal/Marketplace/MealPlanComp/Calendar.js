@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import "./Mealplan.css";
 import { AddMealModal } from "./AddMealModal";
 
 import buildCalendar from "./Build";
@@ -9,7 +8,7 @@ import CalendarHeader from "./header";
 
 import MyMeals from "./meals";
 
-export const Calendar = ({ value, onChange }) => {
+export const Calendar = ({ value, onChange, tab }) => {
   const [calendar, setCalendar] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -32,7 +31,7 @@ export const Calendar = ({ value, onChange }) => {
       <div className="display">
         <div className="plan-box">
           <div className="header">{chosenDay()}</div>
-          <MyMeals value={value} show={show} update={update} />
+          <MyMeals value={value} show={show} update={update} tab={tab} />
           <AddMealModal
             value={value}
             show={show}

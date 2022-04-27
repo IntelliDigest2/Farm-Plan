@@ -34,17 +34,110 @@ body {
 a {
   text-decoration: none;
 }
+.farm-row{
+  border-radius: 20px;
+  padding: 7px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.farm-row .col:first-of-type{
+  display: inline-grid;
+ max-width: 100px;
+}
+.farm-row .sub-btn{
+  width: 100%;
+}
+.farm-row:nth-child(even){
+  background-color: rgb(236, 236, 236);
+}
+.slider{
+  -webkit-appearance: none;
+  width: 80%;
+  height: 15px;
+  border-radius: 15px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.9;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+.range-slider__tooltip.range-slider__tooltip--auto.range-slider__tooltip--bottom{
+  display: none;
+}
+
+.farm-row label {
+  position: relative;
+}
+.farm-row .react-numeric-input input{
+  /* width: 110px; */
+  padding: 6px;
+}
+.farm-row label span:last-of-type {
+  position: absolute;
+  top: 7px;
+  right: 30px;
+} 
+
+::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #afba15;
+  border: 3px solid #2b2b2b;
+  cursor: pointer;
+}
+
+::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #afba15;
+  border: 3px solid #2b2b2b;
+  cursor: pointer;
+}
+.land{
+  max-width: 400px;
+}
+.farm-header .col{
+  font-weight: bold;
+}
 
 @media screen and (min-width: 600px) {
   .flex{
     display: flex;
-    border-bottom: 1px solid #252525;
+  }
+  .flex div{
+    align-self:center;
+    flex-grow: 10;
+    margin: 0;
+    padding: 3px;
   }
   .flex img{
-    /* background: #afba15; */
     max-width: 400px;
   }
   .profile {
     box-shadow: none !important;
+  }
+  .farm-row:not(.farm-header) .col:first-of-type{
+    font-weight: bold;
+    font-size: 1.2em;
+  } 
+  .farm-row .col:first-of-type img{
+    margin-bottom: -20px;
+  }
+  span.range-slider__wrap {
+    display: block;
+    margin: 8px 0 -6px 0px;
+  }
+  
+}
+
+/* Mobile only */
+@media screen and (max-width: 600px) {
+  input[type="text"] {
+      min-width: 150px;
   }
 }

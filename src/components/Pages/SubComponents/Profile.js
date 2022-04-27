@@ -1,6 +1,6 @@
 import React from "react";
 import "../Account/UserAccount.css";
-import blueberries from "../../../images/Blueberries.png";
+// import blueberries from "../../../images/Blueberries.png";
 import { Colors } from "../../lib/Colors";
 
 import { Container, Row, Col } from "react-bootstrap";
@@ -10,7 +10,6 @@ import IconButton from "@mui/material/IconButton";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
 import { Heading } from "./Heading";
-import { Dropdown } from "./Dropdown";
 
 // function Profile(props) {
 //   return (
@@ -53,7 +52,12 @@ export function Profile(props) {
             text={props.profile.firstName + " " + props.profile.lastName}
           />
           <Heading priority="5" text={props.profile.email} />
-          <IconButton href="/settings" component="a" style={{ float: "right" }}>
+          <IconButton
+            href="/settings"
+            component="a"
+            style={{ float: "right" }}
+            title="settings"
+          >
             <SettingsApplicationsIcon />
           </IconButton>
         </Col>

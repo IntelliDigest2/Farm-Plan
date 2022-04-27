@@ -112,7 +112,7 @@ export function IconButton(props) {
 
   var target;
   if (String(props.goTo).startsWith("/")) {
-    target = null;
+    target = "_self";
   } else {
     target = "_blank";
   }

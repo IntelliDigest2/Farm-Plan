@@ -68,7 +68,7 @@ const Weather = () => {
   }
 
   return (
-    <section id="weather">
+    <section id="weather" className="mb-4">
       <h5 className="mt-3">Weather Forecast</h5>
       <input
         type="text"

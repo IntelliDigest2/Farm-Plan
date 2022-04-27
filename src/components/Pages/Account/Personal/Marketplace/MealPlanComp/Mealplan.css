@@ -12,6 +12,7 @@
     flex: 1;
     width: 100%;
     min-height: 19rem;
+    max-height: 25rem;
   }
 
   .calendar {
@@ -93,6 +94,7 @@
   margin: 0 2% 2% 0;
   position: relative;
   min-width: 40%;
+  padding-bottom: 1.5rem;
 }
 
 .plan-box .header {
@@ -103,6 +105,11 @@
   line-height: 2rem;
   color: white;
 }
+
+/* .plan-box .box {
+  overflow-y: scroll;
+  padding-bottom: 1.5rem;
+} */
 
 .plan-box .button {
   position: absolute;
@@ -116,7 +123,7 @@
   min-width: 50%;
 }
 
-.calendar .header {
+.header {
   background-color: #32797e;
   text-align: center;
   min-height: 2rem;
@@ -199,16 +206,32 @@
   background-color: lightgray;
 }
 
+.saved-meals {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+}
+
 .meal-box {
   background-color: #d9a12d;
   border-radius: 25px;
   line-height: 0.2;
   color: #3e3c5c;
-  margin: 2%;
-  padding: 4% 2% 0 4%;
+  margin: 0.5rem;
+  padding: 1rem 1rem 0 1rem;
+  transition: transform 0.5s;
 }
+
 .meal-box .ingrs {
   color: #0c0847;
-  margin-left: 10%;
+  margin-left: 1rem;
   line-height: 0.8;
+}
+
+.saved-meals .meal-box {
+  background-color: #e2b458ec;
+}
+.meal-box:hover {
+  background-color: #d9a12d;
+  transform: scale(0.95);
 }

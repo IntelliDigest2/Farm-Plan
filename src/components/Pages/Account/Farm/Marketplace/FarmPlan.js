@@ -1,105 +1,95 @@
 import React, { useState, useEffect } from "react"
 
 import "../../../SubComponents/Button.css"
-import { Pests } from "./pests"
+
 import Weather from "./Weather"
+import FarmPlanRow from "./FarmPlanRow"
 
 import { PageWrap } from "../../../SubComponents/PageWrap"
 import { Dropdown } from "../../../SubComponents/Dropdown"
+import NumericInput from "react-numeric-input"
 import { PopUp } from "../../../SubComponents/PopUp"
 import SellerAuth from "./SellerAuth"
 
-import { Form, Button, InputGroup } from "react-bootstrap"
+import { Form, Button, InputGroup, Row, Col, Container } from "react-bootstrap"
 import { connect } from "react-redux"
 import { createMarketplaceData } from "../../../../../store/actions/dataActions"
 import { compose } from "redux"
 import { firestoreConnect } from "react-redux-firebase"
-// import { getFirebase} from 'react-redux-firebase'
-// import DisplayError from '../pages/DisplayError'
+
 import moment from "moment"
-// import { fs } from "../../../../config/fbConfig";
-// import { Autocomplete } from "@material-ui/lab";
-// import { TextField } from "@material-ui/core";
+import { Crop } from "@mui/icons-material"
 
 const cropDB = require("./crops.json")
-
-const dailyTabTime = moment().format("ddd MMM Do YYYY")
+const nutrDB = require("./nutr.json")
+const landUnits = ["Km²", "M²", "Hct"]
 
 const AddProductsFarm = (props) => {
-  const [cropCategory, setCropCategory] = useState(
-    Object.keys(cropDB.categories)[0]
-  )
+  const [land, setLand] = useState(0)
+  const [unit, setUnit] = useState(landUnits[0])
 
-  const [crop, setCrop] = useState(
-    cropDB.categories[Object.keys(cropDB.categories)[0]][0].crop
-  )
+  const [farmPlan, setFarmPlan] = useState([])
 
-  const [pests, setPests] = useState()
-
-  const [weight, setWeight] = useState(0)
-  const [unit, setUnit] = useState("kg")
-
-  //followed by an option to give the food composition, carbs, protein, fibre, fat etc, not a priority.
-  const [producedLocally, setProducedLocally] = useState(false)
-
-  const [price, setPrice] = useState(0.0)
-  const [currency, setCurrency] = useState("GBP (£)")
-
-  const [expires, setExpires] = useState(dailyTabTime)
+  const [rows, setRows] = useState(6)
+  const [totalUsed, setTotalUsed] = useState(100)
+  const [totals, setTotals] = useState([])
   const [comment, setComment] = useState(false)
-  //image upload
-  // set a "my products" list to update whenever someone uploads an item, so they can see all of their available listings (and sold products?)
-  //put ghg things in a separate lil box so it's obvious that they are not form items
-  //on hover make it have a little detail about why we include the info.
-  // const [ghg, setGhg] = useState([0, "kgCO2", 1.54, "£"]);
 
-  //pop up
   const [open, setOpen] = useState(false)
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
+  const [msg, setMsg] = useState("")
+
+  const setRowTotal = (data, i) => {
+    totals[i] = Number(data)
+    const initialValue = 0
+    const sumWithInitial = totals.reduce(
+      (previousValue, currentValue) => previousValue + currentValue,
+      initialValue
+    )
+    setTotalUsed(sumWithInitial)
   }
 
   useEffect(() => {
-    // Sets the crop dropdown to be the first crop in the category
-    setCrop(cropDB.categories[cropCategory][0].crop)
-  }, [cropCategory])
+    if (props.auth.error)
+      setMsg(
+        "There was an error connnecting to the database - please try again"
+      )
+  }, [props.auth.error])
 
-  useEffect(() => {
-    // Sets the pest list to be the first crop in the category
-    const pestList = cropDB.categories[cropCategory].filter((item) => {
-      return item.crop == crop
-    })
-    if (pestList[0]) setPests(pestList[0].pests)
-  }, [crop])
+  function mergeJson(target) {
+    for (var argi = 1; argi < arguments.length; argi++) {
+      var source = arguments[argi]
+      for (var key in source) {
+        if (!(key in target)) {
+          target[key] = []
+        }
+        for (var i = 0; i < source[key].length; i++) {
+          target[key].push(source[key][i])
+        }
+      }
+    }
+    return target
+  }
 
-  function HandleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    if (totalUsed > 100) {
+      setMsg("Total crop volume exceed 100%")
+      return
+    }
+
     var data = {
       uid: props.auth.uid,
       upload: {
-        food: crop,
-        category: cropCategory,
-        weight: [weight, unit],
-        producedLocally: producedLocally,
-        price: [price, currency],
-        expires: expires,
+        ...farmPlan,
+        totalLand: land,
+        landUnits: unit,
         comment: comment,
       },
     }
-    if (crop !== "" && weight !== 0) {
-      props.createMarketplaceData(data)
-      handleClickOpen()
-    } else {
-      console.log("error")
-    }
-  }
 
-  //data for dropdown
-  const dropdown = {
-    measurements: ["kg", "g", "/", "oz", "lbs", "/", "l", "ml"],
-    currencies: ["GBP (£)", "USD ($)", "EUR (€)"],
+    props.createMarketplaceData(data)
+    setOpen(true)
   }
 
   if (!props.profile.isSeller) {
@@ -107,65 +97,28 @@ const AddProductsFarm = (props) => {
   } else {
     return (
       <>
-        <PageWrap goTo="/account" header="Sell Products" subtitle="Add an Item">
-          <Form
-            className="form-layout"
-            style={{ padding: "10px" }}
-            onSubmit={(e) => {
-              e.preventDefault()
-              HandleSubmit()
-            }}
-          >
-            <Form.Group className="mb-3">
-              <Form.Label>Crop Category</Form.Label>
-              <Dropdown
-                id="category"
-                styling="green"
-                data={cropCategory}
-                function={(e) => {
-                  setCropCategory(e)
-                }}
-                items={Object.keys(cropDB.categories)}
-              />
-            </Form.Group>
+        <PageWrap
+          goTo="/account"
+          header="Sell Products"
+          subtitle="Build your plan"
+        >
+          <Form onSubmit={handleSubmit}>
+            <p>
+              We recommend that you plant a range of different crops within your
+              field. Crop rotation has been proven to increase yield and
+              minimise the damage of pests and disease
+            </p>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Crop</Form.Label>
-              <Dropdown
-                id="crop"
-                styling="green"
-                data={crop}
-                function={(e) => {
-                  setCrop(e)
-                }}
-                items={cropDB.categories[cropCategory].map((item) => {
-                  return item.crop
-                })}
-              />
-            </Form.Group>
-
-            <Pests category={pests} />
-            <Weather />
-
-            <Form.Group>
-              <Form.Label>Food Name</Form.Label>
-              <Form.Control
-                type="text"
-                id="food"
-                onChange={(e) => setCrop(e.target.value)}
-                value={crop}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label>Weight</Form.Label>
+            <Form.Group className="mb-3 land">
+              <Form.Label>Amount of land</Form.Label>
               <InputGroup>
                 <Form.Control
                   type="number"
                   id="weight"
-                  onChange={(e) => setWeight(e.target.value)}
-                  value={weight}
+                  onChange={(e) => setLand(e.target.value)}
+                  value={land}
+                  min={1}
+                  max={10000}
                   required
                 />
                 <Dropdown
@@ -175,64 +128,46 @@ const AddProductsFarm = (props) => {
                   function={(e) => {
                     setUnit(e)
                   }}
-                  items={dropdown.measurements}
+                  items={landUnits}
                 />
               </InputGroup>
             </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Price</Form.Label>
-              <InputGroup>
-                <Dropdown
-                  id="currency"
-                  styling="green dropdown-input-left"
-                  data={currency}
-                  function={(e) => {
-                    setCurrency(e)
-                  }}
-                  items={dropdown.currencies}
+            <Container className="p-0 text-center ">
+              <Row className="mb-2 farm-row farm-header d-none d-sm-flex">
+                <Col>Plot</Col>
+                <Col>Crop</Col>
+                <Col>% of total land</Col>
+                <Col>Info</Col>
+              </Row>
+              {Object.keys(cropDB.categories).map((category, index) => (
+                <FarmPlanRow
+                  key={category}
+                  rows={rows}
+                  cat={category}
+                  index={index}
+                  setRowTotal={setRowTotal}
+                  setFarmPlan={setFarmPlan}
+                  farmPlan={farmPlan}
+                  land={land}
+                  unit={unit}
                 />
-                <Form.Control
-                  type="number"
-                  id="price"
-                  required
-                  step={0.1}
-                  precision={2}
-                  onChange={(e) => {
-                    setPrice(e.target.value)
-                  }}
-                  value={price}
-                />
-              </InputGroup>
-            </Form.Group>
+              ))}
+            </Container>
 
-            <Form.Group>
-              <Form.Label>Expiry Date</Form.Label>
-              <Form.Control
-                id="expires"
-                type="date"
-                value={expires}
-                required
-                onChange={(e) => {
-                  setExpires(e.target.value)
-                }}
-              />
-            </Form.Group>
+            <h3 className={totalUsed > 100 ? "auth-error" : "success"}>
+              Total of land used: {totalUsed.toFixed(0)}%
+            </h3>
 
-            <Form.Group>
-              <Form.Check
-                type="checkbox"
-                id="producedLocally"
-                label="This item was produced locally."
-                onClick={(e) => setProducedLocally(true)}
-              />
-            </Form.Group>
+            {/* <Button className="sub-btn blue-btn">Add row</Button> */}
+
+            <Weather />
 
             <Form.Group>
               <Form.Control
                 as="textarea"
                 rows={6}
-                placeholder="Any Comments?"
+                placeholder="Comments"
                 id="comment"
                 name="comment"
                 onChange={(e) => {
@@ -241,6 +176,7 @@ const AddProductsFarm = (props) => {
               />
             </Form.Group>
 
+            {msg && <p className="auth-error">{msg}</p>}
             <Button type="submit" className="sub-btn blue-btn">
               Submit
             </Button>
@@ -248,7 +184,9 @@ const AddProductsFarm = (props) => {
         </PageWrap>
         <PopUp
           open={open}
-          onClose={handleClose}
+          onClose={() => {
+            setOpen(false)
+          }}
           text="View my products"
           to="/view-products"
         >

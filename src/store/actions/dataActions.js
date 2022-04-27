@@ -43,7 +43,7 @@ export const createMarketplaceData = (product) => {
       .firestore()
       .collection("marketplace")
       .doc(product.uid)
-      .collection("products")
+      .collection("farmPlanData")
       .add(product.upload)
       .then(() => {
         dispatch({ type: "CREATE_DATA" });
@@ -155,6 +155,27 @@ export const getMealData = (data) => {
       .collection("mealPlanData")
       .doc(data.month)
       .collection(data.day)
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_DATA", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
+      });
+  };
+};
+
+export const getSavedMeals = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(data.uid)
+      .collection("mySavedMeals")
       .get()
       .then((snapshot) => {
         const data = [];
