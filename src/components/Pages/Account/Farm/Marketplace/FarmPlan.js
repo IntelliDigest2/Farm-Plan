@@ -27,12 +27,15 @@ const AddProductsFarm = (props) => {
   const [land, setLand] = useState(0)
   const [unit, setUnit] = useState(landUnits[0])
 
+  const [farmPlan, setFarmPlan] = useState([])
+
   const [rows, setRows] = useState(6)
   const [totalUsed, setTotalUsed] = useState(100)
   const [totals, setTotals] = useState([])
   const [comment, setComment] = useState(false)
 
   const [open, setOpen] = useState(false)
+  const [msg, setMsg] = useState("")
 
   const setRowTotal = (data, i) => {
     totals[i] = Number(data)
@@ -44,22 +47,33 @@ const AddProductsFarm = (props) => {
     setTotalUsed(sumWithInitial)
   }
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    if (props.auth.error)
+      setMsg(
+        "There was an error connnecting to the database - please try again"
+      )
+  }, [props.auth.error])
 
-  function HandleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    if (totalUsed > 100) {
+      setMsg("Total crop volume exceed 100%")
+      return
+    }
+
     var data = {
       uid: props.auth.uid,
       upload: {
-        // category: cropCategory,
+        ...farmPlan,
+        totalLand: land,
+        landUnits: unit,
         comment: comment,
       },
     }
-    // if (crop !== "" && weight !== 0) {
+
     props.createMarketplaceData(data)
     setOpen(true)
-    // } else {
-    //   console.log("error")
-    // }
   }
 
   if (!props.profile.isSeller) {
@@ -75,10 +89,7 @@ const AddProductsFarm = (props) => {
           <Form
             className="form-layout"
             style={{ padding: "10px" }}
-            onSubmit={(e) => {
-              e.preventDefault()
-              HandleSubmit()
-            }}
+            onSubmit={handleSubmit}
           >
             <p>
               We recommend that you plant a range of different crops within your
@@ -94,6 +105,8 @@ const AddProductsFarm = (props) => {
                   id="weight"
                   onChange={(e) => setLand(e.target.value)}
                   value={land}
+                  min={1}
+                  max={10000}
                   required
                 />
                 <Dropdown
@@ -113,14 +126,18 @@ const AddProductsFarm = (props) => {
                 <FarmPlanRow
                   rows={rows}
                   cat={category}
-                  i={index}
+                  index={index}
                   setRowTotal={setRowTotal}
+                  setFarmPlan={setFarmPlan}
+                  farmPlan={farmPlan}
+                  land={land}
+                  unit={unit}
                 />
               </Form.Group>
             ))}
 
             <h3 className={totalUsed > 100 ? "auth-error" : "success"}>
-              Total of land used: {totalUsed}%
+              Total of land used: {totalUsed.toFixed(0)}%
             </h3>
 
             {/* <Button className="sub-btn blue-btn">Add row</Button> */}
@@ -140,6 +157,7 @@ const AddProductsFarm = (props) => {
               />
             </Form.Group>
 
+            {msg && <p className="auth-error">{msg}</p>}
             <Button type="submit" className="sub-btn blue-btn">
               Submit
             </Button>

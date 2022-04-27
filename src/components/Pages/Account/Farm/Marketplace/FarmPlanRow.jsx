@@ -10,9 +10,9 @@ import RangeSlider from "react-bootstrap-range-slider"
 const cropData = require("./crops.json")
 
 const CropCategories = (props) => {
-  const [crop, setCrop] = useState(cropData.categories[props.cat][0].crop)
+  const [crop, setCrop] = useState("")
   const [cropIndex, setCropIndex] = useState(0)
-  const [amount, setAmount] = useState((100 / props.rows).toFixed(1))
+  const [amount, setAmount] = useState((100 / props.rows).toFixed(0))
 
   // Modals
   const [showPests, setShowPests] = useState(false)
@@ -20,8 +20,9 @@ const CropCategories = (props) => {
 
   // Tell Farm plan how much we are using
   useEffect(() => {
-    props.setRowTotal(amount, props.i)
-  }, [amount])
+    props.setRowTotal(amount, props.index)
+    updateFarmPlan()
+  }, [amount, props.unit, props.land])
 
   // Work out the index of the crop for pest/nutrient data
   useEffect(() => {
@@ -33,7 +34,33 @@ const CropCategories = (props) => {
       }
     })
     setCropIndex(index)
+
+    updateFarmPlan()
   }, [crop])
+
+  // Updates the farm plan state array with updated info
+  const updateFarmPlan = () => {
+    const landMass = props.land * (amount / 100)
+
+    // 1. Make a shallow copy of the array
+    let temp_state = [...props.farmPlan]
+
+    // 2. Make a shallow copy of the element you want to mutate
+    let temp_element = { ...temp_state[props.index] }
+
+    // 3. Update the property you're interested in
+    temp_element = {
+      crop: crop,
+      percentOfTotal: amount,
+      landMass: landMass.toFixed(3),
+    }
+
+    // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
+    temp_state[props.index] = temp_element
+
+    // 5. Set the state to our new copy
+    props.setFarmPlan(temp_state)
+  }
 
   return (
     <section>
@@ -48,7 +75,7 @@ const CropCategories = (props) => {
                   height={70}
                   width={70}
                 />
-                {props.i + 1}
+                {props.index + 1}
               </Form.Group>
 
               <Form.Group>
@@ -79,7 +106,7 @@ const CropCategories = (props) => {
                 <RangeSlider
                   value={amount}
                   className="slider"
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={(e) => setAmount(Number(e.target.value).toFixed(1))}
                 />
                 <label htmlFor="amount">
                   <NumericInput
@@ -87,7 +114,7 @@ const CropCategories = (props) => {
                     min={0}
                     max={100}
                     value={amount}
-                    onChange={(e) => setAmount(e)}
+                    onChange={(e) => setAmount(Number(e).toFixed(1))}
                   />
                   <span>%</span>
                 </label>
@@ -119,10 +146,14 @@ const CropCategories = (props) => {
 
       <Modal show={showPests} onHide={() => setShowPests(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Common pests in {crop}</Modal.Title>
+          <Modal.Title>
+            {crop ? <p>Common pests in {crop}</p> : <p>No data</p>}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Pests category={cropData.categories[props.cat][cropIndex].pests} />
+          {crop && cropData.categories[props.cat][cropIndex] && (
+            <Pests category={cropData.categories[props.cat][cropIndex].pests} />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowPests(false)}>
@@ -133,10 +164,18 @@ const CropCategories = (props) => {
 
       <Modal show={showNutrients} onHide={() => setShowNutrients(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Soil nutrient requirements to grow {crop}</Modal.Title>
+          <Modal.Title>
+            {crop ? (
+              <p>Soil nutrient requirements to grow {crop}</p>
+            ) : (
+              <p>No data</p>
+            )}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Nutrients data={cropData.categories[props.cat][cropIndex]} />
+          {crop && cropData.categories[props.cat][cropIndex] && (
+            <Nutrients data={cropData.categories[props.cat][cropIndex]} />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowNutrients(false)}>
