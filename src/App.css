@@ -53,6 +53,7 @@ a {
   align-self:center;
   padding: 7px;
   margin: 0;
+  flex-shrink: 0 !important;
 }
 .crops .form-group .btn{
   min-width: 90px;

@@ -21,6 +21,7 @@ import moment from "moment"
 import { Crop } from "@mui/icons-material"
 
 const cropDB = require("./crops.json")
+const nutrDB = require("./nutr.json")
 const landUnits = ["Km²", "M²", "Hct"]
 
 const AddProductsFarm = (props) => {
@@ -53,6 +54,21 @@ const AddProductsFarm = (props) => {
         "There was an error connnecting to the database - please try again"
       )
   }, [props.auth.error])
+
+  function mergeJson(target) {
+    for (var argi = 1; argi < arguments.length; argi++) {
+        var source = arguments[argi];
+        for (var key in source) {
+            if (!(key in target)) {
+                target[key] = [];
+            }
+            for (var i = 0; i < source[key].length; i++) {
+                target[key].push(source[key][i]);
+            }
+        }
+    }
+    return target;
+}
 
   function handleSubmit(e) {
     e.preventDefault()

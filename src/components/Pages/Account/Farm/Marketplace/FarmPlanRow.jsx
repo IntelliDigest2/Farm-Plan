@@ -128,8 +128,6 @@ const CropCategories = (props) => {
                 >
                   Pests
                 </Button>
-              </Form.Group>
-              <Form.Group>
                 <Button
                   onClick={() => {
                     setShowNutrients(true)
@@ -139,6 +137,7 @@ const CropCategories = (props) => {
                   Nutrient requirement
                 </Button>
               </Form.Group>
+
             </div>
           </Form.Group>
         </div>
