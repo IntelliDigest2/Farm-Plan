@@ -1,9 +1,8 @@
 import React from "react";
 import "./Button.css";
-import { Button as BootstrapButton, Col } from "react-bootstrap";
-import { Colors } from "../../lib/Colors";
+import { Button as BootstrapButton } from "react-bootstrap";
+// import { Colors } from "../../lib/Colors";
 
-import { IconButton as IButton, Typography } from "@mui/material";
 import DeleteIconOutlined from "@mui/icons-material/DeleteOutlined";
 import BarChartOutlined from "@mui/icons-material/BarChartOutlined";
 import RestaurantOutlined from "@mui/icons-material/RestaurantOutlined";

@@ -80,9 +80,16 @@ function MyMeals(props) {
     <div className="box">
       {meals.map((newMeal, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
-          <p key={`meal${index}`}>
-            <b>{newMeal.meal}</b>
-          </p>
+          <div className="header">
+            <div className="name">
+              <p key={`meal${index}`}>
+                <b>{newMeal.meal}</b>
+              </p>
+            </div>
+            {/* <div className="close" aria-label="delete meal entry">
+              x
+            </div> */}
+          </div>
           <List key={`ingrs${index}`}>
             {newMeal.ingredients.map((ingredient, index) => (
               <ListItem key={`item${index}`} className="ingrs">
