@@ -14,10 +14,6 @@ function AddSavedMeal(props) {
   const [calendar, setCalendar] = useState([]);
   const handleFormClose = () => props.setShow(false);
 
-  function chosenDay() {
-    return props.value.format("dddd DD/MM");
-  }
-
   useEffect(() => {
     setCalendar(buildCalendar(props.value));
   }, [props.value]);
@@ -60,6 +56,7 @@ function AddSavedMeal(props) {
 
     props.createMealPlanData(data);
   };
+
   return (
     <>
       <Modal

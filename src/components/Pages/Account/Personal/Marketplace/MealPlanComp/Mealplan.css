@@ -106,11 +106,6 @@
   color: white;
 }
 
-/* .plan-box .box {
-  overflow-y: scroll;
-  padding-bottom: 1.5rem;
-} */
-
 .plan-box .button {
   position: absolute;
   bottom: 1%;
@@ -216,10 +211,28 @@
   background-color: #d9a12d;
   border-radius: 25px;
   line-height: 0.2;
-  color: #3e3c5c;
+
   margin: 0.5rem;
   padding: 1rem 1rem 0 1rem;
   transition: transform 0.5s;
+}
+
+.meal-box .header {
+  background-color: #d9a12d;
+  line-height: 0.2;
+  color: #3e3c5c;
+}
+
+.meal-box .header .name {
+  flex: 1;
+  text-align: left;
+  margin-left: 1rem;
+}
+
+.meal-box .header .close {
+  flex: 1;
+  text-align: right;
+  margin-right: 1rem;
 }
 
 .meal-box .ingrs {
