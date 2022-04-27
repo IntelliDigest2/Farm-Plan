@@ -5,11 +5,14 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
+import AddSavedMeal from "./AddSavedMeal";
 import { connect } from "react-redux";
 import { getSavedMeals } from "../../../../../../store/actions/dataActions";
 
 const SavedMeals = (props) => {
   const [sMeals, setSMeals] = useState([]);
+  const [show, setShow] = useState(false);
+  const [selected, setSelected] = useState({});
 
   function fetchSMeals() {
     var uid;
@@ -69,12 +72,21 @@ const SavedMeals = (props) => {
   };
 
   useEffect(() => {
-    const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-    updateSMeals().then(setSMeals(sorted));
+    // const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
+    updateSMeals();
+    // .then(setSMeals(sorted));
+    // console.log(sMeals);
   }, [props.data]);
 
   return (
     <>
+      <AddSavedMeal
+        value={props.value}
+        onChange={props.onChange}
+        show={show}
+        setShow={setShow}
+        selected={selected}
+      />
       <div className="header" style={{ paddingLeft: "1%" }}>
         My Saved Meals
       </div>
@@ -91,6 +103,13 @@ const SavedMeals = (props) => {
               className="meal-box"
               key={`meal-box${index}`}
               title="Add to Calendar"
+              onClick={() => {
+                setShow(true);
+                setSelected({
+                  meal: newMeal.meal,
+                  ingredients: newMeal.ingredients,
+                });
+              }}
             >
               <p key={`meal${index}`}>
                 <b>{newMeal.meal}</b>

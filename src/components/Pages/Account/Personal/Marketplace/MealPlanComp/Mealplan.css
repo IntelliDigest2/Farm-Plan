@@ -209,6 +209,7 @@
 .saved-meals {
   display: flex;
   flex-flow: row wrap;
+  align-items: flex-start;
 }
 
 .meal-box {
