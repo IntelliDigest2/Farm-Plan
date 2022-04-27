@@ -86,9 +86,9 @@ function MyMeals(props) {
                 <b>{newMeal.meal}</b>
               </p>
             </div>
-            <div className="close" aria-label="delete meal entry">
+            {/* <div className="close" aria-label="delete meal entry">
               x
-            </div>
+            </div> */}
           </div>
           <List key={`ingrs${index}`}>
             {newMeal.ingredients.map((ingredient, index) => (
