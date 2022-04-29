@@ -7,49 +7,16 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
 import AddSavedMeal from "./AddSavedMeal";
 import { connect } from "react-redux";
-import { getSavedMeals } from "../../../../../../store/actions/dataActions";
+import { getSavedMeals } from "../../../../../../store/actions/marketplaceActions";
 
 const SavedMeals = (props) => {
   const [sMeals, setSMeals] = useState([]);
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState({});
 
-  function fetchSMeals() {
-    var uid;
-    switch (props.profile.type) {
-      case "business_admin":
-        uid = props.auth.uid;
-        break;
-      case "business_sub":
-        uid = props.profile.admin;
-        break;
-      case "academic_admin":
-        uid = props.auth.uid;
-        break;
-      case "academic_sub":
-        uid = props.profile.admin;
-        break;
-      case "household_admin":
-        uid = props.auth.uid;
-        break;
-      case "household_sub":
-        uid = props.profile.admin;
-        break;
-      default:
-        uid = props.auth.uid;
-        break;
-    }
-
-    const data = {
-      uid: uid,
-    };
-
-    props.getSavedMeals(data);
-  }
-
   //this sends data request
   useEffect(() => {
-    if (props.tab === 1) fetchSMeals();
+    if (props.tab === 1) props.getSavedMeals();
   }, [props.tab]);
 
   const updateSMeals = async () => {
@@ -135,8 +102,6 @@ const SavedMeals = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth,
-    profile: state.firebase.profile,
     data: state.data.getData,
   };
 };

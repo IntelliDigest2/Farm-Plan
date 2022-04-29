@@ -4,52 +4,41 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { connect } from "react-redux";
-import { getMealData } from "../../../../../../store/actions/dataActions";
+import {
+  getMealData,
+  deleteMealData,
+} from "../../../../../../store/actions/marketplaceActions";
 
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
+  const [hover, setHover] = useState({});
 
-  function fetchMeals() {
-    var uid;
-    switch (props.profile.type) {
-      case "business_admin":
-        uid = props.auth.uid;
-        break;
-      case "business_sub":
-        uid = props.profile.admin;
-        break;
-      case "academic_admin":
-        uid = props.auth.uid;
-        break;
-      case "academic_sub":
-        uid = props.profile.admin;
-        break;
-      case "household_admin":
-        uid = props.auth.uid;
-        break;
-      case "household_sub":
-        uid = props.profile.admin;
-        break;
-      default:
-        uid = props.auth.uid;
-        break;
-    }
+  const handleDelete = (id) => {
+    const iDData = {
+      month: props.value.format("YYYYMM"),
+      day: props.value.format("DD"),
+      id: id,
+    };
+    props.deleteMealData(iDData);
+    props.forceUpdate();
+  };
 
+  //this sends data request
+  useEffect(() => {
     const data = {
-      uid: uid,
       //decided to group year and month together, should this be changed?
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD"),
     };
 
-    props.getMealData(data);
-  }
-
-  //this sends data request
-  useEffect(() => {
-    if (props.tab === 0) fetchMeals();
+    if (props.tab === 0) props.getMealData(data);
+    console.log(props.data);
   }, [props.value, props.update, props.tab]);
 
   const updateMeals = async () => {
@@ -60,12 +49,14 @@ function MyMeals(props) {
     props.data.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
+      var id = doc.id;
 
       setMeals((meals) => [
         ...meals,
         {
           meal: mealName,
           ingredients: ingredients,
+          id: id,
         },
       ]);
     });
@@ -77,19 +68,38 @@ function MyMeals(props) {
 
   return (
     // <p>hewwp me</p>
-    <div className="box">
+    <>
       {meals.map((newMeal, index) => (
-        <div className="meal-box" key={`meal-box${index}`}>
-          <div className="header">
-            <div className="name">
-              <p key={`meal${index}`}>
-                <b>{newMeal.meal}</b>
-              </p>
-            </div>
-            {/* <div className="close" aria-label="delete meal entry">
-              x
-            </div> */}
-          </div>
+        <div
+          className="meal-box"
+          key={`meal-box${index}`}
+          onMouseEnter={() => {
+            setHover((prev) => ({ ...prev, [index]: true }));
+          }}
+          onMouseLeave={() => setHover((prev) => ({ ...prev, [index]: false }))}
+        >
+          <p key={`meal${index}`}>
+            <b>{newMeal.meal}</b>
+          </p>
+          {hover[index] ? (
+            // <>
+            <Tooltip title="Delete">
+              <IconButton
+                className="delete"
+                aria-label="Delete"
+                sx={{ ml: 2 }}
+                onClick={() => handleDelete(newMeal.id)}
+              >
+                <DeleteIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+          ) : // <Tooltip title="Edit">
+          //   <IconButton className="edit" aria-label="Edit" sx={{ ml: 2 }}>
+          //     <EditIcon fontSize="inherit" />
+          //   </IconButton>
+          // </Tooltip>
+          // </>
+          null}
           <List key={`ingrs${index}`}>
             {newMeal.ingredients.map((ingredient, index) => (
               <ListItem key={`item${index}`} className="ingrs">
@@ -103,14 +113,12 @@ function MyMeals(props) {
           </List>
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth,
-    profile: state.firebase.profile,
     data: state.data.getData,
   };
 };
@@ -118,6 +126,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMealData: (product) => dispatch(getMealData(product)),
+    deleteMealData: (data) => dispatch(deleteMealData(data)),
   };
 };
 

@@ -8,7 +8,7 @@ import CalendarHeader from "./header";
 import { SubButton } from "../../../../SubComponents/Button";
 
 import { connect } from "react-redux";
-import { createMealPlanData } from "../../../../../../store/actions/dataActions";
+import { createMealPlanData } from "../../../../../../store/actions/marketplaceActions";
 
 function AddSavedMeal(props) {
   const [calendar, setCalendar] = useState([]);
@@ -19,33 +19,7 @@ function AddSavedMeal(props) {
   }, [props.value]);
 
   const handleSubmit = () => {
-    var uid;
-    switch (props.profile.type) {
-      case "business_admin":
-        uid = props.auth.uid;
-        break;
-      case "business_sub":
-        uid = props.profile.admin;
-        break;
-      case "academic_admin":
-        uid = props.auth.uid;
-        break;
-      case "academic_sub":
-        uid = props.profile.admin;
-        break;
-      case "household_admin":
-        uid = props.auth.uid;
-        break;
-      case "household_sub":
-        uid = props.profile.admin;
-        break;
-      default:
-        uid = props.auth.uid;
-        break;
-    }
-
     const data = {
-      uid: uid,
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD"),
       upload: {
