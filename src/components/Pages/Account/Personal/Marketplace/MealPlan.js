@@ -30,7 +30,7 @@ export default function MealPlan() {
           <Calendar value={value} onChange={setValue} tab={tab} />
         </Tab>
         <Tab eventKey="saved-meals" title="My Saved Meals">
-          {/* saved meals */}
+          {/* returns all saved meals */}
           <SavedMeals value={value} tab={tab} onChange={setValue} />
         </Tab>
       </Tabs>

@@ -31,7 +31,13 @@ export const Calendar = ({ value, onChange, tab }) => {
       <div className="display">
         <div className="plan-box">
           <div className="header">{chosenDay()}</div>
-          <MyMeals value={value} show={show} update={update} tab={tab} />
+          <MyMeals
+            value={value}
+            show={show}
+            update={update}
+            tab={tab}
+            forceUpdate={forceUpdate}
+          />
           <AddMealModal
             value={value}
             show={show}

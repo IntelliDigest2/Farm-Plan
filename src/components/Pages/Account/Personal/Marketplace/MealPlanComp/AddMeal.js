@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import {
   createMealPlanData,
   createSavedMeal,
-} from "../../../../../../store/actions/dataActions";
+} from "../../../../../../store/actions/marketplaceActions";
 
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");
@@ -38,33 +38,7 @@ function AddMealForm(props) {
   });
 
   const handleSubmit = () => {
-    var uid;
-    switch (props.profile.type) {
-      case "business_admin":
-        uid = props.auth.uid;
-        break;
-      case "business_sub":
-        uid = props.profile.admin;
-        break;
-      case "academic_admin":
-        uid = props.auth.uid;
-        break;
-      case "academic_sub":
-        uid = props.profile.admin;
-        break;
-      case "household_admin":
-        uid = props.auth.uid;
-        break;
-      case "household_sub":
-        uid = props.profile.admin;
-        break;
-      default:
-        uid = props.auth.uid;
-        break;
-    }
-
     const data = {
-      uid: uid,
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD"),
       upload: {
@@ -179,7 +153,6 @@ function AddMealForm(props) {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth,
     profile: state.firebase.profile,
   };
 };
