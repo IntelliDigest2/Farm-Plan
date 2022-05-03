@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
 
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-
-import AddSavedMeal from "./AddSavedMeal";
+import MealsBox from "./MealsBox";
 import { connect } from "react-redux";
-import { getSavedMeals } from "../../../../../../store/actions/marketplaceActions";
+import {
+  getSavedMeals,
+  deleteMealData,
+} from "../../../../../../store/actions/marketplaceActions";
 
 const SavedMeals = (props) => {
   const [sMeals, setSMeals] = useState([]);
-  const [show, setShow] = useState(false);
-  const [selected, setSelected] = useState({});
 
   //this sends data request
   useEffect(() => {
     if (props.tab === 1) props.getSavedMeals();
   }, [props.tab]);
+
+  const handleDelete = (id) => {
+    const iDData = {
+      month: props.value.format("YYYYMM"),
+      day: props.value.format("DD"),
+      id: id,
+    };
+    props.deleteMealData(iDData);
+    props.forceUpdate();
+  };
 
   const updateSMeals = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -47,13 +53,6 @@ const SavedMeals = (props) => {
 
   return (
     <>
-      <AddSavedMeal
-        value={props.value}
-        onChange={props.onChange}
-        show={show}
-        setShow={setShow}
-        selected={selected}
-      />
       <div className="header" style={{ paddingLeft: "1%" }}>
         My Saved Meals
       </div>
@@ -64,7 +63,14 @@ const SavedMeals = (props) => {
           marginBottom: "2%",
         }}
       >
-        <div className="saved-meals">
+        <MealsBox
+          forceUpdate={props.forceUpdate}
+          meals={sMeals}
+          saved={true}
+          handleDelete={handleDelete}
+          value={props.value}
+        />
+        {/* <div className="saved-meals">
           {sMeals.map((newMeal, index) => (
             <div
               className="meal-box"
@@ -94,7 +100,7 @@ const SavedMeals = (props) => {
               </List>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   );
@@ -109,6 +115,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSavedMeals: (saved) => dispatch(getSavedMeals(saved)),
+    deleteMealData: (data) => dispatch(deleteMealData(data)),
   };
 };
 

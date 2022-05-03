@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-
-import { EditMeal } from "./EditMeal";
+import MealsBox from "./MealsBox";
 
 import { connect } from "react-redux";
 import {
@@ -19,10 +10,6 @@ import {
 
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
-  const [hover, setHover] = useState({});
-  const [show, setShow] = useState(false);
-  // const [meal, setMeal] = useState("");
-  // const [ingredients, setIngredients] = useState([]);
 
   const handleDelete = (id) => {
     const iDData = {
@@ -72,69 +59,12 @@ function MyMeals(props) {
   }, [props.data]);
 
   return (
-    // <p>hewwp me</p>
-    <>
-      {meals.map((newMeal, index) => (
-        <div
-          className="meal-box"
-          key={`meal-box${index}`}
-          onMouseEnter={() => {
-            setHover((prev) => ({ ...prev, [index]: true }));
-          }}
-          onMouseLeave={() => setHover((prev) => ({ ...prev, [index]: false }))}
-        >
-          <p key={`meal${index}`}>
-            <b>{newMeal.meal}</b>
-          </p>
-          {hover[index] ? (
-            <>
-              <Tooltip title="Delete">
-                <IconButton
-                  className="delete"
-                  aria-label="Delete"
-                  sx={{ ml: 2 }}
-                  onClick={() => handleDelete(newMeal.id)}
-                >
-                  <DeleteIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Edit">
-                <IconButton
-                  className="edit"
-                  aria-label="Edit"
-                  sx={{ ml: 2 }}
-                  onClick={() => {
-                    setShow(true);
-                  }}
-                >
-                  <EditIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-            </>
-          ) : null}
-          <EditMeal
-            value={props.value}
-            show={show}
-            setShow={setShow}
-            meal={newMeal.meal}
-            ingredients={newMeal.ingredients}
-            id={newMeal.id}
-            forceUpdate={props.forceUpdate}
-          />
-          <List key={`ingrs${index}`}>
-            {newMeal.ingredients.map((ingredient, index) => (
-              <ListItem key={`item${index}`} className="ingrs">
-                <ListItemIcon key={`icon${index}`}>
-                  <CheckBoxOutlineBlankIcon fontSize="1rem" />
-                </ListItemIcon>
-                {ingredient.item}: {ingredient.number}
-                {ingredient.unit}
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      ))}
-    </>
+    <MealsBox
+      forceUpdate={props.forceUpdate}
+      meals={meals}
+      handleDelete={handleDelete}
+      value={props.value}
+    />
   );
 }
 

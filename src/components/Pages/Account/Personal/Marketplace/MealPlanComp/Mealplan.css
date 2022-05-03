@@ -233,6 +233,11 @@
   top: 2rem;
   left: 2rem;
 }
+.meal-box .add-to-calendar {
+  position: absolute;
+  top: 2rem;
+  left: 4.5rem;
+}
 
 .saved-meals .meal-box {
   background-color: #e2b458ec;
