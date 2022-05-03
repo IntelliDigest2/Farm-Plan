@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import AddMealForm from "./AddMeal";
 import { AddButton } from "../../../../SubComponents/Button";
+import Tooltip from "@mui/material/Tooltip";
 
 export function AddMealModal({ show, setShow, value, forceUpdate }) {
   const handleForm = () => setShow(true);
@@ -9,14 +10,16 @@ export function AddMealModal({ show, setShow, value, forceUpdate }) {
 
   return (
     <>
-      <div className="button">
-        <AddButton onClick={handleForm} title="Add a meal" />
-      </div>
+      <Tooltip title="add" arrow>
+        <div className="button">
+          <AddButton onClick={handleForm} />
+        </div>
+      </Tooltip>
       <Modal
         show={show}
         onHide={handleFormClose}
         size="lg"
-        aria-labelledby="add-meal"
+        aria-labelledby="add meal"
         centered
       >
         <Modal.Header closeButton>
