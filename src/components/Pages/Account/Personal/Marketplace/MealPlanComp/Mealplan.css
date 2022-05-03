@@ -225,19 +225,25 @@
 
 .meal-box .delete {
   position: absolute;
-  top: 2%;
-  right: 2%;
+  top: 2rem;
+  left: -0.5rem;
 }
 .meal-box .edit {
   position: absolute;
-  top: 2%;
-  right: 10%;
+  top: 2rem;
+  left: 2rem;
 }
 
 .saved-meals .meal-box {
   background-color: #e2b458ec;
 }
 .meal-box:hover {
-  background-color: #d9a12d;
+  background-color: #f0af2e;
   transform: scale(0.98);
+}
+
+.form:nth-child(odd) {
+  background-color: #b3b785;
+  border-radius: 25px;
+  padding: 2%;
 }

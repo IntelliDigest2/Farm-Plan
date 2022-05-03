@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 
-import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import ListSubheader from "@mui/material/ListSubheader"
-
-import { fs } from "../../../../../config/fbConfig"
-import { connect } from "react-redux"
-import { getFirestoreData } from "../../../../../store/actions/dataActions"
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 
 export const Pests = (props) => {
   return (
@@ -27,7 +22,7 @@ export const Pests = (props) => {
         {!props.category && <p>No data available</p>}
       </List>
     </div>
-  )
-}
+  );
+};
 
-export default Pests
+export default Pests;

@@ -9,6 +9,8 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import { EditMeal } from "./EditMeal";
+
 import { connect } from "react-redux";
 import {
   getMealData,
@@ -18,6 +20,9 @@ import {
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
   const [hover, setHover] = useState({});
+  const [show, setShow] = useState(false);
+  // const [meal, setMeal] = useState("");
+  // const [ingredients, setIngredients] = useState([]);
 
   const handleDelete = (id) => {
     const iDData = {
@@ -38,7 +43,7 @@ function MyMeals(props) {
     };
 
     if (props.tab === 0) props.getMealData(data);
-    console.log(props.data);
+    // console.log(props.data);
   }, [props.value, props.update, props.tab]);
 
   const updateMeals = async () => {
@@ -82,24 +87,40 @@ function MyMeals(props) {
             <b>{newMeal.meal}</b>
           </p>
           {hover[index] ? (
-            // <>
-            <Tooltip title="Delete">
-              <IconButton
-                className="delete"
-                aria-label="Delete"
-                sx={{ ml: 2 }}
-                onClick={() => handleDelete(newMeal.id)}
-              >
-                <DeleteIcon fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-          ) : // <Tooltip title="Edit">
-          //   <IconButton className="edit" aria-label="Edit" sx={{ ml: 2 }}>
-          //     <EditIcon fontSize="inherit" />
-          //   </IconButton>
-          // </Tooltip>
-          // </>
-          null}
+            <>
+              <Tooltip title="Delete">
+                <IconButton
+                  className="delete"
+                  aria-label="Delete"
+                  sx={{ ml: 2 }}
+                  onClick={() => handleDelete(newMeal.id)}
+                >
+                  <DeleteIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Edit">
+                <IconButton
+                  className="edit"
+                  aria-label="Edit"
+                  sx={{ ml: 2 }}
+                  onClick={() => {
+                    setShow(true);
+                  }}
+                >
+                  <EditIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+            </>
+          ) : null}
+          <EditMeal
+            value={props.value}
+            show={show}
+            setShow={setShow}
+            meal={newMeal.meal}
+            ingredients={newMeal.ingredients}
+            id={newMeal.id}
+            forceUpdate={props.forceUpdate}
+          />
           <List key={`ingrs${index}`}>
             {newMeal.ingredients.map((ingredient, index) => (
               <ListItem key={`item${index}`} className="ingrs">
