@@ -51,6 +51,10 @@ export default function MealPlan() {
             onChange={setValue}
           />
         </Tab>
+        <Tab eventKey="search" title="Search">
+          {/* search via API */}
+          <h1>:P</h1>
+        </Tab>
       </Tabs>
 
       {/* input available locations for picking up */}
