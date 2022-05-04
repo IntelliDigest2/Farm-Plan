@@ -3,28 +3,10 @@ import React, { useState, useEffect } from "react";
 import MealsBox from "./MealsBox";
 
 import { connect } from "react-redux";
-import {
-  getMealData,
-  deleteMealData,
-  editMealData,
-} from "../../../../../../store/actions/marketplaceActions";
+import { getMealData } from "../../../../../../store/actions/marketplaceActions";
 
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
-
-  const handleDelete = (id) => {
-    const iDData = {
-      month: props.value.format("YYYYMM"),
-      day: props.value.format("DD"),
-      id: id,
-    };
-    props.deleteMealData(iDData);
-    props.forceUpdate();
-  };
-
-  const handleEdit = (data) => {
-    editMealData(data);
-  };
 
   //this sends data request
   useEffect(() => {
@@ -68,8 +50,6 @@ function MyMeals(props) {
       forceUpdate={props.forceUpdate}
       meals={meals}
       saved={false}
-      handleDelete={handleDelete}
-      handleEdit={handleEdit}
       value={props.value}
     />
   );
@@ -84,8 +64,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMealData: (product) => dispatch(getMealData(product)),
-    deleteMealData: (data) => dispatch(deleteMealData(data)),
-    editMealData: (data) => dispatch(editMealData(data)),
   };
 };
 

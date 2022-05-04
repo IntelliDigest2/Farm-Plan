@@ -7,6 +7,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import { Avatar } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import { Tooltip } from "@mui/material";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
 import { Heading } from "./Heading";
@@ -52,14 +53,15 @@ export function Profile(props) {
             text={props.profile.firstName + " " + props.profile.lastName}
           />
           <Heading priority="5" text={props.profile.email} />
-          <IconButton
-            href="/settings"
-            component="a"
-            style={{ float: "right" }}
-            title="settings"
-          >
-            <SettingsApplicationsIcon />
-          </IconButton>
+          <Tooltip title="Settings">
+            <IconButton
+              href="/settings"
+              component="a"
+              style={{ float: "right" }}
+            >
+              <SettingsApplicationsIcon />
+            </IconButton>
+          </Tooltip>
         </Col>
       </Row>
     </Container>

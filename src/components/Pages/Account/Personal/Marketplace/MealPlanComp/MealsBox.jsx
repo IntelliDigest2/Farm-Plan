@@ -13,13 +13,34 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import { EditMeal } from "./EditMeal";
 import AddSavedMeal from "./AddSavedMeal";
 
-export default function MealsBox(props) {
+import { connect } from "react-redux";
+import {
+  deleteMealData,
+  deleteSavedMeal,
+} from "../../../../../../store/actions/marketplaceActions";
+
+function MealsBox(props) {
   //shows edit modal
   const [show, setShow] = useState(false);
   //shows add to calendar modal only for saved meals tab
   const [showCalendar, setShowCalendar] = useState(false);
   const [selected, setSelected] = useState({});
   const [hover, setHover] = useState({});
+
+  const handleDelete = (id) => {
+    const data = {
+      month: props.value.format("YYYYMM"),
+      day: props.value.format("DD"),
+      id: id,
+    };
+    if (props.saved) {
+      props.deleteSavedMeal(data);
+      props.forceUpdate();
+    } else {
+      props.deleteMealData(data);
+      props.forceUpdate();
+    }
+  };
 
   return (
     <>
@@ -42,7 +63,9 @@ export default function MealsBox(props) {
                   className="delete"
                   aria-label="Delete"
                   sx={{ ml: 2 }}
-                  onClick={() => props.handleDelete(newMeal.id)}
+                  onClick={() => {
+                    handleDelete(newMeal.id);
+                  }}
                 >
                   <DeleteIcon fontSize="inherit" />
                 </IconButton>
@@ -81,6 +104,7 @@ export default function MealsBox(props) {
                       setSelected({
                         meal: newMeal.meal,
                         ingredients: newMeal.ingredients,
+                        id: newMeal.id,
                       });
                     }}
                   >
@@ -113,3 +137,18 @@ export default function MealsBox(props) {
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    data: state.data.getData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteMealData: (data) => dispatch(deleteMealData(data)),
+    deleteSavedMeal: (data) => dispatch(deleteSavedMeal(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MealsBox);
