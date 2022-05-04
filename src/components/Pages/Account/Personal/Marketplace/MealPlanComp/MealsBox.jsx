@@ -65,7 +65,6 @@ function MealsBox(props) {
                   sx={{ ml: 2 }}
                   onClick={() => {
                     handleDelete(newMeal.id);
-                    console.log(newMeal.id);
                   }}
                 >
                   <DeleteIcon fontSize="inherit" />
