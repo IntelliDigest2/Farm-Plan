@@ -12,6 +12,12 @@ export default function MealPlan() {
   const [value, setValue] = useState(moment());
   const [tab, setTab] = useState(0);
 
+  //trigger this when editing/deleting items
+  const [update, setUpdate] = useState(0);
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
+
   const handleSelect = (key) => {
     if (key === "calendar") setTab(0);
     else setTab(1);
@@ -27,11 +33,23 @@ export default function MealPlan() {
       >
         <Tab eventKey="calendar" title="Calendar">
           {/* Calender returns daily meal plan and monthly calendar- since they both use the "value" prop */}
-          <Calendar value={value} onChange={setValue} tab={tab} />
+          <Calendar
+            value={value}
+            onChange={setValue}
+            tab={tab}
+            update={update}
+            forceUpdate={forceUpdate}
+          />
         </Tab>
         <Tab eventKey="saved-meals" title="My Saved Meals">
           {/* returns all saved meals */}
-          <SavedMeals value={value} tab={tab} onChange={setValue} />
+          <SavedMeals
+            update={update}
+            forceUpdate={forceUpdate}
+            value={value}
+            tab={tab}
+            onChange={setValue}
+          />
         </Tab>
       </Tabs>
 

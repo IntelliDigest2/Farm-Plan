@@ -14,6 +14,7 @@ export function EditMeal({
   setShow,
   value,
   forceUpdate,
+  saved,
 }) {
   const handleFormClose = () => setShow(false);
   return (
@@ -36,6 +37,7 @@ export function EditMeal({
           forceUpdate={forceUpdate}
           value={value}
           handleFormClose={handleFormClose}
+          saved={saved}
         />
       </Modal.Body>
     </Modal>
