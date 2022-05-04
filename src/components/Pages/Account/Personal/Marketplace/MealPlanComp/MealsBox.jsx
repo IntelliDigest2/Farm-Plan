@@ -20,15 +20,9 @@ export default function MealsBox(props) {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selected, setSelected] = useState({});
   const [hover, setHover] = useState({});
+
   return (
     <>
-      <AddSavedMeal
-        value={props.value}
-        onChange={props.onChange}
-        show={showCalendar}
-        setShow={setShowCalendar}
-        selected={selected}
-      />
       {props.meals.map((newMeal, index) => (
         <div
           className="meal-box"
@@ -65,6 +59,17 @@ export default function MealsBox(props) {
                   <EditIcon fontSize="inherit" />
                 </IconButton>
               </Tooltip>
+              <EditMeal
+                value={props.value}
+                show={show}
+                setShow={setShow}
+                meal={newMeal.meal}
+                ingredients={newMeal.ingredients}
+                id={newMeal.id}
+                forceUpdate={props.forceUpdate}
+                handleEdit={props.handleEdit}
+                saved={props.saved}
+              />
               {props.saved ? (
                 <Tooltip title="Add to Calendar">
                   <IconButton
@@ -85,14 +90,12 @@ export default function MealsBox(props) {
               ) : null}
             </>
           ) : null}
-          <EditMeal
+          <AddSavedMeal
             value={props.value}
-            show={show}
-            setShow={setShow}
-            meal={newMeal.meal}
-            ingredients={newMeal.ingredients}
-            id={newMeal.id}
-            forceUpdate={props.forceUpdate}
+            onChange={props.onChange}
+            show={showCalendar}
+            setShow={setShowCalendar}
+            selected={selected}
           />
           <List key={`ingrs${index}`}>
             {newMeal.ingredients.map((ingredient, index) => (

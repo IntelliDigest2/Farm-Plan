@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Dropdown } from "../../../../SubComponents/Dropdown";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "./../../../../SubComponents/Button.css";
-
 import { connect } from "react-redux";
-import { editMealData } from "../../../../../../store/actions/marketplaceActions";
+import {
+  editMealData,
+  editSavedMeal,
+} from "../../../../../../store/actions/marketplaceActions";
 
 function EditMealForm(props) {
   const [mealName, setMealName] = useState(props.meal);
@@ -20,9 +22,13 @@ function EditMealForm(props) {
         ingredients: ingredients,
       },
     };
-
-    props.editMealData(data);
-    props.forceUpdate();
+    if (props.saved) {
+      props.editSavedMeal(data);
+      props.forceUpdate();
+    } else {
+      props.editMealData(data);
+      props.forceUpdate();
+    }
   };
 
   return (
@@ -119,13 +125,14 @@ function EditMealForm(props) {
 
 const mapStateToProps = (state) => {
   return {
-    profile: state.firebase.profile,
+    data: state.data.getData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     editMealData: (data) => dispatch(editMealData(data)),
+    editSavedMeal: (data) => dispatch(editSavedMeal(data)),
   };
 };
 

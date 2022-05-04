@@ -8,15 +8,9 @@ import CalendarHeader from "./header";
 
 import MyMeals from "./meals";
 
-export const Calendar = ({ value, onChange, tab }) => {
+export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
   const [calendar, setCalendar] = useState([]);
   const [show, setShow] = useState(false);
-
-  const [update, setUpdate] = useState(0);
-  //sorry about this, I couldn't be bothered to move all of the update meals functions inside meal.js up one level to pass it to other components so instead I have set it to update whenever the state of "update" changes.
-  const forceUpdate = () => {
-    setUpdate(update + 1);
-  };
 
   function chosenDay() {
     return value.format("dddd DD/MM");

@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import {
   getMealData,
   deleteMealData,
+  editMealData,
 } from "../../../../../../store/actions/marketplaceActions";
 
 function MyMeals(props) {
@@ -19,6 +20,10 @@ function MyMeals(props) {
     };
     props.deleteMealData(iDData);
     props.forceUpdate();
+  };
+
+  const handleEdit = (data) => {
+    editMealData(data);
   };
 
   //this sends data request
@@ -62,7 +67,9 @@ function MyMeals(props) {
     <MealsBox
       forceUpdate={props.forceUpdate}
       meals={meals}
+      saved={false}
       handleDelete={handleDelete}
+      handleEdit={handleEdit}
       value={props.value}
     />
   );
@@ -78,6 +85,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getMealData: (product) => dispatch(getMealData(product)),
     deleteMealData: (data) => dispatch(deleteMealData(data)),
+    editMealData: (data) => dispatch(editMealData(data)),
   };
 };
 

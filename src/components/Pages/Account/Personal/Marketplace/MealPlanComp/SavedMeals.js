@@ -4,7 +4,8 @@ import MealsBox from "./MealsBox";
 import { connect } from "react-redux";
 import {
   getSavedMeals,
-  deleteMealData,
+  deleteSavedMeal,
+  editSavedMeal,
 } from "../../../../../../store/actions/marketplaceActions";
 
 const SavedMeals = (props) => {
@@ -13,7 +14,7 @@ const SavedMeals = (props) => {
   //this sends data request
   useEffect(() => {
     if (props.tab === 1) props.getSavedMeals();
-  }, [props.tab]);
+  }, [props.tab, props.update]);
 
   const handleDelete = (id) => {
     const iDData = {
@@ -21,8 +22,12 @@ const SavedMeals = (props) => {
       day: props.value.format("DD"),
       id: id,
     };
-    props.deleteMealData(iDData);
+    props.deleteSavedMeal(iDData);
     props.forceUpdate();
+  };
+
+  const handleEdit = (data) => {
+    props.editSavedMeal(data);
   };
 
   const updateSMeals = async () => {
@@ -33,12 +38,14 @@ const SavedMeals = (props) => {
     props.data.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
+      var id = doc.id;
 
       setSMeals((sMeals) => [
         ...sMeals,
         {
           meal: mealName,
           ingredients: ingredients,
+          id: id,
         },
       ]);
     });
@@ -68,39 +75,9 @@ const SavedMeals = (props) => {
           meals={sMeals}
           saved={true}
           handleDelete={handleDelete}
+          handleEdit={handleEdit}
           value={props.value}
         />
-        {/* <div className="saved-meals">
-          {sMeals.map((newMeal, index) => (
-            <div
-              className="meal-box"
-              key={`meal-box${index}`}
-              title="Add to Calendar"
-              onClick={() => {
-                setShow(true);
-                setSelected({
-                  meal: newMeal.meal,
-                  ingredients: newMeal.ingredients,
-                });
-              }}
-            >
-              <p key={`meal${index}`}>
-                <b>{newMeal.meal}</b>
-              </p>
-              <List key={`ingrs${index}`}>
-                {newMeal.ingredients.map((ingredient, index) => (
-                  <ListItem key={`item${index}`} className="ingrs">
-                    <ListItemIcon key={`icon${index}`}>
-                      <CheckBoxOutlineBlankIcon fontSize="1rem" />
-                    </ListItemIcon>
-                    {ingredient.item}: {ingredient.number}
-                    {ingredient.unit}
-                  </ListItem>
-                ))}
-              </List>
-            </div>
-          ))}
-        </div> */}
       </div>
     </>
   );
@@ -115,7 +92,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSavedMeals: (saved) => dispatch(getSavedMeals(saved)),
-    deleteMealData: (data) => dispatch(deleteMealData(data)),
+    deleteSavedMeal: (data) => dispatch(deleteSavedMeal(data)),
+    editSavedMeal: (data) => dispatch(editSavedMeal(data)),
   };
 };
 
