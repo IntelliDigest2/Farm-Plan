@@ -6,5 +6,4 @@ export const recipeSearch = async (query, setRecipes) => {
   );
   const data = await resp.json();
   setRecipes(data.hits);
-  //   console.log("This is your data", data);
 };

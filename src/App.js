@@ -27,7 +27,6 @@ import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
 import FoodIntake from "./components/Pages/Account/Personal/FoodIntake";
-// import FoodSurplus from "./components/Pages/Account/FoodSurplus";
 
 import FoodReduction from "./components/Pages/FoodReduction";
 import InfoTable from "./components/Pages/InfoTable";
@@ -36,13 +35,10 @@ import ProductListing from "./components/Pages/Account/products/ProductListing";
 
 import ReserveItems from "./components/Pages/Account/ReserveItems";
 
-import AddProducts from "./components/Pages/Account/AddProducts";
 import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
 import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
 import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlan";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
-import AddProductsBusiness from "./components/Pages/Account/Business/AddProductsBusiness";
-import AddProductsAcademic from "./components/Pages/Account/Academic/AddProductsAcademic";
 
 import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
 import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
@@ -101,7 +97,6 @@ const App = (props) => {
     <React.Fragment>
       <Notifications position="top-right" />
       <Router>
-        {/* <NavBar /> */}
         <Toast
           onClose={() => setShow(false)}
           show={show}
@@ -150,7 +145,6 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
-            {/* <Route path="/home" exact component={Home} /> */}
             <Route path="/about" exact component={About} />
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
@@ -160,8 +154,6 @@ const App = (props) => {
             <Route path="/contact" exact component={Contact} />
             <Route path="/forgot-password" exact component={ForgotPassword} />
             <Route path="/account" exact component={NewAccount} />
-            {/* Old Bubble Account Page */}
-            {/* <Route path="/newaccount" exact component={Account} /> */}
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />
             <Route path="/view-map" exact component={Map} />
@@ -174,7 +166,6 @@ const App = (props) => {
               component={FoodWasteBusiness}
             />
             <Route path="/food-intake" exact component={FoodIntake} />
-            {/* <Route path="/food-surplus" exact component={FoodSurplus}/> */}
             <Route path="/table" component={InfoTable} />
 
             <Route path="/chart" exact component={ChartView} />
@@ -185,19 +176,10 @@ const App = (props) => {
 
             <Route path="/reserve-items" component={ReserveItems} />
 
-            <Route path="/add-products" component={AddProducts} />
             <Route path="/farm-plan" component={FarmPlan} />
             <Route path="/cons-auth" component={ConsumerAuth} />
             <Route path="/meal-plan" component={MealPlan} />
             <Route path="/view-products" component={ViewProducts} />
-            <Route
-              path="/add-products-business"
-              component={AddProductsBusiness}
-            />
-            <Route
-              path="/add-products-academic"
-              component={AddProductsAcademic}
-            />
 
             <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
             <Route path="/food-intakeAcademic" component={FoodIntakeAcademic} />
@@ -209,7 +191,6 @@ const App = (props) => {
             <Route component={NotFound} />
           </Switch>
         </div>
-        {/* <Footer /> */}
       </Router>
     </React.Fragment>
   );
