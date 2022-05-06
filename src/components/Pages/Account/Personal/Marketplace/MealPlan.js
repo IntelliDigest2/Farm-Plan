@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./MealPlanComp/Mealplan.css";
 import { PageWrap } from "../../../SubComponents/PageWrap";
@@ -6,6 +6,7 @@ import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "./MealPlanComp/Calendar";
 import SavedMeals from "./MealPlanComp/SavedMeals";
+import RecipeSearch from "./MealPlanComp/RecipeSearch";
 import moment from "moment";
 
 export default function MealPlan() {
@@ -20,7 +21,8 @@ export default function MealPlan() {
 
   const handleSelect = (key) => {
     if (key === "calendar") setTab(0);
-    else setTab(1);
+    else if (key === "saved-meals") setTab(1);
+    else setTab(2);
   };
 
   return (
@@ -51,9 +53,10 @@ export default function MealPlan() {
             onChange={setValue}
           />
         </Tab>
-        {/* <Tab eventKey="search" title="Search">
-          <h1>:P</h1>
-        </Tab>*/}
+        <Tab eventKey="search" title="Search">
+          {/* search for recipes via api */}
+          <RecipeSearch />
+        </Tab>
       </Tabs>
 
       {/* input available locations for picking up */}
