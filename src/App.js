@@ -10,9 +10,6 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //* Pages
-// import NavBar from "./components/Navbar/Navbar";
-// import Footer from "./components/Footer/Footer";
-// import Home from "./components/Pages/Home";
 import About from "./components/Pages/About";
 import Login from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
@@ -23,8 +20,6 @@ import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave";
-//old account
-//import Account from "./components/Pages/Account/UserAccount";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 
@@ -36,9 +31,6 @@ import FoodIntake from "./components/Pages/Account/Personal/FoodIntake";
 
 import FoodReduction from "./components/Pages/FoodReduction";
 import InfoTable from "./components/Pages/InfoTable";
-
-import BrowseProducts from "./components/Pages/Account/BrowseProducts";
-// import BrowseProductsLocalProduce from "./components/Pages/Account/BrowseProductsLocalProduce";
 
 import ProductListing from "./components/Pages/Account/products/ProductListing";
 
@@ -188,9 +180,6 @@ const App = (props) => {
             <Route path="/chart" exact component={ChartView} />
 
             <Route path="/food-reduction" component={FoodReduction} />
-
-            <Route path="/browse-products" component={BrowseProducts} />
-            {/* <Route path="/browse-products-local" component={BrowseProductsLocalProduce} /> */}
 
             <Route path="/product-listing" component={ProductListing} />
 
