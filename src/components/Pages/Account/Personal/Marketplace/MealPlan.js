@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./MealPlanComp/Mealplan.css";
 import { PageWrap } from "../../../SubComponents/PageWrap";
@@ -30,7 +30,7 @@ export default function MealPlan() {
       <Tabs
         defaultActiveKey="calendar"
         id="meal-plan-tabs"
-        className="mb-3"
+        className="mb-3 mealtabs"
         onSelect={handleSelect}
       >
         <Tab eventKey="calendar" title="Calendar">
@@ -55,7 +55,7 @@ export default function MealPlan() {
         </Tab>
         <Tab eventKey="search" title="Search">
           {/* search for recipes via api */}
-          <RecipeSearch />
+          <RecipeSearch value={value} onChange={setValue} />
         </Tab>
       </Tabs>
 

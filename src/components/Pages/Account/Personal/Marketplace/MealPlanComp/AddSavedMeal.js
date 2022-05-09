@@ -19,14 +19,27 @@ function AddSavedMeal(props) {
   }, [props.value]);
 
   const handleSubmit = () => {
-    const data = {
-      month: props.value.format("YYYYMM"),
-      day: props.value.format("DD"),
-      upload: {
-        meal: props.selected.meal,
-        ingredients: props.selected.ingredients,
-      },
-    };
+    let data;
+    if (props.saved) {
+      data = {
+        month: props.value.format("YYYYMM"),
+        day: props.value.format("DD"),
+        upload: {
+          meal: props.selected.meal,
+          ingredients: props.selected.ingredients,
+        },
+      };
+    } else {
+      data = {
+        month: props.value.format("YYYYMM"),
+        day: props.value.format("DD"),
+        upload: {
+          meal: props.selected.meal,
+          ingredients: props.selected.ingredients,
+          nonNativeData: true,
+        },
+      };
+    }
 
     props.createMealPlanData(data);
   };

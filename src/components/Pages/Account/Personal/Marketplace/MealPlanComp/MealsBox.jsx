@@ -4,43 +4,13 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ScheduleIcon from "@mui/icons-material/Schedule";
 
-import { EditMeal } from "./EditMeal";
-import AddSavedMeal from "./AddSavedMeal";
+import Delete from "./DeleteIcon";
+import Edit from "./EditIcon";
+import Add from "./AddIcon";
 
-import { connect } from "react-redux";
-import {
-  deleteMealData,
-  deleteSavedMeal,
-} from "../../../../../../store/actions/marketplaceActions";
-
-function MealsBox(props) {
-  //shows edit modal
-  const [show, setShow] = useState(false);
-  //shows add to calendar modal only for saved meals tab
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [selected, setSelected] = useState({});
+export default function MealsBox(props) {
   const [hover, setHover] = useState({});
-
-  const handleDelete = (id) => {
-    const data = {
-      month: props.value.format("YYYYMM"),
-      day: props.value.format("DD"),
-      id: id,
-    };
-    if (props.saved) {
-      props.deleteSavedMeal(data);
-      props.forceUpdate();
-    } else {
-      props.deleteMealData(data);
-      props.forceUpdate();
-    }
-  };
 
   return (
     <>
@@ -58,77 +28,48 @@ function MealsBox(props) {
           </p>
           {hover[index] ? (
             <>
-              <Tooltip title="Delete">
-                <IconButton
-                  className="delete"
-                  aria-label="Delete"
-                  sx={{ ml: 2 }}
-                  onClick={() => {
-                    handleDelete(newMeal.id);
-                  }}
-                >
-                  <DeleteIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Edit">
-                <IconButton
-                  className="edit"
-                  aria-label="Edit"
-                  sx={{ ml: 2 }}
-                  onClick={() => {
-                    setShow(true);
-                  }}
-                >
-                  <EditIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-              <EditMeal
+              <Delete
                 value={props.value}
-                show={show}
-                setShow={setShow}
-                meal={newMeal.meal}
-                ingredients={newMeal.ingredients}
                 id={newMeal.id}
                 forceUpdate={props.forceUpdate}
-                handleEdit={props.handleEdit}
                 saved={props.saved}
               />
               {props.saved ? (
-                <Tooltip title="Add to Calendar">
-                  <IconButton
-                    className="add-to-calendar"
-                    aria-label="Add to Calendar"
-                    sx={{ ml: 2 }}
-                    onClick={() => {
-                      setShowCalendar(true);
-                      setSelected({
-                        meal: newMeal.meal,
-                        ingredients: newMeal.ingredients,
-                        id: newMeal.id,
-                      });
-                    }}
-                  >
-                    <ScheduleIcon fontSize="inherit" />
-                  </IconButton>
-                </Tooltip>
+                <Add
+                  value={props.value}
+                  meal={newMeal.meal}
+                  ingredients={newMeal.ingredients}
+                  id={newMeal.id}
+                  onChange={props.onChange}
+                  saved={props.saved}
+                />
               ) : null}
+              {newMeal.nn ? null : (
+                <Edit
+                  value={props.value}
+                  meal={newMeal.meal}
+                  ingredients={newMeal.ingredients}
+                  id={newMeal.id}
+                  forceUpdate={props.forceUpdate}
+                  saved={props.saved}
+                />
+              )}
             </>
           ) : null}
-          <AddSavedMeal
-            value={props.value}
-            onChange={props.onChange}
-            show={showCalendar}
-            setShow={setShowCalendar}
-            selected={selected}
-          />
           <List key={`ingrs${index}`}>
             {newMeal.ingredients.map((ingredient, index) => (
               <ListItem key={`item${index}`} className="ingrs">
                 <ListItemIcon key={`icon${index}`}>
                   <CheckBoxOutlineBlankIcon fontSize="1rem" />
                 </ListItemIcon>
-                {ingredient.item}: {ingredient.number}
-                {ingredient.unit}
+                {newMeal.nn ? (
+                  <p>{ingredient.text}</p>
+                ) : (
+                  <p>
+                    {ingredient.item}: {ingredient.number}
+                    {ingredient.unit}
+                  </p>
+                )}
               </ListItem>
             ))}
           </List>
@@ -137,18 +78,3 @@ function MealsBox(props) {
     </>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    data: state.data.getData,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteMealData: (data) => dispatch(deleteMealData(data)),
-    deleteSavedMeal: (data) => dispatch(deleteSavedMeal(data)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MealsBox);

@@ -29,6 +29,12 @@ function MyMeals(props) {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
+      let nn;
+      if (doc.nonNativeData) {
+        nn = doc.nonNativeData;
+      } else {
+        nn = false;
+      }
 
       setMeals((meals) => [
         ...meals,
@@ -36,6 +42,7 @@ function MyMeals(props) {
           meal: mealName,
           ingredients: ingredients,
           id: id,
+          nn: nn,
         },
       ]);
     });
@@ -43,6 +50,7 @@ function MyMeals(props) {
 
   useEffect(() => {
     updateMeals();
+    console.log(meals);
   }, [props.data]);
 
   return (

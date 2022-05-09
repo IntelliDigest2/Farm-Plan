@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 
 import List from "@mui/material/List";
@@ -7,11 +7,13 @@ import ListSubheader from "@mui/material/ListSubheader";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-export default function RecipeList({ recipes, query }) {
+import Add from "./AddIcon";
+
+export default function RecipeList(props) {
   return (
     <>
-      {query &&
-        recipes.map((item, i) => (
+      {props.query &&
+        props.recipes.map((item, i) => (
           <div className="search-box" key={i}>
             <Row>
               <Col className="image">
@@ -19,10 +21,18 @@ export default function RecipeList({ recipes, query }) {
               </Col>
               <Col className="ingredients">
                 <List styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}>
-                  <ListSubheader styles={{ lineHeight: "0.1rem", margin: 0 }}>
-                    {item.recipe.label}
+                  <ListSubheader className="heading">
+                    <div className="meal-name">{item.recipe.label}</div>
+                    <div className="add">
+                      <Add
+                        value={props.value}
+                        meal={item.recipe.label}
+                        ingredients={item.recipe.ingredients}
+                        onChange={props.onChange}
+                        saved={false}
+                      />
+                    </div>
                   </ListSubheader>
-
                   {item.recipe.ingredients &&
                     item.recipe.ingredients.map((ingredient, i) => (
                       <ListItem key={i} className="list">
