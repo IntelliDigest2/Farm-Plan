@@ -20,6 +20,7 @@ function EditMealForm(props) {
       upload: {
         meal: mealName,
         ingredients: ingredients,
+        id: props.id,
       },
     };
     if (props.saved) {

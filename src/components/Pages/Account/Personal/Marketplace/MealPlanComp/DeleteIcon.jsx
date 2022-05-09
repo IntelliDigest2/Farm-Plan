@@ -1,13 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ScheduleIcon from "@mui/icons-material/Schedule";
-
-import { EditMeal } from "./EditMeal";
-import AddSavedMeal from "./AddSavedMeal";
 
 import { connect } from "react-redux";
 import {
@@ -15,13 +10,16 @@ import {
   deleteSavedMeal,
 } from "../../../../../../store/actions/marketplaceActions";
 
+//takes props value, id and forceUpdate from a meal item and whether or not it is saved
 function Delete(props) {
+  //needs id passed to it from onClick
   const handleDelete = (id) => {
     const data = {
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD"),
       id: id,
     };
+    //saved meals and calendar meals are in different places in firestore
     if (props.saved) {
       props.deleteSavedMeal(data);
       props.forceUpdate();

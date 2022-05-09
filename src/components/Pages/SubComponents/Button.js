@@ -28,7 +28,7 @@ export function DefaultButton(props) {
     return (
       <BootstrapButton
         variant="default"
-        className={["default-btn", `${props.styling}-btn`]}
+        className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
         disabled
       >
         {props.text}
@@ -38,7 +38,7 @@ export function DefaultButton(props) {
     return (
       <BootstrapButton
         variant="default"
-        className={["default-btn", `${props.styling}-btn`]}
+        className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
         href={props.goTo}
         onClick={props.onClick}
       >
@@ -52,7 +52,7 @@ export function SubButton(props) {
   return (
     <BootstrapButton
       variant="default"
-      className={["sub-btn", `${props.styling}-btn`]}
+      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
       href={props.goTo}
       onClick={props.onClick}
     >
@@ -65,7 +65,7 @@ export function AddButton({ onClick, title }) {
   return (
     <BootstrapButton
       variant="default"
-      className={["add-btn", "green-btn"]}
+      className={["add-btn", "green-btn", "shadow-none"]}
       onClick={onClick}
       title={title}
     >

@@ -89,6 +89,10 @@
   }
 }
 
+.mealtabs a {
+  color: #32797e;
+}
+
 .plan-box {
   border: 1px solid #32797e;
   margin: 0 2% 2% 0;
@@ -261,8 +265,8 @@
 .search-box .image {
   min-width: 15rem;
   max-width: 18rem;
-  margin-left: 1rem;
-  margin-top: 1rem;
+  padding-left: 2rem;
+  padding-top: 2rem;
   align-items: center;
   justify-content: center;
 }
@@ -271,6 +275,21 @@
 }
 .search-box .ingredients {
   min-width: 20rem;
+}
+
+.ingredients .heading {
+  display: flex;
+  line-height: 2rem;
+}
+
+.ingredients .heading .meal-name {
+  flex: 2;
+  text-align: left;
+}
+
+.ingredients .heading .add {
+  flex: 1;
+  text-align: right;
 }
 
 .list {
