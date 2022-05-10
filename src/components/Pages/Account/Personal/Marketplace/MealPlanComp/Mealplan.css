@@ -309,6 +309,18 @@
   width: fit-content;
 }
 
+.refine-search {
+  width: 50%;
+  display: flex;
+}
+.refine-search p {
+  flex: 1;
+  text-align: left;
+}
+.refine-search div {
+  flex: 3;
+}
+
 .list {
   line-height: 1;
   margin: 0;
