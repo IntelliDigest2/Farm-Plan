@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown } from "../../../../SubComponents/Dropdown";
+import MealType from "./Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "./../../../../SubComponents/Button.css";
 
@@ -11,6 +12,7 @@ import {
 
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");
+  const [mealType, setMealType] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [save, setSave] = useState(true);
 
@@ -43,6 +45,7 @@ function AddMealForm(props) {
       day: props.value.format("DD"),
       upload: {
         meal: mealName,
+        mealType: mealType,
         ingredients: ingredients,
       },
     };
@@ -82,6 +85,8 @@ function AddMealForm(props) {
           required
         />
       </Form.Group>
+
+      <MealType setMealType={setMealType} ownRecipe={true} />
 
       <div style={{ padding: "0 0 0 4%" }}>
         <ul>{ingredientsList}</ul>

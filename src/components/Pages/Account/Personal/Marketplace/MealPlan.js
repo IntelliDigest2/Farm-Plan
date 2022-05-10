@@ -6,7 +6,7 @@ import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "./MealPlanComp/Calendar";
 import SavedMeals from "./MealPlanComp/SavedMeals";
-import RecipeSearch from "./MealPlanComp/RecipeSearch";
+import RecipeSearch from "./MealPlanComp/Search/RecipeSearch";
 import moment from "moment";
 
 export default function MealPlan() {

@@ -227,7 +227,7 @@
   line-height: 0.8;
 }
 
-.meal-box .delete {
+/* .meal-box .delete {
   position: absolute;
   top: 2rem;
   left: -0.5rem;
@@ -241,14 +241,14 @@
   position: absolute;
   top: 2rem;
   left: 4.5rem;
-}
+} */
 
 .saved-meals .meal-box {
   background-color: #e2b458ec;
 }
 .meal-box:hover {
   background-color: #f0af2e;
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 .form:nth-child(odd) {
@@ -273,23 +273,40 @@
 .search-box img {
   width: 100%;
 }
+.search-box a {
+  color: #afba15;
+  font-style: italic;
+}
 .search-box .ingredients {
   min-width: 20rem;
+  color: #302d53;
 }
 
-.ingredients .heading {
+.heading {
   display: flex;
   line-height: 2rem;
+  align-items: baseline;
+  position: sticky;
 }
 
-.ingredients .heading .meal-name {
+.heading .meal-name {
   flex: 2;
   text-align: left;
 }
 
-.ingredients .heading .add {
+.heading .icons {
   flex: 1;
   text-align: right;
+}
+
+.meal-box .meal-type {
+  border-radius: 10px;
+  background-color: #f8d287;
+  color: #595680;
+  font-size: 12px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  width: fit-content;
 }
 
 .list {

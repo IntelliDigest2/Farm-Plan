@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 
 import List from "@mui/material/List";
@@ -7,7 +7,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-import Add from "./AddIcon";
+import Add from "../AddIcon";
 
 export default function RecipeList(props) {
   return (
@@ -23,9 +23,10 @@ export default function RecipeList(props) {
                 <List styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}>
                   <ListSubheader className="heading">
                     <div className="meal-name">{item.recipe.label}</div>
-                    <div className="add">
+                    <div className="icons">
                       <Add
                         value={props.value}
+                        mealType={item.recipe.mealType}
                         meal={item.recipe.label}
                         ingredients={item.recipe.ingredients}
                         onChange={props.onChange}
@@ -42,6 +43,7 @@ export default function RecipeList(props) {
                         {ingredient.text}
                       </ListItem>
                     ))}
+                  <a href={item.recipe.url}>{item.recipe.url}</a>
                 </List>
               </Col>
             </Row>
