@@ -29,6 +29,7 @@ function MyMeals(props) {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
+      var mealType = doc.mealType;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
@@ -40,6 +41,7 @@ function MyMeals(props) {
         ...meals,
         {
           meal: mealName,
+          mealType: mealType,
           ingredients: ingredients,
           id: id,
           nn: nn,
@@ -50,7 +52,7 @@ function MyMeals(props) {
 
   useEffect(() => {
     updateMeals();
-    console.log(meals);
+    // console.log(meals);
   }, [props.data]);
 
   return (

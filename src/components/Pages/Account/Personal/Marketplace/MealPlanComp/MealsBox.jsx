@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -10,24 +10,16 @@ import Edit from "./EditIcon";
 import Add from "./AddIcon";
 
 export default function MealsBox(props) {
-  const [hover, setHover] = useState({});
-
   return (
     <>
       {props.meals.map((newMeal, index) => (
-        <div
-          className="meal-box"
-          key={`meal-box${index}`}
-          onMouseEnter={() => {
-            setHover((prev) => ({ ...prev, [index]: true }));
-          }}
-          onMouseLeave={() => setHover((prev) => ({ ...prev, [index]: false }))}
-        >
-          <p key={`meal${index}`}>
-            <b>{newMeal.meal}</b>
-          </p>
-          {hover[index] ? (
-            <>
+        <div className="meal-box" key={`meal-box${index}`}>
+          <div className="heading">
+            <div className="meal-name">{newMeal.meal}</div>
+            {newMeal.mealType ? (
+              <div className="meal-type">{newMeal.mealType}</div>
+            ) : null}
+            <div className="icons">
               <Delete
                 value={props.value}
                 id={newMeal.id}
@@ -39,6 +31,7 @@ export default function MealsBox(props) {
                   value={props.value}
                   meal={newMeal.meal}
                   ingredients={newMeal.ingredients}
+                  mealType={newMeal.mealType}
                   id={newMeal.id}
                   onChange={props.onChange}
                   saved={props.saved}
@@ -54,8 +47,8 @@ export default function MealsBox(props) {
                   saved={props.saved}
                 />
               )}
-            </>
-          ) : null}
+            </div>
+          </div>
           <List key={`ingrs${index}`}>
             {newMeal.ingredients.map((ingredient, index) => (
               <ListItem key={`item${index}`} className="ingrs">

@@ -16,12 +16,14 @@ function Add(props) {
     if (props.saved) {
       setSelected({
         meal: props.meal,
+        mealType: props.mealType,
         ingredients: props.ingredients,
         id: props.id,
       });
     } else {
       setSelected({
         meal: props.meal,
+        mealType: props.mealType,
         ingredients: props.ingredients,
       });
     }
