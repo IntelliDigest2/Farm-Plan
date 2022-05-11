@@ -29,18 +29,13 @@ export function Food({ isConsumer }) {
       )}
 
       {/* <IconButton
-        icon="food"
+        icon="kitchen"
         label="Food Diary"
         color="turquoise"
         goTo="/food-intake"
       /> */}
 
-      <IconButton
-        icon="kitchen"
-        label="Plan to Save"
-        color="yellow"
-        goTo="/pts"
-      />
+      <IconButton icon="food" label="Plan to Save" color="yellow" goTo="/pts" />
     </>
   );
 }
@@ -55,15 +50,15 @@ export function Health() {
         goTo="/"
         disabled="true"
       />
-      <IconButton
+      {/* <IconButton
         icon="book"
         label="Recipes"
         color="yellow"
         goTo="/"
         disabled="true"
-      />
+      /> */}
       <IconButton
-        icon="kitchen"
+        icon="food"
         label="Plan to Save"
         color="turquoise"
         goTo="/pts"

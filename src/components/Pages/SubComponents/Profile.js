@@ -30,13 +30,7 @@ import { Heading } from "./Heading";
 export function Profile(props) {
   return (
     <Container fluid className="profile">
-      <Row
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <Row class="align-items-center">
         <Col xs="auto">
           <Avatar
             className="center"

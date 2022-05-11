@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../../../../SubComponents/Button.css";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import EdamamBadge from "../../../../../../../images/Edamam_Badge_White.svg";
 
 import { recipeSearch } from "./search";
 import RecipeList from "./RecipeList";
@@ -21,6 +22,7 @@ export default function RecipeSearch(props) {
 
   return (
     <>
+      <img className="edamam" src={EdamamBadge} alt="powered by edamam" />
       <Form
         onSubmit={(e) => {
           e.preventDefault();

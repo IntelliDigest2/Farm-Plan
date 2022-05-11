@@ -186,6 +186,12 @@
   height: fit-content;
 }
 
+.edamam {
+  width: 10rem;
+  height: auto;
+  float: right;
+}
+
 .refine-search {
   width: 50%;
   display: flex;
