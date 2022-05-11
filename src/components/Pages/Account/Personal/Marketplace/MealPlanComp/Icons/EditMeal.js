@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import EditMealForm from "./EditMealForm";
 
-//pass down meal props from meals.js
-//edit each item
-//send via editMealData
-
 export function EditMeal({
   meal,
   ingredients,

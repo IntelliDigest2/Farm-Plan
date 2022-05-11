@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Dropdown } from "../../../../SubComponents/Dropdown";
+import { Dropdown } from "../../../../../SubComponents/Dropdown";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import "./../../../../SubComponents/Button.css";
+import "./../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
 import {
   editMealData,
   editSavedMeal,
-} from "../../../../../../store/actions/marketplaceActions";
+} from "../../../../../../../store/actions/marketplaceActions";
 
 function EditMealForm(props) {
   const [mealName, setMealName] = useState(props.meal);

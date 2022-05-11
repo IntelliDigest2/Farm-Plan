@@ -56,12 +56,18 @@ function MyMeals(props) {
   }, [props.data]);
 
   return (
-    <MealsBox
-      forceUpdate={props.forceUpdate}
-      meals={meals}
-      saved={false}
-      value={props.value}
-    />
+    <div className="empty">
+      {meals.meal ? (
+        <MealsBox
+          forceUpdate={props.forceUpdate}
+          meals={meals}
+          saved={false}
+          value={props.value}
+        />
+      ) : (
+        <p>There is no plan for today :(</p>
+      )}
+    </div>
   );
 }
 

@@ -7,14 +7,14 @@ import ListSubheader from "@mui/material/ListSubheader";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-import Add from "../AddIcon";
+import Add from "../Icons/AddIcon";
 
 export default function RecipeList(props) {
   return (
     <>
       {props.query &&
         props.recipes.map((item, i) => (
-          <div className="search-box" key={i}>
+          <div className="meal-box" key={i}>
             <Row>
               <Col className="image">
                 <img src={item.recipe.image} alt={`${item.recipe.label}`} />
