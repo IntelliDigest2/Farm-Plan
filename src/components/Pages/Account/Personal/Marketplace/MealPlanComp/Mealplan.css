@@ -1,103 +1,19 @@
-.display {
-  display: flex;
-}
-
-/* Phones */
-@media screen and (max-width: 600px) {
-  .display {
-    flex-direction: column;
-  }
-
-  .plan-box {
-    flex: 1;
-    width: 100%;
-    min-height: 19rem;
-    max-height: 25rem;
-  }
-
-  .calendar {
-    flex: 1;
-    width: 100%;
-  }
-}
-
-/* Portrait Tablet and Large Phones */
-@media screen and (min-width: 600px) {
-  .display {
-    flex-direction: column;
-  }
-
-  .plan-box {
-    flex: 1;
-    width: 100%;
-    min-height: 19rem;
-  }
-
-  .calendar {
-    width: 100%;
-  }
-}
-
-/* Landscape Tablet */
-@media screen and (min-width: 768px) {
-  .display {
-    flex-direction: row;
-  }
-
-  .plan-box {
-    flex: 1;
-    max-width: 48%;
-  }
-
-  .calendar {
-    flex: 1;
-    max-width: 50%;
-  }
-}
-
-/* Laptop/Desktop */
-@media screen and (min-width: 992px) {
-  .display {
-    flex-direction: row;
-  }
-
-  .plan-box {
-    flex: 1;
-    max-width: 48%;
-  }
-
-  .calendar {
-    flex: 1;
-    max-width: 50%;
-  }
-}
-
-/* Large Laptop/Desktop */
-@media screen and (min-width: 1200px) {
-  .display {
-    flex-direction: row;
-  }
-
-  .plan-box {
-    flex: 1;
-    max-width: 48%;
-  }
-
-  .calendar {
-    flex: 1;
-    max-width: 50%;
-  }
-}
-
 .mealtabs a {
   color: #32797e;
+}
+
+.empty {
+  padding: 1rem;
+  color: #545270;
+  font-weight: 500;
 }
 
 .plan-box {
   border: 1px solid #32797e;
   margin: 0 2% 2% 0;
+  width: 100%;
+  min-height: 8rem;
   position: relative;
-  min-width: 40%;
   padding-bottom: 1.5rem;
 }
 
@@ -113,13 +29,14 @@
 .plan-box .button {
   position: absolute;
   bottom: 1%;
-  left: 2%;
+  right: 2%;
 }
 
 .calendar {
   box-sizing: border-box;
   font-size: 1rem;
-  min-width: 50%;
+  width: 100%;
+  margin: 0 2% 2% 0;
 }
 
 .header {
@@ -211,58 +128,18 @@
   align-items: flex-start;
 }
 
-.meal-box {
-  color: #302d53;
-  overflow-wrap: break-word;
-  background-color: #d9a12d;
-  border-radius: 25px;
-  margin: 0.5rem;
-  padding: 1rem 1rem 0 1rem;
-  transition: transform 0.5s;
-}
-
-.meal-box .ingrs {
-  color: #0c0847;
-  margin-left: 1rem;
-  line-height: 0.8;
-}
-
-/* .meal-box .delete {
-  position: absolute;
-  top: 2rem;
-  left: -0.5rem;
-}
-.meal-box .edit {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-}
-.meal-box .add-to-calendar {
-  position: absolute;
-  top: 2rem;
-  left: 4.5rem;
-} */
-
-.saved-meals .meal-box {
-  background-color: #e2b458ec;
-}
-.meal-box:hover {
-  background-color: #f0af2e;
-  transform: scale(0.99);
-}
-
 .form:nth-child(odd) {
   background-color: #b3b785;
   border-radius: 25px;
   padding: 2%;
 }
 
-.search-box {
+.meal-box {
   margin: 0.5rem 0 0.5rem 0;
-  box-shadow: 0.1rem 0.1rem 0.1rem #aba9b4;
-  border-radius: 15px;
+  border: solid #32797e;
+  border-radius: 10px;
 }
-.search-box .image {
+.meal-box .image {
   min-width: 15rem;
   max-width: 18rem;
   padding-left: 2rem;
@@ -270,23 +147,22 @@
   align-items: center;
   justify-content: center;
 }
-.search-box img {
+.meal-box img {
   width: 100%;
 }
-.search-box a {
+.meal-box a {
   color: #afba15;
   font-style: italic;
 }
-.search-box .ingredients {
+.meal-box .ingredients {
   min-width: 20rem;
   color: #302d53;
 }
 
 .heading {
   display: flex;
-  line-height: 2rem;
+  line-height: 1.5rem !important;
   align-items: baseline;
-  position: sticky;
 }
 
 .heading .meal-name {
@@ -295,7 +171,7 @@
 }
 
 .heading .icons {
-  flex: 1;
+  flex: 2;
   text-align: right;
 }
 
@@ -307,6 +183,19 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   width: fit-content;
+  height: fit-content;
+}
+
+.refine-search {
+  width: 50%;
+  display: flex;
+}
+.refine-search p {
+  flex: 1;
+  text-align: left;
+}
+.refine-search div {
+  flex: 3;
 }
 
 .list {

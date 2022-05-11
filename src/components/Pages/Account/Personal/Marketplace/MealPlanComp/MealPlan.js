@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-import "./MealPlanComp/Mealplan.css";
-import { PageWrap } from "../../../SubComponents/PageWrap";
+import "./Mealplan.css";
+import { PageWrap } from "../../../../SubComponents/PageWrap";
 import { Tab, Tabs } from "react-bootstrap";
 
-import { Calendar } from "./MealPlanComp/Calendar";
-import SavedMeals from "./MealPlanComp/SavedMeals";
-import RecipeSearch from "./MealPlanComp/Search/RecipeSearch";
+import { Calendar } from "./Calendar";
+import SavedMeals from "./SavedMeals";
+import RecipeSearch from "./Search/RecipeSearch";
 import moment from "moment";
 
 export default function MealPlan() {

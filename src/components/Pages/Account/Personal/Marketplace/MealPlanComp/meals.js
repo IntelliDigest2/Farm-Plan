@@ -30,6 +30,7 @@ function MyMeals(props) {
       var ingredients = doc.ingredients;
       var id = doc.id;
       var mealType = doc.mealType;
+      var url = doc.url;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
@@ -45,6 +46,7 @@ function MyMeals(props) {
           ingredients: ingredients,
           id: id,
           nn: nn,
+          url: url,
         },
       ]);
     });
@@ -56,12 +58,20 @@ function MyMeals(props) {
   }, [props.data]);
 
   return (
-    <MealsBox
-      forceUpdate={props.forceUpdate}
-      meals={meals}
-      saved={false}
-      value={props.value}
-    />
+    <>
+      {meals.length ? (
+        <MealsBox
+          forceUpdate={props.forceUpdate}
+          meals={meals}
+          saved={false}
+          value={props.value}
+        />
+      ) : (
+        <div className="empty">
+          <p>There is no plan for today :(</p>
+        </div>
+      )}
+    </>
   );
 }
 

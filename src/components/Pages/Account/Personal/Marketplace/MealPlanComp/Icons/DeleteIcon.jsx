@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import {
   deleteMealData,
   deleteSavedMeal,
-} from "../../../../../../store/actions/marketplaceActions";
+} from "../../../../../../../store/actions/marketplaceActions";
 
 //takes props value, id and forceUpdate from a meal item and whether or not it is saved
 function Delete(props) {

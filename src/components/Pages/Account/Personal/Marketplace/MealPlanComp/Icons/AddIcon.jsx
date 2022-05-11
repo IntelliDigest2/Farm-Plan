@@ -25,6 +25,7 @@ function Add(props) {
         meal: props.meal,
         mealType: props.mealType,
         ingredients: props.ingredients,
+        url: props.url,
       });
     }
   };
