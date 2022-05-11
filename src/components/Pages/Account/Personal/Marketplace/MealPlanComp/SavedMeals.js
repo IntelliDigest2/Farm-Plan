@@ -44,23 +44,13 @@ const SavedMeals = (props) => {
 
   return (
     <>
-      <div className="header" style={{ paddingLeft: "1%" }}>
-        My Saved Meals
-      </div>
-      <div
-        style={{
-          overflowY: "scroll",
-          maxHeight: "25rem",
-          marginBottom: "2%",
-        }}
-      >
-        <MealsBox
-          forceUpdate={props.forceUpdate}
-          meals={sMeals}
-          saved={true}
-          value={props.value}
-        />
-      </div>
+      <MealsBox
+        forceUpdate={props.forceUpdate}
+        onChange={props.onChange}
+        meals={sMeals}
+        saved={true}
+        value={props.value}
+      />
     </>
   );
 };
