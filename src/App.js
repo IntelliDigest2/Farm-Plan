@@ -37,7 +37,7 @@ import ReserveItems from "./components/Pages/Account/ReserveItems";
 
 import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
 import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
-import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlan";
+import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 
 import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";

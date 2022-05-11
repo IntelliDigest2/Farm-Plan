@@ -46,6 +46,7 @@ const SavedMeals = (props) => {
     <>
       <MealsBox
         forceUpdate={props.forceUpdate}
+        onChange={props.onChange}
         meals={sMeals}
         saved={true}
         value={props.value}

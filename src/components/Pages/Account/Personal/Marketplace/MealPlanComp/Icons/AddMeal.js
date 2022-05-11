@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Dropdown } from "../../../../SubComponents/Dropdown";
-import MealType from "./Search/mealType";
+import { Dropdown } from "../../../../../SubComponents/Dropdown";
+import MealType from "../Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import "./../../../../SubComponents/Button.css";
+import "./../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
 import {
   createMealPlanData,
   createSavedMeal,
-} from "../../../../../../store/actions/marketplaceActions";
+} from "../../../../../../../store/actions/marketplaceActions";
 
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");

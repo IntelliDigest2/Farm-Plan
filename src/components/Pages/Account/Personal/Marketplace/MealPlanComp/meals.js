@@ -30,6 +30,7 @@ function MyMeals(props) {
       var ingredients = doc.ingredients;
       var id = doc.id;
       var mealType = doc.mealType;
+      var url = doc.url;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
@@ -45,6 +46,7 @@ function MyMeals(props) {
           ingredients: ingredients,
           id: id,
           nn: nn,
+          url: url,
         },
       ]);
     });
@@ -56,8 +58,8 @@ function MyMeals(props) {
   }, [props.data]);
 
   return (
-    <div className="empty">
-      {meals.meal ? (
+    <>
+      {meals.length ? (
         <MealsBox
           forceUpdate={props.forceUpdate}
           meals={meals}
@@ -65,9 +67,11 @@ function MyMeals(props) {
           value={props.value}
         />
       ) : (
-        <p>There is no plan for today :(</p>
+        <div className="empty">
+          <p>There is no plan for today :(</p>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

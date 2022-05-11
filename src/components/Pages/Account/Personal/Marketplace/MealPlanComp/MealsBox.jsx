@@ -55,6 +55,7 @@ export default function MealsBox(props) {
                   )}
                 </div>
               </ListSubheader>
+
               {newMeal.ingredients.map((ingredient, index) => (
                 <ListItem key={`item${index}`} className="list">
                   <ListItemIcon key={`icon${index}`}>
@@ -70,6 +71,9 @@ export default function MealsBox(props) {
                   )}
                 </ListItem>
               ))}
+              <ListItem>
+                {newMeal.url ? <a href={newMeal.url}>{newMeal.url}</a> : null}
+              </ListItem>
             </List>
           </div>
         </div>

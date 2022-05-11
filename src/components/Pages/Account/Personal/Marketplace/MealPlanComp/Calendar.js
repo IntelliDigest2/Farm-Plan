@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import { AddMealModal } from "./AddMealModal";
+import { AddMealModal } from "./Icons/AddMealModal";
 
-import buildCalendar from "./Build";
-import dayStyles, { beforeToday } from "./dayStyles";
-import CalendarHeader from "./header";
+import buildCalendar from "./BuildCalendar/Build";
+import dayStyles, { beforeToday } from "./BuildCalendar/dayStyles";
+import CalendarHeader from "./BuildCalendar/header";
 
 import MyMeals from "./meals";
 

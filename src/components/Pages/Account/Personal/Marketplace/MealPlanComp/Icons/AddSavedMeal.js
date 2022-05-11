@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 
-import buildCalendar from "../Build";
-import dayStyles, { beforeToday } from "../dayStyles";
-import CalendarHeader from "../header";
+import buildCalendar from "../BuildCalendar/Build";
+import dayStyles, { beforeToday } from "../BuildCalendar/dayStyles";
+import CalendarHeader from "../BuildCalendar/header";
 
 import { SubButton } from "../../../../../SubComponents/Button";
 
@@ -38,6 +38,7 @@ function AddSavedMeal(props) {
           meal: props.selected.meal,
           ingredients: props.selected.ingredients,
           mealType: props.selected.mealType,
+          url: props.selected.url,
           nonNativeData: true,
         },
       };

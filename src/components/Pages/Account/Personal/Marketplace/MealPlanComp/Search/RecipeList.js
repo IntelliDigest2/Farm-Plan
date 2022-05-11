@@ -29,6 +29,7 @@ export default function RecipeList(props) {
                         mealType={item.recipe.mealType}
                         meal={item.recipe.label}
                         ingredients={item.recipe.ingredients}
+                        url={item.recipe.url}
                         onChange={props.onChange}
                         saved={false}
                       />
