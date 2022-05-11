@@ -21,11 +21,13 @@ const SavedMeals = (props) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
+      var mealType = doc.mealType;
 
       setSMeals((sMeals) => [
         ...sMeals,
         {
           meal: mealName,
+          mealType: mealType,
           ingredients: ingredients,
           id: id,
         },

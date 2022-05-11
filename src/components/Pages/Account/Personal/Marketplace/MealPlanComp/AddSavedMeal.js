@@ -26,6 +26,7 @@ function AddSavedMeal(props) {
         day: props.value.format("DD"),
         upload: {
           meal: props.selected.meal,
+          mealType: props.selected.mealType,
           ingredients: props.selected.ingredients,
         },
       };
@@ -36,6 +37,7 @@ function AddSavedMeal(props) {
         upload: {
           meal: props.selected.meal,
           ingredients: props.selected.ingredients,
+          mealType: props.selected.mealType,
           nonNativeData: true,
         },
       };
