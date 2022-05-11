@@ -22,7 +22,9 @@ export default function RecipeSearch(props) {
 
   return (
     <>
-      <img className="edamam" src={EdamamBadge} alt="powered by edamam" />
+      <a href="https://www.edamam.com/">
+        <img className="edamam" src={EdamamBadge} alt="powered by edamam" />
+      </a>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
