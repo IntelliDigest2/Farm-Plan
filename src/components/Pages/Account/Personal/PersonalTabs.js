@@ -15,28 +15,30 @@ export function Food({ isConsumer }) {
       {isConsumer ? (
         <IconButton
           icon="notes"
-          label="My Meal Plan"
+          label="My Food Diary"
           color="turquoise"
           goTo="meal-plan"
         />
       ) : (
         <IconButton
           icon="notes"
-          label="My Meal Plan"
+          label="My Food Diary"
           color="turquoise"
           goTo="cons-auth"
         />
       )}
-      <IconButton
+
+      {/* <IconButton
         icon="food"
         label="Food Diary"
         color="turquoise"
         goTo="/food-intake"
-      />
+      /> */}
+
       <IconButton
         icon="kitchen"
         label="Plan to Save"
-        color="turquoise"
+        color="yellow"
         goTo="/pts"
       />
     </>
@@ -122,12 +124,6 @@ export function Environment() {
         label="Waste Tips"
         color="green"
         goTo="/food-reduction"
-      />
-      <IconButton
-        icon="kitchen"
-        label="Plan to Save"
-        color="turquoise"
-        goTo="/pts"
       />
     </>
   );

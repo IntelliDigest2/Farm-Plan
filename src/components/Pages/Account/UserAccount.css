@@ -93,7 +93,6 @@
   color: #32797e;
   background-color: #c6e5e7;
   border-color: #32797e;
-  border-radius: 25px;
   padding: 5px;
 }
 
@@ -172,10 +171,10 @@
 .pts-p-div {
   text-align: center;
   float: center;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  padding-left: 5%;
-  padding-right: 5%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .pts-p {
@@ -184,6 +183,8 @@
 
 .support {
   width: 100%;
+  background-color: #afba15;
+  color: white;
   padding-top: 2%;
   padding-bottom: 2%;
 }
