@@ -1,5 +1,5 @@
 import React from "react";
-import { DefaultButton } from "../SubComponents/Button";
+// import { DefaultButton } from "../SubComponents/Button";
 import { PageWrap } from "../SubComponents/PageWrap";
 import "./UserAccount.css";
 
@@ -24,16 +24,12 @@ function PlanToSave() {
   return (
     <>
       <PageWrap header="The Plan to Save Campaign" goTo="/account">
-        <img
-          className="large-img"
-          src={pTSBanner}
-          alt="Plan to Save promotional banner"
-        />
-        <DefaultButton
+        {/* <DefaultButton
           styling="green"
           goTo="/reserve-items"
           text="Plan your items here!"
-        />
+        /> */}
+        <PTSCountdown />
         <div className="disclaimer">
           <p>
             <b>NOTE:</b>This is part of the 'Fail to Plan, Plan to Fail'
@@ -43,7 +39,6 @@ function PlanToSave() {
             commencing in January 2023.
           </p>
         </div>
-        <PTSCountdown />
         <div className="container">
           <img className="large-img" src={pTSNotebook} alt="" />
           <div className="img-overlay blue">
@@ -61,26 +56,31 @@ function PlanToSave() {
             ensuring the supply of nutritious food all year round for all.
           </p>
         </div>
-        <div className="support green">
-          <h4>Supported By:</h4>
-        </div>
-        <Row>
-          <Col>
-            <img
-              className="small-img"
-              src={sTFCFoodNetwork}
-              alt="STFC Food Network"
-            />
-          </Col>
-          <Col>
-            <img
-              className="small-img"
-              src={positivePlanet}
-              alt="Positive Planet"
-            />
-          </Col>
-        </Row>
+        <img
+          className="large-img"
+          src={pTSBanner}
+          alt="Plan to Save promotional banner"
+        />
       </PageWrap>
+      <div className="support">
+        <h4>Supported By:</h4>
+      </div>
+      <Row style={{ backgroundColor: "white" }}>
+        <Col>
+          <img
+            className="small-img"
+            src={sTFCFoodNetwork}
+            alt="STFC Food Network"
+          />
+        </Col>
+        <Col>
+          <img
+            className="small-img"
+            src={positivePlanet}
+            alt="Positive Planet"
+          />
+        </Col>
+      </Row>
     </>
   );
 }
