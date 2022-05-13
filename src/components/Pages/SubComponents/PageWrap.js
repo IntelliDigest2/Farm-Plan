@@ -14,7 +14,7 @@ export const PageWrap = (props) => {
           <div style={{ width: "50%", paddingLeft: "1rem" }}>
             <SubButton styling="green" goTo={props.goTo} text="Back" />
           </div>
-          <h5>{props.header}</h5>
+          <div className="basic-title basic-lg">{props.header}</div>
         </div>
         <Divider />
       </div>
@@ -37,7 +37,7 @@ export const PageWrapTop = (props) => {
         <div style={{ width: "50%", paddingLeft: "1rem" }}>
           <SubButton styling="green" goTo={props.goTo} text="Back" />
         </div>
-        <h5>{props.header}</h5>
+        <div className="basic-title basic-lg">{props.header}</div>
       </div>
       <Divider />
       {props.children}

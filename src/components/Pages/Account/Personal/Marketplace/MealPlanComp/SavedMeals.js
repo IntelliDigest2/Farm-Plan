@@ -47,7 +47,7 @@ const SavedMeals = (props) => {
 
   return (
     <>
-      <div className="basic-title-left">My Saved Meals</div>
+      <div className="basic-title-left mb-3">My Saved Meals</div>
       <div className="saved-meals">
         <MealsBox
           forceUpdate={props.forceUpdate}

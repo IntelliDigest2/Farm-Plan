@@ -67,8 +67,8 @@ function MyMeals(props) {
           value={props.value}
         />
       ) : (
-        <div className="empty">
-          <p>There is no plan for today :(</p>
+        <div className="empty basic-title-left">
+          <p>There is no plan for today :( Try adding something. </p>
         </div>
       )}
     </>

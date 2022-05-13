@@ -30,8 +30,8 @@ import { Heading } from "./Heading";
 export function Profile(props) {
   return (
     <Container fluid className="profile">
-      <Row class="align-items-center">
-        <Col xs="auto">
+      {/* <Row class="align-items-center"> */}
+      {/* <Col xs="auto">
           <Avatar
             className="center"
             alt={props.profile.initials}
@@ -40,24 +40,21 @@ export function Profile(props) {
           >
             <Heading priority="2" text={props.profile.initials} />
           </Avatar>
-        </Col>
-        <Col xs="auto">
-          <Heading
-            priority="4"
-            text={props.profile.firstName + " " + props.profile.lastName}
-          />
-          <Heading priority="5" text={props.profile.email} />
-          <Tooltip title="Settings">
-            <IconButton
-              href="/settings"
-              component="a"
-              style={{ float: "right" }}
-            >
-              <SettingsApplicationsIcon />
-            </IconButton>
-          </Tooltip>
-        </Col>
-      </Row>
+        </Col> */}
+      {/* <Col xs="auto"> */}
+      <Heading
+        priority="4"
+        text={props.profile.firstName + " " + props.profile.lastName}
+      />
+      <Heading priority="5" text={props.profile.email} />
+      <p>{props.profile.buildingFunction} Account</p>
+      <Tooltip title="Settings">
+        <IconButton href="/settings" component="a" style={{ float: "right" }}>
+          <SettingsApplicationsIcon />
+        </IconButton>
+      </Tooltip>
+      {/* </Col> */}
+      {/* </Row> */}
     </Container>
   );
 }
