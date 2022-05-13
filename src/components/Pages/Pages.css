@@ -24,24 +24,6 @@ body {
   padding-top: 10px;
 }
 
-/* home page */
-
-.home-welcome {
-  font-size: 65px;
-  width: 70%;
-  font-weight: 600;
-}
-
-.update-text {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.home-welcome,
-.update-text {
-  color: rgb(255, 255, 255);
-}
-
 /* about page */
 .about h1 {
   font-size: 28px;
@@ -399,4 +381,22 @@ body {
 .card-design {
   width: "261px";
   height: "400px";
+}
+
+.basic-title {
+  font-family: "Source Sans Pro";
+  font-weight: 550;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.basic-title-left {
+  font-family: "Source Sans Pro";
+  font-weight: 550;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  text-align: left;
+  padding: 0.5rem;
 }

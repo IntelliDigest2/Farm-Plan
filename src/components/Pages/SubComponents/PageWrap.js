@@ -19,10 +19,10 @@ export const PageWrap = (props) => {
         <Divider />
       </div>
       <Container className="mobile-style">
-        <div className="center">
+        {/* <div className="center">
           <h2 style={{ color: "#0c0847" }}>{props.subtitle}</h2>
         </div>
-        <Divider variant="middle" />
+        <Divider variant="middle" /> */}
         {props.children}
         <Divider variant="middle" />
       </Container>

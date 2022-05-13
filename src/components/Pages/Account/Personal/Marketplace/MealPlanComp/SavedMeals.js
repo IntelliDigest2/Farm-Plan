@@ -9,7 +9,10 @@ const SavedMeals = (props) => {
 
   //this sends data request
   useEffect(() => {
-    if (props.tab === 1) props.getSavedMeals();
+    if (props.tab === 1) {
+      props.getSavedMeals();
+      // console.log("got smeals", props.data);
+    }
   }, [props.tab, props.update]);
 
   const updateSMeals = async () => {
@@ -44,13 +47,16 @@ const SavedMeals = (props) => {
 
   return (
     <>
-      <MealsBox
-        forceUpdate={props.forceUpdate}
-        onChange={props.onChange}
-        meals={sMeals}
-        saved={true}
-        value={props.value}
-      />
+      <div className="basic-title-left">My Saved Meals</div>
+      <div className="saved-meals">
+        <MealsBox
+          forceUpdate={props.forceUpdate}
+          onChange={props.onChange}
+          meals={sMeals}
+          saved={true}
+          value={props.value}
+        />
+      </div>
     </>
   );
 };

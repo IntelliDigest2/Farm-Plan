@@ -10,7 +10,6 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //* Pages
-import About from "./components/Pages/About";
 import Login from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
 import Contact from "./components/Pages/Contact";
@@ -145,7 +144,6 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
-            <Route path="/about" exact component={About} />
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
