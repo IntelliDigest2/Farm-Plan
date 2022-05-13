@@ -5,10 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { connect } from "react-redux";
-import {
-  deleteMealData,
-  deleteSavedMeal,
-} from "../../../../../../../store/actions/marketplaceActions";
+import { deleteSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
+import { deleteMealData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 
 //takes props value, id and forceUpdate from a meal item and whether or not it is saved
 function Delete(props) {

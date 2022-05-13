@@ -3,10 +3,8 @@ import { Dropdown } from "../../../../../SubComponents/Dropdown";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "./../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
-import {
-  editMealData,
-  editSavedMeal,
-} from "../../../../../../../store/actions/marketplaceActions";
+import { editSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
+import { editMealData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 
 function EditMealForm(props) {
   const [mealName, setMealName] = useState(props.meal);

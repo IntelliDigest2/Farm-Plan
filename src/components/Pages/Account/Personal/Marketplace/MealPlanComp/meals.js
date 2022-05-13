@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import MealsBox from "./MealsBox";
 
 import { connect } from "react-redux";
-import { getMealData } from "../../../../../../store/actions/marketplaceActions";
+import { getMealData } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
 
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);

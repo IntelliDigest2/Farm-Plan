@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import MealsBox from "./MealsBox";
 import { connect } from "react-redux";
-import { getSavedMeals } from "../../../../../../store/actions/marketplaceActions";
+import { getSavedMeals } from "../../../../../../store/actions/marketplaceActions/savedMealData";
 
 const SavedMeals = (props) => {
   const [sMeals, setSMeals] = useState([]);

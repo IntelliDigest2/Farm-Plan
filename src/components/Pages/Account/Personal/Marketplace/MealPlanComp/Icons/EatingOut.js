@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import "../../../../../SubComponents/Button.css";
 
-import { recommend } from "../../../../../../../store/actions/marketplaceActions";
+import { recommend } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 
 function EatingOut(props) {
   const [restaurant, setRestaurant] = useState("");
