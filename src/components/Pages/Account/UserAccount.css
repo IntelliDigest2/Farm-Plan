@@ -1,11 +1,10 @@
 .web-center {
-  /* float: center; */
   display: block;
   justify-content: center;
   align-items: center;
   /*600px in center of large page but varies when browser is smaller*/
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  /* margin-top: 1rem;
+  margin-bottom: 2rem; */
   font-family: "Source Sans Pro", sans-serif;
 }
 
@@ -64,15 +63,13 @@
 }
 
 .profile {
-  display: flex;
+  display: block;
+  box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  margin: auto;
   margin-bottom: 1rem;
   padding: 1rem;
-  padding: 3%;
   border-radius: 15px;
-  width: max-content;
   background-color: white;
 }
 

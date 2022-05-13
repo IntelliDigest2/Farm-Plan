@@ -5,10 +5,8 @@ import { Form, InputGroup, Button } from "react-bootstrap";
 import "./../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
-import {
-  createMealPlanData,
-  createSavedMeal,
-} from "../../../../../../../store/actions/marketplaceActions";
+import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
+import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");

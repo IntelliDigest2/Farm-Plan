@@ -1,5 +1,5 @@
-import React from "react";
-// import { DefaultButton } from "../SubComponents/Button";
+import React, { useState, useEffect } from "react";
+import { SubButton } from "../SubComponents/Button";
 import { PageWrap } from "../SubComponents/PageWrap";
 import "./UserAccount.css";
 
@@ -10,6 +10,7 @@ import sTFCFoodNetwork from "../../../images/stfcfoodnetwork.png";
 
 import { Card, Row, Col } from "react-bootstrap";
 import Countdown from "react-countdown";
+import { connect } from "react-redux";
 
 function PTSCountdown() {
   return (
@@ -20,23 +21,37 @@ function PTSCountdown() {
   );
 }
 
-function PlanToSave() {
+function PlanToSave(props) {
+  const [button, setButton] = useState(false);
+  const [link, setLink] = useState("/meal-plan");
+  const handleButton = () => {
+    if (props.profile.buildingFunction === "Households" || "Personal") {
+      setButton(true);
+    } else {
+      setButton(false);
+    }
+    if (props.profile.isConsumer) {
+      setLink("/meal-plan");
+    } else {
+      setLink("cons-auth");
+    }
+  };
+
+  useEffect(() => {
+    handleButton();
+  });
+
   return (
     <>
       <PageWrap header="The Plan to Save Campaign" goTo="/account">
-        {/* <DefaultButton
-          styling="green"
-          goTo="/reserve-items"
-          text="Plan your items here!"
-        /> */}
         <PTSCountdown />
         <div className="disclaimer">
           <p>
             <b>NOTE:</b>This is part of the 'Fail to Plan, Plan to Fail'
-            campaign, running from October 16th 2021 to January 31st 2021. Click
-            'Plan to Save' to express interest in reserving food items from
-            local sources, we have extended to campaign to June 2022 with sales
-            commencing in January 2023.
+            campaign. Click 'Plan to Save' to express interest in reserving food
+            items from local sources, this countdown is representative of our
+            target timeline for deploying the plan to save and coordinating food
+            consumption between consumers and their local farmers.
           </p>
         </div>
         <div className="container">
@@ -56,11 +71,22 @@ function PlanToSave() {
             ensuring the supply of nutritious food all year round for all.
           </p>
         </div>
-        <img
-          className="large-img"
-          src={pTSBanner}
-          alt="Plan to Save promotional banner"
-        />
+        {props.profile.buildingFunction === "Households" || "Personal" ? (
+          <div className="center">
+            <SubButton
+              text="Start your plan now!"
+              goTo="/meal-plan"
+              styling="green"
+            />
+          </div>
+        ) : null}
+        <a href="https://intellidigest.com/services/food-system-sustainability/food-waste-tracker/plan-to-save/">
+          <img
+            className="large-img"
+            src={pTSBanner}
+            alt="Plan to Save promotional banner"
+          />
+        </a>
       </PageWrap>
       <div className="support">
         <h4>Supported By:</h4>
@@ -85,4 +111,10 @@ function PlanToSave() {
   );
 }
 
-export default PlanToSave;
+const mapStateToProps = (state) => {
+  return {
+    profile: state.firebase.profile,
+  };
+};
+
+export default connect(mapStateToProps)(PlanToSave);
