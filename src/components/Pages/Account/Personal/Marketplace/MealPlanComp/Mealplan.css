@@ -1,5 +1,14 @@
+.mealtabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
 .mealtabs a {
   color: #32797e;
+}
+.mealtab {
+  flex: 1;
+  text-align: center;
 }
 
 .empty {
@@ -42,6 +51,10 @@
 .header {
   background-color: #32797e;
   text-align: center;
+  font-family: "Source Sans Pro";
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
   min-height: 2rem;
   line-height: 2rem;
   color: white;
@@ -65,7 +78,13 @@
   text-align: left;
   margin-left: 1rem;
 }
-
+/* .calendar .header .current {
+  font-family: "Source Sans Pro";
+  font-weight: 550;
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+  text-align: center;
+} */
 .calendar .header .next {
   flex: 1;
   text-align: right;
@@ -123,9 +142,9 @@
 }
 
 .saved-meals {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
+  height: 25rem;
+  overflow-y: scroll;
+  margin-bottom: 2rem;
 }
 
 .form:nth-child(odd) {
@@ -184,6 +203,12 @@
   padding-right: 0.5rem;
   width: fit-content;
   height: fit-content;
+}
+
+.edamam {
+  width: 10rem;
+  height: auto;
+  float: right;
 }
 
 .refine-search {
