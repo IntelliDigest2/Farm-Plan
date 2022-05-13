@@ -17,14 +17,14 @@ export function Food({ isConsumer }) {
           icon="notes"
           label="My Food Diary"
           color="turquoise"
-          goTo="meal-plan"
+          goTo="/meal-plan"
         />
       ) : (
         <IconButton
           icon="notes"
           label="My Food Diary"
           color="turquoise"
-          goTo="cons-auth"
+          goTo="/cons-auth"
         />
       )}
 
