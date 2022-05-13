@@ -57,7 +57,11 @@ export default function MealsBox(props) {
               </ListSubheader>
 
               {newMeal.ingredients.map((ingredient, index) => (
-                <ListItem key={`item${index}`} className="list">
+                <ListItem
+                  key={`item${index}`}
+                  className="list"
+                  style={{ alignItems: "baseline" }}
+                >
                   <ListItemIcon key={`icon${index}`}>
                     <CheckBoxOutlineBlankIcon fontSize="1rem" />
                   </ListItemIcon>

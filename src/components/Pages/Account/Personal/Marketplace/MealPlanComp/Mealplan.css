@@ -78,13 +78,7 @@
   text-align: left;
   margin-left: 1rem;
 }
-/* .calendar .header .current {
-  font-family: "Source Sans Pro";
-  font-weight: 550;
-  font-size: 1rem;
-  letter-spacing: 0.2rem;
-  text-align: center;
-} */
+
 .calendar .header .next {
   flex: 1;
   text-align: right;
@@ -142,7 +136,7 @@
 }
 
 .saved-meals {
-  height: 25rem;
+  max-height: 25rem;
   overflow-y: scroll;
   margin-bottom: 2rem;
 }

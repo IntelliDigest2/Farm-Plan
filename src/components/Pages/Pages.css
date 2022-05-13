@@ -6,6 +6,11 @@ body {
   background-color: whitesmoke;
 }
 
+* {
+  font-family: "Source Sans Pro";
+  letter-spacing: 0.06rem;
+}
+
 .warning {
   color: rgb(204, 37, 37);
   font-size: 16px;
@@ -267,7 +272,6 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  max-width: 70%;
   /*600px in center of large page but varies when browser is smaller*/
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -389,14 +393,17 @@ body {
   font-size: 1rem;
   letter-spacing: 0.15rem;
   text-align: center;
-  padding: 0.5rem;
 }
 
 .basic-title-left {
   font-family: "Source Sans Pro";
   font-weight: 550;
   font-size: 1rem;
-  letter-spacing: 0.15rem;
+  letter-spacing: 0.1rem;
   text-align: left;
-  padding: 0.5rem;
+}
+
+.basic-lg {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
 }

@@ -22,7 +22,7 @@ export default function MealPlan() {
   const handleSelect = (key) => {
     if (key === "calendar") {
       setTab(0);
-      console.log(tab);
+      // console.log(tab);
     } else if (key === "recipes") setTab(1);
     else setTab(2);
   };
@@ -32,10 +32,10 @@ export default function MealPlan() {
       <Tabs
         defaultActiveKey="calendar"
         id="meal-plan-tabs"
-        className="mb-3 mealtabs"
+        className="mb-3 mealtabs basic-title"
         onSelect={handleSelect}
       >
-        <Tab eventKey="calendar" title="Calendar" className="mealtab">
+        <Tab eventKey="calendar" title="MEAL PLAN" className="mealtab">
           {/* Calender returns daily meal plan and monthly calendar- since they both use the "value" prop */}
           <Calendar
             value={value}
@@ -45,7 +45,7 @@ export default function MealPlan() {
             forceUpdate={forceUpdate}
           />
         </Tab>
-        <Tab eventKey="recipes" title="Recipes" className="mealtab">
+        <Tab eventKey="recipes" title="RECIPES" className="mealtab">
           {/* returns all saved meals */}
           <SavedMeals
             update={update}
@@ -56,6 +56,11 @@ export default function MealPlan() {
           />
           {/* search for recipes via api */}
           <RecipeSearch value={value} onChange={setValue} />
+        </Tab>
+        <Tab eventKey="shopping-list" title="SHOPPING LIST" className="mealtab">
+          <div className="basic-title">
+            This feature is currently in development.
+          </div>
         </Tab>
       </Tabs>
 

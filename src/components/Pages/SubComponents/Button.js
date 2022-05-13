@@ -31,7 +31,7 @@ export function DefaultButton(props) {
         className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
         disabled
       >
-        {props.text}
+        <div className="basic-title">{props.text}</div>
       </BootstrapButton>
     );
   } else {
@@ -42,7 +42,7 @@ export function DefaultButton(props) {
         href={props.goTo}
         onClick={props.onClick}
       >
-        {props.text}
+        <div className="basic-title">{props.text}</div>
       </BootstrapButton>
     );
   }
@@ -56,7 +56,7 @@ export function SubButton(props) {
       href={props.goTo}
       onClick={props.onClick}
     >
-      {props.text}
+      <div className="basic-title">{props.text}</div>
     </BootstrapButton>
   );
 }
