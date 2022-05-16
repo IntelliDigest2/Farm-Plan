@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "../../../../../SubComponents/Button.css";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import EdamamBadge from "../../../../../../../images/Edamam_Badge_White.svg";
 
 import { recipeSearch } from "./search";
 import RecipeList from "./RecipeList";
 import MealType from "./mealType";
 import CuisineType from "./cuisineType";
+import InfoModal from "./InfoModal";
 
 export default function RecipeSearch(props) {
+  const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
+  //sends to api
   const [query, setQuery] = useState("");
   const [mealType, setMealType] = useState("");
   const [cuisineType, setCuisineType] = useState("");
+  //sent back from api
   const [recipes, setRecipes] = useState({});
 
   useEffect(() => {
@@ -23,9 +26,7 @@ export default function RecipeSearch(props) {
   return (
     <>
       <div className="basic-title-left">Search Recipes</div>
-      <a href="https://www.edamam.com/">
-        <img className="edamam" src={EdamamBadge} alt="powered by edamam" />
-      </a>
+      <InfoModal show={show} setShow={setShow} />
       <Form
         onSubmit={(e) => {
           e.preventDefault();

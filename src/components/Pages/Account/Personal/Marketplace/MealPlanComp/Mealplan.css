@@ -200,8 +200,11 @@
 }
 
 .edamam {
-  width: 10rem;
-  height: auto;
+  /* width: 10rem;
+  height: auto; */
+  font-family: "Source Sans Pro";
+  font-weight: 500;
+  font-size: 15px;
   float: right;
 }
 
