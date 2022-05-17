@@ -17,6 +17,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import Tooltip from "@mui/material/Tooltip";
 
 //when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (styles are in Button.css)
 
@@ -116,17 +117,36 @@ export function IconButton(props) {
   }
 
   return (
-    <BootstrapButton
-      variant="default"
-      className={["icon-btn", `${props.color}-btn`]}
-      href={props.goTo}
-      target={target}
-      disabled={props.disabled}
-    >
-      <div>
-        <IconType />
-        {props.label}
-      </div>
-    </BootstrapButton>
+    <>
+      {props.title ? (
+        <Tooltip placement={props.placement} arrow title={props.title}>
+          <BootstrapButton
+            variant="default"
+            className={["icon-btn", `${props.color}-btn`]}
+            href={props.goTo}
+            target={target}
+            disabled={props.disabled}
+          >
+            <div>
+              <IconType />
+              {props.label}
+            </div>
+          </BootstrapButton>
+        </Tooltip>
+      ) : (
+        <BootstrapButton
+          variant="default"
+          className={["icon-btn", `${props.color}-btn`]}
+          href={props.goTo}
+          target={target}
+          disabled={props.disabled}
+        >
+          <div>
+            <IconType />
+            {props.label}
+          </div>
+        </BootstrapButton>
+      )}
+    </>
   );
 }

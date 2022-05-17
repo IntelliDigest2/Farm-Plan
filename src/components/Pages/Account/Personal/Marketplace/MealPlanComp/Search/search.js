@@ -14,7 +14,7 @@ export const recipeSearch = async (
   const data = await resp.json();
   setRecipes(data.hits);
   setLinks(data._links);
-  console.log("This is your data", data);
+  // console.log("This is your data", data);
   // console.log("links", data._links);
 };
 

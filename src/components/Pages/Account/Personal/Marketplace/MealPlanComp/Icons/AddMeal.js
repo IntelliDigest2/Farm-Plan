@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Dropdown } from "../../../../../SubComponents/Dropdown";
+import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 import MealType from "../Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import "./../../../../../SubComponents/Button.css";
+import "../../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
 import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";

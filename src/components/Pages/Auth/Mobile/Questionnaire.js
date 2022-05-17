@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import "./Mob.css";
-import { PageWrap } from "../../SubComponents/PageWrap";
-import { SubButton } from "../../SubComponents/Button";
-import { Dropdown } from "../../SubComponents/Dropdown";
+import { PageWrap } from "../../../SubComponents/PageWrap";
+import { SubButton } from "../../../SubComponents/Button";
+import { Dropdown } from "../../../SubComponents/Dropdown";
 import { submitNotification } from "../../../lib/Notifications";
 
 import Divider from "@mui/material/Divider";

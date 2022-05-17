@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 
 import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Profile } from "../SubComponents/Profile";
+import { Profile } from "../../SubComponents/Profile";
 import "../Pages.css";
-import { PageWrapMini } from "../SubComponents/PageWrap";
+import { PageWrapMini } from "../../SubComponents/PageWrap";
 
 import logo from "../../../images/Logo.svg";
 

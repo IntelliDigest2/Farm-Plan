@@ -9,8 +9,7 @@ import "./Map.css";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
-import { DefaultButton } from "../SubComponents/Button";
-import { PageWrap } from "../SubComponents/PageWrap";
+import { PageWrap } from "../../SubComponents/PageWrap";
 
 import { getMapData } from "../../../store/actions/dataActions";
 import { firestoreConnect } from "react-redux-firebase";

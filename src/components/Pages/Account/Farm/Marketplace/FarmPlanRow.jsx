@@ -1,74 +1,66 @@
-import React, { useState, useEffect } from "react"
-import { Pests } from "./pests"
-import Nutrients from "./Nutrients.jsx"
-import {
-  Form,
-  Button,
-  InputGroup,
-  Modal,
-  Row,
-  Col,
-  Container,
-} from "react-bootstrap"
-import { Dropdown } from "../../../SubComponents/Dropdown"
+import React, { useState, useEffect } from "react";
+import { Pests } from "./pests";
+import Nutrients from "./Nutrients.jsx";
+import { Form, Button, Modal, Row, Col } from "react-bootstrap";
+import { Dropdown } from "../../../../SubComponents/Dropdown";
 
-import NumericInput from "react-numeric-input"
-import RangeSlider from "react-bootstrap-range-slider"
+import NumericInput from "react-numeric-input";
+import RangeSlider from "react-bootstrap-range-slider";
 
-const cropData = require("./crops.json")
+const cropData = require("./crops.json");
 
 const CropCategories = (props) => {
-  const [crop, setCrop] = useState("")
-  const [cropIndex, setCropIndex] = useState(0)
-  const [amount, setAmount] = useState((100 / props.rows).toFixed(0))
+  const [crop, setCrop] = useState("");
+  const [cropIndex, setCropIndex] = useState(0);
+  const [amount, setAmount] = useState((100 / props.rows).toFixed(0));
 
   // Modals
-  const [showPests, setShowPests] = useState(false)
-  const [showNutrients, setShowNutrients] = useState(false)
+  const [showPests, setShowPests] = useState(false);
+  const [showNutrients, setShowNutrients] = useState(false);
 
   // Tell Farm plan how much we are using
   useEffect(() => {
-    props.setRowTotal(amount, props.index)
-    updateFarmPlan()
-  }, [amount, props.unit, props.land])
+    props.setRowTotal(amount, props.index);
+    updateFarmPlan();
+  }, [amount, props.unit, props.land]);
 
   // Work out the index of the crop for pest/nutrient data
   useEffect(() => {
-    var index = -1
+    var index = -1;
     var filteredObj = cropData.categories[props.cat].find((item, i) => {
       if (item.crop === crop) {
-        index = i
-        return i
+        index = i;
+        return i;
       }
-    })
-    setCropIndex(index)
+    });
+    setCropIndex(index);
 
-    updateFarmPlan()
-  }, [crop])
+    updateFarmPlan();
+  }, [crop]);
 
   // Updates the farm plan state array with updated info
   const updateFarmPlan = () => {
-    const landMass = props.land * (amount / 100)
+    const landMass = props.land * (amount / 100);
 
     // 1. Make a shallow copy of the array
-    let temp_state = [...props.farmPlan]
+    let temp_state = [...props.farmPlan];
 
     // 2. Make a shallow copy of the element you want to mutate
-    let temp_element = { ...temp_state[props.index] }
+    let temp_element = { ...temp_state[props.index] };
 
     // 3. Update the property you're interested in
     temp_element = {
       crop: crop,
       percentOfTotal: amount,
       landMass: landMass.toFixed(3),
-    }
+    };
 
     // 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
-    temp_state[props.index] = temp_element
+    temp_state[props.index] = temp_element;
 
     // 5. Set the state to our new copy
-    props.setFarmPlan(temp_state)
-  }
+    props.setFarmPlan(temp_state);
+  };
 
   return (
     <Row key={props.cat} className="farm-row">
@@ -88,10 +80,10 @@ const CropCategories = (props) => {
           styling="green"
           data={`Select ${props.cat}`}
           function={(e) => {
-            setCrop(e)
+            setCrop(e);
           }}
           items={cropData.categories[props.cat].map((item) => {
-            return item.crop
+            return item.crop;
           })}
         />
 
@@ -126,7 +118,7 @@ const CropCategories = (props) => {
         <div className="d-grid gap-2">
           <Button
             onClick={() => {
-              setShowPests(true)
+              setShowPests(true);
             }}
             className="sub-btn blue-btn"
           >
@@ -134,9 +126,9 @@ const CropCategories = (props) => {
           </Button>
           <Button
             onClick={() => {
-              setShowNutrients(true)
+              setShowNutrients(true);
             }}
-            className="sub-btn green-btn"
+            className="sub-btn green-light-btn"
           >
             Nutrient requirement
           </Button>
@@ -183,7 +175,7 @@ const CropCategories = (props) => {
         </Modal.Footer>
       </Modal>
     </Row>
-  )
-}
+  );
+};
 
-export default CropCategories
+export default CropCategories;

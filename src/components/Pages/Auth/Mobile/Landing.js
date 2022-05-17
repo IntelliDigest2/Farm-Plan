@@ -1,7 +1,7 @@
 import { React } from "react";
 import "./Landing.css";
 
-import { SubButton } from "../../SubComponents/Button";
+import { SubButton } from "../../../SubComponents/Button";
 
 import { connect } from "react-redux";
 

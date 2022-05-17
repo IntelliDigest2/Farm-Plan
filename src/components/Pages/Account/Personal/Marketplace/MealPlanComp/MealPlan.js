@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "./Mealplan.css";
-import { PageWrap } from "../../../../SubComponents/PageWrap";
+import { PageWrap } from "../../../../../SubComponents/PageWrap";
 import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "./Calendar";

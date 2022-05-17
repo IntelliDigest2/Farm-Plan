@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Dropdown } from "../../../../../SubComponents/Dropdown";
+import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import "./../../../../../SubComponents/Button.css";
+import "../../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
 import { editSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { editMealData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";

@@ -1,81 +1,81 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 
-import "../../../SubComponents/Button.css"
+import "../../../../SubComponents/Button.css";
 
-import Weather from "./Weather"
-import FarmPlanRow from "./FarmPlanRow"
+import Weather from "./Weather";
+import FarmPlanRow from "./FarmPlanRow";
 
-import { PageWrap } from "../../../SubComponents/PageWrap"
-import { Dropdown } from "../../../SubComponents/Dropdown"
-import NumericInput from "react-numeric-input"
-import { PopUp } from "../../../SubComponents/PopUp"
-import SellerAuth from "./SellerAuth"
+import { PageWrap } from "../../../../SubComponents/PageWrap";
+import { Dropdown } from "../../../../SubComponents/Dropdown";
+import NumericInput from "react-numeric-input";
+import { PopUp } from "../../../../SubComponents/PopUp";
+import SellerAuth from "./SellerAuth";
 
-import { Form, Button, InputGroup, Row, Col, Container } from "react-bootstrap"
-import { connect } from "react-redux"
-import { createMarketplaceData } from "../../../../../store/actions/dataActions"
-import { compose } from "redux"
-import { firestoreConnect } from "react-redux-firebase"
+import { Form, Button, InputGroup, Row, Col, Container } from "react-bootstrap";
+import { connect } from "react-redux";
+import { createMarketplaceData } from "../../../../../store/actions/dataActions";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 
-import moment from "moment"
-import { Crop } from "@mui/icons-material"
+import moment from "moment";
+import { Crop } from "@mui/icons-material";
 
-const cropDB = require("./crops.json")
-const nutrDB = require("./nutr.json")
-const landUnits = ["Km²", "M²", "Hct"]
+const cropDB = require("./crops.json");
+const nutrDB = require("./nutr.json");
+const landUnits = ["Km²", "M²", "Hct"];
 
 const AddProductsFarm = (props) => {
-  const [land, setLand] = useState(0)
-  const [unit, setUnit] = useState(landUnits[0])
+  const [land, setLand] = useState(0);
+  const [unit, setUnit] = useState(landUnits[0]);
 
-  const [farmPlan, setFarmPlan] = useState([])
+  const [farmPlan, setFarmPlan] = useState([]);
 
-  const [rows, setRows] = useState(6)
-  const [totalUsed, setTotalUsed] = useState(100)
-  const [totals, setTotals] = useState([])
-  const [comment, setComment] = useState(false)
+  const [rows, setRows] = useState(6);
+  const [totalUsed, setTotalUsed] = useState(100);
+  const [totals, setTotals] = useState([]);
+  const [comment, setComment] = useState(false);
 
-  const [open, setOpen] = useState(false)
-  const [msg, setMsg] = useState("")
+  const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const setRowTotal = (data, i) => {
-    totals[i] = Number(data)
-    const initialValue = 0
+    totals[i] = Number(data);
+    const initialValue = 0;
     const sumWithInitial = totals.reduce(
       (previousValue, currentValue) => previousValue + currentValue,
       initialValue
-    )
-    setTotalUsed(sumWithInitial)
-  }
+    );
+    setTotalUsed(sumWithInitial);
+  };
 
   useEffect(() => {
     if (props.auth.error)
       setMsg(
         "There was an error connnecting to the database - please try again"
-      )
-  }, [props.auth.error])
+      );
+  }, [props.auth.error]);
 
   function mergeJson(target) {
     for (var argi = 1; argi < arguments.length; argi++) {
-      var source = arguments[argi]
+      var source = arguments[argi];
       for (var key in source) {
         if (!(key in target)) {
-          target[key] = []
+          target[key] = [];
         }
         for (var i = 0; i < source[key].length; i++) {
-          target[key].push(source[key][i])
+          target[key].push(source[key][i]);
         }
       }
     }
-    return target
+    return target;
   }
 
   function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     if (totalUsed > 100) {
-      setMsg("Total crop volume exceed 100%")
-      return
+      setMsg("Total crop volume exceed 100%");
+      return;
     }
 
     var data = {
@@ -86,14 +86,14 @@ const AddProductsFarm = (props) => {
         landUnits: unit,
         comment: comment,
       },
-    }
+    };
 
-    props.createMarketplaceData(data)
-    setOpen(true)
+    props.createMarketplaceData(data);
+    setOpen(true);
   }
 
   if (!props.profile.isSeller) {
-    return <SellerAuth />
+    return <SellerAuth />;
   } else {
     return (
       <>
@@ -126,7 +126,7 @@ const AddProductsFarm = (props) => {
                   styling="green dropdown-input-right"
                   data={unit}
                   function={(e) => {
-                    setUnit(e)
+                    setUnit(e);
                   }}
                   items={landUnits}
                 />
@@ -171,7 +171,7 @@ const AddProductsFarm = (props) => {
                 id="comment"
                 name="comment"
                 onChange={(e) => {
-                  setComment(e.target.value)
+                  setComment(e.target.value);
                 }}
               />
             </Form.Group>
@@ -185,7 +185,7 @@ const AddProductsFarm = (props) => {
         <PopUp
           open={open}
           onClose={() => {
-            setOpen(false)
+            setOpen(false);
           }}
           text="View my products"
           to="/view-products"
@@ -193,33 +193,33 @@ const AddProductsFarm = (props) => {
           Item Successfully Submitted!
         </PopUp>
       </>
-    )
+    );
   }
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
     data: state.firestore.ordered.data,
     profile: state.firebase.profile,
-  }
-}
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     createMarketplaceData: (product) =>
       dispatch(createMarketplaceData(product)),
-  }
-}
+  };
+};
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect((props) => {
-    if (!props.auth.uid) return []
+    if (!props.auth.uid) return [];
     return [
       {
         collection: "data",
         doc: props.auth.uid,
       },
-    ]
+    ];
   })
-)(AddProductsFarm)
+)(AddProductsFarm);

@@ -1,22 +1,34 @@
 import React from "react";
-import { IconButton } from "../../SubComponents/Button";
+import { IconButton } from "../../../SubComponents/Button";
+
 import "../UserAccount.css";
 
 export function Food() {
   return (
     <>
       <IconButton
+        title="Start planning your farm with us. Coordinate your produce with consumers and grow into sustainability."
+        placement="left"
         icon="notes"
         label="My Farm Plan"
         color="turquoise"
         goTo="/farm-plan"
       />
       <IconButton
+        title="Find out more about the Plan to Save campaign, and what you can do to help."
+        placement="right"
+        icon="food"
+        label="Plan to Save"
+        color="yellow"
+        goTo="/pts"
+      />
+
+      {/* <IconButton
         icon="my-products"
         label="Food Sold"
         color="turquoise"
         goTo="/view-products"
-      />
+      /> */}
       <IconButton
         icon="my-products"
         label="Food Returned"
@@ -44,12 +56,6 @@ export function Food() {
         color="turquoise"
         goTo="/"
         disabled
-      />
-      <IconButton
-        icon="kitchen"
-        label="Plan to Save"
-        color="turquoise"
-        goTo="/pts"
       />
     </>
   );
@@ -108,12 +114,16 @@ export function FSSP() {
         goTo="https://intellidigest.com/masterclasses-overview/"
       />
       <IconButton
+        title="Calculate the Food Industry Sustainability Index (FISI) of your business."
+        placement="right"
         icon="info"
         label="FISI"
         color="green"
         goTo="https://intellidigest.com/services/food-system-sustainability/food-industry-sustainability-index/"
       />
       <IconButton
+        title="Find out more about the Plan to Save campaign, and what you can do to help."
+        placement="right"
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"

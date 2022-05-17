@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Pages.css";
-import { PageWrap } from "./SubComponents/PageWrap";
+import { PageWrap } from "../SubComponents/PageWrap";
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import emailjs from "emailjs-com";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import { SubButton } from "../../../../../SubComponents/Button";
+import { SubButton } from "../../../../../../SubComponents/Button";
 
 export default function NextBack({ links, setPage }) {
   return (

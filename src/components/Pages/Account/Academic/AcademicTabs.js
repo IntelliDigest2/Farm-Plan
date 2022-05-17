@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton } from "../../SubComponents/Button";
+import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
