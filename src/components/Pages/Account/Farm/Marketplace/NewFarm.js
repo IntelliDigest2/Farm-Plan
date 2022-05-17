@@ -1,7 +1,7 @@
 import React from "react";
-import TermsAndCons from "../../../SubComponents/TermsAndConditions";
-import { Dropdown } from "../../../SubComponents/Dropdown";
-import { TickList } from "../../../SubComponents/TickList";
+import TermsAndCons from "../../../../SubComponents/TermsAndConditions";
+import { Dropdown } from "../../../../SubComponents/Dropdown";
+import { TickList } from "../../../../SubComponents/TickList";
 import { Form, Button, InputGroup } from "react-bootstrap";
 
 function SectorSwitch(props) {

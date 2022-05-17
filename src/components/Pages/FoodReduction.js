@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PageWrap } from "./SubComponents/PageWrap";
+import { PageWrap } from "../SubComponents/PageWrap";
 import Divider from "@mui/material/Divider";
 import tip1 from "../../images/tip1.jpg";
 import tip2 from "../../images/tip2.jpg";

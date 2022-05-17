@@ -83,6 +83,26 @@
   border-color: white;
 }
 
+.green-light-btn {
+  background-color: #bfc563;
+  border-color: #bfc563;
+  color: rgb(0, 0, 0);
+  transition: transform 0.5s;
+}
+.green-light-btn:hover {
+  background-color: #bfc563;
+  transform: scale(0.95);
+  color: rgb(0, 0, 0);
+}
+.green-light-btn:focus {
+  background-color: #bfc563;
+  border-color: rgb(0, 0, 0);
+}
+.green-light-btn:active {
+  background-color: #bfc563;
+  border-color: rgb(0, 0, 0);
+}
+
 .yellow-btn {
   background-color: #d9a12d;
   border-color: #c58401;

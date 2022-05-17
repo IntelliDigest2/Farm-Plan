@@ -1,8 +1,8 @@
 //routed into app but not currently accessible to viewers
 import React, { useEffect, useState } from "react";
 
-import { PageWrap } from "../../SubComponents/PageWrap";
-import { ProductCard } from "../../SubComponents/Card";
+import { PageWrap } from "../../../SubComponents/PageWrap";
+import { ProductCard } from "../../../SubComponents/Card";
 
 import { getFirestoreData } from "../../../../store/actions/dataActions";
 import { connect } from "react-redux";

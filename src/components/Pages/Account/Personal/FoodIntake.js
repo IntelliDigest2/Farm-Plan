@@ -8,9 +8,9 @@ import {
 } from "./../../../../store/actions/dataActions";
 import { Redirect } from "react-router-dom";
 import { getFirebase } from "react-redux-firebase";
-import { PageWrap } from "../../SubComponents/PageWrap";
-import { Select } from "../../SubComponents/Dropdown";
-import { DefaultButton } from "../../SubComponents/Button";
+import { PageWrap } from "../../../SubComponents/PageWrap";
+import { Select } from "../../../SubComponents/Dropdown";
+import { DefaultButton } from "../../../SubComponents/Button";
 import { Divider } from "@mui/material";
 import { submitNotification } from "../../../lib/Notifications";
 

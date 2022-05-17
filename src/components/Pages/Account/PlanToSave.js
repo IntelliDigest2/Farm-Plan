@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { SubButton } from "../SubComponents/Button";
-import { PageWrap } from "../SubComponents/PageWrap";
+import { SubButton } from "../../SubComponents/Button";
+import { PageWrap } from "../../SubComponents/PageWrap";
 import "./UserAccount.css";
 
 import positivePlanet from "../../../images/fr_positive-planet.jpg";

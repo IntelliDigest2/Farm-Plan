@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../SubComponents/PageWrap.css";
+import "../../../SubComponents/PageWrap.css";
 import logo from "../../../../images/intellidigest-logo-small.png";
 import { Container } from "react-bootstrap";
 

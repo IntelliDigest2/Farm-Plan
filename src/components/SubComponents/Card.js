@@ -1,7 +1,7 @@
 import React from "react";
 import "./Card.css";
 import { Card as BootstrapCard } from "react-bootstrap";
-import EXAMPLE from "../../../images/peppers-square.jpg";
+import EXAMPLE from "../../images/peppers-square.jpg";
 
 export function Card(props) {
   return (

@@ -3,7 +3,8 @@ export const recipeSearch = async (
   query,
   mealType,
   cuisineType,
-  setRecipes
+  setRecipes,
+  setLinks
 ) => {
   const app_id = "5532003c";
   const app_key = "511d39184173c54ebc5d02a5063a7b87";
@@ -12,5 +13,15 @@ export const recipeSearch = async (
   );
   const data = await resp.json();
   setRecipes(data.hits);
+  setLinks(data._links);
   // console.log("This is your data", data);
+  // console.log("links", data._links);
 };
+
+// export const nextPage = async ({ page, setLinks, setRecipes }) => {
+//   const resp = await fetch(`${page}`);
+//   const data = await resp.json();
+//   // setRecipes(data.hits);
+//   // setLinks(data._links);
+//   console.log("This is your data", data);
+// };
