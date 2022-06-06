@@ -7,7 +7,6 @@ import FarmPlanRow from "./FarmPlanRow";
 
 import { PageWrap } from "../../../../SubComponents/PageWrap";
 import { Dropdown } from "../../../../SubComponents/Dropdown";
-import NumericInput from "react-numeric-input";
 import { PopUp } from "../../../../SubComponents/PopUp";
 import SellerAuth from "./SellerAuth";
 
@@ -16,9 +15,6 @@ import { connect } from "react-redux";
 import { createMarketplaceData } from "../../../../../store/actions/dataActions";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
-
-import moment from "moment";
-import { Crop } from "@mui/icons-material";
 
 const cropDB = require("./crops.json");
 const nutrDB = require("./nutr.json");

@@ -34,7 +34,6 @@ function Add(props) {
     <>
       <Tooltip title="Add to Calendar">
         <IconButton
-          className="add-to-calendar"
           aria-label="Add to Calendar"
           sx={{ ml: 2 }}
           onClick={() => {

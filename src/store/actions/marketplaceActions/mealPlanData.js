@@ -38,7 +38,7 @@ export const createMealPlanData = (data) => {
       .collection(data.day)
       .add(data.upload)
       .then((docRef) => {
-        // make the docId easily acsessible so that we can delete it later if we want.
+        // make the docId easily accessible so that we can delete it later if we want.
         getFirebase()
           .firestore()
           .collection("marketplace")
