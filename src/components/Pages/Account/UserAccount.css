@@ -232,6 +232,11 @@
   color: #ffffff;
 }
 
+.pts-modal .body a {
+  color: #afba15;
+  font-size: inherit;
+}
+
 /* Phones */
 @media screen and (max-width: 600px) {
   .pts-modal {

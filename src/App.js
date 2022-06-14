@@ -18,7 +18,7 @@ import Settings from "./components/Pages/Auth/Settings";
 import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
 import ForgotPassword from "./components/Pages/ForgotPassword";
-import PlanToSave from "./components/Pages/Account/PlanToSave";
+import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 

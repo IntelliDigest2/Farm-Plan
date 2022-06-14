@@ -40,6 +40,7 @@ function PTSForm(props) {
       "Success",
       "Thanks for joining the plan to save! You have taken a huge step in making food sustainable for everybody."
     );
+    props.setContent("6month");
     // props.handleClose();
   };
 
@@ -68,6 +69,10 @@ function PTSForm(props) {
             knowledge that your food will not go to waste, they can focus on
             adopting sustainable farm practices that produce more nutritious
             food with a better impact on the environment.
+          </p>
+          <p>
+            Find out more about the Plan to Save{" "}
+            <a href="https://intellidigest.com/services/plan-to-save/">here</a>
           </p>
           <SubButton
             text="Start Now!"

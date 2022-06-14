@@ -9,7 +9,7 @@ import "../UserAccount.css";
 // import Typography from "@mui/material/Typography";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-export function Food({ setShow }) {
+export function Food({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -56,13 +56,16 @@ export function Food({ setShow }) {
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );
 }
 
-export function Research({ setShow }) {
+export function Research({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -98,13 +101,16 @@ export function Research({ setShow }) {
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );
 }
 
-export function Environment({ setShow }) {
+export function Environment({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -135,7 +141,10 @@ export function Environment({ setShow }) {
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );

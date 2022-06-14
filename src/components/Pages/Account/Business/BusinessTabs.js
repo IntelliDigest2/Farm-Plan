@@ -2,7 +2,7 @@ import React from "react";
 import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 
-export function Food({ setShow }) {
+export function Food({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -52,13 +52,16 @@ export function Food({ setShow }) {
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );
 }
 
-export function Environment({ setShow }) {
+export function Environment({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -94,7 +97,10 @@ export function Environment({ setShow }) {
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );

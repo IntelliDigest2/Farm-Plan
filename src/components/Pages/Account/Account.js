@@ -31,6 +31,7 @@ const NewAccount = (props) => {
   //controls modal appearing
   const [show, setShow] = useState(true);
   const [modal, setModal] = useState(false);
+  const [chooseModal, setChooseModal] = useState(false);
 
   useEffect(() => {
     setType(props.profile.type);
@@ -68,6 +69,7 @@ const NewAccount = (props) => {
       {modal && !props.profile.isConsumer ? (
         <PTSModal show={show} setShow={setShow} />
       ) : null}
+      {chooseModal ? <PTSModal show={show} setShow={setShow} /> : null}
       <PageWrapMini>
         <Container className="web-center">
           <div className="flex">
@@ -88,6 +90,7 @@ const NewAccount = (props) => {
                 handleChange={handleChange}
                 handleChangeIndex={handleChangeIndex}
                 setShow={setShow}
+                setChooseModal={setChooseModal}
               />
             </TabContext>
           </div>
@@ -158,10 +161,16 @@ const AccountType = (props) => {
             onChangeIndex={props.handleChangeIndex}
           >
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <Business.Food />
+              <Business.Food
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
             </TabPanel>
             <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-              <Business.Environment />
+              <Business.Environment
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Business.FSSP />
@@ -194,13 +203,22 @@ const AccountType = (props) => {
             onChangeIndex={props.handleChangeIndex}
           >
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <Schools.Food />
+              <Schools.Food
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
             </TabPanel>
             <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-              <Schools.Research />
+              <Schools.Research
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
-              <Schools.Environment />
+              <Schools.Environment
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
             </TabPanel>
             <TabPanel value={props.value} index={3} dir={props.theme.direction}>
               <Schools.FSSP />
@@ -233,10 +251,16 @@ const AccountType = (props) => {
             onChangeIndex={props.handleChangeIndex}
           >
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <Households.Food setShow={props.setShow} />
+              <Households.Food
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
             </TabPanel>
             <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-              <Households.Health setShow={props.setShow} />
+              <Households.Health
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Households.Environment />
