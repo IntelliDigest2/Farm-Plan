@@ -52,7 +52,6 @@
 .turquoise-btn:hover {
   background-color: #0c656b;
   color: white;
-  transform: scale(0.95);
 }
 .turquoise-btn:focus {
   background-color: #0c656b;
@@ -71,7 +70,6 @@
 }
 .green-btn:hover {
   background-color: #c5d300;
-  transform: scale(0.95);
   color: white;
 }
 .green-btn:focus {
@@ -91,7 +89,6 @@
 }
 .green-light-btn:hover {
   background-color: #bfc563;
-  transform: scale(0.95);
   color: rgb(0, 0, 0);
 }
 .green-light-btn:focus {
@@ -111,7 +108,6 @@
 }
 .yellow-btn:hover {
   background-color: #c58401;
-  transform: scale(0.95);
   color: white;
 }
 .yellow-btn:focus {
@@ -131,7 +127,6 @@
 }
 .blue-btn:hover {
   background-color: #02001a;
-  transform: scale(0.95);
   color: white;
 }
 .blue-btn:focus {

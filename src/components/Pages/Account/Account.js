@@ -23,14 +23,26 @@ import * as Schools from "./Academic/AcademicTabs";
 import { Colors } from "../../lib/Colors";
 
 import { createSubAccount } from "../../../store/actions/authActions";
+import { PTSModal } from "./PlanToSave/PTSModal";
 
 const NewAccount = (props) => {
   //AccountType/BuildingFunction Management
   const [type, setType] = useState(props.profile.type);
+  //controls modal appearing
+  const [show, setShow] = useState(true);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     setType(props.profile.type);
   }, [props.profile.type]);
+
+  //stop pts modal from appearing before firebase has a chance to fetch data
+  useEffect(() => {
+    const showModal = setTimeout(() => {
+      if (props.profile.buildingFunction !== "Farm") setModal(true);
+    }, 1000);
+    return () => clearTimeout(showModal);
+  });
 
   useEffect(() => {}, [type]);
 
@@ -52,31 +64,36 @@ const NewAccount = (props) => {
   }
 
   return (
-    <PageWrapMini>
-      <Container className="web-center">
-        <div className="flex">
-          <img
-            src={logo}
-            alt="IntelliDigest Logo"
-            className="img-fluid rounded fix-image mb-4"
-          />
-          <Profile profile={props.profile} type={type} />
-        </div>
-
-        <div className="tabs">
-          <TabContext value={value}>
-            <AccountType
-              type={type}
-              value={value}
-              theme={theme}
-              handleChange={handleChange}
-              handleChangeIndex={handleChangeIndex}
-              isConsumer={props.profile.isConsumer}
+    <>
+      {modal && !props.profile.isConsumer ? (
+        <PTSModal show={show} setShow={setShow} />
+      ) : null}
+      <PageWrapMini>
+        <Container className="web-center">
+          <div className="flex">
+            <img
+              src={logo}
+              alt="IntelliDigest Logo"
+              className="img-fluid rounded fix-image mb-4"
             />
-          </TabContext>
-        </div>
-      </Container>
-    </PageWrapMini>
+            <Profile profile={props.profile} type={type} />
+          </div>
+
+          <div className="tabs">
+            <TabContext value={value}>
+              <AccountType
+                type={type}
+                value={value}
+                theme={theme}
+                handleChange={handleChange}
+                handleChangeIndex={handleChangeIndex}
+                setShow={setShow}
+              />
+            </TabContext>
+          </div>
+        </Container>
+      </PageWrapMini>
+    </>
   );
 };
 
@@ -216,10 +233,10 @@ const AccountType = (props) => {
             onChangeIndex={props.handleChangeIndex}
           >
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <Households.Food isConsumer={props.isConsumer} />
+              <Households.Food setShow={props.setShow} />
             </TabPanel>
             <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-              <Households.Health />
+              <Households.Health setShow={props.setShow} />
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Households.Environment />

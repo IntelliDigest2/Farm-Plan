@@ -8,7 +8,6 @@ export function Food() {
     <>
       <IconButton
         title="Start planning your farm with us. Coordinate your produce with consumers and grow into sustainability."
-        placement="left"
         icon="notes"
         label="My Farm Plan"
         color="turquoise"
@@ -16,7 +15,6 @@ export function Food() {
       />
       <IconButton
         title="Find out more about the Plan to Save campaign, and what you can do to help."
-        placement="right"
         icon="food"
         label="Plan to Save"
         color="yellow"
@@ -65,33 +63,38 @@ export function Environment() {
   return (
     <>
       <IconButton
+        title="Record your food loss."
         icon="waste"
         label="Food Loss"
         color="turquoise"
         goTo="/food-loss"
       />
       <IconButton
+        title="View your food loss data."
         icon="chart"
         label="Waste Chart"
         color="yellow"
         goTo="/chart"
       />
       <IconButton
+        title="Useful tips on how to reduce food waste in your home."
         icon="info"
         label="Food Waste Reduction Tips"
         color="green"
         goTo="/food-reduction"
       />
       <IconButton
+        title="View the world map of WFT users!"
         icon="world"
         label="Users Map"
         color="yellow"
         goTo="/view-map"
       />
       <IconButton
-        icon="kitchen"
+        title="Find out more about the Plan to Save campaign, and what you can do to help."
+        icon="food"
         label="Plan to Save"
-        color="turquoise"
+        color="yellow"
         goTo="/pts"
       />
     </>
@@ -102,12 +105,14 @@ export function FSSP() {
   return (
     <>
       <IconButton
+        title="Find out about our Agrifood TechPreneur program."
         icon="plant"
         label="Agrifood Technpreneur"
         color="turquoise"
         goTo="https://intellidigest.com/services/food-system-sustainability/agrifood-techpreneur-club/"
       />
       <IconButton
+        title="Buff up the sustainability of your business with our online masterclasses."
         icon="book"
         label="Masterclasses"
         color="turquoise"
@@ -115,7 +120,6 @@ export function FSSP() {
       />
       <IconButton
         title="Calculate the Food Industry Sustainability Index (FISI) of your business."
-        placement="right"
         icon="info"
         label="FISI"
         color="green"
@@ -123,10 +127,9 @@ export function FSSP() {
       />
       <IconButton
         title="Find out more about the Plan to Save campaign, and what you can do to help."
-        placement="right"
-        icon="kitchen"
+        icon="food"
         label="Plan to Save"
-        color="turquoise"
+        color="yellow"
         goTo="/pts"
       />
     </>

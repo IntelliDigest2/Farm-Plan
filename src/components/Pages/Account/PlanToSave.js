@@ -1,3 +1,4 @@
+//not currently in use
 import React, { useState, useEffect } from "react";
 import { SubButton } from "../../SubComponents/Button";
 import { PageWrap } from "../../SubComponents/PageWrap";
@@ -68,7 +69,7 @@ function PlanToSave(props) {
             weekly, fortnightly and monthly fresh food requirements, we will
             take the responsibility to identify local farmers around you or
             encourage the set up of local farmers to supply your reservation,
-            ensuring the supply of nutritious food all year round for all.
+            ensuring the supply of nutritious food all year round.
           </p>
         </div>
         {props.profile.buildingFunction === "Households" || "Personal" ? (

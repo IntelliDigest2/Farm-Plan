@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import "../../../../SubComponents/Button.css";
+import "./FarmPlan.css";
 
 import Weather from "./Weather";
 import FarmPlanRow from "./FarmPlanRow";
@@ -8,13 +9,15 @@ import FarmPlanRow from "./FarmPlanRow";
 import { PageWrap } from "../../../../SubComponents/PageWrap";
 import { Dropdown } from "../../../../SubComponents/Dropdown";
 import { PopUp } from "../../../../SubComponents/PopUp";
-import SellerAuth from "./SellerAuth";
+// import SellerAuth from "./SellerAuth";
+// import AuthIcon from "../../../../SubComponents/AuthIcon";
 
 import { Form, Button, InputGroup, Row, Col, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import { createMarketplaceData } from "../../../../../store/actions/dataActions";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
+import { icon } from "leaflet";
 
 const cropDB = require("./crops.json");
 const nutrDB = require("./nutr.json");
@@ -88,109 +91,119 @@ const AddProductsFarm = (props) => {
     setOpen(true);
   }
 
-  if (!props.profile.isSeller) {
-    return <SellerAuth />;
-  } else {
-    return (
-      <>
-        <PageWrap
-          goTo="/account"
-          header="Sell Products"
-          subtitle="Build your plan"
-        >
-          <Form onSubmit={handleSubmit}>
-            <p>
-              We recommend that you plant a range of different crops within your
-              field. Crop rotation has been proven to increase yield and
-              minimise the damage of pests and disease
-            </p>
+  return (
+    <>
+      <PageWrap
+        goTo="/account"
+        header="My Farm Plan"
+        subtitle="Build your plan"
+      >
+        <Form onSubmit={handleSubmit}>
+          <p>
+            We recommend that you plant a range of different crops within your
+            field. Crop rotation has been proven to increase yield and minimise
+            the damage of pests and disease.
+          </p>
 
-            <Form.Group className="mb-3 land">
-              <Form.Label>Amount of land</Form.Label>
-              <InputGroup>
-                <Form.Control
-                  type="number"
-                  id="weight"
-                  onChange={(e) => setLand(e.target.value)}
-                  value={land}
-                  min={1}
-                  max={10000}
-                  required
-                />
-                <Dropdown
-                  id="unit"
-                  styling="green dropdown-input-right"
-                  data={unit}
-                  function={(e) => {
-                    setUnit(e);
-                  }}
-                  items={landUnits}
-                />
-              </InputGroup>
-            </Form.Group>
-
-            <Container className="p-0 text-center ">
-              <Row className="mb-2 farm-row farm-header d-none d-sm-flex">
-                <Col>Plot</Col>
-                <Col>Crop</Col>
-                <Col>% of total land</Col>
-                <Col>Info</Col>
+          {/* {!props.profile.isSeller && (
+            <div className="auth-icon">
+              <Row>
+                <Col>
+                  <AuthIcon />
+                </Col>
+                <Col xs={8}>
+                  You must authenticate your account with us to join the Plan to
+                  Save!
+                </Col>
               </Row>
-              {Object.keys(cropDB.categories).map((category, index) => (
-                <FarmPlanRow
-                  key={category}
-                  rows={rows}
-                  cat={category}
-                  index={index}
-                  setRowTotal={setRowTotal}
-                  setFarmPlan={setFarmPlan}
-                  farmPlan={farmPlan}
-                  land={land}
-                  unit={unit}
-                />
-              ))}
-            </Container>
+            </div>
+          )} */}
 
-            <h3 className={totalUsed > 100 ? "auth-error" : "success"}>
-              Total of land used: {totalUsed.toFixed(0)}%
-            </h3>
-
-            {/* <Button className="sub-btn blue-btn">Add row</Button> */}
-
-            <Weather />
-
-            <Form.Group>
+          <Form.Group className="mb-3 land">
+            <Form.Label>Amount of land</Form.Label>
+            <InputGroup>
               <Form.Control
-                as="textarea"
-                rows={6}
-                placeholder="Comments"
-                id="comment"
-                name="comment"
-                onChange={(e) => {
-                  setComment(e.target.value);
-                }}
+                type="number"
+                id="land-size"
+                onChange={(e) => setLand(e.target.value)}
+                value={land}
+                min={1}
+                max={10000}
+                required
               />
-            </Form.Group>
+              <Dropdown
+                id="land-unit"
+                styling="green dropdown-input-right"
+                data={unit}
+                function={(e) => {
+                  setUnit(e);
+                }}
+                items={landUnits}
+              />
+            </InputGroup>
+          </Form.Group>
 
-            {msg && <p className="auth-error">{msg}</p>}
-            <Button type="submit" className="sub-btn blue-btn">
-              Submit
-            </Button>
-          </Form>
-        </PageWrap>
-        <PopUp
-          open={open}
-          onClose={() => {
-            setOpen(false);
-          }}
-          text="View my products"
-          to="/view-products"
-        >
-          Item Successfully Submitted!
-        </PopUp>
-      </>
-    );
-  }
+          <Container className="p-0 text-center ">
+            <Row className="mb-2 farm-row farm-header d-none d-sm-flex">
+              <Col>Plot</Col>
+              <Col>Crop</Col>
+              <Col>% of total land</Col>
+              <Col>Info</Col>
+            </Row>
+            {Object.keys(cropDB.categories).map((category, index) => (
+              <FarmPlanRow
+                key={category}
+                rows={rows}
+                cat={category}
+                index={index}
+                setRowTotal={setRowTotal}
+                setFarmPlan={setFarmPlan}
+                farmPlan={farmPlan}
+                land={land}
+                unit={unit}
+              />
+            ))}
+          </Container>
+
+          <h3 className={totalUsed > 100 ? "auth-error" : "success"}>
+            Total of land used: {totalUsed.toFixed(0)}%
+          </h3>
+
+          {/* <Button className="sub-btn blue-btn">Add row</Button> */}
+
+          <Weather />
+
+          <Form.Group>
+            <Form.Control
+              as="textarea"
+              rows={6}
+              placeholder="Comments"
+              id="comment"
+              name="comment"
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+            />
+          </Form.Group>
+
+          {msg && <p className="auth-error">{msg}</p>}
+          <Button type="submit" className="sub-btn blue-btn">
+            Save Plan
+          </Button>
+        </Form>
+      </PageWrap>
+      <PopUp
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+        // text="View my products"
+        // to="/view-products"
+      >
+        Successfully Saved!
+      </PopUp>
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {
