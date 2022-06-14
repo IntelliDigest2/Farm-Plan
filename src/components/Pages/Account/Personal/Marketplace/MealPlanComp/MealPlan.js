@@ -7,6 +7,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import { Calendar } from "./Calendar";
 import SavedMeals from "./SavedMeals";
 import RecipeSearch from "./Search/RecipeSearch";
+import { ShoppingList } from "./BuildShoppingList/ShoppingList";
 import moment from "moment";
 
 export default function MealPlan() {
@@ -61,6 +62,12 @@ export default function MealPlan() {
           <div className="basic-title">
             This feature is currently in development.
           </div>
+          {/* <ShoppingList
+            update={update}
+            forceUpdate={forceUpdate}
+            value={value}
+            tab={tab}
+          /> */}
         </Tab>
       </Tabs>
 

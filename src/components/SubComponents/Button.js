@@ -119,11 +119,12 @@ export function IconButton(props) {
   return (
     <>
       {props.title ? (
-        <Tooltip placement={props.placement} arrow title={props.title}>
+        <Tooltip placement="bottom" arrow title={props.title}>
           <BootstrapButton
             variant="default"
             className={["icon-btn", `${props.color}-btn`]}
             href={props.goTo}
+            onClick={props.onClick}
             target={target}
             disabled={props.disabled}
           >

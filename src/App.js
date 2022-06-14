@@ -95,6 +95,7 @@ const App = (props) => {
   return (
     <React.Fragment>
       <Notifications position="top-right" />
+
       <Router>
         <Toast
           onClose={() => setShow(false)}
@@ -197,6 +198,7 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
+    profile: state.firebase.profile,
   };
 };
 

@@ -34,15 +34,14 @@ function Add(props) {
     <>
       <Tooltip title="Add to Calendar">
         <IconButton
-          className="add-to-calendar"
           aria-label="Add to Calendar"
-          sx={{ ml: 2 }}
+          sx={{ fontSize: 20 }}
           onClick={() => {
             setShowCalendar(true);
             handleSelect();
           }}
         >
-          <ScheduleIcon fontSize="inherit" />
+          <ScheduleIcon fontSize="20" />
         </IconButton>
       </Tooltip>
       <AddSavedMeal

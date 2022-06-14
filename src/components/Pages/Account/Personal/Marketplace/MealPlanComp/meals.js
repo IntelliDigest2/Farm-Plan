@@ -54,8 +54,11 @@ function MyMeals(props) {
 
   useEffect(() => {
     updateMeals();
-    // console.log(meals);
   }, [props.data]);
+
+  // useEffect(() => {
+  //   console.log(meals);
+  // }, [meals]);
 
   return (
     <>
