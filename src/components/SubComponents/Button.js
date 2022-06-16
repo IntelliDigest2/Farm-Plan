@@ -122,7 +122,7 @@ export function IconButton(props) {
         <Tooltip placement="bottom" arrow title={props.title}>
           <BootstrapButton
             variant="default"
-            className={["icon-btn", `${props.color}-btn`]}
+            className={["icon-btn", `${props.color}-btn`, "shadow-none"]}
             href={props.goTo}
             onClick={props.onClick}
             target={target}

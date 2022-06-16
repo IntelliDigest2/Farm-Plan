@@ -3,6 +3,7 @@ import ModalUnstyled from "@mui/material/Modal";
 import PTSForm from "./PTSForm";
 
 import { isBrowser } from "react-device-detect";
+import blueberries from "../../../../images/Blueberries.jpg";
 import pTSNotebook from "../../../../images/pts_plate_notebook-dark.jpg";
 import pTSField from "../../../../images/pts_field_standing-dark.jpg";
 
@@ -11,6 +12,7 @@ export function PTSModal({ show, setShow }) {
 
   const handleClose = () => {
     setShow(false);
+    setContent("start");
   };
 
   return (
@@ -22,7 +24,7 @@ export function PTSModal({ show, setShow }) {
     >
       <div className="pts-modal">
         {isBrowser ? (
-          <img src={pTSNotebook} alt="create your own plan" width="100%" />
+          <img src={blueberries} alt="create your own plan" width="100%" />
         ) : (
           <img src={pTSField} alt="create your own plan" width="100%" />
         )}
@@ -30,7 +32,7 @@ export function PTSModal({ show, setShow }) {
         <button className="close" onClick={handleClose}>
           X
         </button>
-        <div className="title">JOIN THE PLAN TO SAVE!</div>
+
         <PTSForm
           content={content}
           setContent={setContent}

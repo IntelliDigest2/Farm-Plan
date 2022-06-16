@@ -59,15 +59,15 @@ export default function MealPlan() {
           <RecipeSearch value={value} onChange={setValue} />
         </Tab>
         <Tab eventKey="shopping-list" title="SHOPPING LIST" className="mealtab">
-          <div className="basic-title">
+          {/* <div className="basic-title">
             This feature is currently in development.
-          </div>
-          {/* <ShoppingList
+          </div> */}
+          <ShoppingList
             update={update}
             forceUpdate={forceUpdate}
             value={value}
             tab={tab}
-          /> */}
+          />
         </Tab>
       </Tabs>
 

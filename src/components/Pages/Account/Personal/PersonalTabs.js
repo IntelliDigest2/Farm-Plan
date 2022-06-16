@@ -3,11 +3,9 @@ import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import Accordion from "@mui/material/Accordion";
+// import AccordionSummary from "@mui/material/AccordionSummary";
+// import AccordionDetails from "@mui/material/AccordionDetails";
 
 export function Food({ setShow, setChooseModal }) {
   return (
@@ -54,7 +52,7 @@ export function Health({ setShow, setChooseModal }) {
           setChooseModal(true);
         }}
       />
-      <Accordion
+      {/* <Accordion
         style={{
           width: "80%",
           justifyContent: "center",
@@ -79,7 +77,7 @@ export function Health({ setShow, setChooseModal }) {
             advice regarding your health.
           </Typography>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
     </>
   );
 }
