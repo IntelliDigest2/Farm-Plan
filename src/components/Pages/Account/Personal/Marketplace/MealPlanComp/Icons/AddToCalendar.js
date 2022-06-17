@@ -9,8 +9,9 @@ import { SubButton } from "../../../../../../SubComponents/Button";
 
 import { connect } from "react-redux";
 import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
+import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 
-function AddSavedMeal(props) {
+function AddToCalendar(props) {
   const [calendar, setCalendar] = useState([]);
   const handleFormClose = () => props.setShow(false);
 
@@ -18,11 +19,17 @@ function AddSavedMeal(props) {
     setCalendar(buildCalendar(props.value));
   }, [props.value]);
 
+  //fired when click "add"
   const handleSubmit = () => {
     let data;
+    //data is a little different between saved meals and searched meals
     if (props.saved) {
       data = {
+        // month and day are used for the MealPlan db, year and week for the shopping list.
+        year: props.value.format("YYYY"),
         month: props.value.format("YYYYMM"),
+        //need to send shopping list data to be bough the previous week from the day it is made
+        week: props.value.format("w"),
         day: props.value.format("DD"),
         upload: {
           meal: props.selected.meal,
@@ -32,7 +39,9 @@ function AddSavedMeal(props) {
       };
     } else {
       data = {
+        year: props.value.format("YYYY"),
         month: props.value.format("YYYYMM"),
+        week: props.value.format("w"),
         day: props.value.format("DD"),
         upload: {
           meal: props.selected.meal,
@@ -45,6 +54,7 @@ function AddSavedMeal(props) {
     }
 
     props.createMealPlanData(data);
+    props.addToShoppingList(data);
   };
 
   return (
@@ -115,7 +125,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createMealPlanData: (data) => dispatch(createMealPlanData(data)),
+    addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSavedMeal);
+export default connect(mapStateToProps, mapDispatchToProps)(AddToCalendar);

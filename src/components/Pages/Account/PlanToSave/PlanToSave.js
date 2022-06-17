@@ -1,13 +1,12 @@
-//not currently in use
 import React, { useState, useEffect } from "react";
-import { SubButton } from "../../SubComponents/Button";
-import { PageWrap } from "../../SubComponents/PageWrap";
-import "./UserAccount.css";
+import { SubButton } from "../../../SubComponents/Button";
+import { PageWrap } from "../../../SubComponents/PageWrap";
+import "../UserAccount.css";
 
-import positivePlanet from "../../../images/fr_positive-planet.jpg";
-import pTSNotebook from "../../../images/pts_plate_notebook.png";
-import pTSBanner from "../../../images/pts-banner.png";
-import sTFCFoodNetwork from "../../../images/stfcfoodnetwork.png";
+import positivePlanet from "../../../../images/fr_positive-planet.jpg";
+import pTSNotebook from "../../../../images/pts_plate_notebook.png";
+import pTSBanner from "../../../../images/pts-banner.png";
+import sTFCFoodNetwork from "../../../../images/stfcfoodnetwork.png";
 
 import { Card, Row, Col } from "react-bootstrap";
 import Countdown from "react-countdown";

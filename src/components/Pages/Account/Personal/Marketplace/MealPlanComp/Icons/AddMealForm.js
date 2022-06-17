@@ -7,6 +7,7 @@ import "../../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
 import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
+import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");
@@ -15,9 +16,9 @@ function AddMealForm(props) {
   const [save, setSave] = useState(true);
 
   const defaultLocal = {
-    item: "",
-    number: 0,
-    unit: "g",
+    food: "",
+    quantity: 0,
+    measure: "g",
   };
   const [local, setLocal] = useState(defaultLocal);
   const handleLocal = (e) => {
@@ -31,15 +32,20 @@ function AddMealForm(props) {
   const ingredientsList = ingredients.map((ingredient, index) => {
     return (
       <li key={index}>
-        {ingredient.item}: {ingredient.number}
-        {ingredient.unit}
+        {ingredient.food}: {ingredient.quantity}
+        {ingredient.measure}
       </li>
     );
   });
 
+  //fired when click "done"
   const handleSubmit = () => {
     const data = {
+      // month and day are used for the MealPlan db, year and week for the shopping list.
+      year: props.value.format("YYYY"),
       month: props.value.format("YYYYMM"),
+      //need to send shopping list data to be bough the previous week from the day it is made
+      week: props.value.format("w") - 1,
       day: props.value.format("DD"),
       upload: {
         meal: mealName,
@@ -49,6 +55,7 @@ function AddMealForm(props) {
     };
 
     props.createMealPlanData(data);
+    props.addToShoppingList(data);
     props.forceUpdate();
 
     if (save) {
@@ -94,9 +101,9 @@ function AddMealForm(props) {
         <Form.Label>Ingredient</Form.Label>
         <Form.Control
           type="text"
-          id="item"
+          id="food"
           onChange={(e) => handleLocal(e)}
-          value={local.item}
+          value={local.food}
         />
       </Form.Group>
 
@@ -104,17 +111,17 @@ function AddMealForm(props) {
         <Form.Label>Amount</Form.Label>
         <InputGroup>
           <Form.Control
-            id="number"
+            id="quantity"
             type="number"
             min="0"
             step=".1"
             onChange={(e) => handleLocal(e)}
-            value={local.number}
+            value={local.quantity}
           />
           <Dropdown
-            id="unit"
+            id="measure"
             styling="grey dropdown-input"
-            data={local.unit}
+            data={local.measure}
             items={[
               "g",
               "kg",
@@ -128,7 +135,7 @@ function AddMealForm(props) {
               "pcs",
             ]}
             function={(e) => {
-              setLocal({ ...local, unit: e });
+              setLocal({ ...local, measure: e });
             }}
           />
         </InputGroup>
@@ -136,7 +143,7 @@ function AddMealForm(props) {
 
       <Form.Group>
         <Button
-          className="green-btn"
+          className="green-btn shadow-none"
           id="add-new-ing"
           onClick={(e) => {
             setIngredients((ingredients) => [...ingredients, local]);
@@ -157,7 +164,7 @@ function AddMealForm(props) {
       </Form.Group>
 
       <div style={{ alignItems: "center" }}>
-        <Button className="blue-btn" type="submit">
+        <Button className="blue-btn shadow-none" type="submit">
           Done
         </Button>
       </div>
@@ -174,6 +181,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createMealPlanData: (data) => dispatch(createMealPlanData(data)),
     createSavedMeal: (data) => dispatch(createSavedMeal(data)),
+    addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
 

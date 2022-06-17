@@ -31,7 +31,6 @@ function Delete(props) {
     <>
       <Tooltip title="Delete">
         <IconButton
-          className="delete"
           aria-label="Delete"
           sx={{ ml: 2 }}
           onClick={() => {

@@ -73,14 +73,6 @@
   background-color: white;
 }
 
-.blueberries {
-  background: url(../../../images/Blueberries.png) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
 .sub-selecton {
   max-width: 300px;
 }
@@ -223,13 +215,18 @@
 }
 .pts-modal .body {
   position: absolute;
-  top: 53%;
+  top: 50%;
   left: 50%;
   margin-top: 2%;
   width: 80%;
   text-align: center;
   transform: translate(-50%, -50%);
   color: #ffffff;
+}
+
+.pts-modal .body a {
+  color: #afba15;
+  font-size: inherit;
 }
 
 /* Phones */

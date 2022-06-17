@@ -19,7 +19,7 @@ export const ShoppingList = ({ tab, update, forceUpdate }) => {
   return (
     <div className="calendar">
       <ShoppingListHeader value={value} setValue={setValue} />
-      <ShopItems value={value} />
+      <ShopItems value={value} tab={tab} />
     </div>
   );
 };

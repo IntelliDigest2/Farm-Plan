@@ -1,6 +1,5 @@
 import React from "react";
 import "../Pages/Account/UserAccount.css";
-// import blueberries from "../../../images/Blueberries.png";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -9,21 +8,6 @@ import { Tooltip } from "@mui/material";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
 import { Heading } from "./Heading";
-
-// function Profile(props) {
-//   return (
-//     <>
-//       <BootstrapCard className="web-center profile">
-//         <Card.Img src={blueberries} alt="" />
-//         <Card.ImgOverlay>
-//           <Card.Title>My Account</Card.Title>
-//           <Card.Body>Welcome, {props.name}</Card.Body>
-//         </Card.ImgOverlay>
-//       </BootstrapCard>
-//       <Divider />
-//     </>
-//   );
-// }
 
 export function Profile(props) {
   return (

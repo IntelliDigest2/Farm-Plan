@@ -3,13 +3,11 @@ import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import Accordion from "@mui/material/Accordion";
+// import AccordionSummary from "@mui/material/AccordionSummary";
+// import AccordionDetails from "@mui/material/AccordionDetails";
 
-export function Food({ setShow }) {
+export function Food({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -25,13 +23,16 @@ export function Food({ setShow }) {
         icon="food"
         label="Plan to Save"
         color="yellow"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );
 }
 
-export function Health({ setShow }) {
+export function Health({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -46,9 +47,12 @@ export function Health({ setShow }) {
         icon="food"
         label="Plan to Save"
         color="turquoise"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
-      <Accordion
+      {/* <Accordion
         style={{
           width: "80%",
           justifyContent: "center",
@@ -73,7 +77,7 @@ export function Health({ setShow }) {
             advice regarding your health.
           </Typography>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
     </>
   );
 }
