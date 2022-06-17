@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 export default function ShoppingListHeader({ value, setValue }) {
-  const startDay = value.clone().startOf("week").add(7, "days");
-  const endDay = value.clone().endOf("week").add(7, "days");
+  const startDay = value.clone().startOf("week");
+  const endDay = value.clone().endOf("week");
 
   function prevWeek() {
     return value.clone().subtract(7, "days");

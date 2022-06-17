@@ -4,8 +4,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListSubheader from "@mui/material/ListSubheader";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-import ShoppingIcon from "./Icons/ShoppingIcon";
 import Delete from "./Icons/DeleteIcon";
 import Edit from "./Icons/EditIcon";
 import Add from "./Icons/AddIcon";
@@ -60,33 +60,17 @@ export default function MealsBox(props) {
                 <ListItem
                   key={`item${index}`}
                   className="list"
-                  style={{ alignItems: "flex-end" }}
+                  style={{ alignItems: "baseline" }}
                 >
                   {newMeal.nn ? (
                     <>
-                      <ListItemIcon key={`icon${index}`}>
-                        <ShoppingIcon
-                          ingredient={ingredient.food}
-                          value={props.value}
-                          id={newMeal.id}
-                          index={index}
-                        />
-                      </ListItemIcon>
                       <p>{ingredient.text}</p>
                     </>
                   ) : (
                     <>
-                      <ListItemIcon key={`icon${index}`}>
-                        <ShoppingIcon
-                          ingredient={ingredient.item}
-                          value={props.value}
-                          id={newMeal.id}
-                          index={index}
-                        />
-                      </ListItemIcon>
                       <p>
-                        {ingredient.item}: {ingredient.number}
-                        {ingredient.unit}
+                        {ingredient.food}: {ingredient.quantity}
+                        {ingredient.measure}
                       </p>
                     </>
                   )}

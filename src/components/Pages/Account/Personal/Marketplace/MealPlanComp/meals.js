@@ -53,7 +53,10 @@ function MyMeals(props) {
   };
 
   useEffect(() => {
-    updateMeals();
+    if (props.tab === 0) {
+      updateMeals();
+      console.log("Meal Plan:", meals);
+    }
   }, [props.data]);
 
   // useEffect(() => {

@@ -11,7 +11,6 @@ const SavedMeals = (props) => {
   useEffect(() => {
     if (props.tab === 1) {
       props.getSavedMeals();
-      // console.log("got smeals", props.data);
     }
   }, [props.tab, props.update]);
 
@@ -40,7 +39,10 @@ const SavedMeals = (props) => {
 
   useEffect(() => {
     // const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-    updateSMeals();
+    if (props.tab === 1) {
+      updateSMeals();
+      console.log("Saved Meals", sMeals);
+    }
     // .then(setSMeals(sorted));
     // console.log(sMeals);
   }, [props.data]);

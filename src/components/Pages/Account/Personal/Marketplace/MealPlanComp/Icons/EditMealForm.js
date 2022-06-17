@@ -56,25 +56,25 @@ function EditMealForm(props) {
             <Form.Label>Ingredients</Form.Label>
             <Form.Control
               type="text"
-              id="item"
+              id="food"
               onChange={(e) => {
                 setIngredients([
                   ...ingredients.slice(0, i),
                   {
-                    item: e.target.value,
-                    number: ingredient.number,
-                    unit: ingredient.unit,
+                    food: e.target.value,
+                    quantity: ingredient.quantity,
+                    measure: ingredient.measure,
                   },
                   ...ingredients.slice(i + 1, ingredients.length),
                 ]);
               }}
-              defaultValue={ingredient.item}
+              defaultValue={ingredient.food}
             />
           </Form.Group>
           <Form.Group>
             <InputGroup>
               <Form.Control
-                id="number"
+                id="quantity"
                 type="number"
                 min="0"
                 step=".1"
@@ -82,27 +82,27 @@ function EditMealForm(props) {
                   setIngredients([
                     ...ingredients.slice(0, i),
                     {
-                      item: ingredient.item,
-                      number: e.target.value,
-                      unit: ingredient.unit,
+                      food: ingredient.food,
+                      quantity: e.target.value,
+                      measure: ingredient.measure,
                     },
                     ...ingredients.slice(i + 1, ingredients.length),
                   ]);
                 }}
-                defaultValue={ingredient.number}
+                defaultValue={ingredient.quantity}
               />
               <Dropdown
-                id="unit"
+                id="measure"
                 styling="grey dropdown-input"
-                data={ingredient.unit}
+                data={ingredient.measure}
                 items={["g", "kg", "/", "mL", "L", "cups", "pcs"]}
                 function={(e) =>
                   setIngredients([
                     ...ingredients.slice(0, i),
                     {
-                      item: ingredient.item,
-                      number: ingredient.number,
-                      unit: e,
+                      food: ingredient.food,
+                      quantity: ingredient.quantity,
+                      measure: e,
                     },
                     ...ingredients.slice(i + 1, ingredients.length),
                   ])

@@ -5,6 +5,7 @@ import ListItem from "@mui/material/ListItem";
 
 import { connect } from "react-redux";
 import { getShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
+import RemoveFromShop from "../Icons/RemoveFromShop";
 
 function ShopItems(props) {
   const [list, setList] = useState([]);
@@ -17,46 +18,60 @@ function ShopItems(props) {
       week: props.value.format("w"),
     };
 
-    if (props.tab === 0) props.getMealData(data);
+    if (props.tab === 2) props.getShoppingList(data);
     // console.log(props.data);
   }, [props.value, props.update, props.tab]);
 
-  const updateMeals = async () => {
+  const updateShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
     setList([]);
 
     //sets a new meal object in the array for every document with this date attached
     props.data.forEach((doc) => {
-      var food = doc.food;
+      //id is the docref for deletion
+      var id = doc.id;
+      var food = doc.ingredient.food;
+      var quantity = doc.ingredient.quantity;
+      var measure = doc.ingredient.measure;
 
       setList((list) => [
         ...list,
         {
           food: food,
+          measure: measure,
+          quantity: quantity,
+          id: id,
         },
       ]);
     });
   };
 
   useEffect(() => {
-    updateMeals();
-    // console.log(meals);
+    if (props.tab === 2) {
+      updateShoppingList();
+      console.log("shopping list", list);
+    }
   }, [props.data]);
 
   return (
     <>
       {list.length ? (
-        <List>
-          {list.map((item, index) => (
-            <ListItem
-              key={`item${index}`}
-              className="list"
-              style={{ alignItems: "flex-end" }}
-            >
-              <p>{item.food}</p>
-            </ListItem>
-          ))}
-        </List>
+        <>
+          <List>
+            {list.map((ingr, index) => (
+              <ListItem
+                key={`ingr${index}`}
+                className="list"
+                style={{ alignItems: "flex-end" }}
+              >
+                <p>{ingr.food}</p>
+                {/* <div className="icons">
+                  <RemoveFromShop id={ingr.id} />
+                </div> */}
+              </ListItem>
+            ))}
+          </List>
+        </>
       ) : (
         <div className="empty basic-title-left">
           <p>There are no items in the list :( </p>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import AddSavedMeal from "./AddSavedMeal";
+import AddToCalendar from "./AddToCalendar";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function Add(props) {
@@ -35,7 +35,7 @@ function Add(props) {
       <Tooltip title="Add to Calendar">
         <IconButton
           aria-label="Add to Calendar"
-          sx={{ fontSize: 20 }}
+          sx={{ ml: 2 }}
           onClick={() => {
             setShowCalendar(true);
             handleSelect();
@@ -44,7 +44,7 @@ function Add(props) {
           <ScheduleIcon fontSize="20" />
         </IconButton>
       </Tooltip>
-      <AddSavedMeal
+      <AddToCalendar
         value={props.value}
         onChange={props.onChange}
         show={showCalendar}

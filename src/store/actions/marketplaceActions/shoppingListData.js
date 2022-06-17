@@ -1,5 +1,5 @@
 export const addToShoppingList = (data) => {
-  return (dispatch, getState, { getFirebase }) => {
+  return (dispatch, getState, { getFirestore }) => {
     //make async call to database
     const profile = getState().firebase.profile;
     const authUID = getState().firebase.auth.uid;
@@ -29,36 +29,25 @@ export const addToShoppingList = (data) => {
         break;
     }
 
-    getFirebase()
-      .firestore()
-      .collection("marketplace")
-      .doc(uid)
-      .collection("shoppingList")
-      .doc(data.year)
-      .collection(data.week)
-      .add(data.upload)
-      .then((docRef) => {
-        // make the docId easily accessible so that we can delete it later if we want.
-        getFirebase()
-          .firestore()
-          .collection("marketplace")
-          .doc(uid)
-          .collection("shoppingList")
-          .doc(data.year)
-          .collection(data.week)
-          .doc(docRef.id)
-          .set({ id: docRef.id }, { merge: true });
-        // set an ingredient to have the checked state remembered
-        // getFirebase()
-        //   .firestore()
-        //   .collection("marketplace")
-        //   .doc(uid)
-        //   .collection("mealPlanData")
-        //   .doc(data.month)
-        //   .collection(data.day)
-        //   .doc(data.mealId)
-        //   .update( "ingredients", [data.upload.index]: {checked:true})
-        //   .set({ id: docRef.id }, { merge: true });
+    const ingredient = data.upload.ingredients;
+
+    const firestore = getFirestore();
+    const batch = firestore.batch();
+
+    //send each separate ingredient to its own document
+    ingredient.forEach((element) => {
+      var docRef = firestore
+        .collection("marketplace")
+        .doc(uid)
+        .collection("shoppingList")
+        .doc(data.year)
+        .collection(data.week)
+        .doc();
+      batch.set(docRef, { id: docRef, ingredient: element });
+    });
+    batch
+      .commit()
+      .then(() => {
         dispatch({ type: "CREATE_DATA" });
       })
       .catch((err) => {
@@ -115,6 +104,19 @@ export const getShoppingList = (data) => {
       })
       .catch((err) => {
         dispatch({ type: "GET_DATA_ERROR", err });
+      });
+  };
+};
+
+export const removeFromShop = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+    const firestore = getFirestore();
+
+    firestore
+      .delete(data.docRef, {})
+      .then(() => console.log("successfully deleted! "))
+      .catch((err) => {
+        dispatch(console.log("Error removing document:", err));
       });
   };
 };
