@@ -8,7 +8,7 @@ import { Profile } from "../../SubComponents/Profile";
 import "../Pages.css";
 import { PageWrapMini } from "../../SubComponents/PageWrap";
 
-import logo from "../../../images/Logo.svg";
+import logo from "../../../images/WFTLogo.png";
 
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { Tab } from "@material-ui/core";
@@ -77,6 +77,7 @@ const NewAccount = (props) => {
               src={logo}
               alt="IntelliDigest Logo"
               className="img-fluid rounded fix-image mb-4"
+              style={{ maxWidth: "50%" }}
             />
             <Profile profile={props.profile} type={type} />
           </div>

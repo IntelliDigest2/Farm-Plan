@@ -9,18 +9,18 @@ import RemoveFromShop from "../Icons/RemoveFromShop";
 
 function ShopItems(props) {
   const [list, setList] = useState([]);
+  const [update, setUpdate] = useState(0);
 
   //this sends data request
   useEffect(() => {
     const data = {
-      //decided to group year and month together, should this be changed?
       year: props.value.format("YYYY"),
       week: props.value.format("w"),
     };
 
     if (props.tab === 2) props.getShoppingList(data);
     // console.log(props.data);
-  }, [props.value, props.update, props.tab]);
+  }, [props.value, update, props.tab]);
 
   const updateShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -49,7 +49,7 @@ function ShopItems(props) {
   useEffect(() => {
     if (props.tab === 2) {
       updateShoppingList();
-      console.log("shopping list", list);
+      // console.log("shopping list", list);
     }
   }, [props.data]);
 
@@ -65,9 +65,14 @@ function ShopItems(props) {
                 style={{ alignItems: "flex-end" }}
               >
                 <p>{ingr.food}</p>
-                {/* <div className="icons">
-                  <RemoveFromShop id={ingr.id} />
-                </div> */}
+                <div className="icons">
+                  <RemoveFromShop
+                    id={ingr.id}
+                    value={props.value}
+                    update={update}
+                    setUpdate={setUpdate}
+                  />
+                </div>
               </ListItem>
             ))}
           </List>

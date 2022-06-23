@@ -55,7 +55,7 @@ function MyMeals(props) {
   useEffect(() => {
     if (props.tab === 0) {
       updateMeals();
-      console.log("Meal Plan:", meals);
+      // console.log("Meal Plan:", meals);
     }
   }, [props.data]);
 

@@ -12,10 +12,13 @@ function RemoveFromShop(props) {
   //id passed from onClick
   const handleDelete = (id) => {
     const data = {
+      year: props.value.format("YYYY"),
+      week: props.value.format("w"),
       id: id,
     };
     // console.log(props.id);
     props.removeFromShop(data);
+    props.setUpdate(props.update + 1);
   };
 
   return (

@@ -45,6 +45,8 @@ import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplus
 
 import NewAccount from "./components/Pages/Account/Account";
 
+// import Example from "./components/Pages/Account/Example";
+
 import { Notifications } from "react-push-notification";
 
 import { connect } from "react-redux";
@@ -145,6 +147,7 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
+            {/* <Route path="/example" exact component={Example} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/signup" exact component={SignUp} />
