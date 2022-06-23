@@ -7,7 +7,7 @@ import RecipeList from "./RecipeList";
 import MealType from "./mealType";
 import CuisineType from "./cuisineType";
 import InfoModal from "./InfoModal";
-import NextBack from "./Next";
+// import NextBack from "./Next";
 
 export default function RecipeSearch(props) {
   const [show, setShow] = useState(false);

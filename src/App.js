@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //* Pages
 import Login from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
+import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/Mobile/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
@@ -44,6 +45,8 @@ import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAc
 import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
 
 import NewAccount from "./components/Pages/Account/Account";
+
+// import Example from "./components/Pages/Account/Example";
 
 import { Notifications } from "react-push-notification";
 
@@ -145,8 +148,10 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
+            {/* <Route path="/example" exact component={Example} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
+            <Route path="/about-us" exact component={AboutUs} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/settings" exact component={Settings} />
             <Route path="/questionnaire" exact component={Questionnaire} />

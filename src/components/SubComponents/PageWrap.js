@@ -24,7 +24,7 @@ export const PageWrap = (props) => {
         </div>
         <Divider variant="middle" /> */}
         {props.children}
-        <Divider variant="middle" />
+        {/* <Divider variant="middle" /> */}
       </Container>
     </>
   );

@@ -53,7 +53,7 @@ export const createSavedMeal = (data) => {
 };
 
 export const getSavedMeals = (data) => {
-  return (dispatch, getState, { getFirebase }) => {
+  return (dispatch, getState, { getFirestore }) => {
     //make async call to database
     const profile = getState().firebase.profile;
     const authUID = getState().firebase.auth.uid;
@@ -83,8 +83,7 @@ export const getSavedMeals = (data) => {
         break;
     }
 
-    getFirebase()
-      .firestore()
+    getFirestore()
       .collection("marketplace")
       .doc(uid)
       .collection("mySavedMeals")

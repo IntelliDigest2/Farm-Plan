@@ -41,7 +41,7 @@ const SavedMeals = (props) => {
     // const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
     if (props.tab === 1) {
       updateSMeals();
-      console.log("Saved Meals", sMeals);
+      // console.log("Saved Meals", sMeals);
     }
     // .then(setSMeals(sorted));
     // console.log(sMeals);

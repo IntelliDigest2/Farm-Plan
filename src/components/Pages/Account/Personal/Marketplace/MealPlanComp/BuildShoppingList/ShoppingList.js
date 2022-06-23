@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 // import buildShoppingList from "./Build";
 import ShoppingListHeader from "./header";
-import ShopItems from "./shop";
+import ShopItems from "./ShopItems";
 
 import moment from "moment";
 

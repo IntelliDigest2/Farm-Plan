@@ -8,7 +8,7 @@ import { Profile } from "../../SubComponents/Profile";
 import "../Pages.css";
 import { PageWrapMini } from "../../SubComponents/PageWrap";
 
-import logo from "../../../images/Logo.svg";
+import logo from "../../../images/WFTLogo.png";
 
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { Tab } from "@material-ui/core";
@@ -75,8 +75,9 @@ const NewAccount = (props) => {
           <div className="flex">
             <img
               src={logo}
-              alt="IntelliDigest Logo"
+              alt="World Food Tracker, empowering global food sustainability"
               className="img-fluid rounded fix-image mb-4"
+              style={{ maxWidth: "50%" }}
             />
             <Profile profile={props.profile} type={type} />
           </div>
