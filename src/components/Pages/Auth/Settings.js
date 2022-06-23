@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 
 import "./Mobile/Mob.css";
 import "./Settings.css";
-import { SubButton } from "../SubComponents/Button";
-import { LogOutPopUp } from "../SubComponents/PopUp";
-import { PageWrap } from "../SubComponents/PageWrap";
+import { SubButton } from "../../SubComponents/Button";
+import { LogOutPopUp } from "../../SubComponents/PopUp";
+import { PageWrap } from "../../SubComponents/PageWrap";
+import { Heading } from "../../SubComponents/Heading";
 
 import { Form, Col, ListGroup, Badge, FormGroup } from "react-bootstrap";
 
@@ -42,7 +43,6 @@ import {
   getFirestoreData,
 } from "../../../store/actions/dataActions";
 import Geocode from "react-geocode";
-import { Heading } from "../SubComponents/Heading";
 
 import { submitNotification } from "../../lib/Notifications";
 import {

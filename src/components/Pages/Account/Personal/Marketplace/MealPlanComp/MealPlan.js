@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
 import "./Mealplan.css";
-import { PageWrap } from "../../../../SubComponents/PageWrap";
+import { PageWrap } from "../../../../../SubComponents/PageWrap";
 import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "./Calendar";
 import SavedMeals from "./SavedMeals";
 import RecipeSearch from "./Search/RecipeSearch";
+import { ShoppingList } from "./BuildShoppingList/ShoppingList";
 import moment from "moment";
 
 export default function MealPlan() {
@@ -58,9 +59,15 @@ export default function MealPlan() {
           <RecipeSearch value={value} onChange={setValue} />
         </Tab>
         <Tab eventKey="shopping-list" title="SHOPPING LIST" className="mealtab">
-          <div className="basic-title">
+          {/* <div className="basic-title">
             This feature is currently in development.
-          </div>
+          </div> */}
+          <ShoppingList
+            update={update}
+            forceUpdate={forceUpdate}
+            value={value}
+            tab={tab}
+          />
         </Tab>
       </Tabs>
 

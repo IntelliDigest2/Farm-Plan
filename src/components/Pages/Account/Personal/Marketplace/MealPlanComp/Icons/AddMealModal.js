@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
 import EatingOut from "./EatingOut";
-import AddMealForm from "./AddMeal";
-import { AddButton, SubButton } from "../../../../../SubComponents/Button";
+import AddMealForm from "./AddMealForm";
+import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 
 export function AddMealModal({ show, setShow, value, forceUpdate }) {

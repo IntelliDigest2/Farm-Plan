@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Pages.css";
-import { PageWrap } from "./SubComponents/PageWrap";
+import { PageWrap } from "../SubComponents/PageWrap";
 import styled from "styled-components";
 import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import emailjs from "emailjs-com";
@@ -39,7 +39,7 @@ function Contact(props) {
   function OpenEmail() {
     // console.log("Email card clicked");
     window.open(
-      "mailto:info@intellidigest.com?subject=Subject&body=Body%20goes%20here"
+      "mailto:m.driscoll@intellidigest.com?subject=Subject&body=Body%20goes%20here"
     );
   }
 

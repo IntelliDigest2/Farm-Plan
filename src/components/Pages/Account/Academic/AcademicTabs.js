@@ -1,22 +1,16 @@
 import React from "react";
-import { IconButton } from "../../SubComponents/Button";
+import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
-import { Colors } from "../../../lib/Colors";
+// import { Colors } from "../../../lib/Colors";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-export function Food() {
+export function Food({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
         icon="notes"
         label="Meal Plan"
         color="turquoise"
-        goTo="/farm-plan"
+        goTo="/meal-plan"
       />
       <IconButton
         icon="my-products"
@@ -56,13 +50,16 @@ export function Food() {
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"
-        goTo="/pts"
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );
 }
 
-export function Research() {
+export function Research({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -98,13 +95,16 @@ export function Research() {
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"
-        goTo="/pts"
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );
 }
 
-export function Environment() {
+export function Environment({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -135,7 +135,10 @@ export function Environment() {
         icon="kitchen"
         label="Plan to Save"
         color="turquoise"
-        goTo="/pts"
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
     </>
   );
@@ -161,12 +164,6 @@ export function FSSP() {
         label="FISI"
         color="green"
         goTo="https://intellidigest.com/services/food-system-sustainability/food-industry-sustainability-index/"
-      />
-      <IconButton
-        icon="kitchen"
-        label="Plan to Save"
-        color="turquoise"
-        goTo="/pts"
       />
     </>
   );

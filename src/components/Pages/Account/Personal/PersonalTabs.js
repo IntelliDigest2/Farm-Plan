@@ -1,46 +1,38 @@
 import React from "react";
-import { IconButton } from "../../SubComponents/Button";
+import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import Accordion from "@mui/material/Accordion";
+// import AccordionSummary from "@mui/material/AccordionSummary";
+// import AccordionDetails from "@mui/material/AccordionDetails";
 
-export function Food({ isConsumer }) {
+export function Food({ setShow, setChooseModal }) {
   return (
     <>
-      {isConsumer ? (
-        <IconButton
-          icon="notes"
-          label="My Food Diary"
-          color="turquoise"
-          goTo="/meal-plan"
-        />
-      ) : (
-        <IconButton
-          icon="notes"
-          label="My Food Diary"
-          color="turquoise"
-          goTo="/cons-auth"
-        />
-      )}
-
-      {/* <IconButton
-        icon="kitchen"
-        label="Food Diary"
+      <IconButton
+        title="Plan your meals with us, search a range of delicious recipes."
+        icon="notes"
+        label="My Food Diary"
         color="turquoise"
-        goTo="/food-intake"
-      /> */}
+        goTo="/meal-plan"
+      />
 
-      <IconButton icon="food" label="Plan to Save" color="yellow" goTo="/pts" />
+      <IconButton
+        title="Find out more about the Plan to Save campaign, and what you can do to help."
+        icon="food"
+        label="Plan to Save"
+        color="yellow"
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
+      />
     </>
   );
 }
 
-export function Health() {
+export function Health({ setShow, setChooseModal }) {
   return (
     <>
       <IconButton
@@ -50,20 +42,17 @@ export function Health() {
         goTo="/"
         disabled="true"
       />
-      {/* <IconButton
-        icon="book"
-        label="Recipes"
-        color="yellow"
-        goTo="/"
-        disabled="true"
-      /> */}
       <IconButton
+        title="Find out more about the Plan to Save campaign, and what you can do to help."
         icon="food"
         label="Plan to Save"
         color="turquoise"
-        goTo="/pts"
+        onClick={() => {
+          setShow(true);
+          setChooseModal(true);
+        }}
       />
-      <Accordion
+      {/* <Accordion
         style={{
           width: "80%",
           justifyContent: "center",
@@ -88,7 +77,7 @@ export function Health() {
             advice regarding your health.
           </Typography>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
     </>
   );
 }
@@ -97,24 +86,28 @@ export function Environment() {
   return (
     <>
       <IconButton
+        title="Record your food waste."
         icon="waste"
         label="Food Waste"
         color="turquoise"
         goTo="/food-waste"
       />
       <IconButton
+        title="View your food waste data."
         icon="chart"
         label="Waste Chart"
         color="yellow"
         goTo="/chart"
       />
       <IconButton
+        title="View the world map of WFT users!"
         icon="world"
         label="Users Map"
         color="yellow"
         goTo="/view-map"
       />
       <IconButton
+        title="Useful tips on how to reduce food waste in your home."
         icon="info"
         label="Waste Tips"
         color="green"

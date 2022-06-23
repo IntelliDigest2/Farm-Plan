@@ -1,7 +1,7 @@
 import { React } from "react";
 import "./Landing.css";
 
-import { SubButton } from "../../SubComponents/Button";
+import { SubButton } from "../../../SubComponents/Button";
 
 import { connect } from "react-redux";
 
@@ -22,6 +22,7 @@ function LandingPage(props) {
       <div className="buttons">
         <SubButton styling="blue" goTo="/login" text="Log In" />
         <SubButton styling="blue" goTo="/signup" text="Sign Up" />
+        <SubButton styling="green" goTo="/about-us" text="About Us" />
       </div>
     </div>
   );

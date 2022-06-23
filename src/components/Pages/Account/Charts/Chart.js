@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Chart } from "react-google-charts";
-import { Tab, Container, Nav } from "react-bootstrap";
+import { Tab, Nav } from "react-bootstrap";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
 import { connect } from "react-redux";
 import { getFirestoreData } from "../../../../store/actions/dataActions";
-import { DefaultButton } from "../../SubComponents/Button";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
-import { PageWrap } from "../../SubComponents/PageWrap";
+import { PageWrap } from "../../../SubComponents/PageWrap";
 
 // Get current Date and week number
 const currentDate = new Date();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Dropdown } from "../../../../../SubComponents/Dropdown";
+import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 
 //ownRecipe is sent when a person adds their own meal as opposed to downloading from API
 export default function MealType({ setMealType, ownRecipe }) {

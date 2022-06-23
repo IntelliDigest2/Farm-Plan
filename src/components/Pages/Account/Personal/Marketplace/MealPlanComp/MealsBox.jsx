@@ -2,9 +2,9 @@ import React from "react";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
+// import ListItemIcon from "@mui/material/ListItemIcon";
 import ListSubheader from "@mui/material/ListSubheader";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+// import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
 import Delete from "./Icons/DeleteIcon";
 import Edit from "./Icons/EditIcon";
@@ -62,16 +62,17 @@ export default function MealsBox(props) {
                   className="list"
                   style={{ alignItems: "baseline" }}
                 >
-                  <ListItemIcon key={`icon${index}`}>
-                    <CheckBoxOutlineBlankIcon fontSize="1rem" />
-                  </ListItemIcon>
                   {newMeal.nn ? (
-                    <p>{ingredient.text}</p>
+                    <>
+                      <p>{ingredient.text}</p>
+                    </>
                   ) : (
-                    <p>
-                      {ingredient.item}: {ingredient.number}
-                      {ingredient.unit}
-                    </p>
+                    <>
+                      <p>
+                        {ingredient.food}: {ingredient.quantity}
+                        {ingredient.measure}
+                      </p>
+                    </>
                   )}
                 </ListItem>
               ))}

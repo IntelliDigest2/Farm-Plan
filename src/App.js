@@ -12,13 +12,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //* Pages
 import Login from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
+import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/Mobile/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
 import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
 import ForgotPassword from "./components/Pages/ForgotPassword";
-import PlanToSave from "./components/Pages/Account/PlanToSave";
+import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 
@@ -44,6 +45,8 @@ import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAc
 import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
 
 import NewAccount from "./components/Pages/Account/Account";
+
+// import Example from "./components/Pages/Account/Example";
 
 import { Notifications } from "react-push-notification";
 
@@ -95,6 +98,7 @@ const App = (props) => {
   return (
     <React.Fragment>
       <Notifications position="top-right" />
+
       <Router>
         <Toast
           onClose={() => setShow(false)}
@@ -144,8 +148,10 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
+            {/* <Route path="/example" exact component={Example} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
+            <Route path="/about-us" exact component={AboutUs} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/settings" exact component={Settings} />
             <Route path="/questionnaire" exact component={Questionnaire} />
@@ -197,6 +203,7 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
+    profile: state.firebase.profile,
   };
 };
 

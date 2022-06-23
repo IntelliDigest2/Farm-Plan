@@ -1,7 +1,8 @@
+//not currently in use
 import React, { useState, useEffect } from "react";
 
-import "../../../SubComponents/Button.css";
-import { PageWrap } from "../../../SubComponents/PageWrap";
+import "../../../../SubComponents/Button.css";
+import { PageWrap } from "../../../../SubComponents/PageWrap";
 import { ConsumerLocation } from "./ConsumerLocation";
 import { Form, Button } from "react-bootstrap";
 import { becomeConsumer } from "../../../../../store/actions/authActions";

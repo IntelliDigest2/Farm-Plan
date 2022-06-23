@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "../../Account/UserAccount.css";
 import "./Mob.css";
-import { Select } from "../../SubComponents/Dropdown";
+import { Select } from "../../../SubComponents/Dropdown";
 import { Title } from "./MobComponents";
 
 import { Form, Col, Button } from "react-bootstrap";

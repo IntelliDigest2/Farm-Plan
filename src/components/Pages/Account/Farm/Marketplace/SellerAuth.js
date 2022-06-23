@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import "../../../SubComponents/Button.css";
+import "../../../../SubComponents/Button.css";
 import "../../UserAccount.css";
 
-import { PageWrap } from "../../../SubComponents/PageWrap";
+import { PageWrap } from "../../../../SubComponents/PageWrap";
 import { ExistingFarmer } from "./ExistingFarm";
 import { NewFarmer } from "./NewFarm";
 
