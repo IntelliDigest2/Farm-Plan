@@ -39,7 +39,7 @@ function Contact(props) {
   function OpenEmail() {
     // console.log("Email card clicked");
     window.open(
-      "mailto:info@intellidigest.com?subject=Subject&body=Body%20goes%20here"
+      "mailto:m.driscoll@intellidigest.com?subject=Subject&body=Body%20goes%20here"
     );
   }
 

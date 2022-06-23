@@ -75,7 +75,7 @@ const NewAccount = (props) => {
           <div className="flex">
             <img
               src={logo}
-              alt="IntelliDigest Logo"
+              alt="World Food Tracker, empowering global food sustainability"
               className="img-fluid rounded fix-image mb-4"
               style={{ maxWidth: "50%" }}
             />

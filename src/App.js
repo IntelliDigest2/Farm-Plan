@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //* Pages
 import Login from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
+import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/Mobile/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
@@ -150,6 +151,7 @@ const App = (props) => {
             {/* <Route path="/example" exact component={Example} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
+            <Route path="/about-us" exact component={AboutUs} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/settings" exact component={Settings} />
             <Route path="/questionnaire" exact component={Questionnaire} />
