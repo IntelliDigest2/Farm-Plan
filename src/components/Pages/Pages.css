@@ -16,6 +16,17 @@ body {
   font-size: 16px;
 }
 
+.contrast {
+  border-radius: 15px;
+  background-color: #d9dd99;
+  padding: 0.3rem;
+}
+.no-contrast {
+  border-radius: 15px;
+  margin-top: 0.3rem;
+  padding: 0.3rem;
+}
+
 /* page not found */
 
 .not-found .page-not-found {
@@ -27,19 +38,6 @@ body {
 .not-found .not-found-message {
   font-size: 23px;
   padding-top: 10px;
-}
-
-/* about page */
-.about h1 {
-  font-size: 28px;
-}
-
-.about p {
-  font-size: 17px;
-}
-
-.about {
-  margin: auto;
 }
 
 /* login page and signup page */
@@ -264,6 +262,11 @@ body {
 .large-img {
   max-width: 100%;
   height: auto;
+}
+
+.image {
+  object-fit: contain;
+  max-width: 100%;
 }
 
 .web-center {

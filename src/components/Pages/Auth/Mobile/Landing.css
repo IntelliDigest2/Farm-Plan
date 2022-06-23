@@ -38,7 +38,7 @@
   }
   .buttons {
     width: 100%;
-    top: 78%;
+    top: 75%;
   }
 }
 
@@ -54,13 +54,13 @@
   }
 
   .landing {
-    width: 80%;
+    width: 90%;
     height: 100%;
-    left: 10%;
+    left: 5%;
   }
   .buttons {
-    width: 50%;
-    left: 25%;
+    width: 60%;
+    left: 20%;
     top: 78%;
   }
 }
