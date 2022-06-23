@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.2ba329bd.chunk.css",
-    "main.js": "/static/js/main.9053806e.chunk.js",
-    "main.js.map": "/static/js/main.9053806e.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.aca7096e.js",
-    "runtime-main.js.map": "/static/js/runtime-main.aca7096e.js.map",
+    "main.css": "/static/css/main.386c4cc0.chunk.css",
+    "main.js": "/static/js/main.dd48cbc8.chunk.js",
+    "main.js.map": "/static/js/main.dd48cbc8.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.9a6a3eda.js",
+    "runtime-main.js.map": "/static/js/runtime-main.9a6a3eda.js.map",
     "static/css/2.e770c818.chunk.css": "/static/css/2.e770c818.chunk.css",
-    "static/js/2.e691ab0a.chunk.js": "/static/js/2.e691ab0a.chunk.js",
-    "static/js/2.e691ab0a.chunk.js.map": "/static/js/2.e691ab0a.chunk.js.map",
-    "static/js/3.830939be.chunk.js": "/static/js/3.830939be.chunk.js",
-    "static/js/3.830939be.chunk.js.map": "/static/js/3.830939be.chunk.js.map",
+    "static/js/2.57c09459.chunk.js": "/static/js/2.57c09459.chunk.js",
+    "static/js/2.57c09459.chunk.js.map": "/static/js/2.57c09459.chunk.js.map",
+    "static/js/3.33139e8a.chunk.js": "/static/js/3.33139e8a.chunk.js",
+    "static/js/3.33139e8a.chunk.js.map": "/static/js/3.33139e8a.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.e770c818.chunk.css.map": "/static/css/2.e770c818.chunk.css.map",
-    "static/css/main.2ba329bd.chunk.css.map": "/static/css/main.2ba329bd.chunk.css.map",
-    "static/js/2.e691ab0a.chunk.js.LICENSE.txt": "/static/js/2.e691ab0a.chunk.js.LICENSE.txt",
+    "static/css/main.386c4cc0.chunk.css.map": "/static/css/main.386c4cc0.chunk.css.map",
+    "static/js/2.57c09459.chunk.js.LICENSE.txt": "/static/js/2.57c09459.chunk.js.LICENSE.txt",
     "static/media/UserAccount.css": "/static/media/Blueberries.a563943b.png",
     "static/media/Edamam_Badge_White.d317b3d5.svg": "/static/media/Edamam_Badge_White.d317b3d5.svg",
     "static/media/Grains-01.png": "/static/media/Grains-01.6d747af3.png",
@@ -38,10 +38,10 @@
     "static/media/tip5.ee47f4f7.jpg": "/static/media/tip5.ee47f4f7.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.aca7096e.js",
+    "static/js/runtime-main.9a6a3eda.js",
     "static/css/2.e770c818.chunk.css",
-    "static/js/2.e691ab0a.chunk.js",
-    "static/css/main.2ba329bd.chunk.css",
-    "static/js/main.9053806e.chunk.js"
+    "static/js/2.57c09459.chunk.js",
+    "static/css/main.386c4cc0.chunk.css",
+    "static/js/main.dd48cbc8.chunk.js"
   ]
 }
