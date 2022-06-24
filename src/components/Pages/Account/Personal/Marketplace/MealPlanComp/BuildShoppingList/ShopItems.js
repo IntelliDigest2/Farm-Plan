@@ -64,7 +64,10 @@ function ShopItems(props) {
                 className="list"
                 style={{ alignItems: "flex-end" }}
               >
-                <p>{ingr.food}</p>
+                <p>
+                  {ingr.food} {ingr.quantity}
+                  {ingr.measure}
+                </p>
                 <div className="icons">
                   <RemoveFromShop
                     id={ingr.id}
