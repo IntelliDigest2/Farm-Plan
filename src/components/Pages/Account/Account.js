@@ -76,8 +76,8 @@ const NewAccount = (props) => {
             <img
               src={logo}
               alt="World Food Tracker, empowering global food sustainability"
-              className="img-fluid rounded fix-image mb-4"
-              style={{ maxWidth: "50%" }}
+              className="img-fluid rounded fix-image mb-3"
+              style={{ maxWidth: "40%" }}
             />
             <Profile profile={props.profile} type={type} />
           </div>
