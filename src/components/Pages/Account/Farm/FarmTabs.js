@@ -3,16 +3,26 @@ import { IconButton } from "../../../SubComponents/Button";
 
 import "../UserAccount.css";
 
-export function Food() {
+export function Food({ isSeller }) {
   return (
     <>
-      <IconButton
-        title="Start planning your farm with us. Coordinate your produce with consumers and grow into sustainability."
-        icon="notes"
-        label="My Farm Plan"
-        color="turquoise"
-        goTo="/farm-plan"
-      />
+      {isSeller ? (
+        <IconButton
+          title="Start planning your farm with us. Coordinate your produce with consumers and grow into sustainability."
+          icon="notes"
+          label="My Farm Plan"
+          color="turquoise"
+          goTo="/farm-plan"
+        />
+      ) : (
+        <IconButton
+          title="Start planning your farm with us. Coordinate your produce with consumers and grow into sustainability."
+          icon="notes"
+          label="My Farm Plan"
+          color="turquoise"
+          goTo="/farm-auth"
+        />
+      )}
       <IconButton
         title="Find out more about the Plan to Save campaign, and what you can do to help."
         icon="food"

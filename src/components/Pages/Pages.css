@@ -281,37 +281,6 @@ body {
   font-family: "Source Sans Pro", sans-serif;
 }
 
-.custom-btn {
-  background-color: rgb(13, 27, 92);
-  border-color: rgb(13, 27, 92);
-}
-
-.custom-btn-2 {
-  background-color: #aab41e;
-  border-color: #aab41e;
-  height: 120px;
-  width: 100%;
-  margin-bottom: 2.5%;
-  font-weight: 600;
-  font-size: 200%;
-  padding: 5% 0 5% 0;
-}
-
-.custom-btn-3 {
-  background-color: rgb(24, 160, 101);
-  border-color: rgb(24, 160, 101);
-}
-
-.custom-btn-4 {
-  background-color: rgb(176, 10, 182);
-  border-color: rgb(176, 10, 182);
-}
-
-.custom-btn-5 {
-  background-color: rgb(13, 108, 6);
-  border-color: rgb(13, 108, 6);
-}
-
 /* map page */
 .map-data {
   width: 100%;
