@@ -21,6 +21,7 @@
     "google-maps-react": "^2.0.6",
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",
+    "postcode-validator": "^3.7.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
     "react-bootstrap-range-slider": "^3.0.4",

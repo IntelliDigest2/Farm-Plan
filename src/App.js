@@ -36,6 +36,7 @@ import ProductListing from "./components/Pages/Account/products/ProductListing";
 import ReserveItems from "./components/Pages/Account/ReserveItems";
 
 import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
+import FarmerAuth from "./components/Pages/Account/Farm/Marketplace/Auth/Farmer-Auth";
 import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
 import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
@@ -71,7 +72,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (props.auth.uid) setIsLoggedIn(true);
-    if (!props.auth.uid) return <Redirect to="/login" />;
+    if (!props.auth.uid) return <Redirect to="/landing" />;
   }, [props.auth.uid]);
 
   //Google Cloud Messaging code
@@ -180,7 +181,12 @@ const App = (props) => {
 
             <Route path="/reserve-items" component={ReserveItems} />
 
-            <Route path="/farm-plan" component={FarmPlan} />
+            <Route path="/farm-plan" component={FarmPlan}>
+              {!props.profile.isSeller && <Redirect to="/farm-plan" />}
+            </Route>
+            <Route path="/farm-auth" component={FarmerAuth}>
+              {props.profile.isSeller && <Redirect to="/farm-plan" />}
+            </Route>
             <Route path="/cons-auth" component={ConsumerAuth} />
             <Route path="/meal-plan" component={MealPlan} />
             <Route path="/view-products" component={ViewProducts} />

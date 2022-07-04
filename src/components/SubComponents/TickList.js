@@ -16,14 +16,23 @@ export const TickList = (props) => {
       <Form.Label>{props.label}</Form.Label>
       {props.list.map((item, index) => {
         return (
-          <Form.Check
-            type="checkbox"
-            label={item}
-            id={item}
-            key={item}
-            checked={props.checkedState[index]}
-            onChange={() => handleChange(index)}
-          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
+          >
+            <Form.Check
+              type="checkbox"
+              label={item}
+              id={item}
+              key={item}
+              checked={props.checkedState[index]}
+              onChange={() => handleChange(index)}
+            />
+          </div>
         );
       })}
     </Form.Group>

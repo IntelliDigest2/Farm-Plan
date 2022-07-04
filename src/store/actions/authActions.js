@@ -95,16 +95,32 @@ export const updateProfile = (users) => {
 //sets isSeller in "users" and the profile in "marketplace"
 export const becomeSeller = (seller) => {
   return (dispatch, getState, { getFirebase }) => {
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "farm_admin":
+        uid = authUID;
+        break;
+      case "farm_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
     const firestore = getFirebase().firestore();
 
     firestore
       .collection("users")
-      .doc(seller.uid)
+      .doc(uid)
       .set({ ...seller.profile }, { merge: true })
       .then(() => {
         return firestore
           .collection("marketplace")
-          .doc(seller.uid)
+          .doc(uid)
           .set({ ...seller.info }, { merge: true });
       })
       .then(() => {

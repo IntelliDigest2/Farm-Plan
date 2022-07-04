@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import ModalUnstyled from "@mui/material/Modal";
+import "./PTS.css";
 import PTSForm from "./PTSForm";
 
 import { isBrowser } from "react-device-detect";
 import blueberries from "../../../../images/Blueberries.jpg";
-import pTSNotebook from "../../../../images/pts_plate_notebook-dark.jpg";
+// import pTSNotebook from "../../../../images/pts_plate_notebook-dark.jpg";
 import pTSField from "../../../../images/pts_field_standing-dark.jpg";
 
 export function PTSModal({ show, setShow }) {

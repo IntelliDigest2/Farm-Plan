@@ -1,0 +1,124 @@
+.pts-modal {
+  position: relative;
+
+  background-color: bisque;
+}
+
+.pts-modal .close {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  font-family: "Arimo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  color: #ffffff;
+}
+.pts-modal .title {
+  margin-top: 4%;
+  font-weight: 600;
+  line-height: 50px;
+  text-align: center;
+  color: #ffffff;
+}
+.pts-modal .body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 2%;
+  width: 80%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+}
+
+.pts-modal .body a {
+  color: #afba15;
+  font-size: inherit;
+}
+
+/* Phones */
+@media screen and (max-width: 600px) {
+  .pts-modal {
+    top: 50%;
+    left: 0%;
+    transform: translate(-0%, -50%);
+    width: 100%;
+  }
+  .pts-modal .title {
+    font-size: 1.5rem;
+  }
+  .pts-modal .body p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Portrait Tablet and Large Phones */
+@media screen and (min-width: 600px) {
+  .pts-modal {
+    top: 50%;
+    left: 5%;
+    transform: translate(-2.5%, -50%);
+    width: 95%;
+  }
+  .pts-modal .title {
+    font-size: 2rem;
+  }
+  .pts-modal .body p {
+    font-size: 1.4rem;
+  }
+}
+
+/* Landscape Tablet */
+@media screen and (min-width: 768px) {
+  .pts-modal {
+    top: 20%;
+    left: 20%;
+    transform: translate(-10%, -10%);
+    width: 80%;
+  }
+  .pts-modal .title {
+    font-size: 2.5rem;
+  }
+  .pts-modal .body p {
+    font-size: 1.2rem;
+  }
+}
+
+/* Laptop/Desktop */
+@media screen and (min-width: 992px) {
+  .pts-modal {
+    top: 40%;
+    left: 40%;
+    transform: translate(-40%, -40%);
+    width: 60%;
+  }
+  .pts-modal .title {
+    font-size: 2.5rem;
+  }
+  .pts-modal .body p {
+    font-size: 1.2rem;
+  }
+}
+
+/* Large Laptop/Desktop */
+@media screen and (min-width: 1200px) {
+  .pts-modal {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+  }
+  .pts-modal .title {
+    font-size: 2.5rem;
+  }
+  .pts-modal .body p {
+    font-size: 1.2rem;
+  }
+}
+
+.err {
+  color: rgb(250, 66, 66);
+}
