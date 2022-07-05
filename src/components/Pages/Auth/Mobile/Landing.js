@@ -6,7 +6,7 @@ import { SubButton } from "../../../SubComponents/Button";
 import { connect } from "react-redux";
 
 import peppers from "../../../../images/peppers.jpg";
-import logo from "../../../../images/Logo.svg";
+import logo from "../../../../images/WFTLogo.png";
 
 function LandingPage(props) {
   return (
@@ -17,7 +17,10 @@ function LandingPage(props) {
         alt="Four brightly coloured bell peppers arranged in a square."
       />
       <div className="title">
-        <img src={logo} alt="IntelliDigest Logo" />
+        <img
+          src={logo}
+          alt="World Food Tracker, empowering global food sustainability"
+        />
       </div>
       <div className="buttons">
         <SubButton styling="blue" goTo="/login" text="Log In" />

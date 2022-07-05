@@ -7,6 +7,7 @@ import health from "../../images/Health.jpg";
 import environment from "../../images/Environment.jpg";
 // import logo from "../../images/WFTLogo.png";
 import { Row, Col } from "react-bootstrap";
+import { SubButton } from "../SubComponents/Button";
 
 export default function AboutUs() {
   return (
@@ -32,7 +33,7 @@ export default function AboutUs() {
           and save our earth.
         </p>
       </div>
-      <div className="contrast">
+      <div className="contrast mb-3">
         <Row>
           <Col>
             <img src={food} alt={"Food"} className="image" />
@@ -45,6 +46,7 @@ export default function AboutUs() {
           </Col>
         </Row>
       </div>
+      <Divider />
       <h5 style={{ fontWeight: "600" }} className="mt-3">
         FOOD
       </h5>
@@ -67,7 +69,7 @@ export default function AboutUs() {
           their production, which reduces the food that is wasted after harvest.
         </p>
       </div>
-
+      <Divider />
       <h5 style={{ fontWeight: "600" }} className="mt-3">
         Health
       </h5>
@@ -95,7 +97,7 @@ export default function AboutUs() {
           Let us help you connect to the right customers.
         </p>
       </div>
-
+      <Divider />
       <h5 style={{ fontWeight: "600" }} className="mt-3">
         Environment
       </h5>
@@ -114,6 +116,9 @@ export default function AboutUs() {
           while tracking and reducing your avoidable food loss.
         </p>
       </div>
+      <Divider />
+      <SubButton styling="blue" goTo="/login" text="Log In" />
+      <SubButton styling="blue" goTo="/signup" text="Sign Up" />
       <Divider />
       <h1 className="mt-2">About IntelliDigest Ltd</h1>
       <p>

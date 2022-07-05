@@ -104,7 +104,7 @@ const authReducer = (state = initState, action) => {
       console.log("become seller error");
       return {
         ...state,
-        authError: "Please accept the terms and conditions",
+        authError: "Become seller failed",
       };
     case "SELLER_SUCCESS":
       console.log("Successfully became a seller.");

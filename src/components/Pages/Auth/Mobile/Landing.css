@@ -24,7 +24,7 @@
 @media screen and (max-width: 600px) {
   .title {
     width: 100%;
-    top: 0%;
+    top: 1%;
   }
   .title img {
     max-width: 75%;
@@ -47,7 +47,7 @@
   .title {
     width: 90%;
     margin-left: 5%;
-    top: 0%;
+    top: 1%;
   }
   .title img {
     max-width: 75%;
@@ -70,7 +70,7 @@
   .title {
     width: 75%;
     margin-left: 12.5%;
-    top: 0%;
+    top: 2%;
   }
   .title img {
     max-width: 70%;
@@ -93,10 +93,10 @@
   .title {
     width: 75%;
     margin-left: 12.5%;
-    top: -2%;
+    top: 2%;
   }
   .title img {
-    max-width: 50%;
+    max-width: 30%;
   }
   .landing {
     width: 60%;
@@ -115,10 +115,9 @@
   .title {
     width: 75%;
     margin-left: 12.5%;
-    top: -2%;
   }
   .title img {
-    max-width: 45%;
+    max-width: 20%;
   }
   .landing {
     width: 50%;

@@ -46,6 +46,16 @@ const NewAccount = (props) => {
   });
 
   useEffect(() => {}, [type]);
+  function delay(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+  useEffect(() => {
+    delay(2000).then(() => {
+      // if (props.profile.isSeller) return <Redirect to="/farm-plan" />;
+      console.log(props.profile);
+    });
+  }, [props.profile]);
 
   //Tab Management
   const theme = useTheme();
@@ -76,8 +86,8 @@ const NewAccount = (props) => {
             <img
               src={logo}
               alt="World Food Tracker, empowering global food sustainability"
-              className="img-fluid rounded fix-image mb-4"
-              style={{ maxWidth: "50%" }}
+              className="img-fluid rounded fix-image mb-3"
+              style={{ maxWidth: "40%" }}
             />
             <Profile profile={props.profile} type={type} />
           </div>
@@ -85,6 +95,7 @@ const NewAccount = (props) => {
           <div className="tabs">
             <TabContext value={value}>
               <AccountType
+                profile={props.profile}
                 type={type}
                 value={value}
                 theme={theme}
@@ -127,7 +138,7 @@ const AccountType = (props) => {
             onChangeIndex={props.handleChangeIndex}
           >
             <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <Farm.Food />
+              <Farm.Food isSeller={props.profile.isSeller} />
             </TabPanel>
             <TabPanel value={props.value} index={1} dir={props.theme.direction}>
               <Farm.Environment />
