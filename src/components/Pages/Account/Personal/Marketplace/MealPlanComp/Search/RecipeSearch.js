@@ -7,7 +7,7 @@ import RecipeList from "./RecipeList";
 import MealType from "./mealType";
 import CuisineType from "./cuisineType";
 import InfoModal from "./InfoModal";
-// import NextBack from "./Next";
+import NextBack from "./Next";
 
 export default function RecipeSearch(props) {
   const [show, setShow] = useState(false);
@@ -28,10 +28,10 @@ export default function RecipeSearch(props) {
     // console.log("Next Page", links);
   }, [query, mealType, cuisineType]);
 
-  // useEffect(() => {
-  //   page && nextPage(page, setLinks, setRecipes);
-  //   console.log("next page", page);
-  // }, [page]);
+  useEffect(() => {
+    page && nextPage(page, setLinks, setRecipes);
+    console.log("next page", page);
+  }, [page]);
 
   return (
     <>
@@ -78,7 +78,7 @@ export default function RecipeSearch(props) {
         value={props.value}
         onChange={props.onChange}
       />
-      {/* <NextBack links={links} setPage={setPage} /> */}
+      <NextBack links={links} setPage={setPage} />
     </>
   );
 }

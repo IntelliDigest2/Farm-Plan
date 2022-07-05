@@ -18,10 +18,10 @@ export const recipeSearch = async (
   // console.log("links", data._links);
 };
 
-// export const nextPage = async ({ page, setLinks, setRecipes }) => {
-//   const resp = await fetch(`${page}`);
-//   const data = await resp.json();
-//   // setRecipes(data.hits);
-//   // setLinks(data._links);
-//   console.log("This is your data", data);
-// };
+export const nextPage = async (page, setLinks, setRecipes) => {
+  const resp = await fetch(`${page}`);
+  const data = await resp.json();
+  setRecipes(data.hits);
+  setLinks(data._links);
+  console.log("This is your data", data);
+};
