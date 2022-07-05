@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { SubButton } from "../../../../../../SubComponents/Button";
 
-export default function NextBack({ links, setPage }) {
+export default function NextBack({ links, pageNumber, changePage }) {
   return (
     <Row>
       {links.back ? (
@@ -16,9 +16,20 @@ export default function NextBack({ links, setPage }) {
       ) : null}
       {links.next ? (
         <Col>
+          <p>Page: {pageNumber + 1}</p>
           <SubButton
-            onClick={() => setPage(links.next.href)}
+            onClick={() => {
+              changePage(1);
+            }
+          }
             text="Next"
+            styling="green"
+          />
+          <SubButton
+            onClick={() => {
+              changePage(-1);
+            }}
+            text="Previous"
             styling="green"
           />
         </Col>
