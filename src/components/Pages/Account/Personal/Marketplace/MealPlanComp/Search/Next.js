@@ -1,39 +1,34 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { SubButton } from "../../../../../../SubComponents/Button";
 
 export default function NextBack({ links, pageNumber, changePage }) {
   return (
-    <Row>
-      {links.back ? (
-        <Col>
-          <SubButton
-            onClick={() => console.log(links.back.href)}
-            text="Back"
-            styling="green"
-          />
-        </Col>
-      ) : null}
-      {links.next ? (
-        <Col>
-          <p>Page: {pageNumber + 1}</p>
-          <SubButton
-            onClick={() => {
-              changePage(1);
-            }
-          }
-            text="Next"
-            styling="green"
-          />
-          <SubButton
-            onClick={() => {
-              changePage(-1);
-            }}
-            text="Previous"
-            styling="green"
-          />
-        </Col>
-      ) : null}
-    </Row>
+    <Container>
+      {
+        links.back ? (
+          <SubButton onClick={() => console.log(links.back.href)} text="Back" styling="green"/>) : null
+      }
+      
+      {
+        links.next ? (
+          <div>
+            <Row className="justify-content-md-center">
+              <p>Page: {pageNumber + 1}</p>
+            </Row>
+            <Row>
+              { pageNumber != 0 &&
+              <Col>
+                <SubButton onClick={() => changePage(-1)} text="Previous Page" styling="green" />
+              </Col>}
+              <Col>
+                <SubButton onClick={() => changePage(1)} text="Next Page" styling="green" />
+              </Col>
+            </Row>
+          </div>
+        ) : null
+      }
+    </Container>
+
   );
 }
