@@ -187,7 +187,7 @@ const App = (props) => {
               {!props.profile.isSeller && <Redirect to="/farm-auth" />}
             </Route>
             <Route path="/farm-auth" component={FarmerAuth}>
-              {/* {props.profile.isSeller && <Redirect to="/farm-plan" />} */}
+              {props.profile.isSeller && <Redirect to="/farm-plan" />}
             </Route>
             <Route path="/cons-auth" component={ConsumerAuth} />
             <Route path="/meal-plan" component={MealPlan} />
