@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //* Pages
 import Login from "./components/Pages/Auth/Mobile/LogInMob";
 import LandingPage from "./components/Pages/Auth/Mobile/Landing";
+// import LoadingScreen from "./components/SubComponents/LoadingScreen";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 import SignUp from "./components/Pages/Auth/Mobile/SignUp";
@@ -152,6 +153,7 @@ const App = (props) => {
             {/* <Route path="/example" exact component={Example} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
+            {/* <Route path="/loading" exact component={LoadingScreen} /> */}
             <Route path="/about-us" exact component={AboutUs} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/settings" exact component={Settings} />
@@ -182,7 +184,7 @@ const App = (props) => {
             <Route path="/reserve-items" component={ReserveItems} />
 
             <Route path="/farm-plan" component={FarmPlan}>
-              {!props.profile.isSeller && <Redirect to="/farm-plan" />}
+              {!props.profile.isSeller && <Redirect to="/farm-auth" />}
             </Route>
             <Route path="/farm-auth" component={FarmerAuth}>
               {props.profile.isSeller && <Redirect to="/farm-plan" />}

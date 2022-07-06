@@ -6,6 +6,7 @@ import { SubButton } from "../../SubComponents/Button";
 import { LogOutPopUp } from "../../SubComponents/PopUp";
 import { PageWrap } from "../../SubComponents/PageWrap";
 import { Heading } from "../../SubComponents/Heading";
+import LoadingScreen from "../../SubComponents/LoadingScreen";
 
 import { Form, Col, ListGroup, Badge, FormGroup } from "react-bootstrap";
 
@@ -59,6 +60,12 @@ import CloseIcon from "@mui/icons-material/Close";
 // "Name", "Email", "Password" and "Location".
 
 function Settings(props) {
+  //handles loading page
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1500);
+  });
+
   //auth
   const [firstName, setFirstName] = useState(props.profile.firstName);
   const [lastName, setLastName] = useState(props.profile.lastName);
@@ -256,6 +263,9 @@ function Settings(props) {
   }
 
   if (!props.auth.uid) return <Redirect to="/login" />;
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   switch (form) {
     case "changeName":
