@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Mealplan.css";
 import { PageWrap } from "../../../../../SubComponents/PageWrap";
+import LoadingScreen from "../../../../../SubComponents/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "./Calendar";
@@ -11,6 +12,11 @@ import { ShoppingList } from "./BuildShoppingList/ShoppingList";
 import moment from "moment";
 
 export default function MealPlan() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1500);
+  });
+
   const [value, setValue] = useState(moment());
   const [tab, setTab] = useState(0);
 
@@ -27,6 +33,10 @@ export default function MealPlan() {
     } else if (key === "recipes") setTab(1);
     else setTab(2);
   };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <PageWrap goTo="/account" header="My Plan to Save">
