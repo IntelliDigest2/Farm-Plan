@@ -30,6 +30,8 @@ export default function RecipeList(props) {
                         meal={item.recipe.label}
                         ingredients={item.recipe.ingredients}
                         url={item.recipe.url}
+                        totalNutrients={item.recipe.totalNutrients}
+                        totalDaily={item.recipe.totalDaily}
                         onChange={props.onChange}
                         saved={false}
                       />
