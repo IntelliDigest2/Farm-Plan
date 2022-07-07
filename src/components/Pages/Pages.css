@@ -16,15 +16,40 @@ body {
   font-size: 16px;
 }
 
+/* About us page */
 .contrast {
-  border-radius: 15px;
+  margin-left: -1rem;
+  margin-right: -1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #d9dd99;
-  padding: 0.3rem;
+  padding: 2%;
+  /* ignoring parent padding => 100% + 2*padding */
+  width: calc(100% + 2rem);
 }
 .no-contrast {
-  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-top: 0.3rem;
-  padding: 0.3rem;
+  padding: 2rem;
+}
+
+.breaker {
+  margin-left: -1rem;
+  margin-right: -1rem;
+  height: 30vh;
+  overflow: hidden;
+}
+.breaker img {
+  position: relative;
+  object-fit: cover;
+  /* ignoring parent padding => 100% + 2*padding */
+  width: calc(100% + 2rem);
+  top: -100%;
 }
 
 /* page not found */
@@ -38,83 +63,6 @@ body {
 .not-found .not-found-message {
   font-size: 23px;
   padding-top: 10px;
-}
-
-/* login page and signup page */
-
-.login-graphic,
-.signup-graphic,
-.home,
-.home-mobile {
-  background-color: rgb(218, 218, 218);
-  background-image: linear-gradient(
-      rgba(51, 47, 47, 0.5),
-      rgba(95, 95, 95, 0.5)
-    ),
-    url("../../images/robot-backgroung.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-}
-
-.signup-graphic {
-  background-image: linear-gradient(
-      rgba(51, 47, 47, 0.5),
-      rgba(95, 95, 95, 0.5)
-    ),
-    url("../../images/signup3.jpg");
-  height: 175vh;
-}
-
-.new-signup-graphic {
-  background-image: url("../../images/for-website-col-test-9.png");
-  height: 95vh;
-}
-
-/* .foodpage-graphic{
-    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
-    height: 100vh;
-  }
-
-  .foodwastepage-graphic{
-    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
-    height: 125vh;
-  } */
-
-/* .signup-graphic-confirm{
-    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/signup3.jpg");
-    height: 100vh;
-    margin-top: 0%;
-    margin-bottom: 0%;
-  } */
-
-.home {
-  background-image: linear-gradient(rgba(92, 92, 92, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../../images/for-website.png");
-}
-
-.home-mobile {
-  background-image: linear-gradient(rgba(92, 92, 92, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../../images/for-website-2.png");
-}
-
-.home-text-mobile {
-  font-size: 3.5vh;
-  font-weight: bold;
-  color: rgb(218, 218, 218);
-}
-
-.home-update-text-mobile {
-  font-size: 2vh;
-  color: rgb(218, 218, 218);
-}
-
-.home-play-store-link {
-  color: #aab41e;
-  font-weight: 600;
-  font-size: 18px;
-  text-decoration: none;
 }
 
 .fix-image {
@@ -170,11 +118,6 @@ body {
   color: #757c0e;
   text-decoration: none;
 }
-
-/* .signup .confirm-btn{
-    background-color: rgb(13, 27, 92);
-    justify-content: center;
-  } */
 
 .terms-link,
 .privacy-link {

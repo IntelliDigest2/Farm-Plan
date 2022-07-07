@@ -12,12 +12,12 @@ import { SubButton } from "../SubComponents/Button";
 export default function AboutUs() {
   return (
     <PageWrap header="About Us" goTo="/landing">
-      <h1 className="mt-2">About the World Food Tracker</h1>
-      <h5 style={{ fontWeight: "600" }}>
-        END FOOD WASTE | END HUNGER | END MALNUTRITION | IMPROVE LOCAL FOOD
-        PRODUCTION
-      </h5>
       <div className="no-contrast">
+        <h1 className="mt-2">About the World Food Tracker</h1>
+        <h5 style={{ fontWeight: "600" }}>
+          END FOOD WASTE | END HUNGER | END MALNUTRITION | IMPROVE LOCAL FOOD
+          PRODUCTION
+        </h5>
         <p>
           The World Food Tracker is a comprehensive application designed with
           the food system as a whole in mind, from farm to fork.
@@ -33,7 +33,7 @@ export default function AboutUs() {
           and save our earth.
         </p>
       </div>
-      <div className="contrast mb-3">
+      {/* <div className="contrast mb-3">
         <Row>
           <Col>
             <img src={food} alt={"Food"} className="image" />
@@ -45,12 +45,15 @@ export default function AboutUs() {
             <img src={environment} alt={"Environment"} className="image" />
           </Col>
         </Row>
+      </div> */}
+      {/* <Divider /> */}
+      <div className="breaker">
+        <img src={food} alt="" />
       </div>
-      <Divider />
-      <h5 style={{ fontWeight: "600" }} className="mt-3">
-        FOOD
-      </h5>
       <div className="no-contrast">
+        <h5 style={{ fontWeight: "600" }} className="mt-3">
+          FOOD
+        </h5>
         <p>
           <b>Want to keep a detailed meal plan?</b> The World Food Tracker is
           designed for you to get your meal planning to the next level.
@@ -69,11 +72,15 @@ export default function AboutUs() {
           their production, which reduces the food that is wasted after harvest.
         </p>
       </div>
-      <Divider />
-      <h5 style={{ fontWeight: "600" }} className="mt-3">
-        Health
-      </h5>
+
+      <div className="breaker">
+        <img src={health} alt="" />
+      </div>
+
       <div className="no-contrast">
+        <h5 style={{ fontWeight: "600" }} className="mt-3">
+          Health
+        </h5>
         <p>
           The World Food Tracker helps individuals and households to live a
           healthier lifeand transition towards a healthier diet through support
@@ -97,11 +104,15 @@ export default function AboutUs() {
           Let us help you connect to the right customers.
         </p>
       </div>
-      <Divider />
-      <h5 style={{ fontWeight: "600" }} className="mt-3">
-        Environment
-      </h5>
+
+      <div className="breaker">
+        <img src={environment} alt="" />
+      </div>
+
       <div className="no-contrast">
+        <h5 style={{ fontWeight: "600" }} className="mt-3">
+          Environment
+        </h5>
         <p>The World Food Tracker helps you keep track of your food waste.</p>
         <p>
           <b>Curious about how much food is being wasted?</b> The World Food
@@ -116,32 +127,46 @@ export default function AboutUs() {
           while tracking and reducing your avoidable food loss.
         </p>
       </div>
-      <Divider />
-      <SubButton styling="blue" goTo="/login" text="Log In" />
-      <SubButton styling="blue" goTo="/signup" text="Sign Up" />
-      <Divider />
-      <h1 className="mt-2">About IntelliDigest Ltd</h1>
-      <p>
-        Drawing on cutting edge research, training and consulting, our mission
-        at IntelliDigest is to develop new, sustainable technologies, and create
-        innovative solutions to address the sustainability challenges faced by
-        food producers and governments globally.
-      </p>
-      <p>
-        Eliminating edible food waste and repurposing inedible waste to climate
-        friendly chemicals is at the core of everything we do. We believe that
-        reducing food waste at food production, retail, and household level can
-        provide numerous benefits for both the planet and our communities.
-      </p>
-      <p>
-        Through our research and consulting facilities, IntelliDigest is
-        continuously working on helping governments and the public understand
-        the true scale of the food waste issue and the consequences of
-        inadequate food waste handling. Advocating for increased awareness about
-        measuring food waste inspired our Global Food Loss & Waste Tracker
-        system, designed to allow households to monitor their efforts and save
-        money through reducing food waste.
-      </p>
+
+      <div className="no-contrast">
+        <h1 className="mt-3">About IntelliDigest Ltd</h1>
+        <p>
+          Drawing on cutting edge research, training and consulting, our mission
+          at IntelliDigest is to develop new, sustainable technologies, and
+          create innovative solutions to address the sustainability challenges
+          faced by food producers and governments globally.
+        </p>
+        <p>
+          Eliminating edible food waste and repurposing inedible waste to
+          climate friendly chemicals is at the core of everything we do. We
+          believe that reducing food waste at food production, retail, and
+          household level can provide numerous benefits for both the planet and
+          our communities.
+        </p>
+        <p>
+          Through our research and consulting facilities, IntelliDigest is
+          continuously working on helping governments and the public understand
+          the true scale of the food waste issue and the consequences of
+          inadequate food waste handling. Advocating for increased awareness
+          about measuring food waste inspired our Global Food Loss & Waste
+          Tracker system, designed to allow households to monitor their efforts
+          and save money through reducing food waste.
+        </p>
+      </div>
+      {/* <div className="contrast"> */}
+      <Row style={{ justifyContent: "center" }} className="mt-3">
+        <Col
+          style={{ width: "50%", justifyContent: "center", display: "flex" }}
+        >
+          <SubButton styling="blue" goTo="/login" text="Log In" />
+        </Col>
+        <Col
+          style={{ width: "50%", justifyContent: "center", display: "flex" }}
+        >
+          <SubButton styling="blue" goTo="/signup" text="Sign Up" />
+        </Col>
+      </Row>
+      {/* </div> */}
     </PageWrap>
   );
 }
