@@ -38,7 +38,7 @@ export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
                 <div
                   className="day"
                   key={day.format("D").toString()}
-                  onClick={() => !beforeToday(day) && onChange(day)}
+                  onClick={() => onChange(day)}
                 >
                   <div className={dayStyles(day, value)}>
                     {day.format("D").toString()}

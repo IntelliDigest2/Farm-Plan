@@ -4,6 +4,7 @@ import MealsBox from "./MealsBox";
 
 import { connect } from "react-redux";
 import { getMealData } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
+import { NutrientIntake } from "./NutrientIntake";
 
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
@@ -31,6 +32,8 @@ function MyMeals(props) {
       var id = doc.id;
       var mealType = doc.mealType;
       var url = doc.url;
+      var totalNutrients = doc.totalNutrients;
+      var totalDaily = doc.totalDaily;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
@@ -47,6 +50,8 @@ function MyMeals(props) {
           id: id,
           nn: nn,
           url: url,
+          totalNutrients: totalNutrients,
+          totalDaily: totalDaily
         },
       ]);
     });
@@ -66,12 +71,15 @@ function MyMeals(props) {
   return (
     <>
       {meals.length ? (
-        <MealsBox
-          forceUpdate={props.forceUpdate}
-          meals={meals}
-          saved={false}
-          value={props.value}
-        />
+        <div>
+          <MealsBox
+            forceUpdate={props.forceUpdate}
+            meals={meals}
+            saved={false}
+            value={props.value}
+          />
+          <NutrientIntake meals={meals}/>
+        </div>
       ) : (
         <div className="empty basic-title-left">
           <p>There is no plan for today :( Try adding something. </p>

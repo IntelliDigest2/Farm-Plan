@@ -151,6 +151,7 @@ const AccountType = (props) => {
       );
     case "business_admin":
     case "business_sub":
+    case "restaurant":
       return (
         <>
           <TabList

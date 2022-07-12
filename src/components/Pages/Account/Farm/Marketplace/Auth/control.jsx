@@ -164,12 +164,20 @@ function Control(props) {
     case 5.3:
       return (
         <>
-          <div className="basic-title">
+          <div className="basic-text">
             Thanks for your interest in the World Food tracker. We only engage
             with sustainable farmers. Please, get back to us once you decide to
             farm sustainably.
           </div>
-          <div className="basic-title mb-2">We are here to support you.</div>
+          <div className="basic-text mb-2">We are here to support you.</div>
+          <div className="basic-text mb-2">
+            To learn more about our approach to sustainability, check out the
+            Food Industry Sustainability Index on our website{" "}
+            <a href="https://intellidigest.com/services/food-system-sustainability/food-industry-sustainability-index/?doing_wp_cron=1657288516.7443490028381347656250">
+              here
+            </a>
+            .
+          </div>
         </>
       );
     case 6:
