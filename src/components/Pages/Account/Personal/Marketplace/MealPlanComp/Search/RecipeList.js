@@ -32,6 +32,7 @@ export default function RecipeList(props) {
                         url={item.recipe.url}
                         totalNutrients={item.recipe.totalNutrients}
                         totalDaily={item.recipe.totalDaily}
+                        yield={item.recipe.yield}
                         onChange={props.onChange}
                         saved={false}
                       />

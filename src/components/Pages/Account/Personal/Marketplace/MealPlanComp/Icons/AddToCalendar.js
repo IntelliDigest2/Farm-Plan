@@ -49,6 +49,7 @@ function AddToCalendar(props) {
           mealType: props.selected.mealType,
           totalNutrients: props.selected.totalNutrients,
           totalDaily: props.selected.totalDaily,
+          yield: props.selected.yield,
           url: props.selected.url,
           nonNativeData: true,
         },

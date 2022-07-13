@@ -4,7 +4,6 @@ import MealsBox from "./MealsBox";
 
 import { connect } from "react-redux";
 import { getMealData } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
-import { NutrientIntake } from "./NutrientIntake";
 
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
@@ -78,7 +77,6 @@ function MyMeals(props) {
             saved={false}
             value={props.value}
           />
-          {/* <NutrientIntake meals={meals}/> */}
         </div>
       ) : (
         <div className="empty basic-title-left">
