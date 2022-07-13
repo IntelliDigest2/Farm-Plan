@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Collapse, Accordion} from "react-bootstrap";
+import { Button, Card, Collapse, Accordion, Table} from "react-bootstrap";
 
 export const NutrientIntake = (props) => {
     // array of nutrients consumed from all meals
@@ -65,6 +65,10 @@ export const NutrientIntake = (props) => {
     console.log("All Total Nutrients: ", allTotalNutrients);
     console.log("All Total Daily: ", allTotalDaily);
 
+    const changeCellStyle = (rdiValue) => {
+        return rdiValue <= 10 ? 'tomato' : rdiValue >=50 ? '#b3b785' : null; 
+    }
+
     return (
         <div>
 
@@ -82,18 +86,19 @@ export const NutrientIntake = (props) => {
                     <Card.Header></Card.Header>
                     <Accordion.Collapse eventKey="0">
                         <Card.Body>
-                            <table className="table table-striped table-bordered table-hover table-condensed">
+                            <Table striped bordered hover condensed>
                                 <thead>
                                     <tr>
                                         <th>Nutrient</th>
                                         <th>Quantity Consumed</th>
-                                        <th>RDI</th>
+                                        <th>Reference Daily Intake (RDI)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {allTotalNutrients?.map(nutrient => {
                                         return (
-                                                <tr>
+                                                <tr style={{backgroundColor: changeCellStyle(allTotalDaily.find(element => 
+                                                element.label === nutrient.label)?.quantity)}}>
                                                     <td>{nutrient.label}</td>
                                                     <td>{Math.round(nutrient.quantity * 10) / 10} {nutrient.unit}</td>
                                                     <td>{allTotalDaily.find(element => element.label === nutrient.label) ? 
@@ -105,7 +110,7 @@ export const NutrientIntake = (props) => {
                                         )
                                     }
                                 </tbody>
-                            </table>
+                            </Table>
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
