@@ -78,7 +78,7 @@ function MyMeals(props) {
             saved={false}
             value={props.value}
           />
-          <NutrientIntake meals={meals}/>
+          {/* <NutrientIntake meals={meals}/> */}
         </div>
       ) : (
         <div className="empty basic-title-left">

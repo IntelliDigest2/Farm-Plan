@@ -7,6 +7,7 @@ import dayStyles, { beforeToday } from "./BuildCalendar/dayStyles";
 import CalendarHeader from "./BuildCalendar/header";
 
 import MyMeals from "./meals";
+import { NutrientIntake } from "./NutrientIntake";
 
 export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
   const [calendar, setCalendar] = useState([]);
@@ -64,6 +65,7 @@ export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
           setShow={setShow}
           forceUpdate={forceUpdate}
         />
+        <NutrientIntake meals={[]}/>
       </div>
     </>
   );

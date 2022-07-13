@@ -19,6 +19,8 @@ export const NutrientIntake = (props) => {
             // forEach checks if nutrient object is already in array, if it is then 
             // add its quantity to prev quantity, if not then push the object to the array
             props.meals.forEach(element => {
+                if(!element.totalNutrients)
+                    return;
                     Object.keys(element.totalNutrients).forEach(nutrient => {
                         let found = arrNutrients.find(tableNutrient => 
                             tableNutrient.label === element.totalNutrients[nutrient].label)
@@ -47,6 +49,8 @@ export const NutrientIntake = (props) => {
             let arr = [...oldArr];
             // forEach does the same as above forEach but for RDI
             props.meals.forEach(element => {
+                if(!element.totalNutrients)
+                return;
                     Object.keys(element.totalDaily).forEach(nutrient => {
                         let found = arr.find(tableNutrient =>
                              tableNutrient.label === element.totalDaily[nutrient].label)
