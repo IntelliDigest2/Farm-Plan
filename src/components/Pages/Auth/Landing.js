@@ -1,12 +1,12 @@
 import { React } from "react";
 import "./Landing.css";
 
-import { SubButton } from "../../../SubComponents/Button";
+import { SubButton } from "../../SubComponents/Button";
 
 import { connect } from "react-redux";
 
-import peppers from "../../../../images/peppers.jpg";
-import logo from "../../../../images/WFTLogo.png";
+import peppers from "../../../images/peppers.jpg";
+import logo from "../../../images/WFTLogo.png";
 
 function LandingPage(props) {
   return (
