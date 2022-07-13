@@ -65,7 +65,9 @@ export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
           setShow={setShow}
           forceUpdate={forceUpdate}
         />
-        <NutrientIntake meals={[]}/>
+      </div>
+      <div className="plan-box">
+        <NutrientIntake meals={[]} />
       </div>
     </>
   );
