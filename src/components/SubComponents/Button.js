@@ -67,7 +67,6 @@ export function AddButton({ onClick, title }) {
       variant="default"
       className={["add-btn", "green-btn", "shadow-none"]}
       onClick={onClick}
-      title={title}
     >
       <div>
         <AddIcon sx={{ fontSize: 30 }} />

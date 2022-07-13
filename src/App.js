@@ -9,15 +9,17 @@ import "./App.css";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+//* Test
+// import Scanner from "./components/SubComponents/QRCode/Scanner";
+
 //* Pages
-import Login from "./components/Pages/Auth/Mobile/LogInMob";
-import LandingPage from "./components/Pages/Auth/Mobile/Landing";
-// import LoadingScreen from "./components/SubComponents/LoadingScreen";
+import Login from "./components/Pages/Auth/LogIn";
+import LandingPage from "./components/Pages/Auth/Landing";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
-import SignUp from "./components/Pages/Auth/Mobile/SignUp";
+import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
-import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
+import Questionnaire from "./components/Pages/Auth/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
@@ -150,10 +152,9 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
-            {/* <Route path="/example" exact component={Example} /> */}
+            {/* <Route path="/scan-qr-code" component={Scanner} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
-            {/* <Route path="/loading" exact component={LoadingScreen} /> */}
             <Route path="/about-us" exact component={AboutUs} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/settings" exact component={Settings} />
