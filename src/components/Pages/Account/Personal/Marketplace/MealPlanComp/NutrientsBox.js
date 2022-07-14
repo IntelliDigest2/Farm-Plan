@@ -170,7 +170,7 @@ const NutrientsBox = (props) => {
                                         {allTotalNutrients?.map(nutrient => {
                                             return (
                                                     <tr style={{backgroundColor: changeCellStyle(allTotalDaily.find(element => 
-                                                    element.label === nutrient.label)?.quantity)}}>
+                                                    element.label === nutrient.label)?.quantity.toFixed(1))}}>
                                                         <td>{nutrient.label}</td>
                                                         <td>{nutrient.quantity.toFixed(1)} {nutrient.unit}</td>
                                                         <td>{allTotalDaily.find(element => element.label === nutrient.label) ? 
