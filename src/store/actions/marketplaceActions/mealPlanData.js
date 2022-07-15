@@ -206,7 +206,7 @@ export const recommend = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()
       .firestore()
-      .collection("anonymous_data")
+      .collection("recommendations")
       .add(data)
       .then(() => {
         dispatch({ type: "CREATE_DATA" });

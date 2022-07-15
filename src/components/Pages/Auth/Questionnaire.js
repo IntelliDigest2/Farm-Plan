@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
 import "./Mob.css";
-import { PageWrap } from "../../../SubComponents/PageWrap";
-import { SubButton } from "../../../SubComponents/Button";
-import { Dropdown } from "../../../SubComponents/Dropdown";
-import { submitNotification } from "../../../lib/Notifications";
+import { PageWrap } from "../../SubComponents/PageWrap";
+import { SubButton } from "../../SubComponents/Button";
+import { Dropdown } from "../../SubComponents/Dropdown";
+import { submitNotification } from "../../lib/Notifications";
 
 import Divider from "@mui/material/Divider";
 import { Form } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { createResearchData } from "../../../../store/actions/dataActions";
+import { createResearchData } from "../../../store/actions/dataActions";
 
 function Questionnaire(props) {
   const [sixteenPlus, setSixteenPlus] = useState(Boolean);

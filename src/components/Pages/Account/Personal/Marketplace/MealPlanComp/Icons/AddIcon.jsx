@@ -28,6 +28,7 @@ function Add(props) {
         url: props.url,
         totalNutrients: props.totalNutrients,
         totalDaily: props.totalDaily,
+        yield: props.yield,
       });
     }
   };

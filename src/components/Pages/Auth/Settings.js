@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import "./Mobile/Mob.css";
+import "./Mob.css";
 import "./Settings.css";
 import { SubButton } from "../../SubComponents/Button";
 import { LogOutPopUp } from "../../SubComponents/PopUp";

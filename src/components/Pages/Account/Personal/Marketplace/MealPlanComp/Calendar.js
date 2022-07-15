@@ -7,6 +7,7 @@ import dayStyles, { beforeToday } from "./BuildCalendar/dayStyles";
 import CalendarHeader from "./BuildCalendar/header";
 
 import MyMeals from "./meals";
+import NutrientsBox from "./NutrientsBox";
 
 export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
   const [calendar, setCalendar] = useState([]);
@@ -63,6 +64,13 @@ export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
           show={show}
           setShow={setShow}
           forceUpdate={forceUpdate}
+        />
+      </div>
+      <div className="plan-box">
+        <NutrientsBox
+          value={value}
+          update={update}
+          tab={tab}
         />
       </div>
     </>
