@@ -10,6 +10,7 @@ import SavedMeals from "./SavedMeals";
 import RecipeSearch from "./Search/RecipeSearch";
 import { ShoppingList } from "./BuildShoppingList/ShoppingList";
 import moment from "moment";
+import { Inventory } from "./Inventory";
 
 export default function MealPlan() {
   const [loading, setLoading] = useState(true);
@@ -31,7 +32,8 @@ export default function MealPlan() {
       setTab(0);
       // console.log(tab);
     } else if (key === "recipes") setTab(1);
-    else setTab(2);
+    else if (key === "shopping-list") setTab(2);
+    else setTab(3);
   };
 
   if (loading) {
@@ -78,6 +80,16 @@ export default function MealPlan() {
             value={value}
             tab={tab}
           />
+        </Tab>
+        <Tab eventKey="inventory" title="INVENTORY" className="mealtab">
+          {/* <div className="basic-title">
+            This feature is currently in development.
+          </div> */}
+          <Inventory
+            update={update}
+            forceUpdate={forceUpdate}
+            value={value}
+            tab={tab}/>
         </Tab>
       </Tabs>
 

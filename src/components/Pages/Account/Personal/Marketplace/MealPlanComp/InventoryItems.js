@@ -1,0 +1,106 @@
+import React, { useState, useEffect } from "react";
+
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+
+import { connect } from "react-redux";
+import { getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData"
+import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
+
+function InventoryItems(props) {
+  const [list, setList] = useState([]);
+//   const [update, setUpdate] = useState(0);
+
+  //this sends data request
+  useEffect(() => {
+    const data = {};
+
+    if (props.tab === 3) props.getInventory(data);
+    // console.log(props.data);
+  }, [props.value, props.update, props.tab]);
+
+  const updateInventoryList = async () => {
+    //clears the items array before each update- IMPORTANT
+    setList([]);
+
+    //sets a new item object in the array for every document
+    props.data.forEach((doc) => {
+      // id is the docref for deletion
+      var id = doc.id;
+      var item = doc.item;
+
+      setList((list) => [
+        ...list,
+        {
+          item: item,
+          id: id,
+        },
+      ]);
+    });
+
+    setList(list => {
+        let newList = [...list];
+        newList.sort((a, b) => {
+            return a.item < b.item ? -1
+            : a.item > b.item ? 1
+            : 0
+            })
+            // console.log("list sorted");
+        return newList;
+        })
+  };
+
+  useEffect(() => {
+    if (props.tab === 3) {
+      updateInventoryList();
+    }
+  }, [props.data]);
+
+  return (
+    <>
+        {list.length ? (
+        <>
+          <List>
+            {list.map((item, index) => (
+              <ListItem
+                key={`item${index}`}
+                className="list"
+                style={{ alignItems: "flex-end" }}
+              >
+                <p>
+                  {item.item}
+                </p>
+                <div className="icons">
+                <RemoveFromInventoryIcon
+                    id={item.id}
+                    value={props.value}
+                    update={props.update}
+                    setUpdate={props.setUpdate}
+                  />
+                </div>
+              </ListItem>
+            ))}
+          </List>
+        </>
+      ) : (
+        <div className="empty basic-title-left">
+          <p>There are no items in the list :( </p>
+        </div>
+      )}
+    </>
+  );
+}
+
+const mapStateToProps = (state) => {
+  return {
+    data: state.data.getData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getInventory: (item) => dispatch(getInventory(item)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(InventoryItems);
