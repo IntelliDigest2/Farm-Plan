@@ -1,4 +1,4 @@
-export const createMealPlanData = (data) => {
+export const createMealPlanData = (mealPlan) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -34,9 +34,9 @@ export const createMealPlanData = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("mealPlanData")
-      .doc(data.month)
-      .collection(data.day)
-      .add(data.upload)
+      .doc(mealPlan.month)
+      .collection(mealPlan.day)
+      .add(mealPlan.upload)
       .then((docRef) => {
         // make the docId easily accessible so that we can delete it later if we want.
         getFirebase()
@@ -44,19 +44,19 @@ export const createMealPlanData = (data) => {
           .collection("marketplace")
           .doc(uid)
           .collection("mealPlanData")
-          .doc(data.month)
-          .collection(data.day)
+          .doc(mealPlan.month)
+          .collection(mealPlan.day)
           .doc(docRef.id)
           .set({ id: docRef.id }, { merge: true });
-        dispatch({ type: "CREATE_DATA" });
+        dispatch({ type: "CREATE_MEAL", mealPlan });
       })
       .catch((err) => {
-        dispatch({ type: "CREATE_DATA_ERROR", err });
+        dispatch({ type: "CREATE_MEAL_ERROR", err });
       });
   };
 };
 
-export const getMealData = (data) => {
+export const getMealData = (meals) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -92,23 +92,23 @@ export const getMealData = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("mealPlanData")
-      .doc(data.month)
-      .collection(data.day)
+      .doc(meals.month)
+      .collection(meals.day)
       .get()
       .then((snapshot) => {
-        const data = [];
+        const mealPlan = [];
         snapshot.forEach((doc) => {
-          data.push(doc.data());
+          mealPlan.push(doc.data());
         });
-        dispatch({ type: "GET_DATA", payload: data });
+        dispatch({ type: "GET_MEALS", payload: mealPlan });
       })
       .catch((err) => {
-        dispatch({ type: "GET_DATA_ERROR", err });
+        dispatch({ type: "GET_MEALS_ERROR", err });
       });
   };
 };
 
-export const editMealData = (data) => {
+export const editMealData = (mealPlan) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -144,18 +144,18 @@ export const editMealData = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("mealPlanData")
-      .doc(data.month)
-      .collection(data.day)
-      .doc(data.id)
-      .set(data.upload, { merge: true })
-      .then(() => console.log("successfully edited! "))
+      .doc(mealPlan.month)
+      .collection(mealPlan.day)
+      .doc(mealPlan.id)
+      .set(mealPlan.upload, { merge: true })
+      .then(() => dispatch({ type: "EDIT_MEAL", mealPlan }))
       .catch((err) => {
-        dispatch(console.log("Error editing document:", err));
+        dispatch({ type: "EDIT_MEAL_ERROR", err });
       });
   };
 };
 
-export const deleteMealData = (data) => {
+export const deleteMealData = (mealPlan) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -191,13 +191,13 @@ export const deleteMealData = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("mealPlanData")
-      .doc(data.month)
-      .collection(data.day)
-      .doc(data.id)
+      .doc(mealPlan.month)
+      .collection(mealPlan.day)
+      .doc(mealPlan.id)
       .delete()
-      .then(() => console.log("successfully deleted! "))
+      .then(() => dispatch({ type: "DELETE_MEAL", mealPlan }))
       .catch((err) => {
-        dispatch(console.log("Error removing document:", err));
+        dispatch({ type: "DELETE_MEAL_ERROR", err });
       });
   };
 };

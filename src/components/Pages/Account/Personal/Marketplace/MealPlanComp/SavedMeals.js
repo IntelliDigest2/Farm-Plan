@@ -44,7 +44,7 @@ const SavedMeals = (props) => {
       // console.log("Saved Meals", sMeals);
     }
     // .then(setSMeals(sorted));
-    // console.log(sMeals);
+    console.log(props.data);
   }, [props.data]);
 
   return (

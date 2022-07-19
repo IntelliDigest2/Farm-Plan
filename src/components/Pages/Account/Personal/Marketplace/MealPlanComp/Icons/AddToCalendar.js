@@ -119,17 +119,11 @@ function AddToCalendar(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.firebase.auth,
-    profile: state.firebase.profile,
-  };
-};
 const mapDispatchToProps = (dispatch) => {
   return {
-    createMealPlanData: (data) => dispatch(createMealPlanData(data)),
+    createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddToCalendar);
+export default connect(null, mapDispatchToProps)(AddToCalendar);

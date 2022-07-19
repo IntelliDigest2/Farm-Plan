@@ -99,10 +99,10 @@ export const getShoppingList = (data) => {
         snapshot.forEach((doc) => {
           data.push(doc.data());
         });
-        dispatch({ type: "GET_DATA", payload: data });
+        dispatch({ type: "GET_SHOPPING_LIST", payload: data });
       })
       .catch((err) => {
-        dispatch({ type: "GET_DATA_ERROR", err });
+        dispatch({ type: "GET_SHOPPING_LIST_ERROR", err });
       });
   };
 };

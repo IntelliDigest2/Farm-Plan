@@ -172,17 +172,12 @@ function AddMealForm(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    profile: state.firebase.profile,
-  };
-};
 const mapDispatchToProps = (dispatch) => {
   return {
-    createMealPlanData: (data) => dispatch(createMealPlanData(data)),
+    createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
     createSavedMeal: (data) => dispatch(createSavedMeal(data)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMealForm);
+export default connect(null, mapDispatchToProps)(AddMealForm);

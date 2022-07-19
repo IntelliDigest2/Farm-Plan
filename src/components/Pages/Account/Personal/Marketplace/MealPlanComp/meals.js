@@ -17,7 +17,7 @@ function MyMeals(props) {
     };
 
     if (props.tab === 0) props.getMealData(data);
-    // console.log(props.data);
+    // console.log("sending request");
   }, [props.value, props.update, props.tab]);
 
   const updateMeals = async () => {
@@ -25,7 +25,7 @@ function MyMeals(props) {
     setMeals([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.data.forEach((doc) => {
+    props.mealPlan.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
@@ -50,7 +50,7 @@ function MyMeals(props) {
           nn: nn,
           url: url,
           totalNutrients: totalNutrients,
-          totalDaily: totalDaily
+          totalDaily: totalDaily,
         },
       ]);
     });
@@ -61,11 +61,7 @@ function MyMeals(props) {
       updateMeals();
       // console.log("Meal Plan:", meals);
     }
-  }, [props.data]);
-
-  // useEffect(() => {
-  //   console.log(meals);
-  // }, [meals]);
+  }, [props.mealPlan]);
 
   return (
     <>
@@ -89,13 +85,13 @@ function MyMeals(props) {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    mealPlan: state.mealPlan.meals,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMealData: (product) => dispatch(getMealData(product)),
+    getMealData: (meals) => dispatch(getMealData(meals)),
   };
 };
 

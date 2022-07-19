@@ -27,7 +27,7 @@ function ShopItems(props) {
     setList([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.data.forEach((doc) => {
+    props.shoppingList.forEach((doc) => {
       //id is the docref for deletion
       var id = doc.id;
       var food = doc.ingredient.food;
@@ -51,7 +51,7 @@ function ShopItems(props) {
       updateShoppingList();
       // console.log("shopping list", list);
     }
-  }, [props.data]);
+  }, [props.shoppingList]);
 
   return (
     <>
@@ -91,7 +91,7 @@ function ShopItems(props) {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    shoppingList: state.mealPlan.shoppingList,
   };
 };
 

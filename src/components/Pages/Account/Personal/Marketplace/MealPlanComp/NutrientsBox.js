@@ -1,206 +1,226 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Collapse, Accordion, Table} from "react-bootstrap";
+import { Button, Card, Collapse, Accordion, Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getMealData } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
 
 const NutrientsBox = (props) => {
+  const [meals, setMeals] = useState([]);
 
-    const [meals, setMeals] = useState([]);
-
-    //this sends data request
-    useEffect(() => {
-      const data = {
-        //decided to group year and month together, should this be changed?
-        month: props.value.format("YYYYMM"),
-        day: props.value.format("DD"),
-      };
-  
-      if (props.tab === 0) props.getMealData(data);
-      // console.log(props.data);
-    }, [props.value, props.update, props.tab]);
-  
-    const updateMeals = async () => {
-      //clears the meals array before each update- IMPORTANT
-      setMeals([]);
-  
-      //sets a new meal object in the array for every document with this date attached
-      props.data.forEach((doc) => {
-        var mealName = doc.meal;
-        var ingredients = doc.ingredients;
-        var id = doc.id;
-        var mealType = doc.mealType;
-        var url = doc.url;
-        var totalNutrients = doc.totalNutrients;
-        var totalDaily = doc.totalDaily;
-        var recipeYield = doc.yield;
-        let nn;
-        if (doc.nonNativeData) {
-          nn = doc.nonNativeData;
-        } else {
-          nn = false;
-        }
-  
-        setMeals((meals) => [
-          ...meals,
-          {
-            meal: mealName,
-            mealType: mealType,
-            ingredients: ingredients,
-            id: id,
-            nn: nn,
-            url: url,
-            totalNutrients: totalNutrients,
-            totalDaily: totalDaily,
-            recipeYield: recipeYield
-          },
-        ]);
-      });
+  //this sends data request
+  useEffect(() => {
+    const data = {
+      //decided to group year and month together, should this be changed?
+      month: props.value.format("YYYYMM"),
+      day: props.value.format("DD"),
     };
-  
-    useEffect(() => {
-      if (props.tab === 0) {
-        updateMeals();
-        // console.log("Meal Plan:", meals);
+
+    if (props.tab === 0) props.getMealData(data);
+    // console.log(props.data);
+  }, [props.value, props.update, props.tab]);
+
+  const updateMeals = async () => {
+    //clears the meals array before each update- IMPORTANT
+    setMeals([]);
+
+    //sets a new meal object in the array for every document with this date attached
+    props.mealPlan.forEach((doc) => {
+      var mealName = doc.meal;
+      var ingredients = doc.ingredients;
+      var id = doc.id;
+      var mealType = doc.mealType;
+      var url = doc.url;
+      var totalNutrients = doc.totalNutrients;
+      var totalDaily = doc.totalDaily;
+      var recipeYield = doc.yield;
+      let nn;
+      if (doc.nonNativeData) {
+        nn = doc.nonNativeData;
+      } else {
+        nn = false;
       }
-    }, [props.data]);
 
+      setMeals((meals) => [
+        ...meals,
+        {
+          meal: mealName,
+          mealType: mealType,
+          ingredients: ingredients,
+          id: id,
+          nn: nn,
+          url: url,
+          totalNutrients: totalNutrients,
+          totalDaily: totalDaily,
+          recipeYield: recipeYield,
+        },
+      ]);
+    });
+  };
 
-    // array of nutrients consumed from all meals
-    const [allTotalNutrients, setAllTotalNutrients] = useState([]);
-    // array of RDI from nutrients consumed from all meals
-    const [allTotalDaily, setAllTotalDaily] = useState([]);
-    // used for text change in Accordion
-    const [isExpanded, setIsExpanded] = useState(true);
-    
-    // console.log("props.meals: ", props.meals)
-
-    useEffect(() => {
-        setAllTotalNutrients([]);
-        setAllTotalNutrients(oldArr => {
-            let arrNutrients = [...oldArr];
-            let arrDaily = [];
-            // forEach checks if nutrient object is already in array, if it is then 
-            // add its quantity to prev quantity, if not then push the object to the array
-            meals.forEach(element => {
-                if(!element.totalNutrients)
-                    return;
-                    Object.keys(element.totalNutrients).forEach(nutrient => {
-                        let found = arrNutrients.find(tableNutrient => 
-                            tableNutrient.label === element.totalNutrients[nutrient].label)
-                        if(found) {
-                            console.log("Table nutrient found")
-                            found.quantity += element.totalNutrients[nutrient].quantity / element.recipeYield;
-                        }
-                        else {
-                            let newNutrient = element.totalNutrients[nutrient];
-                            newNutrient.quantity /= element.recipeYield;
-                            arrNutrients.push(newNutrient);
-                        }
-                    })
-                })
-                arrNutrients.sort((a, b) => {
-                    return a.label < b.label ? -1
-                    : a.label > b.label ? 1
-                    : 0
-                });
-                return arrNutrients;
-            })
-
-        setAllTotalDaily([]);
-        setAllTotalDaily(oldArr => {
-            let arr = [...oldArr];
-            // forEach does the same as above forEach but for RDI
-            meals.forEach(element => {
-                if(!element.totalNutrients)
-                return;
-                    Object.keys(element.totalDaily).forEach(nutrient => {
-                        let found = arr.find(tableNutrient =>
-                             tableNutrient.label === element.totalDaily[nutrient].label)
-                        if(found) {
-                            // console.log("Table RDI found");
-                            found.quantity += element.totalDaily[nutrient].quantity / element.recipeYield;
-                        }
-                        else {
-                            let newDaily = element.totalDaily[nutrient];
-                            newDaily.quantity /= element.recipeYield;
-                            arr.push(newDaily);
-                            // console.log("Table RDI not found");
-                        }
-
-                    })
-                })
-            return arr;
-        })
-    }, [meals]);
-    
-    // console.log("All Total Nutrients: ", allTotalNutrients);
-    // console.log("All Total Daily: ", allTotalDaily);
-
-    const changeCellStyle = (rdiValue) => {
-        return rdiValue <= 10 ? 'tomato' : rdiValue >=50 ? '#b3b785' : null; 
+  useEffect(() => {
+    if (props.tab === 0) {
+      updateMeals();
+      // console.log("Meal Plan:", meals);
     }
+  }, [props.mealPlan]);
 
-    return (
-        <div>
+  // array of nutrients consumed from all meals
+  const [allTotalNutrients, setAllTotalNutrients] = useState([]);
+  // array of RDI from nutrients consumed from all meals
+  const [allTotalDaily, setAllTotalDaily] = useState([]);
+  // used for text change in Accordion
+  const [isExpanded, setIsExpanded] = useState(true);
 
-            <Accordion defaultActiveKey="0">
-                <Accordion.Toggle as="div" 
-                className="header"
-                eventKey="0"
-                onClick={() => setIsExpanded(!isExpanded)}>
-                    Nutritional Information
-                        <div className="header" style={{marginLeft: "auto", paddingRight: "10px"}}>
-                            {isExpanded ? "Collapse" : "Expand"}
-                        </div>
-                </Accordion.Toggle>
-                <Card>
-                    <Card.Header></Card.Header>
-                    <Accordion.Collapse eventKey="0">
-                        <Card.Body>
-                            { meals.length ?
-                                (<Table striped bordered hover condensed>
-                                    <thead>
-                                        <tr>
-                                            <th>Nutrient</th>
-                                            <th>Quantity Consumed</th>
-                                            <th>Reference Daily Intake (RDI)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {allTotalNutrients?.map(nutrient => {
-                                            return (
-                                                    <tr style={{backgroundColor: changeCellStyle(allTotalDaily.find(element => 
-                                                    element.label === nutrient.label)?.quantity.toFixed(1))}}>
-                                                        <td>{nutrient.label}</td>
-                                                        <td>{nutrient.quantity.toFixed(1)} {nutrient.unit}</td>
-                                                        <td>{allTotalDaily.find(element => element.label === nutrient.label) ? 
-                                                        `${allTotalDaily.find(element => element.label === nutrient.label)
-                                                        .quantity.toFixed(1)} %` : '-'}</td>
-                                                    </tr>
-                                                    )
-                                                }
-                                            )
-                                        }
-                                    </tbody>
-                                </Table>)
-                                : 
-                                <div className="empty basic-title-left">
-                                    <p>Nutritional information will be shown once a meal is added to your plan.</p>
-                                </div>
-                            }
-                        </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-            </Accordion>
+  // console.log("props.meals: ", props.meals)
 
+  useEffect(() => {
+    setAllTotalNutrients([]);
+    setAllTotalNutrients((oldArr) => {
+      let arrNutrients = [...oldArr];
+      let arrDaily = [];
+      // forEach checks if nutrient object is already in array, if it is then
+      // add its quantity to prev quantity, if not then push the object to the array
+      meals.forEach((element) => {
+        if (!element.totalNutrients) return;
+        Object.keys(element.totalNutrients).forEach((nutrient) => {
+          let found = arrNutrients.find(
+            (tableNutrient) =>
+              tableNutrient.label === element.totalNutrients[nutrient].label
+          );
+          if (found) {
+            console.log("Table nutrient found");
+            found.quantity +=
+              element.totalNutrients[nutrient].quantity / element.recipeYield;
+          } else {
+            let newNutrient = element.totalNutrients[nutrient];
+            newNutrient.quantity /= element.recipeYield;
+            arrNutrients.push(newNutrient);
+          }
+        });
+      });
+      arrNutrients.sort((a, b) => {
+        return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
+      });
+      return arrNutrients;
+    });
 
-        </div>
-    );
-}
+    setAllTotalDaily([]);
+    setAllTotalDaily((oldArr) => {
+      let arr = [...oldArr];
+      // forEach does the same as above forEach but for RDI
+      meals.forEach((element) => {
+        if (!element.totalNutrients) return;
+        Object.keys(element.totalDaily).forEach((nutrient) => {
+          let found = arr.find(
+            (tableNutrient) =>
+              tableNutrient.label === element.totalDaily[nutrient].label
+          );
+          if (found) {
+            // console.log("Table RDI found");
+            found.quantity +=
+              element.totalDaily[nutrient].quantity / element.recipeYield;
+          } else {
+            let newDaily = element.totalDaily[nutrient];
+            newDaily.quantity /= element.recipeYield;
+            arr.push(newDaily);
+            // console.log("Table RDI not found");
+          }
+        });
+      });
+      return arr;
+    });
+  }, [meals]);
+
+  // console.log("All Total Nutrients: ", allTotalNutrients);
+  // console.log("All Total Daily: ", allTotalDaily);
+
+  const changeCellStyle = (rdiValue) => {
+    return rdiValue <= 10 ? "tomato" : rdiValue >= 50 ? "#b3b785" : null;
+  };
+
+  return (
+    <div>
+      <Accordion defaultActiveKey="0">
+        <Accordion.Toggle
+          as="div"
+          className="header"
+          eventKey="0"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          Nutritional Information
+          <div
+            className="header"
+            style={{ marginLeft: "auto", paddingRight: "10px" }}
+          >
+            {isExpanded ? "Collapse" : "Expand"}
+          </div>
+        </Accordion.Toggle>
+        <Card>
+          <Card.Header></Card.Header>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+              {meals.length ? (
+                <Table striped bordered hover condensed>
+                  <thead>
+                    <tr>
+                      <th>Nutrient</th>
+                      <th>Quantity Consumed</th>
+                      <th>Reference Daily Intake (RDI)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allTotalNutrients?.map((nutrient) => {
+                      return (
+                        <tr
+                          style={{
+                            backgroundColor: changeCellStyle(
+                              allTotalDaily
+                                .find(
+                                  (element) => element.label === nutrient.label
+                                )
+                                ?.quantity.toFixed(1)
+                            ),
+                          }}
+                        >
+                          <td>{nutrient.label}</td>
+                          <td>
+                            {nutrient.quantity.toFixed(1)} {nutrient.unit}
+                          </td>
+                          <td>
+                            {allTotalDaily.find(
+                              (element) => element.label === nutrient.label
+                            )
+                              ? `${allTotalDaily
+                                  .find(
+                                    (element) =>
+                                      element.label === nutrient.label
+                                  )
+                                  .quantity.toFixed(1)} %`
+                              : "-"}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              ) : (
+                <div className="empty basic-title-left">
+                  <p>
+                    Nutritional information will be shown once a meal is added
+                    to your plan.
+                  </p>
+                </div>
+              )}
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    mealPlan: state.mealPlan.meals,
   };
 };
 
