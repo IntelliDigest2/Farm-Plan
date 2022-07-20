@@ -8,8 +8,11 @@ export default function FoodItemSearch({ handleLocal, local }) {
 
   useEffect(() => {
     foodItemApi(query, setResponse);
-    console.log("response", response);
   }, [query]);
+
+  useEffect(() => {
+    console.log("response", response);
+  }, [response]);
 
   return (
     <Select
