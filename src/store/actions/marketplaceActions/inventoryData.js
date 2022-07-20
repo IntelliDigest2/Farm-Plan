@@ -44,15 +44,15 @@ export const addToInventory = (data) => {
           .collection("inventory")
           .doc(docRef.id)
           .set({ id: docRef.id }, { merge: true });
-        dispatch({ type: "CREATE_DATA" });
+        dispatch({ type: "CREATE_INVENTORY_ITEM" });
       })
       .catch((err) => {
-        dispatch({ type: "CREATE_DATA_ERROR", err });
+        dispatch({ type: "CREATE_INVENTORY_ITEM_ERROR", err });
       });
     };
   };
   
-  export const getInventory = (data) => {
+  export const getInventory = () => {
     return (dispatch, getState, { getFirestore }) => {
       //make async call to database
       const profile = getState().firebase.profile;
@@ -93,10 +93,10 @@ export const addToInventory = (data) => {
           snapshot.forEach((doc) => {
             data.push(doc.data());
           });
-          dispatch({ type: "GET_DATA", payload: data });
+          dispatch({ type: "GET_INVENTORY", payload: data });
         })
         .catch((err) => {
-          dispatch({ type: "GET_DATA_ERROR", err });
+          dispatch({ type: "GET_INVENTORY_ERROR", err });
         });
     };
   };

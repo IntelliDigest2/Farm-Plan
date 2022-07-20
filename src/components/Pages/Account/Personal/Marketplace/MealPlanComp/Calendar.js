@@ -66,13 +66,13 @@ export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
           forceUpdate={forceUpdate}
         />
       </div>
-      <div className="plan-box">
+      {/* <div className="plan-box">
         <NutrientsBox
           value={value}
           update={update}
           tab={tab}
         />
-      </div>
+      </div> */}
     </>
   );
 };
