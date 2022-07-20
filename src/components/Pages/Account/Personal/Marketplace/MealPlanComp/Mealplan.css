@@ -203,6 +203,12 @@
   height: fit-content;
 }
 
+.qrcode-btn {
+  font-family: "Source Sans Pro";
+  font-weight: 500;
+  font-size: 15px;
+}
+
 /* search */
 .edamam {
   /* width: 10rem;
