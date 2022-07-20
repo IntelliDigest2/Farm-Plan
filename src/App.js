@@ -68,6 +68,7 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 
 //* Chart.js
 import ChartView from "./components/Pages/Account/Charts/Chart";
+import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
 
 const App = (props) => {
   const [uid, setUid] = useState(props.auth.uid);
@@ -192,6 +193,7 @@ const App = (props) => {
             </Route>
             <Route path="/cons-auth" component={ConsumerAuth} />
             <Route path="/meal-plan" component={MealPlan} />
+            <Route path="/nutrient-gap" component={NutrientGap} />
             <Route path="/view-products" component={ViewProducts} />
 
             <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />

@@ -14,9 +14,10 @@ const NutrientsBox = (props) => {
       day: props.value.format("DD"),
     };
 
-    if (props.tab === 0) props.getMealData(data);
+    // if (props.tab === 0) 
+    props.getMealData(data);
     // console.log(props.data);
-  }, [props.value, props.update, props.tab]);
+  }, [props.value, /*props.update, props.tab*/]);
 
   const updateMeals = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -57,10 +58,10 @@ const NutrientsBox = (props) => {
   };
 
   useEffect(() => {
-    if (props.tab === 0) {
+    // if (props.tab === 0) {
       updateMeals();
       // console.log("Meal Plan:", meals);
-    }
+    // }
   }, [props.mealPlan]);
 
   // array of nutrients consumed from all meals
