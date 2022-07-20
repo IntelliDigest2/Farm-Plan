@@ -6,6 +6,8 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import RemoveFromShop from "../Icons/RemoveFromShop";
+import { getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { ItemAlreadyInInventoryIcon } from "../Icons/ItemAlreadyInInventoryIcon";
 
 function ShopItems(props) {
   const [list, setList] = useState([]);
@@ -18,7 +20,10 @@ function ShopItems(props) {
       week: props.value.format("w"),
     };
 
-    if (props.tab === 2) props.getShoppingList(data);
+    if (props.tab === 2) {
+      props.getShoppingList(data);
+      props.getInventory();
+    }
     // console.log(props.data);
   }, [props.value, update, props.tab]);
 
@@ -53,6 +58,15 @@ function ShopItems(props) {
     }
   }, [props.shoppingList]);
 
+  const isItemInInventory = (strItem) => {
+    for(let i = 0; i < props.inventory.length; i++) {
+      if(props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
+      // if(strItem.includes(props.inventory[i].item))
+        return true;
+    }
+    return false;
+  }
+
   return (
     <>
       {list.length ? (
@@ -69,6 +83,7 @@ function ShopItems(props) {
                   {ingr.measure}
                 </p>
                 <div className="icons">
+                  {isItemInInventory(ingr.food) ? <ItemAlreadyInInventoryIcon /> : null}
                   <RemoveFromShop
                     id={ingr.id}
                     value={props.value}
@@ -92,12 +107,14 @@ function ShopItems(props) {
 const mapStateToProps = (state) => {
   return {
     shoppingList: state.mealPlan.shoppingList,
+    inventory: state.mealPlan.inventory,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getShoppingList: (product) => dispatch(getShoppingList(product)),
+    getInventory: () => dispatch(getInventory()),
   };
 };
 

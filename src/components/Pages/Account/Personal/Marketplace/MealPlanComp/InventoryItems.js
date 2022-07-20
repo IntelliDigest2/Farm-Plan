@@ -13,9 +13,7 @@ function InventoryItems(props) {
 
   //this sends data request
   useEffect(() => {
-    const data = {};
-
-    if (props.tab === 3) props.getInventory(data);
+    if (props.tab === 3) props.getInventory();
     // console.log(props.data);
   }, [props.value, props.update, props.tab]);
 
@@ -93,7 +91,7 @@ function InventoryItems(props) {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    data: state.mealPlan.inventory,
   };
 };
 

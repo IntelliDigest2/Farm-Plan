@@ -39,8 +39,8 @@ export function Health({ setShow, setChooseModal }) {
         icon="plant"
         label="Nutrient Gap"
         color="yellow"
-        goTo="/"
-        disabled="true"
+        goTo="/nutrient-gap"
+        // disabled="true"
       />
       <IconButton
         title="Find out more about the Plan to Save campaign, and what you can do to help."
