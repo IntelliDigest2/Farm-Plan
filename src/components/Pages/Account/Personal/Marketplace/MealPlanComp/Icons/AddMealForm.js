@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 import MealType from "../Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
@@ -72,6 +72,10 @@ function AddMealForm(props) {
     }
   };
 
+  useEffect(() => {
+    console.log("local", local);
+  }, [local]);
+
   return (
     <Form
       onSubmit={(e) => {
@@ -106,7 +110,7 @@ function AddMealForm(props) {
           onChange={(e) => handleLocal(e)}
           value={local.food}
         /> */}
-        <FoodItemSearch handleLocal={handleLocal} local={local} />
+        <FoodItemSearch setLocal={setLocal} local={local} />
       </Form.Group>
       <Form.Group>
         <Form.Label>Amount</Form.Label>
