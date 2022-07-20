@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Select } from "../../../../../../../SubComponents/Dropdown";
 import { foodItemApi } from "./FoodItemAPI";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 export default function FoodItemSearch({ handleLocal, local }) {
   const [query, setQuery] = useState("");
@@ -11,18 +12,22 @@ export default function FoodItemSearch({ handleLocal, local }) {
   }, [query]);
 
   useEffect(() => {
+    console.log("query", query);
+  });
+
+  useEffect(() => {
     console.log("response", response);
   }, [response]);
 
   return (
-    <Select
-      id="food"
-      function={(e) => {
+    <Autocomplete
+      onInputChange={(e) => {
         setQuery(e.target.value);
       }}
-      value={local.food}
-      placeholder="food item"
-      items={response}
+      id="food"
+      options={response}
+      sx={{ width: "100%", lineHeight: "calc(1.5em + .75rem + 2px)" }}
+      renderInput={(params) => <TextField {...params} label="Ingredient" />}
     />
   );
 }

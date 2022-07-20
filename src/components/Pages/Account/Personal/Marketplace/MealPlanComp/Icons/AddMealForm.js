@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 import MealType from "../Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
@@ -99,14 +100,14 @@ function AddMealForm(props) {
 
       <Form.Group>
         <Form.Label>Ingredient</Form.Label>
-        <Form.Control
+        {/* <Form.Control
           type="text"
           id="food"
           onChange={(e) => handleLocal(e)}
           value={local.food}
-        />
+        /> */}
+        <FoodItemSearch handleLocal={handleLocal} local={local} />
       </Form.Group>
-
       <Form.Group>
         <Form.Label>Amount</Form.Label>
         <InputGroup>
