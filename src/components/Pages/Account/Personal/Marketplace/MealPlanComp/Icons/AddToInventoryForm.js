@@ -34,7 +34,7 @@ const AddToInventoryForm = (props) => {
 
   return (
     <div>
-      <button
+      {/* <button
         className="btn success shadow-none qrcode-btn"
         onClick={() => handleSetScan()}
       >
@@ -43,33 +43,33 @@ const AddToInventoryForm = (props) => {
       {scan ? (
         <Scanner />
       ) : (
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-            props.setUpdate(props.update + 1);
-            props.handleFormClose();
-          }}
-        >
-          <Form.Group>
-            <Form.Label>Item Name</Form.Label>
-            <Form.Control
-              type="text"
-              id="itemName"
-              onChange={(e) => {
-                setItemName(e.target.value);
-              }}
-              required
-            />
-          </Form.Group>
+      )} */}
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+          props.setUpdate(props.update + 1);
+          props.handleFormClose();
+        }}
+      >
+        <Form.Group>
+          <Form.Label>Item Name</Form.Label>
+          <Form.Control
+            type="text"
+            id="itemName"
+            onChange={(e) => {
+              setItemName(e.target.value);
+            }}
+            required
+          />
+        </Form.Group>
 
-          <div style={{ alignItems: "center" }}>
-            <Button className="blue-btn shadow-none" type="submit">
-              Done
-            </Button>
-          </div>
-        </Form>
-      )}
+        <div style={{ alignItems: "center" }}>
+          <Button className="blue-btn shadow-none" type="submit">
+            Done
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 };
