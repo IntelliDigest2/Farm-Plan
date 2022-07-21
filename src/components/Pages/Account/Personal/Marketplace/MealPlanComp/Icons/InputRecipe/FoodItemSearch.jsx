@@ -3,7 +3,7 @@ import { foodItemApi } from "./FoodItemAPI";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
-export default function FoodItemSearch({ setLocal, local }) {
+export default function FoodItemSearch({ handleFoodSearch }) {
   const [query, setQuery] = useState("");
   const [response, setResponse] = useState([]);
 
@@ -25,7 +25,7 @@ export default function FoodItemSearch({ setLocal, local }) {
         setQuery(e.target.value);
       }}
       onChange={(e) => {
-        setLocal({ ...local, food: e.target.textContent });
+        handleFoodSearch(e);
       }}
       id="food"
       options={response}

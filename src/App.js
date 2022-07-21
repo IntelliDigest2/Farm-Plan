@@ -9,9 +9,6 @@ import "./App.css";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-//* Test
-// import Scanner from "./components/SubComponents/QRCode/Scanner";
-
 //* Pages
 import Login from "./components/Pages/Auth/LogIn";
 import LandingPage from "./components/Pages/Auth/Landing";
@@ -153,7 +150,6 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
-            {/* <Route path="/scan-qr-code" component={Scanner} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/about-us" exact component={AboutUs} />
