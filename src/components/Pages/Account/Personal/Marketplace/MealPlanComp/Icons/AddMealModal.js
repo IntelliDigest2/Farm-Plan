@@ -54,7 +54,7 @@ export function AddMealModal({ show, setShow, value, forceUpdate }) {
             setEatingOut={setEatingOut}
             handleFormClose={handleFormClose}
           >
-            <button
+            {/* <button
               className="btn success shadow-none qrcode-btn"
               onClick={() => handleSetScan()}
             >
@@ -63,12 +63,12 @@ export function AddMealModal({ show, setShow, value, forceUpdate }) {
             {scan ? (
               <Scanner />
             ) : (
-              <AddMealForm
-                value={value}
-                handleFormClose={handleFormClose}
-                forceUpdate={forceUpdate}
-              />
-            )}
+              )} */}
+            <AddMealForm
+              value={value}
+              handleFormClose={handleFormClose}
+              forceUpdate={forceUpdate}
+            />
           </InOrOut>
         </Modal.Body>
       </Modal>
