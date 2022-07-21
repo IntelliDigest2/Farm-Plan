@@ -37,10 +37,6 @@ function AddMealForm(props) {
     }
   };
 
-  useEffect(() => {
-    console.log("ingr", local);
-  }, [local]);
-
   const ingredientsList = ingredients.map((ingredient, index) => {
     return (
       <li key={index}>
