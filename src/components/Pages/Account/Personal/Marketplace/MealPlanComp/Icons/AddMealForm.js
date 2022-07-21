@@ -29,6 +29,9 @@ function AddMealForm(props) {
       setLocal({ ...local, [e.target.id]: e.target.value });
     }
   };
+  const handleFoodSearch = (e) => {
+    setLocal({ ...local, food: e.target.textContent });
+  };
 
   const ingredientsList = ingredients.map((ingredient, index) => {
     return (
@@ -110,7 +113,7 @@ function AddMealForm(props) {
           onChange={(e) => handleLocal(e)}
           value={local.food}
         /> */}
-        <FoodItemSearch setLocal={setLocal} local={local} />
+        <FoodItemSearch handleFoodSearch={handleFoodSearch} />
       </Form.Group>
       <Form.Group>
         <Form.Label>Amount</Form.Label>
