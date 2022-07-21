@@ -11,18 +11,19 @@ export default function FoodItemSearch({ handleFoodSearch }) {
     foodItemApi(query, setResponse);
   }, [query]);
 
-  useEffect(() => {
-    console.log("query", query);
-  });
+  // useEffect(() => {
+  //   console.log("query", query);
+  // });
 
-  useEffect(() => {
-    console.log("response", response);
-  }, [response]);
+  // useEffect(() => {
+  //   console.log("response", response);
+  // }, [response]);
 
   return (
     <Autocomplete
       onInputChange={(e) => {
         setQuery(e.target.value);
+        handleFoodSearch(e);
       }}
       onChange={(e) => {
         handleFoodSearch(e);
@@ -30,7 +31,7 @@ export default function FoodItemSearch({ handleFoodSearch }) {
       id="food"
       options={response}
       sx={{ width: "100%", lineHeight: "calc(1.5em + .75rem + 2px)" }}
-      renderInput={(params) => <TextField {...params} label="Ingredient" />}
+      renderInput={(params) => <TextField {...params} label="Item" />}
     />
   );
 }

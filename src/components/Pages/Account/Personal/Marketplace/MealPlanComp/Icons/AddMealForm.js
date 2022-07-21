@@ -30,8 +30,16 @@ function AddMealForm(props) {
     }
   };
   const handleFoodSearch = (e) => {
-    setLocal({ ...local, food: e.target.textContent });
+    if (e.target.textContent) {
+      setLocal({ ...local, food: e.target.textContent });
+    } else {
+      setLocal({ ...local, food: e.target.value });
+    }
   };
+
+  useEffect(() => {
+    console.log("ingr", local);
+  }, [local]);
 
   const ingredientsList = ingredients.map((ingredient, index) => {
     return (
@@ -75,10 +83,6 @@ function AddMealForm(props) {
     }
   };
 
-  useEffect(() => {
-    console.log("local", local);
-  }, [local]);
-
   return (
     <Form
       onSubmit={(e) => {
@@ -106,7 +110,7 @@ function AddMealForm(props) {
       </div>
 
       <Form.Group>
-        <Form.Label>Ingredient</Form.Label>
+        {/* <Form.Label>Ingredient</Form.Label> */}
         {/* <Form.Control
           type="text"
           id="food"
