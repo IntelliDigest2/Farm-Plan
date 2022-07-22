@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.add09c48.chunk.css",
-    "main.js": "/static/js/main.5be8229c.chunk.js",
-    "main.js.map": "/static/js/main.5be8229c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.1bc1d5b5.js",
-    "runtime-main.js.map": "/static/js/runtime-main.1bc1d5b5.js.map",
+    "main.css": "/static/css/main.c6de765d.chunk.css",
+    "main.js": "/static/js/main.ad469e62.chunk.js",
+    "main.js.map": "/static/js/main.ad469e62.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.4fb814df.js",
+    "runtime-main.js.map": "/static/js/runtime-main.4fb814df.js.map",
     "static/css/2.e770c818.chunk.css": "/static/css/2.e770c818.chunk.css",
-    "static/js/2.ca7bf573.chunk.js": "/static/js/2.ca7bf573.chunk.js",
-    "static/js/2.ca7bf573.chunk.js.map": "/static/js/2.ca7bf573.chunk.js.map",
-    "static/js/3.939c0792.chunk.js": "/static/js/3.939c0792.chunk.js",
-    "static/js/3.939c0792.chunk.js.map": "/static/js/3.939c0792.chunk.js.map",
+    "static/js/2.81f07319.chunk.js": "/static/js/2.81f07319.chunk.js",
+    "static/js/2.81f07319.chunk.js.map": "/static/js/2.81f07319.chunk.js.map",
+    "static/js/3.1866cca4.chunk.js": "/static/js/3.1866cca4.chunk.js",
+    "static/js/3.1866cca4.chunk.js.map": "/static/js/3.1866cca4.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.e770c818.chunk.css.map": "/static/css/2.e770c818.chunk.css.map",
-    "static/css/main.add09c48.chunk.css.map": "/static/css/main.add09c48.chunk.css.map",
-    "static/js/2.ca7bf573.chunk.js.LICENSE.txt": "/static/js/2.ca7bf573.chunk.js.LICENSE.txt",
+    "static/css/main.c6de765d.chunk.css.map": "/static/css/main.c6de765d.chunk.css.map",
+    "static/js/2.81f07319.chunk.js.LICENSE.txt": "/static/js/2.81f07319.chunk.js.LICENSE.txt",
     "static/media/Blueberries.81f84019.jpg": "/static/media/Blueberries.81f84019.jpg",
     "static/media/Edamam_Badge_White.d317b3d5.svg": "/static/media/Edamam_Badge_White.d317b3d5.svg",
     "static/media/Environment.3a48bc88.jpg": "/static/media/Environment.3a48bc88.jpg",
@@ -26,6 +26,7 @@
     "static/media/Soft fruits-01.png": "/static/media/Soft fruits-01.ab2cfac3.png",
     "static/media/Vegetables-01.png": "/static/media/Vegetables-01.387314a6.png",
     "static/media/WFTLogo.5d4e2951.png": "/static/media/WFTLogo.5d4e2951.png",
+    "static/media/WheatIcon.1a8e8f19.png": "/static/media/WheatIcon.1a8e8f19.png",
     "static/media/Pages.css": "/static/media/signup3.dde79018.jpg",
     "static/media/fr_positive-planet.8257fa0d.jpg": "/static/media/fr_positive-planet.8257fa0d.jpg",
     "static/media/intellidigest-logo-small.6a3103c7.png": "/static/media/intellidigest-logo-small.6a3103c7.png",
@@ -42,10 +43,10 @@
     "static/media/tip5.ee47f4f7.jpg": "/static/media/tip5.ee47f4f7.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.1bc1d5b5.js",
+    "static/js/runtime-main.4fb814df.js",
     "static/css/2.e770c818.chunk.css",
-    "static/js/2.ca7bf573.chunk.js",
-    "static/css/main.add09c48.chunk.css",
-    "static/js/main.5be8229c.chunk.js"
+    "static/js/2.81f07319.chunk.js",
+    "static/css/main.c6de765d.chunk.css",
+    "static/js/main.ad469e62.chunk.js"
   ]
 }
