@@ -9,7 +9,6 @@ import { Redirect } from "react-router-dom";
 
 import { fs } from "../../../config/fbConfig";
 
-// import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import Geocode from "react-geocode";
 
 class MapData extends Component {

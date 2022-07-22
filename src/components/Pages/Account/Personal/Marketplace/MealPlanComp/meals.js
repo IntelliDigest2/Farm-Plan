@@ -17,7 +17,7 @@ function MyMeals(props) {
     };
 
     if (props.tab === 0) props.getMealData(data);
-    // console.log(props.data);
+    // console.log("sending request");
   }, [props.value, props.update, props.tab]);
 
   const updateMeals = async () => {
@@ -25,12 +25,14 @@ function MyMeals(props) {
     setMeals([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.data.forEach((doc) => {
+    props.mealPlan.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
       var mealType = doc.mealType;
       var url = doc.url;
+      var totalNutrients = doc.totalNutrients;
+      var totalDaily = doc.totalDaily;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
@@ -47,6 +49,8 @@ function MyMeals(props) {
           id: id,
           nn: nn,
           url: url,
+          totalNutrients: totalNutrients,
+          totalDaily: totalDaily,
         },
       ]);
     });
@@ -57,21 +61,19 @@ function MyMeals(props) {
       updateMeals();
       // console.log("Meal Plan:", meals);
     }
-  }, [props.data]);
-
-  // useEffect(() => {
-  //   console.log(meals);
-  // }, [meals]);
+  }, [props.mealPlan]);
 
   return (
     <>
       {meals.length ? (
-        <MealsBox
-          forceUpdate={props.forceUpdate}
-          meals={meals}
-          saved={false}
-          value={props.value}
-        />
+        <div>
+          <MealsBox
+            forceUpdate={props.forceUpdate}
+            meals={meals}
+            saved={false}
+            value={props.value}
+          />
+        </div>
       ) : (
         <div className="empty basic-title-left">
           <p>There is no plan for today :( Try adding something. </p>
@@ -83,13 +85,13 @@ function MyMeals(props) {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    mealPlan: state.mealPlan.meals,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMealData: (product) => dispatch(getMealData(product)),
+    getMealData: (meals) => dispatch(getMealData(meals)),
   };
 };
 

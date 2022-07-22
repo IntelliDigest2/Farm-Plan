@@ -1,7 +1,7 @@
 import React from "react";
 
-import "../../../SubComponents/PageWrap.css";
-import logo from "../../../../images/intellidigest-logo-small.png";
+import "../../SubComponents/PageWrap.css";
+import logo from "../../../images/intellidigest-logo-small.png";
 import { Container } from "react-bootstrap";
 
 export const Title = (props) => {

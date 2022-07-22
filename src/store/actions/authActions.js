@@ -182,11 +182,13 @@ export const signUp = (newUser) => {
       case "Hospitals":
       case "Hotels":
       case "Offices":
-      case "Restaurants":
       case "Shop/Supermarket":
       case "Recreational Centers":
       case "Business":
         type = "business_admin";
+        break;
+      case "Restaurants":
+        type = "restaurant";
         break;
       case "Schools":
         type = "academic_admin";
@@ -195,6 +197,7 @@ export const signUp = (newUser) => {
         type = "farm_admin";
         break;
       case "Households":
+      case "Personal":
         type = "household_admin";
         break;
       default:

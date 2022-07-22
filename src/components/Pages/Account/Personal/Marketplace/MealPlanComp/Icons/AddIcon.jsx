@@ -26,6 +26,9 @@ function Add(props) {
         mealType: props.mealType,
         ingredients: props.ingredients,
         url: props.url,
+        totalNutrients: props.totalNutrients,
+        totalDaily: props.totalDaily,
+        yield: props.yield,
       });
     }
   };

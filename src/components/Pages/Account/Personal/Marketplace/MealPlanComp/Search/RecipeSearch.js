@@ -27,38 +27,45 @@ export default function RecipeSearch(props) {
   const [pageNumber, setPageNumber] = useState(0);
 
   // checks if link is already added to array and
-  // if not then it adds the link to the array 
+  // if not then it adds the link to the array
   function addPageToArray(page) {
-    if(arrPages.includes(page)) {
+    if (arrPages.includes(page)) {
       console.log("Page already in array!");
       return;
     }
-    setArrPages(prevArrPages => [...prevArrPages, page])
-    console.log("This is the pages array ", arrPages);
+    setArrPages((prevArrPages) => [...prevArrPages, page]);
+    // console.log("This is the pages array ", arrPages);
   }
 
   useEffect(() => {
-    recipeSearch(query, mealType, cuisineType, setRecipes, setLinks, addPageToArray);
+    recipeSearch(
+      query,
+      mealType,
+      cuisineType,
+      setRecipes,
+      setLinks,
+      addPageToArray
+    );
     // console.log("recipes", recipes);
     // console.log("Next Page", links);
   }, [query, mealType, cuisineType]);
 
   useEffect(() => {
     page && nextPage(page, setLinks, setRecipes);
-    console.log("next page", page);
+    // console.log("next page", page);
   }, [page]);
 
   // changes the page number by offset and sets the page variable to the correct link
   function changePage(offset) {
-    if(offset > 0) { // visiting new page i.e. new link needed
-      setPageNumber(oldValue => oldValue + offset);
+    if (offset > 0) {
+      // visiting new page i.e. new link needed
+      setPageNumber((oldValue) => oldValue + offset);
       setPage(links.next.href);
       addPageToArray(links.next.href);
-    }
-    else if(offset < 0) { // visiting previous page i.e. link saved in arrPages
-      setPageNumber(oldValue => oldValue === 0 ? 0 : oldValue - 1);
-      if(pageNumber != 0)
-        setPage(arrPages[pageNumber]);
+    } else if (offset < 0) {
+      // visiting previous page i.e. link saved in arrPages
+      setPageNumber((oldValue) => (oldValue === 0 ? 0 : oldValue - 1));
+      if (pageNumber != 0) setPage(arrPages[pageNumber]);
     }
   }
 
@@ -107,7 +114,7 @@ export default function RecipeSearch(props) {
         value={props.value}
         onChange={props.onChange}
       />
-      <NextBack links={links} pageNumber={pageNumber} changePage={changePage}/>
+      <NextBack links={links} pageNumber={pageNumber} changePage={changePage} />
     </>
   );
 }

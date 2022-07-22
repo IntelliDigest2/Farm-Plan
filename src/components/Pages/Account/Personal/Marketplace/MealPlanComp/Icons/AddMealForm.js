@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 import MealType from "../Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
@@ -27,6 +28,9 @@ function AddMealForm(props) {
     } else {
       setLocal({ ...local, [e.target.id]: e.target.value });
     }
+  };
+  const handleFoodSearch = (e) => {
+    setLocal({ ...local, food: e.target.textContent });
   };
 
   const ingredientsList = ingredients.map((ingredient, index) => {
@@ -71,6 +75,10 @@ function AddMealForm(props) {
     }
   };
 
+  useEffect(() => {
+    console.log("local", local);
+  }, [local]);
+
   return (
     <Form
       onSubmit={(e) => {
@@ -99,14 +107,14 @@ function AddMealForm(props) {
 
       <Form.Group>
         <Form.Label>Ingredient</Form.Label>
-        <Form.Control
+        {/* <Form.Control
           type="text"
           id="food"
           onChange={(e) => handleLocal(e)}
           value={local.food}
-        />
+        /> */}
+        <FoodItemSearch handleFoodSearch={handleFoodSearch} />
       </Form.Group>
-
       <Form.Group>
         <Form.Label>Amount</Form.Label>
         <InputGroup>
@@ -172,17 +180,12 @@ function AddMealForm(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    profile: state.firebase.profile,
-  };
-};
 const mapDispatchToProps = (dispatch) => {
   return {
-    createMealPlanData: (data) => dispatch(createMealPlanData(data)),
+    createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
     createSavedMeal: (data) => dispatch(createSavedMeal(data)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMealForm);
+export default connect(null, mapDispatchToProps)(AddMealForm);

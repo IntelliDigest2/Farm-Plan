@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import "../../Account/UserAccount.css";
+import "../Account/UserAccount.css";
 import "./Mob.css";
 import { Title } from "./MobComponents";
 
@@ -8,7 +8,7 @@ import { Form, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { signIn } from "../../../../store/actions/authActions";
+import { signIn } from "../../../store/actions/authActions";
 
 function Login(props) {
   const [email, setEmail] = useState("");

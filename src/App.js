@@ -10,14 +10,13 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //* Pages
-import Login from "./components/Pages/Auth/Mobile/LogInMob";
-import LandingPage from "./components/Pages/Auth/Mobile/Landing";
-// import LoadingScreen from "./components/SubComponents/LoadingScreen";
+import Login from "./components/Pages/Auth/LogIn";
+import LandingPage from "./components/Pages/Auth/Landing";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
-import SignUp from "./components/Pages/Auth/Mobile/SignUp";
+import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
-import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
+import Questionnaire from "./components/Pages/Auth/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
@@ -66,6 +65,7 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 
 //* Chart.js
 import ChartView from "./components/Pages/Account/Charts/Chart";
+import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
 
 const App = (props) => {
   const [uid, setUid] = useState(props.auth.uid);
@@ -150,10 +150,8 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
-            {/* <Route path="/example" exact component={Example} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
-            {/* <Route path="/loading" exact component={LoadingScreen} /> */}
             <Route path="/about-us" exact component={AboutUs} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/settings" exact component={Settings} />
@@ -191,6 +189,7 @@ const App = (props) => {
             </Route>
             <Route path="/cons-auth" component={ConsumerAuth} />
             <Route path="/meal-plan" component={MealPlan} />
+            <Route path="/nutrient-gap" component={NutrientGap} />
             <Route path="/view-products" component={ViewProducts} />
 
             <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />

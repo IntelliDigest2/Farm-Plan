@@ -8,6 +8,7 @@ import "./FarmPlan.css";
 import Horticulture from "./Horticulture/Horticulture";
 
 function FarmPlan(props) {
+  //handles loading page
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => setLoading(false), 1500);
