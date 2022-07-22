@@ -9,17 +9,30 @@ import { connect } from "react-redux";
 import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
+import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
 
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");
   const [mealType, setMealType] = useState("");
-  const [ingredients, setIngredients] = useState([]);
-  const [save, setSave] = useState(true);
+  const [err, setErr] = useState("");
 
+  //saves recipe to saved meal list
+  const [save, setSave] = useState(true);
+  const handleSave = () => {
+    if (!save) {
+      setSave(true);
+    } else {
+      setSave(false);
+    }
+  };
+
+  //controls local state of ingredient as we fetch data for it,
+  //once ingredient is added it will be moved to ingredient array
   const defaultLocal = {
     food: "",
     quantity: 0,
     measure: "g",
+    foodId: "",
   };
   const [local, setLocal] = useState(defaultLocal);
   const handleLocal = (e) => {
@@ -36,6 +49,30 @@ function AddMealForm(props) {
       setLocal({ ...local, food: e.target.value });
     }
   };
+  // useEffect(() => {
+  //   console.log("local", local);
+  // }, [local]);
+
+  //when local.food changes, fetch the id for the food item
+  //which is needed to fetch nutrition
+  const setFoodId = (foodId) => {
+    setLocal({ ...local, foodId: foodId });
+  };
+
+  const [ingredients, setIngredients] = useState([]);
+  const handleIngredient = async () => {
+    if (local.food !== "") {
+      foodIdAPI(local.food, setFoodId).then(() => {
+        setIngredients((ingredients) => [...ingredients, local]);
+        setLocal(defaultLocal);
+      });
+    } else {
+      setErr("Please input an ingredient to add.");
+    }
+  };
+  useEffect(() => {
+    console.log("foodId", local.foodId);
+  }, [local.foodId]);
 
   const ingredientsList = ingredients.map((ingredient, index) => {
     return (
@@ -71,14 +108,6 @@ function AddMealForm(props) {
     }
   };
 
-  const handleSave = () => {
-    if (!save) {
-      setSave(true);
-    } else {
-      setSave(false);
-    }
-  };
-
   return (
     <Form
       onSubmit={(e) => {
@@ -87,6 +116,13 @@ function AddMealForm(props) {
         props.handleFormClose();
       }}
     >
+      {/* <button
+        onClick={() => {
+          nutritionAPI(local);
+        }}
+      >
+        send test
+      </button> */}
       <Form.Group>
         <Form.Label>Meal Name</Form.Label>
         <Form.Control
@@ -130,18 +166,7 @@ function AddMealForm(props) {
             id="measure"
             styling="grey dropdown-input"
             data={local.measure}
-            items={[
-              "g",
-              "kg",
-              "/",
-              "mL",
-              "L",
-              "/",
-              "tsp",
-              "tbsp",
-              "cups",
-              "pcs",
-            ]}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
             function={(e) => {
               setLocal({ ...local, measure: e });
             }}
@@ -152,10 +177,9 @@ function AddMealForm(props) {
       <Form.Group>
         <Button
           className="green-btn shadow-none"
-          id="add-new-ing"
-          onClick={(e) => {
-            setIngredients((ingredients) => [...ingredients, local]);
-            setLocal(defaultLocal);
+          id="add ingredient"
+          onClick={() => {
+            handleIngredient();
           }}
         >
           Add Ingredient
