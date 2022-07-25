@@ -24,7 +24,7 @@ import { Colors } from "../../lib/Colors";
 
 import { createSubAccount } from "../../../store/actions/authActions";
 import { PTSModal } from "./PlanToSave/PTSModal";
-import LoadingScreen from "../../SubComponents/LoadingScreen";
+import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
 const NewAccount = (props) => {
   //handles loading page

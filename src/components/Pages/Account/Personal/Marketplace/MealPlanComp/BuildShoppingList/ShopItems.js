@@ -11,6 +11,8 @@ import { ItemAlreadyInInventoryIcon } from "../Icons/ItemAlreadyInInventoryIcon"
 
 function ShopItems(props) {
   const [list, setList] = useState([]);
+
+  //trigger this when editing/deleting items
   const [update, setUpdate] = useState(0);
 
   //this sends data request
@@ -20,12 +22,10 @@ function ShopItems(props) {
       week: props.value.format("w"),
     };
 
-    if (props.tab === 2) {
-      props.getShoppingList(data);
-      props.getInventory();
-    }
-    // console.log(props.data);
-  }, [props.value, update, props.tab]);
+    props.getShoppingList(data);
+    props.getInventory();
+    // console.log(props);
+  }, [props.value, update]);
 
   const updateShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -52,20 +52,17 @@ function ShopItems(props) {
   };
 
   useEffect(() => {
-    if (props.tab === 2) {
-      updateShoppingList();
-      // console.log("shopping list", list);
-    }
+    updateShoppingList();
   }, [props.shoppingList]);
 
   const isItemInInventory = (strItem) => {
-    for(let i = 0; i < props.inventory.length; i++) {
-      if(props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
-      // if(strItem.includes(props.inventory[i].item))
+    for (let i = 0; i < props.inventory.length; i++) {
+      if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
+        // if(strItem.includes(props.inventory[i].item))
         return true;
     }
     return false;
-  }
+  };
 
   return (
     <>
@@ -83,7 +80,9 @@ function ShopItems(props) {
                   {ingr.measure}
                 </p>
                 <div className="icons">
-                  {isItemInInventory(ingr.food) ? <ItemAlreadyInInventoryIcon /> : null}
+                  {isItemInInventory(ingr.food) ? (
+                    <ItemAlreadyInInventoryIcon />
+                  ) : null}
                   <RemoveFromShop
                     id={ingr.id}
                     value={props.value}

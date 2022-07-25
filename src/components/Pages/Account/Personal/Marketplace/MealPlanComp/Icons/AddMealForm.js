@@ -76,6 +76,12 @@ function AddMealForm(props) {
     );
   });
 
+  //trigger this when editing/deleting items
+  const [update, setUpdate] = useState(0);
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
+
   //fired when click "done"
   const handleSubmit = () => {
     const data = {
@@ -92,7 +98,7 @@ function AddMealForm(props) {
     };
 
     props.createMealPlanData(data);
-    props.forceUpdate();
+    forceUpdate();
 
     if (save) {
       props.createRecipe(data);

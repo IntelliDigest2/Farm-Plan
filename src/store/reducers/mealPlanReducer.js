@@ -126,7 +126,18 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Add to shop failed",
       };
-
+    case "DELETE_SHOP":
+      console.log("successfully deleted item");
+      return {
+        ...state,
+        authError: null,
+      };
+    case "DELETE_SHOP_ERROR":
+      console.log("error, couldn't delete item", action.err);
+      return {
+        ...state,
+        authError: "delete item failed",
+      };
     //#endregion
 
     //#region inventory
