@@ -3,7 +3,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import SaveIcon from "@mui/icons-material/Save";
-import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
+import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { connect } from "react-redux";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
@@ -27,7 +27,7 @@ function SaveMealIcon(props) {
         nonNativeData: true,
       },
     };
-    props.createSavedMeal(data);
+    props.createRecipe(data);
   };
 
   return (
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createSavedMeal: (data) => dispatch(createSavedMeal(data)),
+    createRecipe: (data) => dispatch(createRecipe(data)),
   };
 };
 
