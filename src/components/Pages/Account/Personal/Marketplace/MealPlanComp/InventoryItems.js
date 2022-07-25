@@ -4,18 +4,16 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 import { connect } from "react-redux";
-import { getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData"
+import { getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData";
 import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
 
 function InventoryItems(props) {
   const [list, setList] = useState([]);
-//   const [update, setUpdate] = useState(0);
 
   //this sends data request
   useEffect(() => {
-    if (props.tab === 3) props.getInventory();
-    // console.log(props.data);
-  }, [props.value, props.update, props.tab]);
+    props.getInventory();
+  }, [props.value, props.update]);
 
   const updateInventoryList = async () => {
     //clears the items array before each update- IMPORTANT
@@ -36,27 +34,23 @@ function InventoryItems(props) {
       ]);
     });
 
-    setList(list => {
-        let newList = [...list];
-        newList.sort((a, b) => {
-            return a.item < b.item ? -1
-            : a.item > b.item ? 1
-            : 0
-            })
-            // console.log("list sorted");
-        return newList;
-        })
+    setList((list) => {
+      let newList = [...list];
+      newList.sort((a, b) => {
+        return a.item < b.item ? -1 : a.item > b.item ? 1 : 0;
+      });
+      // console.log("list sorted");
+      return newList;
+    });
   };
 
   useEffect(() => {
-    if (props.tab === 3) {
-      updateInventoryList();
-    }
+    updateInventoryList();
   }, [props.data]);
 
   return (
     <>
-        {list.length ? (
+      {list.length ? (
         <>
           <List>
             {list.map((item, index) => (
@@ -65,11 +59,9 @@ function InventoryItems(props) {
                 className="list"
                 style={{ alignItems: "flex-end" }}
               >
-                <p>
-                  {item.item}
-                </p>
+                <p>{item.item}</p>
                 <div className="icons">
-                <RemoveFromInventoryIcon
+                  <RemoveFromInventoryIcon
                     id={item.id}
                     value={props.value}
                     update={props.update}

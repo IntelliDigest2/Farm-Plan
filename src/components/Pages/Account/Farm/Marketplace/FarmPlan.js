@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getFarmerData } from "../../../../../store/actions/marketplaceActions/farmPlanData";
 import { connect } from "react-redux";
-import LoadingScreen from "../../../../SubComponents/LoadingScreen";
+import LoadingScreen from "../../../../SubComponents/Loading/LoadingScreen";
 import { PageWrap } from "../../../../SubComponents/PageWrap";
 import "./FarmPlan.css";
 

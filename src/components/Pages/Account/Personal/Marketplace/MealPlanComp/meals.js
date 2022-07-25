@@ -8,6 +8,12 @@ import { getMealData } from "../../../../../../store/actions/marketplaceActions/
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
 
+  //trigger this when editing/deleting items
+  const [update, setUpdate] = useState(0);
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
+
   //this sends data request
   useEffect(() => {
     const data = {
@@ -15,10 +21,8 @@ function MyMeals(props) {
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD"),
     };
-
-    if (props.tab === 0) props.getMealData(data);
-    // console.log("sending request");
-  }, [props.value, props.update, props.tab]);
+    props.getMealData(data);
+  }, [props.value, update]);
 
   const updateMeals = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -57,10 +61,7 @@ function MyMeals(props) {
   };
 
   useEffect(() => {
-    if (props.tab === 0) {
-      updateMeals();
-      // console.log("Meal Plan:", meals);
-    }
+    updateMeals();
   }, [props.mealPlan]);
 
   return (
@@ -68,7 +69,7 @@ function MyMeals(props) {
       {meals.length ? (
         <div>
           <MealsBox
-            forceUpdate={props.forceUpdate}
+            forceUpdate={forceUpdate}
             meals={meals}
             saved={false}
             value={props.value}

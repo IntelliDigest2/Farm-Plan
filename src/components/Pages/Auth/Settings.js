@@ -6,7 +6,7 @@ import { SubButton } from "../../SubComponents/Button";
 import { LogOutPopUp } from "../../SubComponents/PopUp";
 import { PageWrap } from "../../SubComponents/PageWrap";
 import { Heading } from "../../SubComponents/Heading";
-import LoadingScreen from "../../SubComponents/LoadingScreen";
+import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
 import { Form, Col, ListGroup, Badge, FormGroup } from "react-bootstrap";
 

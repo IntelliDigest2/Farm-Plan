@@ -7,12 +7,16 @@ import { getRecipes } from "../../../../../../store/actions/marketplaceActions/s
 const SavedMeals = (props) => {
   const [sMeals, setSMeals] = useState([]);
 
+  //trigger this when editing/deleting items
+  const [update, setUpdate] = useState(0);
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
+
   //this sends data request
   useEffect(() => {
-    if (props.tab === 1) {
-      props.getRecipes();
-    }
-  }, [props.tab, props.update]);
+    props.getRecipes();
+  }, [update]);
 
   const updateSMeals = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -39,10 +43,8 @@ const SavedMeals = (props) => {
 
   useEffect(() => {
     // const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-    if (props.tab === 1) {
-      updateSMeals();
-      // console.log("Saved Meals", sMeals);
-    }
+    updateSMeals();
+    // console.log("Saved Meals", sMeals);
     // .then(setSMeals(sorted));
     // console.log(props.data);
   }, [props.mealPlan]);
@@ -52,7 +54,7 @@ const SavedMeals = (props) => {
       <div className="basic-title-left mb-3">My Saved Meals</div>
       <div className="saved-meals">
         <MealsBox
-          forceUpdate={props.forceUpdate}
+          forceUpdate={forceUpdate}
           onChange={props.onChange}
           meals={sMeals}
           saved={true}

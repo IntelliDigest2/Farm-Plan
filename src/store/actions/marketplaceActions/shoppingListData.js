@@ -146,9 +146,9 @@ export const removeFromShop = (data) => {
       .collection(data.week)
       .doc(data.id)
       .delete()
-      .then(() => console.log("successfully deleted! "))
+      .then(() => dispatch({ type: "DELETE_SHOP" }))
       .catch((err) => {
-        dispatch(console.log("Error removing document:", err));
+        dispatch({ type: "DELETE_SHOP_ERROR", err });
       });
   };
 };

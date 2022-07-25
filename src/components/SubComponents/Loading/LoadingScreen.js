@@ -1,5 +1,5 @@
 import React from "react";
-import WheatIcon from "../../images/WheatIcon.png";
+import WheatIcon from "../../../images/WheatIcon.png";
 import "./LoadingScreen.css";
 
 export default function LoadingScreen() {
