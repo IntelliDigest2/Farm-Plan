@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import SaveIcon from "@mui/icons-material/Save";
 import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { connect } from "react-redux";
+import { submitNotification } from "../../../../../../lib/Notifications";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function SaveMealIcon(props) {
@@ -28,6 +28,7 @@ function SaveMealIcon(props) {
       },
     };
     props.createRecipe(data);
+    submitNotification("Success", "Added to Saved Meals!");
   };
 
   return (
