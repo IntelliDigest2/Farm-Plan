@@ -41,9 +41,14 @@ export default function MealsBox(props) {
                       id={newMeal.id}
                       onChange={props.onChange}
                       saved={props.saved}
+                      nonNativeData={newMeal.nonNativeData}
+                      totalDaily={newMeal.totalDaily}
+                      totalNutrients={newMeal.totalNutrients}
+                      url={newMeal.url}
+                      recipeYield={newMeal.recipeYield}
                     />
                   ) : null}
-                  {newMeal.nn ? null : (
+                  {newMeal.nonNativeData ? null : (
                     <Edit
                       value={props.value}
                       meal={newMeal.meal}

@@ -24,16 +24,40 @@ const SavedMeals = (props) => {
       var ingredients = doc.ingredients;
       var id = doc.id;
       var mealType = doc.mealType;
+      var nonNativeData = doc.nonNativeData;
+      var totalDaily = doc.totalDaily;
+      var totalNutrients = doc.totalNutrients;
+      var url = doc.url;
+      var recipeYield = doc.yield;
 
-      setSMeals((sMeals) => [
-        ...sMeals,
-        {
-          meal: mealName,
-          mealType: mealType,
-          ingredients: ingredients,
-          id: id,
-        },
-      ]);
+
+      if(nonNativeData) {
+        setSMeals((sMeals) => [
+          ...sMeals,
+          {
+            meal: mealName,
+            mealType: mealType,
+            ingredients: ingredients,
+            id: id,
+            nonNativeData: nonNativeData,
+            totalDaily: totalDaily,
+            totalNutrients: totalNutrients,
+            url: url,
+            recipeYield: recipeYield
+          },
+        ]);
+      }
+      else {
+        setSMeals((sMeals) => [
+          ...sMeals,
+          {
+            meal: mealName,
+            mealType: mealType,
+            ingredients: ingredients,
+            id: id,
+          },
+        ]);
+     }
     });
   };
 

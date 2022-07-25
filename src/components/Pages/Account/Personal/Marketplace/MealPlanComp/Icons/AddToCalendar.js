@@ -23,7 +23,7 @@ function AddToCalendar(props) {
   const handleSubmit = () => {
     let data;
     //data is a little different between saved meals and searched meals
-    if (props.saved) {
+    if (props.saved && !props.selected.nonNativeData) {
       data = {
         // month and day are used for the MealPlan db, year and week for the shopping list.
         year: props.value.format("YYYY"),
