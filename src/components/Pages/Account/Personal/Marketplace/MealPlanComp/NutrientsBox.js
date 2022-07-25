@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Card, Collapse, Accordion, Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getMealData } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
+import NutrientsBoxHeader from "./NutrientsBoxHeader";
 
 const NutrientsBox = (props) => {
   const [meals, setMeals] = useState([]);
@@ -69,7 +70,7 @@ const NutrientsBox = (props) => {
   // array of RDI from nutrients consumed from all meals
   const [allTotalDaily, setAllTotalDaily] = useState([]);
   // used for text change in Accordion
-  const [isExpanded, setIsExpanded] = useState(true);
+  // const [isExpanded, setIsExpanded] = useState(true);
 
   // console.log("props.meals: ", props.meals)
 
@@ -141,20 +142,21 @@ const NutrientsBox = (props) => {
   return (
     <div>
       <Accordion defaultActiveKey="0">
-        <Accordion.Toggle
+        {/* <Accordion.Toggle
           as="div"
           className="header"
           eventKey="0"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          Nutritional Information
+          // onClick={() => setIsExpanded(!isExpanded)}
+        > */}
+        <NutrientsBoxHeader value={props.value} setValue={props.setValue}/>
+          {/* Nutritional Information
           <div
             className="header"
             style={{ marginLeft: "auto", paddingRight: "10px" }}
           >
             {isExpanded ? "Collapse" : "Expand"}
-          </div>
-        </Accordion.Toggle>
+          </div> */}
+        {/* </Accordion.Toggle> */}
         <Card>
           <Card.Header></Card.Header>
           <Accordion.Collapse eventKey="0">
