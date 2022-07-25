@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import MealsBox from "./MealsBox";
 import { connect } from "react-redux";
-import { getSavedMeals } from "../../../../../../store/actions/marketplaceActions/savedMealData";
+import { getRecipes } from "../../../../../../store/actions/marketplaceActions/savedMealData";
 
 const SavedMeals = (props) => {
   const [sMeals, setSMeals] = useState([]);
@@ -10,7 +10,7 @@ const SavedMeals = (props) => {
   //this sends data request
   useEffect(() => {
     if (props.tab === 1) {
-      props.getSavedMeals();
+      props.getRecipes();
     }
   }, [props.tab, props.update]);
 
@@ -19,7 +19,7 @@ const SavedMeals = (props) => {
     setSMeals([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.data.forEach((doc) => {
+    props.mealPlan.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
@@ -45,7 +45,7 @@ const SavedMeals = (props) => {
     }
     // .then(setSMeals(sorted));
     // console.log(props.data);
-  }, [props.data]);
+  }, [props.mealPlan]);
 
   return (
     <>
@@ -65,13 +65,13 @@ const SavedMeals = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    mealPlan: state.mealPlan.savedMeals,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSavedMeals: (saved) => dispatch(getSavedMeals(saved)),
+    getRecipes: (saved) => dispatch(getRecipes(saved)),
   };
 };
 

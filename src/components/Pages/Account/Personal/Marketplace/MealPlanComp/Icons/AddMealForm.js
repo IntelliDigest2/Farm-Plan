@@ -6,7 +6,7 @@ import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
-import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
+import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
@@ -19,15 +19,11 @@ function AddMealForm(props) {
   //saves recipe to saved meal list
   const [save, setSave] = useState(true);
   const handleSave = () => {
-    if (!save) {
-      setSave(true);
-    } else {
-      setSave(false);
-    }
+    setSave(!save);
   };
 
   //controls local state of ingredient as we fetch data for it,
-  //once ingredient is added it will be moved to ingredient array
+  //once ingredient is "added" it will be moved to ingredient array
   const defaultLocal = {
     food: "",
     quantity: 0,
@@ -49,9 +45,6 @@ function AddMealForm(props) {
       setLocal({ ...local, food: e.target.value });
     }
   };
-  // useEffect(() => {
-  //   console.log("local", local);
-  // }, [local]);
 
   //when local.food changes, fetch the id for the food item
   //which is needed to fetch nutrition
@@ -71,8 +64,8 @@ function AddMealForm(props) {
     }
   };
   useEffect(() => {
-    console.log("foodId", local.foodId);
-  }, [local.foodId]);
+    console.log("ingredients", ingredients);
+  }, [ingredients]);
 
   const ingredientsList = ingredients.map((ingredient, index) => {
     return (
@@ -89,8 +82,7 @@ function AddMealForm(props) {
       // month and day are used for the MealPlan db, year and week for the shopping list.
       year: props.value.format("YYYY"),
       month: props.value.format("YYYYMM"),
-      //need to send shopping list data to be bough the previous week from the day it is made
-      week: props.value.format("w") - 1,
+      week: props.value.format("w"),
       day: props.value.format("DD"),
       upload: {
         meal: mealName,
@@ -100,12 +92,12 @@ function AddMealForm(props) {
     };
 
     props.createMealPlanData(data);
-    props.addToShoppingList(data);
     props.forceUpdate();
 
     if (save) {
-      props.createSavedMeal(data);
+      props.createRecipe(data);
     }
+    props.addToShoppingList(data);
   };
 
   return (
@@ -207,7 +199,7 @@ function AddMealForm(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
-    createSavedMeal: (data) => dispatch(createSavedMeal(data)),
+    createRecipe: (data) => dispatch(createRecipe(data)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };

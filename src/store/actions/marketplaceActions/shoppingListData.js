@@ -29,13 +29,13 @@ export const addToShoppingList = (data) => {
         break;
     }
 
-    const ingredient = data.upload.ingredients;
+    const ingr = data.upload.ingredients;
 
     const firestore = getFirestore();
     const batch = firestore.batch();
 
     //send each separate ingredient to its own document
-    ingredient.forEach((element) => {
+    ingr.forEach((element) => {
       var docRef = firestore
         .collection("marketplace")
         .doc(uid)
@@ -48,10 +48,10 @@ export const addToShoppingList = (data) => {
     batch
       .commit()
       .then(() => {
-        dispatch({ type: "CREATE_DATA" });
+        dispatch({ type: "CREATE_SHOP", ingr });
       })
       .catch((err) => {
-        dispatch({ type: "CREATE_DATA_ERROR", err });
+        dispatch({ type: "CREATE_SHOP_ERROR", err });
       });
   };
 };
