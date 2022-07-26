@@ -1,0 +1,138 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* FIRST PAGE */
+
+.login-contanier{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-main{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 50%;
+    text-align: center;
+    background-color: white;
+
+}
+.logo1-btn{
+   width: 240px;
+   margin-bottom: 10px;
+}
+.logo-header{
+     top: 0;
+     position: absolute;
+     margin: 30px;
+}
+
+.login-form{
+    margin-left: -20px;
+    margin-top: 180px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+} 
+
+.login-input{
+    width: 40vw;
+    outline: none;
+    
+}
+.login-input::placeholder{
+    padding-left: 20px;
+}
+
+.login-btn{
+    margin: 50px;
+    width: 140px;
+    height: 40px;
+    outline: none;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    color: white;
+    background-color:#afba15 ;
+}
+.login-btn:hover{
+transform: scale(1.1);
+border-radius: 20px;
+
+}
+/* SECONDPAGE */
+.avatar-image{
+    position: absolute;
+    top: 30px;
+    border-radius: 50%;
+   background-position: center;
+    font-size: 10px;
+    width: 130px;
+    height: 150px;
+    color: white;
+    background-color: gray;
+}
+.login-text{
+    position: absolute;
+    top: 210px;
+    border-bottom:1px solid #afba15;
+    width: 100%;
+}
+
+.feature-buttons{
+    position: absolute;
+    display: flex;
+     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    top: 310px;
+    margin-bottom: 20px;
+}
+.feature-buttons>div{
+    margin:  15px 30px ;
+    cursor: pointer;
+    width: 140px;
+    height: 120px;
+    border-radius: 10px;
+    transition: all 0.3 ease-in;
+    color: white;
+}
+.feature-buttons>div:hover{
+    transform: scale(1.1);
+ }
+
+.icons-style{
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+.profile-update{
+    position: absolute;
+    top: 150px;
+    margin-left: 40px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: white;
+    background-color: #0c0847;
+}
+
+
+
+/* MEDIA QUERIES */
+@media screen and (max-width:767px){
+    .login-main{
+        width: 100vw;
+        height: 100vh;
+        overflow-y: scroll;
+    }
+    
+}
+    

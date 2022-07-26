@@ -68,7 +68,7 @@ export const updateEmail = (credentials) => {
             dispatch({ type: "CHANGE_EMAIL_SUCCESS" });
           })
           .catch((err) => {
-            dispatch({ type: "CHANGE_EMAIL_ERROR", err });
+           dispatch({ type: "CHANGE_EMAIL_ERROR", err });
           });
       });
   };
