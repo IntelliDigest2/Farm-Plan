@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Navbar from './Components/Navbar';
 import Sidebar from './Components/Sidebar';
 import { DataGrid } from '@mui/x-data-grid';
-import { Link } from 'react-router-dom';
 
 import { ImLocation2 } from 'react-icons/im';
 import { FaToolbox } from 'react-icons/fa';
@@ -211,7 +210,7 @@ function DashboardSettings() {
                                 height: '40px',
                                 marginTop: '5px',
                                 cursor: 'pointer',
-                              }}
+                              }} 
                             />
                           </div>
                         )}
