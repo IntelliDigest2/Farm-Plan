@@ -14,11 +14,8 @@
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@mui/icons-material": "^5.3.0",
     "@mui/material": "^5.3.0",
-<<<<<<< Updated upstream
     "@reduxjs/toolkit": "^1.8.3",
-=======
     "@mui/x-data-grid": "^5.12.3",
->>>>>>> Stashed changes
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.1",

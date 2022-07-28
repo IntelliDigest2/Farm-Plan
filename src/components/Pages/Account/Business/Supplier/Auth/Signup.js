@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import '../../../../Account/UserAccount.css';
-import '../../../../../Pages/Auth/Mobile/Mob.css';
+import '../../../../../Pages/Auth/Mob.css';
 import { Select } from '../../../../../SubComponents/Dropdown';
 
-import { Title } from '../../../../../Pages/Auth/Mobile/MobComponents';
+import { Title } from '../../../../../Pages/Auth/MobComponents';
 import { Form, Col, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 

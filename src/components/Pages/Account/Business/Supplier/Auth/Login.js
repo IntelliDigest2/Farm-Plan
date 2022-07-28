@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import '../../../../Account/UserAccount.css';
 
-import '../../../../../Pages/Auth/Mobile/Mob.css';
-import { Title } from '../../../../../Pages/Auth/Mobile/MobComponents';
+import '../../../../../Pages/Auth/Mob.css';
+import { Title } from '../../../../../Pages/Auth/MobComponents';
 
 import { Form, Button } from 'react-bootstrap';
 

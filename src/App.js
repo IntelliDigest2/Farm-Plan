@@ -10,56 +10,13 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 //* Pages
-<<<<<<< Updated upstream
-import Login from "./components/Pages/Auth/LogIn";
-import LandingPage from "./components/Pages/Auth/Landing";
-import AboutUs from "./components/Pages/AboutUs";
-import Contact from "./components/Pages/Contact";
-import SignUp from "./components/Pages/Auth/SignUp";
-import Settings from "./components/Pages/Auth/Settings";
-import Questionnaire from "./components/Pages/Auth/Questionnaire";
-import NotFound from "./components/Pages/NotFound";
-import ForgotPassword from "./components/Pages/ForgotPassword";
-import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
-import ChangePassword from "./components/Pages/Account/ChangePassword";
-import Map from "./components/Pages/Account/Map";
-
-import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
-import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
-import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
-import FoodIntake from "./components/Pages/Account/Personal/FoodIntake";
-
-import FoodReduction from "./components/Pages/FoodReduction";
-import InfoTable from "./components/Pages/InfoTable";
-
-import ProductListing from "./components/Pages/Account/products/ProductListing";
-
-import ReserveItems from "./components/Pages/Account/ReserveItems";
-
-import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
-import FarmerAuth from "./components/Pages/Account/Farm/Marketplace/Auth/Farmer-Auth";
-import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
-import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan";
-import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
-
-import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
-import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
-import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
-
-import NewAccount from "./components/Pages/Account/Account";
-
-// import Example from "./components/Pages/Account/Example";
-
-import { Notifications } from "react-push-notification";
-
-import { connect } from "react-redux";
-=======
-import Login from './components/Pages/Auth/Mobile/LogInMob';
-import LandingPage from './components/Pages/Auth/Mobile/Landing';
+import Login from './components/Pages/Auth/LogIn';
+import LandingPage from './components/Pages/Auth/Landing';
+import AboutUs from './components/Pages/AboutUs';
 import Contact from './components/Pages/Contact';
-import SignUp from './components/Pages/Auth/Mobile/SignUp';
+import SignUp from './components/Pages/Auth/SignUp';
 import Settings from './components/Pages/Auth/Settings';
-import Questionnaire from './components/Pages/Auth/Mobile/Questionnaire';
+import Questionnaire from './components/Pages/Auth/Questionnaire';
 import NotFound from './components/Pages/NotFound';
 import ForgotPassword from './components/Pages/ForgotPassword';
 import PlanToSave from './components/Pages/Account/PlanToSave/PlanToSave';
@@ -79,6 +36,7 @@ import ProductListing from './components/Pages/Account/products/ProductListing';
 import ReserveItems from './components/Pages/Account/ReserveItems';
 
 import FarmPlan from './components/Pages/Account/Farm/Marketplace/FarmPlan';
+import FarmerAuth from './components/Pages/Account/Farm/Marketplace/Auth/Farmer-Auth';
 import ConsumerAuth from './components/Pages/Account/Personal/Marketplace/ConsumerAuth';
 import MealPlan from './components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan';
 import ViewProducts from './components/Pages/Account/Farm/ViewProducts';
@@ -93,19 +51,21 @@ import SupplierHomePage from './components/Pages/Account/Business/Supplier/HomeP
 import SupplierAuth from './components/Pages/Account/Business/Supplier/Auth';
 import ContinueAuth from './components/Pages/Account/Business/Supplier/ContinueAuth';
 import SuccessModal from './components/Pages/Account/Business/Supplier/SuccessModal';
+
 import SupplierLogin from './components/Pages/Account/Business/Supplier/Auth/Login';
 import SupplierSignup from './components/Pages/Account/Business/Supplier/Auth/Signup';
+import SupplierForgotPassword from './components/Pages/Account/Business/Supplier/Auth/ForgotPassword';
 
 import DashboardHome from './components/Pages/Account/Business/Supplier/Dashboard/Home';
 import DashboardProducts from './components/Pages/Account/Business/Supplier/Dashboard/Products';
 import DashboardOrders from './components/Pages/Account/Business/Supplier/Dashboard/Orders';
 import DashboardRevenue from './components/Pages/Account/Business/Supplier/Dashboard/Revenue';
 import DashboardSettings from './components/Pages/Account/Business/Supplier/Dashboard/Settings';
+// import Example from "./components/Pages/Account/Example";
 
 import { Notifications } from 'react-push-notification';
 
 import { connect } from 'react-redux';
->>>>>>> Stashed changes
 import {
   BrowserView,
   MobileView,
@@ -118,12 +78,8 @@ import { Toast } from 'react-bootstrap';
 import { getToken, onMessageListener } from './config/fbConfig';
 
 //* Chart.js
-<<<<<<< Updated upstream
-import ChartView from "./components/Pages/Account/Charts/Chart";
-import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
-=======
 import ChartView from './components/Pages/Account/Charts/Chart';
->>>>>>> Stashed changes
+import NutrientGap from './components/Pages/Account/Personal/NutrientGap';
 
 const App = (props) => {
   const [uid, setUid] = useState(props.auth.uid);
@@ -131,11 +87,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (props.auth.uid) setIsLoggedIn(true);
-<<<<<<< Updated upstream
-    if (!props.auth.uid) return <Redirect to="/landing" />;
-=======
-    if (!props.auth.uid) return <Redirect to='/login' />;
->>>>>>> Stashed changes
+    if (!props.auth.uid) return <Redirect to='/landing' />;
   }, [props.auth.uid]);
 
   //Google Cloud Messaging code
@@ -212,25 +164,9 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
-<<<<<<< Updated upstream
-            <Route path="/login" exact component={Login} />
-            <Route path="/landing" exact component={LandingPage} />
-            <Route path="/about-us" exact component={AboutUs} />
-            <Route path="/signup" exact component={SignUp} />
-            <Route path="/settings" exact component={Settings} />
-            <Route path="/questionnaire" exact component={Questionnaire} />
-            <Route path="/contact" exact component={Contact} />
-            <Route path="/forgot-password" exact component={ForgotPassword} />
-            <Route path="/account" exact component={NewAccount} />
-            <Route path="/pts" exact component={PlanToSave} />
-            <Route path="/change-password" exact component={ChangePassword} />
-            <Route path="/view-map" exact component={Map} />
-
-            <Route path="/food-waste" exact component={FoodWaste} />
-            <Route path="/food-loss" exact component={FoodLoss} />
-=======
             <Route path='/login' exact component={Login} />
             <Route path='/landing' exact component={LandingPage} />
+            <Route path='/about-us' exact component={AboutUs} />
             <Route path='/signup' exact component={SignUp} />
             <Route path='/settings' exact component={Settings} />
             <Route path='/questionnaire' exact component={Questionnaire} />
@@ -243,7 +179,6 @@ const App = (props) => {
 
             <Route path='/food-waste' exact component={FoodWaste} />
             <Route path='/food-loss' exact component={FoodLoss} />
->>>>>>> Stashed changes
             <Route
               path='/food-wasteBusiness'
               exact
@@ -260,23 +195,16 @@ const App = (props) => {
 
             <Route path='/reserve-items' component={ReserveItems} />
 
-<<<<<<< Updated upstream
-            <Route path="/farm-plan" component={FarmPlan}>
-              {!props.profile.isSeller && <Redirect to="/farm-auth" />}
+            <Route path='/farm-plan' component={FarmPlan}>
+              {!props.profile.isSeller && <Redirect to='/farm-auth' />}
             </Route>
-            <Route path="/farm-auth" component={FarmerAuth}>
-              {props.profile.isSeller && <Redirect to="/farm-plan" />}
+            <Route path='/farm-auth' component={FarmerAuth}>
+              {props.profile.isSeller && <Redirect to='/farm-plan' />}
             </Route>
-            <Route path="/cons-auth" component={ConsumerAuth} />
-            <Route path="/meal-plan" component={MealPlan} />
-            <Route path="/nutrient-gap" component={NutrientGap} />
-            <Route path="/view-products" component={ViewProducts} />
-=======
-            <Route path='/farm-plan' component={FarmPlan} />
             <Route path='/cons-auth' component={ConsumerAuth} />
             <Route path='/meal-plan' component={MealPlan} />
+            <Route path='/nutrient-gap' component={NutrientGap} />
             <Route path='/view-products' component={ViewProducts} />
->>>>>>> Stashed changes
 
             <Route path='/food-wasteAcademic' component={FoodWasteAcademic} />
             <Route path='/food-intakeAcademic' component={FoodIntakeAcademic} />
@@ -298,6 +226,10 @@ const App = (props) => {
             />
             <Route path='/supplier/login' component={SupplierLogin} />
             <Route path='/supplier/signup' component={SupplierSignup} />
+            <Route
+              path='/supplier/forgot-password'
+              component={SupplierForgotPassword}
+            />
 
             <Route path='/supplier/home' component={DashboardHome} />
             <Route path='/supplier/products' component={DashboardProducts} />
