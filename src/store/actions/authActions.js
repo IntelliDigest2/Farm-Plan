@@ -430,3 +430,38 @@ export const deleteSubAccount = (data) => {
       });
   };
 };
+
+export const changeConsumerPostcode = (consumer) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+      firestore
+      .collection("marketplace")
+      .doc(consumer.uid)
+      .set({ ...consumer.upload }, { merge: true })
+      .then(() => {
+        dispatch({ type: "CONSUMER_SUCCESS" });
+      })
+      .catch((err) => {
+        console.log("err");
+        dispatch({ type: "CONSUMER_ERROR", err });
+      });
+  };
+};
+
+export const getConsumerPostcode = (uid) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+      firestore
+      .collection("marketplace")
+      .doc(uid)
+      .get()
+      .then((snapshot) => {
+        dispatch({ type: "GET_DATA", payload: snapshot.data() });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
+      });
+  };
+};
