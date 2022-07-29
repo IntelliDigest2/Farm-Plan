@@ -9,6 +9,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Delete from "./Icons/DeleteIcon";
 import Edit from "./Icons/EditIcon";
 import Add from "./Icons/AddIcon";
+import AteMealIcon from "./Icons/AteMealIcon";
 
 export default function MealsBox(props) {
   return (
@@ -58,6 +59,13 @@ export default function MealsBox(props) {
                       saved={props.saved}
                     />
                   )}
+                  {props.isMealPlan ? (
+                    <AteMealIcon
+                      meal={newMeal}
+                      value={props.value}
+                      id={newMeal.id}
+                    />
+                  ) : null}
                 </div>
               </ListSubheader>
 

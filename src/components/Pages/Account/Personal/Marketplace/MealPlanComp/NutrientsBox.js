@@ -6,6 +6,7 @@ import NutrientsBoxHeader from "./NutrientsBoxHeader";
 
 const NutrientsBox = (props) => {
   const [meals, setMeals] = useState([]);
+  const [eatenMeal, setEatenMeal] = useState(false);
 
   //this sends data request
   useEffect(() => {
@@ -34,6 +35,7 @@ const NutrientsBox = (props) => {
       var totalNutrients = doc.totalNutrients;
       var totalDaily = doc.totalDaily;
       var recipeYield = doc.yield;
+      var eaten = doc.eaten;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
@@ -53,6 +55,7 @@ const NutrientsBox = (props) => {
           totalNutrients: totalNutrients,
           totalDaily: totalDaily,
           recipeYield: recipeYield,
+          eaten: eaten,
         },
       ]);
     });
@@ -82,7 +85,8 @@ const NutrientsBox = (props) => {
       // forEach checks if nutrient object is already in array, if it is then
       // add its quantity to prev quantity, if not then push the object to the array
       meals.forEach((element) => {
-        if (!element.totalNutrients) return;
+        console.log("element.eaten", element.eaten);
+        if (!element.totalNutrients || !element.eaten) return;
         Object.keys(element.totalNutrients).forEach((nutrient) => {
           let found = arrNutrients.find(
             (tableNutrient) =>
@@ -110,6 +114,7 @@ const NutrientsBox = (props) => {
       let arr = [...oldArr];
       // forEach does the same as above forEach but for RDI
       meals.forEach((element) => {
+        if(element.eaten) setEatenMeal(true);
         if (!element.totalNutrients) return;
         Object.keys(element.totalDaily).forEach((nutrient) => {
           let found = arr.find(
@@ -161,8 +166,8 @@ const NutrientsBox = (props) => {
           <Card.Header></Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              {meals.length ? (
-                <Table striped bordered hover condensed>
+              {(meals.length && eatenMeal) ? (
+                <Table striped bordered hover>
                   <thead>
                     <tr>
                       <th>Nutrient</th>
@@ -209,7 +214,7 @@ const NutrientsBox = (props) => {
                 <div className="empty basic-title-left">
                   <p>
                     Nutritional information will be shown once a meal is added
-                    to your plan.
+                    to your plan and is marked as eaten.
                   </p>
                 </div>
               )}

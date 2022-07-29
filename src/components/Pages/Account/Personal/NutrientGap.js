@@ -13,8 +13,7 @@ export default function NutrientGap() {
   });
 
   const [value, setValue] = useState(moment());
-  console.log("val:", value);
-
+  
   if (loading) {
     return <LoadingScreen />;
   }

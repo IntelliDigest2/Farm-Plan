@@ -73,6 +73,7 @@ function MyMeals(props) {
             meals={meals}
             saved={false}
             value={props.value}
+            isMealPlan={true}
           />
         </div>
       ) : (
