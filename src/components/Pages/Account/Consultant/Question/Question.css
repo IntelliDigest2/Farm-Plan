@@ -52,11 +52,8 @@
         color: red;
         padding: 5px;
     }
-.label-text{
-    /* display: inline-block; */
-    /* margin-left: 30px;
-    margin-top: 20px; */
-}
+    
+   
 
 .question-button{
       position: absolute;
@@ -132,7 +129,21 @@ transform: scale(1.1);
 border-radius: 20px;
 
 }
-
+.different{
+    margin-bottom: 10px;
+}
+.eye-style{
+    font-size: 20px; 
+    cursor: pointer;
+    margin-top: -28px;
+    position: absolute;
+    right: 100px;
+}
+.fixed-service-money{
+    margin-top: -38px;
+    position: absolute;
+    right: 100px;
+}
 /* MEDIA QUERIES */
 
 
@@ -152,6 +163,12 @@ border-radius: 20px;
     }
     .error-div-contanier{
         margin: 0px 15px 26px;
+    }
+    .eye-style{
+        right: 50px;
+    }
+    .fixed-service-money{
+        right: 50px;
     }
     
 }
