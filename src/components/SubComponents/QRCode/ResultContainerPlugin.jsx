@@ -1,4 +1,5 @@
 import React from "react";
+import { SubButton } from "../Button";
 
 function filterResults(results) {
   let filteredResults = [];
@@ -14,7 +15,7 @@ function filterResults(results) {
   return filteredResults;
 }
 
-const ResultContainerTable = ({ data }) => {
+const ResultContainerTable = ({ data, onClick }) => {
   const results = filterResults(data);
   return (
     <table className={"Qrcode-result-table"}>
@@ -23,6 +24,7 @@ const ResultContainerTable = ({ data }) => {
           <td>#</td>
           <td>Decoded Text</td>
           <td>Format</td>
+          <td></td>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +35,9 @@ const ResultContainerTable = ({ data }) => {
               <td>{i}</td>
               <td>{result.decodedText}</td>
               <td>{result.result.format.formatName}</td>
+              <td>
+                <SubButton styling="green" onClick={onClick} text="Add" />
+              </td>
             </tr>
           );
         })}

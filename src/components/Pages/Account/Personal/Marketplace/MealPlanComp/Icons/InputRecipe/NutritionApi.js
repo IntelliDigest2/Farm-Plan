@@ -68,14 +68,4 @@ export const nutritionAPI = async (local, setNutrition) => {
   //     }),
   //   });
   //   console.log(resp);
-  const axios = require("axios").default;
-
-  axios
-    .post(link, ingredient)
-    .then(function (response) {
-      return response;
-    })
-    .catch(function (error) {
-      return error;
-    });
 };
