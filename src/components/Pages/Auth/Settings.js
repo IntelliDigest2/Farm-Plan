@@ -38,6 +38,8 @@ import {
   signOut,
   createSubAccount,
   deleteSubAccount,
+  changeConsumerPostcode,
+  getConsumerPostcode,
 } from "../../../store/actions/authActions";
 import {
   createMapData,
@@ -54,6 +56,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import PostcodeValidatorFormGroup from "./PostcodeValidatorFormGroup";
 
 //The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
 //It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
@@ -84,6 +87,9 @@ function Settings(props) {
   const [town, setTown] = useState(props.profile.city);
   const [country, setCountry] = useState(props.profile.country);
   const [region, setRegion] = useState(props.profile.region);
+  const [postcode, setPostcode] = useState("");
+  const [validPostcode, setValidPostcode] = useState(true);
+  const [signedUpForPTS, setSignedUpForPTS] = useState(props.profile.isConsumer);
 
   const [form, setForm] = useState(null);
   const [error, setError] = useState("");
@@ -97,6 +103,10 @@ function Settings(props) {
       setSubAccountsList({});
     }
   }, [props.data]);
+
+  useEffect(() => {
+    setPostcode(props.postcodeData.postcode);
+  }, [props.postcodeData])
 
   //rerender on form change, reset error message
   useEffect(() => {
@@ -120,6 +130,20 @@ function Settings(props) {
       return <Redirect to="/login" />;
     }
   }, [props.auth.uid]);
+
+  // once profile data is loaded, set all default fields to user data
+  useEffect(() => {
+    setFirstName(props.profile.firstName);
+    setLastName(props.profile.lastName);
+    setEmail(props.profile.email);
+    setTown(props.profile.city);
+    setCountry(props.profile.country);
+    setRegion(props.profile.region);
+    if(props.profile.isConsumer || props.profile.isSeller) {
+      setSignedUpForPTS(true);
+      handleGetConsumerPostcode();
+    }
+  }, [props.profile]);
 
   //Setup geocode for getting coords when changing location
   useEffect(() => {
@@ -261,6 +285,22 @@ function Settings(props) {
       submitNotification("Error", "Please ensure the form is completed.");
     }
   }
+
+  function HandleChangePostcode() {
+    const data = {
+      uid: props.auth.uid,
+      upload: {
+        postcode: postcode,
+      }
+    }
+    props.changeConsumerPostcode(data);
+  }
+
+  function handleGetConsumerPostcode() {
+    props.getConsumerPostcode(props.auth.uid);
+    console.log(props.postcodeData);
+  }
+  
 
   if (!props.auth.uid) return <Redirect to="/login" />;
   if (loading) {
@@ -426,6 +466,11 @@ function Settings(props) {
               region={region}
               setRegion={setRegion}
               setForm={setForm}
+              signedUpForPTS={signedUpForPTS}
+              postcode={postcode}
+              setPostcode={setPostcode}
+              validPostcode={validPostcode}
+              setValidPostcode={setValidPostcode}
             />
             <div className="center">
               <SubButton
@@ -434,7 +479,11 @@ function Settings(props) {
                 onClick={(e) => {
                   e.preventDefault();
                   HandleLocation();
+                  if(signedUpForPTS) {
+                    HandleChangePostcode();
+                  }
                 }}
+                disabled={!validPostcode}
               />
             </div>
             <div className="auth-error">
@@ -717,6 +766,7 @@ const Password = (props) => {
 };
 
 const Location = (props) => {
+
   return (
     <div>
       <Form>
@@ -753,6 +803,17 @@ const Location = (props) => {
             onChange={(e) => props.setRegion(e.target.value)}
           />
         </Form.Group>
+
+        {props.signedUpForPTS ? <Form.Group className="mb-3">
+            <PostcodeValidatorFormGroup
+            postcode={props.postcode}
+            setPostcode={props.setPostcode} 
+            country={props.country}
+            validPostcode={props.validPostcode}
+            setValidPostcode={props.setValidPostcode}
+            />
+        </Form.Group> : null}
+
       </Form>
     </div>
   );
@@ -937,6 +998,7 @@ const mapStateToProps = (state) => {
     authError: state.auth.authError,
     profile: state.firebase.profile,
     // data: state.data.getData,
+    postcodeData: state.data.getData,
     data: state.firestore.data.SubAccounts,
   };
 };
@@ -951,6 +1013,8 @@ const mapDispatchToProps = (dispatch) => {
     createSubAccount: (creds) => dispatch(createSubAccount(creds)),
     deleteSubAccount: (creds) => dispatch(deleteSubAccount(creds)),
     getFirestoreData: (data) => dispatch(getFirestoreData(data)),
+    changeConsumerPostcode: (consumer) => dispatch(changeConsumerPostcode(consumer)),
+    getConsumerPostcode: (uid) => dispatch(getConsumerPostcode(uid)),
   };
 };
 
