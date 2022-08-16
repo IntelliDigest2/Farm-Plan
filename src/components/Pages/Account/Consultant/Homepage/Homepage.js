@@ -12,8 +12,8 @@ const Homepage = () => {
                 <p>Together we would deliver a more suitable food system</p>
 
                 <div className='home-btn'>
-                    <button><Link style={{color:"white"}}to ="/consultants/question1">Register</Link></button>
-                    <button ><Link style={{color:"white"}}to ="/consultant-login">Login</Link></button>
+                    <button><Link style={{color:"white", textDecoration:"none"}}to ="/consultants/question2">Register</Link></button>
+                    <button ><Link style={{color:"white", textDecoration:"none"}}to ="/consultant-login">Login</Link></button>
                 
                 </div>
             </div>

@@ -1,55 +1,64 @@
-import React from 'react'
-import "./login.css"
+import React, { useState, useEffect } from "react";
+
+import "../../../Account/UserAccount.css";
+import "../../../Auth/Mobile/Mob.css";
+import { Title } from "../../../Auth/Mobile/MobComponents";
 
 import { Form, Button } from "react-bootstrap";
-import {  Link } from "react-router-dom";
 
+import { connect } from "react-redux";
+import { Redirect, Link } from "react-router-dom";
+import { signIn } from "../../../../../store/actions/authActions";
 
-const FirstPage = () => {
+function Login(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+ 
+  
   return (
-    <div className='login-contanier'>
-        <section  className='login-main'>
-            <header className='logo-header'>
-        <img src='Green.png' alt='logo' className='logo1-btn'/>
-        <p>Become a Consultant with us.</p>
-        </header>
-{/* bootstrap form */}
-<Form className='default-form'>
-<Form.Group controlId="formBasicName" className='form-group' >
-                <Form.Label className='form-label'>1. Username</Form.Label>
-                <Form.Control type="text"placeholder="username" required className='form-control'  ></Form.Control>
-              </Form.Group>
-              
+    <Title subtitle="Log In to your Consultant Account">
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
 
-              <Form.Group controlId="formBasicEmail" className='form-group'>
-            <Form.Label className='form-label'>2. Password</Form.Label>
-            <Form.Control type="email" placeholder="email" className='form-control' required></Form.Control>
-           </Form.Group>
-
-           <div style={{marginTop:"30px"}} className="">
-          <Link to="/" style={{ color: "#AFBA15" }}>
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+        <div className="signup-center subtitles row">
+          <Link to="/forgot-password" style={{ color: "#AFBA15" }}>
             Forgot your password?
           </Link>
         </div>
-           </Form>
-
-        
-           <Button
-        style={{ fontWeight: "700",marginTop:"30px" }}
+      </Form>
+      {/* <div className="auth-error">{authError ? <p> {authError}</p> : null}</div> */}
+      <Button
+        style={{ fontWeight: "700" }}
         variant="default"
         className="signup-confirm"
         onClick={(e) => {
           e.preventDefault();
-         
         }}
       >
-       Submit
+        Confirm
       </Button>
-          
-</section>
-</div>
-  )
+    </Title>
+  );
 }
 
-export default FirstPage;
 
+
+export default Login;

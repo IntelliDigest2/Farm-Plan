@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "https://web-wrggqo5tiq-ue.a.run.app:443",
   "dependencies": {
+    "@emailjs/browser": "^3.6.2",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@material-ui/core": "^4.12.1",

@@ -1,5 +1,8 @@
 
+import firebase from "firebase/app";
 
+
+// exporting consultant form details to firebase
 export const createExample = (data) =>
 {
     return (dispatch, getState, {getFirestore}) =>{
@@ -50,4 +53,21 @@ export const createExample = (data) =>
 }
 
 
-  
+ // Fetching consultant data
+ export const getUserData = () => {
+  return (dispatch, getState, { getFirebase,getFirestore }) => {
+    getFirestore()
+      .collection("consultants")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_DATA", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
+      });
+  };
+};

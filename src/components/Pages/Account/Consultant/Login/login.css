@@ -22,7 +22,7 @@
     width: 50%;
     text-align: center;
     background-color: white;
-
+    margin-bottom: 20px;
 }
 .logo1-btn{
    width: 240px;
@@ -68,20 +68,10 @@ border-radius: 20px;
 
 }
 /* SECONDPAGE */
-.avatar-image{
-    position: absolute;
-    top: 30px;
-    border-radius: 50%;
-   background-position: center;
-    font-size: 10px;
-    width: 130px;
-    height: 150px;
-    color: white;
-    background-color: gray;
-}
+
 .login-text{
     position: absolute;
-    top: 210px;
+    top: 200px;
     border-bottom:1px solid #afba15;
     width: 100%;
 }
@@ -99,7 +89,7 @@ border-radius: 20px;
     margin:  15px 30px ;
     cursor: pointer;
     width: 140px;
-    height: 120px;
+    height: 140px;
     border-radius: 10px;
     transition: all 0.3 ease-in;
     color: white;
@@ -107,21 +97,100 @@ border-radius: 20px;
 .feature-buttons>div:hover{
     transform: scale(1.1);
  }
+ 
 
 .icons-style{
     font-size: 40px;
     margin-top: 20px;
 }
+.profile-contanier{
+    object-fit: contain;
+   border-radius: 50%;
+    height: 140px;
+    width: 140px;
+    position: absolute;
+    top: 40px;
+    vertical-align: middle;
+}
+.profile-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .profile-update{
     position: absolute;
-    top: 150px;
-    margin-left: 40px;
+    top: 145px;
+    margin-left: 45px;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     color: white;
+    cursor: pointer;
     background-color: #0c0847;
+}
+.settings-icon-contanier{
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    height:25px;
+    width:25px;
+    background-color:#afba15;
+    opacity:0.7;
+    cursor: pointer;
+}
+.settings-icon{
+   color: white;
+   text-align: center;
+   cursor:pointer;
+}
+
+.overlay-contanier{
+        height: 100%;
+        width: 100%;
+        background-color: black;
+        opacity: 0.6;
+        position: absolute;
+        bottom: 80px;
+    
+    }
+    .modal-contanier{
+        height: 150px;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        color: black;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        background-color:white;
+       
+    }
+
+
+.modal-icons-contanier{
+    display: flex;
+    margin-top: 25px;
+}
+.modal-icons-contanier>div{
+    cursor: pointer;
+    
+}
+.bottom_icon{
+    font-size: 20px ;
+    color:#0c0847;
+    margin-top: 10px;
+}
+
+ .bottom-icon1{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: 45px;
+    cursor: pointer;
+
+   
 }
 
 
@@ -136,3 +205,5 @@ border-radius: 20px;
     
 }
     
+
+

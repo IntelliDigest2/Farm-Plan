@@ -1,33 +1,59 @@
-import React from 'react'
-import {BsPerson} from "react-icons/bs"
-import {AiOutlineCamera } from "react-icons/ai";
+import React, {useState} from 'react'
+
+import {AiOutlineCamera,AiOutlinePicture } from "react-icons/ai";
+
 import "./login.css"
 import { storage } from "../../../../../config/fbConfig";
-const ImageProfile = () => {
-  // const[profile, setProfile] =useState("")
-    // const [current,setCurrent] = useState("https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg")
-    // function for handling the input field
-    function onInput (e){
-        const file = e.target.files[0];
-    }
+
+const ImageProfile = ({setShow}) => {
+      //  const[profile, setProfile] =useState("")
+      //  const [current,setCurrent] = useState("https://thumbs.dreamstime.com/b/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg")
+    
+     
+      
 
   return (
-    <>
-    <input 
-    style={{display:"none"}}
-    type='file' 
-    accept='image/*'
-    onChange={onInput}
-    
-     />
-     
-     <BsPerson className="avatar-image"/>
-     <div  className='profile-update'><AiOutlineCamera  style={{marginTop:"10px",textAlign:"center"}}/></div> 
-  </>
-  )}
+          <>
+          {/* <input 
+          // style={{display:"none"}}
+          type='file' 
+          accept='image/*'
+          onChange={handleChange} 
+           /> */}
+
+           {/* <div className='profile-main'>
+           <img  className='profile-contanier'  src ={current} />
+           </div>
+           <div  className='profile-update'>
+            <AiOutlineCamera  style={{marginTop:"10px",textAlign:"center"}}
+              />
+            </div>  */}
+
+            {/* the contanier displays on clicking the camera button */}
+            <div className="overlay-contanier" onClick={() => setShow(false)}></div>
+
+            <section className='modal-contanier' onClick={() => setShow(false)}>
+            <h4>Profile photo</h4>
+            <div className='modal-icons-contanier'>
+              <div className ="bottom-icon1"> 
+              <AiOutlineCamera style={{fontSize: "20px" ,color:"#0c0847",marginTop:"10px"}}/>
+              <p style={{marginTop:"20px"}}>Camera</p>
+              </div>
+              <div className ="bottom-icon1"> 
+              <AiOutlinePicture style={{fontSize: "20px" ,color:"#0c0847",marginTop:"10px"}}/>
+             <p style={{marginTop:"20px"}}>Gallery</p>
+             </div>
+             
+              
+            </div> 
+           
+            </section>
+        </>
+        )}
+
+  export default ImageProfile;
 
 
-export default ImageProfile;
 {/* <Form.Group className='form-group'>
            <Form.Label className='form-label1'> 7. Upload Profile Photo <span style={{color:"red"}}>*</span></Form.Label>
           <div >

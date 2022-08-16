@@ -16,10 +16,7 @@ import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
-import Question1 from "./components/Pages/Account/Consultant/Question/Question1";
 import Question2 from "./components/Pages/Account/Consultant/Question/Question2";
-import SubSignUp from "./components/Pages/Account/Consultant/Question/SubSignUp";
-import SubLogin from "./components/Pages/Account/Consultant/Question/SubLogin";
 import OnboardMessage from "./components/Pages/Account/Consultant/Question/OnboardMessage";
 import ConsultantLogin from "./components/Pages/Account/Consultant/Login/ConsultantLogin";
 import ConsultantAccount  from "./components/Pages/Account/Consultant/Login/ConsultantAccount"
@@ -175,14 +172,13 @@ const App = (props) => {
             <Route path="/forgot-password" exact component={ForgotPassword} />
 
             <Route exact path="/consultants"  component={Homepage} />
-            <Route path="/consultants/question1" exact component={Question1} />
             <Route path= "/consultants/question2" exact component ={Question2}/>
             <Route path= "/consultants/onboard" exact component ={OnboardMessage}/>
-            <Route path= "/sub-signup" exact component ={SubSignUp}/>
-            <Route  exact path= "/sub-login" component ={SubLogin}/>   
-             <Route path= "/consultant-login" exact component ={ConsultantLogin}/>
+            <Route path= "/consultant-login" exact component ={ConsultantLogin}/>
             <Route path= "/consultant-account" exact component ={ConsultantAccount}/>
 
+            
+             
             <Route path="/account" exact component={NewAccount} />
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />
