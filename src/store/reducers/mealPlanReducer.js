@@ -140,6 +140,49 @@ const mealPlanReducer = (state = initState, action) => {
       };
     //#endregion
 
+
+
+    //#region Restaurant shopping list
+    case "GET_RESTAURANT_SHOPPING_LIST":
+      console.log("get shopping list success", action.payload);
+      return {
+        ...state,
+        shoppingList: action.payload,
+        authError: null,
+      };
+    case "GET_RESTAURANT_SHOPPING_LIST_ERROR":
+      console.log("error, couldn't get shopping list", action.err);
+      return {
+        ...state,
+        authError: "Get shoppiung list failed",
+      };
+    case "CREATE_RESTAURANT_SHOP":
+      console.log("added to shop", action.ingr);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CREATE_RESTAURANT_SHOP_ERROR":
+      console.log("error, couldn't add to shopping list", action.err);
+      return {
+        ...state,
+        authError: "Add to shop failed",
+      };
+    case "DELETE_RESTAURANT_SHOP":
+      console.log("successfully deleted item");
+      return {
+        ...state,
+        authError: null,
+      };
+    case "DELETE_RESTAURANT_SHOP_ERROR":
+      console.log("error, couldn't delete item", action.err);
+      return {
+        ...state,
+        authError: "delete item failed",
+      };
+    //#endregion
+
+    
     //#region inventory
     case "GET_INVENTORY":
       console.log("get inventory success", action.payload);

@@ -6,7 +6,7 @@ export const signUp = (supplier) => {
       case 'Hospitals':
       case 'Hotels':
       case 'Offices':
-      case 'Restaurants':
+      // case 'Restaurants':
       case 'Shop/Supermarket':
       case 'Recreational Centers':
       case 'Business':
@@ -21,6 +21,9 @@ export const signUp = (supplier) => {
       case 'Households':
         type = 'household_admin';
         break;
+      case 'Restaurant':
+        type = 'restaurant_admin';
+          break;
       default:
         type = 'user';
         break;
