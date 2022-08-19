@@ -8,14 +8,20 @@ import { Form, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { signIn } from "../../../../../store/actions/authActions";
+import {signIn}  from "../../../../../store/actions/consultantAuthActions";
 
-function Login(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
- 
+const ConsultantLogin = (props)=> {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
   
+    function handleSubmit() {
+      var data = {
+        email: email,
+        password: password,
+      };
+      props.signIn(data);
+    }
+    const { authError } = props;
   return (
     <Title subtitle="Log In to your Consultant Account">
       <Form>
@@ -25,7 +31,7 @@ function Login(props) {
             type="email"
             placeholder="Enter email"
             required
-            onChange={(e) => setEmail(e.target.value)}
+            onChange = {(e) => setEmail( e.target.value)}
           />
         </Form.Group>
 
@@ -35,7 +41,7 @@ function Login(props) {
             type="password"
             placeholder="Password"
             required
-            onChange={(e) => setPassword(e.target.value)}
+            onChange = {(e)=> setPassword(e.target.value)}
           />
         </Form.Group>
         <div className="signup-center subtitles row">
@@ -44,13 +50,14 @@ function Login(props) {
           </Link>
         </div>
       </Form>
-      {/* <div className="auth-error">{authError ? <p> {authError}</p> : null}</div> */}
+       <div className="auth-error">{authError ? <p> {authError}</p> : null}</div> 
       <Button
         style={{ fontWeight: "700" }}
         variant="default"
         className="signup-confirm"
         onClick={(e) => {
           e.preventDefault();
+          handleSubmit();
         }}
       >
         Confirm
@@ -59,6 +66,18 @@ function Login(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.authError,
+    auth: state.firebase.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signIn: (creds) => dispatch(signIn(creds)),
+  };
+};
 
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(ConsultantLogin);

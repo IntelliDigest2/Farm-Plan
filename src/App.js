@@ -20,6 +20,7 @@ import Question2 from "./components/Pages/Account/Consultant/Question/Question2"
 import OnboardMessage from "./components/Pages/Account/Consultant/Question/OnboardMessage";
 import ConsultantLogin from "./components/Pages/Account/Consultant/Login/ConsultantLogin";
 import ConsultantAccount  from "./components/Pages/Account/Consultant/Login/ConsultantAccount"
+import ConsultantSetting from "./components/Pages/Account/Consultant/Login/ConsultantSetting";
 
 import SignUp from "./components/Pages/Auth/Mobile/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
@@ -176,7 +177,7 @@ const App = (props) => {
             <Route path= "/consultants/onboard" exact component ={OnboardMessage}/>
             <Route path= "/consultant-login" exact component ={ConsultantLogin}/>
             <Route path= "/consultant-account" exact component ={ConsultantAccount}/>
-
+            <Route path= "/consultant-settings" exact component ={ConsultantSetting}/>
             
              
             <Route path="/account" exact component={NewAccount} />

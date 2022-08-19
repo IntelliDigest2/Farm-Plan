@@ -1,11 +1,11 @@
-
 import firebase from "firebase/app";
+
 
 
 // exporting consultant form details to firebase
 export const createExample = (data) =>
 {
-    return (dispatch, getState, {getFirestore}) =>{
+    return (dispatch, getState, {getFirestore},{getFirebase}) =>{
         //async call
         const profile = getState().firebase.profile;
     const authUID = getState().firebase.auth.uid;
@@ -49,8 +49,25 @@ export const createExample = (data) =>
              dispatch({type: 'CREATE-DATA-ERROR'});
         })
         
-    }
-}
+    
+
+    const firestore = getFirebase().firestore();
+    const firebase = getFirebase();
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then((resp) => {
+        firestore
+          .collection("consultants")
+          .doc(resp.user.uid)
+          .set({
+            fullName: data.fullName,
+            email:data.email,
+            password:data.password
+           
+          });
+        })
+      }}
 
 
  // Fetching consultant data
@@ -71,3 +88,7 @@ export const createExample = (data) =>
       });
   };
 };
+
+
+
+

@@ -12,6 +12,14 @@
     align-items: center;
 }
 
+.question-subcontanier{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    margin-top: 30px;
+}
 
 .onboard-message{
     text-align: center;
