@@ -25,7 +25,11 @@
 
   background-color: white;
   border-radius: 25px;
-  padding: 2%;
+  padding: 1rem;
+}
+.mobile-style a {
+  color: #32797e;
+  font-weight: 600;
 }
 
 .account-style {

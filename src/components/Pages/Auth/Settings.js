@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import "./Mobile/Mob.css";
+import "./Mob.css";
 import "./Settings.css";
 import { SubButton } from "../../SubComponents/Button";
 import { LogOutPopUp } from "../../SubComponents/PopUp";
 import { PageWrap } from "../../SubComponents/PageWrap";
 import { Heading } from "../../SubComponents/Heading";
+import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
 import { Form, Col, ListGroup, Badge, FormGroup } from "react-bootstrap";
 
@@ -37,6 +38,8 @@ import {
   signOut,
   createSubAccount,
   deleteSubAccount,
+  changeConsumerPostcode,
+  getConsumerPostcode,
 } from "../../../store/actions/authActions";
 import {
   createMapData,
@@ -53,12 +56,19 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import PostcodeValidatorFormGroup from "./PostcodeValidatorFormGroup";
 
 //The top level function "Settings" creates the layout of the page and the state of any information passed through it and the other components.
 //It returns a switch that controls the form as people choose on the page, the form functions are defined below. They are "SettingsList",
 // "Name", "Email", "Password" and "Location".
 
 function Settings(props) {
+  //handles loading page
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1500);
+  });
+
   //auth
   const [firstName, setFirstName] = useState(props.profile.firstName);
   const [lastName, setLastName] = useState(props.profile.lastName);
@@ -77,6 +87,9 @@ function Settings(props) {
   const [town, setTown] = useState(props.profile.city);
   const [country, setCountry] = useState(props.profile.country);
   const [region, setRegion] = useState(props.profile.region);
+  const [postcode, setPostcode] = useState("");
+  const [validPostcode, setValidPostcode] = useState(true);
+  const [signedUpForPTS, setSignedUpForPTS] = useState(props.profile.isConsumer);
 
   const [form, setForm] = useState(null);
   const [error, setError] = useState("");
@@ -90,6 +103,10 @@ function Settings(props) {
       setSubAccountsList({});
     }
   }, [props.data]);
+
+  useEffect(() => {
+    setPostcode(props.postcodeData.postcode);
+  }, [props.postcodeData])
 
   //rerender on form change, reset error message
   useEffect(() => {
@@ -113,6 +130,20 @@ function Settings(props) {
       return <Redirect to="/login" />;
     }
   }, [props.auth.uid]);
+
+  // once profile data is loaded, set all default fields to user data
+  useEffect(() => {
+    setFirstName(props.profile.firstName);
+    setLastName(props.profile.lastName);
+    setEmail(props.profile.email);
+    setTown(props.profile.city);
+    setCountry(props.profile.country);
+    setRegion(props.profile.region);
+    if(props.profile.isConsumer || props.profile.isSeller) {
+      setSignedUpForPTS(true);
+      handleGetConsumerPostcode();
+    }
+  }, [props.profile]);
 
   //Setup geocode for getting coords when changing location
   useEffect(() => {
@@ -214,6 +245,9 @@ function Settings(props) {
     } else if (props.profile.type === "household_admin") {
       adminCollection = "household_users";
       subType = "household_sub";
+    } else if (props.profile.type === "restaurant_admin") {
+      adminCollection = "restaurant_users";
+      subType = "restaurant_sub";
     }
 
     var data = {
@@ -255,7 +289,26 @@ function Settings(props) {
     }
   }
 
+  function HandleChangePostcode() {
+    const data = {
+      uid: props.auth.uid,
+      upload: {
+        postcode: postcode,
+      }
+    }
+    props.changeConsumerPostcode(data);
+  }
+
+  function handleGetConsumerPostcode() {
+    props.getConsumerPostcode(props.auth.uid);
+    console.log(props.postcodeData);
+  }
+  
+
   if (!props.auth.uid) return <Redirect to="/login" />;
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   switch (form) {
     case "changeName":
@@ -416,6 +469,11 @@ function Settings(props) {
               region={region}
               setRegion={setRegion}
               setForm={setForm}
+              signedUpForPTS={signedUpForPTS}
+              postcode={postcode}
+              setPostcode={setPostcode}
+              validPostcode={validPostcode}
+              setValidPostcode={setValidPostcode}
             />
             <div className="center">
               <SubButton
@@ -424,7 +482,11 @@ function Settings(props) {
                 onClick={(e) => {
                   e.preventDefault();
                   HandleLocation();
+                  if(signedUpForPTS) {
+                    HandleChangePostcode();
+                  }
                 }}
+                disabled={!validPostcode}
               />
             </div>
             <div className="auth-error">
@@ -707,6 +769,7 @@ const Password = (props) => {
 };
 
 const Location = (props) => {
+
   return (
     <div>
       <Form>
@@ -743,6 +806,17 @@ const Location = (props) => {
             onChange={(e) => props.setRegion(e.target.value)}
           />
         </Form.Group>
+
+        {props.signedUpForPTS ? <Form.Group className="mb-3">
+            <PostcodeValidatorFormGroup
+            postcode={props.postcode}
+            setPostcode={props.setPostcode} 
+            country={props.country}
+            validPostcode={props.validPostcode}
+            setValidPostcode={props.setValidPostcode}
+            />
+        </Form.Group> : null}
+
       </Form>
     </div>
   );
@@ -927,6 +1001,7 @@ const mapStateToProps = (state) => {
     authError: state.auth.authError,
     profile: state.firebase.profile,
     // data: state.data.getData,
+    postcodeData: state.data.getData,
     data: state.firestore.data.SubAccounts,
   };
 };
@@ -941,6 +1016,8 @@ const mapDispatchToProps = (dispatch) => {
     createSubAccount: (creds) => dispatch(createSubAccount(creds)),
     deleteSubAccount: (creds) => dispatch(deleteSubAccount(creds)),
     getFirestoreData: (data) => dispatch(getFirestoreData(data)),
+    changeConsumerPostcode: (consumer) => dispatch(changeConsumerPostcode(consumer)),
+    getConsumerPostcode: (uid) => dispatch(getConsumerPostcode(uid)),
   };
 };
 

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "../../../../../../SubComponents/Button.css";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 import { recipeSearch, nextPage } from "./search";
 import RecipeList from "./RecipeList";
 import MealType from "./mealType";
 import CuisineType from "./cuisineType";
+import Requirements from "./Requirements";
 import InfoModal from "./InfoModal";
-// import NextBack from "./Next";
+import NextBack from "./Next";
 
 export default function RecipeSearch(props) {
   const [show, setShow] = useState(false);
@@ -16,22 +19,60 @@ export default function RecipeSearch(props) {
   const [query, setQuery] = useState("");
   const [mealType, setMealType] = useState("");
   const [cuisineType, setCuisineType] = useState("");
+  const [requirements, setRequirements] = useState("");
   //sent back from api
   const [recipes, setRecipes] = useState({});
   const [links, setLinks] = useState("");
   //handles next and back
   const [page, setPage] = useState("");
+  // contains list of pages already visited - needed for 'previous' button to function
+  const [arrPages, setArrPages] = useState([]);
+  // keeps track of page number
+  const [pageNumber, setPageNumber] = useState(0);
+
+  // checks if link is already added to array and
+  // if not then it adds the link to the array
+  function addPageToArray(page) {
+    if (arrPages.includes(page)) {
+      console.log("Page already in array!");
+      return;
+    }
+    setArrPages((prevArrPages) => [...prevArrPages, page]);
+    // console.log("This is the pages array ", arrPages);
+  }
 
   useEffect(() => {
-    recipeSearch(query, mealType, cuisineType, setRecipes, setLinks);
+    recipeSearch(
+      query,
+      mealType,
+      cuisineType,
+      requirements,
+      setRecipes,
+      setLinks,
+      addPageToArray
+    );
     // console.log("recipes", recipes);
     // console.log("Next Page", links);
   }, [query, mealType, cuisineType]);
 
-  // useEffect(() => {
-  //   page && nextPage(page, setLinks, setRecipes);
-  //   console.log("next page", page);
-  // }, [page]);
+  useEffect(() => {
+    page && nextPage(page, setLinks, setRecipes);
+    // console.log("next page", page);
+  }, [page]);
+
+  // changes the page number by offset and sets the page variable to the correct link
+  function changePage(offset) {
+    if (offset > 0) {
+      // visiting new page i.e. new link needed
+      setPageNumber((oldValue) => oldValue + offset);
+      setPage(links.next.href);
+      addPageToArray(links.next.href);
+    } else if (offset < 0) {
+      // visiting previous page i.e. link saved in arrPages
+      setPageNumber((oldValue) => (oldValue === 0 ? 0 : oldValue - 1));
+      if (pageNumber != 0) setPage(arrPages[pageNumber]);
+    }
+  }
 
   return (
     <>
@@ -59,18 +100,31 @@ export default function RecipeSearch(props) {
             </Button>
           </InputGroup>
         </Form.Group>
-        <div className="refine-search">
-          <p>Meal Type:</p>
-          <div>
-            <MealType setMealType={setMealType} />
-          </div>
-        </div>
-        <div className="refine-search">
-          <p>Origin:</p>
-          <div>
-            <CuisineType setCuisineType={setCuisineType} />
-          </div>
-        </div>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <p>Meal Type:</p>
+              <div>
+                <MealType setMealType={setMealType} />
+              </div>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <p>Origin:</p>
+              <div>
+                <CuisineType setCuisineType={setCuisineType} />
+              </div>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <p>Requirements:</p>
+              <div>
+                <Requirements setRequirements={setRequirements} />
+              </div>
+            </Grid>
+            <Grid item xs={12} md={6}></Grid>
+          </Grid>
+        </Box>
       </Form>
       <RecipeList
         recipes={recipes}
@@ -78,7 +132,13 @@ export default function RecipeSearch(props) {
         value={props.value}
         onChange={props.onChange}
       />
-      {/* <NextBack links={links} setPage={setPage} /> */}
+      {links ? (
+        <NextBack
+          links={links}
+          pageNumber={pageNumber}
+          changePage={changePage}
+        />
+      ) : null}
     </>
   );
 }

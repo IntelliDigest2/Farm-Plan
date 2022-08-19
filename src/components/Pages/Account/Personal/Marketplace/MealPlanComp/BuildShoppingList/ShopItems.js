@@ -6,9 +6,13 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import RemoveFromShop from "../Icons/RemoveFromShop";
+import { getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { ItemAlreadyInInventoryIcon } from "../Icons/ItemAlreadyInInventoryIcon";
 
 function ShopItems(props) {
   const [list, setList] = useState([]);
+
+  //trigger this when editing/deleting items
   const [update, setUpdate] = useState(0);
 
   //this sends data request
@@ -18,16 +22,17 @@ function ShopItems(props) {
       week: props.value.format("w"),
     };
 
-    if (props.tab === 2) props.getShoppingList(data);
-    // console.log(props.data);
-  }, [props.value, update, props.tab]);
+    props.getShoppingList(data);
+    props.getInventory();
+    // console.log(props);
+  }, [props.value, update]);
 
   const updateShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
     setList([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.data.forEach((doc) => {
+    props.shoppingList.forEach((doc) => {
       //id is the docref for deletion
       var id = doc.id;
       var food = doc.ingredient.food;
@@ -47,11 +52,17 @@ function ShopItems(props) {
   };
 
   useEffect(() => {
-    if (props.tab === 2) {
-      updateShoppingList();
-      // console.log("shopping list", list);
+    updateShoppingList();
+  }, [props.shoppingList]);
+
+  const isItemInInventory = (strItem) => {
+    for (let i = 0; i < props.inventory.length; i++) {
+      if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
+        // if(strItem.includes(props.inventory[i].item))
+        return true;
     }
-  }, [props.data]);
+    return false;
+  };
 
   return (
     <>
@@ -69,6 +80,9 @@ function ShopItems(props) {
                   {ingr.measure}
                 </p>
                 <div className="icons">
+                  {isItemInInventory(ingr.food) ? (
+                    <ItemAlreadyInInventoryIcon />
+                  ) : null}
                   <RemoveFromShop
                     id={ingr.id}
                     value={props.value}
@@ -91,13 +105,15 @@ function ShopItems(props) {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    shoppingList: state.mealPlan.shoppingList,
+    inventory: state.mealPlan.inventory,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getShoppingList: (product) => dispatch(getShoppingList(product)),
+    getInventory: () => dispatch(getInventory()),
   };
 };
 

@@ -29,13 +29,13 @@ export const addToShoppingList = (data) => {
         break;
     }
 
-    const ingredient = data.upload.ingredients;
+    const ingr = data.upload.ingredients;
 
     const firestore = getFirestore();
     const batch = firestore.batch();
 
     //send each separate ingredient to its own document
-    ingredient.forEach((element) => {
+    ingr.forEach((element) => {
       var docRef = firestore
         .collection("marketplace")
         .doc(uid)
@@ -48,10 +48,10 @@ export const addToShoppingList = (data) => {
     batch
       .commit()
       .then(() => {
-        dispatch({ type: "CREATE_DATA" });
+        dispatch({ type: "CREATE_SHOP", ingr });
       })
       .catch((err) => {
-        dispatch({ type: "CREATE_DATA_ERROR", err });
+        dispatch({ type: "CREATE_SHOP_ERROR", err });
       });
   };
 };
@@ -99,10 +99,10 @@ export const getShoppingList = (data) => {
         snapshot.forEach((doc) => {
           data.push(doc.data());
         });
-        dispatch({ type: "GET_DATA", payload: data });
+        dispatch({ type: "GET_SHOPPING_LIST", payload: data });
       })
       .catch((err) => {
-        dispatch({ type: "GET_DATA_ERROR", err });
+        dispatch({ type: "GET_SHOPPING_LIST_ERROR", err });
       });
   };
 };
@@ -146,9 +146,9 @@ export const removeFromShop = (data) => {
       .collection(data.week)
       .doc(data.id)
       .delete()
-      .then(() => console.log("successfully deleted! "))
+      .then(() => dispatch({ type: "DELETE_SHOP" }))
       .catch((err) => {
-        dispatch(console.log("Error removing document:", err));
+        dispatch({ type: "DELETE_SHOP_ERROR", err });
       });
   };
 };

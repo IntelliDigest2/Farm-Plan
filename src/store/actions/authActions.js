@@ -182,12 +182,14 @@ export const signUp = (newUser) => {
       case "Hospitals":
       case "Hotels":
       case "Offices":
-      case "Restaurants":
       case "Shop/Supermarket":
       case "Recreational Centers":
       case "Business":
         type = "business_admin";
         break;
+      case "Restaurants":
+        type = "restaurant_admin";
+        break
       case "Schools":
         type = "academic_admin";
         break;
@@ -195,6 +197,7 @@ export const signUp = (newUser) => {
         type = "farm_admin";
         break;
       case "Households":
+      case "Personal":
         type = "household_admin";
         break;
       default:
@@ -424,6 +427,41 @@ export const deleteSubAccount = (data) => {
       })
       .catch((err) => {
         dispatch({ type: "DELETE_SUBACCOUNT_ERROR", err });
+      });
+  };
+};
+
+export const changeConsumerPostcode = (consumer) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+      firestore
+      .collection("marketplace")
+      .doc(consumer.uid)
+      .set({ ...consumer.upload }, { merge: true })
+      .then(() => {
+        dispatch({ type: "CONSUMER_SUCCESS" });
+      })
+      .catch((err) => {
+        console.log("err");
+        dispatch({ type: "CONSUMER_ERROR", err });
+      });
+  };
+};
+
+export const getConsumerPostcode = (uid) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+      firestore
+      .collection("marketplace")
+      .doc(uid)
+      .get()
+      .then((snapshot) => {
+        dispatch({ type: "GET_DATA", payload: snapshot.data() });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
       });
   };
 };

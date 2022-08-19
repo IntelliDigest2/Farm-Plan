@@ -8,6 +8,12 @@ import { getMealData } from "../../../../../../store/actions/marketplaceActions/
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
 
+  //trigger this when editing/deleting items
+  const [update, setUpdate] = useState(0);
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
+
   //this sends data request
   useEffect(() => {
     const data = {
@@ -15,22 +21,22 @@ function MyMeals(props) {
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD"),
     };
-
-    if (props.tab === 0) props.getMealData(data);
-    // console.log(props.data);
-  }, [props.value, props.update, props.tab]);
+    props.getMealData(data);
+  }, [props.value, update]);
 
   const updateMeals = async () => {
     //clears the meals array before each update- IMPORTANT
     setMeals([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.data.forEach((doc) => {
+    props.mealPlan.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
       var mealType = doc.mealType;
       var url = doc.url;
+      var totalNutrients = doc.totalNutrients;
+      var totalDaily = doc.totalDaily;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
@@ -47,31 +53,29 @@ function MyMeals(props) {
           id: id,
           nn: nn,
           url: url,
+          totalNutrients: totalNutrients,
+          totalDaily: totalDaily,
         },
       ]);
     });
   };
 
   useEffect(() => {
-    if (props.tab === 0) {
-      updateMeals();
-      // console.log("Meal Plan:", meals);
-    }
-  }, [props.data]);
-
-  // useEffect(() => {
-  //   console.log(meals);
-  // }, [meals]);
+    updateMeals();
+  }, [props.mealPlan]);
 
   return (
     <>
       {meals.length ? (
-        <MealsBox
-          forceUpdate={props.forceUpdate}
-          meals={meals}
-          saved={false}
-          value={props.value}
-        />
+        <div>
+          <MealsBox
+            forceUpdate={forceUpdate}
+            meals={meals}
+            saved={false}
+            value={props.value}
+            isMealPlan={true}
+          />
+        </div>
       ) : (
         <div className="empty basic-title-left">
           <p>There is no plan for today :( Try adding something. </p>
@@ -83,13 +87,13 @@ function MyMeals(props) {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    mealPlan: state.mealPlan.meals,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMealData: (product) => dispatch(getMealData(product)),
+    getMealData: (meals) => dispatch(getMealData(meals)),
   };
 };
 

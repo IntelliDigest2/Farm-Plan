@@ -55,6 +55,7 @@ export function SubButton(props) {
       className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
       href={props.goTo}
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       <div className="basic-title">{props.text}</div>
     </BootstrapButton>
@@ -67,7 +68,6 @@ export function AddButton({ onClick, title }) {
       variant="default"
       className={["add-btn", "green-btn", "shadow-none"]}
       onClick={onClick}
-      title={title}
     >
       <div>
         <AddIcon sx={{ fontSize: 30 }} />

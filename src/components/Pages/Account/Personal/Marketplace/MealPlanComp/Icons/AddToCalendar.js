@@ -23,12 +23,11 @@ function AddToCalendar(props) {
   const handleSubmit = () => {
     let data;
     //data is a little different between saved meals and searched meals
-    if (props.saved) {
+    if (props.saved && !props.selected.nonNativeData) {
       data = {
         // month and day are used for the MealPlan db, year and week for the shopping list.
         year: props.value.format("YYYY"),
         month: props.value.format("YYYYMM"),
-        //need to send shopping list data to be bough the previous week from the day it is made
         week: props.value.format("w"),
         day: props.value.format("DD"),
         upload: {
@@ -47,6 +46,9 @@ function AddToCalendar(props) {
           meal: props.selected.meal,
           ingredients: props.selected.ingredients,
           mealType: props.selected.mealType,
+          totalNutrients: props.selected.totalNutrients,
+          totalDaily: props.selected.totalDaily,
+          yield: props.selected.yield,
           url: props.selected.url,
           nonNativeData: true,
         },
@@ -116,17 +118,11 @@ function AddToCalendar(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.firebase.auth,
-    profile: state.firebase.profile,
-  };
-};
 const mapDispatchToProps = (dispatch) => {
   return {
-    createMealPlanData: (data) => dispatch(createMealPlanData(data)),
+    createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddToCalendar);
+export default connect(null, mapDispatchToProps)(AddToCalendar);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Control from "./control";
 import { PageWrap } from "../../../../../SubComponents/PageWrap";
 import "../FarmPlan.css";
+import { useEffect } from "react";
 
 export default function FarmerAuth() {
   //stage 0 are you an existing farm
@@ -25,28 +26,63 @@ export default function FarmerAuth() {
   const [sector, setSector] = useState("Horticulture");
 
   //stage 5 sustainability
-  const practices = [
-    "Permaculture",
-    "Biodynamic Farming",
-    "Agroforestry",
-    "Food forestry",
-    "Poly culture",
-    "Crop rotation",
-    "Mulching/ground cover",
-    "Growth of heirlooms",
-    "Natural animal raising",
-    "Natural pest management",
-    "Natural fish harvest",
-    "Others",
-  ];
+  //handles how the sustainable practices list will vary for each sector
+  let practices;
+  switch (sector) {
+    default:
+    case "Horticulture":
+      practices = [
+        "Permaculture",
+        "Biodynamic Farming",
+        "Agroforestry",
+        "Food forestry",
+        "Poly culture",
+        "Regenerative agriculture",
+        "Crop rotation",
+        "Mulching/ground cover",
+        "Growth of heirlooms",
+        "Natural pest management",
+        "Others",
+      ];
+      break;
+    case "Livestock":
+      practices = ["Permaculture", "Natural animal raising", "Others"];
+      break;
+    case "Aquaculture":
+      practices = ["Permaculture", "Natural fish harvest", "Others"];
+      break;
+    case "Insect Farm":
+      practices = ["Permaculture", "Others"];
+      break;
+    case "Other":
+      practices = [
+        "Permaculture",
+        "Biodynamic Farming",
+        "Agroforestry",
+        "Food forestry",
+        "Poly culture",
+        "Regenerative agriculture",
+        "Crop rotation",
+        "Mulching/ground cover",
+        "Growth of heirlooms",
+        "Natural animal raising",
+        "Natural pest management",
+        "Natural fish harvest",
+        "Others",
+      ];
+      break;
+  }
+
   //handles the state of items in the checklist
-  const [practice, setPractice] = useState(
-    new Array(practices.length).fill(false)
-  );
-  const [futurePractice, setFuturePractice] = useState(
-    new Array(practices.length).fill(false)
-  );
+  const [practice, setPractice] = useState([]);
+  const [futurePractice, setFuturePractice] = useState([]);
   const [effective, setEffective] = useState("");
+
+  useEffect(() => {
+    setPractice(new Array(practices.length).fill(false));
+    setFuturePractice(new Array(practices.length).fill(false));
+    console.log(practice);
+  }, [sector]);
 
   return (
     <PageWrap goTo="/account" header="My Farm Plan" subtitle="Build your plan">

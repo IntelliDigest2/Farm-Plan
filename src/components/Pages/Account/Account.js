@@ -24,8 +24,15 @@ import { Colors } from "../../lib/Colors";
 
 import { createSubAccount } from "../../../store/actions/authActions";
 import { PTSModal } from "./PlanToSave/PTSModal";
+import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
 const NewAccount = (props) => {
+  //handles loading page
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 1500);
+  });
+
   //AccountType/BuildingFunction Management
   const [type, setType] = useState(props.profile.type);
   //controls modal appearing
@@ -46,16 +53,6 @@ const NewAccount = (props) => {
   });
 
   useEffect(() => {}, [type]);
-  function delay(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
-
-  useEffect(() => {
-    delay(2000).then(() => {
-      // if (props.profile.isSeller) return <Redirect to="/farm-plan" />;
-      console.log(props.profile);
-    });
-  }, [props.profile]);
 
   //Tab Management
   const theme = useTheme();
@@ -72,6 +69,9 @@ const NewAccount = (props) => {
   //Render
   if (!props.auth.uid) {
     return <Redirect to="/login" />;
+  }
+  if (loading) {
+    return <LoadingScreen />;
   }
 
   return (
@@ -151,6 +151,7 @@ const AccountType = (props) => {
       );
     case "business_admin":
     case "business_sub":
+    case "restaurant":
       return (
         <>
           <TabList
