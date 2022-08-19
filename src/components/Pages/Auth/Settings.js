@@ -245,6 +245,9 @@ function Settings(props) {
     } else if (props.profile.type === "household_admin") {
       adminCollection = "household_users";
       subType = "household_sub";
+    } else if (props.profile.type === "restaurant_admin") {
+      adminCollection = "restaurant_users";
+      subType = "restaurant_sub";
     }
 
     var data = {
