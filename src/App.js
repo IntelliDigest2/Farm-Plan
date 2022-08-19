@@ -10,8 +10,8 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //* Pages
-import Login from "./components/Pages/Auth/Mobile/LogInMob";
-import LandingPage from "./components/Pages/Auth/Mobile/Landing";
+import Login from "./components/Pages/Auth/LogIn";
+import LandingPage from "./components/Pages/Auth/Landing";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 
@@ -19,12 +19,12 @@ import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
 import Question2 from "./components/Pages/Account/Consultant/Question/Question2";
 import OnboardMessage from "./components/Pages/Account/Consultant/Question/OnboardMessage";
 import ConsultantLogin from "./components/Pages/Account/Consultant/Login/ConsultantLogin";
-import ConsultantAccount  from "./components/Pages/Account/Consultant/Login/ConsultantAccount"
+import ConsultantAccount from "./components/Pages/Account/Consultant/Login/ConsultantAccount";
 import ConsultantSetting from "./components/Pages/Account/Consultant/Login/ConsultantSetting";
 
-import SignUp from "./components/Pages/Auth/Mobile/SignUp";
+import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
-import Questionnaire from "./components/Pages/Auth/Mobile/Questionnaire";
+import Questionnaire from "./components/Pages/Auth/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
@@ -74,20 +74,16 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 //* Chart.js
 import ChartView from "./components/Pages/Account/Charts/Chart";
 
-
 const App = (props) => {
   const [uid, setUid] = useState(props.auth.uid);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
- 
-
-
 
   useEffect(() => {
     if (props.auth.uid) setIsLoggedIn(true);
     if (!props.auth.uid) return <Redirect to="/landing" />;
   }, [props.auth.uid]);
 
-  // 
+  //
   //Google Cloud Messaging code
   const [show, setShow] = useState(false);
   const [notification, setNotification] = useState({
@@ -172,14 +168,25 @@ const App = (props) => {
             <Route path="/contact" exact component={Contact} />
             <Route path="/forgot-password" exact component={ForgotPassword} />
 
-            <Route exact path="/consultants"  component={Homepage} />
-            <Route path= "/consultants/question2" exact component ={Question2}/>
-            <Route path= "/consultants/onboard" exact component ={OnboardMessage}/>
-            <Route path= "/consultant-login" exact component ={ConsultantLogin}/>
-            <Route path= "/consultant-account" exact component ={ConsultantAccount}/>
-            <Route path= "/consultant-settings" exact component ={ConsultantSetting}/>
-            
-             
+            <Route exact path="/consultants" component={Homepage} />
+            <Route path="/consultants/question2" exact component={Question2} />
+            <Route
+              path="/consultants/onboard"
+              exact
+              component={OnboardMessage}
+            />
+            <Route path="/consultant-login" exact component={ConsultantLogin} />
+            <Route
+              path="/consultant-account"
+              exact
+              component={ConsultantAccount}
+            />
+            <Route
+              path="/consultant-settings"
+              exact
+              component={ConsultantSetting}
+            />
+
             <Route path="/account" exact component={NewAccount} />
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />

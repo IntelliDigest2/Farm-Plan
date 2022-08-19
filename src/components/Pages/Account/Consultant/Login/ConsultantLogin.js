@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 
 import "../../../Account/UserAccount.css";
-import "../../../Auth/Mobile/Mob.css";
-import { Title } from "../../../Auth/Mobile/MobComponents";
+import "../../../Auth/Mob.css";
+import { Title } from "../../../Auth/MobComponents";
 
 import { Form, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import {signIn}  from "../../../../../store/actions/consultantAuthActions";
+import { signIn } from "../../../../../store/actions/consultantAuthActions";
 
-const ConsultantLogin = (props)=> {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-  
-    function handleSubmit() {
-      var data = {
-        email: email,
-        password: password,
-      };
-      props.signIn(data);
-    }
-    const { authError } = props;
+const ConsultantLogin = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit() {
+    var data = {
+      email: email,
+      password: password,
+    };
+    props.signIn(data);
+  }
+  const { authError } = props;
   return (
     <Title subtitle="Log In to your Consultant Account">
       <Form>
@@ -31,7 +31,7 @@ const ConsultantLogin = (props)=> {
             type="email"
             placeholder="Enter email"
             required
-            onChange = {(e) => setEmail( e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Group>
 
@@ -41,7 +41,7 @@ const ConsultantLogin = (props)=> {
             type="password"
             placeholder="Password"
             required
-            onChange = {(e)=> setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <div className="signup-center subtitles row">
@@ -50,7 +50,7 @@ const ConsultantLogin = (props)=> {
           </Link>
         </div>
       </Form>
-       <div className="auth-error">{authError ? <p> {authError}</p> : null}</div> 
+      <div className="auth-error">{authError ? <p> {authError}</p> : null}</div>
       <Button
         style={{ fontWeight: "700" }}
         variant="default"
@@ -64,7 +64,7 @@ const ConsultantLogin = (props)=> {
       </Button>
     </Title>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -78,6 +78,5 @@ const mapDispatchToProps = (dispatch) => {
     signIn: (creds) => dispatch(signIn(creds)),
   };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConsultantLogin);
