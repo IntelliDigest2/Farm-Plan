@@ -2,50 +2,28 @@ import React, { useState, useEffect } from "react";
 
 import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 
-//ownRecipe is sent when a person adds their own meal as opposed to downloading from API
-export default function MealType({ setMealType, ownRecipe }) {
+export default function MealType({ setMealType }) {
   const [control, setControl] = useState("Any");
 
   //mediates between the state of the dropdown and the format needed for the API
   const handleDropdown = () => {
-    if (ownRecipe) {
-      switch (control) {
-        default:
-        case "Any":
-          setMealType("");
-          break;
-        case "Breakfast":
-          setMealType("Breakfast");
-          break;
-        case "Lunch":
-          setMealType("Lunch");
-          break;
-        case "Dinner":
-          setMealType("Dinner");
-          break;
-        case "Snack":
-          setMealType("Snack");
-          break;
-      }
-    } else {
-      switch (control) {
-        default:
-        case "Any":
-          setMealType("");
-          break;
-        case "Breakfast":
-          setMealType("&mealType=Breakfast");
-          break;
-        case "Lunch":
-          setMealType("&mealType=Lunch");
-          break;
-        case "Dinner":
-          setMealType("&mealType=Dinner");
-          break;
-        case "Snack":
-          setMealType("&mealType=Snack");
-          break;
-      }
+    switch (control) {
+      default:
+      case "Any":
+        setMealType("");
+        break;
+      case "Breakfast":
+        setMealType("Breakfast");
+        break;
+      case "Lunch":
+        setMealType("Lunch");
+        break;
+      case "Dinner":
+        setMealType("Dinner");
+        break;
+      case "Snack":
+        setMealType("Snack");
+        break;
     }
   };
 

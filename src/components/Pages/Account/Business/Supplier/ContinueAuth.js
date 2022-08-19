@@ -1,71 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { TextField, Stack, Button } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
+import React, { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { TextField, Stack, Button } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 
-import { connect } from 'react-redux';
-import { signIn } from '../../../../../store/actions/authActions';
+import { connect } from "react-redux";
+import { signIn } from "../../../../../store/actions/authActions";
 
-import './Supplier.css';
+import "./Supplier.css";
 
 const businessTimespan = [
   {
-    value: '0-3 years',
-    label: '0-3 years',
+    value: "0-3 years",
+    label: "0-3 years",
   },
   {
-    value: '4-7 years',
-    label: '4-7 years',
+    value: "4-7 years",
+    label: "4-7 years",
   },
   {
-    value: '8 years+',
-    label: '8 years+',
+    value: "8 years+",
+    label: "8 years+",
   },
 ];
 
 const supplyEquipmentType = [
   {
-    value: 'Mechanical',
-    label: 'Mechanical',
+    value: "Mechanical",
+    label: "Mechanical",
   },
   {
-    value: 'Electronic',
-    label: ' Electronic',
+    value: "Electronic",
+    label: " Electronic",
   },
   {
-    value: 'Manual',
-    label: 'Manual',
+    value: "Manual",
+    label: "Manual",
   },
 ];
 
 const shipToLocations = [
   {
-    value: 'Africa',
-    label: 'Africa',
+    value: "Africa",
+    label: "Africa",
   },
   {
-    value: 'Asia',
-    label: 'Asia',
+    value: "Asia",
+    label: "Asia",
   },
   {
-    value: 'Australia',
-    label: 'Australia',
+    value: "Australia",
+    label: "Australia",
   },
   {
-    value: 'Europe',
-    label: 'Europe',
+    value: "Europe",
+    label: "Europe",
   },
   {
-    value: 'North America',
-    label: 'North America',
+    value: "North America",
+    label: "North America",
   },
   {
-    value: 'South America',
-    label: 'South America',
+    value: "South America",
+    label: "South America",
   },
 ];
 function ContinueAuth(props) {
-  const [timespan, setTimespan] = useState('');
+  const [timespan, setTimespan] = useState("");
   const [equipmentType, setEquipmentType] = useState([]);
   const [shippingLocations, setShippingLocations] = useState([]);
 
@@ -94,22 +94,22 @@ function ContinueAuth(props) {
 
   useEffect(() => {
     if (isLoggedIn === false) {
-      return <Redirect to='/supplier/login' />;
+      return <Redirect to="/supplier/login" />;
     }
   }, [isLoggedIn]);
 
   return (
     <>
-      <div className='heading'>
+      <div className="s-heading">
         <p>Become a Supplier with us</p>
       </div>
-      <div className='form-container'>
+      <div className="form-container">
         <form>
-          <Stack spacing={3} direction='column'>
+          <Stack spacing={3} direction="column">
             <TextField
-              id='outlined-basic'
+              id="outlined-basic"
               select
-              label='How long have you been in business?'
+              label="How long have you been in business?"
               value={timespan}
               onChange={handleBusinessTime}
             >
@@ -120,9 +120,9 @@ function ContinueAuth(props) {
               ))}
             </TextField>
             <TextField
-              id='outlined-select-currency'
+              id="outlined-select-currency"
               select
-              label='What type of equipment do you supply?'
+              label="What type of equipment do you supply?"
               value={equipmentType}
               onChange={handleEquipment}
             >
@@ -133,9 +133,9 @@ function ContinueAuth(props) {
               ))}
             </TextField>
             <TextField
-              id='outlined-select-currency'
+              id="outlined-select-currency"
               select
-              label='What are your ship-to or service locations?'
+              label="What are your ship-to or service locations?"
               value={shippingLocations}
               onChange={handleLocations}
             >
@@ -146,19 +146,19 @@ function ContinueAuth(props) {
               ))}
             </TextField>
             <TextField
-              id='outlined-basic'
-              label='Any other additional information?'
-              variant='outlined'
+              id="outlined-basic"
+              label="Any other additional information?"
+              variant="outlined"
             />
           </Stack>
           <br />
-          <div className='authbtn-container'>
-            <Stack spacing={3} direction='row'>
+          <div className="authbtn-container">
+            <Stack spacing={3} direction="row">
               <Link
-                to='/supplier/auth/continue/success'
-                style={{ textDecoration: 'none' }}
+                to="/supplier/auth/continue/success"
+                style={{ textDecoration: "none" }}
               >
-                <Button variant='contained'>Submit</Button>
+                <Button variant="contained">Submit</Button>
               </Link>
             </Stack>
           </div>
