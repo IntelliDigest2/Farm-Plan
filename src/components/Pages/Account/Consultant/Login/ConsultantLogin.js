@@ -8,7 +8,7 @@ import { Form, Button } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import { signIn } from "../../../../../store/actions/consultantAuthActions";
+import { signIn } from "../../../../../store/actions/consultingActions/consultantAuthActions";
 
 const ConsultantLogin = (props) => {
   const [email, setEmail] = useState("");
