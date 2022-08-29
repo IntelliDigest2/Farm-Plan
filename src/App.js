@@ -14,6 +14,14 @@ import Login from "./components/Pages/Auth/LogIn";
 import LandingPage from "./components/Pages/Auth/Landing";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
+
+import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
+import Question2 from "./components/Pages/Account/Consultant/Question/Question2";
+import OnboardMessage from "./components/Pages/Account/Consultant/Question/OnboardMessage";
+import ConsultantLogin from "./components/Pages/Account/Consultant/Login/ConsultantLogin";
+import ConsultantAccount from "./components/Pages/Account/Consultant/Login/ConsultantAccount";
+import ConsultantSetting from "./components/Pages/Account/Consultant/Login/ConsultantSetting";
+
 import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
 import Questionnaire from "./components/Pages/Auth/Questionnaire";
@@ -65,7 +73,6 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 
 //* Chart.js
 import ChartView from "./components/Pages/Account/Charts/Chart";
-import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
 
 const App = (props) => {
   const [uid, setUid] = useState(props.auth.uid);
@@ -76,6 +83,7 @@ const App = (props) => {
     if (!props.auth.uid) return <Redirect to="/landing" />;
   }, [props.auth.uid]);
 
+  //
   //Google Cloud Messaging code
   const [show, setShow] = useState(false);
   const [notification, setNotification] = useState({
@@ -150,6 +158,7 @@ const App = (props) => {
           </BrowserView>
 
           <Switch>
+            {/* <Route path="/example" exact component={Example} /> */}
             <Route path="/login" exact component={Login} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/about-us" exact component={AboutUs} />
@@ -158,6 +167,26 @@ const App = (props) => {
             <Route path="/questionnaire" exact component={Questionnaire} />
             <Route path="/contact" exact component={Contact} />
             <Route path="/forgot-password" exact component={ForgotPassword} />
+
+            <Route exact path="/consultants" component={Homepage} />
+            <Route path="/consultants/question2" exact component={Question2} />
+            <Route
+              path="/consultants/onboard"
+              exact
+              component={OnboardMessage}
+            />
+            <Route path="/consultant-login" exact component={ConsultantLogin} />
+            <Route
+              path="/consultant-account"
+              exact
+              component={ConsultantAccount}
+            />
+            <Route
+              path="/consultant-settings"
+              exact
+              component={ConsultantSetting}
+            />
+
             <Route path="/account" exact component={NewAccount} />
             <Route path="/pts" exact component={PlanToSave} />
             <Route path="/change-password" exact component={ChangePassword} />
@@ -182,14 +211,13 @@ const App = (props) => {
             <Route path="/reserve-items" component={ReserveItems} />
 
             <Route path="/farm-plan" component={FarmPlan}>
-              {!props.profile.isSeller && <Redirect to="/farm-auth" />}
+              {!props.profile.isSeller && <Redirect to="/farm-plan" />}
             </Route>
             <Route path="/farm-auth" component={FarmerAuth}>
               {props.profile.isSeller && <Redirect to="/farm-plan" />}
             </Route>
             <Route path="/cons-auth" component={ConsumerAuth} />
             <Route path="/meal-plan" component={MealPlan} />
-            <Route path="/nutrient-gap" component={NutrientGap} />
             <Route path="/view-products" component={ViewProducts} />
 
             <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />

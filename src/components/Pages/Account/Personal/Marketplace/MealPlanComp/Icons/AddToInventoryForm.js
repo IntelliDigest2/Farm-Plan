@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.css";
 import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
@@ -34,6 +34,18 @@ const AddToInventoryForm = (props) => {
     }
   };
 
+  const handleFoodSearch = (e) => {
+    if (e.target.textContent) {
+      setItemName(e.target.textContent);
+    } else {
+      setItemName(e.target.value);
+    }
+  };
+
+  useEffect(() => {
+    console.log("item", itemName);
+  }, [itemName]);
+
   return (
     <div>
       <button
@@ -53,7 +65,7 @@ const AddToInventoryForm = (props) => {
             props.handleFormClose();
           }}
         >
-          <Form.Group>
+          {/* <Form.Group>
             <Form.Label>Item Name</Form.Label>
             <Form.Control
               type="text"
@@ -63,10 +75,11 @@ const AddToInventoryForm = (props) => {
               }}
               required
             />
-          </Form.Group>
+          </Form.Group> */}
+          <FoodItemSearch handleFoodSearch={handleFoodSearch} />
 
           <div style={{ alignItems: "center" }}>
-            <Button className="blue-btn shadow-none" type="submit">
+            <Button className="blue-btn shadow-none mt-3" type="submit">
               Done
             </Button>
           </div>

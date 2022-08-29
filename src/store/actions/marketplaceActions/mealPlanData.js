@@ -216,3 +216,49 @@ export const recommend = (data) => {
       });
   };
 };
+
+export const getAllMarketplaceUsers = () => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .get()
+      .then((snapshot) => {
+        const userList = [];
+        snapshot.forEach((doc) => {
+          userList.push(doc.id);
+        });
+        dispatch({ type: "GET_DATA", payload: userList });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
+      });
+  };
+};
+
+export const getMealDataForUID = (uid, meals) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("mealPlanData")
+      .doc(meals.month)
+      .collection(meals.day)
+      .get()
+      .then((snapshot) => {
+        const mealPlan = [];
+        snapshot.forEach((doc) => {
+          mealPlan.push(doc.data());
+        });
+        dispatch({ type: "GET_MEALS", payload: mealPlan });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_MEALS_ERROR", err });
+      });
+  };
+};

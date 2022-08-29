@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../../../../../../SubComponents/Button.css";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 import { recipeSearch, nextPage } from "./search";
 import RecipeList from "./RecipeList";
 import MealType from "./mealType";
 import CuisineType from "./cuisineType";
+import Requirements from "./Requirements";
 import InfoModal from "./InfoModal";
 import NextBack from "./Next";
 
@@ -16,6 +19,7 @@ export default function RecipeSearch(props) {
   const [query, setQuery] = useState("");
   const [mealType, setMealType] = useState("");
   const [cuisineType, setCuisineType] = useState("");
+  const [requirements, setRequirements] = useState("");
   //sent back from api
   const [recipes, setRecipes] = useState({});
   const [links, setLinks] = useState("");
@@ -42,6 +46,7 @@ export default function RecipeSearch(props) {
       query,
       mealType,
       cuisineType,
+      requirements,
       setRecipes,
       setLinks,
       addPageToArray
@@ -95,18 +100,31 @@ export default function RecipeSearch(props) {
             </Button>
           </InputGroup>
         </Form.Group>
-        <div className="refine-search">
-          <p>Meal Type:</p>
-          <div>
-            <MealType setMealType={setMealType} />
-          </div>
-        </div>
-        <div className="refine-search">
-          <p>Origin:</p>
-          <div>
-            <CuisineType setCuisineType={setCuisineType} />
-          </div>
-        </div>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <p>Meal Type:</p>
+              <div>
+                <MealType setMealType={setMealType} />
+              </div>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <p>Origin:</p>
+              <div>
+                <CuisineType setCuisineType={setCuisineType} />
+              </div>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <p>Requirements:</p>
+              <div>
+                <Requirements setRequirements={setRequirements} />
+              </div>
+            </Grid>
+            <Grid item xs={12} md={6}></Grid>
+          </Grid>
+        </Box>
       </Form>
       <RecipeList
         recipes={recipes}
@@ -114,7 +132,13 @@ export default function RecipeSearch(props) {
         value={props.value}
         onChange={props.onChange}
       />
-      <NextBack links={links} pageNumber={pageNumber} changePage={changePage} />
+      {links ? (
+        <NextBack
+          links={links}
+          pageNumber={pageNumber}
+          changePage={changePage}
+        />
+      ) : null}
     </>
   );
 }
