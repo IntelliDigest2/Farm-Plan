@@ -10,7 +10,7 @@ export function Food({ setShow, setChooseModal }) {
         icon="notes" 
         label="Meal Plan"
         color="turquoise"
-        goTo="/restaurant-meal-plan"
+        goTo="/meal-plan"
         />
 
       <IconButton
