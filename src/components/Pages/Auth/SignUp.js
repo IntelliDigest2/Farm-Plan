@@ -230,10 +230,15 @@ const SignUp = (props) => {
             region={region}
             country={country}
             buildingFunction={buildingFunction}
+            setRestaurantName={setRestaurantName}
             restaurantName={restaurantName}
+            setCuisine={setCuisine}
             cuisine={cuisine}
+            setRegulatoryBody={setRegulatoryBody}
             regulatoryBody={regulatoryBody}
+            setRegulatoryBodyID={setRegulatoryBodyID}
             regulatoryBodyID={regulatoryBodyID}
+            setRestaurantDescription={setRestaurantDescription}
             restaurantDescription={restaurantDescription}
 
           />
@@ -285,8 +290,11 @@ const SignUp = (props) => {
               buildingFunction={buildingFunction}
               setStage={setStage}
               countries={countryNames}
+              setRestaurantName={setRestaurantName}
               restaurantName = {restaurantName}
+              setRegulatoryBody={setRegulatoryBody}
               regulatoryBody = {regulatoryBody}
+              setRegulatoryBodyID={setRegulatoryBodyID}
               regulatoryBodyID = {regulatoryBodyID}
             />
           </Title>
@@ -312,7 +320,9 @@ const SignUp = (props) => {
                 restaurantName = {restaurantName}
                 regulatoryBody = {regulatoryBody}
                 regulatoryBodyID = {regulatoryBodyID}
+                setCuisine={setCuisine}
                 cuisine = {cuisine}
+                setRestaurantDescription={setRestaurantDescription}
                 restaurantDescription = {restaurantDescription}
               />
             </Title>
