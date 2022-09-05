@@ -12,7 +12,7 @@ export function Food({ setShow, setChooseModal }) {
         color="turquoise"
         goTo="/restaurant-meal-plan"
         />
-
+{/* 
       <IconButton
         icon="notes"
         label="Shopping List"
@@ -33,7 +33,7 @@ export function Food({ setShow, setChooseModal }) {
         color="turquoise"
         goTo="/restaurant-dashboard"
         />
-        
+         */}
       <IconButton
         icon="my-products"
         label="Meal Sold" 

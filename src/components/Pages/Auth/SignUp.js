@@ -41,6 +41,17 @@ const SignUp = (props) => {
   const [region, setRegion] = useState("");
   const [buildingFunction, setBuildingFunction] = useState("");
 
+  //Stage4
+  const [restaurantName, setRestaurantName] = useState("");
+  const [regulatoryBody, setRegulatoryBody] = useState("");
+  const [regulatoryBodyID, setRegulatoryBodyID] = useState("");
+
+  //Stage5
+  const [cuisine, setCuisine] = useState("");
+  const [restaurantDescription, setRestaurantDescription] = useState("");
+
+
+
   const [stage, setStage] = useState(1);
 
   const [errorNotification, setErrorNotification] = useState();
@@ -219,6 +230,12 @@ const SignUp = (props) => {
             region={region}
             country={country}
             buildingFunction={buildingFunction}
+            restaurantName={restaurantName}
+            cuisine={cuisine}
+            regulatoryBody={regulatoryBody}
+            regulatoryBodyID={regulatoryBodyID}
+            restaurantDescription={restaurantDescription}
+
           />
           <div className="signup-center">
             <div className="auth-error">
@@ -250,6 +267,56 @@ const SignUp = (props) => {
           </div>
         </Title>
       );
+      //Restaurant-specific
+      case 4:
+        return (
+          <Title subtitle="Sign Up">
+            <div className="signup-center subtitles">
+              <p>First, create your account.</p>
+            </div>
+            <Stage4
+              setTown={setTown}
+              town={town}
+              setCountry={setCountry}
+              country={country}
+              setRegion={setRegion}
+              region={region}
+              setBuildingFunction={setBuildingFunction}
+              buildingFunction={buildingFunction}
+              setStage={setStage}
+              countries={countryNames}
+              restaurantName = {restaurantName}
+              regulatoryBody = {regulatoryBody}
+              regulatoryBodyID = {regulatoryBodyID}
+            />
+          </Title>
+        );
+
+        case 5:
+          return (
+            <Title subtitle="Sign Up">
+              <div className="signup-center subtitles">
+                <p>First, create your account.</p>
+              </div>
+              <Stage5
+                setTown={setTown}
+                town={town}
+                setCountry={setCountry}
+                country={country}
+                setRegion={setRegion}
+                region={region}
+                setBuildingFunction={setBuildingFunction}
+                buildingFunction={buildingFunction}
+                setStage={setStage}
+                countries={countryNames}
+                restaurantName = {restaurantName}
+                regulatoryBody = {regulatoryBody}
+                regulatoryBodyID = {regulatoryBodyID}
+                cuisine = {cuisine}
+                restaurantDescription = {restaurantDescription}
+              />
+            </Title>
+          );
   }
 };
 
@@ -406,6 +473,8 @@ const Stage2 = (props) => {
           </Form.Group>
         </Form>
       </FormStyle>
+
+
       <div className="signup-center">
         <div className="row">
           <Button
@@ -419,24 +488,189 @@ const Stage2 = (props) => {
           >
             Back
           </Button>
+
           <Button
             variant="default"
             className="signup-btn"
+
             onClick={(e) => {
               e.preventDefault();
               //Next Stage
-              props.setStage(3);
+
+              if (props.buildingFunction=="Restaurants") {
+                props.setStage(4) //stage for restaurant-specific questions
+              } else {
+              props.setStage(3);}
             }}
           >
             Next
           </Button>
+
         </div>
       </div>
     </div>
   );
 };
 
+//If account type == restaurant, this routes 
+const Stage4 = (props) => {
+  return(
+  <div>
+    <FormStyle>
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Restaurant name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Restaurant name"
+            defaultValue={props.restaurantName}
+            required
+            onChange={(e) => {
+              props.setRestaurantName(e.target.value);
+            }}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+        <Form.Label>Please input the local authority which verifies your restuarant's health and safety status (e.g. the Food Standards Agency for Scotland).</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Regulatory body"
+            defaultValue={props.regulatoryBody}
+            required
+            onChange={(e) => {
+              props.setRegulatoryBody(e.target.value);
+            }}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+        <Form.Label>Please input the ID this regulatory body has provided you with. </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="ID"
+            defaultValue={props.regulatoryBodyID}
+            required
+            onChange={(e) => {
+              props.setRegulatoryBodyID(e.target.value);
+            }}
+          />
+        </Form.Group>
+
+        <div className="signup-center">
+        <div className="row">
+          <Button
+            variant="default"
+            className="signup-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              //Previous Stage
+              props.setStage(2);
+            }}
+          >
+            Back
+          </Button>
+
+          <Button
+            variant="default"
+            className="signup-btn"
+
+            onClick={(e) => {
+              e.preventDefault();
+              //Next Stage
+
+              if (props.buildingFunction=="Restaurants") {
+                props.setStage(5) //stage for restaurant-specific questions
+              } else {
+              props.setStage(2);}
+            }}
+          >
+            Next
+          </Button>
+
+        </div>
+      </div>
+      </Form>
+    </FormStyle>
+  </div>
+
+  );
+};
+
+
+const Stage5 = (props) => {
+  return(
+  <div>
+    <FormStyle>
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>What cuisine does your kitchen offer?</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Cuisine"
+            defaultValue={props.cuisine}
+            required
+            onChange={(e) => {
+              props.setCuisine(e.target.value);
+            }}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+        <Form.Label>Please provide a brief description of your restaurant for customers to see.</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Description"
+            defaultValue={props.restaurantDescription}
+            required
+            onChange={(e) => {
+              props.setRestaurantDescription(e.target.value);
+            }}
+          />
+        </Form.Group>
+
+        <div className="signup-center">
+        <div className="row">
+          <Button
+            variant="default"
+            className="signup-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              //Previous Stage
+              props.setStage(4);
+            }}
+          >
+            Back
+          </Button>
+
+          <Button
+            variant="default"
+            className="signup-btn"
+
+            onClick={(e) => {
+              e.preventDefault();
+              //Next Stage
+
+              if (props.buildingFunction=="Restaurants") {
+                props.setStage(3) //stage for restaurant-specific questions
+              } else {
+              props.setStage(3);}
+            }}
+          >
+            Next
+          </Button>
+
+        </div>
+      </div>
+      </Form>
+    </FormStyle>
+  </div>
+
+  );
+}
+
 const Stage3 = (props) => {
+  if (props.buildingFunction=="Restaurants"){
   return (
     <div>
       <List>
@@ -459,7 +693,73 @@ const Stage3 = (props) => {
             <EditLocationAltIcon />
           </ListItemIcon>
           <ListItemText>
-            {props.town} {props.country} {props.region}
+            {props.town}, {props.country}, {props.region}
+          </ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <HomeWorkIcon />
+          </ListItemIcon>
+          <ListItemText>{props.buildingFunction}</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <HomeWorkIcon />
+          </ListItemIcon>
+          <ListItemText>{props.restaurantName}</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <HomeWorkIcon />
+          </ListItemIcon>
+          <ListItemText>{props.regulatoryBody}</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <HomeWorkIcon />
+          </ListItemIcon>
+          <ListItemText>{props.regulatoryBodyID}</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <HomeWorkIcon />
+          </ListItemIcon>
+          <ListItemText>{props.cuisine}</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <HomeWorkIcon />
+          </ListItemIcon>
+          <ListItemText>{props.restaurantDescription}</ListItemText>
+        </ListItem>
+
+      </List>
+    </div>
+  );
+} else {
+  return (
+    <div>
+      <List>
+        <ListItem>
+          <ListItemIcon>
+            <DriveFileRenameOutlineIcon />
+          </ListItemIcon>
+          <ListItemText>
+            {props.firstName} {props.lastName}
+          </ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <EmailIcon />
+          </ListItemIcon>
+          <ListItemText>{props.email}</ListItemText>
+        </ListItem>
+        <ListItem className="space-between">
+          <ListItemIcon>
+            <EditLocationAltIcon />
+          </ListItemIcon>
+          <ListItemText>
+            {props.town}, {props.country}, {props.region}
           </ListItemText>
         </ListItem>
         <ListItem>
@@ -471,7 +771,10 @@ const Stage3 = (props) => {
       </List>
     </div>
   );
-};
+
+
+}
+}
 
 const FormStyle = styled.div`
   form {
