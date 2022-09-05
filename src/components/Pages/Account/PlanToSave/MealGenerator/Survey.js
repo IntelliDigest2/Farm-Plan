@@ -13,41 +13,27 @@ export default function Survey() {
   const [stage, setStage] = useState(0);
 
   const [data, setData] = useState(getSurveyData());
+  const [plan, setPlan] = useState([]);
 
-  const [mealCount, setMealCount] = useState(3);
-  const [planType, setPlanType] = useState("");
+  const [mealCount, setMealCount] = useState(data.selectOpt.mealCount[0].val);
+  const [planType, setPlanType] = useState(data.selectOpt.planType[0].val);
   const [health, setHealth] = useState({});
-  const [calories, setCalories] = useState({});
-  const [diet, setDiet] = useState({});
+  const [calories, setCalories] = useState({
+    activeIndex: 0,
+    selected: "rec",
+    min: 1800,
+    max: 2500,
+  });
+  const [diet, setDiet] = useState({
+    activeIndex: 0,
+    name: data.dietSpec[0].name,
+  });
   const [loading, setLoading] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    const count = data.selectOpt.mealCount[0].val;
-    const plan = data.selectOpt.planType[0].val;
-    const defaultDiet = {
-      activeIndex: 0,
-      name: data.dietSpec[0].name,
-    };
-    const cal = {
-      activeIndex: 0,
-      selected: "rec",
-      min: data.calories.min,
-      max: data.dietSpec[0].name,
-    };
-    setMealCount(count);
-    setPlanType(plan);
-    setCalories(cal);
-    setDiet(defaultDiet);
-  }, []);
-
-  useEffect(() => {
-    console.log("health", health);
-  }, [health]);
-
-  useEffect(() => {
-    console.log("Generated Meal Plan", data);
-  }, [data]);
+    console.log("Generated Meal Plan", plan);
+  }, [plan]);
 
   const handleHealth = (name) => {
     setHealth(() => {
@@ -56,18 +42,9 @@ export default function Survey() {
     });
   };
 
-  //   const handleSelect = (e, name) => {
-  //       const target = e.target;
-  //       switch (name) {
-  //         default:
-  //         case "mealCount"
-  //       }
-
-  //   }
-
   const handleCaloriesSelect = (index) => {
     let selected = parseInt(index, 10) === 1 ? "custom" : "rec";
-    setCalories({ ...calories, activeIndex: index, seclected: selected });
+    setCalories({ ...calories, activeIndex: index, selected: selected });
   };
 
   const handleCalories = (e) => {
@@ -101,15 +78,11 @@ export default function Survey() {
     };
     //loading style isn't sorted yet!!!! Ignore for now
     setLoading(true);
-    // getPlan(res).then((data) => {
-    //   let par = { num: planType, data: data };
-    //   //stop loading and redirect to meal page
-    //   setLoading(false);
-    //   setRedirect(true);
-    //   setData(par);
-    // });
-    getPlan(res).then((data) => {
+    getPlan(res, plan, setPlan).then((data) => {
       let par = { num: planType, data: data };
+      //stop loading and redirect to meal page
+      setLoading(false);
+      setRedirect(true);
       setData(par);
     });
   };
@@ -183,7 +156,7 @@ export default function Survey() {
         <>
           <p>Calorie intake</p>
           <RadioGroup
-            handleChange={handleCalories}
+            handleChange={handleCaloriesSelect}
             activeIndex={calories.activeIndex}
           >
             <Radio>Go with recommended</Radio>
@@ -195,15 +168,15 @@ export default function Survey() {
                 placeholder="min"
                 type="number"
                 name="min"
-                onChange={this.setCalories}
-                value={this.state.calories.min}
+                onChange={handleCalories}
+                value={calories.min}
               />
               <input
                 placeholder="max"
                 type="number"
                 name="max"
-                onChange={this.setCalories}
-                value={this.state.calories.max}
+                onChange={handleCalories}
+                value={calories.max}
               />
             </div>
           ) : null}

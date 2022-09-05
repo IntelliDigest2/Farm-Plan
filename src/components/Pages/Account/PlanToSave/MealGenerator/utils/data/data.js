@@ -54,6 +54,6 @@ const surveyData = {
 const API = {
   ID: "5532003c",
   KEY: "511d39184173c54ebc5d02a5063a7b87",
-  URL: "https://api.edamam.com/search?",
+  URL: "https://api.edamam.com/recipes/v2?type=public&",
 };
 export { surveyData as Survey, API };
