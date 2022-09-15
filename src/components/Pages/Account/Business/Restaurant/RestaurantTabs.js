@@ -12,6 +12,14 @@ export function Food({ setShow, setChooseModal }) {
         color="turquoise"
         goTo="/restaurant-meal-plan"
         />
+
+      <IconButton
+        icon="notes" 
+        label="Restaurant details"
+        color="turquoise"
+        goTo="/restaurant-meal-plan"
+        />
+        
 {/* 
       <IconButton
         icon="notes"

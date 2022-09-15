@@ -10,6 +10,7 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import { Heading } from "./Heading";
 
 export function Profile(props) {
+  if (props.profile.buildingFunction!='Restaurants'){
   return (
     <Container fluid className="profile">
       {/* <Row class="align-items-center"> */}
@@ -38,5 +39,25 @@ export function Profile(props) {
       {/* </Col> */}
       {/* </Row> */}
     </Container>
-  );
+  )} else {
+    console.log(props);
+    return (
+    <Container fluid className="profile">
+
+      <Heading
+        priority="4"
+        text={props.profile.firstName + " " + props.profile.lastName + ', '+ props.profile.restaurantName} //WHERE IS THIS STUFF STORED - RACHEL
+      />
+      <Heading priority="5" text={props.profile.email} />
+      <p>{props.profile.buildingFunction} Account</p>
+      <Tooltip title="Settings">
+        <IconButton href="/settings" component="a" style={{ float: "right" }}>
+          <SettingsApplicationsIcon />
+        </IconButton>
+      </Tooltip>
+      {/* </Col> */}
+      {/* </Row> */}
+    </Container>
+  )
+  }
 }

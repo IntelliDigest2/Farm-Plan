@@ -57,7 +57,7 @@ const SignUp = (props) => {
   const [errorNotification, setErrorNotification] = useState();
 
   function handleSubmit() {
-    var data = {
+    let data = {
       firstName: firstName,
       lastName: lastName,
       initials: firstName[0] + lastName[0],
@@ -67,6 +67,11 @@ const SignUp = (props) => {
       city: town,
       country: country,
       region: region,
+      restaurantName: restaurantName, //latest fixes rachel
+      regulatoryBody: regulatoryBody,
+      regulatoryBodyID: regulatoryBodyID,
+      cuisine: cuisine,
+      restaurantDescription: restaurantDescription,
       type: "user",
     };
     if (validation()) {
@@ -824,7 +829,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signUp: (newUser) => dispatch(signUp(newUser)),
+    signUp: (newUser) => dispatch(signUp(newUser)),  //RACHEL: cmd+click on signUp takes you to where the signUp event's props are defined
     createMapData: (mapdata) => dispatch(createMapData(mapdata)),
   };
 };
