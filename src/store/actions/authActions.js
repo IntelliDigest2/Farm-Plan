@@ -352,7 +352,7 @@ export const createSubAccount = (data) => {
             region: data.region,
             admin: data.uid,
             type: data.type,
-            restaurantName: data.restaurantName, //Rachel
+            restaurantName: data.restaurantName,
           });
       })
       .then(() => {
