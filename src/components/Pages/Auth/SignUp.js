@@ -67,7 +67,7 @@ const SignUp = (props) => {
       city: town,
       country: country,
       region: region,
-      restaurantName: restaurantName, //latest fixes rachel
+      restaurantName: restaurantName, 
       regulatoryBody: regulatoryBody,
       regulatoryBodyID: regulatoryBodyID,
       cuisine: cuisine,
@@ -829,7 +829,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signUp: (newUser) => dispatch(signUp(newUser)),  //RACHEL: cmd+click on signUp takes you to where the signUp event's props are defined
+    signUp: (newUser) => dispatch(signUp(newUser)),  //r: cmd+click on signUp takes you to where the signUp event's props are defined
     createMapData: (mapdata) => dispatch(createMapData(mapdata)),
   };
 };

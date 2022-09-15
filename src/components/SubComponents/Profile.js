@@ -46,7 +46,7 @@ export function Profile(props) {
 
       <Heading
         priority="4"
-        text={props.profile.firstName + " " + props.profile.lastName + ', '+ props.profile.restaurantName} //WHERE IS THIS STUFF STORED - RACHEL
+        text={props.profile.firstName + " " + props.profile.lastName + ', '+ props.profile.restaurantName} 
       />
       <Heading priority="5" text={props.profile.email} />
       <p>{props.profile.buildingFunction} Account</p>

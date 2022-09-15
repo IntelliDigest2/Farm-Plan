@@ -92,7 +92,7 @@ export const addToRestaurantShoppingList = (data) => {
         .doc(uid)
         .collection("shoppingList")
         // .doc(data.year)
-        // .collection(data.week) //RACHEL
+        // .collection(data.week) 
         .get()
         .then((snapshot) => {
           const data = [];
