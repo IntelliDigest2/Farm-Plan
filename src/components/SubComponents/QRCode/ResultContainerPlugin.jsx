@@ -8,7 +8,7 @@ function filterResults(results) {
       filteredResults.push(results[i]);
       continue;
     }
-    if (results[i].brands !== results[i - 1].brands) {
+    if (results[i] !== results[i - 1]) {
       filteredResults.push(results[i]);
     }
   }
@@ -33,7 +33,7 @@ const ResultContainerTable = ({ data, onClick }) => {
           return (
             <tr key={i}>
               <td>{i}</td>
-              <td>{result.brands}</td>
+              <td>{result}</td>
               {/* <td>{result.result.format.formatName}</td> */}
               <td>
                 <SubButton styling="green" onClick={onClick} text="Add" />

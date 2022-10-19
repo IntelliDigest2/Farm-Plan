@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Html5QrcodePlugin from "./Html5QrcodeScanner";
 import ResultContainerPlugin from "./ResultContainerPlugin";
 import "./QRCode.css";
+import { backdropClasses } from "@mui/material";
 
 export default function Scanner() {
   const [decodedResults, setDecodedResults] = useState([]);
@@ -14,13 +15,12 @@ export default function Scanner() {
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
     .then(data => {
-      setBarCodeData(data.product.brands)
+      setBarCodeData(data.product.ingredients)
       console.log(data.product.ingredients)
-      console.log(data.product.ingredients_hierarchy)
+      // console.log(data.product.ingredients_hierarchy)
+      // setDecodedResults((prev) => [...prev, barCodeData]);
 
     })
-    
-    setDecodedResults((prev) => [...prev, barCodeData]);
 
   };
 
@@ -37,8 +37,9 @@ export default function Scanner() {
         disableFlip={false}
         qrCodeSuccessCallback={onNewScanResult}
       />
-      {/* <ResultContainerPlugin results={barCodeData} /> */}
-      <p>{barCodeData}</p>
+      <ResultContainerPlugin results={barCodeData.map(food => <div><p>{food.id}</p></div>)} />
+      {/* <p>{barCodeData}</p> */}
+      
     </>
   );
 }
