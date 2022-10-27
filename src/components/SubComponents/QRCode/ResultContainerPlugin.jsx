@@ -11,9 +11,19 @@ function filterResults(results) {
     if (results[i] !== results[i - 1]) {
       filteredResults.push(results[i]);
     }
+   
   }
   return filteredResults;
 }
+
+const OurFallbackComponent = ({ error, componentStack, resetErrorBoundary }) => {
+  return (
+    <div>
+      <h1>An error occurred: {error.message}</h1>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
+};
 
 const ResultContainerTable = ({ data, onClick }) => {
   const results = filterResults(data);
