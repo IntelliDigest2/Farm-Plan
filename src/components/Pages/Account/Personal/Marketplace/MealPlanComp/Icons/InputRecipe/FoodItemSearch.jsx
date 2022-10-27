@@ -11,26 +11,53 @@ export default function FoodItemSearch({ handleFoodSearch }) {
     foodItemApi(query, setResponse);
   }, [query]);
 
-  useEffect(() => {
-    console.log("query", query);
-  });
+  // useEffect(() => {
+  //   console.log("query", query);
+  // });
 
-  useEffect(() => {
-    console.log("response", response);
-  }, [response]);
+  // useEffect(() => {
+  //   console.log("response", response);
+  // }, [response]);
+
+  let options;
+  if (query === "") {
+    options = ["..."];
+  } else {
+    options = response;
+  }
 
   return (
-    <Autocomplete
-      onInputChange={(e) => {
-        setQuery(e.target.value);
-      }}
-      onChange={(e) => {
-        handleFoodSearch(e);
-      }}
-      id="food"
-      options={response}
-      sx={{ width: "100%", lineHeight: "calc(1.5em + .75rem + 2px)" }}
-      renderInput={(params) => <TextField {...params} label="Ingredient" />}
-    />
+    <>
+      {query ? (
+        <Autocomplete
+          onInputChange={(e) => {
+            setQuery(e.target.value);
+            handleFoodSearch(e);
+          }}
+          onChange={(e) => {
+            handleFoodSearch(e);
+          }}
+          id="food"
+          options={options}
+          sx={{ width: "100%", lineHeight: "calc(1.5em + .75rem + 2px)" }}
+          renderInput={(params) => <TextField {...params} label="Item" />}
+        />
+      ) : (
+        <Autocomplete
+          onInputChange={(e) => {
+            setQuery(e.target.value);
+            handleFoodSearch(e);
+          }}
+          onChange={(e) => {
+            handleFoodSearch(e);
+          }}
+          id="food"
+          options={options}
+          getOptionDisabled={(option) => option === options[0]}
+          sx={{ width: "100%", lineHeight: "calc(1.5em + .75rem + 2px)" }}
+          renderInput={(params) => <TextField {...params} label="Item" />}
+        />
+      )}
+    </>
   );
 }

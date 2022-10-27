@@ -130,3 +130,16 @@
     top: 78%;
   }
 }
+/* landscape styles */
+/* @media screen and (orientation : landscape){
+  .landing {
+      width: 100vw;
+      height: auto;
+      
+  }
+.buttons{
+ top:170%;
+}
+.title img {
+  height: 50vh;
+}} */

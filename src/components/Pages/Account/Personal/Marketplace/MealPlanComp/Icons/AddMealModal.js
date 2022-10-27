@@ -6,7 +6,7 @@ import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
 
-export function AddMealModal({ show, setShow, value, forceUpdate }) {
+export function AddMealModal({ show, setShow, value }) {
   const [eatingOut, setEatingOut] = useState("unconfirmed");
 
   //control barcode scanner
@@ -63,11 +63,7 @@ export function AddMealModal({ show, setShow, value, forceUpdate }) {
             {scan ? (
               <Scanner />
             ) : (
-              <AddMealForm
-                value={value}
-                handleFormClose={handleFormClose}
-                forceUpdate={forceUpdate}
-              />
+              <AddMealForm value={value} handleFormClose={handleFormClose} />
             )}
           </InOrOut>
         </Modal.Body>

@@ -1,0 +1,520 @@
+/* ===============================
+Stylesheet for Users' dashboard
+=============================== */
+* {
+  margin: 0;
+  padding: 0;
+  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.dashboard-content {
+  height: 65rem;
+  display: flex;
+  position: absolute;
+  background-color: #d9d9d9;
+  width: 100%;
+}
+
+.dashboard-content > .page-title {
+  height: 20px;
+  display: block;
+  position: relative;
+}
+
+.main-content {
+  width: 100%;
+}
+
+.main-content h1 {
+  font-size: 40px;
+  font-weight: 800;
+  color: black;
+  margin-top: 60px;
+  margin-left: 10px;
+}
+
+/* ==================
+Overview
+================== */
+.overview-container {
+  width: 45rem;
+  height: 10rem;
+  background-color: white;
+  margin-left: 10px;
+  border-radius: 20px;
+}
+
+.overview-container.revenue {
+  width: 47rem;
+  height: 30rem;
+}
+
+.overview-container.products {
+  height: 31rem;
+}
+
+.overview-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.overview-heading h4 {
+  color: black;
+  font-weight: 600;
+  margin-left: 5px;
+  margin-top: 15px;
+}
+
+.overview-stats {
+  background-color: #d9d9d9;
+  cursor: pointer;
+  margin: 4px 10px;
+  height: calc(5rem + 3px);
+  border-radius: 20px;
+  box-shadow: 3px 3px 2px 0px rgba(79, 78, 78, 0.75);
+  -webkit-box-shadow: 3px 3px 2px 0px rgba(79, 78, 78, 0.75);
+  -moz-box-shadow: 3px 3px 2px 0px rgba(79, 78, 78, 0.75);
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+}
+
+.overview-heading > span > button {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  border: 0px;
+  color: #969696;
+  font-weight: 800;
+  padding: 1px 6px 1px 6px;
+  background-color: #d9d9d9;
+}
+
+.fileupload-container {
+  background-color: #d9d9d9;
+  cursor: pointer;
+  margin: 4px 10px;
+  height: calc(5rem + 3px);
+  border-radius: 20px;
+  box-shadow: 3px 3px 2px 0px rgba(79, 78, 78, 0.75);
+  -webkit-box-shadow: 3px 3px 2px 0px rgba(79, 78, 78, 0.75);
+  -moz-box-shadow: 3px 3px 2px 0px rgba(79, 78, 78, 0.75);
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+  width: 60%;
+  height: 200px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10%;
+  padding-right: 10%;
+  border: 2px dashed #7d7c7c;
+  align-items: center;
+  align-self: center;
+  text-align: center;
+  box-shadow: 7px 7px 5px #aaaaaa;
+}
+
+.overview-stats:hover {
+  margin: 5px;
+}
+
+.overview-stats-customers {
+  background-color: white;
+  flex: 1;
+  height: 4rem;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+p.overview-stats-customers-heading {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px;
+  padding-bottom: 0;
+  margin-bottom: 0px;
+}
+
+p.overview-stats-customers-value {
+  font-size: 25px;
+  font-weight: 400;
+  margin-left: 20px;
+  margin-top: 0px;
+}
+.overview-stats-customers span {
+  color: green;
+  font-weight: 600;
+}
+.overview-stats-income {
+  background-color: #d9d9d9;
+  flex: 1;
+  height: 4rem;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-right: 6px;
+}
+
+p.overview-stats-income-heading {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px;
+  padding-bottom: 0;
+  margin-bottom: 0px;
+}
+
+p.overview-stats-income-value {
+  font-size: 25px;
+  font-weight: 400;
+  margin-top: 0;
+  margin-left: 20px;
+}
+
+/* ==============
+Revenue
+============== */
+.revenue-overview {
+  width: 45rem;
+  height: 20rem;
+  background-color: white;
+  margin-left: 10px;
+  border-radius: 20px;
+}
+.revenue-heading {
+  color: black;
+  font-weight: 600;
+  margin-left: 5px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.revenue-heading h4 {
+  color: black;
+  font-weight: 600;
+  margin-left: 5px;
+  margin-top: 15px;
+}
+
+.revenue-incomedue {
+  display: flex;
+}
+
+/* ================
+Orders
+================ */
+.orders-overview {
+  width: calc(65rem + 28px);
+  height: 20rem;
+  background-color: white;
+  margin-left: 10px;
+  border-radius: 20px;
+}
+
+.orders-overview.products {
+  height: 25rem;
+}
+
+.orders-overview-fulfilled {
+  width: calc(65rem + 28px);
+  height: 15rem;
+  background-color: white;
+  margin-left: 10px;
+  border-radius: 20px;
+}
+
+.orders-heading {
+  color: black;
+  font-weight: 600;
+  margin-left: 5px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.orders-heading h4 {
+  color: black;
+  font-weight: 600;
+  margin-left: 5px;
+  margin-top: 15px;
+}
+
+/* ============
+Top products
+============ */
+.overview-revenue-products {
+  display: flex;
+}
+
+.products-overview {
+  width: 20rem;
+  height: 30rem;
+  background-color: white;
+  margin-left: 30px;
+  border-radius: 20px;
+}
+
+.products-overview.income {
+  height: 14rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.products-overview.income p {
+  color: #d9d9d9;
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.products-heading {
+  color: black;
+  font-weight: 600;
+  margin-left: 5px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.products-heading h4 {
+  color: black;
+  text-align: center;
+  font-weight: 600;
+  margin-left: 5px;
+  margin-top: 15px;
+}
+
+/* ====================
+Modify products
+==================== */
+
+.productEdit {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: transparent;
+  color: black;
+  font-weight: 800;
+  padding: 5px 10px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.productDelete {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: transparent;
+  color: black;
+  font-weight: 800;
+  padding: 3px;
+}
+
+.productDelete:hover,
+.productEdit:hover {
+  box-shadow: 4px 4px 3px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 4px 4px 3px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 4px 3px 0px rgba(0, 0, 0, 0.75);
+}
+
+/* ====================
+Confirm pending order
+==================== */
+
+.confirmOrderBtn {
+  border: 1px solid black;
+  background-color: transparent;
+  padding: 5px;
+  border-radius: 7px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* =======================
+Upload products form
+======================= */
+
+.form-group.products {
+  margin: 0 30px;
+  /* background-color: red; */
+}
+
+.form-row.products {
+  /* background-color: blue; */
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 108px;
+  margin-top: 10px;
+}
+
+.form-row > label {
+  font-weight: 800;
+}
+
+.form-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+}
+
+.form-input {
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: transparent;
+}
+
+.form-input[type='number'] {
+  width: 240px;
+}
+
+.form-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-product-btn {
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 5px;
+  margin-top: 7px;
+}
+
+/* Payout button */
+
+.payout-btn {
+  background-color: transparent;
+  border-radius: 7px;
+  padding: 7px;
+  cursor: pointer;
+  margin-top: 0px;
+  border: 1px solid black;
+}
+
+/* =======================
+Settings
+======================= */
+.settings-main {
+  display: flex;
+}
+
+.overview-heading.settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details-image {
+  border-radius: 50%;
+  max-width: 80px;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.details-title-header {
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.details-title-subtext {
+  text-align: left;
+  margin-left: 5px;
+  color: #938888;
+}
+.overview-container.settings {
+  flex: 2;
+  height: 24rem;
+}
+
+.settings-details-main h4 {
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin-left: 5px;
+}
+
+.settings-details-main hr {
+  margin: 0 auto 0 auto;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.settings-details-main ul {
+  padding-left: 10px;
+  list-style-type: none;
+}
+.settings-details-main li {
+  color: #aea5a5;
+}
+.settings-details-header {
+  text-align: center;
+}
+
+.orders-overview.settings {
+  width: 200px;
+  flex: 4;
+  margin-right: 15px;
+  height: 45rem;
+}
+
+.other-settings {
+  text-align: center;
+  font-size: 13px;
+}
+
+.other-settings span {
+  text-decoration: underline;
+}
+
+.settings-table-container {
+  width: 100%;
+}
+.settings-table-image {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-settings-container img {
+  height: 220px;
+  border-radius: 50%;
+}
+
+.image-update-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.image-update-container button {
+  margin-top: 18rem;
+}
+
+.table-add {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-add button {
+  border: 1px solid black;
+  background-color: transparent;
+  padding: 3px;
+  margin-bottom: 3px;
+}
+
+.table-add h5 {
+  font-weight: 700;
+}
+
+.settings-update-btn {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+}

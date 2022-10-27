@@ -6,20 +6,29 @@ import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
-import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
+import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
+import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
 
 function AddMealForm(props) {
   const [mealName, setMealName] = useState("");
   const [mealType, setMealType] = useState("");
-  const [ingredients, setIngredients] = useState([]);
-  const [save, setSave] = useState(true);
+  const [err, setErr] = useState("");
 
+  //saves recipe to saved meal list
+  const [save, setSave] = useState(true);
+  const handleSave = () => {
+    setSave(!save);
+  };
+
+  //controls local state of ingredient as we fetch data for it,
+  //once ingredient is "added" it will be moved to ingredient array
   const defaultLocal = {
     food: "",
     quantity: 0,
     measure: "g",
+    foodId: "",
   };
   const [local, setLocal] = useState(defaultLocal);
   const handleLocal = (e) => {
@@ -30,8 +39,33 @@ function AddMealForm(props) {
     }
   };
   const handleFoodSearch = (e) => {
-    setLocal({ ...local, food: e.target.textContent });
+    if (e.target.textContent) {
+      setLocal({ ...local, food: e.target.textContent });
+    } else {
+      setLocal({ ...local, food: e.target.value });
+    }
   };
+
+  //when local.food changes, fetch the id for the food item
+  //which is needed to fetch nutrition
+  const setFoodId = (foodId) => {
+    setLocal({ ...local, foodId: foodId });
+  };
+
+  const [ingredients, setIngredients] = useState([]);
+  const handleIngredient = async () => {
+    if (local.food !== "") {
+      foodIdAPI(local.food, setFoodId).then(() => {
+        setIngredients((ingredients) => [...ingredients, local]);
+        setLocal(defaultLocal);
+      });
+    } else {
+      setErr("Please input an ingredient to add.");
+    }
+  };
+  useEffect(() => {
+    console.log("ingredients", ingredients);
+  }, [ingredients]);
 
   const ingredientsList = ingredients.map((ingredient, index) => {
     return (
@@ -42,14 +76,19 @@ function AddMealForm(props) {
     );
   });
 
+  //trigger this when editing/deleting items
+  const [update, setUpdate] = useState(0);
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
+
   //fired when click "done"
   const handleSubmit = () => {
     const data = {
       // month and day are used for the MealPlan db, year and week for the shopping list.
       year: props.value.format("YYYY"),
       month: props.value.format("YYYYMM"),
-      //need to send shopping list data to be bough the previous week from the day it is made
-      week: props.value.format("w") - 1,
+      week: props.value.format("w"),
       day: props.value.format("DD"),
       upload: {
         meal: mealName,
@@ -59,25 +98,13 @@ function AddMealForm(props) {
     };
 
     props.createMealPlanData(data);
-    props.addToShoppingList(data);
-    props.forceUpdate();
+    forceUpdate();
 
     if (save) {
-      props.createSavedMeal(data);
+      props.createRecipe(data);
     }
+    props.addToShoppingList(data);
   };
-
-  const handleSave = () => {
-    if (!save) {
-      setSave(true);
-    } else {
-      setSave(false);
-    }
-  };
-
-  useEffect(() => {
-    console.log("local", local);
-  }, [local]);
 
   return (
     <Form
@@ -87,6 +114,13 @@ function AddMealForm(props) {
         props.handleFormClose();
       }}
     >
+      {/* <button
+        onClick={() => {
+          nutritionAPI(local);
+        }}
+      >
+        send test
+      </button> */}
       <Form.Group>
         <Form.Label>Meal Name</Form.Label>
         <Form.Control
@@ -106,7 +140,7 @@ function AddMealForm(props) {
       </div>
 
       <Form.Group>
-        <Form.Label>Ingredient</Form.Label>
+        {/* <Form.Label>Ingredient</Form.Label> */}
         {/* <Form.Control
           type="text"
           id="food"
@@ -130,18 +164,7 @@ function AddMealForm(props) {
             id="measure"
             styling="grey dropdown-input"
             data={local.measure}
-            items={[
-              "g",
-              "kg",
-              "/",
-              "mL",
-              "L",
-              "/",
-              "tsp",
-              "tbsp",
-              "cups",
-              "pcs",
-            ]}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
             function={(e) => {
               setLocal({ ...local, measure: e });
             }}
@@ -152,10 +175,9 @@ function AddMealForm(props) {
       <Form.Group>
         <Button
           className="green-btn shadow-none"
-          id="add-new-ing"
-          onClick={(e) => {
-            setIngredients((ingredients) => [...ingredients, local]);
-            setLocal(defaultLocal);
+          id="add ingredient"
+          onClick={() => {
+            handleIngredient();
           }}
         >
           Add Ingredient
@@ -183,7 +205,7 @@ function AddMealForm(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
-    createSavedMeal: (data) => dispatch(createSavedMeal(data)),
+    createRecipe: (data) => dispatch(createRecipe(data)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };

@@ -14,13 +14,30 @@ function Add(props) {
 
   const handleSelect = async () => {
     if (props.saved) {
-      setSelected({
-        meal: props.meal,
-        mealType: props.mealType,
-        ingredients: props.ingredients,
-        id: props.id,
-      });
+      if (props.nonNativeData) {
+        // saved and non native
+        setSelected({
+          meal: props.meal,
+          mealType: props.mealType,
+          ingredients: props.ingredients,
+          id: props.id,
+          nonNativeData: props.nonNativeData,
+          totalDaily: props.totalDaily,
+          totalNutrients: props.totalNutrients,
+          url: props.url,
+          yield: props.recipeYield,
+        });
+      } else {
+        // saved and native
+        setSelected({
+          meal: props.meal,
+          mealType: props.mealType,
+          ingredients: props.ingredients,
+          id: props.id,
+        });
+      }
     } else {
+      // not saved
       setSelected({
         meal: props.meal,
         mealType: props.mealType,

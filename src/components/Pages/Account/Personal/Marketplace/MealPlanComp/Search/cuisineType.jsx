@@ -11,7 +11,7 @@ export default function CuisineType({ setCuisineType }) {
     if (control === "Any") {
       setCuisineType("");
     } else {
-      setCuisineType(`&cuisineType=${control}`);
+      setCuisineType(`${control}`);
     }
   };
 
