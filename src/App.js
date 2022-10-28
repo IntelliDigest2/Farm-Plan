@@ -47,6 +47,7 @@ import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
 import FarmerAuth from "./components/Pages/Account/Farm/Marketplace/Auth/Farmer-Auth";
 import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
 import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan";
+import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 
 import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
@@ -73,6 +74,7 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 
 //* Chart.js
 import ChartView from "./components/Pages/Account/Charts/Chart";
+import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 
 const App = (props) => {
   const [uid, setUid] = useState(props.auth.uid);
@@ -218,6 +220,7 @@ const App = (props) => {
             </Route>
             <Route path="/cons-auth" component={ConsumerAuth} />
             <Route path="/meal-plan" component={MealPlan} />
+            <Route path="/nutrient-gap" component={NutrientGap} />
             <Route path="/view-products" component={ViewProducts} />
 
             <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />

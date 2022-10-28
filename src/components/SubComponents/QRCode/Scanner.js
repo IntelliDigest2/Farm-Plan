@@ -3,7 +3,7 @@ import Html5QrcodePlugin from "./Html5QrcodeScanner";
 import ResultContainerPlugin from "./ResultContainerPlugin";
 import "./QRCode.css";
 import { backdropClasses } from "@mui/material";
-import ErrorBoundary from './ErrorBoundary'
+
 
 export default function Scanner() {
   const [decodedResults, setDecodedResults] = useState([]);
@@ -11,15 +11,8 @@ export default function Scanner() {
   const [foodName, setFoodName] = useState([]);
   const [error, setError] = useState(null)
 
-  const errorDiv = error 
-      ? <div className="error">
-          <i class="material-icons error-icon">Oops failed to fetch details</i>
-          {error}
-        </div> 
-      : '';
 
   const onNewScanResult = (decodedText, decodedResult) => {
-    //console.log("App [result]", decodedResult);
 
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
@@ -27,27 +20,16 @@ export default function Scanner() {
       setBarCodeData(data.product.ingredients)
       setFoodName(data.product.brands)
 
-      // console.log(data.product.ingredients)
+      console.log(data.product.ingredients)
       // console.log(data.product.ingredients_hierarchy)
-      // setDecodedResults((prev) => [...prev, barCodeData]);
 
     }).catch((err) => {
-      // console.log(err.message);
-      setError(err)
+      console.log(err.message)
+      setError(err.message)
      });
 
+
   };
-
-  function onScanFailure(error) {
-    // handle scan failure, usually better to ignore and keep scanning.
-    // for example:
-    console.log(`Code scan error = ${error}`);
-  }
-
-  // useEffect(() => {
-   
-  //   },[])
-  
 
   return (
     <>
@@ -56,15 +38,11 @@ export default function Scanner() {
         qrbox={250}
         disableFlip={false}
         qrCodeSuccessCallback={onNewScanResult}
-        qrCodeFailureCallback={onScanFailure}
 
       />
       <p style={{fontSize: '20px', fontWeight: 'bold', color: 'green'}}>{foodName}</p>
-      <ErrorBoundary>
-        <ResultContainerPlugin results={barCodeData && barCodeData.map(
-        food => <div><p>{food.id}</p></div>)} />    
-
-        </ErrorBoundary>
+      <ul>{barCodeData && barCodeData.map(food => <div><p>{food?.id}</p></div>)}</ul>
+      {error && <div><p>Oops..Could not fetch food item, pls try another barcode..😭</p></div>}
      
     </>
   );

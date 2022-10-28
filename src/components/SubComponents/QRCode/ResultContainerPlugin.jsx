@@ -1,5 +1,7 @@
 import React from "react";
 import { SubButton } from "../Button";
+import ErrorBoundary from './ErrorBoundary'
+
 
 function filterResults(results) {
   let filteredResults = [];
@@ -32,7 +34,7 @@ const ResultContainerTable = ({ data, onClick }) => {
       <thead>
         <tr>
           <td>#</td>
-          <td>Decoded Text</td>
+          <td>Food Details</td>
           {/* <td>Format</td> */}
           <td></td>
         </tr>
@@ -59,11 +61,16 @@ const ResultContainerTable = ({ data, onClick }) => {
 const ResultContainerPlugin = (props) => {
   const results = filterResults(props.results);
   return (
+    
     <div className="Result-container">
-      <div className="Result-header">Scanned results ({results.length})</div>
+            <ErrorBoundary>
+            <div className="Result-header">Scanned results ({results.length})</div>
       <div className="Result-section">
         <ResultContainerTable data={results} />
       </div>
+            </ErrorBoundary>
+
+      
     </div>
   );
 };
