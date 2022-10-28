@@ -4,30 +4,32 @@ import ResultContainerPlugin from "./ResultContainerPlugin";
 import "./QRCode.css";
 import { backdropClasses } from "@mui/material";
 
+
 export default function Scanner() {
   const [decodedResults, setDecodedResults] = useState([]);
   const [barCodeData, setBarCodeData] = useState([]);
+  const [foodName, setFoodName] = useState([]);
+  const [error, setError] = useState(null)
 
 
   const onNewScanResult = (decodedText, decodedResult) => {
-    //console.log("App [result]", decodedResult);
 
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
     .then(data => {
       setBarCodeData(data.product.ingredients)
+      setFoodName(data.product.brands)
+
       console.log(data.product.ingredients)
       // console.log(data.product.ingredients_hierarchy)
-      // setDecodedResults((prev) => [...prev, barCodeData]);
 
-    })
+    }).catch((err) => {
+      console.log(err.message)
+      setError(err.message)
+     });
+
 
   };
-
-  // useEffect(() => {
-   
-  //   },[])
-
 
   return (
     <>
@@ -36,10 +38,12 @@ export default function Scanner() {
         qrbox={250}
         disableFlip={false}
         qrCodeSuccessCallback={onNewScanResult}
+
       />
-      <ResultContainerPlugin results={barCodeData.map(food => <div><p>{food.id}</p></div>)} />
-      {/* <p>{barCodeData}</p> */}
-      
+      <p style={{fontSize: '20px', fontWeight: 'bold', color: 'green'}}>{foodName}</p>
+      <ul>{barCodeData && barCodeData.map(food => <div><p>{food?.id}</p></div>)}</ul>
+      {error && <div><p>Oops..Could not fetch food item, pls try another barcode..😭</p></div>}
+     
     </>
   );
 }
