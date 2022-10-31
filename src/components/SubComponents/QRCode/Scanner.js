@@ -3,7 +3,7 @@ import Html5QrcodePlugin from "./Html5QrcodeScanner";
 import ResultContainerPlugin from "./ResultContainerPlugin";
 import "./QRCode.css";
 import { backdropClasses } from "@mui/material";
-import { Form, InputGroup, Button, Alert } from "react-bootstrap";
+import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
 import "../Button.css"
 import { addToShoppingList } from "../../../store/actions/marketplaceActions/shoppingListData";
 import { connect } from "react-redux";
@@ -13,11 +13,9 @@ import { connect } from "react-redux";
 function Scanner(props) {
   const [decodedResults, setDecodedResults] = useState([]);
   const [mealName, setMealName] = useState("");
-  const [mealType, setMealType] = useState("");
   const [error, setError] = useState(null)
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
-  const [show, setShow] = useState(true);
 
  
   const onNewScanResult = (decodedText, decodedResult) => {
@@ -106,7 +104,34 @@ function Scanner(props) {
         <Form.Group>
         <li>{ingredientList && ingredientList.map(data => 
         <div><p>
-          <Form.Label>{data?.id}</Form.Label>
+          <Table striped>
+      <thead>
+        
+      </thead>
+      <tbody>
+        <tr>
+          <td>{data?.id}</td>
+          <td>
+          <Button
+            type="text"
+            id="add ingredient"
+            style={{display: 'flex', justifyContent: 'right'}}
+            color="primary"
+            className="float-right"
+            value={data?.id}
+            onClick={(e) => {
+              handleIngredient(e, "value");
+              e.currentTarget.disabled = true;
+            }}
+            required
+          >
+          Add
+        </Button>
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+          {/* <Form.Label>{data?.id}</Form.Label>
           <Button
             type="text"
             id="add ingredient"
@@ -118,7 +143,7 @@ function Scanner(props) {
             required
           >
           Add
-        </Button>
+        </Button> */}
         </p></div>)}</li>
         </Form.Group>
 
