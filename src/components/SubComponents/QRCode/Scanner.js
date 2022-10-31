@@ -113,6 +113,7 @@ function Scanner(props) {
             value={data?.id}
             onClick={(e) => {
               handleIngredient(e, "value");
+              e.currentTarget.disabled = true;
             }}
             required
           >
@@ -123,7 +124,7 @@ function Scanner(props) {
 
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn shadow-none" type="submit">
-          Done
+          Save
         </Button>
       </div>        
       </Form>
