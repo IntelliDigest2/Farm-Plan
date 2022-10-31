@@ -13,11 +13,9 @@ import { connect } from "react-redux";
 function Scanner(props) {
   const [decodedResults, setDecodedResults] = useState([]);
   const [mealName, setMealName] = useState("");
-  const [mealType, setMealType] = useState("");
   const [error, setError] = useState(null)
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
-  const [show, setShow] = useState(true);
 
  
   const onNewScanResult = (decodedText, decodedResult) => {
