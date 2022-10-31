@@ -7,9 +7,10 @@ import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
 import "../Button.css"
 import { addToShoppingList } from "../../../store/actions/marketplaceActions/shoppingListData";
 import { connect } from "react-redux";
-import { createMealPlanData } from "../../../store/actions/marketplaceActions/mealPlanData";
 
-function Scanner(props) {
+
+
+function ScannerShop(props) {
   const [decodedResults, setDecodedResults] = useState([]);
   const [mealName, setMealName] = useState("");
   const [error, setError] = useState(null)
@@ -55,11 +56,6 @@ function Scanner(props) {
     console.log("ingredients", ingredients);
   }, [ingredients]);
 
-  //trigger this when editing/deleting items
-  const [update, setUpdate] = useState(0);
-  const forceUpdate = () => {
-    setUpdate(update + 1);
-  };
 
   //fired when click "done"
   const handleSubmit = () => {
@@ -75,8 +71,7 @@ function Scanner(props) {
       },
     };
 
-    props.createMealPlanData(data);
-    forceUpdate();
+
     props.addToShoppingList(data);
   };
 
@@ -166,9 +161,8 @@ function Scanner(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Scanner);
+export default connect(null, mapDispatchToProps)(ScannerShop);
