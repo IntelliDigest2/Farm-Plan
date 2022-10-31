@@ -52,6 +52,14 @@ export function Health({ setShow, setChooseModal }) {
           setChooseModal(true);
         }}
       />
+
+      <IconButton
+        icon="plant"
+        label="Composition"
+        color="green"
+        goTo="/nutrient-composition"
+        // disabled="true"
+      />
       {/* <Accordion
         style={{
           width: "80%",

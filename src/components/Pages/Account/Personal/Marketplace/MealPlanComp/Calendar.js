@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { AddMealModal } from "./Icons/AddMealModal";
+import Scanner from "../../../../../SubComponents/QRCode/Scanner";
 
 import buildCalendar from "./BuildCalendar/Build";
 import dayStyles from "./BuildCalendar/dayStyles";
@@ -51,6 +52,7 @@ export const Calendar = ({ value, onChange }) => {
       </div>
       <div className="plan-box">
         <div className="header">{chosenDay()}</div>
+
         <MyMeals value={value} show={show} />
         <AddMealModal value={value} show={show} setShow={setShow} />
       </div>

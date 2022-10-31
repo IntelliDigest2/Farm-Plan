@@ -1,5 +1,7 @@
 import React from "react";
 import { SubButton } from "../Button";
+import ErrorBoundary from './ErrorBoundary'
+
 
 function filterResults(results) {
   let filteredResults = [];
@@ -11,9 +13,19 @@ function filterResults(results) {
     if (results[i] !== results[i - 1]) {
       filteredResults.push(results[i]);
     }
+   
   }
   return filteredResults;
 }
+
+const OurFallbackComponent = ({ error, componentStack, resetErrorBoundary }) => {
+  return (
+    <div>
+      <h1>An error occurred: {error.message}</h1>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
+};
 
 const ResultContainerTable = ({ data, onClick }) => {
   const results = filterResults(data);
@@ -22,7 +34,7 @@ const ResultContainerTable = ({ data, onClick }) => {
       <thead>
         <tr>
           <td>#</td>
-          <td>Decoded Text</td>
+          <td>Food Details</td>
           {/* <td>Format</td> */}
           <td></td>
         </tr>
@@ -49,11 +61,14 @@ const ResultContainerTable = ({ data, onClick }) => {
 const ResultContainerPlugin = (props) => {
   const results = filterResults(props.results);
   return (
+    
     <div className="Result-container">
-      <div className="Result-header">Scanned results ({results.length})</div>
+            <div className="Result-header">Scanned results ({results.length})</div>
       <div className="Result-section">
         <ResultContainerTable data={results} />
       </div>
+
+      
     </div>
   );
 };
