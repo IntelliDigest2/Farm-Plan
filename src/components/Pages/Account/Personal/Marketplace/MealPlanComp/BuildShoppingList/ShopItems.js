@@ -96,7 +96,7 @@ function ShopItems(props) {
         </>
       ) : (
         <div className="empty basic-title-left">
-          <p>There are no items in the list :( </p>
+          <p>There are no items in the list yet :( please refresh page</p>
         </div>
       )}
     </>
