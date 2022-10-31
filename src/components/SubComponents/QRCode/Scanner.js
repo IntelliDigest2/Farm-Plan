@@ -3,10 +3,10 @@ import Html5QrcodePlugin from "./Html5QrcodeScanner";
 import ResultContainerPlugin from "./ResultContainerPlugin";
 import "./QRCode.css";
 import { backdropClasses } from "@mui/material";
-import { Form, InputGroup, Button } from "react-bootstrap";
+import { Form, InputGroup, Button, Alert } from "react-bootstrap";
+import "../Button.css"
 import { addToShoppingList } from "../../../store/actions/marketplaceActions/shoppingListData";
 import { connect } from "react-redux";
-//import { createMealPlanData } from "../../../store/actions/marketplaceActions/mealPlanData";
 
 
 
@@ -17,6 +17,7 @@ function Scanner(props) {
   const [error, setError] = useState(null)
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
+  const [show, setShow] = useState(true);
 
  
   const onNewScanResult = (decodedText, decodedResult) => {
@@ -72,14 +73,9 @@ function Scanner(props) {
       },
     };
 
-    //note to check
-    //props.createMealPlanData(data);
-    //forceUpdate();
-
 
     props.addToShoppingList(data);
   };
-
 
   return (
     <>
@@ -92,11 +88,18 @@ function Scanner(props) {
       />
       <p style={{fontSize: '20px', fontWeight: 'bold', color: 'green'}}>{mealName}</p>
 
-     
+      <Alert variant="success">
+        <Alert.Heading>Missing some items in your meal plan?</Alert.Heading>
+        <p>
+          The scanner allows you to add more items to your meal plan
+        </p>
+      </Alert>
+
         <Form
            onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
+            props.handleFormClose();
           }}
         >
       
@@ -132,7 +135,6 @@ function Scanner(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
