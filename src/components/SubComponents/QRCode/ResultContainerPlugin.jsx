@@ -63,12 +63,10 @@ const ResultContainerPlugin = (props) => {
   return (
     
     <div className="Result-container">
-            <ErrorBoundary>
             <div className="Result-header">Scanned results ({results.length})</div>
       <div className="Result-section">
         <ResultContainerTable data={results} />
       </div>
-            </ErrorBoundary>
 
       
     </div>

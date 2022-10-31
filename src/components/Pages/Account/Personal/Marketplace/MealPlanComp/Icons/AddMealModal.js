@@ -61,7 +61,7 @@ export function AddMealModal({ show, setShow, value }) {
               {expand}
             </button>
             {scan ? (
-              <Scanner />
+              <Scanner value={value} />
             ) : (
               <AddMealForm value={value} handleFormClose={handleFormClose} />
             )}
