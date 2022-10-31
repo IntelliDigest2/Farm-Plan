@@ -99,7 +99,7 @@ function Scanner(props) {
            onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
-            props.handleFormClose();
+            //props.handleFormClose();
           }}
         >
       
