@@ -83,9 +83,11 @@ function Scanner(props) {
   return (
     <>
       <Html5QrcodePlugin
-        fps={10}
+        fps={200}
         qrbox={250}
         disableFlip={false}
+        //useBarCodeDetectorIfSupported={true}
+        experimentalFeatures={{useBarCodeDetectorIfSupported: true}}
         qrCodeSuccessCallback={onNewScanResult}
 
       />
