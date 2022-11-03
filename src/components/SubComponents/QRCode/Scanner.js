@@ -109,7 +109,7 @@ function Scanner(props) {
         >
       
         <Form.Group>
-        <li>{ingredientList && ingredientList.map(data => 
+        <li>
         <div><p>
           <Table striped>
       <thead>
@@ -117,7 +117,7 @@ function Scanner(props) {
       </thead>
       <tbody>
         <tr>
-          <td>{data?.id}</td>
+          <td>{ingredientList}</td>
           <td>
           <Button
             type="text"
@@ -125,7 +125,7 @@ function Scanner(props) {
             style={{display: 'flex', justifyContent: 'right'}}
             color="primary"
             className="float-right"
-            value={data?.id}
+            value={ingredientList}
             onClick={(e) => {
               handleIngredient(e, "value");
               e.currentTarget.disabled = true;
@@ -151,7 +151,7 @@ function Scanner(props) {
           >
           Add
         </Button> */}
-        </p></div>)}</li>
+        </p></div></li>
         </Form.Group>
 
       <div style={{ alignItems: "center" }}>
