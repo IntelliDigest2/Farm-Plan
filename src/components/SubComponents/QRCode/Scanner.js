@@ -19,13 +19,13 @@ function Scanner(props) {
  
   const onNewScanResult = (decodedText, decodedResult) => {
 
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
+    fetch(`https://api.barcodelookup.com/v3/products?barcode=${decodedResult.decodedText}&formatted=y&key=89fvqetm4ulqciauxieiosj3zbodet`)
     .then(response => response.json())
     .then(data => {
-      setIngredientList(data.product.ingredients)
-      setMealName(data.product.brands)
-
-      // console.log(data.product.ingredients_hierarchy)
+      setIngredientList(data.products.ingredients)
+      setMealName(data.products.title)
+      
+      console.log(data.products.title)
 
     }).catch((err) => {
       console.log(err.message)
@@ -83,9 +83,11 @@ function Scanner(props) {
   return (
     <>
       <Html5QrcodePlugin
-        fps={10}
+        fps={200}
         qrbox={250}
         disableFlip={false}
+        //useBarCodeDetectorIfSupported={true}
+        experimentalFeatures={{useBarCodeDetectorIfSupported: true}}
         qrCodeSuccessCallback={onNewScanResult}
 
       />
@@ -107,7 +109,7 @@ function Scanner(props) {
         >
       
         <Form.Group>
-        <li>{ingredientList && ingredientList.map(data => 
+        <li>
         <div><p>
           <Table striped>
       <thead>
@@ -115,7 +117,7 @@ function Scanner(props) {
       </thead>
       <tbody>
         <tr>
-          <td>{data?.id}</td>
+          <td>{ingredientList}</td>
           <td>
           <Button
             type="text"
@@ -123,7 +125,7 @@ function Scanner(props) {
             style={{display: 'flex', justifyContent: 'right'}}
             color="primary"
             className="float-right"
-            value={data?.id}
+            value={ingredientList}
             onClick={(e) => {
               handleIngredient(e, "value");
               e.currentTarget.disabled = true;
@@ -149,7 +151,7 @@ function Scanner(props) {
           >
           Add
         </Button> */}
-        </p></div>)}</li>
+        </p></div></li>
         </Form.Group>
 
       <div style={{ alignItems: "center" }}>
