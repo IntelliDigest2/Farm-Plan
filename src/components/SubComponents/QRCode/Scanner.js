@@ -19,13 +19,13 @@ function Scanner(props) {
  
   const onNewScanResult = (decodedText, decodedResult) => {
 
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
+    fetch(`https://api.barcodelookup.com/v3/products?barcode=${decodedResult.decodedText}&formatted=y&key=89fvqetm4ulqciauxieiosj3zbodet`)
     .then(response => response.json())
     .then(data => {
-      setIngredientList(data.product.ingredients)
-      setMealName(data.product.brands)
-
-      // console.log(data.product.ingredients_hierarchy)
+      setIngredientList(data.products.ingredients)
+      setMealName(data.products.title)
+      
+      console.log(data.products.title)
 
     }).catch((err) => {
       console.log(err.message)
