@@ -7,7 +7,11 @@ import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
 import "../Button.css"
 import { addToShoppingList } from "../../../store/actions/marketplaceActions/shoppingListData";
 import { connect } from "react-redux";
-import { createMealPlanData } from "../../../store/actions/marketplaceActions/mealPlanData";
+import { SubscriptionsOutlined } from "@mui/icons-material";
+
+const app_id = "5532003c";
+const app_key = "511d39184173c54ebc5d02a5063a7b87";
+  const limit = "5";
 
 function Scanner(props) {
   const [decodedResults, setDecodedResults] = useState([]);
@@ -15,19 +19,30 @@ function Scanner(props) {
   const [error, setError] = useState(null)
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
+  const [recipeList, setRecipeList] = useState([]);
 
  
   const onNewScanResult = (decodedText, decodedResult) => {
 
-    fetch(`https://api.barcodelookup.com/v3/products?barcode=${decodedResult.decodedText}&formatted=y&key=89fvqetm4ulqciauxieiosj3zbodet`)
+    fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
     .then(data => {
-      setIngredientList(data.products.ingredients)
-      setMealName(data.products.title)
-      
-      console.log(data.products.title)
+      setIngredientList(data.product.ingredients)
+      setMealName(data.product.brands)
+      const query = data.product.brands
 
-    }).catch((err) => {
+      return fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${query}`)
+      })
+      .then(res => res.json())
+      .then(newData => {
+        console.log("name:", newData.hits)
+        setRecipeList(newData.hits)
+      })
+    .catch((err => {
+      console.log(err.message)
+      setError(err.message)
+    }))
+    .catch((err) => {
       console.log(err.message)
       setError(err.message)
      });
@@ -55,11 +70,6 @@ function Scanner(props) {
     console.log("ingredients", ingredients);
   }, [ingredients]);
 
-  //trigger this when editing/deleting items
-  const [update, setUpdate] = useState(0);
-  const forceUpdate = () => {
-    setUpdate(update + 1);
-  };
 
   //fired when click "done"
   const handleSubmit = () => {
@@ -75,19 +85,16 @@ function Scanner(props) {
       },
     };
 
-    props.createMealPlanData(data);
-    forceUpdate();
+
     props.addToShoppingList(data);
   };
 
   return (
     <>
       <Html5QrcodePlugin
-        fps={200}
+        fps={10}
         qrbox={250}
         disableFlip={false}
-        //useBarCodeDetectorIfSupported={true}
-        experimentalFeatures={{useBarCodeDetectorIfSupported: true}}
         qrCodeSuccessCallback={onNewScanResult}
 
       />
@@ -109,15 +116,15 @@ function Scanner(props) {
         >
       
         <Form.Group>
-        <li>
+        <li>{recipeList && recipeList.map(data => 
         <div><p>
-          <Table striped>
+          {/* <Table striped>
       <thead>
         
       </thead>
       <tbody>
         <tr>
-          <td>{ingredientList}</td>
+          <td>{data?.recipe.ingredientLines}</td>
           <td>
           <Button
             type="text"
@@ -125,7 +132,7 @@ function Scanner(props) {
             style={{display: 'flex', justifyContent: 'right'}}
             color="primary"
             className="float-right"
-            value={ingredientList}
+            value={data?.id}
             onClick={(e) => {
               handleIngredient(e, "value");
               e.currentTarget.disabled = true;
@@ -137,7 +144,18 @@ function Scanner(props) {
           </td>
         </tr>
       </tbody>
-    </Table>
+    </Table> */}
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{data?.recipe.label}</h5>
+        <p class="card-text">
+          {data?.recipe.ingredientLines.map(item => {
+          return <li>{item}</li>;
+        })}
+          </p>
+        <a href="#" class="btn btn-primary">Add</a>
+      </div>
+    </div>
           {/* <Form.Label>{data?.id}</Form.Label>
           <Button
             type="text"
@@ -151,7 +169,7 @@ function Scanner(props) {
           >
           Add
         </Button> */}
-        </p></div></li>
+        </p></div>)}</li>
         </Form.Group>
 
       <div style={{ alignItems: "center" }}>
@@ -168,7 +186,6 @@ function Scanner(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
