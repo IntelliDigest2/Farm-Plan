@@ -6,16 +6,26 @@ import { backdropClasses } from "@mui/material";
 import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
 import "../Button.css"
 import { addToShoppingList } from "../../../store/actions/marketplaceActions/shoppingListData";
+//import { createMealPlanData } from "../../../store/actions/marketplaceActions/mealPlanData";
 import { connect } from "react-redux";
+import { SubscriptionsOutlined } from "@mui/icons-material";
 
+const app_id = "5532003c";
+const app_key = "511d39184173c54ebc5d02a5063a7b87";
+  const limit = "5";
 
-
-function ScannerShop(props) {
+function Scanner(props) {
   const [decodedResults, setDecodedResults] = useState([]);
   const [mealName, setMealName] = useState("");
   const [error, setError] = useState(null)
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
+  const [recipeList, setRecipeList] = useState([]);
+  const [ purchasePlace, setPurchasePlace] = useState("");
+  const [ expiryDate, setExpiryDate] = useState("");
+  const [ storageMethod, setStorageMethod] = useState("");
+
+
 
  
   const onNewScanResult = (decodedText, decodedResult) => {
@@ -23,12 +33,22 @@ function ScannerShop(props) {
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
     .then(data => {
-      setIngredientList(data.product.ingredients)
+      //setIngredientList(data.product.ingredients)
       setMealName(data.product.brands)
+      const query = data.product.brands
 
-      // console.log(data.product.ingredients_hierarchy)
-
-    }).catch((err) => {
+      return fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${query}`)
+      })
+      .then(res => res.json())
+      .then(newData => {
+        console.log("name:", newData.hits)
+        setRecipeList(newData.hits)
+      })
+    .catch((err => {
+      console.log(err.message)
+      setError(err.message)
+    }))
+    .catch((err) => {
       console.log(err.message)
       setError(err.message)
      });
@@ -41,21 +61,38 @@ function ScannerShop(props) {
     quantity: 0,
     measure: "g",
     foodId: "",
+    expiry: ""
   };
 
   const [local, setLocal] = useState(defaultLocal);
   
+  const handleLocal = (e) => {
+    if (e.target.textContent) {
+      setLocal({ ...local, [e.target.id]: e.target.textContent });
+    } else {
+      setLocal({ ...local, [e.target.id]: e.target.value });
+    }
+  };
 
-  const handleIngredient = (e) => {
+  const handleRecipe = (e) => {
     setLocal((local.food = e.target.value));
     setIngredients((ingredients) => [...ingredients, local]);
     setLocal(defaultLocal);
+  };
+
+  const handleMealName = (e) => {
+   setMealName(e.target.value)
   };
 
   useEffect(() => {
     console.log("ingredients", ingredients);
   }, [ingredients]);
 
+ //trigger this when editing/deleting items
+ const [update, setUpdate] = useState(0);
+ const forceUpdate = () => {
+   setUpdate(update + 1);
+ };
 
   //fired when click "done"
   const handleSubmit = () => {
@@ -68,11 +105,16 @@ function ScannerShop(props) {
       upload: {
         meal: mealName,
         ingredients: ingredients,
+        purchase: purchasePlace,
+        expiry: expiryDate,
+        storage: storageMethod
       },
     };
 
+    forceUpdate();
 
     props.addToShoppingList(data);
+
   };
 
   return (
@@ -97,40 +139,63 @@ function ScannerShop(props) {
            onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
-            //props.handleFormClose();
+            props.handleFormClose();
           }}
         >
       
         <Form.Group>
-        <li>{ingredientList && ingredientList.map(data => 
+        <li>{recipeList && recipeList.map(data => 
         <div><p>
-          <Table striped>
-      <thead>
-        
-      </thead>
-      <tbody>
-        <tr>
-          <td>{data?.id}</td>
-          <td>
-          <Button
-            type="text"
-            id="add ingredient"
-            style={{display: 'flex', justifyContent: 'right'}}
-            color="primary"
-            className="float-right"
-            value={data?.id}
-            onClick={(e) => {
-              handleIngredient(e, "value");
-              e.currentTarget.disabled = true;
-            }}
-            required
-          >
-          Add
-        </Button>
-          </td>
-        </tr>
-      </tbody>
-    </Table>
+          
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <div class="form-check">
+            <label class="form-check-label" for="flexCheckDisabled" style={{fontSize: '20px', fontWeight: 'bold', color: 'green'}}>
+              {data?.recipe.label}
+            </label>
+            <input 
+              class="form-check-input" 
+              type="radio" 
+              name="flexRadioDefault" 
+              id="flexRadioDefault1"
+              style={{alignItems: 'right', marginLeft: '20px'}}
+              value= {data?.recipe.label}
+              onClick={(e) => {
+                handleMealName(e, "value");
+              }}
+            />            
+          </div>
+        </h5>
+        <p class="card-text">
+          {data?.recipe.ingredientLines.map(item => {
+          return <ul>
+            
+            <div class="form-check">
+              <label class="form-check-label" for="flexCheckDisabled">
+                {item}
+              </label>
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                value={item}
+                id="flexCheckDefault"
+                style={{alignItems: 'right', marginLeft: '20px', alignItems: 'left'}}
+                onClick={(e) => {
+                  handleRecipe(e, "value");
+                  //e.currentTarget.disabled = true;
+                }}
+              />
+          
+            </div>
+            
+          </ul>;
+          
+        })}
+          </p>
+          
+      </div>
+    </div>
           {/* <Form.Label>{data?.id}</Form.Label>
           <Button
             type="text"
@@ -147,6 +212,36 @@ function ScannerShop(props) {
         </p></div>)}</li>
         </Form.Group>
 
+        <Form.Group>
+            <Form.Label>Where did you purchase this item?</Form.Label>
+            <Form.Control
+              type="text"
+              id="purchasePlace"
+              onChange={(e) => {
+                setPurchasePlace(e.target.value);
+              }}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>What is the Expiry date of this item?</Form.Label>
+            <Form.Control
+              type="text"
+              id="expiry"
+              onChange={(e) => handleLocal(e)}
+              value={local.expiry}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>How do you store this item?</Form.Label>
+            <Form.Control
+              type="text"
+              id="storageMethod"
+              onChange={(e) => {
+                setStorageMethod(e.target.value);
+              }}
+            />
+          </Form.Group>
+
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn shadow-none" type="submit">
           Save
@@ -161,8 +256,9 @@ function ScannerShop(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToShoppingList: (data) => dispatch(addToShoppingList(data)),
+    //createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
+    addToShoppingList: (data) => dispatch(addToShoppingList(data))
   };
 };
 
-export default connect(null, mapDispatchToProps)(ScannerShop);
+export default connect(null, mapDispatchToProps)(Scanner);
