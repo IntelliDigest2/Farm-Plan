@@ -61,10 +61,18 @@ function Scanner(props) {
     quantity: 0,
     measure: "g",
     foodId: "",
+    expiry: ""
   };
 
   const [local, setLocal] = useState(defaultLocal);
   
+  const handleLocal = (e) => {
+    if (e.target.textContent) {
+      setLocal({ ...local, [e.target.id]: e.target.textContent });
+    } else {
+      setLocal({ ...local, [e.target.id]: e.target.value });
+    }
+  };
 
   const handleRecipe = (e) => {
     setLocal((local.food = e.target.value));
@@ -218,10 +226,9 @@ function Scanner(props) {
             <Form.Label>What is the Expiry date of this item?</Form.Label>
             <Form.Control
               type="text"
-              id="expiryDate"
-              onChange={(e) => {
-                setExpiryDate(e.target.value);
-              }}
+              id="expiry"
+              onChange={(e) => handleLocal(e)}
+              value={local.expiry}
             />
           </Form.Group>
           <Form.Group>
