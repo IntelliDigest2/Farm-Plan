@@ -38,6 +38,7 @@ function ShopItems(props) {
       var food = doc.ingredient.food;
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
+      var expiry = doc.ingredient.expiry;
 
       setList((list) => [
         ...list,
@@ -45,6 +46,7 @@ function ShopItems(props) {
           food: food,
           measure: measure,
           quantity: quantity,
+          expiry: expiry,
           id: id,
         },
       ]);
@@ -75,10 +77,15 @@ function ShopItems(props) {
                 className="list"
                 style={{ alignItems: "flex-end" }}
               >
-                <p>
-                  {ingr.food} {ingr.quantity}
-                  {ingr.measure}
-                </p>
+                <div>
+                  <p>
+                    {ingr.food} {ingr.quantity}
+                    {ingr.measure} 
+                    </p><br /><p><b >Expiry Date: </b>{ingr.expiry}</p>
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  
+                </div>
                 <div className="icons">
                   {isItemInInventory(ingr.food) ? (
                     <ItemAlreadyInInventoryIcon />
