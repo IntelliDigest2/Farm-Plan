@@ -6,7 +6,7 @@ import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
 
-export function PreparedOrRaw({value }) {
+export function PreparedOrRaw({ value }) {
   const [prepared, setPrepared] = useState("unconfirmed");
   const [show, setShow] = useState(false);
 
@@ -102,7 +102,7 @@ function YesOrNo(props) {
         </>
       );
     case "yes":
-      return <EatingOut handleFormClose={props.handleFormClose} />;
+      return <Scanner handleFormClose={props.handleFormClose} />;
     case "no":
       return <>{props.children}</>;
   }
