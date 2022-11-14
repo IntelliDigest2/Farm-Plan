@@ -5,10 +5,12 @@ import AddMealForm from "./AddMealForm";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
+import ScannerPrepared from "../../../../../../SubComponents/QRCode/ScannerPrepared";
+
 
 export function PreparedOrRaw({ value }) {
   const [prepared, setPrepared] = useState("unconfirmed");
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
 
   //control barcode scanner
@@ -47,7 +49,7 @@ export function PreparedOrRaw({ value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add new meal for
+            Add new meal for 
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -55,6 +57,7 @@ export function PreparedOrRaw({ value }) {
             prepared={prepared}
             setPrepared={setPrepared}
             handleFormClose={handleFormClose}
+            value={value}
           >
             <button
               className="btn success shadow-none qrcode-btn"
@@ -74,7 +77,7 @@ export function PreparedOrRaw({ value }) {
   );
 }
 
-function YesOrNo(props) {
+function YesOrNo(props, value) {
   switch (props.prepared) {
     default:
     case "unconfirmed":
@@ -102,7 +105,7 @@ function YesOrNo(props) {
         </>
       );
     case "yes":
-      return <Scanner handleFormClose={props.handleFormClose} />;
+      return <ScannerPrepared value={value} handleFormClose={props.handleFormClose} />;
     case "no":
       return <>{props.children}</>;
   }

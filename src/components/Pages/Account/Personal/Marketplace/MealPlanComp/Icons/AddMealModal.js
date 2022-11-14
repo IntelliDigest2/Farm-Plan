@@ -80,6 +80,6 @@ function InOrOut(props) {
     case "yes":
       return <EatingOut handleFormClose={props.handleFormClose} />;
     case "no":
-      return <PreparedOrRaw />;
+      return <PreparedOrRaw/>;
   }
 }
