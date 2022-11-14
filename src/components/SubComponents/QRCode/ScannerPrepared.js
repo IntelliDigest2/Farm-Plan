@@ -13,42 +13,50 @@ const app_id = "5532003c";
 const app_key = "511d39184173c54ebc5d02a5063a7b87";
   const limit = "5";
 
-function Scanner(props) {
+function ScannerPrepared(props) {
   const [decodedResults, setDecodedResults] = useState([]);
   const [mealName, setMealName] = useState("");
   const [error, setError] = useState(null)
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
   const [recipeList, setRecipeList] = useState([]);
+  const [search, setSearch] = useState([]);
 
- 
+  const app_id = "5532003c";
+  const app_key = "511d39184173c54ebc5d02a5063a7b87";
+  const limit = "5";
+
   const onNewScanResult = (decodedText, decodedResult) => {
 
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
     .then(data => {
-      //setIngredientList(data.product.ingredients)
+      setIngredientList(data.product.ingredients)
       setMealName(data.product.brands)
-      const query = data.product.brands
 
-      return fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${query}`)
-      })
-      .then(res => res.json())
-      .then(newData => {
-        console.log("name:", newData.hits)
-        setRecipeList(newData.hits)
-      })
-    .catch((err => {
-      console.log(err.message)
-      setError(err.message)
-    }))
-    .catch((err) => {
+      // console.log(data.product.ingredients_hierarchy)
+
+    }).catch((err) => {
       console.log(err.message)
       setError(err.message)
      });
 
 
   };
+
+  // search for items not found on OFD api
+  const textSearch = () => {
+    fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${search}`)
+    .then(response => response.json())
+    .then(newData => {
+     // console.log("name:", newData.hits)
+      setRecipeList(newData.hits)
+    }).catch((err) => {
+      console.log(err.message)
+      setError(err.message)
+     });
+
+  }
 
   const defaultLocal = {
     food: "",
@@ -59,6 +67,12 @@ function Scanner(props) {
 
   const [local, setLocal] = useState(defaultLocal);
   
+
+  const handleIngredient = (e) => {
+    setLocal((local.food = e.target.value));
+    setIngredients((ingredients) => [...ingredients, local]);
+    setLocal(defaultLocal);
+  };
 
   const handleRecipe = (e) => {
     setLocal((local.food = e.target.value));
@@ -74,7 +88,7 @@ function Scanner(props) {
     console.log("ingredients", ingredients);
   }, [ingredients]);
 
- //trigger this when editing/deleting items
+  //trigger this when editing/deleting items
  const [update, setUpdate] = useState(0);
  const forceUpdate = () => {
    setUpdate(update + 1);
@@ -96,8 +110,9 @@ function Scanner(props) {
 
     props.createMealPlanData(data);
     forceUpdate();
-
   };
+
+
 
   return (
     <>
@@ -125,6 +140,88 @@ function Scanner(props) {
           }}
         >
       
+        <Form.Group>
+        <li>{ingredientList && ingredientList.map(data => 
+        <div><p>
+          <Table striped>
+      <thead>
+        
+      </thead>
+      <tbody>
+        <tr>
+          <td>{data?.id}</td>
+          <td>
+          <Button
+            type="text"
+            id="add ingredient"
+            style={{display: 'flex', justifyContent: 'right'}}
+            color="primary"
+            className="float-right"
+            value={data?.id}
+            onClick={(e) => {
+              handleIngredient(e, "value");
+              e.currentTarget.disabled = true;
+            }}
+            required
+          >
+          Add
+        </Button>
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+          {/* <Form.Label>{data?.id}</Form.Label>
+          <Button
+            type="text"
+            id="add ingredient"
+            value={data?.id}
+            onClick={(e) => {
+              handleIngredient(e, "value");
+              e.currentTarget.disabled = true;
+            }}
+            required
+          >
+          Add
+        </Button> */}
+        </p></div>)}</li>
+        </Form.Group>
+
+      <div style={{ alignItems: "center" }}>
+        <Button className="blue-btn shadow-none" type="submit">
+          Save
+        </Button>
+      </div>        
+      </Form>
+      {error && 
+      <div>
+        <p>Oops..Could not fetch food item, pls try another barcode or enter the name of items for our suggestions..😭</p>
+        <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+          props.handleFormClose();
+
+        }}
+      >
+        <Form.Group>
+          <InputGroup>
+            <Form.Control
+              className="shadow-none"
+              type="text"
+              id="query"
+              defaultValue={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+            <Button 
+            type="button" 
+            className="green-btn shadow-none"
+            onClick={textSearch()}>
+              Search
+            </Button>
+          </InputGroup>
+        </Form.Group>
         <Form.Group>
         <li>{recipeList && recipeList.map(data => 
         <div><p>
@@ -180,29 +277,15 @@ function Scanner(props) {
           
       </div>
     </div>
-          {/* <Form.Label>{data?.id}</Form.Label>
-          <Button
-            type="text"
-            id="add ingredient"
-            value={data?.id}
-            onClick={(e) => {
-              handleIngredient(e, "value");
-              e.currentTarget.disabled = true;
-            }}
-            required
-          >
-          Add
-        </Button> */}
         </p></div>)}</li>
         </Form.Group>
-
-      <div style={{ alignItems: "center" }}>
+        <div style={{ alignItems: "center" }}>
         <Button className="blue-btn shadow-none" type="submit">
           Save
         </Button>
-      </div>        
+      </div>  
       </Form>
-      {error && <div><p>Oops..Could not fetch food item, pls try another barcode..😭</p></div>}
+      </div>}
      
     </>
   );
@@ -214,4 +297,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Scanner);
+export default connect(null, mapDispatchToProps)(ScannerPrepared);
