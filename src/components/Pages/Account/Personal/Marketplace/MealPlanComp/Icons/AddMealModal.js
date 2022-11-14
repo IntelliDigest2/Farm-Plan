@@ -42,6 +42,7 @@ export function AddMealModal({ show, setShow, value }) {
             eatingOut={eatingOut}
             setEatingOut={setEatingOut}
             handleFormClose={handleFormClose}
+            value={value}
           >
           </InOrOut>
         </Modal.Body>
@@ -80,6 +81,6 @@ function InOrOut(props) {
     case "yes":
       return <EatingOut handleFormClose={props.handleFormClose} />;
     case "no":
-      return <PreparedOrRaw/>;
+      return <PreparedOrRaw value={props.value}/>;
   }
 }
