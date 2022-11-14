@@ -9,7 +9,7 @@ import ScannerPrepared from "../../../../../../SubComponents/QRCode/ScannerPrepa
 
 
 export function PreparedOrRaw({ value }) {
-  const [prepared, setPrepared] = useState("unconfirmed");
+  const [raw, setRaw] = useState("unconfirmed");
   const [show, setShow] = useState(true);
 
   //control barcode scanner
@@ -29,7 +29,7 @@ export function PreparedOrRaw({ value }) {
   const handleForm = () => setShow(true);
   const handleFormClose = () => {
     setShow(false);
-    setPrepared("unconfirmed");
+    setRaw("unconfirmed");
   };
 
   return (
@@ -53,8 +53,8 @@ export function PreparedOrRaw({ value }) {
         </Modal.Header>
         <Modal.Body>
           <YesOrNo
-            prepared={prepared}
-            setPrepared={setPrepared}
+            raw={raw}
+            setRaw={setRaw}
             handleFormClose={handleFormClose}
             value={value}
           >
@@ -77,7 +77,7 @@ export function PreparedOrRaw({ value }) {
 }
 
 function YesOrNo(props) {
-  switch (props.prepared) {
+  switch (props.raw) {
     default:
     case "unconfirmed":
       return (
@@ -90,22 +90,22 @@ function YesOrNo(props) {
               <SubButton
                 styling="green"
                 text="Prepared"
-                onClick={() => props.setPrepared("no")}
+                onClick={() => props.setRaw("no")}
               />
             </Col>
             <Col>
               <SubButton
                 styling="green"
                 text="Raw"
-                onClick={() => props.setPrepared("yes")}
+                onClick={() => props.setRaw("yes")}
               />
             </Col>
           </Row>
         </>
       );
-    case "yes":
-      return <ScannerPrepared value={props.value} handleFormClose={props.handleFormClose} />;
     case "no":
+      return <ScannerPrepared value={props.value} handleFormClose={props.handleFormClose} />;
+    case "yes":
       return <>{props.children}</>;
   }
 }
