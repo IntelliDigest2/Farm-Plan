@@ -6,8 +6,9 @@ import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
 
-export function PreparedOrRaw({ show, setShow, value }) {
+export function PreparedOrRaw({value }) {
   const [prepared, setPrepared] = useState("unconfirmed");
+  const [show, setShow] = useState(false);
 
 
   //control barcode scanner
@@ -46,7 +47,7 @@ export function PreparedOrRaw({ show, setShow, value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add new meal for {value.format("DD/MM")}
+            Add new meal for
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
