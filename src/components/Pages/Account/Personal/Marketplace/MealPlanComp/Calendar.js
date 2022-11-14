@@ -8,6 +8,7 @@ import dayStyles from "./BuildCalendar/dayStyles";
 import CalendarHeader from "./BuildCalendar/header";
 
 import MyMeals from "./meals";
+import { PreparedOrRaw } from "./Icons/PreparedOrRaw";
 
 export const Calendar = ({ value, onChange }) => {
   const [calendar, setCalendar] = useState([]);

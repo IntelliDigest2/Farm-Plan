@@ -12,7 +12,6 @@ export function PreparedOrRaw({ value }) {
   const [prepared, setPrepared] = useState("unconfirmed");
   const [show, setShow] = useState(true);
 
-
   //control barcode scanner
   const [scan, setScan] = useState(false);
   const [expand, setExpand] = useState("+ scan from barcode");
@@ -77,7 +76,7 @@ export function PreparedOrRaw({ value }) {
   );
 }
 
-function YesOrNo(props, value) {
+function YesOrNo(props) {
   switch (props.prepared) {
     default:
     case "unconfirmed":
@@ -105,7 +104,7 @@ function YesOrNo(props, value) {
         </>
       );
     case "yes":
-      return <ScannerPrepared value={value} handleFormClose={props.handleFormClose} />;
+      return <ScannerPrepared value={props.value} handleFormClose={props.handleFormClose} />;
     case "no":
       return <>{props.children}</>;
   }
