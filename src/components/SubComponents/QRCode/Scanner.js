@@ -5,7 +5,6 @@ import "./QRCode.css";
 import { backdropClasses } from "@mui/material";
 import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
 import "../Button.css"
-import { addToShoppingList } from "../../../store/actions/marketplaceActions/shoppingListData";
 import { createMealPlanData } from "../../../store/actions/marketplaceActions/mealPlanData";
 import { connect } from "react-redux";
 import { SubscriptionsOutlined } from "@mui/icons-material";
@@ -97,8 +96,6 @@ function Scanner(props) {
 
     props.createMealPlanData(data);
     forceUpdate();
-
-    props.addToShoppingList(data);
 
   };
 
@@ -214,7 +211,6 @@ function Scanner(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
-    addToShoppingList: (data) => dispatch(addToShoppingList(data))
   };
 };
 
