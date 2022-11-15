@@ -20,6 +20,11 @@ function Scanner(props) {
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
   const [recipeList, setRecipeList] = useState([]);
+  const [mealType, setMealType] = useState([]);
+  const [totalDaily, setTotalDaily] = useState([]);
+  const [totalNutrients, setTotalNutrients] = useState([]);
+  const [recipeYield, setRecipeYield] = useState([]);
+
 
  
   const onNewScanResult = (decodedText, decodedResult) => {
@@ -37,6 +42,13 @@ function Scanner(props) {
       .then(newData => {
         console.log("name:", newData.hits)
         setRecipeList(newData.hits)
+        //setTotalDaily(newData.hits.recipe.totalDaily)
+        //setTotalNutrients(newData.hits.recipe.totalNutrients)
+        //setRecipeYield(newData.hits.recipeYield)
+        //setMealType(newData.hits.MealType)
+
+
+
       })
     .catch((err => {
       console.log(err.message)
@@ -91,6 +103,11 @@ function Scanner(props) {
       upload: {
         meal: mealName,
         ingredients: ingredients,
+        mealType: mealType,
+        totalDaily: totalDaily,
+        totalNutrients: totalNutrients,
+        //url: recipe.recipe.url,
+        recipeYield: recipeYield
       },
     };
 
@@ -145,6 +162,10 @@ function Scanner(props) {
               value= {data?.recipe.label}
               onClick={(e) => {
                 handleMealName(e, "value");
+                setMealType(data?.recipe.mealType)
+                setTotalDaily(data?.recipe.totalDaily)
+                setTotalNutrients(data?.recipe.totalNutrients)
+                setRecipeYield(data?.recipe.yield)
                 //handleRecipe(e, "value");
                 //e.currentTarget.disabled = true;
               }}
