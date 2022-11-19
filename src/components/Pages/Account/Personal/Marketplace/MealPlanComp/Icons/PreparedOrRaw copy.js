@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
 import EatingOut from "./EatingOut";
-import EatNowLater from './EatNowLater';
-import EatNowRecipe from "./EatNowRecipe";
 import AddMealForm from "./AddMealForm";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -106,8 +104,8 @@ function YesOrNo(props) {
         </>
       );
     case "no":
-      return <EatNowLater value={props.value} handleFormClose={props.handleFormClose} />;
+      return <ScannerPrepared value={props.value} handleFormClose={props.handleFormClose} />;
     case "yes":
-      return <EatNowRecipe value={props.value} handleFormClose={props.handleFormClose} />;
+      return <>{props.children}</>;
   }
 }

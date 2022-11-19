@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
 import EatingOut from "./EatingOut";
-import EatNowLater from './EatNowLater';
-import EatNowRecipe from "./EatNowRecipe";
 import AddMealForm from "./AddMealForm";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -10,8 +8,8 @@ import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
 import ScannerPrepared from "../../../../../../SubComponents/QRCode/ScannerPrepared";
 
 
-export function PreparedOrRaw({ value }) {
-  const [raw, setRaw] = useState("unconfirmed");
+export default function EatNowRecipe({ value }) {
+  const [eatRecipe, setEatRecipe] = useState("unconfirmed");
   const [show, setShow] = useState(true);
 
   //control barcode scanner
@@ -31,7 +29,7 @@ export function PreparedOrRaw({ value }) {
   const handleForm = () => setShow(true);
   const handleFormClose = () => {
     setShow(false);
-    setRaw("unconfirmed");
+    setEatRecipe("unconfirmed");
   };
 
   return (
@@ -50,13 +48,13 @@ export function PreparedOrRaw({ value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add new meal for 
+            Eat Now or Add Recipe
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <YesOrNo
-            raw={raw}
-            setRaw={setRaw}
+          <NowOrRecipe
+            eatRecipe={eatRecipe}
+            setEatRecipe={setEatRecipe}
             handleFormClose={handleFormClose}
             value={value}
           >
@@ -71,43 +69,43 @@ export function PreparedOrRaw({ value }) {
             ) : (
               <AddMealForm value={value} handleFormClose={handleFormClose} />
             )}
-          </YesOrNo>
+          </NowOrRecipe>
         </Modal.Body>
       </Modal>
     </>
   );
 }
 
-function YesOrNo(props) {
-  switch (props.raw) {
+function NowOrRecipe(props) {
+  switch (props.eatRecipe) {
     default:
     case "unconfirmed":
       return (
         <>
           <div className="basic-title-left">
-            Prepared Or Raw
+            Eat Now or Add Recipe
           </div>
           <Row>
             <Col>
               <SubButton
                 styling="green"
-                text="Prepared"
-                onClick={() => props.setRaw("no")}
+                text="Eat Now"
+                onClick={() => props.setEatRecipe("no")}
               />
             </Col>
             <Col>
               <SubButton
                 styling="green"
-                text="Raw"
-                onClick={() => props.setRaw("yes")}
+                text="Add Recipe"
+                onClick={() => props.setEatRecipe("yes")}
               />
             </Col>
           </Row>
         </>
       );
     case "no":
-      return <EatNowLater value={props.value} handleFormClose={props.handleFormClose} />;
+      return <>{props.children}</>;
     case "yes":
-      return <EatNowRecipe value={props.value} handleFormClose={props.handleFormClose} />;
+      return <>{props.children}</>;
   }
 }
