@@ -28,12 +28,13 @@ function Scanner(props) {
  
   const onNewScanResult = (decodedText, decodedResult) => {
 
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
+    fetch(`https://api.barcodelookup.com/v3/products?barcode=${decodedResult.decodedText}&formatted=y&key=plu2i52mqndohcrrmxq85jtprziuyj`)
+
     .then(response => response.json())
     .then(data => {
       //setIngredientList(data.product.ingredients)
-      setMealName(data.product.brands)
-      const query = data.product.brands
+      setMealName(data.products.title)
+      const query = data.products.title
 
       return fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${query}`)
       })
