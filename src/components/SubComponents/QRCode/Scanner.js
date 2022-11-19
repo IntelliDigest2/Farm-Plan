@@ -23,7 +23,7 @@ function Scanner(props) {
   const [mealType, setMealType] = useState([]);
   const [totalDaily, setTotalDaily] = useState([]);
   const [totalNutrients, setTotalNutrients] = useState([]);
-  const [recipeYield, setRecipeYield] = useState([]);
+  const [recipeYield, setRecipeYield] = useState('');
   const [search, setSearch] = useState('');
  
   const onNewScanResult = (decodedText, decodedResult) => {
@@ -78,7 +78,7 @@ function Scanner(props) {
 
     function SubmitButton(){
       if (search){
-        return <button onClick={textSearch()} className="green-btn shadow-none" type="button">Button</button>
+        return <button onClick={textSearch()} className="green-btn shadow-none" type="button">Search</button>
       } else {
         return <button className="green-btn shadow-none" type="button" disabled>Button</button>
       };
