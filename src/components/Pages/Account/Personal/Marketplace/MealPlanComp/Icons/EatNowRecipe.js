@@ -104,7 +104,7 @@ function NowOrRecipe(props) {
         </>
       );
     case "no":
-      return <ScannerPrepared value={props.value} handleFormClose={props.handleFormClose} />;
+      return <>{props.children}</>;
     case "yes":
       return <>{props.children}</>;
   }

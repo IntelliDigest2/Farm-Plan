@@ -24,8 +24,7 @@ function Scanner(props) {
   const [totalDaily, setTotalDaily] = useState([]);
   const [totalNutrients, setTotalNutrients] = useState([]);
   const [recipeYield, setRecipeYield] = useState([]);
-
-
+  const [search, setSearch] = useState('');
  
   const onNewScanResult = (decodedText, decodedResult) => {
 
@@ -61,6 +60,29 @@ function Scanner(props) {
 
 
   };
+
+    // search for items not found on OFD api
+    const textSearch = () => {
+      fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${search}`)
+      .then(response => response.json())
+      .then(newData => {
+       // console.log("name:", newData.hits)
+        setRecipeList(newData.hits)
+        console.log("hit", search)
+      }).catch((err) => {
+        console.log(err.message)
+        setError(err.message)
+       });
+  
+    }
+
+    function SubmitButton(){
+      if (search){
+        return <button onClick={textSearch()} className="green-btn shadow-none" type="button">Button</button>
+      } else {
+        return <button className="green-btn shadow-none" type="button" disabled>Button</button>
+      };
+    };
 
   const defaultLocal = {
     food: "",
@@ -223,7 +245,111 @@ function Scanner(props) {
         </Button>
       </div>        
       </Form>
-      {error && <div><p>Oops..Could not fetch food item, pls try another barcode..😭</p></div>}
+      {
+      
+      error && 
+      <div>
+        <p>Oops..Could not fetch food item, pls try another barcode or enter the name of items for our suggestions..😭</p>
+        <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+          props.handleFormClose();
+
+        }}
+      >
+        <Form.Group>
+          <InputGroup>
+            <Form.Control
+              className="shadow-none"
+              type="text"
+              id="query"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+            />
+          </InputGroup>
+          <SubmitButton/>
+          {/* <Button 
+            type="button" 
+            className="green-btn shadow-none"
+            onClick={
+              textSearch()
+              }>
+              Search
+            </Button> */}
+        </Form.Group>
+        <Form.Group>
+        <li>{recipeList && recipeList.map(data => 
+        <div><p>
+          
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <div class="form-check">
+            <label class="form-check-label" for="flexCheckDisabled" style={{fontSize: '20px', fontWeight: 'bold', color: 'green'}}>
+              {data?.recipe.label}
+            </label>
+            <input 
+              class="form-check-input" 
+              type="radio" 
+              name="flexRadioDefault" 
+              id="flexRadioDefault1"
+              style={{alignItems: 'right', marginLeft: '20px'}}
+              value= {data?.recipe.label}
+              onClick={(e) => {
+                handleMealName(e, "value");
+                setMealType(data?.recipe.mealType)
+                setTotalDaily(data?.recipe.totalDaily)
+                setTotalNutrients(data?.recipe.totalNutrients)
+                setRecipeYield(data?.recipe.yield)
+                //handleRecipe(e, "value");
+                //e.currentTarget.disabled = true;
+              }}
+            />            
+          </div>
+        </h5>
+        <p class="card-text">
+          {data?.recipe.ingredientLines.map(item => {
+          return <ul>
+            
+            <div class="form-check">
+              <label class="form-check-label" for="flexCheckDisabled">
+                {item}
+              </label>
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                value={item}
+                id="flexCheckDefault"
+                style={{alignItems: 'right', marginLeft: '20px', alignItems: 'left'}}
+                onClick={(e) => {
+                  handleRecipe(e, "value");
+                  //e.currentTarget.disabled = true;
+                }}
+              />
+          
+            </div>
+            
+          </ul>;
+          
+        })}
+          </p>
+          
+      </div>
+    </div>
+        </p></div>)}</li>
+        </Form.Group>
+        <div style={{ alignItems: "center" }}>
+        <Button className="blue-btn shadow-none" type="submit">
+          Save
+        </Button>
+      </div>  
+      </Form>
+      </div>
+
+      }
      
     </>
   );
