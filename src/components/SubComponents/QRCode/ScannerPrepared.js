@@ -32,10 +32,10 @@ function ScannerPrepared(props) {
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
     .then(data => {
-      //setIngredientList(data.product.ingredients)      
+
+      // set query to constant
       let query;
-      //var query = data.product.product_name_en
-      //console.log ("checking:", query)
+
 
       if (data.product.product_name_en == undefined) {
          query = data.product.product_name
