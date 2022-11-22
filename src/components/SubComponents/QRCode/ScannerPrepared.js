@@ -7,7 +7,7 @@ import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
 import "../Button.css"
 import { createMealPlanData } from "../../../store/actions/marketplaceActions/mealPlanData";
 import { connect } from "react-redux";
-import { SubscriptionsOutlined } from "@mui/icons-material";
+import { ContactlessOutlined, SubscriptionsOutlined } from "@mui/icons-material";
 
 const app_id = "5532003c";
 const app_key = "511d39184173c54ebc5d02a5063a7b87";
@@ -20,43 +20,56 @@ function ScannerPrepared(props) {
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
   const [recipeList, setRecipeList] = useState([]);
-  const [search, setSearch] = useState([]);
+  const [mealType, setMealType] = useState([]);
+  const [totalDaily, setTotalDaily] = useState([]);
+  const [totalNutrients, setTotalNutrients] = useState([]);
+  const [recipeYield, setRecipeYield] = useState([]);
 
-  const app_id = "5532003c";
-  const app_key = "511d39184173c54ebc5d02a5063a7b87";
-  const limit = "5";
 
+ 
   const onNewScanResult = (decodedText, decodedResult) => {
 
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
     .then(data => {
-      setIngredientList(data.product.ingredients)
-      setMealName(data.product.brands)
+      //setIngredientList(data.product.ingredients)      
+      let query;
+      //var query = data.product.product_name_en
+      //console.log ("checking:", query)
 
-      // console.log(data.product.ingredients_hierarchy)
+      if (data.product.product_name_en == undefined) {
+         query = data.product.product_name
+         setMealName(query)
+      } else {
+        query = data.product.product_name_en
+        setMealName(query)
+      }
 
-    }).catch((err) => {
+      return fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${query}`)
+      })
+      .then(res => res.json())
+      .then(newData => {
+        console.log("name:", newData.hits)
+        setRecipeList(newData.hits)
+        //setTotalDaily(newData.hits.recipe.totalDaily)
+        //setTotalNutrients(newData.hits.recipe.totalNutrients)
+        //setRecipeYield(newData.hits.recipeYield)
+        //setMealType(newData.hits.MealType)
+
+
+
+      })
+    .catch((err => {
+      console.log(err.message)
+      setError(err.message)
+    }))
+    .catch((err) => {
       console.log(err.message)
       setError(err.message)
      });
 
 
   };
-
-  // search for items not found on OFD api
-  const textSearch = () => {
-    fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${search}`)
-    .then(response => response.json())
-    .then(newData => {
-     // console.log("name:", newData.hits)
-      setRecipeList(newData.hits)
-    }).catch((err) => {
-      console.log(err.message)
-      setError(err.message)
-     });
-
-  }
 
   const defaultLocal = {
     food: "",
@@ -67,12 +80,6 @@ function ScannerPrepared(props) {
 
   const [local, setLocal] = useState(defaultLocal);
   
-
-  const handleIngredient = (e) => {
-    setLocal((local.food = e.target.value));
-    setIngredients((ingredients) => [...ingredients, local]);
-    setLocal(defaultLocal);
-  };
 
   const handleRecipe = (e) => {
     setLocal((local.food = e.target.value));
@@ -88,7 +95,7 @@ function ScannerPrepared(props) {
     console.log("ingredients", ingredients);
   }, [ingredients]);
 
-  //trigger this when editing/deleting items
+ //trigger this when editing/deleting items
  const [update, setUpdate] = useState(0);
  const forceUpdate = () => {
    setUpdate(update + 1);
@@ -105,14 +112,18 @@ function ScannerPrepared(props) {
       upload: {
         meal: mealName,
         ingredients: ingredients,
+        mealType: mealType,
+        totalDaily: totalDaily,
+        totalNutrients: totalNutrients,
+        //url: recipe.recipe.url,
+        recipeYield: recipeYield
       },
     };
 
     props.createMealPlanData(data);
     forceUpdate();
+
   };
-
-
 
   return (
     <>
@@ -141,88 +152,6 @@ function ScannerPrepared(props) {
         >
       
         <Form.Group>
-        <li>{ingredientList && ingredientList.map(data => 
-        <div><p>
-          <Table striped>
-      <thead>
-        
-      </thead>
-      <tbody>
-        <tr>
-          <td>{data?.id}</td>
-          <td>
-          <Button
-            type="text"
-            id="add ingredient"
-            style={{display: 'flex', justifyContent: 'right'}}
-            color="primary"
-            className="float-right"
-            value={data?.id}
-            onClick={(e) => {
-              handleIngredient(e, "value");
-              e.currentTarget.disabled = true;
-            }}
-            required
-          >
-          Add
-        </Button>
-          </td>
-        </tr>
-      </tbody>
-    </Table>
-          {/* <Form.Label>{data?.id}</Form.Label>
-          <Button
-            type="text"
-            id="add ingredient"
-            value={data?.id}
-            onClick={(e) => {
-              handleIngredient(e, "value");
-              e.currentTarget.disabled = true;
-            }}
-            required
-          >
-          Add
-        </Button> */}
-        </p></div>)}</li>
-        </Form.Group>
-
-      <div style={{ alignItems: "center" }}>
-        <Button className="blue-btn shadow-none" type="submit">
-          Save
-        </Button>
-      </div>        
-      </Form>
-      {error && 
-      <div>
-        <p>Oops..Could not fetch food item, pls try another barcode or enter the name of items for our suggestions..😭</p>
-        <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-          props.handleFormClose();
-
-        }}
-      >
-        <Form.Group>
-          <InputGroup>
-            <Form.Control
-              className="shadow-none"
-              type="text"
-              id="query"
-              defaultValue={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-            />
-            <Button 
-            type="button" 
-            className="green-btn shadow-none"
-            onClick={textSearch()}>
-              Search
-            </Button>
-          </InputGroup>
-        </Form.Group>
-        <Form.Group>
         <li>{recipeList && recipeList.map(data => 
         <div><p>
           
@@ -242,6 +171,10 @@ function ScannerPrepared(props) {
               value= {data?.recipe.label}
               onClick={(e) => {
                 handleMealName(e, "value");
+                setMealType(data?.recipe.mealType)
+                setTotalDaily(data?.recipe.totalDaily)
+                setTotalNutrients(data?.recipe.totalNutrients)
+                setRecipeYield(data?.recipe.yield)
                 //handleRecipe(e, "value");
                 //e.currentTarget.disabled = true;
               }}
@@ -277,15 +210,29 @@ function ScannerPrepared(props) {
           
       </div>
     </div>
+          {/* <Form.Label>{data?.id}</Form.Label>
+          <Button
+            type="text"
+            id="add ingredient"
+            value={data?.id}
+            onClick={(e) => {
+              handleIngredient(e, "value");
+              e.currentTarget.disabled = true;
+            }}
+            required
+          >
+          Add
+        </Button> */}
         </p></div>)}</li>
         </Form.Group>
-        <div style={{ alignItems: "center" }}>
+
+      <div style={{ alignItems: "center" }}>
         <Button className="blue-btn shadow-none" type="submit">
           Save
         </Button>
-      </div>  
+      </div>        
       </Form>
-      </div>}
+      {error && <div><p>Oops..Could not fetch food item, pls try another barcode..😭</p></div>}
      
     </>
   );

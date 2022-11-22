@@ -7,6 +7,8 @@ import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "./Calendar";
 import { CalendarShop } from "./CalendarShop";
+import { CalendarPlan } from "./CalendarPlan";
+
 
 import SavedMeals from "./SavedMeals";
 import RecipeSearch from "./Search/RecipeSearch";
@@ -53,6 +55,9 @@ export default function MealPlan() {
         </Tab>
         <Tab eventKey="inventory" title="INVENTORY" className="mealtab">
           <Inventory value={value} />
+        </Tab>
+        <Tab eventKey="mealplanner" title="MEAL PLANNER" className="mealtab">
+        <CalendarPlan value={value} onChange={setValue} />
         </Tab>
       </Tabs>
 
