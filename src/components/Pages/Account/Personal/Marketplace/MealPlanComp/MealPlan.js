@@ -56,9 +56,9 @@ export default function MealPlan() {
         <Tab eventKey="inventory" title="INVENTORY" className="mealtab">
           <Inventory value={value} />
         </Tab>
-        <Tab eventKey="mealplanner" title="MEAL PLANNER" className="mealtab">
+        {/* <Tab eventKey="mealplanner" title="MEAL PLANNER" className="mealtab">
         <CalendarPlan value={value} onChange={setValue} />
-        </Tab>
+        </Tab> */}
       </Tabs>
 
       {/* input available locations for picking up */}
