@@ -27,15 +27,23 @@ function Scanner(props) {
 
 
 
- 
   const onNewScanResult = (decodedText, decodedResult) => {
 
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
     .then(response => response.json())
     .then(data => {
-      //setIngredientList(data.product.ingredients)
-      setMealName(data.product.brands)
-      const query = data.product.brands
+      //setIngredientList(data.product.ingredients)      
+      let query;
+      //var query = data.product.product_name_en
+      //console.log ("checking:", query)
+
+      if (data.product.product_name_en == undefined) {
+         query = data.product.product_name
+         setMealName(query)
+      } else {
+        query = data.product.product_name_en
+        setMealName(query)
+      }
 
       return fetch(`https://api.edamam.com/api/recipes/v2?app_id=${app_id}&app_key=${app_key}&type=public&q=${query}`)
       })
@@ -43,6 +51,13 @@ function Scanner(props) {
       .then(newData => {
         console.log("name:", newData.hits)
         setRecipeList(newData.hits)
+        //setTotalDaily(newData.hits.recipe.totalDaily)
+        //setTotalNutrients(newData.hits.recipe.totalNutrients)
+        //setRecipeYield(newData.hits.recipeYield)
+        //setMealType(newData.hits.MealType)
+
+
+
       })
     .catch((err => {
       console.log(err.message)
@@ -56,6 +71,7 @@ function Scanner(props) {
 
   };
 
+  
   const defaultLocal = {
     food: "",
     quantity: 0,

@@ -97,6 +97,7 @@ function AddMealForm(props) {
       },
     };
 
+    console.log("checking props:", props)
     props.createMealPlanData(data);
     forceUpdate();
 
