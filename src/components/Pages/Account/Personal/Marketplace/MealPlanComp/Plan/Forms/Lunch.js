@@ -142,7 +142,12 @@ function Lunch(props) {
       </Form.Group>
 
       <div style={{ alignItems: "center" }}>
-        <Button className="blue-btn shadow-none" type="submit">
+        <Button onClick={() => {
+                alert("Your meals have been saved");
+                //props.handleFormClose();
+                }}
+                
+          className="blue-btn shadow-none" type="submit">
           Save
         </Button>
       </div>
