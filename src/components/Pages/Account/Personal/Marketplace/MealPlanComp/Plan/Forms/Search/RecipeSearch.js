@@ -18,7 +18,7 @@ export default function RecipeSearch(props) {
   const [search, setSearch] = useState("");
   //sends to api
   const [query, setQuery] = useState("");
-  const [mealType, setMealType] = useState("breakfast");
+  const [mealType, setMealType] = useState("");
   const [cuisineType, setCuisineType] = useState("");
   const [requirements, setRequirements] = useState("");
   //sent back from api
@@ -102,6 +102,12 @@ export default function RecipeSearch(props) {
         </Form.Group>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <p>Meal Type:</p>
+              <div>
+                <MealType setMealType={setMealType} />
+              </div>
+            </Grid>
             <Grid item xs={12} md={6}>
               <p>Origin:</p>
               <div>
