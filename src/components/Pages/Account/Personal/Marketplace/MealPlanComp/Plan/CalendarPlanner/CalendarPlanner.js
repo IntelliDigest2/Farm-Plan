@@ -1,6 +1,7 @@
 import "./calendarStyle.css";
 import { useState } from "react";
 import Calendar from "./CalendarPlan";
+import FullCalendarApp from "./FullCalendar";
 import Details from "./Details";
 
 export default function CalendarPlanner() {
@@ -15,7 +16,7 @@ export default function CalendarPlanner() {
   return (
     <div className="App">
       <h2>6-Months Meal Plan</h2>
-      <Calendar showDetailsHandle={showDetailsHandle} />
+      <FullCalendarApp />
       <br />
       {showDetails && <Details data={data} />}
     </div>

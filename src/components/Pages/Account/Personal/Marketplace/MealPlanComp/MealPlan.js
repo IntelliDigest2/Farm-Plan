@@ -63,7 +63,7 @@ export default function MealPlan() {
         <Tab eventKey="plan" title="VIEW PLAN" className="mealtab">
           <CalendarPlanner/>
         </Tab>
-      </Tabs>
+      </Tabs> 
 
       {/* input available locations for picking up */}
       {/* shopping list */}
