@@ -55,7 +55,7 @@ export const addToShoppingList = (data) => {
       });
   };
 };
-
+ 
 export const getShoppingList = (data) => {
   return (dispatch, getState, { getFirestore }) => {
     //make async call to database

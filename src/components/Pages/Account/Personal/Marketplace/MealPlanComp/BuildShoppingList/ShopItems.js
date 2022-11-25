@@ -24,7 +24,6 @@ function ShopItems(props) {
 
     props.getShoppingList(data);
     props.getInventory();
-    // console.log(props);
   }, [props.value, update]);
 
   const updateShoppingList = async () => {
