@@ -16,7 +16,7 @@ function Breakfast(props) {
   
   return (
     <div>
-        <h5>Choose atleast 7 meals for Breakfast</h5>
+        <h5>Choose atleast 7 meals each for Breakfast, Lunch and Dinner</h5>
       <RecipeSearch value={props.value} />
     <div>
         <button className="btn blue-btn shadow-none" style={{marginTop: "25px"}}

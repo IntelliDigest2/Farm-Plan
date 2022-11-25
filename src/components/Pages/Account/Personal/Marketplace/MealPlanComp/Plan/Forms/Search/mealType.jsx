@@ -4,15 +4,12 @@ import { Dropdown } from "../../../../../../../../SubComponents/Dropdown";
 
 
 export default function MealType({ setMealType }) {
-  const [control, setControl] = useState("Any");
+  const [control, setControl] = useState("Breakfast");
 
   //mediates between the state of the dropdown and the format needed for the API
   const handleDropdown = () => {
     switch (control) {
       default:
-      case "Any":
-        setMealType("");
-        break;
       case "Breakfast":
         setMealType("Breakfast");
         break;
@@ -22,9 +19,6 @@ export default function MealType({ setMealType }) {
       case "Dinner":
         setMealType("Dinner");
         break;
-      case "Snack":
-        setMealType("Snack");
-        break;
     }
   };
 
@@ -32,7 +26,7 @@ export default function MealType({ setMealType }) {
     handleDropdown();
   }, [control]);
 
-  const mealTypes = ["Any", "Breakfast", "Lunch", "Dinner", "Snack"];
+  const mealTypes = ["Breakfast", "Lunch", "Dinner"];
 
   return (
     <Dropdown

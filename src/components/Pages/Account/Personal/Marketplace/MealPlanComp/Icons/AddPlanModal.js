@@ -9,6 +9,7 @@ import AddPlanForm from "./AddPlanForm";
 import Breakfast from "../Plan/Forms/Breakfast";
 import Lunch from "../Plan/Forms/Lunch";
 import Dinner from "../Plan/Forms/Dinner";
+import RecipeSearch from "../Plan/Forms/Search/RecipeSearch";
 
 export function AddPlanModal({ show, setShow, value }) {
   const [eatingOut, setEatingOut] = useState("unconfirmed");
@@ -83,7 +84,9 @@ export function AddPlanModal({ show, setShow, value }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {componentList[page]}
+        <h5>Choose atleast 7 meals each for Breakfast, Lunch and Dinner</h5>
+
+          <RecipeSearch value={value} />
         </Modal.Body>
       </Modal>
     </>
