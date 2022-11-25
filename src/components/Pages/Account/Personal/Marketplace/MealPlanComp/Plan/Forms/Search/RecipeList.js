@@ -7,7 +7,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import Add from "../../../Icons/AddIcon"
-import SaveMealIcon from "../../../Icons/SaveMealIcon";
+import SaveMealPlanIcon from "../../../Icons/SaveMealPlanIcon";
 
 export default function RecipeList(props) {
   return (
@@ -24,19 +24,8 @@ export default function RecipeList(props) {
                   <ListSubheader className="heading">
                     <div className="meal-name">{item.recipe.label}</div>
                     <div className="icons">
-                      <Add
-                        value={props.value}
-                        mealType={item.recipe.mealType}
-                        meal={item.recipe.label}
-                        ingredients={item.recipe.ingredients}
-                        url={item.recipe.url}
-                        totalNutrients={item.recipe.totalNutrients}
-                        totalDaily={item.recipe.totalDaily}
-                        yield={item.recipe.yield}
-                        onChange={props.onChange}
-                        saved={false}
-                      />
-                      <SaveMealIcon 
+                      
+                      <SaveMealPlanIcon 
                         value={props.value}
                         mealType={item.recipe.mealType}
                         meal={item.recipe.label}
