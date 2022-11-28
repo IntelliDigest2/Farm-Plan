@@ -59,7 +59,7 @@ function MyMeals(props) {
       ]);
     });
   };
-
+ 
   useEffect(() => {
     updateMeals();
   }, [props.mealPlan]);
