@@ -68,8 +68,10 @@ function FullCalendarApp(props) {
 
       var combinations = [];
       var count = 0;
+      var time = [{breakfast: 'T00:00:00'},{lunch: 'T03:00:00'},{dinner: 'T06:00:00'}]
       for (let i = 0; i < newObjects.length; i++) {
         var e = {}
+        e['id'] = i
         e['title'] = mealList[count].meal
         e['start'] = newObjects[i].start;
         e['end'] = newObjects[i].end;
