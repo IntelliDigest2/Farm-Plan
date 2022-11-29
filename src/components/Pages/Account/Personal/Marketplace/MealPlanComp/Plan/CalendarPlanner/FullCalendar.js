@@ -50,7 +50,13 @@ function FullCalendarApp(props) {
       return arr;
     };
 
-      var daylist = getDaysArray(new Date(props.value.format("YYYY-MM-DD")),new Date("2022-11-30"));
+    var d = new Date(props.value.format("YYYY-MM-DD"));
+    d.setMonth(d.getMonth() + 6);
+    console.log("In six months", d.toISOString().slice(0,19));
+
+
+
+      var daylist = getDaysArray(new Date(props.value.format("YYYY-MM-DD")),new Date(d.toISOString().slice(0,10)));
       const dates = daylist.map((v)=>v.toISOString().slice(0,10))
 
       var myStringArray = dateRange;
