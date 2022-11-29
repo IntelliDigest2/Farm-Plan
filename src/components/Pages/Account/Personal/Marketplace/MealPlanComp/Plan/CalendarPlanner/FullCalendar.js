@@ -1,45 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, Button } from "react-bootstrap";
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import "./calendarStyle.css";
+
+import "./calendarStyle.css"
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 import { connect } from "react-redux";
 import { getMealPlannerData } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData";
-import { setDate } from "date-fns";
 
 
 function FullCalendarApp(props) {
 
-  const [meals, setMeals] = useState([]);
+  const [value, setValue] = useState([]);
   const [breakfast, setBreakfast] = useState([]);
   const [lunch, setLunch] = useState([]);
-  const [dateRange, setDateRange] = useState([])
+  const [mealTitle, setMealTitle] = useState(false);
 
-  // const events = [
-  //   {
-  //     id: 1,
-  //     title: 'Rice',
-  //     start: '2022-11-24T00:00:00',
-  //     end: '2022-11-24T03:00:00',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Baked beans',
-  //     start: '2022-11-24T03:00:00',
-  //     end: '2022-11-24T06:00:00',
-  //   },
-  //   { id: 3, 
-  //     title: 'Grilled Beef', 
-  //     start: '2022-11-23T06:00:00',
-  //     end: '2022-11-23T09:00:00',
-  //   },
-  // ];
+  const [dateRange, setDateRange] = useState([])
+  const [showModal, setShow] = useState(false);
+
+
+  const events = [
+    {
+      id: 1,
+      title: 'Rice',
+      start: '2022-11-24T00:00:00',
+      end: '2022-11-24T03:00:00',
+    },
+    {
+      id: 2,
+      title: 'Baked beans',
+      start: '2022-11-24T03:00:00',
+      end: '2022-11-24T06:00:00',
+    },
+    { id: 3, 
+      title: 'Grilled Beef', 
+      start: '2022-11-23T06:00:00',
+      end: '2022-11-23T09:00:00',
+    },
+  ];
 
   
 
@@ -77,6 +82,11 @@ function FullCalendarApp(props) {
 
       //console.log("qqq:", newEvent)
 
+    
+    //this sends data request
+    useEffect(() => {
+      props.getMealPlannerData();
+    }, []);
 
   const updateMealPlanner = async () => {
     //clears the items array before each update- IMPORTANT
@@ -133,64 +143,89 @@ function FullCalendarApp(props) {
     });
   };
 
-  console.log("breakfast:", breakfast)
-  console.log("lunch:", lunch)
-
-  var comb = [];
-  let x = 0
-  let y = 0
-  let z = 0
-
-  while (x < breakfast.length && y < lunch.length) {
-        comb[z++] = breakfast[x++];
-        comb[z++] = lunch[y++];
-        comb[z++] = lunch[y++];
-  }
-  // Store remaining elements of first array
-  while (x < breakfast.length)
-  comb[z++] = breakfast[x++];
-
-  // Store remaining elements of second array
-  while (y < lunch.length)
-    comb[z++] = lunch[y++];
-
-    console.log("getcomb:",comb);
-
-      var allMeals = comb
-      var combinations = [];
-      var count = 0;
-      //var time = [{breakfast: 'T00:00:00'},{lunch: 'T03:00:00'},{dinner: 'T06:00:00'}]
-      for (let i = 0; i < newObjects.length; i++) {
-        var e = {}
-        e['id'] = i
-        e['title'] = allMeals[count].meal;
-        e['start'] = newObjects[i].start;
-        e['end'] = newObjects[i].end;
-        //e['qty'] = 3
-        combinations.push(e);
-        count++;
-        if (count === allMeals.length - 1) count = 0;
-      }
-      //console.log("newObjects",allMeals[0].meal)
-
-     
-     console.log("combinations:",combinations);
-
-     useEffect(() => {
-      setDateRange(dates)
-      console.log("printing date range:", props.value.format("YYYY-MM-DD"))
-      }, []);
-
-    
-    //this sends data request
-  useEffect(() => {
-    props.getMealPlannerData();
-  }, []);
-
   useEffect(() => {
     updateMealPlanner();
-  }, [props.getMealPlannerData]);
+    //combineArray();
+  }, [props.data]);
 
+  useEffect(() => {
+    setDateRange(dates)
+   // console.log("printing date range:", props.value.format("YYYY-MM-DD"))
+    }, []);
+
+
+    useEffect(() => {
+      combineArray();
+
+     // console.log("printing date range:", props.value.format("YYYY-MM-DD"))
+      }, [breakfast, lunch]);
+  
+
+  console.log("breakfast:", breakfast)
+  console.log("lunch:", lunch)
+  
+
+  var combineArray = () => {
+    var comb = [];
+    let x = 0
+    let y = 0
+    let z = 0
+
+    while (x < breakfast.length && y < lunch.length) {
+      comb[z++] = breakfast[x++];
+      comb[z++] = lunch[y++];
+      comb[z++] = lunch[y++];
+    }
+
+    // Store remaining elements of first array
+    while (x < breakfast.length)
+      comb[z++] = breakfast[x++];
+
+    // Store remaining elements of second array
+    while (y < lunch.length)
+      comb[z++] = lunch[y++];
+
+      console.log("getcomb:",comb);
+    
+    return comb;
+  }
+
+  useEffect(() => {
+    combinations();
+  }, [breakfast, lunch])
+  
+  var combinations = async () => {
+    var combinations = [];
+    var count = 0;
+
+    await combineArray()
+
+    if (breakfast == '' || lunch == '' ) return (<div><p>Loading...</p></div>)
+
+    var allMeals = combineArray()
+
+    //var time = [{breakfast: 'T00:00:00'},{lunch: 'T03:00:00'},{dinner: 'T06:00:00'}]
+    for (let i = 0; i < newObjects.length; i++) {
+      var e = {}
+      e['id'] = i
+      e['title'] = allMeals[count].meal;
+      e['start'] = newObjects[i].start;
+      e['end'] = newObjects[i].end;
+
+      //e['qty'] = 3
+      combinations.push(e);
+      count++;
+      if (count === allMeals.length - 1) count = 0;
+    }
+
+    setValue(combinations);
+
+    console.log("value:",value);
+
+  }
+   
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <div className="calendar">
       <FullCalendar
@@ -199,12 +234,27 @@ function FullCalendarApp(props) {
         headerToolbar={{
           center: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
-        events={combinations} 
-        eventColor="blue"
+        events={value} 
+        eventDisplay="block"
+        display="background"
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
-        eventClick={(e) => console.log(e.event.title)}
+        eventClick={(e) => {
+          setMealTitle(e.event.title);
+          handleShow()
+        }}
       />
+        <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Meal Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{mealTitle}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
