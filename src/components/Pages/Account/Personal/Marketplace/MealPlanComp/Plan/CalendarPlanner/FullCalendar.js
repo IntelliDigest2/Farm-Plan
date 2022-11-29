@@ -231,10 +231,12 @@ function FullCalendarApp(props) {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
+        themeSystem="bootstrap"
         headerToolbar={{
           center: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
         events={value} 
+        contentHeight="auto"
         eventDisplay="block"
         display="background"
         nowIndicator
