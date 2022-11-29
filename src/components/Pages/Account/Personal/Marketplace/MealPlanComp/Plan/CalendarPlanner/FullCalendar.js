@@ -17,6 +17,8 @@ import { setDate } from "date-fns";
 function FullCalendarApp(props) {
 
   const [meals, setMeals] = useState([]);
+  const [breakfast, setBreakfast] = useState([]);
+  const [lunch, setLunch] = useState([]);
   const [dateRange, setDateRange] = useState([])
 
   // const events = [
@@ -39,6 +41,7 @@ function FullCalendarApp(props) {
   //   },
   // ];
 
+  
 
     var getDaysArray = function(start, end) {
       for(var arr=[],dt=new Date(start); dt<=new Date(end); dt.setDate(dt.getDate()+1)){
@@ -47,11 +50,11 @@ function FullCalendarApp(props) {
       return arr;
     };
 
-      var daylist = getDaysArray(new Date("2022-11-10"),new Date("2022-11-30"));
+      var daylist = getDaysArray(new Date(props.value.format("YYYY-MM-DD")),new Date("2022-11-30"));
       const dates = daylist.map((v)=>v.toISOString().slice(0,10))
 
       var myStringArray = dateRange;
-      var mealList = meals
+      //var mealList = meals
       let newEvent = []
       var arrayLength = myStringArray.length;
       for (var i = 0; i < arrayLength; i++) {
@@ -66,39 +69,13 @@ function FullCalendarApp(props) {
         Array(e.qty).fill({start: e.start, end: e.end})
       );
 
-      var combinations = [];
-      var count = 0;
-      var time = [{breakfast: 'T00:00:00'},{lunch: 'T03:00:00'},{dinner: 'T06:00:00'}]
-      for (let i = 0; i < newObjects.length; i++) {
-        var e = {}
-        e['id'] = i
-        e['title'] = mealList[count].meal
-        e['start'] = newObjects[i].start;
-        e['end'] = newObjects[i].end;
-        e['qty'] = 3
-        combinations.push(e);
-        count++;
-        if (count === mealList.length - 1) count = 0;
-      }
-     
-     console.log("qqq:",combinations);
-
       //console.log("qqq:", newEvent)
 
-    useEffect(() => {
-      setDateRange(dates)
-      console.log("printing date range:", dateRange)
-  }, []);
-
-    
-    //this sends data request
-  useEffect(() => {
-    props.getMealPlannerData();
-  }, []);
 
   const updateMealPlanner = async () => {
     //clears the items array before each update- IMPORTANT
-    setMeals([]);
+    setBreakfast([]);
+    setLunch([]);
 
     //sets a new item object in the array for every document
     props.data.forEach((doc) => {
@@ -116,26 +93,97 @@ function FullCalendarApp(props) {
       } else {
         nn = false;
       }
-      setMeals((meals) => [
-        ...meals,
-        {
-          meal: mealName,
-          mealType: mealType,
-          ingredients: ingredients,
-          id: id,
-          nn: nn,
-          url: url,
-          totalNutrients: totalNutrients,
-          totalDaily: totalDaily,
-        },
-      ]);
+
+      if (mealType == 'breakfast') {
+        setBreakfast((meals) => [
+          ...meals,
+          {
+            meal: mealName,
+            mealType: mealType,
+            ingredients: ingredients,
+            id: id,
+            nn: nn,
+            url: url,
+            totalNutrients: totalNutrients,
+            totalDaily: totalDaily,
+          },
+        ]);
+      } else {
+        setLunch((meals) => [
+          ...meals,
+          {
+            meal: mealName,
+            mealType: mealType,
+            ingredients: ingredients,
+            id: id,
+            nn: nn,
+            url: url,
+            totalNutrients: totalNutrients,
+            totalDaily: totalDaily,
+          },
+        ]);
+      }
+      
     });
   };
+
+  console.log("breakfast:", breakfast)
+  console.log("lunch:", lunch)
+
+  var comb = [];
+  let x = 0
+  let y = 0
+  let z = 0
+
+  while (x < breakfast.length && y < lunch.length) {
+        comb[z++] = breakfast[x++];
+        comb[z++] = lunch[y++];
+        comb[z++] = lunch[y++];
+  }
+  // Store remaining elements of first array
+  while (x < breakfast.length)
+  comb[z++] = breakfast[x++];
+
+  // Store remaining elements of second array
+  while (y < lunch.length)
+    comb[z++] = lunch[y++];
+
+    console.log("getcomb:",comb);
+
+      var allMeals = comb
+      var combinations = [];
+      var count = 0;
+      //var time = [{breakfast: 'T00:00:00'},{lunch: 'T03:00:00'},{dinner: 'T06:00:00'}]
+      for (let i = 0; i < newObjects.length; i++) {
+        var e = {}
+        e['id'] = i
+        e['title'] = allMeals[count].meal;
+        e['start'] = newObjects[i].start;
+        e['end'] = newObjects[i].end;
+        //e['qty'] = 3
+        combinations.push(e);
+        count++;
+        if (count === allMeals.length - 1) count = 0;
+      }
+      //console.log("newObjects",allMeals[0].meal)
+
+     
+     console.log("combinations:",combinations);
+
+     useEffect(() => {
+      setDateRange(dates)
+      console.log("printing date range:", props.value.format("YYYY-MM-DD"))
+      }, []);
+
+    
+    //this sends data request
+  useEffect(() => {
+    props.getMealPlannerData();
+  }, []);
 
   useEffect(() => {
     updateMealPlanner();
   }, [props.getMealPlannerData]);
-
 
   return (
     <div className="calendar">
