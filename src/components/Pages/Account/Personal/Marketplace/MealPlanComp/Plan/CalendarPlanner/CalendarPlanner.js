@@ -14,7 +14,7 @@ export default function CalendarPlanner(props) {
   };
 
   return (
-    <div className="App">
+    <div>
       <h2>6-Months Meal Plan</h2>
       <FullCalendarApp value={props.value}/>
       <br />
