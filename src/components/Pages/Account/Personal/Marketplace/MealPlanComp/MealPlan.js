@@ -61,7 +61,7 @@ export default function MealPlan() {
           <CalendarPlan value={value} onChange={setValue} />
         </Tab>
         <Tab eventKey="plan" title="VIEW PLAN" className="mealtab">
-          <CalendarPlanner/>
+          <CalendarPlanner value={value}/>
         </Tab>
       </Tabs> 
 
