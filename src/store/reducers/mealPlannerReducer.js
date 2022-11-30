@@ -15,7 +15,7 @@ const mealPlannerReducer = (state = initState, action) => {
       console.log("meal planner created", action.mealPlanner);
       return {
         ...state,
-        authError: null,
+        authError: null, 
       };
     case "CREATE_MEAL_PLANNER_ERROR":
       console.log("error, meal plan not created", action.err);

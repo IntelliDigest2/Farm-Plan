@@ -19,6 +19,9 @@ export default function MealType({ setMealType }) {
       case "Dinner":
         setMealType("Dinner");
         break;
+      case "Snacks":
+      setMealType("Snacks");
+      break;
     }
   };
 
@@ -26,7 +29,7 @@ export default function MealType({ setMealType }) {
     handleDropdown();
   }, [control]);
 
-  const mealTypes = ["Breakfast", "Lunch", "Dinner"];
+  const mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"];
 
   return (
     <Dropdown
