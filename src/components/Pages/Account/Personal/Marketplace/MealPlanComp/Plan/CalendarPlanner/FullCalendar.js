@@ -176,7 +176,8 @@ function FullCalendarApp(props) {
     let y = 0
     let z = 0
 
-    while (x < breakfast.length && y < lunch.length) {
+    while (x < breakfast.length -1 && y < lunch.length -1) {
+      
       comb[z++] = breakfast[x++];
       comb[z++] = lunch[y++];
       comb[z++] = lunch[y++];
@@ -227,8 +228,6 @@ function FullCalendarApp(props) {
 
         
       if(H > 20) H = 8
-
-      console.log("whats H:", H)
 
 
       if (H > 9) {T = 'T' + H + MS} else {T = 'T0' + H + MS}
