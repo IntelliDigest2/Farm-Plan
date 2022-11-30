@@ -24,29 +24,27 @@ function FullCalendarApp(props) {
 
   const [dateRange, setDateRange] = useState([])
   const [showModal, setShow] = useState(false);
-
-
-  const events = [
-    {
-      id: 1,
-      title: 'Rice',
-      start: '2022-11-24T00:00:00',
-      end: '2022-11-24T03:00:00',
-    },
-    {
-      id: 2,
-      title: 'Baked beans',
-      start: '2022-11-24T03:00:00',
-      end: '2022-11-24T06:00:00',
-    },
-    { id: 3, 
-      title: 'Grilled Beef', 
-      start: '2022-11-23T06:00:00',
-      end: '2022-11-23T09:00:00',
-    },
-  ];
-
   
+  // const events = [
+  //   {
+  //     id: 1,
+  //     title: 'Rice',
+  //     start: '2022-11-24T00:00:00',
+  //     end: '2022-11-24T03:00:00',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Baked beans',
+  //     start: '2022-11-24T03:00:00',
+  //     end: '2022-11-24T06:00:00',
+  //   },
+  //   { id: 3, 
+  //     title: 'Grilled Beef', 
+  //     start: '2022-11-23T06:00:00',
+  //     end: '2022-11-23T09:00:00',
+  //   },
+  // ];
+
 
     var getDaysArray = function(start, end) {
       for(var arr=[],dt=new Date(start); dt<=new Date(end); dt.setDate(dt.getDate()+1)){
@@ -68,19 +66,26 @@ function FullCalendarApp(props) {
       //var mealList = meals
       let newEvent = []
       var arrayLength = myStringArray.length;
+
+      
+
       for (var i = 0; i < arrayLength; i++) {
         var obj = {}
         obj['start'] = myStringArray[i];
         obj['end'] = myStringArray[i];
         obj['qty'] = 3
         newEvent.push(obj);
+
+       
       }
 
       let newObjects = newEvent.flatMap(e=>
-        Array(e.qty).fill({start: e.start, end: e.end})
+        Array(e.qty).fill({
+          start: e.start, 
+          end: e.end})
       );
 
-      //console.log("qqq:", newEvent)
+      console.log("qqq:", newEvent)
 
     
     //this sends data request
@@ -171,7 +176,8 @@ function FullCalendarApp(props) {
     let y = 0
     let z = 0
 
-    while (x < breakfast.length && y < lunch.length) {
+    while (x < breakfast.length -1 && y < lunch.length -1) {
+      
       comb[z++] = breakfast[x++];
       comb[z++] = lunch[y++];
       comb[z++] = lunch[y++];
@@ -204,23 +210,37 @@ function FullCalendarApp(props) {
 
     var allMeals = combineArray()
 
+    var H = 8
+    var MS = ':00:00'
+    var T = 'T0' + H + MS
     //var time = [{breakfast: 'T00:00:00'},{lunch: 'T03:00:00'},{dinner: 'T06:00:00'}]
     for (let i = 0; i < newObjects.length; i++) {
       var e = {}
       e['id'] = i
       e['title'] = allMeals[count].meal;
-      e['start'] = newObjects[i].start;
-      e['end'] = newObjects[i].end;
+      e['start'] = newObjects[i].start + T;
+      e['end'] = newObjects[i].end + T;
 
       //e['qty'] = 3
-      combinations.push(e);
+      combinations.push(e); 
+
+      H = H + 6
+
+        
+      if(H > 20) H = 8
+
+
+      if (H > 9) {T = 'T' + H + MS} else {T = 'T0' + H + MS}
+      
+
+
       count++;
       if (count === allMeals.length - 1) count = 0;
     }
 
     setValue(combinations);
 
-    console.log("value:",value);
+    console.log("combination:",value);
 
   }
    
