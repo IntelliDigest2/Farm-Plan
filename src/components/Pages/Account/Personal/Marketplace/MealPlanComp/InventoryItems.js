@@ -13,6 +13,7 @@ function InventoryItems(props) {
   //this sends data request
   useEffect(() => {
     props.getInventory();
+    console.log("this a props", props)
   }, [props.value, props.update]);
 
   const updateInventoryList = async () => {

@@ -4,6 +4,8 @@ const initState = {
   savedMeals: [],
   shoppingList: [],
   inventory: [],
+  plans: [],
+
 };
 
 const mealPlannerReducer = (state = initState, action) => {
@@ -21,7 +23,19 @@ const mealPlannerReducer = (state = initState, action) => {
         ...state,
         authError: "Create meal failed",
       };
-    
+      case "GET_MEAL_PLANS":
+        console.log("get meals plans success", action.payload);
+        return {
+          ...state,
+          plans: action.payload,
+          authError: null,
+        };
+      case "GET_MEAL_PLANS_ERROR":
+        console.log("error, couldn't fetch meals", action.err);
+        return {
+          ...state,
+          authError: "Get meals failed",
+        };
     //#endregion
     default:
       return state;

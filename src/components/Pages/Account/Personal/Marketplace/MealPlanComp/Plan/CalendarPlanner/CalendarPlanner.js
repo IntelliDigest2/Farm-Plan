@@ -1,9 +1,10 @@
 import "./calendarStyle.css";
 import { useState } from "react";
 import Calendar from "./CalendarPlan";
+import FullCalendarApp from "./FullCalendar";
 import Details from "./Details";
 
-export default function CalendarPlanner() {
+export default function CalendarPlanner(props) {
   const [showDetails, setShowDetails] = useState(false);
   const [data, setData] = useState(null);
 
@@ -13,9 +14,9 @@ export default function CalendarPlanner() {
   };
 
   return (
-    <div className="App">
+    <div>
       <h2>6-Months Meal Plan</h2>
-      <Calendar showDetailsHandle={showDetailsHandle} />
+      <FullCalendarApp value={props.value}/>
       <br />
       {showDetails && <Details data={data} />}
     </div>
