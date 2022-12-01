@@ -28,6 +28,17 @@
   padding-bottom: 1.5rem;
 }
 
+.plan-box-planner {
+  display:flex; 
+  flex-direction:row;
+  clear: both;
+}
+
+.plan-box-planner .plan-box-add {
+  margin-left: 600px;
+  max-width: 100px;
+}
+
 .plan-box .header {
   background-color: #32797e;
   padding-left: 1%;
