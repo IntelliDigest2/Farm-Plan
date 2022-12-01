@@ -38,7 +38,7 @@ export default function MealPlan() {
         id="meal-plan-tabs"
         className="mb-3 mealtabs basic-title"
       >
-        <Tab eventKey="calendar" title="MEAL PLAN" className="mealtab">
+        <Tab eventKey="calendar" title="MEAL DIARY" className="mealtab">
           {/* Calender returns daily meal plan and monthly calendar- since they both use the "value" prop */}
           <Calendar value={value} onChange={setValue} />
         </Tab>
