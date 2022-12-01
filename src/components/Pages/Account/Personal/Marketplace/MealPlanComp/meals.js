@@ -78,7 +78,7 @@ function MyMeals(props) {
         </div>
       ) : (
         <div className="empty basic-title-left">
-          <p> No meal yet 🙂 Add your casual meals here </p>
+          <p> No meal yet 🙂 use the add button </p>
         </div>
       )}
     </>
