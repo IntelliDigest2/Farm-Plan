@@ -1,22 +1,56 @@
 import React, { useEffect, useState } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.css";
-import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
+import ScannerInventory from "../../../../../../SubComponents/QRCode/ScannerInventory";
 import FoodItemSearch from "./InputRecipe/FoodItemSearch";
+import { Dropdown } from "../../../../../../SubComponents/Dropdown";
+
 
 import { connect } from "react-redux";
 import { addToInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 
 const AddToInventoryForm = (props) => {
   const [itemName, setItemName] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [measure, setMeasure] = useState("");
   const [scan, setScan] = useState(false);
   const [expand, setExpand] = useState("+ scan from barcode");
+  const [show, setShow] = useState(true);
+
+  const defaultLocal = {
+    food: "",
+    quantity: 0,
+    measure: "g", 
+    foodId: "",
+  };
+  const [local, setLocal] = useState(defaultLocal);
+  const handleLocal = (e) => {
+    if (e.target.textContent) {
+      setLocal({ ...local, [e.target.id]: e.target.textContent });
+    } else {
+      setLocal({ ...local, [e.target.id]: e.target.value });
+    }
+  };
+
+  const handleFoodSearch = (e) => {
+    if (e.target.textContent) {
+      setLocal({ ...local, food: e.target.textContent });
+    } else {
+      setLocal({ ...local, food: e.target.value });
+    }
+  };
+
+  //control modal
+  const handleForm = () => setShow(true);
+  const handleFormClose = () => {
+    setShow(false);
+  }
 
   //fired when click "done"
   const handleSubmit = () => {
     const data = {
       upload: {
-        item: itemName,
+        ingredients: local.food + " " + local.quantity + " " + local.measure,
       },
     };
 
@@ -34,17 +68,9 @@ const AddToInventoryForm = (props) => {
     }
   };
 
-  const handleFoodSearch = (e) => {
-    if (e.target.textContent) {
-      setItemName(e.target.textContent);
-    } else {
-      setItemName(e.target.value);
-    }
-  };
-
   useEffect(() => {
-    console.log("item", itemName);
-  }, [itemName]);
+    console.log("item", local.food);
+  }, [local.food]);
 
   return (
     <div>
@@ -55,7 +81,7 @@ const AddToInventoryForm = (props) => {
         {expand}
       </button>
       {scan ? (
-        <Scanner />
+        <ScannerInventory handleFormClose={handleFormClose}/>
       ) : (
         <Form
           onSubmit={(e) => {
@@ -65,18 +91,30 @@ const AddToInventoryForm = (props) => {
             props.handleFormClose();
           }}
         >
-          {/* <Form.Group>
-            <Form.Label>Item Name</Form.Label>
-            <Form.Control
-              type="text"
-              id="itemName"
-              onChange={(e) => {
-                setItemName(e.target.value);
-              }}
-              required
-            />
-          </Form.Group> */}
+          
           <FoodItemSearch handleFoodSearch={handleFoodSearch} />
+        <Form.Group>
+        <Form.Label>Amount</Form.Label>
+        <InputGroup>
+          <Form.Control
+            id="quantity"
+            type="number"
+            min="0"
+            step=".1"
+            onChange={(e) => handleLocal(e)}
+            value={local.quantity}
+          />
+          <Dropdown
+            id="measure"
+            styling="grey dropdown-input"
+            data={local.measure}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
+            function={(e) => {
+              setLocal({ ...local, measure: e });
+            }}
+          />
+        </InputGroup>
+      </Form.Group>
 
           <div style={{ alignItems: "center" }}>
             <Button className="blue-btn shadow-none mt-3" type="submit">

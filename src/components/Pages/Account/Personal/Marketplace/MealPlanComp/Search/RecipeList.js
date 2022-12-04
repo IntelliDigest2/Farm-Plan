@@ -45,7 +45,7 @@ export default function RecipeList(props) {
                         totalNutrients={item.recipe.totalNutrients}
                         totalDaily={item.recipe.totalDaily}
                         yield={item.recipe.yield}
-                      />
+                      /> 
                     </div>
                   </ListSubheader>
                   {item.recipe.ingredients &&
