@@ -8,6 +8,8 @@ import { getShoppingList } from "../../../../../../../store/actions/marketplaceA
 import RemoveFromShop from "../Icons/RemoveFromShop";
 import { getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { ItemAlreadyInInventoryIcon } from "../Icons/ItemAlreadyInInventoryIcon";
+import BoughtItemIcon from "../Icons/BoughtItemIcon";
+
 
 function ShopItems(props) {
   const [list, setList] = useState([]);
@@ -42,7 +44,7 @@ function ShopItems(props) {
       setList((list) => [
         ...list,
         {
-          food: food,
+          food: food + " " + quantity + " " + measure,
           measure: measure,
           quantity: quantity,
           expiry: expiry,
@@ -56,14 +58,14 @@ function ShopItems(props) {
     updateShoppingList();
   }, [props.shoppingList]);
 
-  const isItemInInventory = (strItem) => {
-    for (let i = 0; i < props.inventory.length; i++) {
-      if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
-        // if(strItem.includes(props.inventory[i].item))
-        return true;
-    }
-    return false;
-  };
+  // const isItemInInventory = (strItem) => {
+  //   for (let i = 0; i < props.inventory.length; i++) {
+  //     if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
+  //       // if(strItem.includes(props.inventory[i].item))
+  //       return true;
+  //   }
+  //   return false;
+  // };
 
   return (
     <>
@@ -78,23 +80,27 @@ function ShopItems(props) {
               >
                 <div>
                   <p>
-                    {ingr.food} {ingr.quantity}
-                    {ingr.measure} 
+                    {ingr.food}
                     </p><br /><p><b >Expiry Date: </b>{ingr.expiry}</p>
                 </div>
                 <div style={{ marginLeft: "20px" }}>
                   
                 </div>
                 <div className="icons">
-                  {isItemInInventory(ingr.food) ? (
+                  {/* {isItemInInventory(ingr.food) ? (
                     <ItemAlreadyInInventoryIcon />
-                  ) : null}
+                  ) : null} */}
+                  <BoughtItemIcon 
+                    value={props.value}
+                    ingredients={ingr.food}
+                  /> 
                   <RemoveFromShop
                     id={ingr.id}
                     value={props.value}
                     update={update}
                     setUpdate={setUpdate}
                   />
+                   
                 </div>
               </ListItem>
             ))}

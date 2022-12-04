@@ -27,7 +27,7 @@ function AddMealForm(props) {
   const defaultLocal = {
     food: "",
     quantity: 0,
-    measure: "g",
+    measure: "g", 
     foodId: "",
   };
   const [local, setLocal] = useState(defaultLocal);

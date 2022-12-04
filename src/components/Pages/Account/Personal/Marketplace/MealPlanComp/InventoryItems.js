@@ -24,7 +24,7 @@ function InventoryItems(props) {
     props.data.forEach((doc) => {
       // id is the docref for deletion
       var id = doc.id;
-      var item = doc.item;
+      var item = doc.ingredients;
 
       setList((list) => [
         ...list,
