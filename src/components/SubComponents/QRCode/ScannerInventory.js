@@ -5,30 +5,28 @@ import "./QRCode.css";
 import { backdropClasses } from "@mui/material";
 import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
 import "../Button.css"
-import { addToShoppingList } from "../../../store/actions/marketplaceActions/shoppingListData";
-//import { createMealPlanData } from "../../../store/actions/marketplaceActions/mealPlanData";
+import { addToInventory } from "../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
-import { SubscriptionsOutlined } from "@mui/icons-material";
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import { ContactlessOutlined, SubscriptionsOutlined } from "@mui/icons-material";
 
 const app_id = "5532003c";
 const app_key = "511d39184173c54ebc5d02a5063a7b87";
   const limit = "5";
 
-function Scanner(props) {
+function ScannerInventory(props) {
   const [decodedResults, setDecodedResults] = useState([]);
   const [mealName, setMealName] = useState("");
   const [error, setError] = useState(null)
   const [ingredients, setIngredients] = useState([]);
   const [ingredientList, setIngredientList] = useState([]);
   const [recipeList, setRecipeList] = useState([]);
-  const [ purchasePlace, setPurchasePlace] = useState("");
-  const [ expiryDate, setExpiryDate] = useState("");
-  const [ storageMethod, setStorageMethod] = useState("");
+  const [mealType, setMealType] = useState([]);
+  const [totalDaily, setTotalDaily] = useState([]);
+  const [totalNutrients, setTotalNutrients] = useState([]);
+  const [recipeYield, setRecipeYield] = useState([]);
 
 
-
+ 
   const onNewScanResult = (decodedText, decodedResult) => {
 
     fetch(`https://world.openfoodfacts.org/api/v0/product/${decodedResult.decodedText}.json`)
@@ -73,29 +71,18 @@ function Scanner(props) {
 
   };
 
-  
   const defaultLocal = {
     food: "",
     quantity: 0,
     measure: "g",
     foodId: "",
-    expiry: moment(expiryDate).format("DD/MM/yyyy")
   };
 
   const [local, setLocal] = useState(defaultLocal);
   
-  const handleLocal = (e) => {
-    if (e.target.textContent) {
-      setLocal({ ...local, [e.target.id]: e.target.textContent });
-    } else {
-      setLocal({ ...local, [e.target.id]: e.target.value });
-    }
-    
-  };
 
   const handleRecipe = (e) => {
     setLocal((local.food = e.target.value));
-    setLocal((local.expiry = expiryDate))
     setIngredients((ingredients) => [...ingredients, local]);
     setLocal(defaultLocal);
   };
@@ -116,24 +103,19 @@ function Scanner(props) {
 
   //fired when click "done"
   const handleSubmit = () => {
-    const data = {
-      //month and day are used for the MealPlan db, year and week for the shopping list.
-      year: props.value.format("YYYY"),
-      month: props.value.format("YYYYMM"),
-      week: props.value.format("w"),
-      day: props.value.format("DD"),
-      upload: {
-        meal: mealName,
-        ingredients: ingredients,
-        purchase: purchasePlace,
-        expiry: moment(expiryDate).format("DD/MM/yyyy"),
-        storage: storageMethod
-      },
-    };
+    ingredients.forEach((ingr) => {
+      const data = {
+        //month and day are used for the MealPlan db, year and week for the shopping list.
+        upload: {
+          ingredients: ingr.food,
+        },
+      };
 
-    forceUpdate();
-
-    props.addToShoppingList(data);
+      console.log("data is:", data)
+  
+      props.addToInventory(data);
+      forceUpdate();
+    })
 
   };
 
@@ -144,7 +126,6 @@ function Scanner(props) {
         qrbox={250}
         disableFlip={false}
         qrCodeSuccessCallback={onNewScanResult}
-
       />
       <p style={{fontSize: '20px', fontWeight: 'bold', color: 'green'}}>{mealName}</p>
 
@@ -159,10 +140,9 @@ function Scanner(props) {
            onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
-            props.handleFormClose();
+            //props.handleFormClose();
           }}
         >
-      
         <Form.Group>
         <li>{recipeList && recipeList.map(data => 
         <div><p>
@@ -171,20 +151,7 @@ function Scanner(props) {
       <div class="card-body">
         <h5 class="card-title">
           <div class="form-check">
-            <label class="form-check-label" for="flexCheckDisabled" style={{fontSize: '20px', fontWeight: 'bold', color: 'green'}}>
-              {data?.recipe.label}
-            </label>
-            <input 
-              class="form-check-input" 
-              type="radio" 
-              name="flexRadioDefault" 
-              id="flexRadioDefault1"
-              style={{alignItems: 'right', marginLeft: '20px'}}
-              value= {data?.recipe.label}
-              onClick={(e) => {
-                handleMealName(e, "value");
-              }}
-            />            
+            <h5>{data?.recipe.label}</h5>        
           </div>
         </h5>
         <p class="card-text">
@@ -232,41 +199,6 @@ function Scanner(props) {
         </p></div>)}</li>
         </Form.Group>
 
-        <Form.Group>
-            <Form.Label>Where did you purchase this item?</Form.Label>
-            <Form.Control
-              type="text"
-              id="purchasePlace"
-              onChange={(e) => {
-                setPurchasePlace(e.target.value);
-              }}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>What is the Expiry date of this item?</Form.Label>
-            {/* <Form.Control
-              type="text"
-              id="expiry"
-              onChange={(e) => handleLocal(e)}
-              value={local.expiry}
-            /> */}
-            <DatePicker 
-              selected={expiryDate} 
-              onChange={(date) => setExpiryDate(date)} 
-              dateFormat="dd/MM/yyyy"  
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>How do you store this item?</Form.Label>
-            <Form.Control
-              type="text"
-              id="storageMethod"
-              onChange={(e) => {
-                setStorageMethod(e.target.value);
-              }}
-            />
-          </Form.Group>
-
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn shadow-none" type="submit">
           Save
@@ -281,9 +213,8 @@ function Scanner(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
-    addToShoppingList: (data) => dispatch(addToShoppingList(data))
+    addToInventory: (mealPlan) => dispatch(addToInventory(mealPlan)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Scanner);
+export default connect(null, mapDispatchToProps)(ScannerInventory);
