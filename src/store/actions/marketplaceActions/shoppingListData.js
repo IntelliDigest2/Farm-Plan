@@ -30,6 +30,9 @@ export const addToShoppingList = (data) => {
     }
 
     const ingr = data.upload.ingredients;
+    const expiry = data.upload.expiry;
+    const storage = data.upload.storage;
+
 
     const firestore = getFirestore();
     const batch = firestore.batch();
@@ -43,7 +46,7 @@ export const addToShoppingList = (data) => {
         .doc(data.year)
         .collection(data.week)
         .doc();
-      batch.set(docRef, { id: docRef.id, ingredient: element });
+      batch.set(docRef, { id: docRef.id, ingredient: element, expiry: expiry, storage: storage });
     });
     batch
       .commit()

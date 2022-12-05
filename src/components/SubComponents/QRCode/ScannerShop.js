@@ -9,6 +9,8 @@ import { addToShoppingList } from "../../../store/actions/marketplaceActions/sho
 //import { createMealPlanData } from "../../../store/actions/marketplaceActions/mealPlanData";
 import { connect } from "react-redux";
 import { SubscriptionsOutlined } from "@mui/icons-material";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
 const app_id = "5532003c";
 const app_key = "511d39184173c54ebc5d02a5063a7b87";
@@ -77,7 +79,7 @@ function Scanner(props) {
     quantity: 0,
     measure: "g",
     foodId: "",
-    expiry: ""
+    expiry: moment(expiryDate).format("DD/MM/yyyy")
   };
 
   const [local, setLocal] = useState(defaultLocal);
@@ -124,7 +126,7 @@ function Scanner(props) {
         meal: mealName,
         ingredients: ingredients,
         purchase: purchasePlace,
-        expiry: expiryDate,
+        expiry: moment(expiryDate).format("DD/MM/yyyy"),
         storage: storageMethod
       },
     };
@@ -242,11 +244,16 @@ function Scanner(props) {
           </Form.Group>
           <Form.Group>
             <Form.Label>What is the Expiry date of this item?</Form.Label>
-            <Form.Control
+            {/* <Form.Control
               type="text"
               id="expiry"
-              onChange={(e) => setExpiryDate(e.target.value)}
-              value={expiryDate}
+              onChange={(e) => handleLocal(e)}
+              value={local.expiry}
+            /> */}
+            <DatePicker 
+              selected={expiryDate} 
+              onChange={(date) => setExpiryDate(date)} 
+              dateFormat="dd/MM/yyyy"  
             />
           </Form.Group>
           <Form.Group>

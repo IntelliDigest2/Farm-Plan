@@ -4,6 +4,8 @@ import "../../../../../../SubComponents/Button.css";
 import ScannerInventory from "../../../../../../SubComponents/QRCode/ScannerInventory";
 import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import { Dropdown } from "../../../../../../SubComponents/Dropdown";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
 
 import { connect } from "react-redux";
@@ -16,12 +18,14 @@ const AddToInventoryForm = (props) => {
   const [scan, setScan] = useState(false);
   const [expand, setExpand] = useState("+ scan from barcode");
   const [show, setShow] = useState(true);
+  const [startDate, setStartDate] = useState(new Date());
 
   const defaultLocal = {
     food: "",
     quantity: 0,
     measure: "g", 
     foodId: "",
+    //expiry: ""
   };
   const [local, setLocal] = useState(defaultLocal);
   const handleLocal = (e) => {
@@ -50,7 +54,8 @@ const AddToInventoryForm = (props) => {
   const handleSubmit = () => {
     const data = {
       upload: {
-        ingredients: local.food + " " + local.quantity + " " + local.measure,
+        ingredients: local.food + " " + local.quantity + "" + local.measure,
+        expiry: moment(startDate).format("DD/MM/yyyy")
       },
     };
 
@@ -92,7 +97,7 @@ const AddToInventoryForm = (props) => {
           }}
         >
           
-          <FoodItemSearch handleFoodSearch={handleFoodSearch} />
+        <FoodItemSearch handleFoodSearch={handleFoodSearch} />
         <Form.Group>
         <Form.Label>Amount</Form.Label>
         <InputGroup>
@@ -114,6 +119,20 @@ const AddToInventoryForm = (props) => {
             }}
           />
         </InputGroup>
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Expiry Date</Form.Label>
+        <DatePicker 
+          selected={startDate} 
+          onChange={(date) => setStartDate(date)} 
+          dateFormat="dd/MM/yyyy"  
+        />
+        {/* <Form.Control
+          type="text"
+          id="expiry"
+          onChange={(e) => handleLocal(e)}
+          value={local.expiry}
+        /> */}
       </Form.Group>
 
           <div style={{ alignItems: "center" }}>
