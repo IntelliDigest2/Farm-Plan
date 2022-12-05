@@ -25,11 +25,13 @@ function InventoryItems(props) {
       // id is the docref for deletion
       var id = doc.id;
       var item = doc.ingredients;
+      var expiry = doc.expiry;
 
       setList((list) => [
         ...list,
         {
           item: item,
+          expiry: expiry,
           id: id,
         },
       ]);
@@ -60,7 +62,11 @@ function InventoryItems(props) {
                 className="list"
                 style={{ alignItems: "flex-end" }}
               >
-                <p>{item.item}</p>
+                <div>
+                  <p>{item.item}</p>
+                  <p><b >Expiry Date: </b>{item.expiry}</p>
+                </div>
+                
                 <div className="icons">
                   <RemoveFromInventoryIcon
                     id={item.id}
