@@ -19,7 +19,6 @@ function BoughtItemIcon(props) {
       day: props.value.format("DD"),
       upload: {
         ingredients: props.food,
-        expiry: props.expiry
       },
     };
     props.addToInventory(data);

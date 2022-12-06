@@ -25,7 +25,6 @@ const AddToInventoryForm = (props) => {
     quantity: 0,
     measure: "g", 
     foodId: "",
-    //expiry: ""
   };
   const [local, setLocal] = useState(defaultLocal);
   const handleLocal = (e) => {
