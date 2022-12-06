@@ -39,8 +39,6 @@ function ShopItems(props) {
       var food = doc.ingredient.food;
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
-      var expiry = doc.expiry;
-      var storage = doc.storage;
 
 
       setList((list) => [
@@ -49,8 +47,6 @@ function ShopItems(props) {
           food: food + " " + quantity + " " + measure,
           measure: measure,
           quantity: quantity,
-          expiry: expiry,
-          storage: storage,
           id: id,
         },
       ]);
@@ -86,8 +82,7 @@ function ShopItems(props) {
                     {ingr.food}
                     </p>
                     <br />
-                    <p><b>Storage:</b><b >Expiry Date: </b>{ingr.expiry}</p>
-                    <p><b>Storage:</b>{ingr.storage}</p>
+
 
                 </div>
                 <div style={{ marginLeft: "20px" }}>
@@ -100,7 +95,6 @@ function ShopItems(props) {
                   <BoughtItemIcon 
                     value={props.value}
                     food={ingr.food}
-                    expiry={ingr.expiry}
                   /> 
                   <RemoveFromShop
                     id={ingr.id}

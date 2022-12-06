@@ -58,6 +58,7 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "delete meal failed",
       };
+      
     // #endregion
 
     //#region recipes

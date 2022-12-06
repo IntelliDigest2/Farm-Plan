@@ -5,6 +5,9 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import moment from 'moment';
+
+
 
 import "./calendarStyle.css"
 
@@ -12,12 +15,16 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 import { connect } from "react-redux";
-import { getMealPlannerData } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData";
-
+import { getMealPlannerData, removeAllMealPlan, getPlanData } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData";
+import { generateNewPlan } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData";
+import { submitNotificationPlan } from "../../../../../../../lib/Notifications"
+import { addToShoppingList } from "../../../../../../../../store/actions/marketplaceActions/shoppingListData";
 
 function FullCalendarApp(props) {
 
   const [value, setValue] = useState([]);
+  const [newPlan, setNewPlan] = useState([]);
+
   const [breakfast, setBreakfast] = useState([]);
   const [lunch, setLunch] = useState([]);
   const [mealTitle, setMealTitle] = useState(false);
@@ -216,10 +223,11 @@ function FullCalendarApp(props) {
     //var time = [{breakfast: 'T00:00:00'},{lunch: 'T03:00:00'},{dinner: 'T06:00:00'}]
     for (let i = 0; i < newObjects.length; i++) {
       var e = {}
-      e['id'] = i
+      //e['id'] = allMeals[count].id
       e['title'] = allMeals[count].meal;
       e['start'] = newObjects[i].start + T;
       e['end'] = newObjects[i].end + T;
+      e['ingredients'] = allMeals[count].ingredients;
 
       //e['qty'] = 3
       combinations.push(e); 
@@ -232,8 +240,6 @@ function FullCalendarApp(props) {
 
       if (H > 9) {T = 'T' + H + MS} else {T = 'T0' + H + MS}
       
-
-
       count++;
       if (count === allMeals.length - 1) count = 0;
     }
@@ -243,6 +249,69 @@ function FullCalendarApp(props) {
     console.log("combination:",value);
 
   }
+
+  const generatePlan = async ()  => {
+    value.forEach((item) => {
+      const data = {
+        year: moment(item.start).format("yyyy"),
+        week: moment(item.start).format("w"),
+        
+        upload: {
+          value: item,
+          meal: item.title,
+          ingredients: item.ingredients,
+        }        
+      };
+
+      console.log("tired:", data)
+
+       props.generateNewPlan(data);
+       props.addToShoppingList(data);
+
+    })
+    submitNotificationPlan("Saving..", "refresh when notification disappears!");
+
+  };
+
+
+    const getPlan = async () => {
+      //clears the items array before each update- IMPORTANT
+      setNewPlan([]);
+      
+      //sets a new item object in the array for every document
+      props.allPlan.forEach((doc) => {
+        // id is the docref for deletion
+        var mealName = doc.value.title;
+        var startDate = doc.value.start;
+        var id = doc.id;
+        var endDate = doc.value.end;
+        
+  
+        setNewPlan((meals) => [
+          ...meals,
+          {
+            id: id,
+            title: mealName,
+            start: startDate,
+            end: endDate,
+          },
+        ]);
+        
+      });
+    };
+
+    //this sends data request
+    useEffect(() => {
+      props.getPlanData();
+    }, []);
+
+
+    useEffect(() => {
+      getPlan();
+      console.log("newPlan:", newPlan)
+      //combineArray();
+    }, [props.allPlan]);
+
    
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -255,7 +324,7 @@ function FullCalendarApp(props) {
         headerToolbar={{
           center: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
-        events={value} 
+        events={newPlan} 
         contentHeight="auto"
         eventDisplay="block"
         display="background"
@@ -266,6 +335,11 @@ function FullCalendarApp(props) {
           handleShow()
         }}
       />
+      <p>
+          <Button variant="secondary" onClick={generatePlan}>
+            Generate Plan
+          </Button>
+      </p>
         <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Meal Details</Modal.Title>
@@ -284,12 +358,18 @@ function FullCalendarApp(props) {
 const mapStateToProps = (state) => {
     return {
       data: state.mealPlanner.plans,
+      allPlan: state.mealPlanner.newPlans
     };
   };
   
   const mapDispatchToProps = (dispatch) => {
     return {
         getMealPlannerData: (meal) => dispatch(getMealPlannerData(meal)),
+        getPlanData: (allPlan) => dispatch(getPlanData(allPlan)),
+        generateNewPlan: (plan) => dispatch(generateNewPlan(plan)),
+        removeAllMealPlan: (plan) => dispatch(removeAllMealPlan(plan)),
+        addToShoppingList: (data) => dispatch(addToShoppingList(data))
+
     };
   };
 
