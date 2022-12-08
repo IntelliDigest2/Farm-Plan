@@ -20,6 +20,7 @@ import { Inventory } from "./Inventory";
 
 export default function MealPlan() {
   const [loading, setLoading] = useState(true);
+  const [getItems, setGetItems] = useState([])
   useEffect(() => {
     setTimeout(() => setLoading(false), 1500);
   });
@@ -52,7 +53,7 @@ export default function MealPlan() {
           <ShoppingList value={value} />
         </Tab> */}
         <Tab eventKey="shopscan" title="SHOPPING LIST" className="mealtab">
-        <CalendarShop value={value} onChange={setValue} />
+        <CalendarShop value={value} onChange={setValue} getItems={getItems} />
         </Tab>
         <Tab eventKey="inventory" title="INVENTORY" className="mealtab">
           <Inventory value={value} />
@@ -61,7 +62,7 @@ export default function MealPlan() {
           <CalendarPlan value={value} onChange={setValue} />
         </Tab>
         <Tab eventKey="plan" title="VIEW PLAN" className="mealtab">
-          <CalendarPlanner value={value}/>
+          <CalendarPlanner value={value} getItems={getItems} setGetItems={setGetItems}/>
         </Tab>
       </Tabs> 
 

@@ -4,7 +4,7 @@ import Calendar from "./CalendarPlan";
 import FullCalendarApp from "./FullCalendar";
 import Details from "./Details";
 
-export default function CalendarPlanner(props) {
+export default function CalendarPlanner(props, getItems, setGetItems) {
   const [showDetails, setShowDetails] = useState(false);
   const [data, setData] = useState(null);
 
@@ -16,7 +16,7 @@ export default function CalendarPlanner(props) {
   return (
     <div>
       <h2>6-Months Meal Plan</h2>
-      <FullCalendarApp value={props.value}/>
+      <FullCalendarApp value={props.value} getItems={getItems} setGetItems={setGetItems}/>
       <br />
       {showDetails && <Details data={data} />}
     </div>

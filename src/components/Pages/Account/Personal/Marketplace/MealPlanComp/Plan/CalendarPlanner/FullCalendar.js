@@ -14,15 +14,17 @@ import "./calendarStyle.css"
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { getMealPlannerData, removeAllMealPlan, getPlanData } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { generateNewPlan } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { submitNotificationPlan } from "../../../../../../../lib/Notifications"
 import { addToShoppingList } from "../../../../../../../../store/actions/marketplaceActions/shoppingListData";
+import { getAllItems } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData"
+
 
 function FullCalendarApp(props) {
 
-  const [value, setValue] = useState([]);
+  //const [allItems, setAllItems ] = useState([])
   const [newPlan, setNewPlan] = useState([]);
 
   const [breakfast, setBreakfast] = useState([]);
@@ -52,6 +54,7 @@ function FullCalendarApp(props) {
   //   },
   // ];
 
+  console.log("check the props:", props)
 
     var getDaysArray = function(start, end) {
       for(var arr=[],dt=new Date(start); dt<=new Date(end); dt.setDate(dt.getDate()+1)){
@@ -74,8 +77,6 @@ function FullCalendarApp(props) {
       let newEvent = []
       var arrayLength = myStringArray.length;
 
-      
-
       for (var i = 0; i < arrayLength; i++) {
         var obj = {}
         obj['start'] = myStringArray[i];
@@ -92,12 +93,12 @@ function FullCalendarApp(props) {
           end: e.end})
       );
 
-      console.log("qqq:", newEvent)
+      //console.log("qqq:", newEvent)
 
     
-    //this sends data request
+    // this sends data request
     useEffect(() => {
-      props.getMealPlannerData();
+      props.getAllItems();
     }, []);
 
   const updateMealPlanner = async () => {
@@ -173,8 +174,8 @@ function FullCalendarApp(props) {
       }, [breakfast, lunch]);
   
 
-  console.log("breakfast:", breakfast)
-  console.log("lunch:", lunch)
+  //console.log("breakfast:", breakfast)
+  //console.log("lunch:", lunch)
   
 
   var combineArray = () => {
@@ -198,7 +199,7 @@ function FullCalendarApp(props) {
     while (y < lunch.length)
       comb[z++] = lunch[y++];
 
-      console.log("getcomb:",comb);
+      //console.log("getcomb:",comb);
     
     return comb;
   }
@@ -220,7 +221,6 @@ function FullCalendarApp(props) {
     var H = 8
     var MS = ':00:00'
     var T = 'T0' + H + MS
-    //var time = [{breakfast: 'T00:00:00'},{lunch: 'T03:00:00'},{dinner: 'T06:00:00'}]
     for (let i = 0; i < newObjects.length; i++) {
       var e = {}
       //e['id'] = allMeals[count].id
@@ -244,34 +244,37 @@ function FullCalendarApp(props) {
       if (count === allMeals.length - 1) count = 0;
     }
 
-    setValue(combinations);
 
-    console.log("combination:",value);
+    console.log("combination:", props.getAllItems(combinations));
+
+    //console.log("combination:",combinations);
 
   }
 
-  const generatePlan = async ()  => {
-    value.forEach((item) => {
-      const data = {
-        year: moment(item.start).format("yyyy"),
-        week: moment(item.start).format("w"),
+  
+
+  // const generatePlan = async ()  => {
+  //   value.forEach((item) => {
+  //     const data = {
+  //       year: moment(item.start).format("yyyy"),
+  //       week: moment(item.start).format("w"),
         
-        upload: {
-          value: item,
-          meal: item.title,
-          ingredients: item.ingredients,
-        }        
-      };
+  //       upload: {
+  //         value: item,
+  //         meal: item.title,
+  //         ingredients: item.ingredients,
+  //       }        
+  //     };
 
-      console.log("tired:", data)
+  //     console.log("tired:", data)
 
-       props.generateNewPlan(data);
-       props.addToShoppingList(data);
+  //      props.generateNewPlan(data);
+  //      props.addToShoppingList(data);
 
-    })
-    submitNotificationPlan("Saving..", "refresh when notification disappears!");
+  //   })
+  //   submitNotificationPlan("Saving..", "refresh when notification disappears!");
 
-  };
+  // };
 
 
     const getPlan = async () => {
@@ -300,17 +303,17 @@ function FullCalendarApp(props) {
       });
     };
 
-    //this sends data request
-    useEffect(() => {
-      props.getPlanData();
-    }, []);
+    // //this sends data request
+    // useEffect(() => {
+    //   props.getPlanData();
+    // }, []);
 
 
-    useEffect(() => {
-      getPlan();
-      console.log("newPlan:", newPlan)
-      //combineArray();
-    }, [props.allPlan]);
+    // useEffect(() => {
+    //   getPlan();
+    //   console.log("newPlan:", newPlan)
+    //   //combineArray();
+    // }, [props.allPlan]);
 
    
   const handleClose = () => setShow(false);
@@ -324,7 +327,7 @@ function FullCalendarApp(props) {
         headerToolbar={{
           center: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
-        events={newPlan} 
+        events={props.allItems} 
         contentHeight="auto"
         eventDisplay="block"
         display="background"
@@ -335,11 +338,11 @@ function FullCalendarApp(props) {
           handleShow()
         }}
       />
-      <p>
+      {/* <p>
           <Button variant="secondary" onClick={generatePlan}>
             Generate Plan
           </Button>
-      </p>
+      </p> */}
         <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Meal Details</Modal.Title>
@@ -358,17 +361,19 @@ function FullCalendarApp(props) {
 const mapStateToProps = (state) => {
     return {
       data: state.mealPlanner.plans,
-      allPlan: state.mealPlanner.newPlans
+      allPlan: state.mealPlanner.newPlans,
+      allItems: state.mealPlanner.allItems,
     };
   };
   
   const mapDispatchToProps = (dispatch) => {
     return {
         getMealPlannerData: (meal) => dispatch(getMealPlannerData(meal)),
-        getPlanData: (allPlan) => dispatch(getPlanData(allPlan)),
-        generateNewPlan: (plan) => dispatch(generateNewPlan(plan)),
-        removeAllMealPlan: (plan) => dispatch(removeAllMealPlan(plan)),
-        addToShoppingList: (data) => dispatch(addToShoppingList(data))
+        //getPlanData: (allPlan) => dispatch(getPlanData(allPlan)),
+        //generateNewPlan: (plan) => dispatch(generateNewPlan(plan)),
+        //removeAllMealPlan: (plan) => dispatch(removeAllMealPlan(plan)),
+        //addToShoppingList: (data) => dispatch(addToShoppingList(data))
+        getAllItems: (plan) => dispatch(getAllItems(plan))
 
     };
   };

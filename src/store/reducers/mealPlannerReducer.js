@@ -7,6 +7,7 @@ const initState = {
   plans: [],
   items: [],
   newPlans: [],
+  allItems:[],
 
 
 };
@@ -88,6 +89,13 @@ const mealPlannerReducer = (state = initState, action) => {
             ...state,
             authError: "delete item failed",
           };
+        case "GET_ALL_MEAL_PLAN":
+        console.log("getting all meal panner items", action.plan);
+        return {
+          ...state,
+          allItems: action.plan,
+          authError: null,
+        };
     //#endregion
     default:
       return state;

@@ -300,3 +300,11 @@ export const removeAllMealPlan = (plan) => {
 
   };
 };
+
+export const getAllItems = (plan) => {
+  return {
+    //make async call to database
+    type: "GET_ALL_MEAL_PLAN", plan,
+    //type: "GET_ALL_MEAL_PLAN_ERROR", err,
+  };
+};
