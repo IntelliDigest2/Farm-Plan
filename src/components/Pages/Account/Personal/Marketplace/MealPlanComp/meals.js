@@ -8,6 +8,7 @@ import { getMealData } from "../../../../../../store/actions/marketplaceActions/
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
 
+
   //trigger this when editing/deleting items
   const [update, setUpdate] = useState(0);
   const forceUpdate = () => {
@@ -88,7 +89,7 @@ function MyMeals(props) {
 const mapStateToProps = (state) => {
   return {
     mealPlan: state.mealPlan.meals,
-  };
+  }; 
 };
 
 const mapDispatchToProps = (dispatch) => {
