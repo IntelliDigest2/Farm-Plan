@@ -96,6 +96,18 @@ const mealPlannerReducer = (state = initState, action) => {
           allItems: action.plan,
           authError: null,
         };
+        case "EDIT_INVENTORY":
+      console.log("successfully edited", action.data);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "EDIT_INVENTORY_ERROR":
+      console.log("error, couldn't edit inventory item", action.err);
+      return {
+        ...state,
+        authError: "Edit inventory item failed",
+      };
     //#endregion
     default:
       return state;
