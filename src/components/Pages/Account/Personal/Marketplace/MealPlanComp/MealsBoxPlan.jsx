@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-import Delete from "./Icons/DeletePlanIcon";
+import Delete from "./Icons/DeletePlanIcon"; 
 import Edit from "./Icons/EditIcon";
 import Add from "./Icons/AddIcon";
 import AteMealIcon from "./Icons/AteMealIcon";
