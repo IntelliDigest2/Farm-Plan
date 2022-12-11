@@ -6,9 +6,13 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData";
 import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
+import Edit from "./Icons/EditIconInventory.jsx"
+import moment from "moment";
 
 function InventoryItems(props) {
   const [list, setList] = useState([]);
+  const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
+
 
   //this sends data request
   useEffect(() => {
@@ -27,12 +31,15 @@ function InventoryItems(props) {
       var item = doc.ingredients;
       var expiry = doc.expiry;
 
+      var daysUntil = new moment().to(moment(expiry));
+
       setList((list) => [
         ...list,
         {
           item: item,
           expiry: expiry,
           id: id,
+          daysUntil,
         },
       ]);
     });
@@ -65,9 +72,21 @@ function InventoryItems(props) {
                 <div>
                   <p>{item.item}</p>
                   <p><b >Expiry Date: </b>{item.expiry}</p>
+                  <p><b >Item expires </b>{item.daysUntil}</p>
+
                 </div>
                 
                 <div className="icons">
+                <Edit
+                      //value={props.value}
+                      ingredients={item.item}
+                      expiry={item.expiry}
+                      id={item.id}
+                      update={props.update}
+                      setUpdate={props.setUpdate}
+                      //expiry={list.expiry}
+                    />
+
                   <RemoveFromInventoryIcon
                     id={item.id}
                     value={props.value}
