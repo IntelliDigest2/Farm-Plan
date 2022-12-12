@@ -56,7 +56,7 @@ export const Calendar = ({ value, onChange }) => {
         <div className="col-4" style={{textAlign: "right"}}><AddMealModal value={value} show={show} setShow={setShow} />
       </div>
       </div>
-      <div>
+      <div> 
       </div>
       <div className="plan-box">
         <div className="header">{chosenDay()}</div>
