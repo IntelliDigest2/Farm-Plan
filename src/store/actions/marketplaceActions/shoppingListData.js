@@ -150,6 +150,8 @@ export const getShoppingList = (data) => {
         break;
     }
 
+    console.log("----", data)
+
     getFirestore()
       .collection("marketplace")
       .doc(uid)

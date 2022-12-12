@@ -16,13 +16,12 @@ import FullCalendar from "../Plan/CalendarPlanner/FullCalendar";
 import moment from "moment";
 
 
-
 function ShopItems(props) {
   const [list, setList] = useState([]);
   const [allList, setAllList] = useState([]);
 
 
-  //console.log("whats props:", props)
+  console.log("whats props:", allList)
 
 
   //trigger this when editing/deleting items
@@ -43,11 +42,10 @@ function ShopItems(props) {
     props.getShoppingList(data);
   }, [props.value, update]);
 
-  console.log("plss:", props.UpdatedShoppingList)
 
   const newShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
-    setList([]);
+    setAllList([]);
 
     //sets a new meal object in the array for every document with this date attached
     props.UpdatedShoppingList.forEach((doc) => {
@@ -127,23 +125,6 @@ function ShopItems(props) {
   //   getFilteredProducts();
   // }, [props.shoppingList]);
 
-  
-  const addToList = () => {
-
-    // getList = allList.ingredient.food
-
-    // getList.forEach((item) => {
-    //   for (let i = 0; i < getList.length; i++) {
-    //         if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
-    //           // if(strItem.includes(props.inventory[i].item))
-    //           return true;
-    //       }
-    // })
-    
-    //console.log("from button:", getFilteredProducts().week)
-    props.addToShoppingListUpdate(getFilteredProducts())
-  }
-
   // const isItemInInventory = (strItem) => {
   //   for (let i = 0; i < props.inventory.length; i++) {
   //     if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
@@ -197,10 +178,51 @@ function ShopItems(props) {
               </ListItem>
             ))}
           </List>
-          <Button className="blue-btn shadow-none" type="submit"
+
+          <List>
+            {getFilteredProducts().map((ingr, index) => (
+              <ListItem
+                key={`ingr${index}`}
+                className="list"
+                style={{ alignItems: "flex-end" }}
+              >
+                <div>
+                  <p>
+                    {ingr.food}
+                    </p>
+                    <br />
+
+
+                </div>
+                <div style={{ marginLeft: "20px" }}>
+                  
+                </div>
+                <div className="icons">
+                  {/* {isItemInInventory(ingr.food) ? (
+                    <ItemAlreadyInInventoryIcon />
+                  ) : null} */}
+                  <BoughtItemIcon 
+                    value={props.value}
+                    food={ingr.food}
+                    id={ingr.id}
+                    update={update}
+                    setUpdate={setUpdate}
+                  /> 
+                  {/* <RemoveFromShop
+                    id={ingr.id}
+                    value={props.value}
+                    update={update}
+                    setUpdate={setUpdate}
+                  />
+                    */}
+                </div>
+              </ListItem>
+            ))}
+          </List>
+          {/* <Button className="blue-btn shadow-none" type="submit"
           onClick={addToList}>
               Update
-          </Button>
+          </Button> */}
         </>
       ) : (
         <div className="empty basic-title-left">

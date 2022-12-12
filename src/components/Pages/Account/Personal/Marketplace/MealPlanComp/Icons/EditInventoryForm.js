@@ -13,7 +13,7 @@ function EditInventoryForm(props) {
   const [ingredients, setIngredients] = useState([props.ingredients]);
   const [ExpiryDate, setExpiryDate] = useState(props.expiry);
   const [placeOfPurchase, setPlaceOfPurchase] = useState("");
-  const [storage, setStorage] = useState("");
+  const [storage, setStorage] = useState("Choose Storage");
 
 
   //console.log("checking ingredients:", props)
@@ -97,15 +97,20 @@ function EditInventoryForm(props) {
       </Form.Group>
 
       <Form.Group>
-        <Form.Label>storage</Form.Label>
-        <Form.Control
-          type="text"
-          id="food"
-          defaultValue={storage}
-          onChange={(e) => {
-            setStorage(e.target.value);
-          }}
-        />
+        <Dropdown
+            id="storage"
+            styling="grey dropdown-input"
+            data={storage}
+            items={[
+              "Cool dry place", 
+              "Air-tight container", 
+              "Fridge", 
+              "Freezer", 
+              "Others"]}
+              function={(e) => {
+              setStorage(e);
+            }}
+          />
       </Form.Group>
 
       
