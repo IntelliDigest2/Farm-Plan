@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import MealsBoxPlan from "./MealsBox";
+import MealsBox from "./MealsBoxPlan";
 
 import { connect } from "react-redux";
 import { getMealPlannerData } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
@@ -69,7 +69,7 @@ function MyPlans(props) {
     <>
       {meals.length ? (
         <div>
-          <MealsBoxPlan
+          <MealsBox
             forceUpdate={forceUpdate}
             meals={meals}
             saved={false}

@@ -30,9 +30,6 @@ export const addToShoppingList = (data) => {
     }
 
     const ingr = data.upload.ingredients;
-    // const expiry = data.upload.expiry;
-    // const storage = data.upload.storage;
-
 
     const firestore = getFirestore();
     const batch = firestore.batch();
@@ -43,8 +40,71 @@ export const addToShoppingList = (data) => {
         .collection("marketplace")
         .doc(uid)
         .collection("shoppingList")
-        .doc(data.year)
+        .doc(data.week)
         .collection(data.week)
+        .doc();
+      batch.set(docRef, { id: docRef.id, ingredient: element });
+    });
+    batch
+      .commit()
+      .then(() => {
+        dispatch({ type: "CREATE_SHOP", ingr });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_SHOP_ERROR", err });
+      });
+  };
+};
+ 
+export const addToShoppingListUpdate = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    const ingr = data;
+    //const week = data[0] 
+    // const ingr = data.upload.ingredients;
+    // const expiry = data.upload.expiry;
+    // const storage = data.upload.storage;
+    var week = ingr[0].week.toString();
+  
+    const firestore = getFirestore();
+    const batch = firestore.batch();
+
+    //send each separate ingredient to its own document
+    ingr.forEach((element) => {
+      var docRef = firestore
+        .collection("marketplace")
+        .doc(uid)
+        .collection("shoppingList")
+        .doc(week)
+        .collection(week)
         .doc();
       batch.set(docRef, { id: docRef.id, ingredient: element /*expiry: expiry, storage: storage*/ });
     });
@@ -94,7 +154,7 @@ export const getShoppingList = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("shoppingList")
-      .doc(data.year)
+      .doc(data.week)
       .collection(data.week)
       .get()
       .then((snapshot) => {
@@ -145,7 +205,7 @@ export const removeFromShop = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("shoppingList")
-      .doc(data.year)
+      .doc(data.week)
       .collection(data.week)
       .doc(data.id)
       .delete()

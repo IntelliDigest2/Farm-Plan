@@ -2,8 +2,9 @@ import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { addToInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { removeFromShop } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
+
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 
@@ -11,9 +12,6 @@ import { submitNotification } from "../../../../../../lib/Notifications";
 function BoughtItemIcon(props) {
   const handleSelect = async () => {
     const data = {
-      // month and day are used for the MealPlan db, year and week for the shopping list.
-      year: props.value.format("YYYY"),
-      month: props.value.format("YYYYMM"),
       //need to send shopping list data to be bough the previous week from the day it is made
       week: props.value.format("w") - 1,
       day: props.value.format("DD"),
@@ -25,6 +23,16 @@ function BoughtItemIcon(props) {
     submitNotification("Success", "Item added to Inventory!");
   };
 
+  const handleDelete = (id) => {
+    const data = {
+      week: props.value.format("w"),
+      id: id, 
+    };
+    // console.log(props.id);
+    props.removeFromShop(data);
+    props.setUpdate(props.update + 1);
+  };
+
   return (
     <>
       <Tooltip title="Bought Item">
@@ -33,6 +41,7 @@ function BoughtItemIcon(props) {
           sx={{ ml: 2 }}
           onClick={() => {
             handleSelect();
+            handleDelete(props.id);
           }}
         >
           <LocalMallIcon fontSize="25" />
@@ -51,6 +60,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToInventory: (data) => dispatch(addToInventory(data)),
+    removeFromShop: (data) => dispatch(removeFromShop(data)),
   };
 };
 
