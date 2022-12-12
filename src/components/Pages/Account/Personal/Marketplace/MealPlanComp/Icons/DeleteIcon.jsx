@@ -7,6 +7,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { connect } from "react-redux";
 import { deleteSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { deleteMealData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
+import { deleteMealPlannerData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
+
 
 //takes props value, id and forceUpdate from a meal item and whether or not it is saved
 function Delete(props) {
