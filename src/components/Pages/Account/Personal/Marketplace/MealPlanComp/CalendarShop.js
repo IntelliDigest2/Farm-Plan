@@ -55,12 +55,14 @@ export const CalendarShop = ({ value, onChange }) => {
           ))}
         </div>
       </div>
+      <div className="row">
+        <div className="col-8" style={{textAlign: "left"}}>Add other items to your Shopping List🙂</div>
+        <div className="col-4" style={{textAlign: "right"}}><AddMealModalShop value={values} show={show} setShow={setShow} /></div>
+      </div>
       <div className="plan-box">
         <div className="header">{chosenDay()}</div>
-
-        {/* <MyMeals value={value} show={show} /> */}
         <ShoppingListHeader value={value} setValue={setValue} />
-        <AddMealModalShop value={values} show={show} setShow={setShow} />
+        {/* <MyMeals value={value} show={show} /> */}
         <ShopItems value={value} show={show} />
       </div>
     </>
