@@ -165,7 +165,7 @@ function AddMealForm(props) {
             id="measure"
             styling="grey dropdown-input"
             data={local.measure}
-            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups", "unit"]}
             function={(e) => {
               setLocal({ ...local, measure: e });
             }}
