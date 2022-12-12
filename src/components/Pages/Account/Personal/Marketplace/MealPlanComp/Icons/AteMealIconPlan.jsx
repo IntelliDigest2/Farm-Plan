@@ -14,7 +14,8 @@ import { useEffect } from "react";
 import { submitNotification } from "../../../../../../lib/Notifications";
 
 //takes props value, id and forceUpdate from a meal item and whether or not it is saved
-function AteMealIcon(props) {
+function AteMealIconPlan(props) {
+
   //needs id passed to it from onClick
   const handleEat = (id) => {
     // const data = {
@@ -51,15 +52,25 @@ function AteMealIcon(props) {
       "Food has been marked as eaten"
     );
 
+    var getMeal = props.meal
+
     const data = {
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD"),
       id: props.id,
       upload: {
-        eaten: true,
+       eaten: true,
+        meal: getMeal.meal,
+        mealType: getMeal.mealType,
+        ingredients: getMeal.ingredients,
+        id: getMeal.id,
+        nn: getMeal.nn,
+        url: getMeal.url,
+        totalNutrients: getMeal.totalNutrients,
+        totalDaily: getMeal.totalDaily,
       },
     };
-    
+
     props.editMealData(data);
     // props.forceUpdate();
   };
@@ -117,4 +128,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AteMealIcon);
+export default connect(mapStateToProps, mapDispatchToProps)(AteMealIconPlan);

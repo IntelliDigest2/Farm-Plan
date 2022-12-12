@@ -115,7 +115,7 @@ const AddToInventoryForm = (props) => {
             id="measure"
             styling="grey dropdown-input"
             data={local.measure}
-            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups", "units"]}
             function={(e) => {
               setLocal({ ...local, measure: e });
             }}

@@ -14,7 +14,7 @@ function RemoveFromShop(props) {
     const data = {
       year: props.value.format("YYYY"),
       week: props.value.format("w"),
-      id: id,
+      id: id, 
     };
     // console.log(props.id);
     props.removeFromShop(data);

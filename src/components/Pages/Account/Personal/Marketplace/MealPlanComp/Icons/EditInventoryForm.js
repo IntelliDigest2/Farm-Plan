@@ -12,9 +12,11 @@ import moment from "moment";
 function EditInventoryForm(props) {
   const [ingredients, setIngredients] = useState([props.ingredients]);
   const [ExpiryDate, setExpiryDate] = useState(props.expiry);
+  const [placeOfPurchase, setPlaceOfPurchase] = useState("");
+  const [storage, setStorage] = useState("");
 
 
-  console.log("checking ingredients:", props)
+  //console.log("checking ingredients:", props)
 
 
   const handleSubmit = () => {
@@ -25,7 +27,9 @@ function EditInventoryForm(props) {
       upload: {
         ingredients: ingredients,
         id: props.id,
-        expiry: moment(ExpiryDate).format("DD/MM/yyyy")
+        expiry: moment(ExpiryDate).format("DD/MM/yyyy"),
+        purchase: placeOfPurchase,
+        storage: storage
       },
     };
     if (props.saved) {
@@ -77,6 +81,30 @@ function EditInventoryForm(props) {
           selected={ExpiryDate} 
           onChange={(e) => setExpiryDate(e)} 
           dateFormat="dd/MM/yyyy"  
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Place of Purchase</Form.Label>
+        <Form.Control
+          type="text"
+          id="food"
+          defaultValue={placeOfPurchase}
+          onChange={(e) => {
+            setPlaceOfPurchase(e.target.value);
+          }}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>storage</Form.Label>
+        <Form.Control
+          type="text"
+          id="food"
+          defaultValue={storage}
+          onChange={(e) => {
+            setStorage(e.target.value);
+          }}
         />
       </Form.Group>
 

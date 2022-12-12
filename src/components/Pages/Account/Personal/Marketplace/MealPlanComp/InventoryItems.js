@@ -30,6 +30,8 @@ function InventoryItems(props) {
       var id = doc.id;
       var item = doc.ingredients;
       var expiry = doc.expiry;
+      var purchase = doc.purchase;
+      var storage = doc.storage;
 
       var daysUntil = new moment().to(moment(expiry));
 
@@ -37,6 +39,8 @@ function InventoryItems(props) {
         ...list,
         {
           item: item,
+          purchase: purchase,
+          storage: storage,
           expiry: expiry,
           id: id,
           daysUntil,
@@ -72,8 +76,9 @@ function InventoryItems(props) {
                 <div>
                   <p>{item.item}</p>
                   <p><b >Expiry Date: </b>{item.expiry}</p>
-                  <p><b >Item expires </b>{item.daysUntil}</p>
-
+                  <p><b >Item expires: </b>{item.daysUntil}</p>
+                  <p><b >Place of purchase: </b>{item.purchase}</p>
+                  <p><b >Storage:</b>{item.storage}</p>
                 </div>
                 
                 <div className="icons">
