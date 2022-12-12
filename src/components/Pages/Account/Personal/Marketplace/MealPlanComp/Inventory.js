@@ -11,14 +11,14 @@ export const Inventory = ({forceUpdate, value, tab}) => {
     const [show, setShow] = useState(false);
 
     return (
-        <div className="inventory">
-            <InventoryItems value={value} tab={tab} update={update} setUpdate={setUpdate}/>
-            <AddToInventoryModal 
-            show={show}
-            setShow={setShow}
-            update={update}
-            setUpdate={setUpdate}
-            />
+        <div>
+             <div className="row">
+                <div className="col-8" style={{textAlign: "left"}}>Add new items to your inventory 🙂</div>
+                <div className="col-4" style={{textAlign: "right"}}><AddToInventoryModal show={show} setShow={setShow} update={update} setUpdate={setUpdate} /></div>           
+             </div>
+            <div>
+                <InventoryItems value={value} tab={tab} update={update} setUpdate={setUpdate}/>
+            </div>
         </div>
     )
 }
