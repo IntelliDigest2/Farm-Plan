@@ -9,7 +9,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Delete from "./Icons/DeletePlanIcon"; 
 import Edit from "./Icons/EditIcon";
 import Add from "./Icons/AddIcon";
-import AteMealIcon from "./Icons/AteMealIcon";
+import AteMealIconPlan from "./Icons/AteMealIconPlan";
 
 export default function MealsBox(props) {
   return (
@@ -60,7 +60,7 @@ export default function MealsBox(props) {
                     />
                   )}
                   {props.isMealPlan ? (
-                    <AteMealIcon
+                    <AteMealIconPlan
                       meal={newMeal}
                       value={props.value}
                       id={newMeal.id}

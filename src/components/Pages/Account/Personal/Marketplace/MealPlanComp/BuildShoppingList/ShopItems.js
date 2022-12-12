@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 import { connect } from "react-redux";
 import { getShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
+import { addToShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import RemoveFromShop from "../Icons/RemoveFromShop";
 import { getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
@@ -17,8 +19,10 @@ import moment from "moment";
 
 function ShopItems(props) {
   const [list, setList] = useState([]);
+  const [allList, setAllList] = useState([]);
 
-  console.log("whats props:", props)
+
+  //console.log("whats props:", props)
 
 
   //trigger this when editing/deleting items
@@ -30,6 +34,47 @@ function ShopItems(props) {
   }, []);
 
   //const year = props.value.format("YYYY")
+
+  useEffect(() => {
+    const data = {
+      week: props.value.format("w"),
+    };
+
+    props.getShoppingList(data);
+  }, [props.value, update]);
+
+  console.log("plss:", props.UpdatedShoppingList)
+
+  const newShoppingList = async () => {
+    //clears the meals array before each update- IMPORTANT
+    setList([]);
+
+    //sets a new meal object in the array for every document with this date attached
+    props.UpdatedShoppingList.forEach((doc) => {
+
+      //id is the docref for deletion
+      var id = doc.id;
+      var food = doc.ingredient.food;
+      var quantity = doc.ingredient.quantity;
+      var measure = doc.ingredient.measure;
+      var expiry = doc.ingredient.expiry;
+
+      setAllList((list) => [
+        ...list,
+        {
+          food: food,
+          measure: measure,
+          quantity: quantity,
+          expiry: expiry,
+          id: id,
+        },
+      ]);
+    });
+  };
+
+  useEffect(() => {
+    newShoppingList();
+  }, [props.UpdatedShoppingList]);
 
   const updateShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -82,9 +127,22 @@ function ShopItems(props) {
   //   getFilteredProducts();
   // }, [props.shoppingList]);
 
+  
+  const addToList = () => {
 
-  console.log("check", getFilteredProducts())
+    // getList = allList.ingredient.food
 
+    // getList.forEach((item) => {
+    //   for (let i = 0; i < getList.length; i++) {
+    //         if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
+    //           // if(strItem.includes(props.inventory[i].item))
+    //           return true;
+    //       }
+    // })
+    
+    //console.log("from button:", getFilteredProducts().week)
+    props.addToShoppingListUpdate(getFilteredProducts())
+  }
 
   // const isItemInInventory = (strItem) => {
   //   for (let i = 0; i < props.inventory.length; i++) {
@@ -97,10 +155,10 @@ function ShopItems(props) {
 
   return (
     <>
-      {list.length ? (
+      {allList.length ? (
         <>
           <List>
-            {getFilteredProducts().map((ingr, index) => (
+            {allList.map((ingr, index) => (
               <ListItem
                 key={`ingr${index}`}
                 className="list"
@@ -124,18 +182,25 @@ function ShopItems(props) {
                   <BoughtItemIcon 
                     value={props.value}
                     food={ingr.food}
+                    id={ingr.id}
+                    update={update}
+                    setUpdate={setUpdate}
                   /> 
-                  <RemoveFromShop
+                  {/* <RemoveFromShop
                     id={ingr.id}
                     value={props.value}
                     update={update}
                     setUpdate={setUpdate}
                   />
-                   
+                    */}
                 </div>
               </ListItem>
             ))}
           </List>
+          <Button className="blue-btn shadow-none" type="submit"
+          onClick={addToList}>
+              Update
+          </Button>
         </>
       ) : (
         <div className="empty basic-title-left">
@@ -148,7 +213,7 @@ function ShopItems(props) {
 
 const mapStateToProps = (state) => {
   return {
-    //shoppingList: state.mealPlan.shoppingList,
+    UpdatedShoppingList: state.mealPlan.shoppingList,
     inventory: state.mealPlan.inventory,
     shoppingList: state.mealPlanner.allItems,
   };
@@ -156,9 +221,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //getShoppingList: (product) => dispatch(getShoppingList(product)),
+    getShoppingList: (product) => dispatch(getShoppingList(product)),
     getInventory: () => dispatch(getInventory()),
     getAllItems: (plan) => dispatch(getAllItems(plan)),
+    addToShoppingListUpdate: (data) => dispatch(addToShoppingListUpdate(data)),
   };
 };
 
