@@ -30,7 +30,7 @@ function ShopItems(props) {
   //this sends data request
   useEffect(() => {
     props.getAllItems();
-  }, []);
+  }, [update]);
 
   //const year = props.value.format("YYYY")
 
@@ -110,7 +110,7 @@ function ShopItems(props) {
 
   useEffect(() => {
     updateShoppingList();
-  }, [props.shoppingList]);
+  }, [props.shoppingList, update]);
 
   function getFilteredProducts() {
     return list.filter(product => {
@@ -121,9 +121,9 @@ function ShopItems(props) {
     });
   }
 
-  // useEffect(() => {
-  //   getFilteredProducts();
-  // }, [props.shoppingList]);
+  useEffect(() => {
+    getFilteredProducts();
+  }, [props.shoppingList]);
 
   // const isItemInInventory = (strItem) => {
   //   for (let i = 0; i < props.inventory.length; i++) {
@@ -136,7 +136,7 @@ function ShopItems(props) {
 
   return (
     <>
-      {allList.length ? (
+      {getFilteredProducts().length ? (
         <>
           <List>
             {allList.map((ingr, index) => (
