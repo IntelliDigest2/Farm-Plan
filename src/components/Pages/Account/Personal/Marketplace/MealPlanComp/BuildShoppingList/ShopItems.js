@@ -151,10 +151,10 @@ function ShopItems(props) {
 
   return (
     <>
-      {allList.length ? (
+      {getFilteredProducts().length ? (
         <>
           <List>
-            {getFilteredProducts().map((ingr, index) => (
+            {allList.map((ingr, index) => (
               <ListItem
                 key={`ingr${index}`}
                 className="list"
