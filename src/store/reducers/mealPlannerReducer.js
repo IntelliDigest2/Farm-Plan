@@ -7,6 +7,7 @@ const initState = {
   plans: [],
   items: [],
   newPlans: [],
+  weekPlans: [],
   allItems:[],
 
 
@@ -64,7 +65,20 @@ const mealPlannerReducer = (state = initState, action) => {
           ...state,
           authError: "Get meals failed",
         };
-        case "GET_NEW_PLANS":
+        case "GET_WEEK_PLANS":
+        console.log("get week plans success", action.payload);
+        return {
+          ...state,
+          weekPlans: action.payload,
+          authError: null,
+        };
+      case "GET_WEEK_PLANS_ERROR":
+        console.log("error, couldn't fetch meals", action.err);
+        return {
+          ...state,
+          authError: "Get meals failed",
+        };
+      case "GET_NEW_PLANS":
       console.log("get meal plan success", action.payload);
       return {
         ...state,

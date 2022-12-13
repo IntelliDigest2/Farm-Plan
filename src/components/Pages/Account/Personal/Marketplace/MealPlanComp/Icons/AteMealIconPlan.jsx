@@ -61,7 +61,7 @@ function AteMealIconPlan(props) {
       upload: {
        eaten: true,
         meal: getMeal.meal,
-        mealType: getMeal.mealType,
+        //mealType: getMeal.mealType,
         ingredients: getMeal.ingredients,
         id: getMeal.id,
         nn: getMeal.nn,
