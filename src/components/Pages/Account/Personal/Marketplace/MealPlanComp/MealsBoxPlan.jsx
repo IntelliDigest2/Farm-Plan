@@ -27,13 +27,13 @@ export default function MealsBox(props) {
                   <div className="meal-type">{newMeal.mealType}</div>
                 ) : null}
                 <div className="icons">
-                  <Delete
+                  {/* <Delete
                     value={props.value}
                     id={newMeal.id}
                     forceUpdate={props.forceUpdate}
                     saved={props.saved}
-                  />
-                  {props.saved ? (
+                  /> */}
+                  {/* {props.saved ? (
                     <Add
                       value={props.value}
                       meal={newMeal.meal}
@@ -48,8 +48,8 @@ export default function MealsBox(props) {
                       url={newMeal.url}
                       recipeYield={newMeal.recipeYield}
                     />
-                  ) : null}
-                  {newMeal.nonNativeData ? null : (
+                  ) : null} */}
+                  {/* {newMeal.nonNativeData ? null : (
                     <Edit
                       value={props.value}
                       meal={newMeal.meal}
@@ -58,7 +58,7 @@ export default function MealsBox(props) {
                       forceUpdate={props.forceUpdate}
                       saved={props.saved}
                     />
-                  )}
+                  )} */}
                   {props.isMealPlan ? (
                     <AteMealIconPlan
                       meal={newMeal}
