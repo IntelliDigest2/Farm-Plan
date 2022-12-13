@@ -140,6 +140,7 @@ export const editMealData = (mealPlan) => {
     }
 
     console.log("check:", mealPlan)
+    
     getFirebase()
       .firestore()
       .collection("marketplace")

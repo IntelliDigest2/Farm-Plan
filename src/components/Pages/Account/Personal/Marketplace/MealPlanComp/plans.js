@@ -95,6 +95,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMealPlannerData: (meal) => dispatch(getMealPlannerData(meal)),
+    
   };
 };
 

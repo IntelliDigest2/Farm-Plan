@@ -3,6 +3,7 @@ const initState = {
   meals: [],
   savedMeals: [],
   shoppingList: [],
+  shopItems: [],
   inventory: [],
 };
 
@@ -122,6 +123,18 @@ const mealPlanReducer = (state = initState, action) => {
         authError: null,
       };
     case "CREATE_SHOP_ERROR":
+      console.log("error, couldn't add to shopping list", action.err);
+      return {
+        ...state,
+        authError: "Add to shop failed",
+      };
+      case "CREATE_SHOP_ITEMS":
+      console.log("added to shop", action.ingr);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CREATE_SHOP_ITEMS_ERROR":
       console.log("error, couldn't add to shopping list", action.err);
       return {
         ...state,
