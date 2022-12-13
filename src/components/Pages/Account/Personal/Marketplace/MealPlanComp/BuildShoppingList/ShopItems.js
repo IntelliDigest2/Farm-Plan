@@ -9,7 +9,7 @@ import { getShoppingList } from "../../../../../../../store/actions/marketplaceA
 import { addToShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import RemoveFromShop from "../Icons/RemoveFromShop";
 import { getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
-import { getAllItems } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
+import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { ItemAlreadyInInventoryIcon } from "../Icons/ItemAlreadyInInventoryIcon";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
 import FullCalendar from "../Plan/CalendarPlanner/FullCalendar";
@@ -21,16 +21,26 @@ function ShopItems(props) {
   const [allList, setAllList] = useState([]);
 
 
-  console.log("whats props:", allList)
+  //console.log("whats props:", allList)
 
 
   //trigger this when editing/deleting items
   const [update, setUpdate] = useState(0);
 
+  // //this sends data request
+  // useEffect(() => {
+  //   props.getAllItems();
+  // }, [update]);
+
   //this sends data request
   useEffect(() => {
-    props.getAllItems();
-  }, [update]);
+    const data = {
+      //decided to group year and month together, should this be changed?
+      month: props.value.format("YYYYMM"),
+      day: props.value.format("DD-MM-yyyy"),
+    };
+    props.getPlanData(data);
+  }, [props.value, update]);
 
   //const year = props.value.format("YYYY")
 
@@ -78,11 +88,11 @@ function ShopItems(props) {
     //clears the meals array before each update- IMPORTANT
     setList([]);
 
-    if (props.shoppingList == undefined || props.shoppingList == '' ) return (<div><p>Loading...</p></div>)
+    if (props.newPlans == undefined || props.newPlans == '' ) return (<div><p>Loading...</p></div>)
 
 
     //sets a new meal object in the array for every document with this date attached
-    props.shoppingList.forEach((doc ) => {
+    props.newPlans.forEach((doc ) => {
 
       const items = doc.ingredients
 
@@ -110,7 +120,7 @@ function ShopItems(props) {
 
   useEffect(() => {
     updateShoppingList();
-  }, [props.shoppingList, update]);
+  }, [props.newPlans, update]);
 
   function getFilteredProducts() {
     return list.filter(product => {
@@ -123,7 +133,7 @@ function ShopItems(props) {
 
   useEffect(() => {
     getFilteredProducts();
-  }, [props.shoppingList]);
+  }, [props.newPlans]);
 
   // const isItemInInventory = (strItem) => {
   //   for (let i = 0; i < props.inventory.length; i++) {
@@ -134,12 +144,17 @@ function ShopItems(props) {
   //   return false;
   // };
 
+  // const addToList = () => {
+
+  //   console.log("this is function", getFilteredProducts())
+  // }
+
   return (
     <>
-      {getFilteredProducts().length ? (
+      {allList.length ? (
         <>
           <List>
-            {allList.map((ingr, index) => (
+            {getFilteredProducts().map((ingr, index) => (
               <ListItem
                 key={`ingr${index}`}
                 className="list"
@@ -219,14 +234,15 @@ function ShopItems(props) {
               </ListItem>
             ))}
           </List>
-          {/* <Button className="blue-btn shadow-none" type="submit"
-          onClick={addToList}>
-              Update
-          </Button> */}
+          
         </>
       ) : (
         <div className="empty basic-title-left">
           <p>There are no items in the list yet :( please refresh page</p>
+          {/* <Button className="blue-btn shadow-none" type="submit"
+            onClick={addToList}>
+              Update
+          </Button> */}
         </div>
       )}
     </>
@@ -238,6 +254,7 @@ const mapStateToProps = (state) => {
     UpdatedShoppingList: state.mealPlan.shoppingList,
     inventory: state.mealPlan.inventory,
     shoppingList: state.mealPlanner.allItems,
+    newPlans: state.mealPlanner.newPlans,
   };
 };
 
@@ -247,6 +264,7 @@ const mapDispatchToProps = (dispatch) => {
     getInventory: () => dispatch(getInventory()),
     getAllItems: (plan) => dispatch(getAllItems(plan)),
     addToShoppingListUpdate: (data) => dispatch(addToShoppingListUpdate(data)),
+    getPlanData: (plan) => dispatch(getPlanData(plan)),
   };
 };
 
