@@ -98,7 +98,7 @@ function ShopItems(props) {
 
       items.forEach((data) => {
         var start = moment(doc.start).utc().format('YYYY-MM-DD')
-        var food = data.food
+        var item = data.food
         var quantity = data.quantity;
         var measure = data.measure;
 
@@ -106,14 +106,14 @@ function ShopItems(props) {
           ...list,
           {
             week: moment(start, "YYYY-MM-DD").week(),
-            food: food + " " + quantity + " " + measure,
+            data: item,
+            food: item + " " + quantity + " " + measure,
             measure: measure,
             quantity: quantity,
             //id: id,
           },
         ]);
       })
-                
         
     });
   };
@@ -148,6 +148,19 @@ function ShopItems(props) {
 
   //   console.log("this is function", getFilteredProducts())
   // }
+ 
+   
+const result = Object.values(
+  getFilteredProducts().reduce((acc, item) => {
+    acc[item.data] = acc[item.data]
+      ? { ...item, quantity: item.quantity + acc[item.data].quantity }
+      : item;
+    return acc;
+  }, {})
+);
+
+//console.log("difference =>", result);
+
 
   return (
     <>
@@ -195,7 +208,7 @@ function ShopItems(props) {
           </List>
 
           <List>
-            {getFilteredProducts().map((ingr, index) => (
+            {result.map((ingr, index) => (
               <ListItem
                 key={`ingr${index}`}
                 className="list"
