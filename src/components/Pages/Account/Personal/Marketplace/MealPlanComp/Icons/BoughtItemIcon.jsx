@@ -3,7 +3,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { addToInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
-import { removeFromShop } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
+import { removeFromShop, newRemoveFromShop } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
@@ -30,6 +30,7 @@ function BoughtItemIcon(props) {
     };
     // console.log(props.id);
     props.removeFromShop(data);
+    props.newRemoveFromShop(data);
     props.setUpdate(props.update + 1);
   };
 
@@ -61,6 +62,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addToInventory: (data) => dispatch(addToInventory(data)),
     removeFromShop: (data) => dispatch(removeFromShop(data)),
+    newRemoveFromShop: (data) => dispatch(newRemoveFromShop(data)),
   };
 };
 
