@@ -24,12 +24,14 @@ import { getAllItems } from "../../../../../../../../store/actions/marketplaceAc
 
 function FullCalendarApp(props) {
 
-  //const [allItems, setAllItems ] = useState([])
+  const [allItems, setAllItems ] = useState([])
   const [newPlan, setNewPlan] = useState([]);
 
   const [breakfast, setBreakfast] = useState([]);
   const [lunch, setLunch] = useState([]);
   const [mealTitle, setMealTitle] = useState(false);
+  const [ingredients, setIngredients] = useState([""]);
+
 
   const [dateRange, setDateRange] = useState([])
   const [showModal, setShow] = useState(false);
@@ -174,7 +176,7 @@ function FullCalendarApp(props) {
       }, [breakfast, lunch]);
   
 
-  //console.log("breakfast:", breakfast)
+  console.log("breakfast:", breakfast)
   //console.log("lunch:", lunch)
   
 
@@ -228,6 +230,11 @@ function FullCalendarApp(props) {
       e['start'] = newObjects[i].start + T;
       e['end'] = newObjects[i].end + T;
       e['ingredients'] = allMeals[count].ingredients;
+      e['totalDaily'] = allMeals[count].totalDaily;
+      e['totalNutrients'] = allMeals[count].totalNutrients;
+      e['nn'] = allMeals[count].nn;
+      e['url'] = allMeals[count].url;
+
 
       //e['qty'] = 3
       combinations.push(e); 
@@ -245,36 +252,38 @@ function FullCalendarApp(props) {
     }
 
 
-    console.log("combination:", props.getAllItems(combinations));
+    setAllItems(combinations);
 
-    //console.log("combination:",combinations);
+    console.log("All items is:",allItems);
 
   }
 
-  
-
-  // const generatePlan = async ()  => {
-  //   value.forEach((item) => {
-  //     const data = {
-  //       year: moment(item.start).format("yyyy"),
-  //       week: moment(item.start).format("w"),
+  const generatePlan = async ()  => {
+    allItems.forEach((item) => {
+      const data = {
+        year: moment(item.start).format("yyyy"),
+        week: moment(item.start).format("w"),
         
-  //       upload: {
-  //         value: item,
-  //         meal: item.title,
-  //         ingredients: item.ingredients,
-  //       }        
-  //     };
+        upload: {
+          meal: item.title,
+          ingredients: item.ingredients,
+          totalDaily: item.totalDaily,
+          totalNutrients: item.totalNutrients,
+          nn: item.nn,
+          url: item.url,
+          start: item.start,
+          end: item.end,
+          day: moment(item.start).format("DD-MM-yyyy"),
+        }        
+      };
 
-  //     console.log("tired:", data)
+      //console.log("tired:", data)
 
-  //      props.generateNewPlan(data);
-  //      props.addToShoppingList(data);
+       props.generateNewPlan(data);
+    })
+    submitNotificationPlan("Saving..", "refresh when notification disappears!");
 
-  //   })
-  //   submitNotificationPlan("Saving..", "refresh when notification disappears!");
-
-  // };
+  };
 
 
     const getPlan = async () => {
@@ -284,36 +293,42 @@ function FullCalendarApp(props) {
       //sets a new item object in the array for every document
       props.allPlan.forEach((doc) => {
         // id is the docref for deletion
-        var mealName = doc.value.title;
-        var startDate = doc.value.start;
-        var id = doc.id;
-        var endDate = doc.value.end;
-        
+        var meal = doc.meal;
+        var ingredients = doc.ingredients;
+        var totalDaily = doc.totalDaily;
+        var totalNutrients = doc.totalNutrients;
+        var nn = doc.nn;
+        //var url = doc.url;
+        var start = doc.start;
+        var end = doc.end;
+      
   
         setNewPlan((meals) => [
           ...meals,
           {
-            id: id,
-            title: mealName,
-            start: startDate,
-            end: endDate,
+          title: meal,
+          ingredients: ingredients,
+          totalDaily: totalDaily,
+          totalNutrients: totalNutrients,
+          nn: nn,
+          //url: url,
+          start: start,
+          end: end,
           },
         ]);
         
       });
     };
 
-    // //this sends data request
-    // useEffect(() => {
-    //   props.getPlanData();
-    // }, []);
+    //this sends data request
+    useEffect(() => {
+      props.getPlanData();
+    }, []);
 
 
-    // useEffect(() => {
-    //   getPlan();
-    //   console.log("newPlan:", newPlan)
-    //   //combineArray();
-    // }, [props.allPlan]);
+    useEffect(() => {
+      getPlan();
+    }, [props.allPlan]);
 
    
   const handleClose = () => setShow(false);
@@ -327,7 +342,7 @@ function FullCalendarApp(props) {
         headerToolbar={{
           center: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
-        events={props.allItems} 
+        events={newPlan} 
         contentHeight="auto"
         eventDisplay="block"
         display="background"
@@ -335,19 +350,22 @@ function FullCalendarApp(props) {
         dateClick={(e) => console.log(e.dateStr)}
         eventClick={(e) => {
           setMealTitle(e.event.title);
+          console.log("chhhh",e.event.ingredients);
           handleShow()
         }}
       />
-      {/* <p>
+      <p>
           <Button variant="secondary" onClick={generatePlan}>
             Generate Plan
           </Button>
-      </p> */}
+      </p>
         <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Meal Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{mealTitle}</Modal.Body>
+        <Modal.Body>
+            {mealTitle}
+          </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
@@ -369,8 +387,8 @@ const mapStateToProps = (state) => {
   const mapDispatchToProps = (dispatch) => {
     return {
         getMealPlannerData: (meal) => dispatch(getMealPlannerData(meal)),
-        //getPlanData: (allPlan) => dispatch(getPlanData(allPlan)),
-        //generateNewPlan: (plan) => dispatch(generateNewPlan(plan)),
+        getPlanData: (plan) => dispatch(getPlanData(plan)),
+        generateNewPlan: (plan) => dispatch(generateNewPlan(plan)),
         //removeAllMealPlan: (plan) => dispatch(removeAllMealPlan(plan)),
         //addToShoppingList: (data) => dispatch(addToShoppingList(data))
         getAllItems: (plan) => dispatch(getAllItems(plan))

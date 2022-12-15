@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Form, InputGroup, Button, Alert, Table } from "react-bootstrap";
+import { Form, InputGroup, Button, Alert, Table, Modal } from "react-bootstrap";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 import { connect } from "react-redux";
-import { getShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
+import { getShoppingList, getShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { addToShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import RemoveFromShop from "../Icons/RemoveFromShop";
 import { getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
-import { getAllItems } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
+import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { ItemAlreadyInInventoryIcon } from "../Icons/ItemAlreadyInInventoryIcon";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
 import FullCalendar from "../Plan/CalendarPlanner/FullCalendar";
@@ -19,18 +19,31 @@ import moment from "moment";
 function ShopItems(props) {
   const [list, setList] = useState([]);
   const [allList, setAllList] = useState([]);
+  const [newList, setNewList] = useState([]);
+  const [showModal, setShow] = useState(false);
 
 
-  console.log("whats props:", allList)
+
+  //console.log("whats props:", allList)
 
 
   //trigger this when editing/deleting items
   const [update, setUpdate] = useState(0);
 
+  // //this sends data request
+  // useEffect(() => {
+  //   props.getAllItems();
+  // }, [update]);
+
   //this sends data request
   useEffect(() => {
-    props.getAllItems();
-  }, []);
+    const data = {
+      //decided to group year and month together, should this be changed?
+      month: props.value.format("YYYYMM"),
+      day: props.value.format("DD-MM-yyyy"),
+    };
+    props.getPlanData(data);
+  }, [props.value, update]);
 
   //const year = props.value.format("YYYY")
 
@@ -40,10 +53,11 @@ function ShopItems(props) {
     };
 
     props.getShoppingList(data);
+    props.getShoppingListUpdate(data);
   }, [props.value, update]);
 
 
-  const newShoppingList = async () => {
+  const ShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
     setAllList([]);
 
@@ -70,25 +84,55 @@ function ShopItems(props) {
     });
   };
 
+  const newShoppingList = async () => {
+    //clears the meals array before each update- IMPORTANT
+    setNewList([]);
+
+    //sets a new meal object in the array for every document with this date attached
+    props.newShoppingList.forEach((doc) => {
+
+      //id is the docref for deletion
+      var id = doc.id;
+      var food = doc.ingredient.food;
+      var quantity = doc.ingredient.quantity;
+      var measure = doc.ingredient.measure;
+      var expiry = doc.ingredient.expiry;
+
+      setNewList((list) => [
+        ...list,
+        {
+          food: food,
+          measure: measure,
+          quantity: quantity,
+          expiry: expiry,
+          id: id,
+        },
+      ]);
+    });
+  };
+
+
   useEffect(() => {
+    ShoppingList();
     newShoppingList();
-  }, [props.UpdatedShoppingList]);
+  }, [props.UpdatedShoppingList, props.newShoppingList]);
 
   const updateShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
     setList([]);
 
-    if (props.shoppingList == undefined || props.shoppingList == '' ) return (<div><p>Loading...</p></div>)
+    if (props.newPlans == undefined || props.newPlans == '' ) return (<div><p>Loading...</p></div>)
 
 
     //sets a new meal object in the array for every document with this date attached
-    props.shoppingList.forEach((doc ) => {
+    props.newPlans.forEach((doc ) => {
 
       const items = doc.ingredients
 
       items.forEach((data) => {
+        var id = doc.id
         var start = moment(doc.start).utc().format('YYYY-MM-DD')
-        var food = data.food
+        var item = data.food
         var quantity = data.quantity;
         var measure = data.measure;
 
@@ -96,21 +140,21 @@ function ShopItems(props) {
           ...list,
           {
             week: moment(start, "YYYY-MM-DD").week(),
-            food: food + " " + quantity + " " + measure,
+            data: item,
+            food: item + " " + quantity + " " + measure,
             measure: measure,
             quantity: quantity,
-            //id: id,
+            id: id,
           },
         ]);
       })
-                
         
     });
   };
 
   useEffect(() => {
     updateShoppingList();
-  }, [props.shoppingList]);
+  }, [props.newPlans, update]);
 
   function getFilteredProducts() {
     return list.filter(product => {
@@ -121,9 +165,9 @@ function ShopItems(props) {
     });
   }
 
-  // useEffect(() => {
-  //   getFilteredProducts();
-  // }, [props.shoppingList]);
+  useEffect(() => {
+    getFilteredProducts();
+  }, [props.newPlans]);
 
   // const isItemInInventory = (strItem) => {
   //   for (let i = 0; i < props.inventory.length; i++) {
@@ -134,9 +178,44 @@ function ShopItems(props) {
   //   return false;
   // };
 
+  // const addToList = () => {
+
+  //   console.log("this is function", getFilteredProducts())
+  // }
+ 
+   
+const result = Object.values(
+  getFilteredProducts().reduce((acc, item) => {
+    acc[item.data] = acc[item.data]
+      ? { ...item, quantity: item.quantity + acc[item.data].quantity }
+      : item;
+    return acc;
+  }, {})
+);
+
+//setNewResult(result)
+//console.log("difference =>", result);
+
+const addToList = () => {
+
+  const data = {
+
+    week: props.value.format("w"),
+    upload: {
+      result: result
+    },
+  };
+    console.log("this is function", data)
+    props.addToShoppingListUpdate(data)
+    setShow(false);
+  }
+ 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <>
-      {allList.length ? (
+      {newList.length ? (
         <>
           <List>
             {allList.map((ingr, index) => (
@@ -180,7 +259,7 @@ function ShopItems(props) {
           </List>
 
           <List>
-            {getFilteredProducts().map((ingr, index) => (
+            {newList.map((ingr, index) => (
               <ListItem
                 key={`ingr${index}`}
                 className="list"
@@ -219,14 +298,54 @@ function ShopItems(props) {
               </ListItem>
             ))}
           </List>
-          {/* <Button className="blue-btn shadow-none" type="submit"
-          onClick={addToList}>
+
+          <Button className="blue-btn shadow-none" type="submit"
+            onClick={handleShow}>
               Update
-          </Button> */}
+          </Button>
+
+        <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Generate New Shopping List</Modal.Title>
+          </Modal.Header>
+        <Modal.Body>
+            Generate a new list?
+          </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={addToList}>
+            Yes
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
+          
         </>
       ) : (
         <div className="empty basic-title-left">
           <p>There are no items in the list yet :( please refresh page</p>
+          <Button className="blue-btn shadow-none" type="submit"
+            onClick={handleShow}>
+              Update
+          </Button>
+
+          <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Generate New Shopping List</Modal.Title>
+          </Modal.Header>
+        <Modal.Body>
+            Generate a new list?
+          </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={addToList}>
+            Yes
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
         </div>
       )}
     </>
@@ -236,17 +355,21 @@ function ShopItems(props) {
 const mapStateToProps = (state) => {
   return {
     UpdatedShoppingList: state.mealPlan.shoppingList,
+    newShoppingList: state.mealPlan.newShoppingList,
     inventory: state.mealPlan.inventory,
     shoppingList: state.mealPlanner.allItems,
+    newPlans: state.mealPlanner.newPlans,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getShoppingList: (product) => dispatch(getShoppingList(product)),
+    getShoppingListUpdate: (product) => dispatch(getShoppingListUpdate(product)),
     getInventory: () => dispatch(getInventory()),
     getAllItems: (plan) => dispatch(getAllItems(plan)),
     addToShoppingListUpdate: (data) => dispatch(addToShoppingListUpdate(data)),
+    getPlanData: (plan) => dispatch(getPlanData(plan)),
   };
 };
 

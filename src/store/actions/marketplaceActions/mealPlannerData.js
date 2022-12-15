@@ -102,6 +102,59 @@ export const getMealPlannerData = () => {
   };
 };
 
+export const getWeeklyPlan = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    console.log("this is day", data.day)
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("newPlan").where('day', '==', data.day)
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_WEEK_PLANS", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_WEEK_PLANS_ERROR", err });
+      });
+  };
+};
+
+
 export const getPlanData = () => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
