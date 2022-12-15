@@ -35,26 +35,7 @@ function FullCalendarApp(props) {
 
   const [dateRange, setDateRange] = useState([])
   const [showModal, setShow] = useState(false);
-  
-  // const events = [
-  //   {
-  //     id: 1,
-  //     title: 'Rice',
-  //     start: '2022-11-24T00:00:00',
-  //     end: '2022-11-24T03:00:00',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Baked beans',
-  //     start: '2022-11-24T03:00:00',
-  //     end: '2022-11-24T06:00:00',
-  //   },
-  //   { id: 3, 
-  //     title: 'Grilled Beef', 
-  //     start: '2022-11-23T06:00:00',
-  //     end: '2022-11-23T09:00:00',
-  //   },
-  // ];
+
 
   console.log("check the props:", props)
 

@@ -183,7 +183,7 @@ function ShopItems(props) {
   //   console.log("this is function", getFilteredProducts())
   // }
  
-// filter products based on similar mea name
+// filter products based on similar meal name
 const result = Object.values(
   getFilteredProducts().reduce((acc, item) => {
     acc[item.data] = acc[item.data]
@@ -196,6 +196,7 @@ const result = Object.values(
 //setNewResult(result)
 //console.log("difference =>", result);
 
+//add item to new shopping list
 const addToList = () => {
 
   const data = {
@@ -306,10 +307,10 @@ const addToList = () => {
 
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Generate New Shopping List</Modal.Title>
+            <Modal.Title>Update Shopping List</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            Generate a new list?
+            Update this Shopping list?
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={addToList}>
@@ -327,7 +328,7 @@ const addToList = () => {
           <p>There are no items in the list yet :( please refresh page</p>
           <Button className="blue-btn shadow-none" type="submit"
             onClick={handleShow}>
-              Update
+              Generate
           </Button>
 
           <Modal show={showModal} onHide={handleClose}>
