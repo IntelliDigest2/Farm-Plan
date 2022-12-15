@@ -183,7 +183,7 @@ function ShopItems(props) {
   //   console.log("this is function", getFilteredProducts())
   // }
  
-   
+// filter products based on similar mea name
 const result = Object.values(
   getFilteredProducts().reduce((acc, item) => {
     acc[item.data] = acc[item.data]
