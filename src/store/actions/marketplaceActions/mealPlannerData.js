@@ -304,6 +304,7 @@ export const generateNewPlan = (plan) => {
   };
 };
 
+// delete all item in collection and re-upload?
 export const removeAllMealPlan = (plan) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
@@ -354,6 +355,7 @@ export const removeAllMealPlan = (plan) => {
   };
 };
 
+//should be removed
 export const getAllItems = (plan) => {
   return {
     //make async call to database

@@ -15,7 +15,7 @@ const initState = {
 
 const mealPlannerReducer = (state = initState, action) => {
   switch (action.type) {
-    //#region calendar
+    //#region start
     case "CREATE_MEAL_PLAN":
       console.log("meal planner created", action.mealPlanner);
       return {
