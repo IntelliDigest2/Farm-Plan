@@ -13,6 +13,7 @@ import {
 import { connect } from "react-redux";
 import { becomeConsumer } from "../../../../store/actions/authActions";
 import { submitNotification } from "../../../lib/Notifications";
+import Survey from "./MealGenerator/Survey";
 
 function PTSForm(props) {
   const [validated, setValidated] = useState(false);
@@ -145,12 +146,7 @@ function PTSForm(props) {
     case "choose":
       return (
         <div className="body">
-          {/* <p>
-            In a short while, you will be able to create a 6 month meal plan
-            with us that is right for you.
-          </p> */}
-          {/* <SubButton text="close" styling="green" onClick={props.handleClose} /> */}
-          <p>Choose a base for your 6 month meal plan.</p>
+          {/* <p>Choose a base for your 6 month meal plan.</p>
           <SubButton
             text="Omnivore"
             styling="green"
@@ -165,7 +161,8 @@ function PTSForm(props) {
             text="Vegan"
             styling="green"
             // onClick={}
-          />
+          /> */}
+          <Survey />
         </div>
       );
     case "refine":

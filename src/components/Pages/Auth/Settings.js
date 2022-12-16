@@ -25,6 +25,12 @@ import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import QuizIcon from "@mui/icons-material/Quiz";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import GroupIcon from "@mui/icons-material/Group";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import DescriptionIcon from "@mui/icons-material/Description";
+import BadgeIcon from "@mui/icons-material/Badge";
+
+
+
 
 //import { MobileView, BrowserView, isMobile } from "react-device-detect";
 import { Redirect } from "react-router-dom";
@@ -95,6 +101,13 @@ function Settings(props) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
+  //restaurant data
+  const [restaurantName, setRestaurantName] = useState("");
+  const [regulatoryBody, setRegulatoryBody] = useState("");
+  const [regulatoryBodyID, setRegulatoryBodyID] = useState("");
+  const [cuisine, setCuisine] = useState("");
+  const [restaurantDescription, setRestaurantDescription] = useState("");
+
   //handle data from firebase
   useEffect(() => {
     if (props.data !== undefined && props.data !== null) {
@@ -139,6 +152,13 @@ function Settings(props) {
     setTown(props.profile.city);
     setCountry(props.profile.country);
     setRegion(props.profile.region);
+    setRestaurantName(props.profile.restaurantName)
+    setRegulatoryBody(props.profile.regulatoryBody)
+    setRegulatoryBodyID(props.profile.regulatoryBodyID)
+    setCuisine(props.profile.cuisine)
+    setRestaurantDescription(props.profile.restaurantDescription)
+
+
     if(props.profile.isConsumer || props.profile.isSeller) {
       setSignedUpForPTS(true);
       handleGetConsumerPostcode();
@@ -304,6 +324,215 @@ function Settings(props) {
     console.log(props.postcodeData);
   }
   
+  //restaurant-specific
+  function HandleRestaurantName() {
+    var data = {
+      uid: props.auth.uid,
+      profile: {
+        restaurantName: restaurantName,
+      },
+    };
+    props.updateProfile(data);
+    if (!props.authError) {
+      setSuccess(true);
+      submitNotification("Success", "Restaurant Name Successfully Updated!");
+    } else {
+      setError(props.authError);
+    }
+  }
+
+  function HandleRegulatoryBody() {
+    var data = {
+      uid: props.auth.uid,
+      profile: {
+        regulatoryBody: regulatoryBody,
+      },
+    };
+    props.updateProfile(data);
+    if (!props.authError) {
+      setSuccess(true);
+      submitNotification("Success", "Regulatory Body Successfully Updated!");
+    } else {
+      setError(props.authError);
+    }
+  }
+
+  function HandleRegulatoryBodyID() {
+    var data = {
+      uid: props.auth.uid,
+      profile: {
+        regulatoryBodyID: regulatoryBodyID,
+      },
+    };
+    props.updateProfile(data);
+    if (!props.authError) {
+      setSuccess(true);
+      submitNotification("Success", "Regulatory Body ID Successfully Updated!");
+    } else {
+      setError(props.authError);
+    }
+  }
+
+  function HandleRestaurantDescription() {
+    var data = {
+      uid: props.auth.uid,
+      profile: {
+        restaurantDescription: restaurantDescription,
+      },
+    };
+    props.updateProfile(data);
+    if (!props.authError) {
+      setSuccess(true);
+      submitNotification("Success", "Restaurant Description Successfully Updated!");
+    } else {
+      setError(props.authError);
+    }
+  }
+  function HandleCuisine() {
+    var data = {
+      uid: props.auth.uid,
+      profile: {
+        cuisine: cuisine,
+      },
+    };
+    props.updateProfile(data);
+    if (!props.authError) {
+      setSuccess(true);
+      submitNotification("Success", "Cuisine Successfully Updated!");
+    } else {
+      setError(props.authError);
+    }
+  }
+
+
+  
+const RestaurantName = (props) => {
+  return (
+    <div>
+      <Form>
+        <Form.Row>
+          <Form.Group
+            className="mb-3"
+            style={{ backgroundColor: "white" }}
+            as={Col}
+          >
+            <Form.Label style={{ backgroundColor: "white" }}>Restaurant Name</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter name"
+              defaultValue={props.restaurantName}
+              id="restaurantName"
+              onChange={(e) => props.setRestaurantName(e.target.value)}
+            />
+          </Form.Group>
+        </Form.Row>
+      </Form>
+    </div>
+  );
+};
+
+
+const RegulatoryBody = (props) => {
+  return (
+    <div>
+      <Form>
+        <Form.Row>
+          <Form.Group
+            className="mb-3"
+            style={{ backgroundColor: "white" }}
+            as={Col}
+          >
+            <Form.Label style={{ backgroundColor: "white" }}>Regulatory Body</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter Name of Regulatory Body"
+              defaultValue={props.regulatoryBody}
+              id="regulatoryBody"
+              onChange={(e) => props.setRegulatoryBody(e.target.value)}
+            />
+          </Form.Group>
+        </Form.Row>
+      </Form>
+    </div>
+  );
+};
+const RegulatoryBodyID = (props) => {
+  return (
+    <div>
+      <Form>
+        <Form.Row>
+          <Form.Group
+            className="mb-3"
+            style={{ backgroundColor: "white" }}
+            as={Col}
+          >
+            <Form.Label style={{ backgroundColor: "white" }}>Regulatory Body ID</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter Regulatory Body ID"
+              defaultValue={props.regulatoryBodyID}
+              id="regulatoryBodyID"
+              onChange={(e) => props.setRegulatoryBodyID(e.target.value)}
+            />
+          </Form.Group>
+        </Form.Row>
+      </Form>
+    </div>
+  );
+};
+
+const Cuisine = (props) => {
+  return (
+    <div>
+      <Form>
+        <Form.Row>
+          <Form.Group
+            className="mb-3"
+            style={{ backgroundColor: "white" }}
+            as={Col}
+          >
+            <Form.Label style={{ backgroundColor: "white" }}>Cuisine</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter Cuisine"
+              defaultValue={props.cuisine}
+              id="cuisine"
+              onChange={(e) => props.setCuisine(e.target.value)}
+            />
+          </Form.Group>
+        </Form.Row>
+      </Form>
+    </div>
+  );
+};
+
+
+const RestaurantDescription = (props) => {
+  return (
+    <div>
+      <Form>
+        <Form.Row>
+          <Form.Group
+            className="mb-3"
+            style={{ backgroundColor: "white" }}
+            as={Col}
+          >
+            <Form.Label style={{ backgroundColor: "white" }}>Restaurant Description</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Enter Restaurant Description"
+              defaultValue={props.restaurantDescription}
+              id="restaurantDescription"
+              onChange={(e) => props.setRestaurantDescription(e.target.value)}
+            />
+          </Form.Group>
+        </Form.Row>
+      </Form>
+    </div>
+  );
+};
+
+
 
   if (!props.auth.uid) return <Redirect to="/login" />;
   if (loading) {
@@ -326,6 +555,7 @@ function Settings(props) {
             region={props.profile.region}
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
+
             setForm={setForm}
             HandleButtonState={HandleButtonState}
             type={props.profile.type}
@@ -418,6 +648,11 @@ function Settings(props) {
             region={props.profile.region}
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
+            restaurantName={props.profile.restaurantName}
+            regulatoryBody={props.profile.regulatoryBody}
+            regulatoryBodyID={props.profile.regulatoryBodyID}
+            cuisine={props.profile.cuisine}
+            restaurantDescription={props.profile.restaurantDescription}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
             type={props.profile.type}
@@ -456,6 +691,11 @@ function Settings(props) {
             region={props.profile.region}
             country={props.profile.country}
             buildingFunction={props.profile.buildingFunction}
+            restaurantName={props.profile.restaurantName}
+            regulatoryBody={props.profile.regulatoryBody}
+            regulatoryBodyID={props.profile.regulatoryBodyID}
+            cuisine={props.profile.cuisine}
+            restaurantDescription={props.profile.restaurantDescription}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
             type={props.profile.type}
@@ -498,6 +738,7 @@ function Settings(props) {
           </ProfileList>
         </PageWrap>
       );
+
     case "changeSubAccounts":
       return (
         <PageWrap
@@ -515,6 +756,11 @@ function Settings(props) {
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
+            restaurantName={props.profile.restaurantName}
+            regulatoryBody={props.profile.regulatoryBody}
+            regulatoryBodyID={props.profile.regulatoryBodyID}
+            cuisine={props.profile.cuisine}
+            restaurantDescription={props.profile.restaurantDescription}
             type={props.profile.type}
           >
             <Divider variant="middle" />
@@ -553,6 +799,255 @@ function Settings(props) {
           </ProfileList>
         </PageWrap>
       );
+      case "changeRestaurantName":
+      return (
+        <PageWrap
+          header="Settings"
+          subtitle="What would you like to change?"
+          goTo="/account"
+        >
+          <ProfileList
+           firstName={props.profile.firstName}
+           lastName={props.profile.lastName}
+           email={props.auth.email}
+           town={props.profile.city}
+           region={props.profile.region}
+           country={props.profile.country}
+           buildingFunction={props.profile.buildingFunction}
+           restaurantName={props.profile.restaurantName}
+           regulatoryBody={props.profile.regulatoryBody}
+           regulatoryBodyID={props.profile.regulatoryBodyID}
+           cuisine={props.profile.cuisine}
+           restaurantDescription={props.profile.restaurantDescription}
+           setForm={setForm}
+           HandleButtonState={HandleButtonState}
+           type={props.profile.type}
+          >
+            <Divider variant="middle" />
+            <RestaurantName
+              restaurantName={restaurantName}
+              setRestaurantName={setRestaurantName}
+              setForm={setForm}
+            />
+            <div className="center">
+              <SubButton
+                styling="blue"
+                text="Confirm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  HandleRestaurantName();
+                }}
+              />
+            </div>
+            <div className="auth-error">
+              {props.authError ? <p> {props.authError}</p> : null}
+            </div>
+            <div className="success">
+              {success ? <p>Change Success</p> : null}
+            </div>
+          </ProfileList>
+        </PageWrap>
+      );
+
+      case "changeRegulatoryBody":
+      return (
+        <PageWrap
+          header="Settings"
+          subtitle="What would you like to change?"
+          goTo="/account"
+        >
+          <ProfileList
+           firstName={props.profile.firstName}
+           lastName={props.profile.lastName}
+           email={props.auth.email}
+           town={props.profile.city}
+           region={props.profile.region}
+           country={props.profile.country}
+           buildingFunction={props.profile.buildingFunction}
+           restaurantName={props.profile.restaurantName}
+           regulatoryBody={props.profile.regulatoryBody}
+           regulatoryBodyID={props.profile.regulatoryBodyID}
+           cuisine={props.profile.cuisine}
+           restaurantDescription={props.profile.restaurantDescription}
+           setForm={setForm}
+           HandleButtonState={HandleButtonState}
+           type={props.profile.type}
+          >
+            <Divider variant="middle" />
+            <RegulatoryBody
+              regulatoryBody={regulatoryBody}
+              setRegulatoryBody={setRegulatoryBody}
+              setForm={setForm}
+            />
+            <div className="center">
+              <SubButton
+                styling="blue"
+                text="Confirm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  HandleRegulatoryBody();
+                }}
+              />
+            </div>
+            <div className="auth-error">
+              {props.authError ? <p> {props.authError}</p> : null}
+            </div>
+            <div className="success">
+              {success ? <p>Change Success</p> : null}
+            </div>
+          </ProfileList>
+        </PageWrap>
+      );
+
+      case "changeRegulatoryBodyID":
+        return (
+          <PageWrap
+            header="Settings"
+            subtitle="What would you like to change?"
+            goTo="/account"
+          >
+            <ProfileList
+             firstName={props.profile.firstName}
+             lastName={props.profile.lastName}
+             email={props.auth.email}
+             town={props.profile.city}
+             region={props.profile.region}
+             country={props.profile.country}
+             buildingFunction={props.profile.buildingFunction}
+             restaurantName={props.profile.restaurantName}
+             regulatoryBody={props.profile.regulatoryBody}
+             regulatoryBodyID={props.profile.regulatoryBodyID}
+             cuisine={props.profile.cuisine}
+             restaurantDescription={props.profile.restaurantDescription}
+             setForm={setForm}
+             HandleButtonState={HandleButtonState}
+             type={props.profile.type}
+            >
+              <Divider variant="middle" />
+              <RegulatoryBodyID
+                regulatoryBodyID={regulatoryBodyID}
+                setRegulatoryBodyID={setRegulatoryBodyID}
+                setForm={setForm}
+              />
+              <div className="center">
+                <SubButton
+                  styling="blue"
+                  text="Confirm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    HandleRegulatoryBodyID();
+                  }}
+                />
+              </div>
+              <div className="auth-error">
+                {props.authError ? <p> {props.authError}</p> : null}
+              </div>
+              <div className="success">
+                {success ? <p>Change Success</p> : null}
+              </div>
+            </ProfileList>
+          </PageWrap>
+        );
+
+      case "changeCuisine":
+        return (
+          <PageWrap
+            header="Settings"
+            subtitle="What would you like to change?"
+            goTo="/account"
+          >
+            <ProfileList
+              firstName={props.profile.firstName}
+              lastName={props.profile.lastName}
+              email={props.auth.email}
+              town={props.profile.city}
+              region={props.profile.region}
+              country={props.profile.country}
+              buildingFunction={props.profile.buildingFunction}
+              restaurantName={props.profile.restaurantName}
+              regulatoryBody={props.profile.regulatoryBody}
+              regulatoryBodyID={props.profile.regulatoryBodyID}
+              cuisine={props.profile.cuisine}
+              restaurantDescription={props.profile.restaurantDescription}
+              setForm={setForm}
+              HandleButtonState={HandleButtonState}
+              type={props.profile.type}
+            >
+              <Divider variant="middle" />
+              <Cuisine
+                cuisine={cuisine}
+                setCuisine={setCuisine}
+                setForm={setForm}
+              />
+              <div className="center">
+                <SubButton
+                  styling="blue"
+                  text="Confirm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    HandleCuisine();
+                  }}
+                />
+              </div>
+              <div className="auth-error">
+                {props.authError ? <p> {props.authError}</p> : null}
+              </div>
+              <div className="success">
+                {success ? <p>Change Success</p> : null}
+              </div>
+            </ProfileList>
+          </PageWrap>
+        );
+
+      case "changeRestaurantDescription":
+      return (
+        <PageWrap
+          header="Settings"
+          subtitle="What would you like to change?"
+          goTo="/account"
+        >
+          <ProfileList
+            firstName={props.profile.firstName}
+            lastName={props.profile.lastName}
+            email={props.auth.email}
+            town={props.profile.city}
+            region={props.profile.region}
+            country={props.profile.country}
+            buildingFunction={props.profile.buildingFunction}
+            restaurantName={props.profile.restaurantName}
+            regulatoryBody={props.profile.regulatoryBody}
+            regulatoryBodyID={props.profile.regulatoryBodyID}
+            cuisine={props.profile.cuisine}
+            restaurantDescription={props.profile.restaurantDescription}
+            setForm={setForm}
+            HandleButtonState={HandleButtonState}
+            type={props.profile.type}
+          >
+            <Divider variant="middle" />
+            <RestaurantDescription
+              restaurantDescription={restaurantDescription}
+              setRestaurantDescription={setRestaurantDescription}
+              setForm={setForm}
+            />
+            <div className="center">
+              <SubButton
+                styling="blue"
+                text="Confirm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  HandleRestaurantDescription();
+                }}
+              />
+            </div>
+            <div className="auth-error">
+              {props.authError ? <p> {props.authError}</p> : null}
+            </div>
+            <div className="success">
+              {success ? <p>Change Success</p> : null}
+            </div>
+          </ProfileList>
+        </PageWrap>
+      );
     default:
       return (
         <PageWrap
@@ -567,6 +1062,11 @@ function Settings(props) {
             town={props.profile.city}
             region={props.profile.region}
             country={props.profile.country}
+            restaurantName={props.profile.restaurantName}
+            regulatoryBody={props.profile.regulatoryBody}
+            regulatoryBodyID={props.profile.regulatoryBodyID}
+            cuisine={props.profile.cuisine}
+            restaurantDescription={props.profile.restaurantDescription}
             buildingFunction={props.profile.buildingFunction}
             setForm={setForm}
             HandleButtonState={HandleButtonState}
@@ -623,6 +1123,32 @@ const ProfileList = (props) => {
       item: props.town + ", " + props.country + ", " + props.region,
       change: "changeLocation",
       icon: <EditLocationAltIcon />,
+    },
+    {
+      key: "restaurantName",
+      item: props.restaurantName,
+      change: "changeRestaurantName",
+      icon: <DriveFileRenameOutlineIcon />,
+    },{
+      key: "regulatoryBody",
+      item:props.regulatoryBody,
+      change: "changeRegulatoryBody",
+      icon: <BadgeIcon />,
+    },{
+      key: "regulatoryBodyID",
+      item: props.regulatoryBodyID,
+      change: "changeRegulatoryBodyID",
+      icon: <BadgeIcon />,
+    },{
+      key: "cuisine",
+      item: props.cuisine,
+      change: "changeCuisine",
+      icon: <RestaurantIcon />,
+    },{
+      key: "restaurantDescription",
+      item: props.restaurantDescription,
+      change: "changeRestaurantDescription",
+      icon: <DescriptionIcon />,
     },
   ];
 
@@ -862,6 +1388,136 @@ const SubAccounts = (props) => {
     props.deleteSubAccount(data);
     handleClose();
   };
+
+
+// const RestaurantName = (props) => {
+//     return (
+//       <div>
+//         <Form>
+//           <Form.Row>
+//             <Form.Group
+//               className="mb-3"
+//               style={{ backgroundColor: "white" }}
+//               as={Col}
+//             >
+//               <Form.Label style={{ backgroundColor: "white" }}>Restaurant Name</Form.Label>
+//               <Form.Control
+//                 type="name"
+//                 placeholder="Enter name"
+//                 defaultValue={props.restaurantName}
+//                 id="restaurantName"
+//                 onChange={(e) => props.setRestaurantName(e.target.value)}
+//               />
+//             </Form.Group>
+//           </Form.Row>
+//         </Form>
+//       </div>
+//     );
+// //   };
+
+
+//   const RegulatoryBody = (props) => {
+//     return (
+//       <div>
+//         <Form>
+//           <Form.Row>
+//             <Form.Group
+//               className="mb-3"
+//               style={{ backgroundColor: "white" }}
+//               as={Col}
+//             >
+//               <Form.Label style={{ backgroundColor: "white" }}>Regulatory Body</Form.Label>
+//               <Form.Control
+//                 type="name"
+//                 placeholder="Enter Name of Regulatory Body"
+//                 defaultValue={props.regulatoryBody}
+//                 id="regulatoryBody"
+//                 onChange={(e) => props.setRegulatoryBody(e.target.value)}
+//               />
+//             </Form.Group>
+//           </Form.Row>
+//         </Form>
+//       </div>
+//     );
+//   };
+
+
+  // const RegulatoryBodyID = (props) => {
+  //   return (
+  //     <div>
+  //       <Form>
+  //         <Form.Row>
+  //           <Form.Group
+  //             className="mb-3"
+  //             style={{ backgroundColor: "white" }}
+  //             as={Col}
+  //           >
+  //             <Form.Label style={{ backgroundColor: "white" }}>Regulatory Body ID</Form.Label>
+  //             <Form.Control
+  //               type="name"
+  //               placeholder="Enter Regulatory Body ID"
+  //               defaultValue={props.regulatoryBodyID}
+  //               id="regulatoryBodyID"
+  //               onChange={(e) => props.setRegulatoryBodyID(e.target.value)}
+  //             />
+  //           </Form.Group>
+  //         </Form.Row>
+  //       </Form>
+  //     </div>
+  //   );
+  // };
+
+  // const Cuisine = (props) => {
+  //   return (
+  //     <div>
+  //       <Form>
+  //         <Form.Row>
+  //           <Form.Group
+  //             className="mb-3"
+  //             style={{ backgroundColor: "white" }}
+  //             as={Col}
+  //           >
+  //             <Form.Label style={{ backgroundColor: "white" }}>Cuisine</Form.Label>
+  //             <Form.Control
+  //               type="name"
+  //               placeholder="Enter Cuisine"
+  //               defaultValue={props.cuisine}
+  //               id="cuisine"
+  //               onChange={(e) => props.setCuisine(e.target.value)}
+  //             />
+  //           </Form.Group>
+  //         </Form.Row>
+  //       </Form>
+  //     </div>
+  //   );
+  // };
+
+
+  // const RestaurantDescription = (props) => {
+  //   return (
+  //     <div>
+  //       <Form>
+  //         <Form.Row>
+  //           <Form.Group
+  //             className="mb-3"
+  //             style={{ backgroundColor: "white" }}
+  //             as={Col}
+  //           >
+  //             <Form.Label style={{ backgroundColor: "white" }}>Restaurant Description</Form.Label>
+  //             <Form.Control
+  //               type="name"
+  //               placeholder="Enter Restaurant Description"
+  //               defaultValue={props.restaurantDescription}
+  //               id="restaurantDescription"
+  //               onChange={(e) => props.setRestaurantDescription(e.target.value)}
+  //             />
+  //           </Form.Group>
+  //         </Form.Row>
+  //       </Form>
+  //     </div>
+  //   );
+  // };
+  
 
   if (props.subAccounts !== null && props.subAccounts !== undefined)
     var subs = Object.values(props.subAccounts);

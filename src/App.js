@@ -54,6 +54,12 @@ import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
 import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
 import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
 
+import RestaurantShoppingListPlanner from './components/Pages/Account/Business/Restaurant/RestaurantShoppingListPlanner';
+import RestaurantInventory from './components/Pages/Account/Business/Restaurant/RestaurantInventory';
+import RestaurantDashboard from './components/Pages/Account/Business/Restaurant/RestaurantDashboard';
+import RestaurantMealPlan from './components/Pages/Account/Business/Restaurant/RestaurantMealPlan';
+
+
 import NewAccount from "./components/Pages/Account/Account";
 
 // import Example from "./components/Pages/Account/Example";
@@ -229,6 +235,12 @@ const App = (props) => {
               path="/food-surplusAcademic"
               component={FoodSurplusAcademic}
             />
+            
+            <Route path="/restaurant-shopping-list" component={RestaurantShoppingListPlanner}/>
+            <Route path="/restaurant-inventory" component={RestaurantInventory}/>
+            <Route path="/restaurant-dashboard" component={RestaurantDashboard}/>
+            <Route path="/restaurant-meal-plan" component={RestaurantMealPlan}/>
+
 
             <Route component={NotFound} />
           </Switch>

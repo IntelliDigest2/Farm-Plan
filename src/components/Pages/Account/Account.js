@@ -19,6 +19,7 @@ import * as Households from "./Personal/PersonalTabs";
 import * as Farm from "./Farm/FarmTabs";
 import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Academic/AcademicTabs";
+import * as Restaurant from "./Business/Restaurant/RestaurantTabs";
 
 import { Colors } from "../../lib/Colors";
 
@@ -151,7 +152,6 @@ const AccountType = (props) => {
       );
     case "business_admin":
     case "business_sub":
-    case "restaurant":
       return (
         <>
           <TabList
@@ -191,6 +191,50 @@ const AccountType = (props) => {
           </SwipeableViews>
         </>
       );
+
+    
+      case "restaurant_admin":
+      case "restaurant_sub":      
+      return (
+        <>
+          <TabList
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: Colors.brandGreen,
+              },
+            }}
+            variant="standard"
+            onChange={props.handleChange}
+            centered
+          >
+            <Tab disableRipple label="Food" value="0" />
+            <Tab disableRipple label="Environment" value="1" />
+            <Tab disableRipple label="FSSP" value="2" />
+          </TabList>
+          <SwipeableViews
+            axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={parseInt(props.value)}
+            onChangeIndex={props.handleChangeIndex}
+          >
+            <TabPanel value={props.value} index={0} dir={props.theme.direction}>
+              <Restaurant.Food
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
+            </TabPanel>
+            <TabPanel value={props.value} index={1} dir={props.theme.direction}>
+              <Restaurant.Environment
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
+            </TabPanel>
+            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
+              <Restaurant.FSSP />
+            </TabPanel>
+          </SwipeableViews>
+        </>
+      );
+
     case "academic_admin":
     case "academic_sub":
       return (
