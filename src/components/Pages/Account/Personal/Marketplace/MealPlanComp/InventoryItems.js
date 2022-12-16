@@ -6,13 +6,18 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData";
 import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
+import Edit from "./Icons/EditIconInventory.jsx"
+import moment from "moment";
 
 function InventoryItems(props) {
   const [list, setList] = useState([]);
+  const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
+
 
   //this sends data request
   useEffect(() => {
     props.getInventory();
+    console.log("this a props", props)
   }, [props.value, props.update]);
 
   const updateInventoryList = async () => {
@@ -23,13 +28,22 @@ function InventoryItems(props) {
     props.data.forEach((doc) => {
       // id is the docref for deletion
       var id = doc.id;
-      var item = doc.item;
+      var item = doc.ingredients;
+      var expiry = doc.expiry;
+      var purchase = doc.purchase;
+      var storage = doc.storage;
+
+      var daysUntil = new moment().to(moment(expiry));
 
       setList((list) => [
         ...list,
         {
           item: item,
+          purchase: purchase,
+          storage: storage,
+          expiry: expiry,
           id: id,
+          daysUntil,
         },
       ]);
     });
@@ -59,8 +73,25 @@ function InventoryItems(props) {
                 className="list"
                 style={{ alignItems: "flex-end" }}
               >
-                <p>{item.item}</p>
+                <div>
+                  <p>{item.item}</p>
+                  <p><b >Expiry Date: </b>{item.expiry}</p>
+                  <p><b >Item expires: </b>{item.daysUntil}</p>
+                  <p><b >Place of purchase: </b>{item.purchase}</p>
+                  <p><b >Storage:</b>{item.storage}</p>
+                </div>
+                
                 <div className="icons">
+                <Edit
+                      //value={props.value}
+                      ingredients={item.item}
+                      expiry={item.expiry}
+                      id={item.id}
+                      update={props.update}
+                      setUpdate={props.setUpdate}
+                      //expiry={list.expiry}
+                    />
+
                   <RemoveFromInventoryIcon
                     id={item.id}
                     value={props.value}

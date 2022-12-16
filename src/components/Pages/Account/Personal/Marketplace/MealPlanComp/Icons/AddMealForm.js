@@ -27,7 +27,7 @@ function AddMealForm(props) {
   const defaultLocal = {
     food: "",
     quantity: 0,
-    measure: "g",
+    measure: "g", 
     foodId: "",
   };
   const [local, setLocal] = useState(defaultLocal);
@@ -97,6 +97,7 @@ function AddMealForm(props) {
       },
     };
 
+    console.log("checking props:", props)
     props.createMealPlanData(data);
     forceUpdate();
 
@@ -164,7 +165,7 @@ function AddMealForm(props) {
             id="measure"
             styling="grey dropdown-input"
             data={local.measure}
-            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups", "unit"]}
             function={(e) => {
               setLocal({ ...local, measure: e });
             }}

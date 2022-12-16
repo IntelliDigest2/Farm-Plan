@@ -3,6 +3,8 @@ const initState = {
   meals: [],
   savedMeals: [],
   shoppingList: [],
+  newShoppingList: [],
+  shopItems: [],
   inventory: [],
 };
 
@@ -58,6 +60,7 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "delete meal failed",
       };
+      
     // #endregion
 
     //#region recipes
@@ -114,6 +117,19 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Get shoppiung list failed",
       };
+      case "GET_NEW_SHOPPING_LIST":
+      console.log("get shopping list success", action.payload);
+      return {
+        ...state,
+        newShoppingList: action.payload,
+        authError: null,
+      };
+    case "GET_NEW_SHOPPING_LIST_ERROR":
+      console.log("error, couldn't get shopping list", action.err);
+      return {
+        ...state,
+        authError: "Get shoppiung list failed",
+      };
     case "CREATE_SHOP":
       console.log("added to shop", action.ingr);
       return {
@@ -126,6 +142,30 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Add to shop failed",
       };
+      case "CREATE_NEW_SHOP":
+      console.log("added to shop", action.ingr);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CREATE_NEW_SHOP_ERROR":
+      console.log("error, couldn't add to shopping list", action.err);
+      return {
+        ...state,
+        authError: "Add to shop failed",
+      };
+      case "CREATE_SHOP_ITEMS":
+      console.log("added to shop", action.ingr);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CREATE_SHOP_ITEMS_ERROR":
+      console.log("error, couldn't add to shopping list", action.err);
+      return {
+        ...state,
+        authError: "Add to shop failed",
+      };
     case "DELETE_SHOP":
       console.log("successfully deleted item");
       return {
@@ -133,6 +173,18 @@ const mealPlanReducer = (state = initState, action) => {
         authError: null,
       };
     case "DELETE_SHOP_ERROR":
+      console.log("error, couldn't delete item", action.err);
+      return {
+        ...state,
+        authError: "delete item failed",
+      };
+      case "DELETE_NEW_SHOP":
+      console.log("successfully deleted item");
+      return {
+        ...state,
+        authError: null,
+      };
+    case "DELETE_NEW_SHOP_ERROR":
       console.log("error, couldn't delete item", action.err);
       return {
         ...state,

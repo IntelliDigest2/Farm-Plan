@@ -31,24 +31,24 @@ function AteMealIcon(props) {
     //   props.forceUpdate();
     // }
 
-    props.getInventory();
+    //props.getInventory();
 
-    props.meal.ingredients.forEach((ingredient) => {
-      props.inventory.forEach((inventoryItem) => {
-        if (
-          ingredient.food.toLowerCase() === inventoryItem.item.toLowerCase()
-        ) {
-          console.log(ingredient.food, "- Item found in inventory, delete");
-          const data = {
-            id: inventoryItem.id,
-          };
-          props.removeFromInventory(data);
-        }
-      });
-    });
+    // props.meal.ingredients.forEach((ingredient) => {
+    //   props.inventory.forEach((inventoryItem) => {
+    //     if (
+    //       ingredient.food.toLowerCase() === inventoryItem.item.toLowerCase()
+    //     ) {
+    //       console.log(ingredient.food, "- Item found in inventory, delete");
+    //       const data = {
+    //         id: inventoryItem.id,
+    //       };
+    //       props.removeFromInventory(data);
+    //     }
+    //   });
+    // });
     submitNotification(
       "Success",
-      "Food has been marked as eaten and the ingredients have been removed from your inventory!"
+      "Food has been marked as eaten"
     );
 
     const data = {
@@ -59,6 +59,7 @@ function AteMealIcon(props) {
         eaten: true,
       },
     };
+    
     props.editMealData(data);
     // props.forceUpdate();
   };

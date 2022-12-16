@@ -34,7 +34,7 @@ const NutrientsBox = (props) => {
       var url = doc.url;
       var totalNutrients = doc.totalNutrients;
       var totalDaily = doc.totalDaily;
-      var recipeYield = doc.yield;
+      var recipeYield = doc.recipeYield;
       var eaten = doc.eaten;
       let nn;
       if (doc.nonNativeData) {
@@ -144,6 +144,7 @@ const NutrientsBox = (props) => {
     return rdiValue <= 10 ? "tomato" : rdiValue >= 50 ? "#b3b785" : null;
   };
 
+  console.log("fuck around => ", meals)
   return (
     <div>
       <Accordion defaultActiveKey="0">

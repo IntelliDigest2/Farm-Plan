@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
+import "react-datepicker/dist/react-datepicker.css";  
+
 
 import buildCalendar from "../BuildCalendar/Build";
 import dayStyles, { beforeToday } from "../BuildCalendar/dayStyles";
