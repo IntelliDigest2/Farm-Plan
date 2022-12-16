@@ -53,6 +53,7 @@ function AteMealIconPlan(props) {
     );
 
     var getMeal = props.meal
+  
 
     const data = {
       month: props.value.format("YYYYMM"),
@@ -68,6 +69,7 @@ function AteMealIconPlan(props) {
         url: getMeal.url,
         totalNutrients: getMeal.totalNutrients,
         totalDaily: getMeal.totalDaily,
+        recipeYield: getMeal.recipeYield,
       },
     };
 

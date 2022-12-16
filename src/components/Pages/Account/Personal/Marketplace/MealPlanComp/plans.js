@@ -85,6 +85,7 @@ function MyPlans(props) {
       var url = doc.url;
       var totalNutrients = doc.totalNutrients;
       var totalDaily = doc.totalDaily;
+      var recipeYield = doc.recipeYield;
       let nn = doc.nn
       // if (doc.nonNativeData) {
       //   nn = doc.nonNativeData;
@@ -103,6 +104,7 @@ function MyPlans(props) {
           url: url,
           totalNutrients: totalNutrients,
           totalDaily: totalDaily,
+          recipeYield: recipeYield,
         },
       ]);
     });
