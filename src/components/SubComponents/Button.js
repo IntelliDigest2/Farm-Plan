@@ -57,10 +57,11 @@ export function SubButton(props) {
       onClick={props.onClick}
       disabled={props.disabled}
     >
-      <div className="basic-title">{props.text}</div>
+      <div className="basic-title" style={{color: 'white'}}>{props.text}</div>
     </BootstrapButton>
   );
 }
+
 
 export function AddButton({ onClick, title }) {
   return (

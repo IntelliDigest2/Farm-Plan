@@ -101,16 +101,16 @@ function PTSForm(props) {
               focus on adopting sustainable farm practices that produce more
               nutritious food with a better impact on the environment.
             </p>
-            <p>
+            {/* <p>
               Find out more about the Plan to Save{" "}
-              <a href="https://intellidigest.com/services/plan-to-save/">
+              <a href="https://intellidigest.com/meal-plan/">
                 here
               </a>
-            </p>
+            </p> */}
             <SubButton
-              text="Start Now!"
+              text="Start now!"
+              goTo="/meal-plan"
               styling="green"
-              onClick={() => props.setContent("6month")}
             />
           </div>
         </>
