@@ -10,13 +10,13 @@ import moment from "moment";
 
 
 function EditInventoryForm(props) {
-  const [ingredients, setIngredients] = useState([props.ingredients]);
-  const [ExpiryDate, setExpiryDate] = useState(props.expiry);
+  const [ingredients, setIngredients] = useState(props.ingredients);
+  const [ExpiryDate, setExpiryDate] = useState("");
   const [placeOfPurchase, setPlaceOfPurchase] = useState("");
   const [storage, setStorage] = useState("Choose Storage");
 
 
-  //console.log("checking ingredients:", props)
+  console.log("checking ingredients ==>", ingredients)
 
 
   const handleSubmit = () => {
@@ -30,7 +30,7 @@ function EditInventoryForm(props) {
         expiry: moment(ExpiryDate).format("DD/MM/yyyy"),
         purchase: placeOfPurchase,
         storage: storage
-      },
+      }, 
     };
     if (props.saved) {
       props.editSavedMeal(data);
