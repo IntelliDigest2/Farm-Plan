@@ -35,6 +35,8 @@ function FullCalendarApp(props) {
 
   const [dateRange, setDateRange] = useState([])
   const [showModal, setShow] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
 
 
   console.log("check the props:", props)
@@ -99,6 +101,7 @@ function FullCalendarApp(props) {
       var url = doc.url;
       var totalNutrients = doc.totalNutrients;
       var totalDaily = doc.totalDaily;
+      var recipeYield = doc.yield;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
@@ -118,6 +121,7 @@ function FullCalendarApp(props) {
             url: url,
             totalNutrients: totalNutrients,
             totalDaily: totalDaily,
+            recipeYield: recipeYield,
           },
         ]);
       } else {
@@ -132,6 +136,7 @@ function FullCalendarApp(props) {
             url: url,
             totalNutrients: totalNutrients,
             totalDaily: totalDaily,
+            recipeYield: recipeYield,
           },
         ]);
       }
@@ -213,6 +218,7 @@ function FullCalendarApp(props) {
       e['ingredients'] = allMeals[count].ingredients;
       e['totalDaily'] = allMeals[count].totalDaily;
       e['totalNutrients'] = allMeals[count].totalNutrients;
+      e['recipeYield'] = allMeals[count].recipeYield;
       e['nn'] = allMeals[count].nn;
       e['url'] = allMeals[count].url;
 
@@ -250,6 +256,7 @@ function FullCalendarApp(props) {
           ingredients: item.ingredients,
           totalDaily: item.totalDaily,
           totalNutrients: item.totalNutrients,
+          recipeYield: item.recipeYield,
           nn: item.nn,
           url: item.url,
           start: item.start,
@@ -278,6 +285,7 @@ function FullCalendarApp(props) {
         var ingredients = doc.ingredients;
         var totalDaily = doc.totalDaily;
         var totalNutrients = doc.totalNutrients;
+        var recipeYield = doc.recipeYield;
         var nn = doc.nn;
         //var url = doc.url;
         var start = doc.start;
@@ -291,6 +299,7 @@ function FullCalendarApp(props) {
           ingredients: ingredients,
           totalDaily: totalDaily,
           totalNutrients: totalNutrients,
+          recipeYield: recipeYield,
           nn: nn,
           //url: url,
           start: start,
@@ -314,8 +323,12 @@ function FullCalendarApp(props) {
    
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleButton = () => setDisabled(true);
+
   return (
-    <div className="calendar">
+    <>
+    {newPlan.length ? (
+      <div className="calendar">
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -329,31 +342,72 @@ function FullCalendarApp(props) {
         display="background"
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
-        eventClick={(e) => {
-          setMealTitle(e.event.title);
-          console.log("chhhh",e.event.ingredients);
-          handleShow()
-        }}
+        // eventClick={(e) => {
+        //   setMealTitle(e.event.title);
+        //   console.log("chhhh",e.event.ingredients);
+        //   handleShow()
+        // }}
       />
+      <div>
       <p>
-          <Button variant="secondary" onClick={generatePlan}>
+          <Button variant="secondary" onClick={handleShow}>
             Generate Plan
           </Button>
       </p>
         <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Meal Details</Modal.Title>
+          <Modal.Title>Generate Plan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            {mealTitle}
+            <p>Do you want to generate a new plan? </p>
+            <p>This will incure additional cost</p>
           </Modal.Body>
         <Modal.Footer>
+        <Button variant="secondary">
+            Yes
+          </Button>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            No
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+  </div>
+      </div>
+) : (
+  <div>
+    <div className="empty basic-title-center">
+          <p>You have not generated a new meal plan yet.. 🙂</p>
+        </div>
+      <p>
+          <Button variant="secondary" onClick={handleShow}>
+            Generate Plan
+          </Button>
+      </p>
+        <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Generate Plan</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <p>Do you want to generate a new plan? </p>
+          </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" disabled={disabled}  onClick={() => {
+          generatePlan()
+          handleClose()
+          handleButton()
+        }}>
+            {disabled ? 'Generated' : 'Generate'}
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
+  </div>
+)}
+    </>
+    
+    
   );
 }
 

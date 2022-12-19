@@ -8,11 +8,14 @@ import { getInventory } from "../../../../../../store/actions/marketplaceActions
 import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
 import Edit from "./Icons/EditIconInventory.jsx"
 import moment from "moment";
+import { Button } from "react-bootstrap";
+import { SubButtonInventory } from "../../../../../SubComponents/Button";
 
 function InventoryItems(props) {
   const [list, setList] = useState([]);
   const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
 
+  var today = moment(new Date()).format("DD/MM/YYYY")
 
   //this sends data request
   useEffect(() => {
@@ -79,6 +82,15 @@ function InventoryItems(props) {
                   <p><b >Item expires: </b>{item.daysUntil}</p>
                   <p><b >Place of purchase: </b>{item.purchase}</p>
                   <p><b >Storage:</b>{item.storage}</p>
+                  { moment().isAfter(item.expiry) ? (
+                    <>
+                      <SubButtonInventory
+                        text="Add Waste"
+                        goTo="/food-waste"
+                        styling="green"
+                      />
+                    </>
+                  ):("")}
                 </div>
                 
                 <div className="icons">
