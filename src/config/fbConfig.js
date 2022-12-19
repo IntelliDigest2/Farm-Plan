@@ -17,6 +17,16 @@ var fbConfig = {
 firebase.initializeApp(fbConfig);
 // firebase.firestore;
 
+//use firebase emulator for testing
+// if (window.location.hostname === "localhost") {
+//   app.auth().useEmulator("http://localhost:9099");
+//   app.firestore().settings({
+//     host: "localhost:8080",
+//     ssl: false,
+//   });
+// }
+
+
 //for uploading documents to fb storage
 export const storage = firebase.storage();
 

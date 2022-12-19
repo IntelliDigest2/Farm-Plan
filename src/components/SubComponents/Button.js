@@ -62,6 +62,20 @@ export function SubButton(props) {
   );
 }
 
+export function SubButtonInventory(props) {
+  return (
+    <BootstrapButton
+      variant="default"
+      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+      href={props.goTo}
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      <div className="basic-title" style={{color: 'white'}}>{props.text}</div>
+    </BootstrapButton>
+  );
+}
+
 
 export function AddButton({ onClick, title }) {
   return (

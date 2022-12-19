@@ -35,7 +35,7 @@ export const createFoodWasteData = (data) => {
         dispatch({ type: "CREATE_DATA_ERROR", err });
       });
   };
-};
+}; 
 
 export const createMarketplaceData = (product) => {
   return (dispatch, getState, { getFirebase }) => {
