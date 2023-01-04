@@ -24,7 +24,7 @@ function ShopItems(props) {
 
 
 
-  //console.log("whats props:", allList)
+  console.log("whats props:", newList)
 
 
   //trigger this when editing/deleting items
@@ -67,6 +67,7 @@ function ShopItems(props) {
       //id is the docref for deletion
       var id = doc.id;
       var food = doc.ingredient.food;
+      var data = doc.ingredient.data;
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
       var expiry = doc.ingredient.expiry;
@@ -75,6 +76,7 @@ function ShopItems(props) {
         ...list,
         {
           food: food,
+          item: data,
           measure: measure,
           quantity: quantity,
           expiry: expiry,
@@ -94,6 +96,7 @@ function ShopItems(props) {
       //id is the docref for deletion
       var id = doc.id;
       var food = doc.ingredient.food;
+      var data = doc.ingredient.data
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
       var expiry = doc.ingredient.expiry;
@@ -102,6 +105,7 @@ function ShopItems(props) {
         ...list,
         {
           food: food,
+          item: data,
           measure: measure,
           quantity: quantity,
           expiry: expiry,
@@ -244,6 +248,7 @@ const addToList = () => {
                     value={props.value}
                     food={ingr.food}
                     id={ingr.id}
+                    item={ingr.item}
                     update={update}
                     setUpdate={setUpdate}
                   /> 
@@ -284,7 +289,10 @@ const addToList = () => {
                   <BoughtItemIcon 
                     value={props.value}
                     food={ingr.food}
+                    item={ingr.item}
                     id={ingr.id}
+                    measure={ingr.measure}
+                    quantity={ingr.quantity}
                     update={update}
                     setUpdate={setUpdate}
                   /> 
