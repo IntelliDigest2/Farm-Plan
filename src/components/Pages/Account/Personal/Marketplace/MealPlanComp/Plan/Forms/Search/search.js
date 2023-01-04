@@ -26,7 +26,7 @@ export const recipeSearch = async (
   setRecipes(data.hits);
   setLinks(data._links);
   addPageToArray(link);
-  console.log("This is your data", data);
+  //console.log("This is your data", data);
   // console.log("links", data._links);
 };
 
@@ -35,7 +35,7 @@ export const nextPage = async (page, setLinks, setRecipes) => {
   const data = await resp.json();
   setRecipes(data.hits);
   setLinks(data._links);
-  console.log("This is your data", data);
+  //console.log("This is your data", data);
 };
 
 // &mealType=${mealType}&cuisineType=${cuisineType}

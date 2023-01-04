@@ -160,7 +160,6 @@ const mapStateToProps = (state) => {
   return {
     mealPlan: state.mealPlan.meals,
     mealPlanner: state.mealPlanner.plans,
-
   }; 
 };
 
