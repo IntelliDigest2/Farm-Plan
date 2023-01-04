@@ -1,3 +1,5 @@
+import { submitNotificationPlan } from '../../../components/lib/Notifications'
+
 export const addToInventory = (data) => {
   return (dispatch, getState, { getFirestore }) => {
     //make async call to database
@@ -230,7 +232,7 @@ export const editInventoryData = (data) => {
 
         .get().then((results) => {
           if(results.empty) {
-            console.log("No documents found!");   
+            submitNotificationPlan("Success..", "Some Items in this meal was not added to inventory");
           } else {
             // go through all results
             results.forEach((doc) => {

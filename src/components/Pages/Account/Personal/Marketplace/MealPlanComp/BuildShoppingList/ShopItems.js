@@ -24,7 +24,7 @@ function ShopItems(props) {
 
 
 
-  console.log("whats props:", newList)
+  //console.log("whats props:", newList)
 
 
   //trigger this when editing/deleting items
