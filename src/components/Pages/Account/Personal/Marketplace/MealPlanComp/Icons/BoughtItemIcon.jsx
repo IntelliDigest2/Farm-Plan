@@ -10,6 +10,8 @@ import { submitNotification } from "../../../../../../lib/Notifications";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function BoughtItemIcon(props) {
+
+  //console.log("to inventory ==> ", props)
   const handleSelect = async () => {
     const data = {
       //need to send shopping list data to be bough the previous week from the day it is made
@@ -17,6 +19,9 @@ function BoughtItemIcon(props) {
       day: props.value.format("DD"),
       upload: {
         ingredients: props.food,
+        item: props.item,
+        measure: props.measure,
+        quantity: props.quantity,
       },
     };
     props.addToInventory(data);
