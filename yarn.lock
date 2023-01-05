@@ -8375,11 +8375,7 @@
     "bindings" "^1.5.0"
     "nan" "^2.12.1"
 
-<<<<<<< HEAD
 "fsevents@^2.1.3":
-=======
-"fsevents@^2.1.2", "fsevents@^2.1.3", "fsevents@~2.3.1":
->>>>>>> 9adbf1e440a76c9d790820564f05fc81467693ed
   "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
   "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
   "version" "2.3.2"
