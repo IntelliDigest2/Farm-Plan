@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, InputGroup, FormGroup, Container, Modal, Button } from "react-bootstrap";
+import { Form, InputGroup, FormGroup, Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
   createFoodWasteData,
@@ -9,14 +9,12 @@ import { Redirect } from "react-router-dom";
 import { getFirebase } from "react-redux-firebase";
 import { PageWrap } from "../../../SubComponents/PageWrap";
 import { Dropdown } from "../../../SubComponents/Dropdown";
-import { DefaultButton, SubButton } from "../../../SubComponents/Button";
+import { DefaultButton } from "../../../SubComponents/Button";
 import { Divider } from "@mui/material";
 import { submitNotification } from "../../../lib/Notifications";
 
 const FoodWaste = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);
-  
-
   //useEffect to redirect if not correct account type
   useEffect(() => {
     if (props.profile.type) {
@@ -31,7 +29,7 @@ const FoodWaste = (props) => {
   }, [props.profile]);
 
   const defaultUpload = {
-    edibleInedible: "Inedible",
+    edibleInedible: "Edible",
     foodWasteWeight: 0,
     weightType: "Select Unit",
     carbsContent: 0,
@@ -262,101 +260,124 @@ const FoodWaste = (props) => {
       goTo="/account"
     >
       <Container fluid className="web-center">
-        <Form>
-          <FormGroup className="mb-3">
-            <Form.Label style={{ backgroundColor: "white" }}>
-              Edible or Inedible
-            </Form.Label>
-            <Dropdown
-              id="edibleInedible"
-              styling="grey dropdown-input"
-              data={upload.edibleInedible}
-              function={(ekey, e) => {
-                updateStateValue(e);
-              }}
-              items={["Edible", "Inedible"]}
-            />
-          </FormGroup>
-          <FormGroup className="mb-3">
-            <Form.Label style={{ backgroundColor: "white" }}>
-              Weight / Volume
-            </Form.Label>
-            <InputGroup>
-              <Form.Control
-                type="number"
-                id="foodWasteWeight"
-                onChange={(e) => {
-                  updateStateValue(e);
-                }}
-                value={upload.foodWasteWeight}
-              />
-              <Dropdown
-                id="weightType"
-                styling="grey dropdown-input-right"
-                data={upload.weightType}
-                function={(ekey, e) => {
-                  changeMultiplier(e);
-                  updateStateValue(e);
-                }}
-                items={["kg", "g", "/", "oz", "lbs", "/", "l", "ml"]}
-              />
-            </InputGroup>
-          </FormGroup>
-          <EdibleInedible
-            upload={upload}
-            multipliers={multipliers}
-            changeMultiplier={changeMultiplier}
-            updateStateValue={updateStateValue}
-          />
-          <FormGroup className="mb-3">
-            <Form.Label style={{ backgroundColor: "white" }}>GHG</Form.Label>
-            <InputGroup>
-              <Form.Control
-                type="ghg"
-                value={upload.ghg}
-                title={upload.ghg}
-                readOnly
-              />
-              <InputGroup.Append>
-                <InputGroup.Text>kg co2</InputGroup.Text>
-              </InputGroup.Append>
-            </InputGroup>
-          </FormGroup>
-          <EnableSubmit
-            upload={upload}
-            handleFoodWasteSubmit={handleFoodWasteSubmit}
-          />
-        </Form>
+        <DefaultButton text="Update" styling="green" disabled="true" />
       </Container>
     </PageWrap>
   );
 };
 
 const EdibleInedible = (props) => {
-  const [showModal, setShow] = useState(true);
-
-  const handleClose = () => setShow(false);
-
   if (props.upload.edibleInedible === "Edible") {
-    //setShow(true)
     return (
       <>
-      <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edible Waste</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <p>To add edible item to the food waste,</p>
-            <p>You need to add the item to your inventory </p>
-          </Modal.Body>
-        <Modal.Footer>
-        <SubButton
-              text="Go To Inventory"
-              goTo="/meal-plan"
-              styling="green"
+        {/* <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
+            Carbs Content
+          </Form.Label>
+          <InputGroup>
+            <Form.Control
+              type="number"
+              id="carbsContent"
+              onChange={(e) => {
+                props.updateStateValue(e);
+              }}
+              value={props.upload.carbsContent}
             />
-        </Modal.Footer>
-      </Modal>
+            <Dropdown
+              id="carbsPerUnit"
+              styling="grey dropdown-input-right"
+              data={props.upload.carbsPerUnit}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
+            Protein Content
+          </Form.Label>
+          <InputGroup>
+            <Form.Control
+              type="number"
+              id="proteinContent"
+              onChange={(e) => {
+                props.updateStateValue(e);
+              }}
+              value={props.upload.proteinContent}
+            />
+            <Dropdown
+              id="proteinPerUnit"
+              styling="grey dropdown-input-right"
+              data={props.upload.proteinPerUnit}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
+            Fat Content
+          </Form.Label>
+          <InputGroup>
+            <Form.Control
+              type="number"
+              id="fatContent"
+              onChange={(e) => {
+                props.updateStateValue(e);
+              }}
+              value={props.upload.fatContent}
+            />
+            <Dropdown
+              id="fatPerUnit"
+              styling="grey dropdown-input-right"
+              data={props.upload.fatPerUnit}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
+            />
+          </InputGroup>
+        </FormGroup> */}
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
+            Expiry Date
+          </Form.Label>
+          <Form.Control
+            id="expiryDate"
+            placeholder="DD/MM/YYYY"
+            onChange={(e) => {
+              props.updateStateValue(e);
+            }}
+            value={props.upload.expiryDate}
+          />
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
+          <InputGroup>
+            <Form.Control
+              id="foodWasteCost"
+              value={props.upload.foodWasteCost}
+              readOnly
+            />
+            <Dropdown
+              id="currency"
+              styling="grey dropdown-input-right"
+              data={props.upload.currency}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["GBP (£)", "USD ($)", "EUR (€)"]}
+            />
+          </InputGroup>
+        </FormGroup>
       </>
     );
   } else {
