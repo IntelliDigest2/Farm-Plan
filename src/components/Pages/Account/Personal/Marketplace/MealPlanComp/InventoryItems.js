@@ -88,7 +88,7 @@ function InventoryItems(props) {
                     <>
                       <SubButtonInventory
                         text="Add Waste"
-                        goTo="/food-waste"
+                        goTo="/food-waste-edible"
                         styling="green"
                       />
                     </>
