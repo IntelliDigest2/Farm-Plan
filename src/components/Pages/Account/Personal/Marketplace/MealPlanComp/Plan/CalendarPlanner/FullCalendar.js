@@ -39,7 +39,7 @@ function FullCalendarApp(props) {
 
 
 
-  console.log("check the props:", props)
+  //console.log("check the props:", props)
 
     var getDaysArray = function(start, end) {
       for(var arr=[],dt=new Date(start); dt<=new Date(end); dt.setDate(dt.getDate()+1)){

@@ -20,7 +20,7 @@ function InventoryItems(props) {
   //this sends data request
   useEffect(() => {
     props.getInventory();
-    console.log("this a props", props)
+    //console.log("getting inv ==>", props.data)
   }, [props.value, props.update]);
 
   const updateInventoryList = async () => {
@@ -31,7 +31,9 @@ function InventoryItems(props) {
     props.data.forEach((doc) => {
       // id is the docref for deletion
       var id = doc.id;
-      var item = doc.ingredients;
+      var food = doc.item;
+      var measure = doc.measure;
+      var quantity = doc.quantity;
       var expiry = doc.expiry;
       var purchase = doc.purchase;
       var storage = doc.storage;
@@ -41,7 +43,7 @@ function InventoryItems(props) {
       setList((list) => [
         ...list,
         {
-          item: item,
+          item: food + " " + quantity + " " + measure,
           purchase: purchase,
           storage: storage,
           expiry: expiry,
