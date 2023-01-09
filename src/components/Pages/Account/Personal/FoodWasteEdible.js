@@ -260,7 +260,71 @@ const FoodWaste = (props) => {
       goTo="/account"
     >
       <Container fluid className="web-center">
-        <DefaultButton text="Update" styling="green" disabled="true" />
+        <Form>
+          <FormGroup className="mb-3">
+            <Form.Label style={{ backgroundColor: "white" }}>
+              Edible or Inedible
+            </Form.Label>
+            <Dropdown
+              id="edibleInedible"
+              styling="grey dropdown-input"
+              data={upload.edibleInedible}
+              function={(ekey, e) => {
+                updateStateValue(e);
+              }}
+              items={["Edible", "Inedible"]}
+            />
+          </FormGroup>
+          <FormGroup className="mb-3">
+            <Form.Label style={{ backgroundColor: "white" }}>
+              Weight / Volume
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                type="number"
+                id="foodWasteWeight"
+                onChange={(e) => {
+                  updateStateValue(e);
+                }}
+                value={upload.foodWasteWeight}
+              />
+              <Dropdown
+                id="weightType"
+                styling="grey dropdown-input-right"
+                data={upload.weightType}
+                function={(ekey, e) => {
+                  changeMultiplier(e);
+                  updateStateValue(e);
+                }}
+                items={["kg", "g", "/", "oz", "lbs", "/", "l", "ml"]}
+              />
+            </InputGroup>
+          </FormGroup>
+          <EdibleInedible
+            upload={upload}
+            multipliers={multipliers}
+            changeMultiplier={changeMultiplier}
+            updateStateValue={updateStateValue}
+          />
+          <FormGroup className="mb-3">
+            <Form.Label style={{ backgroundColor: "white" }}>GHG</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type="ghg"
+                value={upload.ghg}
+                title={upload.ghg}
+                readOnly
+              />
+              <InputGroup.Append>
+                <InputGroup.Text>kg co2</InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
+          </FormGroup>
+          <EnableSubmit
+            upload={upload}
+            handleFoodWasteSubmit={handleFoodWasteSubmit}
+          />
+        </Form>
       </Container>
     </PageWrap>
   );

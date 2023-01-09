@@ -8,11 +8,13 @@ import { recommend } from "../../../../../../../store/actions/marketplaceActions
 function EatingOut(props) {
   const [restaurant, setRestaurant] = useState("");
   const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
 
   const handleSubmit = () => {
     const data = {
       restaurant: restaurant,
       email: email,
+      location: location,
     };
     props.recommend(data);
   };
@@ -36,6 +38,13 @@ function EatingOut(props) {
             <Form.Control
               type="text"
               onChange={(e) => setRestaurant(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Location.</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(e) => setLocation(e.target.value)}
             />
           </Form.Group>
           <Form.Group>
