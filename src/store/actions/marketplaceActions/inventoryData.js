@@ -232,7 +232,7 @@ export const editInventoryData = (data) => {
 
         .get().then((results) => {
           if(results.empty) {
-            submitNotificationPlan("Success..", "Some Items in this meal was not added to inventory");
+            submitNotificationPlan("Success..", "Some Items in this meal was not found in inventory");
           } else {
             // go through all results
             results.forEach((doc) => {
