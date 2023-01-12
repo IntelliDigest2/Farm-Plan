@@ -38,7 +38,7 @@ function InventoryItems(props) {
       var purchase = doc.purchase;
       var storage = doc.storage;
 
-      var daysUntil = new moment().to(moment(expiry));
+      var daysUntil = new moment().to(moment(expiry, 'DD-MM-YYYY').format('ll'));
 
       setList((list) => [
         ...list,
@@ -46,7 +46,7 @@ function InventoryItems(props) {
           item: food + " " + quantity + " " + measure,
           purchase: purchase,
           storage: storage,
-          expiry: expiry,
+          expiry: moment(expiry, 'DD-MM-YYYY').format('ll'),
           id: id,
           daysUntil,
         },

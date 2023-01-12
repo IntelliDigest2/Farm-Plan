@@ -130,7 +130,7 @@ const AddToInventoryForm = (props) => {
         <DatePicker 
           selected={startDate} 
           onChange={(date) => setStartDate(date)} 
-          dateFormat="dd/MM/yyyy"  
+          dateFormat="DD/MM/YYYY"  
         />
         {/* <Form.Control
           type="text"
