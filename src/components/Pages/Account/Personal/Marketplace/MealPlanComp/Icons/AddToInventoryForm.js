@@ -54,10 +54,13 @@ const AddToInventoryForm = (props) => {
     const data = {
       upload: {
         ingredients: local.food + " " + local.quantity + "" + local.measure,
+        item: local.food,
+        measure: local.measure,
+        quantity: local.quantity,
         //quantity: local.quantity
         expiry: moment(startDate).format("DD/MM/yyyy")
       },
-    };
+    }; 
 
     console.log("lets do this:", data)
 
