@@ -3,8 +3,9 @@ import { Modal } from "react-bootstrap";
 import EditInventoryForm from "./EditInventoryForm";
 
 export function EditInventory({
-  meal,
-  ingredients,
+  food,
+  quantity,
+  measure,
   expiry,
   id,
   show,
@@ -25,13 +26,15 @@ export function EditInventory({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="add-meal">Edit Meal</Modal.Title>
+        <Modal.Title id="add-meal">Edit Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* <p>bleeeeeeeeh</p> */}
         <EditInventoryForm
-          meal={meal}
-          ingredients={ingredients}
+          //meal={meal}
+          food={food}
+          measure={measure}
+          quantity={quantity}
           expiry={expiry}
           id={id}
           update={update}

@@ -31,7 +31,7 @@ function InventoryItems(props) {
     props.data.forEach((doc) => {
       // id is the docref for deletion
       var id = doc.id;
-      var food = doc.item;
+      var food = doc.food;
       var measure = doc.measure;
       var quantity = doc.quantity;
       var expiry = doc.expiry;
@@ -44,6 +44,9 @@ function InventoryItems(props) {
         ...list,
         {
           item: food + " " + quantity + " " + measure,
+          food: food,
+          quantity: quantity,
+          measure: measure,
           purchase: purchase,
           storage: storage,
           expiry: moment(expiry, 'DD-MM-YYYY').format('ll'),
@@ -65,6 +68,7 @@ function InventoryItems(props) {
 
   useEffect(() => {
     updateInventoryList();
+    console.log("this is list ==>", list)
   }, [props.data]);
 
   return (
@@ -79,7 +83,7 @@ function InventoryItems(props) {
                 style={{ alignItems: "flex-end" }}
               >
                 <div>
-                  <p>{item.item}</p>
+                  <p>{item.food + " " + item.quantity + " " + item.measure}</p>
                   <p><b >Expiry Date: </b>{item.expiry}</p>
                   <p><b >Item expires: </b>{item.daysUntil}</p>
                   <p><b >Place of purchase: </b>{item.purchase}</p>
@@ -98,7 +102,9 @@ function InventoryItems(props) {
                 <div className="icons">
                 <Edit
                       //value={props.value}
-                      ingredients={item.item}
+                      food={item.food}
+                      measure={item.measure}
+                      quantity={item.quantity}
                       expiry={item.expiry}
                       id={item.id}
                       update={props.update}
