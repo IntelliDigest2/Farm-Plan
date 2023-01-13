@@ -84,8 +84,9 @@ export function AddPlanModal({ show, setShow, value }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <h5>Choose atleast 7 meals each for Breakfast, Lunch and Dinner</h5>
-
+        <h5>Add 7 meals for breakfast, lunch and dinner; </h5>
+        <h5> then go to the View Plan tab to generate a 6 month meal plan</h5>
+        <br />
           <RecipeSearch value={value} />
         </Modal.Body>
       </Modal>

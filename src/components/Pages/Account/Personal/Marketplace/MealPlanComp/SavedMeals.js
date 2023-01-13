@@ -3,9 +3,12 @@ import React, { useState, useEffect } from "react";
 import MealsBox from "./MealsBox";
 import { connect } from "react-redux";
 import { getRecipes } from "../../../../../../store/actions/marketplaceActions/savedMealData";
+import { getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
 
 const SavedMeals = (props) => {
   const [sMeals, setSMeals] = useState([]);
+  const [weeklyMeals, setWeeklyMeals] = useState([]);
+
 
   //trigger this when editing/deleting items
   const [update, setUpdate] = useState(0);
@@ -17,6 +20,45 @@ const SavedMeals = (props) => {
   useEffect(() => {
     props.getRecipes();
   }, [update]);
+
+  const updateWeeklyMeals = async () => {
+    //clears the meals array before each update- IMPORTANT
+    setWeeklyMeals([]);
+
+    //sets a new meal object in the array for every document with this date attached
+    props.weekPlans.forEach((doc) => {
+      var mealName = doc.meal;
+      var ingredients = doc.ingredients;
+      var id = doc.id;
+     // var mealType = doc.mealType;
+      var url = doc.url;
+      var totalNutrients = doc.totalNutrients;
+      var totalDaily = doc.totalDaily;
+      var recipeYield = doc.recipeYield;
+      let nn = doc.nn
+      // if (doc.nonNativeData) {
+      //   nn = doc.nonNativeData;
+      // } else {
+      //   nn = false;
+      // }
+
+      setWeeklyMeals((meals) => [
+        ...meals,
+        {
+          meal: mealName,
+          //mealType: mealType,
+          ingredients: ingredients,
+          id: id,
+          nn: nn,
+          url: url,
+          totalNutrients: totalNutrients,
+          totalDaily: totalDaily,
+          recipeYield: recipeYield,
+        },
+      ]);
+    });
+  };
+
 
   const updateSMeals = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -73,6 +115,11 @@ const SavedMeals = (props) => {
     // console.log(props.data);
   }, [props.mealPlan]);
 
+  useEffect(() => {
+    updateWeeklyMeals();
+    console.log("let fetch what Smeals meals is ==> ", weeklyMeals)
+  }, [props.weekPlans]);
+
   return (
     <>
       <div className="basic-title-left mb-3">My Saved Meals</div>
@@ -81,6 +128,7 @@ const SavedMeals = (props) => {
           forceUpdate={forceUpdate}
           onChange={props.onChange}
           meals={sMeals}
+          weeklyMeals={weeklyMeals}
           saved={true}
           value={props.value}
         />
@@ -92,12 +140,14 @@ const SavedMeals = (props) => {
 const mapStateToProps = (state) => {
   return {
     mealPlan: state.mealPlan.savedMeals,
+    weekPlans: state.mealPlanner.weekPlans,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getRecipes: (saved) => dispatch(getRecipes(saved)),
+    getWeeklyPlan: (plan) => dispatch(getWeeklyPlan(plan)),
   };
 };
 
