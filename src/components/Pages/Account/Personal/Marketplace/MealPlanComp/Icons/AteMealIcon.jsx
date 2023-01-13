@@ -50,6 +50,9 @@ function AteMealIcon(props) {
       "Success",
       "Food has been marked as eaten"
     );
+    console.log("finding out Yo ==>", getMeal);
+
+    var getMeal = props.meal
 
     const data = {
       month: props.value.format("YYYYMM"),
@@ -57,6 +60,15 @@ function AteMealIcon(props) {
       id: props.id,
       upload: {
         eaten: true,
+        meal: getMeal.meal,
+        //mealType: getMeal.mealType,
+        ingredients: getMeal.ingredients,
+        id: getMeal.id,
+        nn: getMeal.nn,
+        url: getMeal.url,
+        totalNutrients: getMeal.totalNutrients,
+        totalDaily: getMeal.totalDaily,
+        recipeYield: getMeal.recipeYield,
       },
     };
     

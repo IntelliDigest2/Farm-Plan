@@ -32,7 +32,7 @@ function MyPlans(props) {
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD-MM-yyyy"),
     };
-    props.getWeeklyPlan(data);
+    props.getMealPlannerData(data);
   }, [props.value, update]);
 
 
@@ -77,7 +77,7 @@ function MyPlans(props) {
     setMeals([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.weekPlans.forEach((doc) => {
+    props.mealPlanner.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
@@ -115,7 +115,7 @@ function MyPlans(props) {
   }, [props.weekPlans]);
   
   useEffect(() => {
-    console.log("wahala", meals)
+    //console.log("wahala", meals)
   }, [props.weekPlans]);
 
   return (

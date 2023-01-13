@@ -29,7 +29,9 @@ function Edit(props) {
         show={show}
         setShow={setShow}
         //meal={props.meal}
-        ingredients={props.ingredients}
+        food={props.food}
+        measure={props.measure}
+        quantity={props.quantity}
         expiry={props.expiry}
         id={props.id}
         update={props.update}

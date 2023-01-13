@@ -36,6 +36,7 @@
     "leaflet": "^1.7.1",
     "lodash.sortby": "^4.7.0",
     "moment": "^2.29.1",
+    "nodemailer-react": "^1.0.2",
     "postcode-validator": "^3.7.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
