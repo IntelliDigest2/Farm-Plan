@@ -2,6 +2,8 @@ import React from "react";
 import "./WaveLoader.css";
 import { motion } from "framer-motion";
 
+//currently struggling to get framer-motion to work, will come back for this.
+
 const loadingContainer = {
   width: "2rem",
   height: "2rem",
