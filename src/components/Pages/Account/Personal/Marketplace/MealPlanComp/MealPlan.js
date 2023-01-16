@@ -19,6 +19,7 @@ import { Inventory } from "./Inventory";
 // import WaveLoader from "../../../../../SubComponents/Loading/WaveLoader";
 
 export default function MealPlan() {
+
   const [loading, setLoading] = useState(true);
   const [getItems, setGetItems] = useState([])
   useEffect(() => {

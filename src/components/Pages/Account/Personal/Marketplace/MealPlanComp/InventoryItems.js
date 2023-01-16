@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import emailjs, { init } from "@emailjs/browser";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -12,6 +13,7 @@ import { Button } from "react-bootstrap";
 import { SubButtonInventory } from "../../../../../SubComponents/Button";
 
 function InventoryItems(props) {
+
   const [list, setList] = useState([]);
   const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
 
@@ -31,7 +33,7 @@ function InventoryItems(props) {
     props.data.forEach((doc) => {
       // id is the docref for deletion
       var id = doc.id;
-      var food = doc.food;
+      var food = doc.ingredients;
       var measure = doc.measure;
       var quantity = doc.quantity;
       var expiry = doc.expiry;
@@ -68,9 +70,19 @@ function InventoryItems(props) {
 
   useEffect(() => {
     updateInventoryList();
-    console.log("this is list ==>", list)
   }, [props.data]);
 
+  function sendMail(item) {
+    emailjs.send("service_33mgmp6","template_o8lxppf",{
+      from_name: "intellidigest",
+      to_name: props.profile.firstName,
+      message: item + " is about to expire!! please use it before the expiry date",
+      reply_to: props.profile.email,
+      to_email: props.profile.email,
+      }, 
+      "pG3M3Ncz-i7qCJ2GD");  
+  }
+  
   return (
     <>
       {list.length ? (
@@ -97,6 +109,19 @@ function InventoryItems(props) {
                       />
                     </>
                   ):("")}
+                  { }
+                  {(() => {
+                    if (today == moment(item.expiry).subtract(7,'d').format('DD/MM/YYYY') ) {
+                      return (
+                        sendMail(item.food)
+                      )
+                    } else {
+                      return (
+                        <div></div>
+                      )
+                    }
+                  })()}
+                  
                 </div>
                 
                 <div className="icons">
@@ -135,6 +160,7 @@ function InventoryItems(props) {
 const mapStateToProps = (state) => {
   return {
     data: state.mealPlan.inventory,
+    profile: state.firebase.profile,
   };
 };
 

@@ -70,6 +70,7 @@ import PostcodeValidatorFormGroup from "./PostcodeValidatorFormGroup";
 
 function Settings(props) {
   //handles loading page
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => setLoading(false), 1500);
