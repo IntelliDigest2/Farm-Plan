@@ -86,7 +86,9 @@ function MyPlans(props) {
       var totalNutrients = doc.totalNutrients;
       var totalDaily = doc.totalDaily;
       var recipeYield = doc.recipeYield;
-      let nn = doc.nn
+      var mealType = doc.mealType;
+      let nn = doc.nn;
+      
       // if (doc.nonNativeData) {
       //   nn = doc.nonNativeData;
       // } else {
@@ -102,6 +104,7 @@ function MyPlans(props) {
           id: id,
           nn: nn,
           url: url,
+          mealType: mealType,
           totalNutrients: totalNutrients,
           totalDaily: totalDaily,
           recipeYield: recipeYield,
@@ -112,11 +115,22 @@ function MyPlans(props) {
 
   useEffect(() => {
     updateMeals();
-  }, [props.weekPlans]);
+  }, [props.mealPlanner]);
   
-  useEffect(() => {
-    //console.log("wahala", meals)
-  }, [props.weekPlans]);
+  // useEffect(() => {
+  //   //console.log("wahala", meals)
+  // }, [props.weekPlans]);
+
+  function getFilteredMeal() {
+    return meals.filter(data => {
+      var mealType = 'breakfast'
+      //console.log("mealType", data.mealType[0])
+    
+      return mealType == data.mealType[0];
+    });
+  }
+
+  console.log("lets check ==>", getFilteredMeal())
 
   return (
     <>
