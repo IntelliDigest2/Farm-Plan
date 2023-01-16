@@ -34,7 +34,6 @@ export default function MealsBox(props) {
         <option value="lunch/dinner">lunch/dinner</option>
       </select>
     </p>
-    
 
       {filter.map((newMeal, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
