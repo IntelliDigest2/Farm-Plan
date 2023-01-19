@@ -10,13 +10,15 @@ import moment from "moment";
 
 
 function EditInventoryForm(props) {
-  const [ingredients, setIngredients] = useState(props.ingredients);
+  const [food, setFood] = useState(props.food);
+  const [quantity, setQuantity] = useState(props.quantity);
+  const [measure, setMeasure] = useState(props.measure);
   const [ExpiryDate, setExpiryDate] = useState("");
   const [placeOfPurchase, setPlaceOfPurchase] = useState("");
   const [storage, setStorage] = useState("Choose Storage");
 
 
-  console.log("checking ingredients ==>", ingredients)
+  console.log("checking ingredients props ==>", props.quantity)
 
 
   const handleSubmit = () => {
@@ -25,7 +27,9 @@ function EditInventoryForm(props) {
       // day: props.value.format("DD"),
       id: props.id,
       upload: {
-        ingredients: ingredients,
+        food: food,
+        quantity: quantity,
+        measure: measure,
         id: props.id,
         expiry: moment(ExpiryDate).format("DD/MM/yyyy"),
         purchase: placeOfPurchase,
@@ -50,13 +54,13 @@ function EditInventoryForm(props) {
       }}
     >
       <Form.Group>
-        <Form.Label>Ingredients</Form.Label>
+        <Form.Label>Ingredient</Form.Label>
         <Form.Control
           type="text"
           id="food"
-          defaultValue={ingredients}
+          defaultValue={food}
           onChange={(e) => {
-            setIngredients(e.target.value);
+            setFood(e.target.value);
           }}
         />
       </Form.Group>
@@ -72,6 +76,27 @@ function EditInventoryForm(props) {
           }}
         />
       </Form.Group> */}
+
+      <Form.Group>
+        <Form.Label>Amount</Form.Label>
+        <InputGroup>
+          <Form.Control
+            id="quantity"
+            type="number"
+            min="0"
+            step=".1"
+            defaultValue={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+          <Dropdown
+            id="measure"
+            styling="grey dropdown-input"
+            data={measure}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups", "units"]}
+            onChange={(e) => setMeasure(e)}
+          />
+        </InputGroup>
+      </Form.Group>
 
       <Form.Group>
         <Form.Label>Expiry Date</Form.Label>

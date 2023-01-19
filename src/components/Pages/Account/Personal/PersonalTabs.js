@@ -8,6 +8,7 @@ import { Colors } from "../../../lib/Colors";
 // import AccordionDetails from "@mui/material/AccordionDetails";
 
 export function Food({ setShow, setChooseModal }) {
+
   return (
     <>
       <IconButton

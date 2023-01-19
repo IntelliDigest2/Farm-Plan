@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import emailjs, { init } from "@emailjs/browser";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -12,6 +13,7 @@ import { Button } from "react-bootstrap";
 import { SubButtonInventory } from "../../../../../SubComponents/Button";
 
 function InventoryItems(props) {
+
   const [list, setList] = useState([]);
   const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
 
@@ -31,22 +33,25 @@ function InventoryItems(props) {
     props.data.forEach((doc) => {
       // id is the docref for deletion
       var id = doc.id;
-      var food = doc.item;
+      var food = doc.ingredients;
       var measure = doc.measure;
       var quantity = doc.quantity;
       var expiry = doc.expiry;
       var purchase = doc.purchase;
       var storage = doc.storage;
 
-      var daysUntil = new moment().to(moment(expiry));
+      var daysUntil = new moment().to(moment(expiry, 'DD-MM-YYYY').format('ll'));
 
       setList((list) => [
         ...list,
         {
           item: food + " " + quantity + " " + measure,
+          food: food,
+          quantity: quantity,
+          measure: measure,
           purchase: purchase,
           storage: storage,
-          expiry: expiry,
+          expiry: moment(expiry, 'DD-MM-YYYY').format('ll'),
           id: id,
           daysUntil,
         },
@@ -67,6 +72,17 @@ function InventoryItems(props) {
     updateInventoryList();
   }, [props.data]);
 
+  function sendMail(item) {
+    emailjs.send("service_33mgmp6","template_o8lxppf",{
+      from_name: "intellidigest",
+      to_name: props.profile.firstName,
+      message: item + " is about to expire!! please use it before the expiry date",
+      reply_to: props.profile.email,
+      to_email: props.profile.email,
+      }, 
+      "pG3M3Ncz-i7qCJ2GD");  
+  }
+  
   return (
     <>
       {list.length ? (
@@ -79,7 +95,7 @@ function InventoryItems(props) {
                 style={{ alignItems: "flex-end" }}
               >
                 <div>
-                  <p>{item.item}</p>
+                  <p>{item.food + " " + item.quantity + " " + item.measure}</p>
                   <p><b >Expiry Date: </b>{item.expiry}</p>
                   <p><b >Item expires: </b>{item.daysUntil}</p>
                   <p><b >Place of purchase: </b>{item.purchase}</p>
@@ -93,12 +109,27 @@ function InventoryItems(props) {
                       />
                     </>
                   ):("")}
+                  { }
+                  {(() => {
+                    if (today == moment(item.expiry).subtract(7,'d').format('DD/MM/YYYY') ) {
+                      return (
+                        sendMail(item.food)
+                      )
+                    } else {
+                      return (
+                        <div></div>
+                      )
+                    }
+                  })()}
+                  
                 </div>
                 
                 <div className="icons">
                 <Edit
                       //value={props.value}
-                      ingredients={item.item}
+                      food={item.food}
+                      measure={item.measure}
+                      quantity={item.quantity}
                       expiry={item.expiry}
                       id={item.id}
                       update={props.update}
@@ -129,6 +160,7 @@ function InventoryItems(props) {
 const mapStateToProps = (state) => {
   return {
     data: state.mealPlan.inventory,
+    profile: state.firebase.profile,
   };
 };
 
