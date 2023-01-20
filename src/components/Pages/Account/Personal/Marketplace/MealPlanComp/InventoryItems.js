@@ -17,7 +17,7 @@ function InventoryItems(props) {
   const [list, setList] = useState([]);
   const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
 
-  var today = moment(new Date()).format("DD/MM/YYYY")
+  var today = moment(new Date()).format("dd/mm/yyyy")
 
   //this sends data request
   useEffect(() => {
@@ -34,6 +34,7 @@ function InventoryItems(props) {
       // id is the docref for deletion
       var id = doc.id;
       var food = doc.ingredients;
+      var item = doc.item;
       var measure = doc.measure;
       var quantity = doc.quantity;
       var expiry = doc.expiry;
@@ -45,8 +46,8 @@ function InventoryItems(props) {
       setList((list) => [
         ...list,
         {
-          item: food + " " + quantity + " " + measure,
-          food: food,
+          food: food + " " + quantity + " " + measure,
+          item: item,
           quantity: quantity,
           measure: measure,
           purchase: purchase,
@@ -95,7 +96,7 @@ function InventoryItems(props) {
                 style={{ alignItems: "flex-end" }}
               >
                 <div>
-                  <p>{item.food + " " + item.quantity + " " + item.measure}</p>
+                  <p>{item.item + " " + item.quantity + " " + item.measure}</p>
                   <p><b >Expiry Date: </b>{item.expiry}</p>
                   <p><b >Item expires: </b>{item.daysUntil}</p>
                   <p><b >Place of purchase: </b>{item.purchase}</p>
@@ -111,7 +112,7 @@ function InventoryItems(props) {
                   ):("")}
                   { }
                   {(() => {
-                    if (today == moment(item.expiry).subtract(7,'d').format('DD/MM/YYYY') ) {
+                    if (today == moment(item.expiry).subtract(7,'d').format('dd/mm/yyyy') ) {
                       return (
                         sendMail(item.food)
                       )
@@ -134,6 +135,7 @@ function InventoryItems(props) {
                       id={item.id}
                       update={props.update}
                       setUpdate={props.setUpdate}
+                      forceUpdate={props.forceUpdate}
                       //expiry={list.expiry}
                     />
 
