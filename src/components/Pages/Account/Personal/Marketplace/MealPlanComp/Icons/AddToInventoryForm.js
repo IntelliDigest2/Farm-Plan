@@ -49,6 +49,12 @@ const AddToInventoryForm = (props) => {
     setShow(false);
   }
 
+  //trigger this when editing/deleting items
+  const [update, setUpdate] = useState(0);
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
+
   //fired when click "done"
   const handleSubmit = () => {
     const data = {
@@ -66,7 +72,7 @@ const AddToInventoryForm = (props) => {
 
     props.addToInventory(data);
     // props.createMealPlanData(data);
-    // props.forceUpdate();
+    forceUpdate();
   };
 
   const handleSetScan = () => {
@@ -130,7 +136,7 @@ const AddToInventoryForm = (props) => {
         <DatePicker 
           selected={startDate} 
           onChange={(date) => setStartDate(date)} 
-          dateFormat="DD/MM/YYYY"  
+          dateFormat="dd/mm/yyyy"  
         />
         {/* <Form.Control
           type="text"

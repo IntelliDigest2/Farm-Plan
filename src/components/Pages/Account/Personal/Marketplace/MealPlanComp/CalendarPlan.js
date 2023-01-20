@@ -24,7 +24,7 @@ export const CalendarPlan = ({ value, onChange }) => {
 
   return (
     <>
-      <div className="calendar">
+      {/* <div className="calendar">
         <CalendarHeader value={value} setValue={onChange} />
         <div className="body">
           <div className="day-names">
@@ -50,7 +50,7 @@ export const CalendarPlan = ({ value, onChange }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       <div className="row">
         <div className="col-8" style={{textAlign: "left"}}>Add more meals to your calendar or edit added meals 🙂</div>
         <div className="col-4" style={{textAlign: "right"}}><AddPlanModal value={value} show={show} setShow={setShow} /></div>
