@@ -18,9 +18,6 @@ function EditInventoryForm(props) {
   const [storage, setStorage] = useState("Choose Storage");
 
 
-  console.log("checking ingredients props ==>", props.quantity)
-
-
   const handleSubmit = () => {
     const data = {
       // month: props.value.format("YYYYMM"),
@@ -36,6 +33,7 @@ function EditInventoryForm(props) {
         storage: storage
       }, 
     };
+    console.log("checking ingredients props ==>", data)
     if (props.saved) {
       props.editSavedMeal(data);
       props.forceUpdate();
@@ -105,7 +103,7 @@ function EditInventoryForm(props) {
           id="expiry"
           selected={ExpiryDate} 
           onChange={(e) => setExpiryDate(e)} 
-          dateFormat="dd/MM/yyyy"  
+          dateFormat="dd/mm/yyyy"  
         />
       </Form.Group>
 
