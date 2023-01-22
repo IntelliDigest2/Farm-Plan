@@ -134,7 +134,8 @@ function ShopItems(props) {
       const items = doc.ingredients
 
       items.forEach((data) => {
-        var id = doc.id
+        //we dont need the ID from the food item yet since we are not relating them
+        //var id = doc.id
         var start = moment(doc.start).utc().format('YYYY-MM-DD')
         var item = data.food
         var quantity = data.quantity;
@@ -148,7 +149,6 @@ function ShopItems(props) {
             food: item + " " + quantity + " " + measure,
             measure: measure,
             quantity: quantity,
-            id: id,
           },
         ]);
       })
