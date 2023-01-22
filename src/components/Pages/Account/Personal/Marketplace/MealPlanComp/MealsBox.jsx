@@ -178,14 +178,6 @@ export default function MealsBox(props) {
         </div>
       ))}
 
-
-
-
-
-
-
-
-
 {props.meals.map((newMeal, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
           <div className="ingredients">
@@ -231,11 +223,12 @@ export default function MealsBox(props) {
                       saved={props.saved}
                     />
                   )}
-                  {props.isMealPlan ? (
+                  {props.isMealPlan || newMeal.eaten == true ? (
                     <AteMealIcon
                       meal={newMeal}
                       value={props.value}
                       id={newMeal.id}
+                      eaten={true}
                     />
                   ) : null}
                 </div>

@@ -11,7 +11,7 @@ import { submitNotification } from "../../../../../../lib/Notifications";
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function BoughtItemIcon(props) {
 
-  console.log("to inventory ==> ", props.food)
+ // console.log("to inventory ==> ", props.food)
   const handleSelect = async () => {
     const data = {
       //need to send shopping list data to be bough the previous week from the day it is made

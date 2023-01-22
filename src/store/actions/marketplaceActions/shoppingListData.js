@@ -89,7 +89,7 @@ export const addToShoppingListUpdate = (data) => {
 
     const ingr = data.upload.result;
 
-    console.log("checking what error ===> ", ingr)
+    //console.log("checking what error ===> ", ingr)
 
     const firestore = getFirestore();
     const batch = firestore.batch();
@@ -103,8 +103,8 @@ export const addToShoppingListUpdate = (data) => {
         .doc(data.week)
         .collection(data.week)
         .doc();
-      //batch.set(docRef, { id: docRef.id, ingredient: element.food });
-      console.log("sshshshsh", element.id);
+      batch.set(docRef, { id: docRef.id, ingredient: element});
+      //console.log("sshshshsh", element.id);
     });
     batch
       .commit()
