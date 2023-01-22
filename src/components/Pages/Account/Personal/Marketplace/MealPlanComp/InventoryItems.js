@@ -135,7 +135,6 @@ function InventoryItems(props) {
                       id={item.id}
                       update={props.update}
                       setUpdate={props.setUpdate}
-                      forceUpdate={props.forceUpdate}
                       //expiry={list.expiry}
                     />
 

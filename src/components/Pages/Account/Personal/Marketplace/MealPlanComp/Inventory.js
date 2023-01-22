@@ -17,7 +17,7 @@ export const Inventory = ({forceUpdate, value, tab}) => {
                 <div className="col-4" style={{textAlign: "right"}}><AddToInventoryModal show={show} setShow={setShow} update={update} setUpdate={setUpdate} /></div>           
              </div>
             <div>
-                <InventoryItems value={value} tab={tab} forceUpdate={forceUpdate} update={update} setUpdate={setUpdate}/>
+                <InventoryItems value={value} tab={tab} update={update} setUpdate={setUpdate}/>
             </div>
         </div>
     )
