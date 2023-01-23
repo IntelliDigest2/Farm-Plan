@@ -245,7 +245,7 @@ export const deleteMealData = (mealPlan) => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("mealData")
+      .collection("mealDiary")
       .doc(mealPlan.month)
       .collection(mealPlan.day)
       .doc(mealPlan.id)

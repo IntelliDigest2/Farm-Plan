@@ -108,12 +108,12 @@ export default function MealsBox(props) {
                   <div className="meal-type">{newMeal.mealType}</div>
                 ) : null}
                 <div className="icons">
-                  <Delete
+                  {/* <Delete
                     value={props.value}
                     id={newMeal.id}
                     forceUpdate={props.forceUpdate}
                     saved={props.saved}
-                  />
+                  /> */}
                   {props.saved ? (
                     <Add
                       value={props.value}
