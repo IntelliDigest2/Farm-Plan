@@ -33,7 +33,7 @@ export const createMealPlanData = (mealPlan) => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("mealData")
+      .collection("mealDiary")
       .doc(mealPlan.month)
       .collection(mealPlan.day)
       .add(mealPlan.upload)
@@ -43,7 +43,7 @@ export const createMealPlanData = (mealPlan) => {
           .firestore()
           .collection("marketplace")
           .doc(uid)
-          .collection("mealData")
+          .collection("mealDiary")
           .doc(mealPlan.month)
           .collection(mealPlan.day)
           .doc(docRef.id)
@@ -107,6 +107,59 @@ export const getMealData = (meals) => {
       });
   };
 };
+
+export const getMealDiary = (meals) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("mealDiary")
+      .doc(meals.month)
+      .collection(meals.day)
+      .get()
+      .then((snapshot) => {
+        const mealPlan = [];
+        snapshot.forEach((doc) => {
+          mealPlan.push(doc.data());
+        });
+        dispatch({ type: "GET_MEAL_DIARY", payload: mealPlan });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_MEAL_DIARY_ERROR", err });
+      });
+  };
+};
+
 
 export const editMealData = (mealPlan) => {
   return (dispatch, getState, { getFirebase }) => {
@@ -192,7 +245,7 @@ export const deleteMealData = (mealPlan) => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("mealData")
+      .collection("mealDiary")
       .doc(mealPlan.month)
       .collection(mealPlan.day)
       .doc(mealPlan.id)

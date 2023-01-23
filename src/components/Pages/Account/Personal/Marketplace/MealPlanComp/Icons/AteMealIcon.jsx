@@ -9,6 +9,7 @@ import { editMealData } from "../../../../../../../store/actions/marketplaceActi
 import {
   getInventory,
   RemoveFromInventory,
+  updateQuantity,
 } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { useEffect } from "react";
 import { submitNotification } from "../../../../../../lib/Notifications";
@@ -53,6 +54,19 @@ function AteMealIcon(props) {
     console.log("finding out Yo ==>", getMeal);
 
     var getMeal = props.meal
+
+    var ingr = getMeal.ingredients
+
+    ingr.forEach(e => {
+
+      const updateQty = {
+      
+        id: e.food,
+        quantity: e.quantity,
+      };
+      //console.log("we up again ==>", updateQty)
+      props.updateQuantity(updateQty)
+    });
 
     const data = {
       month: props.value.format("YYYYMM"),
@@ -126,6 +140,7 @@ const mapDispatchToProps = (dispatch) => {
     getInventory: () => dispatch(getInventory()),
     removeFromInventory: (data) => dispatch(RemoveFromInventory(data)),
     editMealData: (data) => dispatch(editMealData(data)),
+    updateQuantity: (data) => dispatch(updateQuantity(data)),
   };
 };
 

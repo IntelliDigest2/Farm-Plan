@@ -1,6 +1,7 @@
 const initState = {
   authError: null,
   meals: [],
+  mealDiary: [],
   savedMeals: [],
   shoppingList: [],
   newShoppingList: [],
@@ -36,6 +37,19 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Get meals failed",
       };
+      case "GET_MEAL_DIARY":
+        console.log("get meal diary success", action.payload);
+        return {
+          ...state,
+          mealDiary: action.payload,
+          authError: null,
+        };
+      case "GET_MEAL_DIARY_ERROR":
+        console.log("error, couldn't fetch diary meals", action.err);
+        return {
+          ...state,
+          authError: "Get meal diary failed",
+        };
     case "EDIT_MEAL":
       console.log("successfully edited", action.mealPlan);
       return {
