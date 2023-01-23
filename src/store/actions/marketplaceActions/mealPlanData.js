@@ -91,7 +91,7 @@ export const getMealData = (meals) => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("mealData")
+      .collection("mealPlanData")
       .doc(meals.month)
       .collection(meals.day)
       .get()
