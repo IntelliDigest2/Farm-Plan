@@ -9,6 +9,7 @@ const initState = {
   newPlans: [],
   weekPlans: [],
   allItems:[],
+  singleMealPlan:[],
 
 
 };
@@ -79,18 +80,46 @@ const mealPlannerReducer = (state = initState, action) => {
           authError: "Get meals failed",
         };
       case "GET_NEW_PLANS":
-      console.log("get meal plan success", action.payload);
+      console.log("get meal new plan success", action.payload);
       return {
         ...state,
         newPlans: action.payload,
         authError: null,
       };
     case "GET_NEW_PLANS_ERROR":
-      console.log("error, couldn't fetch meals", action.err);
+      console.log("error, couldn't fetch new plan", action.err);
       return {
         ...state,
         authError: "Get meals failed",
       };
+
+      case "GET_SINGLE_MEAL_PLAN":
+        console.log("get single meal from plan success", action.payload);
+        return {
+          ...state,
+          singleMealPlan: action.payload,
+          authError: null,
+        };
+      case "GET_SINGLE_MEAL_PLAN_ERROR":
+        console.log("error, couldn't fetch single  meals from plan", action.err);
+        return {
+          ...state,
+          authError: "Get single meal plan failed",
+        };
+
+      case "EDIT_NEW_PLAN":
+      console.log("successfully edited", action.data);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "EDIT_NEW_PLAN_ERROR":
+      console.log("error, couldn't edit meal", action.err);
+      return {
+        ...state,
+        authError: "Edit meal failed",
+      };
+
         case "DELETE_MEAL_PLAN":
           console.log("successfully deleted item");
           return {
