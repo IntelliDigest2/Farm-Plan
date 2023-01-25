@@ -7,6 +7,8 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData";
 import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
+import RemoveFoodWasteIcon from "./Icons/RemoveFoodWasteIcon";
+
 import Edit from "./Icons/EditIconInventory.jsx"
 import moment from "moment";
 import { Button } from "react-bootstrap";
@@ -103,11 +105,19 @@ function InventoryItems(props) {
                   <p><b >Storage:</b>{item.storage}</p>
                   { moment().isAfter(item.expiry) ? (
                     <>
-                      <SubButtonInventory
+                      {/* <SubButtonInventory
                         text="Add Waste"
                         goTo="/food-waste-edible"
                         styling="green"
+                        onClick={console.log("dddddddddddddddddddddddddd")}
+                      /> */}
+                       <RemoveFoodWasteIcon
+                        id={item.id}
+                        value={props.value}
+                        update={props.update}
+                        setUpdate={props.setUpdate}
                       />
+
                     </>
                   ):("")}
                   { }
