@@ -109,6 +109,20 @@ export function Environment() {
         goTo="/chart"
       />
       <IconButton
+        title="Gift a Food Item."
+        icon="chart"
+        label="Gifted Items Chart"
+        color="turquoise"
+        goTo="/gift-food"
+      />
+       <IconButton
+        title="View your gifted food data."
+        icon="chart"
+        label="Gift Chart"
+        color="yellow"
+        goTo="/gift-chart"
+      />
+      <IconButton
         title="View the world map of WFT users!"
         icon="world"
         label="Users Map"

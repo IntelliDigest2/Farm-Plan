@@ -5,11 +5,11 @@ import IconButton from "@mui/material/IconButton";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { RemoveFromInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { useHistory } from 'react-router-dom';
-
+import Button from '@mui/material/Button';
 import { connect } from "react-redux";
 
 //need props id
-function RemoveFromInventoryIcon(props) {
+function RemoveFoodWasteIcon(props) {
 
   const history = useHistory();
 
@@ -29,10 +29,16 @@ function RemoveFromInventoryIcon(props) {
         <IconButton
           aria-label="Remove"
           sx={{ ml: 2 }}
-          onClick={() => handleDelete(props.id)}
+          // onClick={() => handleDelete(props.id)}
+          onClick={()=> {
+            handleDelete(props.id)
+            history.push("/food-waste")
+          }}
         >
-          <RemoveCircleOutlineIcon />
-        </IconButton>
+        <Button variant="outlined" color="success">
+          Add To Food Waste
+        </Button>        
+      </IconButton>
       </Tooltip>
     </>
   );
@@ -53,4 +59,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RemoveFromInventoryIcon);
+)(RemoveFoodWasteIcon);
