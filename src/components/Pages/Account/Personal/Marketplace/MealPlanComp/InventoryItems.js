@@ -103,7 +103,7 @@ function InventoryItems(props) {
                   <p><b >Item expires: </b>{item.daysUntil}</p>
                   <p><b >Place of purchase: </b>{item.purchase}</p>
                   <p><b >Storage:</b>{item.storage}</p>
-                  { moment().isAfter(item.expiry) ? (
+                 
                     <>
                       {/* <SubButtonInventory
                         text="Add Waste"
@@ -119,7 +119,6 @@ function InventoryItems(props) {
                       />
 
                     </>
-                  ):("")}
                   { }
                   {(() => {
                     if (today == moment(item.expiry).subtract(7,'d').format('dd/mm/yyyy') ) {
