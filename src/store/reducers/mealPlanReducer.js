@@ -8,6 +8,7 @@ const initState = {
   newShoppingList: [],
   shopItems: [],
   inventory: [],
+  giftedFood: [],
 };
 
 const mealPlanReducer = (state = initState, action) => {
@@ -299,6 +300,18 @@ const mealPlanReducer = (state = initState, action) => {
       };
     case "CREATE_INVENTORY_ITEM_ERROR":
       console.log("error, inventory item not created", action.err);
+      return {
+        ...state,
+        authError: "Create inventory item failed",
+      };
+      case "CREATE_GIFT_ITEM":
+      console.log("gifted item created", action.data);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CREATE_GIFT_ITEM_ERROR":
+      console.log("error, gifted item not created", action.err);
       return {
         ...state,
         authError: "Create inventory item failed",

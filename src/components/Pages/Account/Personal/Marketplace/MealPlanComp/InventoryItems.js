@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData";
 import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
 import RemoveFoodWasteIcon from "./Icons/RemoveFoodWasteIcon";
-
+import GiftFoodIcon from "./Icons/GiftFoodIcon";
 import Edit from "./Icons/EditIconInventory.jsx"
 import moment from "moment";
 import { Button } from "react-bootstrap";
@@ -116,6 +116,13 @@ function InventoryItems(props) {
                         value={props.value}
                         update={props.update}
                         setUpdate={props.setUpdate}
+                      />
+                      <GiftFoodIcon
+                        id={item.id}
+                        value={props.value}
+                        update={props.update}
+                        setUpdate={props.setUpdate}
+                        item={item}
                       />
 
                     </>

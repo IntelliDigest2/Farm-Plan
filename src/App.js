@@ -32,6 +32,7 @@ import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
+import GiftFood from "./components/Pages/Account/Personal/GiftFood";
 import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
@@ -81,6 +82,8 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 
 //* Chart.js
 import ChartView from "./components/Pages/Account/Charts/Chart";
+import GiftFoodChart from "./components/Pages/Account/Charts/GiftFoodChart";
+
 import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 
 const App = (props) => {
@@ -202,6 +205,7 @@ const App = (props) => {
             <Route path="/view-map" exact component={Map} />
 
             <Route path="/food-waste" exact component={FoodWaste} />
+            <Route path="/gift-food" exact component={GiftFood} />
             <Route path="/food-waste-edible" exact component={FoodWasteEdible} />
             <Route path="/food-loss" exact component={FoodLoss} />
             <Route
@@ -213,6 +217,9 @@ const App = (props) => {
             <Route path="/table" component={InfoTable} />
 
             <Route path="/chart" exact component={ChartView} />
+
+            <Route path="/gift-chart" exact component={GiftFoodChart} />
+
 
             <Route path="/food-reduction" component={FoodReduction} />
 
