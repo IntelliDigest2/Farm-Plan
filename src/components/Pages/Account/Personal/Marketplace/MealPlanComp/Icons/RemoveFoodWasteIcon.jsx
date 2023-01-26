@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 
 //need props id
 function RemoveFoodWasteIcon(props) {
+
+  const [showModal, setShow] = useState(false);
+
 
   const history = useHistory();
 
@@ -23,6 +26,9 @@ function RemoveFoodWasteIcon(props) {
     props.setUpdate(props.update + 1);
   };
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <>
       <Tooltip title="Remove">
@@ -30,16 +36,39 @@ function RemoveFoodWasteIcon(props) {
           aria-label="Remove"
           sx={{ ml: 2 }}
           // onClick={() => handleDelete(props.id)}
-          onClick={()=> {
-            handleDelete(props.id)
-            history.push("/food-waste")
-          }}
+          // onClick={()=> {
+          //   handleDelete(props.id)
+          //   history.push("/food-waste")
+          // }}
         >
-        <Button variant="outlined" color="success">
+        <Button variant="outlined" color="success" onClick={handleShow}>
           Add To Food Waste
         </Button>        
       </IconButton>
       </Tooltip>
+
+      <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add To Food Waste</Modal.Title>
+          </Modal.Header>
+        <Modal.Body>
+            This will remove {props.item.quantity} {props.item.measure} of {props.item.item} from the inventory
+          </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary"
+        onClick={() => {
+          handleDelete(props.id)
+          history.push("/food-waste")
+        }}>
+            Yes
+          </Button>
+          <Button variant="secondary" 
+          onClick={handleClose}
+          >
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

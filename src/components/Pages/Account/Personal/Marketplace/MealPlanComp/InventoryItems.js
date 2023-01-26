@@ -116,6 +116,8 @@ function InventoryItems(props) {
                         value={props.value}
                         update={props.update}
                         setUpdate={props.setUpdate}
+                        item={item}
+
                       />
                       <GiftFoodIcon
                         id={item.id}
