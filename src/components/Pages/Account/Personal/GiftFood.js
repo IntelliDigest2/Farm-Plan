@@ -257,13 +257,13 @@ const GiftFood = (props) => {
 
   return (
     <PageWrap
-      header="Update Food Waste"
-      subtitle="Upload Edible or Inedible Food Waste"
+      header="Gifted Food"
+      subtitle="Upload Gifted Food Info"
       goTo="/account"
     >
       <Container fluid className="web-center">
         <Form>
-          <FormGroup className="mb-3">
+          {/* <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Edible or Inedible
             </Form.Label>
@@ -276,7 +276,41 @@ const GiftFood = (props) => {
               }}
               items={["Edible", "Inedible"]}
             />
-          </FormGroup>
+          </FormGroup> */}
+
+          <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
+            Expiry Date
+          </Form.Label>
+          <Form.Control
+            id="expiryDate"
+            placeholder="DD/MM/YYYY"
+            onChange={(e) => {
+              updateStateValue(e);
+            }}
+            value={upload.expiryDate}
+          />
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
+          <InputGroup>
+            <Form.Control
+              id="foodWasteCost"
+              value={upload.foodWasteCost}
+              readOnly
+            />
+            <Dropdown
+              id="currency"
+              styling="grey dropdown-input-right"
+              data={upload.currency}
+              function={(eventKey, e) => {
+                changeMultiplier(e);
+                updateStateValue(e);
+              }}
+              items={["GBP (£)", "USD ($)", "EUR (€)"]}
+            />
+          </InputGroup>
+        </FormGroup>
           <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Weight / Volume
@@ -302,12 +336,12 @@ const GiftFood = (props) => {
               />
             </InputGroup>
           </FormGroup>
-          <EdibleInedible
+          {/* <EdibleInedible
             upload={upload}
             multipliers={multipliers}
             changeMultiplier={changeMultiplier}
             updateStateValue={updateStateValue}
-          />
+          /> */}
           <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>GHG</Form.Label>
             <InputGroup>
