@@ -1,4 +1,4 @@
-export const createSavedMeal = (data) => {
+export const createRecipe = (recipe) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -34,7 +34,7 @@ export const createSavedMeal = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("mySavedMeals")
-      .add(data.upload)
+      .add(recipe.upload)
       .then((docRef) => {
         // make the docId easily acsessible so that we can delete it later if we want.
         getFirebase()
@@ -44,16 +44,16 @@ export const createSavedMeal = (data) => {
           .collection("mySavedMeals")
           .doc(docRef.id)
           .set({ id: docRef.id }, { merge: true });
-        dispatch({ type: "CREATE_DATA" });
+        dispatch({ type: "CREATE_RECIPE", recipe });
       })
       .catch((err) => {
-        dispatch({ type: "CREATE_DATA_ERROR", err });
+        dispatch({ type: "CREATE_RECIPE_ERROR", err });
       });
   };
 };
 
-export const getSavedMeals = (data) => {
-  return (dispatch, getState, { getFirebase }) => {
+export const getRecipes = (recipe) => {
+  return (dispatch, getState, { getFirestore }) => {
     //make async call to database
     const profile = getState().firebase.profile;
     const authUID = getState().firebase.auth.uid;
@@ -83,8 +83,7 @@ export const getSavedMeals = (data) => {
         break;
     }
 
-    getFirebase()
-      .firestore()
+    getFirestore()
       .collection("marketplace")
       .doc(uid)
       .collection("mySavedMeals")
@@ -94,15 +93,15 @@ export const getSavedMeals = (data) => {
         snapshot.forEach((doc) => {
           data.push(doc.data());
         });
-        dispatch({ type: "GET_DATA", payload: data });
+        dispatch({ type: "GET_RECIPES", payload: data });
       })
       .catch((err) => {
-        dispatch({ type: "GET_DATA_ERROR", err });
+        dispatch({ type: "GET_RECIPES_ERROR", err });
       });
   };
 };
 
-export const deleteSavedMeal = (data) => {
+export const deleteSavedMeal = (recipe) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -138,11 +137,11 @@ export const deleteSavedMeal = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("mySavedMeals")
-      .doc(data.id)
+      .doc(recipe.id)
       .delete()
-      .then(() => console.log("successfully deleted! "))
+      .then(() => dispatch({ type: "DELETE_RECIPE", recipe }))
       .catch((err) => {
-        dispatch(console.log("Error removing document:", err));
+        dispatch({ type: "DELETE_RECIPE_ERROR", err });
       });
   };
 };

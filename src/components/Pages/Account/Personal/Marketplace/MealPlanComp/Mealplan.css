@@ -28,6 +28,17 @@
   padding-bottom: 1.5rem;
 }
 
+.plan-box-planner {
+  display:flex; 
+  flex-direction:row;
+  clear: both;
+}
+
+.plan-box-planner .plan-box-add {
+  margin-left: 600px;
+  max-width: 100px;
+}
+
 .plan-box .header {
   background-color: #32797e;
   padding-left: 1%;
@@ -38,7 +49,7 @@
 
 .plan-box .button {
   position: absolute;
-  bottom: 1%;
+  bottom: 0.5%;
   right: 2%;
 }
 
@@ -59,7 +70,6 @@
   min-height: 2rem;
   line-height: 2rem;
   color: white;
-  font-weight: 700;
   display: flex;
 }
 
@@ -202,6 +212,12 @@
   padding-right: 0.5rem;
   width: fit-content;
   height: fit-content;
+}
+
+.qrcode-btn {
+  font-family: "Source Sans Pro";
+  font-weight: 500;
+  font-size: 15px;
 }
 
 /* search */

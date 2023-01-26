@@ -15,7 +15,7 @@
   margin-top: 2%;
   margin-bottom: 2%;
   font-size: 1.3rem !important;
-  border-radius: 8px;
+  border-radius: 5px;
 }
 
 .icon-btn {
@@ -88,7 +88,7 @@
   transition: transform 0.5s;
 }
 .green-light-btn:hover {
-  background-color: #bfc563;
+  background-color: #d1d682;
   color: rgb(0, 0, 0);
 }
 .green-light-btn:focus {

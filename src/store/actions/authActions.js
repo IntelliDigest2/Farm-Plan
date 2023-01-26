@@ -68,7 +68,7 @@ export const updateEmail = (credentials) => {
             dispatch({ type: "CHANGE_EMAIL_SUCCESS" });
           })
           .catch((err) => {
-            dispatch({ type: "CHANGE_EMAIL_ERROR", err });
+           dispatch({ type: "CHANGE_EMAIL_ERROR", err });
           });
       });
   };
@@ -95,16 +95,32 @@ export const updateProfile = (users) => {
 //sets isSeller in "users" and the profile in "marketplace"
 export const becomeSeller = (seller) => {
   return (dispatch, getState, { getFirebase }) => {
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "farm_admin":
+        uid = authUID;
+        break;
+      case "farm_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
     const firestore = getFirebase().firestore();
 
     firestore
       .collection("users")
-      .doc(seller.uid)
+      .doc(uid)
       .set({ ...seller.profile }, { merge: true })
       .then(() => {
         return firestore
           .collection("marketplace")
-          .doc(seller.uid)
+          .doc(uid)
           .set({ ...seller.info }, { merge: true });
       })
       .then(() => {
@@ -166,12 +182,14 @@ export const signUp = (newUser) => {
       case "Hospitals":
       case "Hotels":
       case "Offices":
-      case "Restaurants":
       case "Shop/Supermarket":
       case "Recreational Centers":
       case "Business":
         type = "business_admin";
         break;
+      case "Restaurants":
+        type = "restaurant_admin";
+        break
       case "Schools":
         type = "academic_admin";
         break;
@@ -179,6 +197,7 @@ export const signUp = (newUser) => {
         type = "farm_admin";
         break;
       case "Households":
+      case "Personal":
         type = "household_admin";
         break;
       default:
@@ -196,6 +215,7 @@ export const signUp = (newUser) => {
           .collection("users")
           .doc(resp.user.uid)
           .set({
+            // ...newUser,
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             initials: newUser.firstName[0] + newUser.lastName[0],
@@ -204,6 +224,12 @@ export const signUp = (newUser) => {
             city: newUser.city,
             country: newUser.country,
             region: newUser.region,
+            //restaurant-specific user data:
+            restaurantName: newUser.restaurantName,
+            regulatoryBody: newUser.regulatoryBody,
+            regulatoryBodyID: newUser.regulatoryBodyID,
+            cuisine: newUser.cuisine,
+            restaurantDescription: newUser.restaurantDescription,
             type: type,
           });
 
@@ -326,6 +352,7 @@ export const createSubAccount = (data) => {
             region: data.region,
             admin: data.uid,
             type: data.type,
+            restaurantName: data.restaurantName,
           });
       })
       .then(() => {
@@ -408,6 +435,41 @@ export const deleteSubAccount = (data) => {
       })
       .catch((err) => {
         dispatch({ type: "DELETE_SUBACCOUNT_ERROR", err });
+      });
+  };
+};
+
+export const changeConsumerPostcode = (consumer) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+      firestore
+      .collection("marketplace")
+      .doc(consumer.uid)
+      .set({ ...consumer.upload }, { merge: true })
+      .then(() => {
+        dispatch({ type: "CONSUMER_SUCCESS" });
+      })
+      .catch((err) => {
+        console.log("err");
+        dispatch({ type: "CONSUMER_ERROR", err });
+      });
+  };
+};
+
+export const getConsumerPostcode = (uid) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firestore = getFirebase().firestore();
+
+      firestore
+      .collection("marketplace")
+      .doc(uid)
+      .get()
+      .then((snapshot) => {
+        dispatch({ type: "GET_DATA", payload: snapshot.data() });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
       });
   };
 };

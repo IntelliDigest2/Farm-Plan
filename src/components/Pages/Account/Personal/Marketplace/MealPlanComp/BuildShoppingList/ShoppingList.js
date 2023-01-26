@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 // import buildShoppingList from "./Build";
 import ShoppingListHeader from "./header";
-import ShopItems from "./shop";
+import ShopItems from "./ShopItems";
 
 import moment from "moment";
 
@@ -19,7 +19,7 @@ export const ShoppingList = ({ tab, update, forceUpdate }) => {
   return (
     <div className="calendar">
       <ShoppingListHeader value={value} setValue={setValue} />
-      <ShopItems value={value} tab={tab} />
+      <ShopItems value={value} />
     </div>
   );
 };

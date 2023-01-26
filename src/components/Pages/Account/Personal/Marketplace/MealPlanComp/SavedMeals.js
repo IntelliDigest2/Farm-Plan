@@ -1,60 +1,129 @@
 import React, { useState, useEffect } from "react";
 
-import MealsBox from "./MealsBox";
+import MealsBoxRecipe from "./MealsBox";
 import { connect } from "react-redux";
-import { getSavedMeals } from "../../../../../../store/actions/marketplaceActions/savedMealData";
+import { getRecipes } from "../../../../../../store/actions/marketplaceActions/savedMealData";
+import { getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
 
 const SavedMeals = (props) => {
   const [sMeals, setSMeals] = useState([]);
+  const [weeklyMeals, setWeeklyMeals] = useState([]);
+
+
+  //trigger this when editing/deleting items
+  const [update, setUpdate] = useState(0);
+  const forceUpdate = () => {
+    setUpdate(update + 1);
+  };
 
   //this sends data request
   useEffect(() => {
-    if (props.tab === 1) {
-      props.getSavedMeals();
-    }
-  }, [props.tab, props.update]);
+    props.getRecipes();
+  }, [update]);
+
+  const updateWeeklyMeals = async () => {
+    //clears the meals array before each update- IMPORTANT
+    setWeeklyMeals([]);
+
+    //sets a new meal object in the array for every document with this date attached
+    props.weekPlans.forEach((doc) => {
+      var mealName = doc.meal;
+      var ingredients = doc.ingredients;
+      var id = doc.id;
+     // var mealType = doc.mealType;
+      var url = doc.url;
+      var totalNutrients = doc.totalNutrients;
+      var totalDaily = doc.totalDaily;
+      var recipeYield = doc.recipeYield;
+      let nn = doc.nn
+      // if (doc.nonNativeData) {
+      //   nn = doc.nonNativeData;
+      // } else {
+      //   nn = false;
+      // }
+
+      setWeeklyMeals((meals) => [
+        ...meals,
+        {
+          meal: mealName,
+          //mealType: mealType,
+          ingredients: ingredients,
+          id: id,
+          nn: nn,
+          url: url,
+          totalNutrients: totalNutrients,
+          totalDaily: totalDaily,
+          recipeYield: recipeYield,
+        },
+      ]);
+    });
+  };
+
 
   const updateSMeals = async () => {
     //clears the meals array before each update- IMPORTANT
     setSMeals([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.data.forEach((doc) => {
+    props.mealPlan.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
       var mealType = doc.mealType;
+      var nonNativeData = doc.nonNativeData;
+      var totalDaily = doc.totalDaily;
+      var totalNutrients = doc.totalNutrients;
+      var url = doc.url;
+      var recipeYield = doc.yield;
 
-      setSMeals((sMeals) => [
-        ...sMeals,
-        {
-          meal: mealName,
-          mealType: mealType,
-          ingredients: ingredients,
-          id: id,
-        },
-      ]);
+
+      if(nonNativeData) {
+        setSMeals((sMeals) => [
+          ...sMeals,
+          {
+            meal: mealName,
+            mealType: mealType,
+            ingredients: ingredients,
+            id: id,
+            nonNativeData: nonNativeData,
+            totalDaily: totalDaily,
+            totalNutrients: totalNutrients,
+            url: url,
+            recipeYield: recipeYield
+          },
+        ]);
+      }
+      else {
+        setSMeals((sMeals) => [
+          ...sMeals,
+          {
+            meal: mealName,
+            mealType: mealType,
+            ingredients: ingredients,
+            id: id,
+          },
+        ]);
+     }
     });
   };
 
   useEffect(() => {
     // const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-    if (props.tab === 1) {
-      updateSMeals();
-      console.log("Saved Meals", sMeals);
-    }
+    updateSMeals();
+    // console.log("Saved Meals", sMeals);
     // .then(setSMeals(sorted));
-    // console.log(sMeals);
-  }, [props.data]);
+    // console.log(props.data);
+  }, [props.mealPlan]);
 
   return (
     <>
       <div className="basic-title-left mb-3">My Saved Meals</div>
       <div className="saved-meals">
-        <MealsBox
-          forceUpdate={props.forceUpdate}
+        <MealsBoxRecipe
+          forceUpdate={forceUpdate}
           onChange={props.onChange}
           meals={sMeals}
+          weeklyMeals={weeklyMeals}
           saved={true}
           value={props.value}
         />
@@ -65,13 +134,15 @@ const SavedMeals = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.getData,
+    mealPlan: state.mealPlan.savedMeals,
+    weekPlans: state.mealPlanner.weekPlans,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSavedMeals: (saved) => dispatch(getSavedMeals(saved)),
+    getRecipes: (saved) => dispatch(getRecipes(saved)),
+    getWeeklyPlan: (plan) => dispatch(getWeeklyPlan(plan)),
   };
 };
 

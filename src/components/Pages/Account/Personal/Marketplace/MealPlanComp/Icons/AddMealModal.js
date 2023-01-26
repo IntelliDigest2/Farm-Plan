@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
 import EatingOut from "./EatingOut";
-import AddMealForm from "./AddMealForm";
+import { PreparedOrRaw } from "./PreparedOrRaw";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 
-export function AddMealModal({ show, setShow, value, forceUpdate }) {
+export function AddMealModal({ show, setShow, value }) {
   const [eatingOut, setEatingOut] = useState("unconfirmed");
+
+  //control barcode scanner
+  const [expand, setExpand] = useState("+ scan from barcode");
+  
+  //control modal
   const handleForm = () => setShow(true);
   const handleFormClose = () => {
     setShow(false);
@@ -37,12 +42,8 @@ export function AddMealModal({ show, setShow, value, forceUpdate }) {
             eatingOut={eatingOut}
             setEatingOut={setEatingOut}
             handleFormClose={handleFormClose}
+            value={value}
           >
-            <AddMealForm
-              value={value}
-              handleFormClose={handleFormClose}
-              forceUpdate={forceUpdate}
-            />
           </InOrOut>
         </Modal.Body>
       </Modal>
@@ -80,6 +81,6 @@ function InOrOut(props) {
     case "yes":
       return <EatingOut handleFormClose={props.handleFormClose} />;
     case "no":
-      return <>{props.children}</>;
+      return <PreparedOrRaw value={props.value}/>;
   }
 }

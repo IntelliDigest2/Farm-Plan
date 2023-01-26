@@ -3,27 +3,64 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import "../../../SubComponents/Button.css";
 import { SubButton } from "../../../SubComponents/Button";
 
+import { Select } from "../../../SubComponents/Dropdown";
+import { countryNames, countries } from "../../../lib/Countries";
+import {
+  postcodeValidator,
+  postcodeValidatorExistsForCountry,
+} from "postcode-validator";
+
 import { connect } from "react-redux";
 import { becomeConsumer } from "../../../../store/actions/authActions";
 import { submitNotification } from "../../../lib/Notifications";
+import Survey from "./MealGenerator/Survey";
 
 function PTSForm(props) {
   const [validated, setValidated] = useState(false);
+  const [country, setCountry] = useState("");
+  const [countryCode, setCountryCode] = useState("");
   const [postcode, setPostcode] = useState("");
+  const [err, setErr] = useState(false);
+
+  useEffect(() => {
+    if (country) {
+      let cc = countries.find((c) => c.name === country);
+      setCountryCode(cc.code);
+    }
+  }, [country]);
+
+  useEffect(() => {
+    if (postcodeValidatorExistsForCountry(countryCode)) {
+      // console.log("validator exists", postcode, countryCode);
+      if (postcodeValidator(postcode.trim(), countryCode)) {
+        setValidated(true);
+        // console.log("valid");
+        setErr(false);
+      } else {
+        setValidated(false);
+        setErr(true);
+        // console.log("no");
+      }
+    } else {
+      setValidated(true);
+    }
+  }, [postcode]);
+
+  // useEffect(() => {
+  //   console.log(validated);
+  // }, [validated]);
 
   const handleSubmit = (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    // const form = e.currentTarget;
 
-    if (postcode) {
+    if (!err) {
       e.preventDefault();
-      setValidated(true);
+      handleFinish();
+      // console.log("I'm valid!!!!");
     } else {
       e.preventDefault();
-      setValidated(false);
+      console.log("prevented");
+      e.stopPropagation();
     }
   };
 
@@ -43,13 +80,6 @@ function PTSForm(props) {
     props.setContent("6month");
     props.handleClose();
   };
-
-  useEffect(() => {
-    if (validated) {
-      handleFinish();
-      // console.log("I'm valid!!!!");
-    }
-  }, [validated]);
 
   useEffect(() => {}, [props.content]);
 
@@ -72,16 +102,16 @@ function PTSForm(props) {
               focus on adopting sustainable farm practices that produce more
               nutritious food with a better impact on the environment.
             </p>
-            <p>
+            {/* <p>
               Find out more about the Plan to Save{" "}
-              <a href="https://intellidigest.com/services/plan-to-save/">
+              <a href="https://intellidigest.com/meal-plan/">
                 here
               </a>
-            </p>
+            </p> */}
             <SubButton
-              text="Start Now!"
+              text="Start now!"
+              goTo="/meal-plan"
               styling="green"
-              onClick={() => props.setContent("6month")}
             />
           </div>
         </>
@@ -116,27 +146,23 @@ function PTSForm(props) {
     case "choose":
       return (
         <div className="body">
-          <p>
-            In a short while, you will be able to create a 6 month meal plan
-            with us that is right for you.
-          </p>
-          <SubButton text="close" styling="green" onClick={props.handleClose} />
           {/* <p>Choose a base for your 6 month meal plan.</p>
           <SubButton
             text="Omnivore"
             styling="green"
-            onClick={() => props.setContent("location")}
+            // onClick={}
           />
           <SubButton
             text="Vegetarian"
             styling="green"
-            onClick={() => props.setContent("location")}
+            // onClick={}
           />
           <SubButton
             text="Vegan"
             styling="green"
-            onClick={() => props.setContent("location")}
+            // onClick={}
           /> */}
+          <Survey />
         </div>
       );
     case "refine":
@@ -148,17 +174,27 @@ function PTSForm(props) {
     case "location":
       return (
         <>
-          <div className="title" style={{ marginTop: "15%" }}>
+          <div className="title" style={{ marginTop: "10%" }}>
             JOIN THE PLAN TO SAVE!
           </div>
           <div className="body">
             <Form
-              noValidate
-              validated={validated}
               onSubmit={(e) => {
                 handleSubmit(e);
               }}
             >
+              <Form.Group>
+                <p>Your Country</p>
+                <Select
+                  id="country"
+                  function={(e) => {
+                    setCountry(e.target.value);
+                  }}
+                  value={country}
+                  placeholder="Country"
+                  items={countryNames}
+                />
+              </Form.Group>
               <Form.Group controlId="postcode">
                 <p>Your Postcode</p>
                 <Form.Control
@@ -166,9 +202,9 @@ function PTSForm(props) {
                   onChange={(e) => setPostcode(e.target.value)}
                   required
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid Postcode.
-                </Form.Control.Feedback>
+                {err && (
+                  <div className="err">Please enter a valid postcode.</div>
+                )}
               </Form.Group>
               <Button type="submit" className="sub-btn green-btn shadow-none">
                 <div className="basic-title">Finish</div>

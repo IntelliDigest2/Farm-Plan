@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { Container } from "react-bootstrap";
 import { MapContainer, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";

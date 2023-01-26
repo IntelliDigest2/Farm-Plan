@@ -6,8 +6,8 @@ import ListItem from "@mui/material/ListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-
 import Add from "../Icons/AddIcon";
+import SaveMealIcon from "../Icons/SaveMealIcon";
 
 export default function RecipeList(props) {
   return (
@@ -30,9 +30,22 @@ export default function RecipeList(props) {
                         meal={item.recipe.label}
                         ingredients={item.recipe.ingredients}
                         url={item.recipe.url}
+                        totalNutrients={item.recipe.totalNutrients}
+                        totalDaily={item.recipe.totalDaily}
+                        yield={item.recipe.yield}
                         onChange={props.onChange}
                         saved={false}
                       />
+                      <SaveMealIcon 
+                        value={props.value}
+                        mealType={item.recipe.mealType}
+                        meal={item.recipe.label}
+                        ingredients={item.recipe.ingredients}
+                        url={item.recipe.url}
+                        totalNutrients={item.recipe.totalNutrients}
+                        totalDaily={item.recipe.totalDaily}
+                        yield={item.recipe.yield}
+                      /> 
                     </div>
                   </ListSubheader>
                   {item.recipe.ingredients &&

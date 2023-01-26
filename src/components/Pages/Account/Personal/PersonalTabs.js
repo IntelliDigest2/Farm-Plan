@@ -8,6 +8,7 @@ import { Colors } from "../../../lib/Colors";
 // import AccordionDetails from "@mui/material/AccordionDetails";
 
 export function Food({ setShow, setChooseModal }) {
+
   return (
     <>
       <IconButton
@@ -39,8 +40,8 @@ export function Health({ setShow, setChooseModal }) {
         icon="plant"
         label="Nutrient Gap"
         color="yellow"
-        goTo="/"
-        disabled="true"
+        goTo="/nutrient-gap"
+        // disabled="true"
       />
       <IconButton
         title="Find out more about the Plan to Save campaign, and what you can do to help."
@@ -51,6 +52,14 @@ export function Health({ setShow, setChooseModal }) {
           setShow(true);
           setChooseModal(true);
         }}
+      />
+
+      <IconButton
+        icon="plant"
+        label="Composition"
+        color="green"
+        goTo="/nutrient-composition"
+        // disabled="true"
       />
       {/* <Accordion
         style={{
@@ -98,6 +107,20 @@ export function Environment() {
         label="Waste Chart"
         color="yellow"
         goTo="/chart"
+      />
+      <IconButton
+        title="Gift a Food Item."
+        icon="chart"
+        label="Gifted Items Chart"
+        color="turquoise"
+        goTo="/gift-food"
+      />
+       <IconButton
+        title="View your gifted food data."
+        icon="chart"
+        label="Gift Chart"
+        color="yellow"
+        goTo="/gift-chart"
       />
       <IconButton
         title="View the world map of WFT users!"

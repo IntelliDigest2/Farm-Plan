@@ -16,6 +16,42 @@ body {
   font-size: 16px;
 }
 
+/* About us page */
+.contrast {
+  margin-left: -1rem;
+  margin-right: -1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #d9dd99;
+  padding: 2%;
+  /* ignoring parent padding => 100% + 2*padding */
+  width: calc(100% + 2rem);
+}
+.no-contrast {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 0.3rem;
+  padding: 2rem;
+}
+
+.breaker {
+  margin-left: -1rem;
+  margin-right: -1rem;
+  height: 30vh;
+  overflow: hidden;
+}
+.breaker img {
+  position: relative;
+  object-fit: cover;
+  /* ignoring parent padding => 100% + 2*padding */
+  width: calc(100% + 2rem);
+  top: -100%;
+}
+
 /* page not found */
 
 .not-found .page-not-found {
@@ -27,96 +63,6 @@ body {
 .not-found .not-found-message {
   font-size: 23px;
   padding-top: 10px;
-}
-
-/* about page */
-.about h1 {
-  font-size: 28px;
-}
-
-.about p {
-  font-size: 17px;
-}
-
-.about {
-  margin: auto;
-}
-
-/* login page and signup page */
-
-.login-graphic,
-.signup-graphic,
-.home,
-.home-mobile {
-  background-color: rgb(218, 218, 218);
-  background-image: linear-gradient(
-      rgba(51, 47, 47, 0.5),
-      rgba(95, 95, 95, 0.5)
-    ),
-    url("../../images/robot-backgroung.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-}
-
-.signup-graphic {
-  background-image: linear-gradient(
-      rgba(51, 47, 47, 0.5),
-      rgba(95, 95, 95, 0.5)
-    ),
-    url("../../images/signup3.jpg");
-  height: 175vh;
-}
-
-.new-signup-graphic {
-  background-image: url("../../images/for-website-col-test-9.png");
-  height: 95vh;
-}
-
-/* .foodpage-graphic{
-    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
-    height: 100vh;
-  }
-
-  .foodwastepage-graphic{
-    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/robot-backgroung.jpg");
-    height: 125vh;
-  } */
-
-/* .signup-graphic-confirm{
-    background-image: linear-gradient(rgba(51, 47, 47, 0.5),rgba(95, 95, 95, 0.5)), url("../../images/signup3.jpg");
-    height: 100vh;
-    margin-top: 0%;
-    margin-bottom: 0%;
-  } */
-
-.home {
-  background-image: linear-gradient(rgba(92, 92, 92, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../../images/for-website.png");
-}
-
-.home-mobile {
-  background-image: linear-gradient(rgba(92, 92, 92, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../../images/for-website-2.png");
-}
-
-.home-text-mobile {
-  font-size: 3.5vh;
-  font-weight: bold;
-  color: rgb(218, 218, 218);
-}
-
-.home-update-text-mobile {
-  font-size: 2vh;
-  color: rgb(218, 218, 218);
-}
-
-.home-play-store-link {
-  color: #aab41e;
-  font-weight: 600;
-  font-size: 18px;
-  text-decoration: none;
 }
 
 .fix-image {
@@ -172,11 +118,6 @@ body {
   color: #757c0e;
   text-decoration: none;
 }
-
-/* .signup .confirm-btn{
-    background-color: rgb(13, 27, 92);
-    justify-content: center;
-  } */
 
 .terms-link,
 .privacy-link {
@@ -266,6 +207,11 @@ body {
   height: auto;
 }
 
+.image {
+  object-fit: contain;
+  max-width: 100%;
+}
+
 .web-center {
   /* float: center; */
   display: block;
@@ -276,37 +222,6 @@ body {
   margin-top: 2rem;
   margin-bottom: 2rem;
   font-family: "Source Sans Pro", sans-serif;
-}
-
-.custom-btn {
-  background-color: rgb(13, 27, 92);
-  border-color: rgb(13, 27, 92);
-}
-
-.custom-btn-2 {
-  background-color: #aab41e;
-  border-color: #aab41e;
-  height: 120px;
-  width: 100%;
-  margin-bottom: 2.5%;
-  font-weight: 600;
-  font-size: 200%;
-  padding: 5% 0 5% 0;
-}
-
-.custom-btn-3 {
-  background-color: rgb(24, 160, 101);
-  border-color: rgb(24, 160, 101);
-}
-
-.custom-btn-4 {
-  background-color: rgb(176, 10, 182);
-  border-color: rgb(176, 10, 182);
-}
-
-.custom-btn-5 {
-  background-color: rgb(13, 108, 6);
-  border-color: rgb(13, 108, 6);
 }
 
 /* map page */
@@ -406,4 +321,12 @@ body {
 .basic-lg {
   font-size: 1.5rem !important;
   font-weight: 600 !important;
+}
+
+.basic-text {
+  font-family: "Source Sans Pro";
+  font-weight: 550;
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  text-align: center;
 }

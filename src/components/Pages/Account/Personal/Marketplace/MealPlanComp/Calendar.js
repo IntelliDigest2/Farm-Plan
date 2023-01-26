@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 import { AddMealModal } from "./Icons/AddMealModal";
+import Scanner from "../../../../../SubComponents/QRCode/Scanner";
 
 import buildCalendar from "./BuildCalendar/Build";
-import dayStyles, { beforeToday } from "./BuildCalendar/dayStyles";
+import dayStyles from "./BuildCalendar/dayStyles";
 import CalendarHeader from "./BuildCalendar/header";
 
 import MyMeals from "./meals";
+import { PreparedOrRaw } from "./Icons/PreparedOrRaw";
 
-export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
+export const Calendar = ({ value, onChange }) => {
   const [calendar, setCalendar] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -38,7 +40,7 @@ export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
                 <div
                   className="day"
                   key={day.format("D").toString()}
-                  onClick={() => !beforeToday(day) && onChange(day)}
+                  onClick={() => onChange(day)}
                 >
                   <div className={dayStyles(day, value)}>
                     {day.format("D").toString()}
@@ -49,21 +51,16 @@ export const Calendar = ({ value, onChange, tab, update, forceUpdate }) => {
           ))}
         </div>
       </div>
+      <div className="row">
+        <div className="col-8" style={{textAlign: "left"}}>Add casual meals to your calendar or edit added meals 🙂</div>
+        <div className="col-4" style={{textAlign: "right"}}><AddMealModal value={value} show={show} setShow={setShow} />
+      </div>
+      </div>
+      <div> 
+      </div>
       <div className="plan-box">
         <div className="header">{chosenDay()}</div>
-        <MyMeals
-          value={value}
-          show={show}
-          update={update}
-          tab={tab}
-          forceUpdate={forceUpdate}
-        />
-        <AddMealModal
-          value={value}
-          show={show}
-          setShow={setShow}
-          forceUpdate={forceUpdate}
-        />
+        <MyMeals value={value} show={show} />
       </div>
     </>
   );

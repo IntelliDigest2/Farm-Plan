@@ -1,4 +1,4 @@
-export const createMealPlanData = (data) => {
+export const createMealPlanData = (mealPlan) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -33,30 +33,30 @@ export const createMealPlanData = (data) => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("mealPlanData")
-      .doc(data.month)
-      .collection(data.day)
-      .add(data.upload)
+      .collection("mealDiary")
+      .doc(mealPlan.month)
+      .collection(mealPlan.day)
+      .add(mealPlan.upload)
       .then((docRef) => {
         // make the docId easily accessible so that we can delete it later if we want.
         getFirebase()
           .firestore()
           .collection("marketplace")
           .doc(uid)
-          .collection("mealPlanData")
-          .doc(data.month)
-          .collection(data.day)
+          .collection("mealDiary")
+          .doc(mealPlan.month)
+          .collection(mealPlan.day)
           .doc(docRef.id)
           .set({ id: docRef.id }, { merge: true });
-        dispatch({ type: "CREATE_DATA" });
+        dispatch({ type: "CREATE_MEAL", mealPlan });
       })
       .catch((err) => {
-        dispatch({ type: "CREATE_DATA_ERROR", err });
+        dispatch({ type: "CREATE_MEAL_ERROR", err });
       });
   };
 };
 
-export const getMealData = (data) => {
+export const getMealData = (meals) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -92,23 +92,23 @@ export const getMealData = (data) => {
       .collection("marketplace")
       .doc(uid)
       .collection("mealPlanData")
-      .doc(data.month)
-      .collection(data.day)
+      .doc(meals.month)
+      .collection(meals.day)
       .get()
       .then((snapshot) => {
-        const data = [];
+        const mealPlan = [];
         snapshot.forEach((doc) => {
-          data.push(doc.data());
+          mealPlan.push(doc.data());
         });
-        dispatch({ type: "GET_DATA", payload: data });
+        dispatch({ type: "GET_MEALS", payload: mealPlan });
       })
       .catch((err) => {
-        dispatch({ type: "GET_DATA_ERROR", err });
+        dispatch({ type: "GET_MEALS_ERROR", err });
       });
   };
 };
 
-export const editMealData = (data) => {
+export const getMealDiary = (meals) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -143,19 +143,24 @@ export const editMealData = (data) => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("mealPlanData")
-      .doc(data.month)
-      .collection(data.day)
-      .doc(data.id)
-      .set(data.upload, { merge: true })
-      .then(() => console.log("successfully edited! "))
+      .collection("mealDiary")
+      .doc(meals.month)
+      .collection(meals.day)
+      .get()
+      .then((snapshot) => {
+        const mealPlan = [];
+        snapshot.forEach((doc) => {
+          mealPlan.push(doc.data());
+        });
+        dispatch({ type: "GET_MEAL_DIARY", payload: mealPlan });
+      })
       .catch((err) => {
-        dispatch(console.log("Error editing document:", err));
+        dispatch({ type: "GET_MEAL_DIARY_ERROR", err });
       });
   };
 };
 
-export const deleteMealData = (data) => {
+export const getSingleMealDiary = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -190,14 +195,164 @@ export const deleteMealData = (data) => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("mealPlanData")
+      .collection("mealDiary")
       .doc(data.month)
-      .collection(data.day)
-      .doc(data.id)
+      .collection(data.day).where('id', '==', data.id)
+      .get()
+      .then((snapshot) => {
+        let meal
+        snapshot.forEach(doc => meal = doc.data());
+        dispatch({ type: "GET_SINGLE_MEAL_DIARY", payload: meal });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_SINGLE_MEAL_DIARY_ERROR", err });
+      });
+  };
+};
+
+
+
+export const editMealData = (mealPlan) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    console.log("check:", mealPlan)
+    
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("mealPlanData")
+      .doc(mealPlan.month)
+      .collection(mealPlan.day)
+      .doc(mealPlan.id)
+      .set(mealPlan.upload, { merge: true })
+      .then(() => dispatch({ type: "EDIT_MEAL", mealPlan }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_MEAL_ERROR", err });
+      });
+  };
+};
+
+export const editDiaryData = (mealPlan) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("mealDiary")
+      .doc(mealPlan.month)
+      .collection(mealPlan.day)
+      .doc(mealPlan.id)
+      .set(mealPlan.upload, { merge: true })
+      .then(() => dispatch({ type: "EDIT_DIARY_MEAL", mealPlan }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_DIARY_MEAL_ERROR", err });
+      });
+  };
+};
+
+
+export const deleteMealData = (mealPlan) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("mealDiary")
+      .doc(mealPlan.month)
+      .collection(mealPlan.day)
+      .doc(mealPlan.id)
       .delete()
-      .then(() => console.log("successfully deleted! "))
+      .then(() => dispatch({ type: "DELETE_MEAL", mealPlan }))
       .catch((err) => {
-        dispatch(console.log("Error removing document:", err));
+        dispatch({ type: "DELETE_MEAL_ERROR", err });
       });
   };
 };
@@ -206,13 +361,59 @@ export const recommend = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()
       .firestore()
-      .collection("anonymous_data")
+      .collection("recommendations")
       .add(data)
       .then(() => {
         dispatch({ type: "CREATE_DATA" });
       })
       .catch((err) => {
         dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+};
+
+export const getAllMarketplaceUsers = () => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .get()
+      .then((snapshot) => {
+        const userList = [];
+        snapshot.forEach((doc) => {
+          userList.push(doc.id);
+        });
+        dispatch({ type: "GET_DATA", payload: userList });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_DATA_ERROR", err });
+      });
+  };
+};
+
+export const getMealDataForUID = (uid, meals) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("mealPlanData")
+      .doc(meals.month)
+      .collection(meals.day)
+      .get()
+      .then((snapshot) => {
+        const mealPlan = [];
+        snapshot.forEach((doc) => {
+          mealPlan.push(doc.data());
+        });
+        dispatch({ type: "GET_MEALS", payload: mealPlan });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_MEALS_ERROR", err });
       });
   };
 };

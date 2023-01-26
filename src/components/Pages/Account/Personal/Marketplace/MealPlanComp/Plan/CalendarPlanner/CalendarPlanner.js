@@ -1,0 +1,24 @@
+import "./calendarStyle.css";
+import { useState } from "react";
+import Calendar from "./CalendarPlan";
+import FullCalendarApp from "./FullCalendar";
+import Details from "./Details";
+
+export default function CalendarPlanner(props, getItems, setGetItems) {
+  const [showDetails, setShowDetails] = useState(false);
+  const [data, setData] = useState(null);
+
+  const showDetailsHandle = (dayStr) => {
+    setData(dayStr);
+    setShowDetails(true);
+  };
+
+  return (
+    <div>
+      <h2>6-Months Meal Plan</h2>
+      <FullCalendarApp value={props.value} getItems={getItems} setGetItems={setGetItems}/>
+      <br />
+      {showDetails && <Details data={data} />}
+    </div>
+  );
+}
