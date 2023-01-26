@@ -37,6 +37,24 @@ export const createFoodWasteData = (data) => {
   };
 }; 
 
+//Works for new Admin/Sub acount structure
+export const createGiftFoodData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    getFirebase()
+      .firestore()
+      .collection(data.masterCollection)
+      .doc(data.uid)
+      .collection(data.collection)
+      .add(data.upload)
+      .then(() => {
+        dispatch({ type: "CREATE_DATA" });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATE_DATA_ERROR", err });
+      });
+  };
+}; 
+
 export const createMarketplaceData = (product) => {
   return (dispatch, getState, { getFirebase }) => {
     getFirebase()

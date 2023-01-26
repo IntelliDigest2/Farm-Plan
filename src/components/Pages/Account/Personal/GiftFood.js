@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Form, InputGroup, FormGroup, Container } from "react-bootstrap";
+import { Form, InputGroup, FormGroup, Container, Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
-  createFoodWasteData,
+  createGiftFoodData,
   createMapData,
 } from "./../../../../store/actions/dataActions";
 import { Redirect } from "react-router-dom";
 import { getFirebase } from "react-redux-firebase";
 import { PageWrap } from "../../../SubComponents/PageWrap";
 import { Dropdown } from "../../../SubComponents/Dropdown";
-import { DefaultButton } from "../../../SubComponents/Button";
+import { DefaultButton, SubButton } from "../../../SubComponents/Button";
 import { Divider } from "@mui/material";
 import { submitNotification } from "../../../lib/Notifications";
 
-const FoodWaste = (props) => {
+const GiftFood = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);
+  
+
   //useEffect to redirect if not correct account type
   useEffect(() => {
     if (props.profile.type) {
@@ -29,7 +31,7 @@ const FoodWaste = (props) => {
   }, [props.profile]);
 
   const defaultUpload = {
-    edibleInedible: "Edible",
+    edibleInedible: "Inedible",
     foodWasteWeight: 0,
     weightType: "Select Unit",
     carbsContent: 0,
@@ -233,16 +235,16 @@ const FoodWaste = (props) => {
     const data = {
       uid: uid,
       masterCollection: masterCollection,
-      collection: "writtenFoodWasteData",
+      collection: "writtenGiftFoodData",
       upload: {
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         ...upload,
       },
     };
 
-    props.createFoodWasteData(data);
+    props.createGiftFoodData(data);
     props.createMapData(mapData);
-    submitNotification("Success", "Food Waste successfully uploaded!");
+    submitNotification("Success", "Food had been added to your gifted items!");
     setUpload(defaultUpload);
     setMultipliers(defaultMultipliers);
   };
@@ -331,85 +333,15 @@ const FoodWaste = (props) => {
 };
 
 const EdibleInedible = (props) => {
+  const [showModal, setShow] = useState(true);
+
+  const handleClose = () => setShow(false);
+
   if (props.upload.edibleInedible === "Edible") {
+    //setShow(true)
     return (
       <>
-        {/* <FormGroup className="mb-3">
-          <Form.Label style={{ backgroundColor: "white" }}>
-            Carbs Content
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              type="number"
-              id="carbsContent"
-              onChange={(e) => {
-                props.updateStateValue(e);
-              }}
-              value={props.upload.carbsContent}
-            />
-            <Dropdown
-              id="carbsPerUnit"
-              styling="grey dropdown-input-right"
-              data={props.upload.carbsPerUnit}
-              function={(eventKey, e) => {
-                props.changeMultiplier(e);
-                props.updateStateValue(e);
-              }}
-              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
-            />
-          </InputGroup>
-        </FormGroup>
-        <FormGroup className="mb-3">
-          <Form.Label style={{ backgroundColor: "white" }}>
-            Protein Content
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              type="number"
-              id="proteinContent"
-              onChange={(e) => {
-                props.updateStateValue(e);
-              }}
-              value={props.upload.proteinContent}
-            />
-            <Dropdown
-              id="proteinPerUnit"
-              styling="grey dropdown-input-right"
-              data={props.upload.proteinPerUnit}
-              function={(eventKey, e) => {
-                props.changeMultiplier(e);
-                props.updateStateValue(e);
-              }}
-              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
-            />
-          </InputGroup>
-        </FormGroup>
-        <FormGroup className="mb-3">
-          <Form.Label style={{ backgroundColor: "white" }}>
-            Fat Content
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              type="number"
-              id="fatContent"
-              onChange={(e) => {
-                props.updateStateValue(e);
-              }}
-              value={props.upload.fatContent}
-            />
-            <Dropdown
-              id="fatPerUnit"
-              styling="grey dropdown-input-right"
-              data={props.upload.fatPerUnit}
-              function={(eventKey, e) => {
-                props.changeMultiplier(e);
-                props.updateStateValue(e);
-              }}
-              items={["100g", "500g", "1kg", "/", "100ml", "500ml", "1l"]}
-            />
-          </InputGroup>
-        </FormGroup> */}
-        <FormGroup className="mb-3">
+       <FormGroup className="mb-3">
           <Form.Label style={{ backgroundColor: "white" }}>
             Expiry Date
           </Form.Label>
@@ -505,9 +437,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
+    createGiftFoodData: (product) => dispatch(createGiftFoodData(product)),
     createMapData: (product) => dispatch(createMapData(product)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodWaste);
+export default connect(mapStateToProps, mapDispatchToProps)(GiftFood);

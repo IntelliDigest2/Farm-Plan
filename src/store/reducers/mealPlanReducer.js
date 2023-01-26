@@ -1,11 +1,14 @@
 const initState = {
   authError: null,
   meals: [],
+  mealDiary: [],
+  singleMealDiary: [],
   savedMeals: [],
   shoppingList: [],
   newShoppingList: [],
   shopItems: [],
   inventory: [],
+  giftedFood: [],
 };
 
 const mealPlanReducer = (state = initState, action) => {
@@ -36,6 +39,34 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Get meals failed",
       };
+      case "GET_MEAL_DIARY":
+        console.log("get meal diary success", action.payload);
+        return {
+          ...state,
+          mealDiary: action.payload,
+          authError: null,
+        };
+      case "GET_MEAL_DIARY_ERROR":
+        console.log("error, couldn't fetch diary meals", action.err);
+        return {
+          ...state,
+          authError: "Get meal diary failed",
+        };
+
+        case "GET_SINGLE_MEAL_DIARY":
+        console.log("get single meal diary success", action.payload);
+        return {
+          ...state,
+          singleMealDiary: action.payload,
+          authError: null,
+        };
+      case "GET_SINGLE_MEAL_DIARY_ERROR":
+        console.log("error, couldn't fetch single diary meals", action.err);
+        return {
+          ...state,
+          authError: "Get single meal diary failed",
+        };
+        
     case "EDIT_MEAL":
       console.log("successfully edited", action.mealPlan);
       return {
@@ -47,6 +78,18 @@ const mealPlanReducer = (state = initState, action) => {
       return {
         ...state,
         authError: "Edit meal failed",
+      };
+      case "EDIT_DIARY_MEAL":
+      console.log("successfully edited diary meal", action.mealPlan);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "EDIT_DIARY_MEAL_ERROR":
+      console.log("error, couldn't edit diary meal", action.err);
+      return {
+        ...state,
+        authError: "Edit diary meal failed",
       };
     case "DELETE_MEAL":
       console.log("successfully deleted", action.mealPlan);
@@ -257,6 +300,18 @@ const mealPlanReducer = (state = initState, action) => {
       };
     case "CREATE_INVENTORY_ITEM_ERROR":
       console.log("error, inventory item not created", action.err);
+      return {
+        ...state,
+        authError: "Create inventory item failed",
+      };
+      case "CREATE_GIFT_ITEM":
+      console.log("gifted item created", action.data);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "CREATE_GIFT_ITEM_ERROR":
+      console.log("error, gifted item not created", action.err);
       return {
         ...state,
         authError: "Create inventory item failed",

@@ -14,7 +14,7 @@ import AteMealIconPlan from "./Icons/AteMealIconPlan";
 
 export default function MealsBox(props) {
 
-  console.log("let fetch what weekly props is ==> ", props)
+  console.log("let fetch what weekly props is ==> ", props.meals)
   return (
     <>
       {props.weeklyMeals.map((newMeal, index) => (
@@ -108,12 +108,12 @@ export default function MealsBox(props) {
                   <div className="meal-type">{newMeal.mealType}</div>
                 ) : null}
                 <div className="icons">
-                  <Delete
+                  {/* <Delete
                     value={props.value}
                     id={newMeal.id}
                     forceUpdate={props.forceUpdate}
                     saved={props.saved}
-                  />
+                  /> */}
                   {props.saved ? (
                     <Add
                       value={props.value}
@@ -178,14 +178,6 @@ export default function MealsBox(props) {
         </div>
       ))}
 
-
-
-
-
-
-
-
-
 {props.meals.map((newMeal, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
           <div className="ingredients">
@@ -231,11 +223,12 @@ export default function MealsBox(props) {
                       saved={props.saved}
                     />
                   )}
-                  {props.isMealPlan ? (
+                  {props.isMealPlan || newMeal.eaten == true ? (
                     <AteMealIcon
                       meal={newMeal}
                       value={props.value}
                       id={newMeal.id}
+                      eaten={true}
                     />
                   ) : null}
                 </div>

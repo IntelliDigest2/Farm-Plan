@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import MealsBox from "./MealsBox";
 
 import { connect } from "react-redux";
-import { getMealData } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
+import { getMealData, getMealDiary } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { getMealPlannerData, getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
 
 
@@ -35,7 +35,7 @@ function MyMeals(props) {
       month: props.value.format("YYYYMM"),
       day: props.value.format("DD"),
     };
-    props.getMealData(data);
+    props.getMealDiary(data);
     props.getMealPlannerData(data)
   }, [props.value, update]);
 
@@ -85,7 +85,7 @@ function MyMeals(props) {
     setMeals([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.mealPlan.forEach((doc) => {
+    props.mealDiary.forEach((doc) => {
       var mealName = doc.meal;
       var ingredients = doc.ingredients;
       var id = doc.id;
@@ -156,12 +156,12 @@ function MyMeals(props) {
  
   useEffect(() => {
     updateMeals();
-    //console.log("let get what weekly meals is ==> ", weeklyMeals)
+    console.log("xxxxxxxxxx==> ", weeklyMeals)
   }, [props.mealPlan, props.mealPlanner]);
 
   useEffect(() => {
     updateWeeklyMeals();
-    console.log("let get what weekly meals is ==> ", meals)
+    console.log("===========> ", meals)
   }, [props.weekPlans]);
 
 
@@ -189,7 +189,7 @@ function MyMeals(props) {
 
 const mapStateToProps = (state) => {
   return {
-    mealPlan: state.mealPlan.meals,
+    mealDiary: state.mealPlan.mealDiary,
     mealPlanner: state.mealPlanner.plans,
     weekPlans: state.mealPlanner.weekPlans,
   }; 
@@ -197,7 +197,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMealData: (meals) => dispatch(getMealData(meals)),
+    getMealDiary: (meals) => dispatch(getMealDiary(meals)),
     getMealPlannerData: (meals) => dispatch(getMealPlannerData(meals)),
     getWeeklyPlan: (plan) => dispatch(getWeeklyPlan(plan)),
   };

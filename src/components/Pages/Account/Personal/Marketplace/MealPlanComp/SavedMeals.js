@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import MealsBox from "./MealsBox";
+import MealsBoxRecipe from "./MealsBox";
 import { connect } from "react-redux";
 import { getRecipes } from "../../../../../../store/actions/marketplaceActions/savedMealData";
 import { getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
@@ -115,16 +115,11 @@ const SavedMeals = (props) => {
     // console.log(props.data);
   }, [props.mealPlan]);
 
-  useEffect(() => {
-    updateWeeklyMeals();
-    console.log("let fetch what Smeals meals is ==> ", weeklyMeals)
-  }, [props.weekPlans]);
-
   return (
     <>
       <div className="basic-title-left mb-3">My Saved Meals</div>
       <div className="saved-meals">
-        <MealsBox
+        <MealsBoxRecipe
           forceUpdate={forceUpdate}
           onChange={props.onChange}
           meals={sMeals}
