@@ -341,22 +341,39 @@ const EdibleInedible = (props) => {
     //setShow(true)
     return (
       <>
-      <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edible Waste</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <p>To add edible item to the food waste,</p>
-            <p>You need to add the item to your inventory </p>
-          </Modal.Body>
-        <Modal.Footer>
-        <SubButton
-              text="Go To Inventory"
-              goTo="/meal-plan"
-              styling="green"
+       <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>
+            Expiry Date
+          </Form.Label>
+          <Form.Control
+            id="expiryDate"
+            placeholder="DD/MM/YYYY"
+            onChange={(e) => {
+              props.updateStateValue(e);
+            }}
+            value={props.upload.expiryDate}
+          />
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
+          <InputGroup>
+            <Form.Control
+              id="foodWasteCost"
+              value={props.upload.foodWasteCost}
+              readOnly
             />
-        </Modal.Footer>
-      </Modal>
+            <Dropdown
+              id="currency"
+              styling="grey dropdown-input-right"
+              data={props.upload.currency}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["GBP (£)", "USD ($)", "EUR (€)"]}
+            />
+          </InputGroup>
+        </FormGroup>
       </>
     );
   } else {

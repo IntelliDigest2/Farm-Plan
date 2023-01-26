@@ -33,7 +33,6 @@ import Map from "./components/Pages/Account/Map";
 
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import GiftFood from "./components/Pages/Account/Personal/GiftFood";
-import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
 import FoodIntake from "./components/Pages/Account/Personal/FoodIntake";
@@ -206,7 +205,6 @@ const App = (props) => {
 
             <Route path="/food-waste" exact component={FoodWaste} />
             <Route path="/gift-food" exact component={GiftFood} />
-            <Route path="/food-waste-edible" exact component={FoodWasteEdible} />
             <Route path="/food-loss" exact component={FoodLoss} />
             <Route
               path="/food-wasteBusiness"
