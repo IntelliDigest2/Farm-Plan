@@ -17,29 +17,28 @@ function GiftFoodIcon(props) {
 
   const history = useHistory();
 
-  // //id passed from onClick
-  // const giftFood = () => {
+  //id passed from onClick
+  const giftFood = () => {
 
-  //   const getItem = props.item
+    const getItem = props.item
 
-  //   const data = {
+    const data = {
 
-  //     upload: {
-  //       id: getItem.id,
-  //       food: getItem.food,
-  //       item: getItem.item,
-  //       measure: getItem.measure,
-  //       quantity: getItem.quantity,
-  //     }
+      upload: {
+        id: getItem.id,
+        food: getItem.food,
+        item: getItem.item,
+        measure: getItem.measure,
+        quantity: getItem.quantity,
+      }
      
-  //   };
+    };
 
 
-  //   console.log("gift this item", data)
-  //   //props.removeFromInventory(data);
-  //   props.addToGiftItems(data);
-  //  // props.setUpdate(props.update + 1);
-  // };
+    //props.removeFromInventory(data);
+    props.addToGiftItems(data);
+   // props.setUpdate(props.update + 1);
+  };
 
 
   //id passed from onClick
@@ -82,6 +81,7 @@ function GiftFoodIcon(props) {
         <Modal.Footer>
         <Button variant="secondary"
         onClick={() => {
+          giftFood();
           handleDelete(props.id)
           history.push("/gift-food")
         }}>

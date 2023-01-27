@@ -257,8 +257,8 @@ const FoodWaste = (props) => {
 
   return (
     <PageWrap
-      header="Update Food Waste"
-      subtitle="Upload Edible or Inedible Food Waste"
+      header="Update Edible Food Waste"
+      subtitle="Upload Edible Food Waste"
       goTo="/account"
     >
       <Container fluid className="web-center">
