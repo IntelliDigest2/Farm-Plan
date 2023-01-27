@@ -58,7 +58,7 @@ function RemoveFoodWasteIcon(props) {
         <Button variant="secondary"
         onClick={() => {
           handleDelete(props.id)
-          history.push("/food-waste")
+          history.push("/food-waste-edible")
         }}>
             Yes
           </Button>
