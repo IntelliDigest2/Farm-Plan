@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { RemoveFromInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { RemoveFromInventory, addToWasteItems } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { connect } from "react-redux";
@@ -15,6 +15,29 @@ function RemoveFoodWasteIcon(props) {
 
 
   const history = useHistory();
+
+  //id passed from onClick
+  const WasteFood = () => {
+
+    const getItem = props.item
+
+    const data = {
+
+      upload: {
+        id: getItem.id,
+        food: getItem.food,
+        item: getItem.item,
+        measure: getItem.measure,
+        quantity: getItem.quantity,
+      }
+     
+    };
+
+
+    //props.removeFromInventory(data);
+    props.addToWasteItems(data);
+   // props.setUpdate(props.update + 1);
+  };
 
   //id passed from onClick
   const handleDelete = (id) => {
@@ -57,6 +80,7 @@ function RemoveFoodWasteIcon(props) {
         <Modal.Footer>
         <Button variant="secondary"
         onClick={() => {
+          WasteFood()
           handleDelete(props.id)
           history.push("/food-waste-edible")
         }}>
@@ -82,6 +106,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeFromInventory: (data) => dispatch(RemoveFromInventory(data)),
+    addToWasteItems: (data) => dispatch(addToWasteItems(data)),
   };
 };
 

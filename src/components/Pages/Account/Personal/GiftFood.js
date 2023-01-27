@@ -278,19 +278,7 @@ const GiftFood = (props) => {
             />
           </FormGroup> */}
 
-          <FormGroup className="mb-3">
-          <Form.Label style={{ backgroundColor: "white" }}>
-            Expiry Date
-          </Form.Label>
-          <Form.Control
-            id="expiryDate"
-            placeholder="DD/MM/YYYY"
-            onChange={(e) => {
-              updateStateValue(e);
-            }}
-            value={upload.expiryDate}
-          />
-        </FormGroup>
+          
         <FormGroup className="mb-3">
           <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
           <InputGroup>
