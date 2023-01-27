@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.9b5985c6.chunk.css",
-    "main.js": "/static/js/main.f4ce8c73.chunk.js",
-    "main.js.map": "/static/js/main.f4ce8c73.chunk.js.map",
+    "main.js": "/static/js/main.d5b47503.chunk.js",
+    "main.js.map": "/static/js/main.d5b47503.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.2052925a.js",
     "runtime-main.js.map": "/static/js/runtime-main.2052925a.js.map",
     "static/css/2.9bb8024e.chunk.css": "/static/css/2.9bb8024e.chunk.css",
-    "static/js/2.f295c245.chunk.js": "/static/js/2.f295c245.chunk.js",
-    "static/js/2.f295c245.chunk.js.map": "/static/js/2.f295c245.chunk.js.map",
+    "static/js/2.418df306.chunk.js": "/static/js/2.418df306.chunk.js",
+    "static/js/2.418df306.chunk.js.map": "/static/js/2.418df306.chunk.js.map",
     "static/js/3.3518c984.chunk.js": "/static/js/3.3518c984.chunk.js",
     "static/js/3.3518c984.chunk.js.map": "/static/js/3.3518c984.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.9bb8024e.chunk.css.map": "/static/css/2.9bb8024e.chunk.css.map",
     "static/css/main.9b5985c6.chunk.css.map": "/static/css/main.9b5985c6.chunk.css.map",
-    "static/js/2.f295c245.chunk.js.LICENSE.txt": "/static/js/2.f295c245.chunk.js.LICENSE.txt",
+    "static/js/2.418df306.chunk.js.LICENSE.txt": "/static/js/2.418df306.chunk.js.LICENSE.txt",
     "static/media/Blueberries.81f84019.jpg": "/static/media/Blueberries.81f84019.jpg",
     "static/media/Edamam_Badge_White.d317b3d5.svg": "/static/media/Edamam_Badge_White.d317b3d5.svg",
     "static/media/Environment.3a48bc88.jpg": "/static/media/Environment.3a48bc88.jpg",
@@ -29,7 +29,6 @@
     "static/media/WheatIcon.1a8e8f19.png": "/static/media/WheatIcon.1a8e8f19.png",
     "static/media/Homepage.css": "/static/media/farm1.aa19cc0c.jpg",
     "static/media/fr_positive-planet.8257fa0d.jpg": "/static/media/fr_positive-planet.8257fa0d.jpg",
-    "static/media/intellidigest-logo-small.6a3103c7.png": "/static/media/intellidigest-logo-small.6a3103c7.png",
     "static/media/peppers-square.92ac872c.jpg": "/static/media/peppers-square.92ac872c.jpg",
     "static/media/peppers.65825e19.jpg": "/static/media/peppers.65825e19.jpg",
     "static/media/pts-banner.a6e618cb.png": "/static/media/pts-banner.a6e618cb.png",
@@ -45,8 +44,8 @@
   "entrypoints": [
     "static/js/runtime-main.2052925a.js",
     "static/css/2.9bb8024e.chunk.css",
-    "static/js/2.f295c245.chunk.js",
+    "static/js/2.418df306.chunk.js",
     "static/css/main.9b5985c6.chunk.css",
-    "static/js/main.f4ce8c73.chunk.js"
+    "static/js/main.d5b47503.chunk.js"
   ]
 }
