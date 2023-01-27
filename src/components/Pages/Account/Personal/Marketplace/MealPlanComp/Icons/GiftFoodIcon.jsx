@@ -72,7 +72,6 @@ function GiftFoodIcon(props) {
         </Button>        
       </IconButton>
       </Tooltip>
-    // validation before confirming 
       <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Gifted Item?</Modal.Title>

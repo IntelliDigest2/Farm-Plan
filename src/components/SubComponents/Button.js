@@ -16,6 +16,7 @@ import ShoppingBagOutlined from "@mui/icons-material/ShoppingBagOutlined";
 import CategoryIcon from "@mui/icons-material/Category";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
+import CardGiftcardOutlined from "@mui/icons-material/CardGiftcardOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -99,6 +100,8 @@ export function IconButton(props) {
         return <DeleteIconOutlined sx={{ fontSize: 90 }} />;
       case "chart":
         return <BarChartOutlined sx={{ fontSize: 90 }} />;
+      case "gift":
+        return <CardGiftcardOutlined sx={{ fontSize: 90 }} />;
       case "food":
         return <RestaurantOutlined sx={{ fontSize: 90 }} />;
       case "surplus":
