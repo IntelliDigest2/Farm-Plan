@@ -277,41 +277,7 @@ const GiftFood = (props) => {
               items={["Edible", "Inedible"]}
             />
           </FormGroup> */}
-
-          <FormGroup className="mb-3">
-          <Form.Label style={{ backgroundColor: "white" }}>
-            Expiry Date
-          </Form.Label>
-          <Form.Control
-            id="expiryDate"
-            placeholder="DD/MM/YYYY"
-            onChange={(e) => {
-              updateStateValue(e);
-            }}
-            value={upload.expiryDate}
-          />
-        </FormGroup>
-        <FormGroup className="mb-3">
-          <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
-          <InputGroup>
-            <Form.Control
-              id="foodWasteCost"
-              value={upload.foodWasteCost}
-              readOnly
-            />
-            <Dropdown
-              id="currency"
-              styling="grey dropdown-input-right"
-              data={upload.currency}
-              function={(eventKey, e) => {
-                changeMultiplier(e);
-                updateStateValue(e);
-              }}
-              items={["GBP (£)", "USD ($)", "EUR (€)"]}
-            />
-          </InputGroup>
-        </FormGroup>
-          <FormGroup className="mb-3">
+<FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Weight / Volume
             </Form.Label>
@@ -336,6 +302,28 @@ const GiftFood = (props) => {
               />
             </InputGroup>
           </FormGroup>
+          
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
+          <InputGroup>
+            <Form.Control
+              id="foodWasteCost"
+              value={upload.foodWasteCost}
+              readOnly
+            />
+            <Dropdown
+              id="currency"
+              styling="grey dropdown-input-right"
+              data={upload.currency}
+              function={(eventKey, e) => {
+                changeMultiplier(e);
+                updateStateValue(e);
+              }}
+              items={["GBP (£)", "USD ($)", "EUR (€)"]}
+            />
+          </InputGroup>
+        </FormGroup>
+          
           {/* <EdibleInedible
             upload={upload}
             multipliers={multipliers}

@@ -316,6 +316,18 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Create inventory item failed",
       };
+      case "CREATE_WASTE_ITEM":
+        console.log("waste item added", action.data);
+        return {
+          ...state,
+          authError: null,
+        };
+      case "CREATE_WASTE_ITEM_ERROR":
+        console.log("error, waste item not created", action.err);
+        return {
+          ...state,
+          authError: "Create inventory item failed",
+        };
     case "DELETE_INVENTORY_ITEM":
       console.log("successfully deleted", action.mealPlan);
       return {
