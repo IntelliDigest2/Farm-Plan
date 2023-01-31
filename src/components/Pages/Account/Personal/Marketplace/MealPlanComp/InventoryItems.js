@@ -38,7 +38,9 @@ function InventoryItems(props) {
       var food = doc.ingredients;
       var item = doc.item;
       var measure = doc.measure;
+      var updatedMeasure = doc.updatedMeasure;
       var quantity = doc.quantity;
+      var updatedQty = doc.updatedQty;
       var expiry = doc.expiry;
       var purchase = doc.purchase;
       var storage = doc.storage;
@@ -51,7 +53,9 @@ function InventoryItems(props) {
           food: food + " " + quantity + " " + measure,
           item: item,
           quantity: quantity,
+          updatedQty: updatedQty,
           measure: measure,
+          updatedMeasure: updatedMeasure,
           purchase: purchase,
           storage: storage,
           expiry: moment(expiry, 'DD-MM-YYYY').format('ll'),
@@ -99,6 +103,7 @@ function InventoryItems(props) {
               >
                 <div>
                   <p>{item.item + " " + item.quantity + " " + item.measure}</p>
+                  <p><b >Weight/Vol: </b>{item.updatedQty} {item.updatedMeasure}</p>
                   <p><b >Expiry Date: </b>{item.expiry}</p>
                   <p><b >Item expires: </b>{item.daysUntil}</p>
                   <p><b >Place of purchase: </b>{item.purchase}</p>
@@ -146,9 +151,11 @@ function InventoryItems(props) {
                 <div className="icons">
                 <Edit
                       //value={props.value}
-                      food={item.food}
+                      food={item.item}
                       measure={item.measure}
                       quantity={item.quantity}
+                      updatedQty={item.updatedQty}
+                      updatedMeasure={item.updatedMeasure}
                       expiry={item.expiry}
                       id={item.id}
                       update={props.update}

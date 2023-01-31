@@ -12,6 +12,8 @@ import moment from "moment";
 function EditInventoryForm(props) {
   const [food, setFood] = useState(props.food);
   const [quantity, setQuantity] = useState(props.quantity);
+  const [updatedQty, setUpdatedQty] = useState("");
+  const [updatedMeasure, setUpdatedMeasure] = useState("Select Unit");
   const [measure, setMeasure] = useState(props.measure);
   const [ExpiryDate, setExpiryDate] = useState("");
   const [placeOfPurchase, setPlaceOfPurchase] = useState("");
@@ -26,7 +28,9 @@ function EditInventoryForm(props) {
       upload: {
         food: food,
         quantity: quantity,
+        updatedQty: updatedQty,
         measure: measure,
+        updatedMeasure: updatedMeasure,
         id: props.id,
         expiry: moment(ExpiryDate).format("DD/MM/yyyy"),
         purchase: placeOfPurchase,
@@ -76,7 +80,7 @@ function EditInventoryForm(props) {
       </Form.Group> */}
 
       <Form.Group>
-        <Form.Label>Amount</Form.Label>
+        <Form.Label>Measure</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -91,7 +95,36 @@ function EditInventoryForm(props) {
             styling="grey dropdown-input"
             data={measure}
             items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups", "units"]}
-            onChange={(e) => setMeasure(e)}
+            function={(e) => {
+              setMeasure(e)
+              }
+            }
+            //onChange={(e) => setMeasure(e)}
+          />
+        </InputGroup>
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Weight/Volume</Form.Label>
+        <InputGroup>
+          <Form.Control
+            id="quantity"
+            type="number"
+            min="0"
+            step=".1"
+            defaultValue={updatedQty}
+            onChange={(e) => setUpdatedQty(e.target.value)}
+          />
+          <Dropdown
+            id="measure"
+            styling="grey dropdown-input"
+            data={updatedMeasure}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups", "units"]}
+            function={(e) => {
+              setUpdatedMeasure(e)
+              }
+            }
+            //onChange={(e) => setUpdatedMeasure(e)}
           />
         </InputGroup>
       </Form.Group>
