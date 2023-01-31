@@ -7,7 +7,9 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { RemoveFromInventory, addToGiftItems } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import GiftFood from "../../../GiftFoodE"
 import { connect } from "react-redux";
+import GiftFoodE from "../../../GiftFoodE";
 
 //need props id
 function GiftFoodIcon(props) {
@@ -76,22 +78,24 @@ function GiftFoodIcon(props) {
             <Modal.Title>Gifted Item?</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            This will remove {props.item.quantity} {props.item.measure} of {props.item.item} from the inventory
+        <p><h5>remove {props.item.quantity} {props.item.measure} of {props.item.item} from the inventory?</h5></p>
+            <GiftFood item={props.item}/>
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"
         onClick={() => {
-          giftFood();
-          handleDelete(props.id)
-          history.push("/gift-food")
+          //giftFood();
+          handleDelete(props.id);
+          handleClose();
+          //history.push("/gift-food")
         }}>
-            Yes
+            Done
           </Button>
-          <Button variant="secondary" 
+          {/* <Button variant="secondary" 
           onClick={handleClose}
           >
             No
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
