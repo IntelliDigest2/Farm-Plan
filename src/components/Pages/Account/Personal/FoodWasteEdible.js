@@ -277,7 +277,7 @@ const FoodWaste = (props) => {
               items={["Edible", "Inedible"]}
             />
           </FormGroup> */}
-<FormGroup className="mb-3">
+          <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Weight / Volume
             </Form.Label>

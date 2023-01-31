@@ -32,7 +32,7 @@ const GiftFood = (props) => {
 
   const defaultUpload = {
     edibleInedible: "edible",
-    foodWasteWeight: 0,
+    foodWasteWeight: props.item.updatedQty,
     weightType: "Select Unit",
     carbsContent: 0,
     carbsPerUnit: "Select Unit",
@@ -44,6 +44,7 @@ const GiftFood = (props) => {
     expiryDate: "",
     foodWasteCost: 0,
     currency: "Select Currency",
+    food: props.item.item,
   };
 
   const defaultMultipliers = {
@@ -256,11 +257,7 @@ const GiftFood = (props) => {
   if (redirectTo) return <Redirect to="/account" />;
 
   return (
-    <PageWrap
-      header="Gifted Food"
-      subtitle="Upload Gifted Food Info"
-      goTo="/account"
-    >
+    
       <Container fluid className="web-center">
         <Form>
           {/* <FormGroup className="mb-3">
@@ -350,7 +347,6 @@ const GiftFood = (props) => {
           />
         </Form>
       </Container>
-    </PageWrap>
   );
 };
 
