@@ -80,7 +80,7 @@ function EditInventoryForm(props) {
       </Form.Group> */}
 
       <Form.Group>
-        <Form.Label>Measure</Form.Label>
+        <Form.Label>Weight/volume - Meal plan</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -105,7 +105,7 @@ function EditInventoryForm(props) {
       </Form.Group>
 
       <Form.Group>
-        <Form.Label>Weight/Volume</Form.Label>
+        <Form.Label>Weight/Volume - Purchased food item </Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
