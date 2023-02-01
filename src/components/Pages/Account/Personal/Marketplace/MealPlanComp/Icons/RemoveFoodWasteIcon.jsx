@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Alert } from "react-bootstrap";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -76,8 +76,11 @@ function RemoveFoodWasteIcon(props) {
             <Modal.Title>Add To Food Waste</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            <p><h5>remove {props.item.quantity} {props.item.measure} of {props.item.item} from the inventory?</h5></p>
-          <FoodWaste item={props.item}/>
+            <p><h5>Remove {props.item.quantity} {props.item.measure} of {props.item.item} from the inventory?</h5></p>
+            <Alert variant="primary">
+              Cannot find the measurement unit? select another unit, measure and update
+            </Alert>
+            <FoodWaste item={props.item}/>
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"

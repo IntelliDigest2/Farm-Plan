@@ -150,7 +150,7 @@ function AddMealForm(props) {
         <FoodItemSearch handleFoodSearch={handleFoodSearch} />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Amount</Form.Label>
+        <Form.Label>Weight/Volume</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"

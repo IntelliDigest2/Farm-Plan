@@ -19,7 +19,7 @@ export const Inventory = ({forceUpdate, value, tab}) => {
                     <p>Add new items to your inventory 🙂</p>
                     <p>
                     <Alert variant="primary">
-                        Update your items with the actual weight/Volume. Ex., convert Cups, Teaspoon to Ltrs/mL
+                        Please, add the weight/volume  of each food item using the unit of measurement in the meal plan and and the food item purchased.
                     </Alert>
                     </p>
                 </div>
