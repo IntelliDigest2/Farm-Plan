@@ -1,12 +1,13 @@
 /* mealplan.js */
 .mealtabs {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: stretch;
 }
 .mealtabs a {
   color: #32797e;
 }
+
 .mealtab {
   flex: 1;
   text-align: center;
