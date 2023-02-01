@@ -7,7 +7,6 @@
 .mealtabs a {
   color: #32797e;
 }
-
 .mealtab {
   flex: 1;
   text-align: center;
@@ -187,6 +186,37 @@
   min-width: 20rem;
   color: #302d53;
 }
+
+.meal-box-recipe {
+  margin: 0.5rem 0 0.5rem 0;
+  border: solid #32797e;
+  border-radius: 10px;
+}
+.meal-box-recipe .image {
+  min-width: 15rem;
+  max-width: 18rem;
+  padding-left: 3rem;
+  padding-top: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+.meal-box-recipe img {
+  min-width: 100%;
+  min-height: 250px;
+  max-height: 150px;
+
+}
+.meal-box-recipe a {
+  color: #afba15;
+  font-style: italic;
+}
+.meal-box-recipe .ingredients {
+  min-width: 20rem;
+  color: #302d53;
+  padding-left: 2rem;
+
+}
+
 
 .heading {
   display: flex;
