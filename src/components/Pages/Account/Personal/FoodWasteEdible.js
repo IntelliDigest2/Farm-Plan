@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, InputGroup, FormGroup, Container, Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
-  createGiftFoodData,
+  createFoodWasteData,
   createMapData,
 } from "./../../../../store/actions/dataActions";
 import { Redirect } from "react-router-dom";
@@ -13,7 +13,7 @@ import { DefaultButton, SubButton } from "../../../SubComponents/Button";
 import { Divider } from "@mui/material";
 import { submitNotification } from "../../../lib/Notifications";
 
-const GiftFood = (props) => {
+const FoodWaste = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);
   
 
@@ -31,7 +31,7 @@ const GiftFood = (props) => {
   }, [props.profile]);
 
   const defaultUpload = {
-    edibleInedible: "edible",
+    edibleInedible: "Inedible",
     foodWasteWeight: 0,
     weightType: "Select Unit",
     carbsContent: 0,
@@ -235,16 +235,16 @@ const GiftFood = (props) => {
     const data = {
       uid: uid,
       masterCollection: masterCollection,
-      collection: "writtenGiftFoodData",
+      collection: "writtenFoodWasteData",
       upload: {
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         ...upload,
       },
     };
 
-    props.createGiftFoodData(data);
+    props.createFoodWasteData(data);
     props.createMapData(mapData);
-    submitNotification("Success", "Food had been added to your gifted items!");
+    submitNotification("Success", "Food Waste successfully uploaded!");
     setUpload(defaultUpload);
     setMultipliers(defaultMultipliers);
   };
@@ -257,8 +257,8 @@ const GiftFood = (props) => {
 
   return (
     <PageWrap
-      header="Gifted Food"
-      subtitle="Upload Gifted Food Info"
+      header="Update Edible Food Waste"
+      subtitle="Upload Edible Food Waste"
       goTo="/account"
     >
       <Container fluid className="web-center">
@@ -277,7 +277,7 @@ const GiftFood = (props) => {
               items={["Edible", "Inedible"]}
             />
           </FormGroup> */}
-<FormGroup className="mb-3">
+          <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Weight / Volume
             </Form.Label>
@@ -302,7 +302,7 @@ const GiftFood = (props) => {
               />
             </InputGroup>
           </FormGroup>
-          
+         
         <FormGroup className="mb-3">
           <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
           <InputGroup>
@@ -447,9 +447,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    createGiftFoodData: (product) => dispatch(createGiftFoodData(product)),
+    createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
     createMapData: (product) => dispatch(createMapData(product)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GiftFood);
+export default connect(mapStateToProps, mapDispatchToProps)(FoodWaste);

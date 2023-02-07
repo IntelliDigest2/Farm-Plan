@@ -110,7 +110,7 @@ export function Environment() {
       />
       <IconButton
         title="Gift a Food Item."
-        icon="chart"
+        icon="gift"
         label="Gifted Items Chart"
         color="turquoise"
         goTo="/gift-food"
@@ -118,7 +118,7 @@ export function Environment() {
        <IconButton
         title="View your gifted food data."
         icon="chart"
-        label="Gift Chart"
+        label="Gifted Item Chart"
         color="yellow"
         goTo="/gift-chart"
       />

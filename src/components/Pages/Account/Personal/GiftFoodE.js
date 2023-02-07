@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, InputGroup, FormGroup, Container, Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
-  createFoodWasteData,
+  createGiftFoodData,
   createMapData,
 } from "./../../../../store/actions/dataActions";
 import { Redirect } from "react-router-dom";
@@ -13,7 +13,7 @@ import { DefaultButton, SubButton } from "../../../SubComponents/Button";
 import { Divider } from "@mui/material";
 import { submitNotification } from "../../../lib/Notifications";
 
-const FoodWaste = (props) => {
+const GiftFood = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);
   
 
@@ -31,8 +31,8 @@ const FoodWaste = (props) => {
   }, [props.profile]);
 
   const defaultUpload = {
-    edibleInedible: "Inedible",
-    foodWasteWeight: 0,
+    edibleInedible: "edible",
+    foodWasteWeight: props.item.updatedQty,
     weightType: "Select Unit",
     carbsContent: 0,
     carbsPerUnit: "Select Unit",
@@ -44,6 +44,7 @@ const FoodWaste = (props) => {
     expiryDate: "",
     foodWasteCost: 0,
     currency: "Select Currency",
+    food: props.item.item,
   };
 
   const defaultMultipliers = {
@@ -235,16 +236,16 @@ const FoodWaste = (props) => {
     const data = {
       uid: uid,
       masterCollection: masterCollection,
-      collection: "writtenFoodWasteData",
+      collection: "writtenGiftFoodData",
       upload: {
         date: getFirebase().firestore.Timestamp.fromDate(new Date()),
         ...upload,
       },
     };
 
-    props.createFoodWasteData(data);
+    props.createGiftFoodData(data);
     props.createMapData(mapData);
-    submitNotification("Success", "Food Waste successfully uploaded!");
+    submitNotification("Success", "Food had been added to your gifted items!");
     setUpload(defaultUpload);
     setMultipliers(defaultMultipliers);
   };
@@ -256,14 +257,10 @@ const FoodWaste = (props) => {
   if (redirectTo) return <Redirect to="/account" />;
 
   return (
-    <PageWrap
-      header="Update Food Waste"
-      subtitle="Upload Edible or Inedible Food Waste"
-      goTo="/account"
-    >
+    
       <Container fluid className="web-center">
         <Form>
-          <FormGroup className="mb-3">
+          {/* <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Edible or Inedible
             </Form.Label>
@@ -276,8 +273,8 @@ const FoodWaste = (props) => {
               }}
               items={["Edible", "Inedible"]}
             />
-          </FormGroup>
-          <FormGroup className="mb-3">
+          </FormGroup> */}
+<FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>
               Weight / Volume
             </Form.Label>
@@ -302,12 +299,34 @@ const FoodWaste = (props) => {
               />
             </InputGroup>
           </FormGroup>
-          <EdibleInedible
+          
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
+          <InputGroup>
+            <Form.Control
+              id="foodWasteCost"
+              value={upload.foodWasteCost}
+              readOnly
+            />
+            <Dropdown
+              id="currency"
+              styling="grey dropdown-input-right"
+              data={upload.currency}
+              function={(eventKey, e) => {
+                changeMultiplier(e);
+                updateStateValue(e);
+              }}
+              items={["GBP (£)", "USD ($)", "EUR (€)"]}
+            />
+          </InputGroup>
+        </FormGroup>
+          
+          {/* <EdibleInedible
             upload={upload}
             multipliers={multipliers}
             changeMultiplier={changeMultiplier}
             updateStateValue={updateStateValue}
-          />
+          /> */}
           <FormGroup className="mb-3">
             <Form.Label style={{ backgroundColor: "white" }}>GHG</Form.Label>
             <InputGroup>
@@ -328,7 +347,6 @@ const FoodWaste = (props) => {
           />
         </Form>
       </Container>
-    </PageWrap>
   );
 };
 
@@ -341,22 +359,27 @@ const EdibleInedible = (props) => {
     //setShow(true)
     return (
       <>
-      <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edible Waste</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <p>To add edible item to the food waste,</p>
-            <p>You need to add the item to your inventory </p>
-          </Modal.Body>
-        <Modal.Footer>
-        <SubButton
-              text="Go To Inventory"
-              goTo="/meal-plan"
-              styling="green"
+       
+        <FormGroup className="mb-3">
+          <Form.Label style={{ backgroundColor: "white" }}>Cost</Form.Label>
+          <InputGroup>
+            <Form.Control
+              id="foodWasteCost"
+              value={props.upload.foodWasteCost}
+              readOnly
             />
-        </Modal.Footer>
-      </Modal>
+            <Dropdown
+              id="currency"
+              styling="grey dropdown-input-right"
+              data={props.upload.currency}
+              function={(eventKey, e) => {
+                props.changeMultiplier(e);
+                props.updateStateValue(e);
+              }}
+              items={["GBP (£)", "USD ($)", "EUR (€)"]}
+            />
+          </InputGroup>
+        </FormGroup>
       </>
     );
   } else {
@@ -420,9 +443,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    createFoodWasteData: (product) => dispatch(createFoodWasteData(product)),
+    createGiftFoodData: (product) => dispatch(createGiftFoodData(product)),
     createMapData: (product) => dispatch(createMapData(product)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodWaste);
+export default connect(mapStateToProps, mapDispatchToProps)(GiftFood);
