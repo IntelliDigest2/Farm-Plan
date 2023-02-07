@@ -9,12 +9,15 @@ import { getInventory } from "../../../../../../store/actions/marketplaceActions
 import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
 import RemoveFoodWasteIcon from "./Icons/RemoveFoodWasteIcon";
 import GiftFoodIcon from "./Icons/GiftFoodIcon";
+import PurchaseIcon from "./Icons/PurchaseIcon";
 import Edit from "./Icons/EditIconInventory.jsx"
 import moment from "moment";
 import { Button } from "react-bootstrap";
 import { SubButtonInventory } from "../../../../../SubComponents/Button";
 
 function InventoryItems(props) {
+
+  // console.log("let get it, park well", props)
 
   const [list, setList] = useState([]);
   const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
@@ -131,6 +134,15 @@ function InventoryItems(props) {
                         setUpdate={props.setUpdate}
                         item={item}
                       />
+
+                      {/* <PurchaseIcon
+                        id={item.id}
+                        value={props.value}
+                        update={props.update}
+                        setUpdate={props.setUpdate}
+                        item={item}
+                        profile={props.profile}
+                      /> */}
 
                     </>
                   { }
