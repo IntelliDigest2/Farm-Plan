@@ -9,7 +9,6 @@ import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
-import { promiseProps } from "firebase-tools/lib/utils";
 
 //need props id
 function PurchaseIcon(props) {

@@ -135,14 +135,14 @@ function InventoryItems(props) {
                         item={item}
                       />
 
-                      {/* <PurchaseIcon
+                      <PurchaseIcon
                         id={item.id}
                         value={props.value}
                         update={props.update}
                         setUpdate={props.setUpdate}
                         item={item}
                         profile={props.profile}
-                      /> */}
+                      />
 
                     </>
                   { }
