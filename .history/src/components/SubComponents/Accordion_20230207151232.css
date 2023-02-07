@@ -1,0 +1,132 @@
+.accordion{
+    width: calc(900px - 40px);
+   height: auto;
+    font-size: 13px;
+    border: 1px solid #D2D2D7;
+    border-radius: 8px;
+    /* display: flex; */
+    margin: 0 auto;
+    overflow: hidden;
+    text-transform: uppercase;
+    
+
+}
+
+.accordion_top{
+    display: flex;
+    width: 100%;
+  
+    height: 55px;
+    padding:4px 20px;
+    background-color: #F2F2F2;
+
+}
+
+.accordion_top_left{
+    width: 77%;
+    /* background-color: pink; */
+}
+
+.accordion_top_userInfo > span:first-child {
+    color:#0440D8
+}
+
+.accordion_top_right::before{
+content: '';
+background-color: #D3D3D3;
+height: 21px;
+width: 1px;
+margin-right: 10px;
+
+}
+
+.accordion_top_right{
+    display: flex;
+    justify-content: space-evenly;
+    width: 23%;
+    align-items: center;
+}
+
+.accordion_dropDown{
+    width: auto;
+    height:110px;
+    display: flex;
+    justify-content: space-between;
+    
+   
+    background-color: #fafafa;
+    /* display: none; */
+    padding:15px 20px;
+}
+.accordion_dropdown_products{
+    width: 638px;
+    /* background-color: red; */
+    
+
+   
+
+}
+
+.status-green{
+    color: #07F202;
+}
+.status-blue{
+    color:#0440D8;
+}
+.status-red{
+    color: #FF0000;
+}
+.status-purple{
+    color: #9747FF;
+}
+
+
+
+.accordion_dropdown_productItems{
+    display: block;
+
+}
+.accordion_dropdown_productItem{
+width: auto;
+margin-right: 10px;
+color: #3467B2;
+}
+
+
+/*=============================================
+=            accordion styling            =
+=============================================*/
+
+
+
+/*=====  End of accordion styling  ======*/
+
+
+
+
+/*=============================================
+=            Status Bulb            =
+=============================================*/
+.bulb{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.bulb-red{
+    background-color: #FF0000;
+}
+.bulb-green{
+    background-color: #0FBE0B;
+}
+.bulb-yellow{
+    background-color: #FFE600;
+}
+.bulb-purple{
+    background-color: #9747FF;
+}
+
+
+/*=====  End of Status Bulb  ======*/
+
+

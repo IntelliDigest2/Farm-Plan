@@ -150,24 +150,3 @@
 .default-btn.grey:focus {
   box-shadow: none !important;
 }
-
-
-
-/*=============================================
-=            accordion btn            =
-=============================================*/
-.btn-plain{
-  width: auto;
-  border: none;
-  padding: 0;
-}
-
-.btn-plain:hover{
-  background-color: #bfbfbf68;
- 
-}
-
-
-/*=====  End of accordion btn  ======*/
-
-

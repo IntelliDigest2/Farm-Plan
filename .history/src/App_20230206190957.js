@@ -14,6 +14,7 @@ import Login from "./components/Pages/Auth/LogIn";
 import LandingPage from "./components/Pages/Auth/Landing";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
+import Admin from "./components/Pages/Admin";
 
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
 import Question2 from "./components/Pages/Account/Consultant/Question/Question2";
@@ -30,7 +31,6 @@ import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
-import Admin from "./components/Pages/Admin";
 
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import GiftFood from "./components/Pages/Account/Personal/GiftFood";

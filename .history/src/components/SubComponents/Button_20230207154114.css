@@ -164,7 +164,7 @@
 
 .btn-plain:hover{
   background-color: #bfbfbf68;
- 
+  border-radius: 50%;
 }
 
 

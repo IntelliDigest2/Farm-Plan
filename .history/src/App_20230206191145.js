@@ -30,7 +30,6 @@ import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
-import Admin from "./components/Pages/Admin";
 
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import GiftFood from "./components/Pages/Account/Personal/GiftFood";
@@ -171,7 +170,6 @@ const App = (props) => {
 					<Switch>
 						{/* <Route path="/example" exact component={Example} /> */}
 						<Route path="/login" exact component={Login} />
-						<Route path="/admin" exact component={Admin} />
 						<Route path="/landing" exact component={LandingPage} />
 						<Route path="/about-us" exact component={AboutUs} />
 						<Route path="/signup" exact component={SignUp} />

@@ -1,0 +1,71 @@
+.accordion{
+    width: calc(900px - 40px);
+    height: 55px;
+    font-size: 13px;
+    background-color: #F2F2F2;
+    border: 1px solid #D2D2D7;
+    border-radius: 8px;
+    /* display: flex; */
+    margin: 0 auto;
+    padding:4px 20px
+
+}
+
+.accordion_top{
+    display: flex;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.accordion_top_left{
+    width: 77%;
+    background-color: pink;
+}
+
+.accordion_top_right::before{
+content: '';
+background-color: #D3D3D3;
+height: 21px;
+width: 1px;
+margin-right: 10px;
+}
+
+.accordion_top_right{
+    display: flex;
+    justify-content: space-evenly;
+    width: 23%;
+}
+
+.accordion_dropDown{
+    width: 900px;
+    height:110px
+}
+
+
+
+/*=============================================
+=            Status Bulb            =
+=============================================*/
+.bulb{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.bulb-red{
+    background-color: #FF0000;
+}
+.bulb-green{
+    background-color: #07F202;
+}
+.bulb-yellow{
+    background-color: #FFE600;
+}
+.bulb-purple{
+    background-color: #9747FF;
+}
+
+
+/*=====  End of Status Bulb  ======*/
+
+
