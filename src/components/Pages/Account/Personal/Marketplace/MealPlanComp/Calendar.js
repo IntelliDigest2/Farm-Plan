@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import { AddMealModal } from "./Icons/AddMealModal";
+import Scanner from "../../../../../SubComponents/QRCode/Scanner";
 
 import buildCalendar from "./BuildCalendar/Build";
 import dayStyles from "./BuildCalendar/dayStyles";
 import CalendarHeader from "./BuildCalendar/header";
 
 import MyMeals from "./meals";
+import { PreparedOrRaw } from "./Icons/PreparedOrRaw";
 
 export const Calendar = ({ value, onChange }) => {
   const [calendar, setCalendar] = useState([]);
@@ -49,10 +51,16 @@ export const Calendar = ({ value, onChange }) => {
           ))}
         </div>
       </div>
+      <div className="row">
+        <div className="col-8" style={{textAlign: "left"}}>Add casual meals to your calendar or edit added meals 🙂</div>
+        <div className="col-4" style={{textAlign: "right"}}><AddMealModal value={value} show={show} setShow={setShow} />
+      </div>
+      </div>
+      <div> 
+      </div>
       <div className="plan-box">
         <div className="header">{chosenDay()}</div>
         <MyMeals value={value} show={show} />
-        <AddMealModal value={value} show={show} setShow={setShow} />
       </div>
     </>
   );

@@ -39,6 +39,7 @@ export default function FoodItemSearch({ handleFoodSearch }) {
           }}
           id="food"
           options={options}
+          freeSolo
           sx={{ width: "100%", lineHeight: "calc(1.5em + .75rem + 2px)" }}
           renderInput={(params) => <TextField {...params} label="Item" />}
         />
@@ -52,6 +53,7 @@ export default function FoodItemSearch({ handleFoodSearch }) {
             handleFoodSearch(e);
           }}
           id="food"
+          freeSolo
           options={options}
           getOptionDisabled={(option) => option === options[0]}
           sx={{ width: "100%", lineHeight: "calc(1.5em + .75rem + 2px)" }}

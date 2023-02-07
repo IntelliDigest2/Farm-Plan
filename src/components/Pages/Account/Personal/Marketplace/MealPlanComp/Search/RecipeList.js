@@ -14,7 +14,7 @@ export default function RecipeList(props) {
     <>
       {props.query &&
         props.recipes.map((item, i) => (
-          <div className="meal-box" key={i}>
+          <div className="meal-box-recipe" key={i}>
             <Row>
               <Col className="image">
                 <img src={item.recipe.image} alt={`${item.recipe.label}`} />
@@ -45,7 +45,7 @@ export default function RecipeList(props) {
                         totalNutrients={item.recipe.totalNutrients}
                         totalDaily={item.recipe.totalDaily}
                         yield={item.recipe.yield}
-                      />
+                      /> 
                     </div>
                   </ListSubheader>
                   {item.recipe.ingredients &&

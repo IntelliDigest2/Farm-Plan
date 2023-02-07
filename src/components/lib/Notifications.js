@@ -13,4 +13,17 @@ const submitNotification = (title, message) => {
   });
 };
 
-export { submitNotification };
+const submitNotificationPlan = (title, message) => {
+  addNotification({
+    title: title,
+    message: message,
+    backgroundTop: "white", //optional, background color of top container.
+    backgroundBottom: "white", //optional, background color of bottom container.
+    colorTop: "black", //optional, font color of top container.
+    colorBottom: "black",
+    closeButton: "X",
+    duration: 30000,
+  });
+};
+
+export { submitNotification, submitNotificationPlan };

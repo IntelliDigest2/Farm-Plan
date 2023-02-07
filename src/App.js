@@ -32,6 +32,9 @@ import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
+import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
+
+import GiftFood from "./components/Pages/Account/Personal/GiftFood";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
 import FoodIntake from "./components/Pages/Account/Personal/FoodIntake";
@@ -47,11 +50,18 @@ import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
 import FarmerAuth from "./components/Pages/Account/Farm/Marketplace/Auth/Farmer-Auth";
 import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
 import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan";
+import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 
 import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
 import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
 import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
+
+import RestaurantShoppingListPlanner from './components/Pages/Account/Business/Restaurant/RestaurantShoppingListPlanner';
+import RestaurantInventory from './components/Pages/Account/Business/Restaurant/RestaurantInventory';
+import RestaurantDashboard from './components/Pages/Account/Business/Restaurant/RestaurantDashboard';
+import RestaurantMealPlan from './components/Pages/Account/Business/Restaurant/RestaurantMealPlan';
+
 
 import NewAccount from "./components/Pages/Account/Account";
 
@@ -73,6 +83,9 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 
 //* Chart.js
 import ChartView from "./components/Pages/Account/Charts/Chart";
+import GiftFoodChart from "./components/Pages/Account/Charts/GiftFoodChart";
+
+import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 
 const App = (props) => {
   const [uid, setUid] = useState(props.auth.uid);
@@ -193,6 +206,9 @@ const App = (props) => {
             <Route path="/view-map" exact component={Map} />
 
             <Route path="/food-waste" exact component={FoodWaste} />
+            <Route path="/food-waste-edible" exact component={FoodWasteEdible} />
+
+            <Route path="/gift-food" exact component={GiftFood} />
             <Route path="/food-loss" exact component={FoodLoss} />
             <Route
               path="/food-wasteBusiness"
@@ -203,6 +219,9 @@ const App = (props) => {
             <Route path="/table" component={InfoTable} />
 
             <Route path="/chart" exact component={ChartView} />
+
+            <Route path="/gift-chart" exact component={GiftFoodChart} />
+
 
             <Route path="/food-reduction" component={FoodReduction} />
 
@@ -218,6 +237,7 @@ const App = (props) => {
             </Route>
             <Route path="/cons-auth" component={ConsumerAuth} />
             <Route path="/meal-plan" component={MealPlan} />
+            <Route path="/nutrient-gap" component={NutrientGap} />
             <Route path="/view-products" component={ViewProducts} />
 
             <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
@@ -226,6 +246,12 @@ const App = (props) => {
               path="/food-surplusAcademic"
               component={FoodSurplusAcademic}
             />
+            
+            <Route path="/restaurant-shopping-list" component={RestaurantShoppingListPlanner}/>
+            <Route path="/restaurant-inventory" component={RestaurantInventory}/>
+            <Route path="/restaurant-dashboard" component={RestaurantDashboard}/>
+            <Route path="/restaurant-meal-plan" component={RestaurantMealPlan}/>
+
 
             <Route component={NotFound} />
           </Switch>

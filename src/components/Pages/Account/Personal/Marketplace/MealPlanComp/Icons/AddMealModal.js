@@ -1,27 +1,16 @@
 import React, { useState } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
 import EatingOut from "./EatingOut";
-import AddMealForm from "./AddMealForm";
+import { PreparedOrRaw } from "./PreparedOrRaw";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
-import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
 
 export function AddMealModal({ show, setShow, value }) {
   const [eatingOut, setEatingOut] = useState("unconfirmed");
 
   //control barcode scanner
-  const [scan, setScan] = useState(false);
   const [expand, setExpand] = useState("+ scan from barcode");
-  //scanning items will add item as a meal in meal plan including nutrition info and ingrs if information available
-  const handleSetScan = () => {
-    setScan(!scan);
-    if (scan) {
-      setExpand("+ scan from barcode");
-    } else {
-      setExpand("- input manually");
-    }
-  };
-
+  
   //control modal
   const handleForm = () => setShow(true);
   const handleFormClose = () => {
@@ -53,18 +42,8 @@ export function AddMealModal({ show, setShow, value }) {
             eatingOut={eatingOut}
             setEatingOut={setEatingOut}
             handleFormClose={handleFormClose}
+            value={value}
           >
-            <button
-              className="btn success shadow-none qrcode-btn"
-              onClick={() => handleSetScan()}
-            >
-              {expand}
-            </button>
-            {scan ? (
-              <Scanner />
-            ) : (
-              <AddMealForm value={value} handleFormClose={handleFormClose} />
-            )}
           </InOrOut>
         </Modal.Body>
       </Modal>
@@ -102,6 +81,6 @@ function InOrOut(props) {
     case "yes":
       return <EatingOut handleFormClose={props.handleFormClose} />;
     case "no":
-      return <>{props.children}</>;
+      return <PreparedOrRaw value={props.value}/>;
   }
 }

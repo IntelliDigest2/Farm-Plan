@@ -4,11 +4,15 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { RemoveFromInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { useHistory } from 'react-router-dom';
 
 import { connect } from "react-redux";
 
 //need props id
 function RemoveFromInventoryIcon(props) {
+
+  const history = useHistory();
+
   //id passed from onClick
   const handleDelete = (id) => {
     const data = {
