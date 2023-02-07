@@ -14,6 +14,7 @@ import Login from "./components/Pages/Auth/LogIn";
 import LandingPage from "./components/Pages/Auth/Landing";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
+import Admin from "./components/Pages/Admin";
 
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
 import Question2 from "./components/Pages/Account/Consultant/Question/Question2";
@@ -30,11 +31,8 @@ import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
-import Admin from "./components/Pages/Admin";
 
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
-import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
-
 import GiftFood from "./components/Pages/Account/Personal/GiftFood";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
@@ -268,7 +266,6 @@ const App = (props) => {
 			</Router>
 		</React.Fragment>
 	);
-
 };
 
 const mapStateToProps = (state) => {

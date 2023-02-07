@@ -33,8 +33,6 @@ import Map from "./components/Pages/Account/Map";
 import Admin from "./components/Pages/Admin";
 
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
-import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
-
 import GiftFood from "./components/Pages/Account/Personal/GiftFood";
 import FoodLoss from "./components/Pages/Account/Farm/FoodLoss";
 import FoodWasteBusiness from "./components/Pages/Account/Business/FoodWaste";
@@ -268,7 +266,6 @@ const App = (props) => {
 			</Router>
 		</React.Fragment>
 	);
-
 };
 
 const mapStateToProps = (state) => {
