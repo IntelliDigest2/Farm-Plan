@@ -215,6 +215,7 @@ export const signUp = (newUser) => {
           .collection("users")
           .doc(resp.user.uid)
           .set({
+            // ...newUser,
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             initials: newUser.firstName[0] + newUser.lastName[0],
@@ -223,6 +224,12 @@ export const signUp = (newUser) => {
             city: newUser.city,
             country: newUser.country,
             region: newUser.region,
+            //restaurant-specific user data:
+            restaurantName: newUser.restaurantName,
+            regulatoryBody: newUser.regulatoryBody,
+            regulatoryBodyID: newUser.regulatoryBodyID,
+            cuisine: newUser.cuisine,
+            restaurantDescription: newUser.restaurantDescription,
             type: type,
           });
 
@@ -345,6 +352,7 @@ export const createSubAccount = (data) => {
             region: data.region,
             admin: data.uid,
             type: data.type,
+            restaurantName: data.restaurantName,
           });
       })
       .then(() => {

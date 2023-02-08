@@ -8,6 +8,7 @@ import { Colors } from "../../../lib/Colors";
 // import AccordionDetails from "@mui/material/AccordionDetails";
 
 export function Food({ setShow, setChooseModal }) {
+
   return (
     <>
       <IconButton
@@ -106,6 +107,20 @@ export function Environment() {
         label="Waste Chart"
         color="yellow"
         goTo="/chart"
+      />
+      <IconButton
+        title="Gift a Food Item."
+        icon="gift"
+        label="Gifted Items Chart"
+        color="turquoise"
+        goTo="/gift-food"
+      />
+       <IconButton
+        title="View your gifted food data."
+        icon="chart"
+        label="Gifted Item Chart"
+        color="yellow"
+        goTo="/gift-chart"
       />
       <IconButton
         title="View the world map of WFT users!"

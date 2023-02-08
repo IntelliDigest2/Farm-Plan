@@ -16,6 +16,7 @@ import ShoppingBagOutlined from "@mui/icons-material/ShoppingBagOutlined";
 import CategoryIcon from "@mui/icons-material/Category";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
+import CardGiftcardOutlined from "@mui/icons-material/CardGiftcardOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -57,10 +58,25 @@ export function SubButton(props) {
       onClick={props.onClick}
       disabled={props.disabled}
     >
-      <div className="basic-title">{props.text}</div>
+      <div className="basic-title" style={{color: 'white'}}>{props.text}</div>
     </BootstrapButton>
   );
 }
+
+export function SubButtonInventory(props) {
+  return (
+    <BootstrapButton
+      variant="default"
+      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+      href={props.goTo}
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      <div className="basic-title" style={{color: 'white'}}>{props.text}</div>
+    </BootstrapButton>
+  );
+}
+
 
 export function AddButton({ onClick, title }) {
   return (
@@ -84,6 +100,8 @@ export function IconButton(props) {
         return <DeleteIconOutlined sx={{ fontSize: 90 }} />;
       case "chart":
         return <BarChartOutlined sx={{ fontSize: 90 }} />;
+      case "gift":
+        return <CardGiftcardOutlined sx={{ fontSize: 90 }} />;
       case "food":
         return <RestaurantOutlined sx={{ fontSize: 90 }} />;
       case "surplus":

@@ -24,6 +24,8 @@ function Scanner(props) {
   const [totalDaily, setTotalDaily] = useState([]);
   const [totalNutrients, setTotalNutrients] = useState([]);
   const [recipeYield, setRecipeYield] = useState([]);
+  const [url, setUrl] = useState([]);
+
 
 
  
@@ -115,7 +117,7 @@ function Scanner(props) {
         mealType: mealType,
         totalDaily: totalDaily,
         totalNutrients: totalNutrients,
-        //url: recipe.recipe.url,
+        url: url,
         recipeYield: recipeYield
       },
     };
@@ -175,6 +177,8 @@ function Scanner(props) {
                 setTotalDaily(data?.recipe.totalDaily)
                 setTotalNutrients(data?.recipe.totalNutrients)
                 setRecipeYield(data?.recipe.yield)
+                setUrl(data?.recipe.url)
+
                 //handleRecipe(e, "value");
                 //e.currentTarget.disabled = true;
               }}

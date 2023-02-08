@@ -24,7 +24,7 @@ export default function EatNowRecipe({ value }) {
       setExpand("- input manually");
     }
   };
-
+ 
   //control modal
   const handleForm = () => setShow(true);
   const handleFormClose = () => {

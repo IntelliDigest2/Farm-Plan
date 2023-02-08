@@ -14,8 +14,19 @@ var fbConfig = {
 };
 
 // Initialize Firebase
+//var app = firebase.initializeApp(fbConfig);
+
 firebase.initializeApp(fbConfig);
 // firebase.firestore;
+
+// if (window.location.hostname === "localhost") {
+//   app.auth().useEmulator("http://localhost:9099");
+//   app.firestore().settings({
+//     host: "localhost:8080",
+//     ssl: false,
+//   });
+// }
+
 
 //for uploading documents to fb storage
 export const storage = firebase.storage();
