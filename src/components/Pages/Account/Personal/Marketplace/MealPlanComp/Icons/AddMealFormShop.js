@@ -1,33 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { Dropdown } from "../../../../../../SubComponents/Dropdown";
-import MealType from "../Search/mealType";
+import React, { useEffect, useState } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
+import ScannerInventory from "../../../../../../SubComponents/QRCode/ScannerInventory";
+import FoodItemSearch from "./InputRecipe/FoodItemSearch";
+import { Dropdown } from "../../../../../../SubComponents/Dropdown";
+import DatePicker from "react-datepicker";
+import moment from "moment";
+
 
 import { connect } from "react-redux";
-//import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
-//import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
-import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
 
-function AddMealForm(props) {
-  const [mealName, setMealName] = useState("");
-  const [mealType, setMealType] = useState("");
-  const [err, setErr] = useState("");
+const AddMealFormShop = (props) => {
+  const [itemName, setItemName] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [measure, setMeasure] = useState("");
+  const [scan, setScan] = useState(false);
+  const [expand, setExpand] = useState("+ scan from barcode");
+  const [show, setShow] = useState(true);
+  const [startDate, setStartDate] = useState(new Date());
 
-  //saves recipe to saved meal list
-  const [save, setSave] = useState(true);
-  const handleSave = () => {
-    setSave(!save);
-  };
-
-  //controls local state of ingredient as we fetch data for it,
-  //once ingredient is "added" it will be moved to ingredient array
   const defaultLocal = {
     food: "",
     quantity: 0,
-    measure: "g",
+    measure: "g", 
     foodId: "",
   };
   const [local, setLocal] = useState(defaultLocal);
@@ -38,6 +34,7 @@ function AddMealForm(props) {
       setLocal({ ...local, [e.target.id]: e.target.value });
     }
   };
+
   const handleFoodSearch = (e) => {
     if (e.target.textContent) {
       setLocal({ ...local, food: e.target.textContent });
@@ -46,35 +43,11 @@ function AddMealForm(props) {
     }
   };
 
-  //when local.food changes, fetch the id for the food item
-  //which is needed to fetch nutrition
-  const setFoodId = (foodId) => {
-    setLocal({ ...local, foodId: foodId });
-  };
-
-  const [ingredients, setIngredients] = useState([]);
-  const handleIngredient = async () => {
-    if (local.food !== "") {
-      foodIdAPI(local.food, setFoodId).then(() => {
-        setIngredients((ingredients) => [...ingredients, local]);
-        setLocal(defaultLocal);
-      });
-    } else {
-      setErr("Please input an ingredient to add.");
-    }
-  };
-  useEffect(() => {
-    console.log("ingredients", ingredients);
-  }, [ingredients]);
-
-  const ingredientsList = ingredients.map((ingredient, index) => {
-    return (
-      <li key={index}>
-        {ingredient.food}: {ingredient.quantity}
-        {ingredient.measure}
-      </li>
-    );
-  });
+  //control modal
+  const handleForm = () => setShow(true);
+  const handleFormClose = () => {
+    setShow(false);
+  }
 
   //trigger this when editing/deleting items
   const [update, setUpdate] = useState(0);
@@ -85,72 +58,57 @@ function AddMealForm(props) {
   //fired when click "done"
   const handleSubmit = () => {
     const data = {
-      // month and day are used for the MealPlan db, year and week for the shopping list.
-      year: props.value.format("YYYY"),
-      month: props.value.format("YYYYMM"),
-      week: props.value.format("w"),
-      day: props.value.format("DD"),
       upload: {
-        meal: mealName,
-        mealType: mealType,
-        ingredients: ingredients,
+        ingredients: local.food + " " + local.quantity + "" + local.measure,
+        item: local.food,
+        measure: local.measure,
+        quantity: local.quantity,
+        //quantity: local.quantity
+        expiry: moment(startDate).format("DD/MM/yyyy")
       },
-    };
+    }; 
 
-    //props.createMealPlanData(data);
-    //forceUpdate();
-
-    // if (save) {
-    //   props.createRecipe(data);
-    // }
     props.addToShoppingList(data);
+    // props.createMealPlanData(data);
+    forceUpdate();
   };
 
+  const handleSetScan = () => {
+    setScan(!scan);
+    if (scan) {
+      setExpand("+ scan from barcode");
+    } else {
+      setExpand("- input manually");
+    }
+  };
+
+  useEffect(() => {
+    console.log("item", local.food);
+  }, [local.food]);
+
   return (
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-        props.handleFormClose();
-      }}
-    >
+    <div>
       {/* <button
-        onClick={() => {
-          nutritionAPI(local);
-        }}
+        className="btn success shadow-none qrcode-btn"
+        onClick={() => handleSetScan()}
       >
-        send test
+        {expand}
       </button> */}
-      <Form.Group>
-        <Form.Label>Meal Name</Form.Label>
-        <Form.Control
-          type="text"
-          id="mealName"
-          onChange={(e) => {
-            setMealName(e.target.value);
+      {scan ? (
+        <ScannerInventory handleFormClose={handleFormClose}/>
+      ) : (
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+            props.setUpdate(props.update + 1);
+            props.handleFormClose();
           }}
-          required
-        />
-      </Form.Group>
-
-      <MealType setMealType={setMealType} ownRecipe={true} />
-
-      <div style={{ padding: "0 0 0 4%" }}>
-        <ul>{ingredientsList}</ul>
-      </div>
-
-      <Form.Group>
-        {/* <Form.Label>Ingredient</Form.Label> */}
-        {/* <Form.Control
-          type="text"
-          id="food"
-          onChange={(e) => handleLocal(e)}
-          value={local.food}
-        /> */}
+        >
+          
         <FoodItemSearch handleFoodSearch={handleFoodSearch} />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Weight/Volume</Form.Label>
+        <Form.Group>
+        <Form.Label>Amount</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -172,42 +130,27 @@ function AddMealForm(props) {
         </InputGroup>
       </Form.Group>
 
-      <Form.Group>
-        <Button
-          className="green-btn shadow-none"
-          id="add ingredient"
-          onClick={() => {
-            handleIngredient();
-          }}
-        >
-          Add Ingredient
-        </Button>
-      </Form.Group>
-
-      <Form.Group>
-        <Form.Check
-          type="checkbox"
-          defaultChecked
-          label="Save meal"
-          onClick={() => handleSave()}
-        />
-      </Form.Group>
-
-      <div style={{ alignItems: "center" }}>
-        <Button className="blue-btn shadow-none" type="submit">
-          Done
-        </Button>
-      </div>
-    </Form>
+          <div style={{ alignItems: "center" }}>
+            <Button className="blue-btn shadow-none mt-3" type="submit">
+              Done
+            </Button>
+          </div>
+        </Form>
+      )}
+    </div>
   );
-}
+};
 
+const mapStateToProps = (state) => {
+  return {
+    profile: state.firebase.profile,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
-    //createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
-    //createRecipe: (data) => dispatch(createRecipe(data)),
     addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(AddMealForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AddMealFormShop);
+

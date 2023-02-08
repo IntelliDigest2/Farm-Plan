@@ -66,37 +66,3 @@ export function AddMealModalRecipe({ show, setShow, value }) {
     </>
   );
 }
-
-function InOrOut(props) {
-  switch (props.eatingOut) {
-    default:
-    case "unconfirmed":
-      return (
-        <>
-          <div className="basic-title-left">
-            Are you cooking at home or eating out?
-          </div>
-          <Row>
-            <Col>
-              <SubButton
-                styling="green"
-                text="At Home"
-                onClick={() => props.setEatingOut("no")}
-              />
-            </Col>
-            <Col>
-              <SubButton
-                styling="green"
-                text="Eating Out"
-                onClick={() => props.setEatingOut("yes")}
-              />
-            </Col>
-          </Row>
-        </>
-      );
-    case "yes":
-      return <EatingOut handleFormClose={props.handleFormClose} />;
-    case "no":
-      return <>{props.children}</>;
-  }
-}
