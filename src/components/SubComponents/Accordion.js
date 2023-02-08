@@ -82,6 +82,26 @@ const Accordion = () =>
 						</span>
 						<span className="accordion_dropdown_productItem">
 							{/* {product.name} */}
+							Quantity
+						</span>
+						<span className="accordion_dropdown_productItem">
+							{/* {product.name} */}
+							Measure
+						</span>
+						<span className="accordion_dropdown_productItem">
+							{/* {product.name} */}
+							productName
+						</span>
+						<span className="accordion_dropdown_productItem">
+							{/* {product.name} */}
+							productName
+						</span>
+						<span className="accordion_dropdown_productItem">
+							{/* {product.name} */}
+							productName
+						</span>
+						<span className="accordion_dropdown_productItem">
+							{/* {product.name} */}
 							productName
 						</span>
 						<span className="accordion_dropdown_productItem">
