@@ -7,19 +7,55 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData";
 import RemoveFromInventoryIcon from "./Icons/RemoveFromInventoryIcon";
+import RefreshIcon from "./Icons/RefreshIcon";
 import RemoveFoodWasteIcon from "./Icons/RemoveFoodWasteIcon";
 import GiftFoodIcon from "./Icons/GiftFoodIcon";
+import PurchaseIcon from "./Icons/PurchaseIcon";
 import Edit from "./Icons/EditIconInventory.jsx"
 import moment from "moment";
 import { Button } from "react-bootstrap";
 import { SubButtonInventory } from "../../../../../SubComponents/Button";
+import SyncIcon from '@mui/icons-material/Sync';
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 
 function InventoryItems(props) {
+
+  // console.log("let get it, park well", props)
 
   const [list, setList] = useState([]);
   const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
 
   var today = moment(new Date()).format("dd/mm/yyyy")
+
+   //trigger this when updating items
+ const [update, setUpdate] = useState(0);
+ 
+ const forceUpdate = () => {
+   setUpdate(update + 1);
+ };
+
+  function Refresh() {
+    return (
+      <>
+        <Tooltip title="Refresh">
+          <IconButton
+            aria-label="Refresh"
+            sx={{ ml: 2 }}
+            onClick={() => {
+              forceUpdate();
+              console.log("update", update)
+
+            }}
+          >
+            <SyncIcon style={{ fontSize: 35 }} 
+            />
+          </IconButton>
+        </Tooltip>
+    </>
+    );
+   }
+
 
   //this sends data request
   useEffect(() => {
@@ -77,6 +113,7 @@ function InventoryItems(props) {
 
   useEffect(() => {
     updateInventoryList();
+    forceUpdate()
   }, [props.data]);
 
   function sendMail(item) {
@@ -92,6 +129,7 @@ function InventoryItems(props) {
   
   return (
     <>
+    <RefreshIcon update={props.update} setUpdate={props.setUpdate} />
       {list.length ? (
         <>
           <List>
@@ -130,6 +168,15 @@ function InventoryItems(props) {
                         update={props.update}
                         setUpdate={props.setUpdate}
                         item={item}
+                      />
+
+                      <PurchaseIcon
+                        id={item.id}
+                        value={props.value}
+                        update={props.update}
+                        setUpdate={props.setUpdate}
+                        item={item}
+                        profile={props.profile}
                       />
 
                     </>

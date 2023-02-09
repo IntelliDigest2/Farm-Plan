@@ -89,6 +89,7 @@ export default function RecipeSearch(props) {
             <Form.Control
               className="shadow-none"
               type="text"
+              placeholder="Enter meal name"
               id="query"
               defaultValue={query}
               onChange={(e) => {

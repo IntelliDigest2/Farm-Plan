@@ -4,7 +4,7 @@ import { Modal, Alert } from "react-bootstrap";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { RemoveFromInventory, addToGiftItems } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { RemoveFromInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import GiftFood from "../../../GiftFoodE"
@@ -20,27 +20,27 @@ function GiftFoodIcon(props) {
   const history = useHistory();
 
   //id passed from onClick
-  const giftFood = () => {
+  // const giftFood = () => {
 
-    const getItem = props.item
+  //   const getItem = props.item
 
-    const data = {
+  //   const data = {
 
-      upload: {
-        id: getItem.id,
-        food: getItem.food,
-        item: getItem.item,
-        measure: getItem.measure,
-        quantity: getItem.quantity,
-      }
+  //     upload: {
+  //       id: getItem.id,
+  //       food: getItem.food,
+  //       item: getItem.item,
+  //       measure: getItem.measure,
+  //       quantity: getItem.quantity,
+  //     }
      
-    };
+  //   };
 
 
-    //props.removeFromInventory(data);
-    props.addToGiftItems(data);
-   // props.setUpdate(props.update + 1);
-  };
+  //   //props.removeFromInventory(data);
+  //   props.addToGiftItems(data);
+  //  // props.setUpdate(props.update + 1);
+  // };
 
 
   //id passed from onClick
@@ -115,7 +115,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeFromInventory: (data) => dispatch(RemoveFromInventory(data)),
-    addToGiftItems: (data) => dispatch(addToGiftItems(data))
+    //addToGiftItems: (data) => dispatch(addToGiftItems(data))
   };
 };
 
