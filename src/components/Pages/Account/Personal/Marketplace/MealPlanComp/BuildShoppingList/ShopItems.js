@@ -7,13 +7,19 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getShoppingList, getShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { addToShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
-import RemoveFromShop from "../Icons/RemoveFromShop";
+import { addToPurchaseItems } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
-import RefreshIcon from "../Icons/RefreshIcon";
-import FullCalendar from "../Plan/CalendarPlanner/FullCalendar";
+import Checkbox from '@mui/material/Checkbox';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack';
 import moment from "moment";
-
+import { submitNotification } from "../../../../../../lib/Notifications";
 import SyncIcon from '@mui/icons-material/Sync';
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -24,6 +30,8 @@ function ShopItems(props) {
   const [allList, setAllList] = useState([]);
   const [newList, setNewList] = useState([]);
   const [showModal, setShow] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
 
   //trigger this when editing/deleting items
  const [update, setUpdate] = useState(0);
@@ -50,6 +58,92 @@ function ShopItems(props) {
   </>
   );
  }
+
+ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+const [cart, setCart] = useState([]);
+
+
+const addToCart = (ingr) => {
+  setCart([...cart, ingr]);
+  };
+
+  const removeFromCart = (ingr) => {
+    let hardCopy = [...cart];
+    hardCopy = hardCopy.filter((cartItem) => cartItem.id !== ingr.id);
+    setCart(hardCopy);
+    };
+
+  const cartItems = cart.map((ingr, index) => (
+    <List>
+      <ListItem
+          key={`ingr${index}`}
+          className="list"
+          style={{ alignItems: "flex-end" }}
+        >      
+        <b>{`${ingr.item}: `}  </b> &nbsp; {`${ingr.quantity} ${ingr.measure}`} &nbsp;
+        {/* <input type="submit" value="remove" onClick={() => removeFromCart(ingr)} /> */}
+        <HighlightOffIcon onClick={() => removeFromCart(ingr)} />
+      </ListItem>
+    </List>
+    ));
+
+    const PurchaseItem = () => {
+
+      const cartList = cart
+  
+      const data = {
+  
+        upload: {
+         cartList,
+          profile: props.profile,
+          // FirstName: props.profile.firstName, 
+          // LastName: props.profile.lastName,
+          // Country: props.profile.country,
+          // City: props.profile.city,
+          // Email: props.profile.email,
+          date: props.value.format("YYYY/MM/DD"),
+          status: "pending"
+        }
+       
+      };
+
+      props.addToPurchaseItems(data);
+    submitNotification("Order Successful", "You will be contected shortly..");
+
+    }
+
+    const AllPurchaseItem = () => {
+
+      const firstList = allList
+      const secondList = newList 
+  
+      const data = {
+  
+        upload: {
+          firstList,
+          secondList,
+          profile: props.profile,
+          // FirstName: props.profile.firstName, 
+          // LastName: props.profile.lastName,
+          // Country: props.profile.country,
+          // City: props.profile.city,
+          // Email: props.profile.email,
+          date: props.value.format("YYYY/MM/DD"),
+          status: "pending"
+        }
+       
+      };
+
+      props.addToPurchaseItems(data);
+    submitNotification("Order Successful", "You will be contected shortly..");
+
+    }
+  
+
+useEffect(() => {
+  console.log("cart", cart);
+}, [cart]);
 
   //this sends data request
   useEffect(() => {
@@ -86,7 +180,7 @@ function ShopItems(props) {
       var data = doc.ingredient.data;
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
-      var expiry = doc.ingredient.expiry;
+      //var expiry = doc.ingredient.expiry;
 
       setAllList((list) => [
         ...list,
@@ -95,7 +189,7 @@ function ShopItems(props) {
           item: data,
           measure: measure,
           quantity: quantity,
-          expiry: expiry,
+          //expiry: expiry,
           id: id,
         },
       ]);
@@ -115,7 +209,7 @@ function ShopItems(props) {
       var data = doc.ingredient.data
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
-      var expiry = doc.ingredient.expiry;
+      //var expiry = doc.ingredient.expiry;
 
       setNewList((list) => [
         ...list,
@@ -124,7 +218,7 @@ function ShopItems(props) {
           item: data,
           measure: measure,
           quantity: quantity,
-          expiry: expiry,
+          //expiry: expiry,
           id: id,
         },
       ]);
@@ -218,6 +312,14 @@ const addToList = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const Close = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Refresh />
@@ -236,13 +338,17 @@ const addToList = () => {
                     </p>
                     <br />
 
-
                 </div>
                 <div style={{ marginLeft: "20px" }}>
                   
                 </div>
                 <div className="icons">
-                  
+                <Checkbox {...label} color="success" 
+                    onClick={(e) => {
+                        addToCart(ingr);
+                    }}
+                  />
+
                   <BoughtItemIcon 
                    value={props.value}
                    food={ingr.food}
@@ -253,6 +359,10 @@ const addToList = () => {
                    update={update}
                    setUpdate={setUpdate}
                   /> 
+
+
+                  
+                  
                   {/* <RemoveFromShop
                     id={ingr.id}
                     value={props.value}
@@ -284,7 +394,12 @@ const addToList = () => {
                   
                 </div>
                 <div className="icons">
-                 
+
+                  <Checkbox {...label} color="success" 
+                    onClick={(e) => {
+                        addToCart(ingr);
+                    }}
+                  />
                   <BoughtItemIcon 
                     value={props.value}
                     food={ingr.food}
@@ -307,27 +422,64 @@ const addToList = () => {
             ))}
           </List>
 
-          <Button className="blue-btn shadow-none" type="submit"
-            onClick={handleShow}>
-              Update
-          </Button>
+          <Stack spacing={2} direction="row" style={{justifyContent: 'center'}}>
+            <Button className="blue-btn shadow-none" type="submit"
+              onClick={handleShow}>
+                View Cart
+            </Button>
 
+            <Button className="blue-btn shadow-none" variant="contained" onClick={handleClickOpen}>
+              All
+            </Button>
+          </Stack>
+
+          
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Update Shopping List</Modal.Title>
+            <Modal.Title>Request Items</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            Update this Shopping list?
+            {cartItems}
           </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={addToList}>
-            Yes
+        <Button variant="secondary" onClick={() => {
+          PurchaseItem()
+          setCart([])
+          handleClose()
+          }}>
+            Confirm
           </Button>
           <Button variant="secondary" onClick={handleClose}>
-            No
+            Cancel
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Oder Reqest"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to request all the items on the shopping List?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={Close}>Cancel</Button>
+          <Button onClick={() => {
+            AllPurchaseItem()
+            Close()
+          }} 
+            autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
           
         </>
       ) : (
@@ -366,6 +518,7 @@ const mapStateToProps = (state) => {
     newShoppingList: state.mealPlan.newShoppingList,
     shoppingList: state.mealPlanner.allItems,
     newPlans: state.mealPlanner.newPlans,
+    profile: state.firebase.profile
   };
 };
 
@@ -376,6 +529,7 @@ const mapDispatchToProps = (dispatch) => {
     getAllItems: (plan) => dispatch(getAllItems(plan)),
     addToShoppingListUpdate: (data) => dispatch(addToShoppingListUpdate(data)),
     getPlanData: (plan) => dispatch(getPlanData(plan)),
+    addToPurchaseItems: (data) => dispatch(addToPurchaseItems(data))
   };
 };
 
