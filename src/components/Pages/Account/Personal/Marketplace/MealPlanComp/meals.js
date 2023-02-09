@@ -5,7 +5,9 @@ import MealsBox from "./MealsBox";
 import { connect } from "react-redux";
 import { getMealData, getMealDiary } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { getMealPlannerData, getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
-
+import SyncIcon from '@mui/icons-material/Sync';
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 
 function MyMeals(props) {
   const [meals, setMeals] = useState([]);
@@ -18,6 +20,25 @@ function MyMeals(props) {
   const forceUpdate = () => {
     setUpdate(update + 1);
   };
+
+  function Refresh() {
+    return (
+      <>
+        <Tooltip title="Refresh">
+          <IconButton
+            aria-label="Refresh"
+            sx={{ ml: 2 }}
+            onClick={() => {
+              forceUpdate();
+            }}
+          >
+            <SyncIcon style={{ fontSize: 35 }} 
+            />
+          </IconButton>
+        </Tooltip>
+    </>
+    );
+   }
 
   useEffect(() => {
     const weekData = {
@@ -167,6 +188,7 @@ function MyMeals(props) {
 
   return (
     <>
+    <Refresh />
       {weeklyMeals.length ? (
         <div>
           <MealsBox
