@@ -8,12 +8,15 @@ import { connect } from "react-redux";
 import { getShoppingList, getShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { addToShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import RemoveFromShop from "../Icons/RemoveFromShop";
-import { getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
-import { ItemAlreadyInInventoryIcon } from "../Icons/ItemAlreadyInInventoryIcon";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
+import RefreshIcon from "../Icons/RefreshIcon";
 import FullCalendar from "../Plan/CalendarPlanner/FullCalendar";
 import moment from "moment";
+
+import SyncIcon from '@mui/icons-material/Sync';
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 
 
 function ShopItems(props) {
@@ -22,18 +25,31 @@ function ShopItems(props) {
   const [newList, setNewList] = useState([]);
   const [showModal, setShow] = useState(false);
 
-
-
-  //console.log("whats props:", newList)
-
-
   //trigger this when editing/deleting items
-  const [update, setUpdate] = useState(0);
+ const [update, setUpdate] = useState(0);
+ 
+ const forceUpdate = () => {
+   setUpdate(update + 1);
+ };
 
-  // //this sends data request
-  // useEffect(() => {
-  //   props.getAllItems();
-  // }, [update]);
+ function Refresh() {
+  return (
+    <>
+      <Tooltip title="Refresh">
+        <IconButton
+          aria-label="Refresh"
+          sx={{ ml: 2 }}
+          onClick={() => {
+            forceUpdate();
+          }}
+        >
+          <SyncIcon style={{ fontSize: 35 }} 
+          />
+        </IconButton>
+      </Tooltip>
+  </>
+  );
+ }
 
   //this sends data request
   useEffect(() => {
@@ -163,7 +179,6 @@ function ShopItems(props) {
   function getFilteredProducts() {
     return list.filter(product => {
       const week = props.value.format("w")
-      //console.log("week", product.week)
     
       return week == product.week;
     });
@@ -172,20 +187,6 @@ function ShopItems(props) {
   useEffect(() => {
     getFilteredProducts();
   }, [props.newPlans]);
-
-  // const isItemInInventory = (strItem) => {
-  //   for (let i = 0; i < props.inventory.length; i++) {
-  //     if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
-  //       // if(strItem.includes(props.inventory[i].item))
-  //       return true;
-  //   }
-  //   return false;
-  // };
-
-  // const addToList = () => {
-
-  //   console.log("this is function", getFilteredProducts())
-  // }
  
 // filter products based on similar meal name
 const result = Object.values(
@@ -210,7 +211,6 @@ const addToList = () => {
       result: result
     },
   };
-    console.log("this is function", data)
     props.addToShoppingListUpdate(data)
     setShow(false);
   }
@@ -220,6 +220,7 @@ const addToList = () => {
 
   return (
     <>
+      <Refresh />
       {newList.length ? (
         <>
           <List>
@@ -241,16 +242,16 @@ const addToList = () => {
                   
                 </div>
                 <div className="icons">
-                  {/* {isItemInInventory(ingr.food) ? (
-                    <ItemAlreadyInInventoryIcon />
-                  ) : null} */}
+                  
                   <BoughtItemIcon 
-                    value={props.value}
-                    food={ingr.food}
-                    id={ingr.id}
-                    item={ingr.item}
-                    update={update}
-                    setUpdate={setUpdate}
+                   value={props.value}
+                   food={ingr.food}
+                   item={ingr.item}
+                   id={ingr.id}
+                   measure={ingr.measure}
+                   quantity={ingr.quantity}
+                   update={update}
+                   setUpdate={setUpdate}
                   /> 
                   {/* <RemoveFromShop
                     id={ingr.id}
@@ -283,9 +284,7 @@ const addToList = () => {
                   
                 </div>
                 <div className="icons">
-                  {/* {isItemInInventory(ingr.food) ? (
-                    <ItemAlreadyInInventoryIcon />
-                  ) : null} */}
+                 
                   <BoughtItemIcon 
                     value={props.value}
                     food={ingr.food}
@@ -365,7 +364,6 @@ const mapStateToProps = (state) => {
   return {
     UpdatedShoppingList: state.mealPlan.shoppingList,
     newShoppingList: state.mealPlan.newShoppingList,
-    inventory: state.mealPlan.inventory,
     shoppingList: state.mealPlanner.allItems,
     newPlans: state.mealPlanner.newPlans,
   };
@@ -375,7 +373,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getShoppingList: (product) => dispatch(getShoppingList(product)),
     getShoppingListUpdate: (product) => dispatch(getShoppingListUpdate(product)),
-    getInventory: () => dispatch(getInventory()),
     getAllItems: (plan) => dispatch(getAllItems(plan)),
     addToShoppingListUpdate: (data) => dispatch(addToShoppingListUpdate(data)),
     getPlanData: (plan) => dispatch(getPlanData(plan)),

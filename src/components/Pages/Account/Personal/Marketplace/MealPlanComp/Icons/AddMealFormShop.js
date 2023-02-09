@@ -96,8 +96,8 @@ const AddMealFormShop = (props) => {
   };
 
   useEffect(() => {
-    console.log("item", local.food);
-  }, [local.food]);
+    forceUpdate()
+  }, []);
 
   return (
     <div>
