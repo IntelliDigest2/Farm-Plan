@@ -6,16 +6,15 @@
 =============================================*/
 
 .accordion{
-    width: calc(100% - 40px);
+    width: calc(900px - 40px);
    height: auto;
     font-size: 13px;
     border: 1px solid #D2D2D7;
-
-    border-radius: 1px;
+    border-radius: 8px;
+    /* display: flex; */
     margin: 0 auto;
     overflow: hidden;
     text-transform: uppercase;
-    border-bottom: 2px solid #d0cece ;
     
 
 }
@@ -28,7 +27,6 @@
     padding:4px 20px;
     background-color: #F2F2F2;
     cursor: pointer;
-    align-items: center;
 
 }
 
@@ -38,8 +36,7 @@
 }
 
 .accordion_top_userInfo > span:first-child {
-    color:#0440D8;
-    font-weight: 600;
+    color:#0440D8
 }
 
 .accordion_top_right::before{
@@ -51,19 +48,11 @@ margin-right: 10px;
 
 }
 
-.accordion_top_right > span:first-child::after{
-    content: '';
-    background-color: red;
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
-}
-
 .accordion_top_right{
     display: flex;
     justify-content: space-evenly;
     width: 23%;
-    /* align-items: center; */
+    align-items: center;
 }
 
 .accordion_dropDown{
@@ -78,15 +67,13 @@ margin-right: 10px;
     padding:15px 20px;
 }
 .accordion_dropdown_products{
-    width: 75%;
+    width: 638px;
     /* background-color: red; */
     
 
    
 
 }
-
-
 
 .status-green{
     color: #07F202;
@@ -104,39 +91,20 @@ margin-right: 10px;
 
 
 .accordion_dropdown_productItems{
-    width: 100%;
+    width: 638px;
     display: grid;
     grid-template-columns: repeat(8, calc(100% / 8));
     margin-top: 4px;
-    grid-row-gap: 9px;
-    /* word-wrap: break-word; */
-    /* justify-items: center; */
+    justify-items: center;
 
 }
 .accordion_dropdown_productItem{
 width: auto;
-/* margin-right: 10px; */
+margin-right: 10px;
 color: #3467B2;
+word-wrap: break-word;
 cursor: pointer;
-text-align: center;
-position: relative;
-/* word-wrap:break-word; */
-}
-
-.accordion_dropdown_info{
-    width: 170px;
-    height: 58px;
-    padding: 7px 8px;
-    z-index: 1;
-    position: absolute;
-    border-radius: 8px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    color: black;
-    background-color: white;
-    text-align: left;
-    font-size: 12px;
-    visibility: hidden;
-    
+/* justify-items: center; */
 }
 
 /*=====  End of accordion styling  ======*/

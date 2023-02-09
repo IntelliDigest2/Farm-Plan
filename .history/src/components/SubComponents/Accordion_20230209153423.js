@@ -12,30 +12,9 @@ const Accordion = () =>
 		const [color, setColor] = useState();
 		const status = "completed";
 		const [accordionOpen, setAccordionOpen] = useState(false);
-		// const gridItem = useRef([]);
+		const gridItem = useRef([]);
 
 		const requestedProducts = Array.from(Array(10).keys());
-
-		let dropDownOption;
-
-		// switch (status) {
-		// 	case "completed":
-		// 		dropDownOption =
-
-		// 		break;
-		// 	case "progress":
-		// 		setColor("purple");
-		// 		break;
-		// 	case "canceled":
-		// 		setColor("red");
-		// 		break;
-		// 	case "pending":
-		// 		setColor("yellow");
-		// 		break;
-
-		// 	default:
-		// 		setColor("grey");
-		// }
 
 		// useEffect(
 		// 	(status) => {
@@ -70,7 +49,7 @@ const Accordion = () =>
 		let products = requestedProducts.map((product) => {
 			return (
 				<div
-					// ref={gridItem}
+					ref={gridItem}
 					key={`gridItem-${uuidv4()}`}
 					className="accordion_dropdown_productItem"
 					onMouseEnter={() => extraInfoHandler(true)}
@@ -128,7 +107,8 @@ const Accordion = () =>
 			<div className="accordion_dropDown">
 				<div>
 					<div>
-						status : <span className="status-green">{status}</span>
+						status : <span className="status-green">Completed</span>
+						{/* {status className= */}
 					</div>
 					<div>
 						Link to mail{" "}

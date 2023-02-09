@@ -339,7 +339,6 @@ body {
   width : 100%;
   display: flex;
   background-color: #fff;
-  min-height: calc(100vh - 40px);
 
 }
 .admin_header{

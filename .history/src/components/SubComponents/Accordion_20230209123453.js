@@ -1,26 +1,24 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./Accordion.css";
 import "./Button.css";
 import DropDownArrowIcon from "../../icons/dropDownArrowIcon";
 import StatusBulb from "./StatusBulb";
 import ExternalLink from "../../icons/externalLink";
-import { v4 as uuidv4 } from "uuid";
 
 const Accordion = () =>
 	// { status, requestedProducts }
 	{
 		const [color, setColor] = useState();
-		const status = "completed";
 		const [accordionOpen, setAccordionOpen] = useState(false);
-		// const gridItem = useRef([]);
+		// const [extraInfoShown, setExtraInfoShown] = useState(false);
 
-		const requestedProducts = Array.from(Array(10).keys());
+		useEffect((value) => {}, [accordionOpen]);
 
-		let dropDownOption;
+		// const [dropDownContent , setDropDownContent] = useState(status)
 
 		// switch (status) {
 		// 	case "completed":
-		// 		dropDownOption =
+		// 		setColor("green");
 
 		// 		break;
 		// 	case "progress":
@@ -37,58 +35,26 @@ const Accordion = () =>
 		// 		setColor("grey");
 		// }
 
-		// useEffect(
-		// 	(status) => {
-		// 		switch (status) {
-		// 			case "completed":
-		// 				setColor("green");
-
-		// 				break;
-		// 			case "progress":
-		// 				setColor("purple");
-		// 				break;
-		// 			case "canceled":
-		// 				setColor("red");
-		// 				break;
-		// 			case "pending":
-		// 				setColor("yellow");
-		// 				break;
-
-		// 			default:
-		// 				setColor("grey");
-		// 		}
-		// 	},
-		// 	[status]
-		// );
-
-		// useEffect(() => {
-		// 	console.log(gridItem.current); // logs <div>I'm an element</div>
-		// }, [gridItem]);
-
-		// const [dropDownContent , setDropDownContent] = useState(status)
-
-		let products = requestedProducts.map((product) => {
-			return (
-				<div
-					// ref={gridItem}
-					key={`gridItem-${uuidv4()}`}
-					className="accordion_dropdown_productItem"
-					onMouseEnter={() => extraInfoHandler(true)}
-					onMouseLeave={() => extraInfoHandler(false)}
-				>
-					{/* {product.name} */}
-					Name
-					<div className="accordion_dropdown_info">
-						<div>Qty : 8</div>
-						<div>Farm : Divine Farms</div>
-					</div>
-				</div>
-			);
-		});
+		// let products = requestedProducts.map((product) => {
+		// 	return (
+		//
+		// 			<span className>
+		// 				{/* {product.name} */}
+		// 				productName
+		// 			</span>
+		// 			<span>
+		// 				productQuantity
+		// 				{/* {product.quantity} */}
+		// 			</span>
+		//
+		// 	);
+		// });
 
 		function accordionHandler() {
+			console.log(accordionOpen);
 			if (accordionOpen) {
 				setAccordionOpen(false);
+				console.log(accordionOpen);
 			} else {
 				setAccordionOpen(true);
 			}
@@ -128,7 +94,8 @@ const Accordion = () =>
 			<div className="accordion_dropDown">
 				<div>
 					<div>
-						status : <span className="status-green">{status}</span>
+						status : <span className="status-green">Completed</span>
+						{/* {status className= */}
 					</div>
 					<div>
 						Link to mail{" "}
@@ -139,7 +106,30 @@ const Accordion = () =>
 				</div>
 				<div className="accordion_dropdown_products">
 					requested Products :{/* <span>{products}</span> */}
-					<div className="accordion_dropdown_productItems">{products}</div>
+					<div className="accordion_dropdown_productItems">
+						<div
+							className="accordion_dropdown_productItem"
+							onMouseEnter={() => extraInfoHandler(true)}
+							onMouseLeave={() => extraInfoHandler(false)}
+						>
+							{/* {product.name} */}
+							Name
+							<div className="accordion_dropdown_info">
+								<div>Qty : 8</div>
+								<div>Farm : Divine Farms</div>
+							</div>
+						</div>
+
+						<div
+							className="accordion_dropdown_productItem"
+							onMouseEnter={() => setExtraInfoShown(true)}
+							onMouseLeave={() => setExtraInfoShown(false)}
+						>
+							{/* {product.name} */}
+							Name
+							{extraDetails}
+						</div>
+					</div>
 				</div>
 			</div>
 		) : (
@@ -161,7 +151,7 @@ const Accordion = () =>
 						<span>completed</span>
 
 						<StatusBulb
-							color={color}
+							color={"red"}
 							// color={color}
 						/>
 						{/* <button className="btn-plain" onClick={accordionHandler}> */}

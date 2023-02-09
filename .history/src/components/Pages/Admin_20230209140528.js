@@ -9,16 +9,16 @@ const Admin = () => {
 	// })
 	const accordionRef = useRef([]);
 
-	// useEffect(() => {
-	// 	console.log(accordionRef.current);
-	// }, [accordionRef]);
+	useEffect(() => {
+		console.log(accordionRef.current);
+	}, [accordionRef]);
 
 	const entries = Array.from(Array(15).keys());
 
 	let accordions = entries.map((product, i) => {
 		return (
 			<Accordion
-				// useRef={(el) => (accordionRef.current[i] = el)}
+				useRef={(el) => (accordionRef.current[i] = el)}
 				key={`accordion-${i}`}
 			/>
 		);

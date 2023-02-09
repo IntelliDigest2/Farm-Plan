@@ -339,7 +339,6 @@ body {
   width : 100%;
   display: flex;
   background-color: #fff;
-  min-height: calc(100vh - 40px);
 
 }
 .admin_header{
@@ -349,7 +348,7 @@ body {
 
 .admin_left_section{
    width: 70%; ;
-  background-color:#f8f8f8 ;
+  background-color:#b5b7a6 ;
   margin: 10px 0px;
 }
 
@@ -360,20 +359,9 @@ body {
 
 .admin_right_section{
   position: fixed;
-  /* width: 90%; */
-  width: calc(100% - 70%);
-  height: auto;
+  width: 90%;
+  height: 100%;
   background-color: yellow;
-  right: 0;
-}
-
-.admin_paginator{
-    z-index: 1;
-    
-    position: fixed;
-   
-    bottom: 30px;
-    width: inherit;
 }
 
 

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import Accordion from "../SubComponents/Accordion";
 import Paginator from "../SubComponents/Paginator";
 import { v4 as uuidv4 } from "uuid";
@@ -7,21 +7,11 @@ const Admin = () => {
 	// let userRequests = userRequests.map(userRequestInfo=>{
 	// 	return <Accordion userRequestInfo={userRequestInfo}/>
 	// })
-	const accordionRef = useRef([]);
 
-	// useEffect(() => {
-	// 	console.log(accordionRef.current);
-	// }, [accordionRef]);
+	const entries = Array.from(Array(10).keys());
 
-	const entries = Array.from(Array(15).keys());
-
-	let accordions = entries.map((product, i) => {
-		return (
-			<Accordion
-				// useRef={(el) => (accordionRef.current[i] = el)}
-				key={`accordion-${i}`}
-			/>
-		);
+	let accordions = entries.map((product) => {
+		return <Accordion />;
 	});
 
 	return (

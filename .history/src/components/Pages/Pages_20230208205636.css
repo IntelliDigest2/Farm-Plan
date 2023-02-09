@@ -337,43 +337,28 @@ body {
 =============================================*/
 .adminCont{
   width : 100%;
-  display: flex;
-  background-color: #fff;
-  min-height: calc(100vh - 40px);
+  height: auto;
+  display: flex
 
 }
 .admin_header{
-  height: 30px;
+  height: 70px;
   background-color: purple;
 }
 
 .admin_left_section{
-   width: 70%; ;
-  background-color:#f8f8f8 ;
+  width: 960px ;
+  background-color:#b5b7a6 ;
   margin: 10px 0px;
 }
 
-.admin_left_section > div:not(:last-child){
-  margin-bottom: 1px;
+.admin_left_section > div{
+  margin-bottom: 20px;
 
 }
 
 .admin_right_section{
-  position: fixed;
-  /* width: 90%; */
-  width: calc(100% - 70%);
-  height: auto;
-  background-color: yellow;
-  right: 0;
-}
-
-.admin_paginator{
-    z-index: 1;
-    
-    position: fixed;
-   
-    bottom: 30px;
-    width: inherit;
+  
 }
 
 

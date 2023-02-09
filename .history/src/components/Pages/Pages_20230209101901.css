@@ -339,7 +339,6 @@ body {
   width : 100%;
   display: flex;
   background-color: #fff;
-  min-height: calc(100vh - 40px);
 
 }
 .admin_header{
@@ -369,7 +368,7 @@ body {
 
 .admin_paginator{
     z-index: 1;
-    
+    height: 25px;
     position: fixed;
    
     bottom: 30px;

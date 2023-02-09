@@ -10,17 +10,22 @@ const Accordion = () =>
 	// { status, requestedProducts }
 	{
 		const [color, setColor] = useState();
-		const status = "completed";
 		const [accordionOpen, setAccordionOpen] = useState(false);
-		// const gridItem = useRef([]);
+		const gridItem = useRef();
 
 		const requestedProducts = Array.from(Array(10).keys());
 
-		let dropDownOption;
+		useEffect((value) => {}, [accordionOpen]);
+
+		useEffect(() => {
+			console.log(gridItem.current); // logs <div>I'm an element</div>
+		}, [gridItem]);
+
+		// const [dropDownContent , setDropDownContent] = useState(status)
 
 		// switch (status) {
 		// 	case "completed":
-		// 		dropDownOption =
+		// 		setColor("green");
 
 		// 		break;
 		// 	case "progress":
@@ -37,40 +42,10 @@ const Accordion = () =>
 		// 		setColor("grey");
 		// }
 
-		// useEffect(
-		// 	(status) => {
-		// 		switch (status) {
-		// 			case "completed":
-		// 				setColor("green");
-
-		// 				break;
-		// 			case "progress":
-		// 				setColor("purple");
-		// 				break;
-		// 			case "canceled":
-		// 				setColor("red");
-		// 				break;
-		// 			case "pending":
-		// 				setColor("yellow");
-		// 				break;
-
-		// 			default:
-		// 				setColor("grey");
-		// 		}
-		// 	},
-		// 	[status]
-		// );
-
-		// useEffect(() => {
-		// 	console.log(gridItem.current); // logs <div>I'm an element</div>
-		// }, [gridItem]);
-
-		// const [dropDownContent , setDropDownContent] = useState(status)
-
 		let products = requestedProducts.map((product) => {
 			return (
 				<div
-					// ref={gridItem}
+					ref={gridItem}
 					key={`gridItem-${uuidv4()}`}
 					className="accordion_dropdown_productItem"
 					onMouseEnter={() => extraInfoHandler(true)}
@@ -128,7 +103,8 @@ const Accordion = () =>
 			<div className="accordion_dropDown">
 				<div>
 					<div>
-						status : <span className="status-green">{status}</span>
+						status : <span className="status-green">Completed</span>
+						{/* {status className= */}
 					</div>
 					<div>
 						Link to mail{" "}
@@ -161,7 +137,7 @@ const Accordion = () =>
 						<span>completed</span>
 
 						<StatusBulb
-							color={color}
+							color={"red"}
 							// color={color}
 						/>
 						{/* <button className="btn-plain" onClick={accordionHandler}> */}

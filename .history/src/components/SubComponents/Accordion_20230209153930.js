@@ -16,26 +16,30 @@ const Accordion = () =>
 
 		const requestedProducts = Array.from(Array(10).keys());
 
-		let dropDownOption;
+		let dropDownOption; 
 
-		// switch (status) {
-		// 	case "completed":
-		// 		dropDownOption =
 
-		// 		break;
-		// 	case "progress":
-		// 		setColor("purple");
-		// 		break;
-		// 	case "canceled":
-		// 		setColor("red");
-		// 		break;
-		// 	case "pending":
-		// 		setColor("yellow");
-		// 		break;
+			switch (status) {
+				case "completed":
+					dropDownOption =
 
-		// 	default:
-		// 		setColor("grey");
-		// }
+					break;
+				case "progress":
+					setColor("purple");
+					break;
+				case "canceled":
+					setColor("red");
+					break;
+				case "pending":
+					setColor("yellow");
+					break;
+
+				default:
+					setColor("grey");
+			}
+		
+						
+			
 
 		// useEffect(
 		// 	(status) => {
@@ -129,6 +133,7 @@ const Accordion = () =>
 				<div>
 					<div>
 						status : <span className="status-green">{status}</span>
+						{/* {status className= */}
 					</div>
 					<div>
 						Link to mail{" "}

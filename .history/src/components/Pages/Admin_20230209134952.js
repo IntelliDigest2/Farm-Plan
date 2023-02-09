@@ -7,21 +7,16 @@ const Admin = () => {
 	// let userRequests = userRequests.map(userRequestInfo=>{
 	// 	return <Accordion userRequestInfo={userRequestInfo}/>
 	// })
-	const accordionRef = useRef([]);
+	const accordionRef = useRef();
 
-	// useEffect(() => {
-	// 	console.log(accordionRef.current);
-	// }, [accordionRef]);
+	useEffect(() => {
+		console.log(accordionRef.current);
+	}, [accordionRef]);
 
 	const entries = Array.from(Array(15).keys());
 
-	let accordions = entries.map((product, i) => {
-		return (
-			<Accordion
-				// useRef={(el) => (accordionRef.current[i] = el)}
-				key={`accordion-${i}`}
-			/>
-		);
+	let accordions = entries.map((product) => {
+		return <Accordion useRef={accordionRef} key={`accordion-${uuidv4()}`} />;
 	});
 
 	return (
