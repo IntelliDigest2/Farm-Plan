@@ -6,7 +6,8 @@ import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-
+import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
+import { submitNotification } from "../../../../../../lib/Notifications";
 
 import { connect } from "react-redux";
 import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
@@ -19,6 +20,8 @@ const AddMealFormShop = (props) => {
   const [expand, setExpand] = useState("+ scan from barcode");
   const [show, setShow] = useState(true);
   const [startDate, setStartDate] = useState(new Date());
+  const [err, setErr] = useState("");
+
 
   const defaultLocal = {
     food: "",
@@ -43,6 +46,13 @@ const AddMealFormShop = (props) => {
     }
   };
 
+  //when local.food changes, fetch the id for the food item
+  //which is needed to fetch nutrition
+  const setFoodId = (foodId) => {
+    setLocal({ ...local, foodId: foodId });
+  };
+
+
   //control modal
   const handleForm = () => setShow(true);
   const handleFormClose = () => {
@@ -57,19 +67,22 @@ const AddMealFormShop = (props) => {
 
   //fired when click "done"
   const handleSubmit = () => {
-    const data = {
+    const data = {      
+      week: props.value.format("w"),
       upload: {
-        ingredients: local.food + " " + local.quantity + "" + local.measure,
-        item: local.food,
-        measure: local.measure,
-        quantity: local.quantity,
-        //quantity: local.quantity
-        expiry: moment(startDate).format("DD/MM/yyyy")
+        ingredient: {
+          food: local.food + " " + local.quantity + "" + local.measure,
+          data: local.food,
+          measure: local.measure,
+          quantity: local.quantity,
+          week: props.value.format("w"),
+        }
       },
     }; 
 
     props.addToShoppingList(data);
     // props.createMealPlanData(data);
+    submitNotification("Success", "Item added to Shopping List!");
     forceUpdate();
   };
 
@@ -101,7 +114,6 @@ const AddMealFormShop = (props) => {
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
-            props.setUpdate(props.update + 1);
             props.handleFormClose();
           }}
         >
