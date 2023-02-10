@@ -13,11 +13,7 @@ function Paginator() {
 			{/* <input type="text" className="paginator_input">
 				5
 			</input> */}
-			<form className=" paginator_form" action="">
-				<input type="number"></input>
-				<button className=" paginator_goBtn paginatorBtn ">GO</button>
-			</form>
-
+			<input type="number"></input>
 			<button className="paginatorBtn paginator_next_pg">6</button>
 			<button className="paginatorBtn paginatorBtn-right">
 				<ArrowIcon />

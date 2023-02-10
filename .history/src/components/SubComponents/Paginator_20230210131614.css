@@ -61,11 +61,9 @@ justify-content: space-evenly
 
 .paginatorBtn-left > svg{
     transform: rotate(90deg);
-    fill: black;
 }
 .paginatorBtn-right > svg{
     transform: rotate(-90deg);
-    fill: black
 
 }
 

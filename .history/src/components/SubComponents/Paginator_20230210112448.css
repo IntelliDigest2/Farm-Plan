@@ -1,5 +1,5 @@
 .paginator{
-    width: 240px;
+    width: 150px;
     height: 35px;
     border: 1px solid #D2D2D7;
     margin: 0 auto;
@@ -30,43 +30,15 @@ input, input:focus,input:active{
     
 }
 
-.paginator_form{
-display: flex;
-width: 5.2rem;
-justify-content: space-evenly
-}
-
-
-
-.paginator input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
 .paginator input:focus{
     outline: none;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 .paginatorBtn{
-    width: 2.2rem;
+    width: 1.75rem;
     background-color: #4e8488;
     color:white
-}
-
-.paginator_goBtn{
-    background-color: black;
-    
-}
-
-.paginatorBtn-left > svg{
-    transform: rotate(90deg);
-    fill: black;
-}
-.paginatorBtn-right > svg{
-    transform: rotate(-90deg);
-    fill: black
-
 }
 
 .paginator_prev_pg{

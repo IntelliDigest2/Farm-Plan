@@ -9,10 +9,9 @@ import { v4 as uuidv4 } from "uuid";
 const Accordion = () =>
 	// { status, requestedProducts }
 	{
-		// const [color, setColor] = useState();
+		const [color, setColor] = useState();
 		const status = "progress";
 		const [accordionOpen, setAccordionOpen] = useState(false);
-		let color;
 		// const gridItem = useRef([]);
 
 		const requestedProducts = Array.from(Array(10).keys());
@@ -24,17 +23,18 @@ const Accordion = () =>
 			return (
 				<div>
 					{/* {product.name} */}
-					<div>Rice</div>
-					<div className="accordion_productUpdate_input">
-						<input type="number"></input>
-
+					Rice
+					<span>
+						<input></input>
+					</span>
+					<span>
 						<select name="units" id="unit-select">
 							<option value="kg">kg</option>
 							<option value="g">g</option>
 							<option value="ltr">ltr</option>
-							<option value="unit">unit</option>
+							<option value="tbsp">tbsp</option>
 						</select>
-					</div>
+					</span>
 				</div>
 			);
 		});
@@ -42,7 +42,6 @@ const Accordion = () =>
 		switch (status) {
 			case "completed":
 				dropDownOption1 = "";
-				color = "green";
 
 				break;
 			case "progress":
@@ -53,31 +52,28 @@ const Accordion = () =>
 						<input type="checkbox" id="farmermail" name="farmermail"></input>
 					</>
 				);
-				color = "purple";
 				dropDownOption2 = (
-					<div className="accordion_dropdown_Option2">
+					<div>
 						UPLOAD PRICING
 						<form
 							// ref={gridItem}
 							key={`gridItem-${uuidv4()}`}
-							className="accordion_productUpdate"
+							className="accordion_dropdown_productUpdate"
 						>
 							{/* <div></div> */}
 							{productPricing}
 						</form>
-						<button className="accordion_productUpdateBtn">Submit</button>
+						<button>Submit</button>
 					</div>
 				);
 
 				break;
 			case "canceled":
 				dropDownOption1 = <>reason for cancellation: </>;
-				color = "red";
 
 				break;
 			case "pending":
 				dropDownOption1 = <>pending payment</>;
-				color = "yellow";
 
 				break;
 
@@ -168,7 +164,6 @@ const Accordion = () =>
 		) : (
 			""
 		);
-		let color2 = `--color2:${color}`;
 
 		return (
 			<div className="accordion">
@@ -182,18 +177,12 @@ const Accordion = () =>
 					</div>
 					<div className="accordion_top_right">
 						{/* status: {status} */}
-						<span
-							// style={color2}
-							data-color={color}
-							className="accordion_status"
-						>
-							{status}
-						</span>
+						<span>{status}</span>
 
-						{/* <StatusBulb
+						<StatusBulb
 							color={color}
 							// color={color}
-						/> */}
+						/>
 						{/* <button className="btn-plain" onClick={accordionHandler}> */}
 						<ArrowIcon />
 						{/* </button> */}

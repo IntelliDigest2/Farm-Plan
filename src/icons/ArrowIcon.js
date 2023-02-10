@@ -1,6 +1,6 @@
 import React from "react";
 
-function DropDownArrowIcon() {
+function ArrowIcon() {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -17,4 +17,4 @@ function DropDownArrowIcon() {
 	);
 }
 
-export default DropDownArrowIcon;
+export default ArrowIcon;

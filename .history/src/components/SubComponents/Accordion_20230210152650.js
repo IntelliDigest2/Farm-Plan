@@ -168,7 +168,6 @@ const Accordion = () =>
 		) : (
 			""
 		);
-		let color2 = `--color2:${color}`;
 
 		return (
 			<div className="accordion">
@@ -182,11 +181,7 @@ const Accordion = () =>
 					</div>
 					<div className="accordion_top_right">
 						{/* status: {status} */}
-						<span
-							// style={color2}
-							data-color={color}
-							className="accordion_status"
-						>
+						<span data={color} className="accordion_status">
 							{status}
 						</span>
 

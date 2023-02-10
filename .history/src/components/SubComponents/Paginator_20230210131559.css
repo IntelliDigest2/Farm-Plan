@@ -1,5 +1,5 @@
 .paginator{
-    width: 240px;
+    width: 250px;
     height: 35px;
     border: 1px solid #D2D2D7;
     margin: 0 auto;
@@ -61,11 +61,9 @@ justify-content: space-evenly
 
 .paginatorBtn-left > svg{
     transform: rotate(90deg);
-    fill: black;
 }
 .paginatorBtn-right > svg{
     transform: rotate(-90deg);
-    fill: black
 
 }
 

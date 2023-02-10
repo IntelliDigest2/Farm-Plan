@@ -1,0 +1,38 @@
+.paginator{
+    width: 150px;
+    height: 35px;
+    border: 1px solid #D2D2D7;
+    margin: 0 auto;
+    border-radius: 8px;
+     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+     display: flex;
+}
+
+button, button:focus,button:active{
+    outline: none;
+     
+  }
+  
+ 
+
+.paginator input{
+    width: 1.75rem;
+}
+
+.paginator input:focus{
+    outline: none;
+     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, #0440D8 0px 0px 0px 1px;;
+}
+
+.paginatorBtn{
+    width: 1.75rem;
+    background-color: #4e8488;
+    color:white
+}
+
+.paginator_prev_pg{
+    border-radius: 0 8 8 0 ;
+}
+.paginator_next_pg{
+    border-radius: 8 0 0 8 ;
+}

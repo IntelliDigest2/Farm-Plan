@@ -183,7 +183,7 @@ const Accordion = () =>
 					<div className="accordion_top_right">
 						{/* status: {status} */}
 						<span
-							// style={color2}
+							style={color2}
 							data-color={color}
 							className="accordion_status"
 						>

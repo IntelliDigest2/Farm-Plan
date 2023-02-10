@@ -5,7 +5,7 @@ import ArrowIcon from "../../icons/ArrowIcon";
 function Paginator() {
 	return (
 		<div className="paginator">
-			<button className="paginatorBtn paginatorBtn-left">
+			<button className="paginatorBtn">
 				<ArrowIcon />
 			</button>
 			<button className="paginatorBtn paginator_prev_pg">4</button>
@@ -13,13 +13,9 @@ function Paginator() {
 			{/* <input type="text" className="paginator_input">
 				5
 			</input> */}
-			<form className=" paginator_form" action="">
-				<input type="number"></input>
-				<button className=" paginator_goBtn paginatorBtn ">GO</button>
-			</form>
-
+			<input></input>
 			<button className="paginatorBtn paginator_next_pg">6</button>
-			<button className="paginatorBtn paginatorBtn-right">
+			<button className="paginatorBtn">
 				<ArrowIcon />
 			</button>
 		</div>

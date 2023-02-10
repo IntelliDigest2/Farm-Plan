@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./Accordion.css";
 import "./Button.css";
-import ArrowIcon from "../../icons/ArrowIcon";
+import DropDownArrowIcon from "../../icons/dropDownArrowIcon";
 import StatusBulb from "./StatusBulb";
 import ExternalLink from "../../icons/externalLink";
 import { v4 as uuidv4 } from "uuid";
@@ -9,10 +9,9 @@ import { v4 as uuidv4 } from "uuid";
 const Accordion = () =>
 	// { status, requestedProducts }
 	{
-		// const [color, setColor] = useState();
+		const [color, setColor] = useState();
 		const status = "progress";
 		const [accordionOpen, setAccordionOpen] = useState(false);
-		let color;
 		// const gridItem = useRef([]);
 
 		const requestedProducts = Array.from(Array(10).keys());
@@ -22,19 +21,21 @@ const Accordion = () =>
 
 		let productPricing = requestedProducts.map((product) => {
 			return (
-				<div>
+				<form>
 					{/* {product.name} */}
-					<div>Rice</div>
-					<div className="accordion_productUpdate_input">
-						<input type="number"></input>
-
-						<select name="units" id="unit-select">
-							<option value="kg">kg</option>
-							<option value="g">g</option>
-							<option value="ltr">ltr</option>
-							<option value="unit">unit</option>
-						</select>
-					</div>
+					Rice
+					<span>
+						<input></input>
+						<select name="pets" id="pet-select">
+    <option value="">--Please choose an option--</option>
+    <option value="dog">Dog</option>
+    <option value="cat">Cat</option>
+    <option value="hamster">Hamster</option>
+    <option value="parrot">Parrot</option>
+    <option value="spider">Spider</option>
+    <option value="goldfish">Goldfish</option>
+</select>
+					</span>
 				</div>
 			);
 		});
@@ -42,7 +43,6 @@ const Accordion = () =>
 		switch (status) {
 			case "completed":
 				dropDownOption1 = "";
-				color = "green";
 
 				break;
 			case "progress":
@@ -51,33 +51,29 @@ const Accordion = () =>
 						{" "}
 						<label for="farmermail">SENT FARMER EMAIL </label>
 						<input type="checkbox" id="farmermail" name="farmermail"></input>
+					
 					</>
 				);
-				color = "purple";
 				dropDownOption2 = (
-					<div className="accordion_dropdown_Option2">
+					<div>
 						UPLOAD PRICING
-						<form
+						<div
 							// ref={gridItem}
 							key={`gridItem-${uuidv4()}`}
-							className="accordion_productUpdate"
+							className="accordion_dropdown_productUpdate"
 						>
-							{/* <div></div> */}
 							{productPricing}
-						</form>
-						<button className="accordion_productUpdateBtn">Submit</button>
+						</div>
 					</div>
 				);
 
 				break;
 			case "canceled":
 				dropDownOption1 = <>reason for cancellation: </>;
-				color = "red";
 
 				break;
 			case "pending":
 				dropDownOption1 = <>pending payment</>;
-				color = "yellow";
 
 				break;
 
@@ -168,7 +164,6 @@ const Accordion = () =>
 		) : (
 			""
 		);
-		let color2 = `--color2:${color}`;
 
 		return (
 			<div className="accordion">
@@ -182,20 +177,14 @@ const Accordion = () =>
 					</div>
 					<div className="accordion_top_right">
 						{/* status: {status} */}
-						<span
-							// style={color2}
-							data-color={color}
-							className="accordion_status"
-						>
-							{status}
-						</span>
+						<span>{status}</span>
 
-						{/* <StatusBulb
+						<StatusBulb
 							color={color}
 							// color={color}
-						/> */}
+						/>
 						{/* <button className="btn-plain" onClick={accordionHandler}> */}
-						<ArrowIcon />
+						<DropDownArrowIcon />
 						{/* </button> */}
 					</div>
 				</div>
