@@ -151,7 +151,7 @@ function AddMealForm(props) {
         <FoodItemSearch handleFoodSearch={handleFoodSearch} />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Amount</Form.Label>
+        <Form.Label>Weight/Volume</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -165,7 +165,7 @@ function AddMealForm(props) {
             id="measure"
             styling="grey dropdown-input"
             data={local.measure}
-            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups", "unit"]}
+            items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups", "units", "pcs", "oz", "lbs"]}
             function={(e) => {
               setLocal({ ...local, measure: e });
             }}

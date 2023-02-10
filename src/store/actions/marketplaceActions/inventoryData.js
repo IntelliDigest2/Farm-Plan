@@ -54,7 +54,7 @@ export const addToInventory = (data) => {
   };
 };
 
-export const addToGiftItems = (data) => {
+export const addToPurchaseItems = (data) => {
   return (dispatch, getState, { getFirestore }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -88,14 +88,14 @@ export const addToGiftItems = (data) => {
     getFirestore()
     .collection("marketplace")
     .doc(uid)
-    .collection("giftedItems")
+    .collection("PurchasedItems")
     .add(data.upload)
     .then((docRef) => {
       // make the docId easily accessible so that we can delete it later if we want.
       getFirestore()
         .collection("marketplace")
         .doc(uid)
-        .collection("giftedItems")
+        .collection("PurchasedItems")
         .doc(docRef.id)
         .set({ id: docRef.id }, { merge: true });
       dispatch({ type: "CREATE_GIFT_ITEM", data });
@@ -105,6 +105,60 @@ export const addToGiftItems = (data) => {
     });
   };
 };
+
+export const addToWasteItems = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirestore()
+    .collection("marketplace")
+    .doc(uid)
+    .collection("wasteItems")
+    .add(data.upload)
+    .then((docRef) => {
+      // make the docId easily accessible so that we can delete it later if we want.
+      getFirestore()
+        .collection("marketplace")
+        .doc(uid)
+        .collection("wasteItems")
+        .doc(docRef.id)
+        .set({ id: docRef.id }, { merge: true });
+      dispatch({ type: "CREATE_WASTE_ITEM", data });
+    })
+    .catch((err) => {
+      dispatch({ type: "CREATE_WASTE_ITEM_ERROR", err });
+    });
+  };
+};
+
+
 
 
 export const getInventory = () => {
