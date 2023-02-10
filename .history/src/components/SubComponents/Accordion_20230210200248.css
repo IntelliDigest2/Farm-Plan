@@ -118,7 +118,7 @@ margin-right: 10px;
 }
 
 .accordion_dropDown_left > div:not(:last-child){
-    margin-bottom: 8px;
+    margin-bottom: 20px;
 }
 .accordion_status{
     width: 100px;
@@ -194,7 +194,7 @@ margin-right: 10px;
 
 .accordion_productUpdate  input{
     width: 2.4rem;
-    margin-right: 8px;
+    margin-right: 20px;
     
    
     text-align: center;

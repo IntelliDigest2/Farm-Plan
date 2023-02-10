@@ -59,35 +59,17 @@ margin-right: 10px;
     height: 10px;
 } */
 
-.accordion_status[data-color= red]::after{
+[data-color= red]::after{
     background-color: red;
 }
-.accordion_status[data-color= green]::after{
+[data-color= green]::after{
     background-color:green;
 }
-.accordion_status[data-color= purple]::after{
+[data-color= purple]::after{
     background-color: purple;
 }
-.accordion_status[data-color= yellow]::after{
+[data-color= yellow]::after{
     background-color: yellow;
-}
-
-
-.accordion_status_name[data-color= red]{
-    color: red;
-    font-weight: 600;
-}
-.accordion_status_name[data-color= green]{
-    color:green;
-    font-weight: 600;
-}
-.accordion_status_name[data-color= purple]{
-    color: purple;
-    font-weight: 600;
-}
-.accordion_status_name[data-color= yellow]{
-    color: yellow;
-    font-weight: 600;
 }
 
 .accordion_top_right{
@@ -115,10 +97,6 @@ margin-right: 10px;
 
    
 
-}
-
-.accordion_dropDown_left > div:not(:last-child){
-    margin-bottom: 8px;
 }
 .accordion_status{
     width: 100px;
@@ -194,7 +172,7 @@ margin-right: 10px;
 
 .accordion_productUpdate  input{
     width: 2.4rem;
-    margin-right: 8px;
+    margin-right: 20px;
     
    
     text-align: center;
@@ -270,6 +248,29 @@ cursor: pointer;
 
 
 
+/*=============================================
+=            Status Bulb            =
+=============================================*/
+.bulb{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
 
+.bulb-red{
+    background-color: #FF0000;
+}
+.bulb-green{
+    background-color: #0FBE0B;
+}
+.bulb-yellow{
+    background-color: #FFE600;
+}
+.bulb-purple{
+    background-color: #9747FF;
+}
+
+
+/*=====  End of Status Bulb  ======*/
 
 

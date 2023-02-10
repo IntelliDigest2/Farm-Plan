@@ -148,6 +148,17 @@ const Accordion = () =>
 
 		// }
 
+		//         Name of user
+
+		// let extraDetails = extraInfoShown ? (
+		// 	<div className="accordion_dropdown_info">
+		// 		<div>Qty : 8</div>
+		// 		<div>Farm : Divine Farms</div>
+		// 	</div>
+		// ) : (
+		// 	""
+		// );
+
 		let accordionDropDown = accordionOpen ? (
 			<div className="accordion_dropDown">
 				<div className="accordion_dropDown_left">

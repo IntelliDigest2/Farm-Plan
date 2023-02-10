@@ -27,8 +27,9 @@ const Accordion = () =>
 			measure: "kg",
 		};
 
-		// const requestedProducts = Array.from(Array(10).keys());
 		const requestedProducts = Array.from(Array(10).fill(requestDummy));
+
+		console.log(requestedProducts);
 
 		let dropDownOption1;
 		let dropDownOption2;
@@ -37,7 +38,7 @@ const Accordion = () =>
 			return (
 				<div>
 					{/* {product.name} */}
-					<div>{product.name}</div>
+					<div>Rice</div>
 					<div className="accordion_productUpdate_input">
 						<input type="number"></input>
 
@@ -103,8 +104,7 @@ const Accordion = () =>
 		) : (
 			<div className="accordion_dropdown_info">
 				<div>
-					Qty : {requestDummy.quantity}{" "}
-					<span>Price : {requestDummy.price}$</span>
+					Qty : 8 <span>Price : {requestDummy.price}$</span>
 				</div>
 				<div>Farm : Divine Farms</div>
 			</div>
@@ -119,8 +119,8 @@ const Accordion = () =>
 					onMouseEnter={() => extraInfoHandler(true)}
 					onMouseLeave={() => extraInfoHandler(false)}
 				>
-					{product.name}
-
+					{/* {product.name} */}
+					Rice
 					{productInfo}
 				</div>
 			);
@@ -147,6 +147,17 @@ const Accordion = () =>
 		// 	productName = <><span className="">{first}</span><span>{second}</span></>
 
 		// }
+
+		//         Name of user
+
+		// let extraDetails = extraInfoShown ? (
+		// 	<div className="accordion_dropdown_info">
+		// 		<div>Qty : 8</div>
+		// 		<div>Farm : Divine Farms</div>
+		// 	</div>
+		// ) : (
+		// 	""
+		// );
 
 		let accordionDropDown = accordionOpen ? (
 			<div className="accordion_dropDown">

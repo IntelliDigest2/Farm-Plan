@@ -4,11 +4,11 @@
     border: 1px solid #545455;
     margin: 0 auto;
     border-radius: 8px;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
      display: flex;
      overflow: hidden;
      justify-content: space-between;
-     /* background-color: #fff; */
+     background-color: #fff;
 }
 
 button, button:focus,button:active{

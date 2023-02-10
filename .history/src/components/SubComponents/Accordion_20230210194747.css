@@ -73,21 +73,17 @@ margin-right: 10px;
 }
 
 
-.accordion_status_name[data-color= red]{
+.accordion_status_name[data-color1= red]{
     color: red;
-    font-weight: 600;
 }
-.accordion_status_name[data-color= green]{
+.accordion_status_name[data-color1= green]{
     color:green;
-    font-weight: 600;
 }
-.accordion_status_name[data-color= purple]{
+.accordion_status_name[data-color1= purple]{
     color: purple;
-    font-weight: 600;
 }
-.accordion_status_name[data-color= yellow]{
+.accordion_status_name[data-color1= yellow]{
     color: yellow;
-    font-weight: 600;
 }
 
 .accordion_top_right{
@@ -115,10 +111,6 @@ margin-right: 10px;
 
    
 
-}
-
-.accordion_dropDown_left > div:not(:last-child){
-    margin-bottom: 8px;
 }
 .accordion_status{
     width: 100px;
@@ -194,7 +186,7 @@ margin-right: 10px;
 
 .accordion_productUpdate  input{
     width: 2.4rem;
-    margin-right: 8px;
+    margin-right: 20px;
     
    
     text-align: center;

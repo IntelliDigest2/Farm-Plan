@@ -59,35 +59,31 @@ margin-right: 10px;
     height: 10px;
 } */
 
-.accordion_status[data-color= red]::after{
+.accordion_status> [data-color= red]::after{
     background-color: red;
 }
-.accordion_status[data-color= green]::after{
+.accordion_status> [data-color= green]::after{
     background-color:green;
 }
-.accordion_status[data-color= purple]::after{
+.accordion_status> [data-color= purple]::after{
     background-color: purple;
 }
-.accordion_status[data-color= yellow]::after{
+.accordion_status > [data-color= yellow]::after{
     background-color: yellow;
 }
 
 
-.accordion_status_name[data-color= red]{
+.accordion_status_name [data-color1= red]::after{
     color: red;
-    font-weight: 600;
 }
-.accordion_status_name[data-color= green]{
+.accordion_status_name [data-color1= green]::after{
     color:green;
-    font-weight: 600;
 }
-.accordion_status_name[data-color= purple]{
+.accordion_status_name [data-color1= purple]::after{
     color: purple;
-    font-weight: 600;
 }
-.accordion_status_name[data-color= yellow]{
+.accordion_status_name [data-color1= yellow]::after{
     color: yellow;
-    font-weight: 600;
 }
 
 .accordion_top_right{
@@ -115,10 +111,6 @@ margin-right: 10px;
 
    
 
-}
-
-.accordion_dropDown_left > div:not(:last-child){
-    margin-bottom: 8px;
 }
 .accordion_status{
     width: 100px;
@@ -194,7 +186,7 @@ margin-right: 10px;
 
 .accordion_productUpdate  input{
     width: 2.4rem;
-    margin-right: 8px;
+    margin-right: 20px;
     
    
     text-align: center;

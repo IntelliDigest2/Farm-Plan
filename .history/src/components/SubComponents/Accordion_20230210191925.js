@@ -2,33 +2,20 @@ import React, { useEffect, useState, useRef } from "react";
 import "./Accordion.css";
 import "./Button.css";
 import ArrowIcon from "../../icons/ArrowIcon";
-
+import StatusBulb from "./StatusBulb";
 import ExternalLink from "../../icons/externalLink";
 import { v4 as uuidv4 } from "uuid";
 
 const Accordion = () =>
 	// { status, requestedProducts }
-
 	{
 		// const [color, setColor] = useState();
 		const status = "progress";
 		const [accordionOpen, setAccordionOpen] = useState(false);
 		let color;
-
 		// const gridItem = useRef([]);
 
-		let requestDummy = {
-			userName: "Jamed Deen",
-			location: "Edinburgh",
-			name: "Rice",
-			price: 20,
-			status: "progress",
-			quantity: 8,
-			measure: "kg",
-		};
-
-		// const requestedProducts = Array.from(Array(10).keys());
-		const requestedProducts = Array.from(Array(10).fill(requestDummy));
+		const requestedProducts = Array.from(Array(10).keys());
 
 		let dropDownOption1;
 		let dropDownOption2;
@@ -37,7 +24,7 @@ const Accordion = () =>
 			return (
 				<div>
 					{/* {product.name} */}
-					<div>{product.name}</div>
+					<div>Rice</div>
 					<div className="accordion_productUpdate_input">
 						<input type="number"></input>
 
@@ -98,30 +85,21 @@ const Accordion = () =>
 				dropDownOption1 = "";
 		}
 
-		let productInfo = requestDummy.price ? (
-			""
-		) : (
-			<div className="accordion_dropdown_info">
-				<div>
-					Qty : {requestDummy.quantity}{" "}
-					<span>Price : {requestDummy.price}$</span>
-				</div>
-				<div>Farm : Divine Farms</div>
-			</div>
-		);
-
 		let products = requestedProducts.map((product) => {
 			return (
 				<div
-					// ref={(el)=>gridItem(el)}
+					// ref={gridItem}
 					key={`gridItem-${uuidv4()}`}
 					className="accordion_dropdown_productItem"
 					onMouseEnter={() => extraInfoHandler(true)}
 					onMouseLeave={() => extraInfoHandler(false)}
 				>
-					{product.name}
-
-					{productInfo}
+					{/* {product.name} */}
+					Rice
+					<div className="accordion_dropdown_info">
+						<div>Qty : 8</div>
+						<div>Farm : Divine Farms</div>
+					</div>
 				</div>
 			);
 		});
@@ -148,14 +126,27 @@ const Accordion = () =>
 
 		// }
 
+		//         Name of user
+		// Email
+		// City
+		// Name of item
+		// Measure
+		// Quantity
+
+		// let extraDetails = extraInfoShown ? (
+		// 	<div className="accordion_dropdown_info">
+		// 		<div>Qty : 8</div>
+		// 		<div>Farm : Divine Farms</div>
+		// 	</div>
+		// ) : (
+		// 	""
+		// );
+
 		let accordionDropDown = accordionOpen ? (
 			<div className="accordion_dropDown">
-				<div className="accordion_dropDown_left">
+				<div>
 					<div>
-						status :{" "}
-						<span className="accordion_status_name" data-color={color}>
-							{status}
-						</span>
+						status : <span className="status-green">{status}</span>
 					</div>
 					<div>
 						Link to mail{" "}
