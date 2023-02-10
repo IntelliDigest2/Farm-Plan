@@ -11,7 +11,7 @@ const Admin = () => {
 
 	const productsDummy = {
 		name: "Rice",
-		price: 20,
+		// price: 20,
 		quantity: 8,
 	};
 
@@ -24,7 +24,7 @@ const Admin = () => {
 		location: "Edinburgh",
 		products: requestedProducts,
 
-		status: "pending",
+		status: "progress",
 	};
 
 	const accordionInfos = Array.from(Array(10).fill(requestDummy));

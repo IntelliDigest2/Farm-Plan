@@ -83,25 +83,29 @@ const Accordion = ({ userName, location, products, status }) => {
 			dropDownOption1 = "";
 	}
 
-	let productInfo = products[1].price ? <productRequestInfo /> : "";
+	// let productInfo = .price ? (
+	// 	""
+	// ) : (
+	// 	<productRequestInfo/>
+	// );
 
 	console.log(products);
 
-	let productsInfo = products.map((product) => {
-		return (
-			<div
-				// ref={(el)=>gridItem(el)}
-				key={`gridItem-${uuidv4()}`}
-				className="accordion_dropdown_productItem"
-				onMouseEnter={() => extraInfoHandler(true)}
-				onMouseLeave={() => extraInfoHandler(false)}
-			>
-				{product.name}
+	// let productsInfo = products.map((product) => {
+	// 	return (
+	// 		<div
+	// 			// ref={(el)=>gridItem(el)}
+	// 			key={`gridItem-${uuidv4()}`}
+	// 			className="accordion_dropdown_productItem"
+	// 			onMouseEnter={() => extraInfoHandler(true)}
+	// 			onMouseLeave={() => extraInfoHandler(false)}
+	// 		>
+	// 			{product.name}
 
-				{/* {productInfo} */}
-			</div>
-		);
-	});
+	// 			{/* {productInfo} */}
+	// 		</div>
+	// 	);
+	// });
 
 	function accordionHandler() {
 		if (accordionOpen) {
@@ -145,7 +149,7 @@ const Accordion = ({ userName, location, products, status }) => {
 			<div className="accordion_dropdown_products">
 				<div>
 					requested Products :{/* <span>{products}</span> */}
-					<div className="accordion_dropdown_productItems">{productsInfo}</div>
+					{/* <div className="accordion_dropdown_productItems">{productsInfo}</div> */}
 				</div>
 
 				{dropDownOption2}

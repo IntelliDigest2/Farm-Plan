@@ -24,7 +24,7 @@ const Admin = () => {
 		location: "Edinburgh",
 		products: requestedProducts,
 
-		status: "pending",
+		status: "progress",
 	};
 
 	const accordionInfos = Array.from(Array(10).fill(requestDummy));

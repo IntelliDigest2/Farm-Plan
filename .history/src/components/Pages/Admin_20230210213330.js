@@ -17,14 +17,12 @@ const Admin = () => {
 
 	const requestedProducts = Array.from(Array(10).fill(productsDummy));
 
-	console.log(requestedProducts);
-
 	let requestDummy = {
 		userName: "Jamed Deen",
 		location: "Edinburgh",
-		products: requestedProducts,
+		products: [requestedProducts],
 
-		status: "pending",
+		status: "progress",
 	};
 
 	const accordionInfos = Array.from(Array(10).fill(requestDummy));
@@ -40,10 +38,7 @@ const Admin = () => {
 	let accordions = accordionInfos.map((accordionInfo, i) => {
 		return (
 			<Accordion
-				userName={accordionInfo.userName}
-				location={accordionInfo.location}
-				status={accordionInfo.status}
-				products={accordionInfo.products}
+				info={accordionInfo} // useRef={(el) => (accordionRef.current[i] = el)}
 				key={`accordion-${i}`}
 			/>
 		);

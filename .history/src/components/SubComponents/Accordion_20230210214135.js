@@ -83,9 +83,11 @@ const Accordion = ({ userName, location, products, status }) => {
 			dropDownOption1 = "";
 	}
 
-	let productInfo = products[1].price ? <productRequestInfo /> : "";
-
-	console.log(products);
+	let productInfo = .price ? (
+		""
+	) : (
+		<productRequestInfo/>
+	);
 
 	let productsInfo = products.map((product) => {
 		return (
@@ -98,7 +100,7 @@ const Accordion = ({ userName, location, products, status }) => {
 			>
 				{product.name}
 
-				{/* {productInfo} */}
+				{productInfo}
 			</div>
 		);
 	});

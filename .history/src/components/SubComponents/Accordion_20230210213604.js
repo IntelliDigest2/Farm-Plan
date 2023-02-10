@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import "./Accordion.css";
 import "./Button.css";
 import ArrowIcon from "../../icons/ArrowIcon";
-import productRequestInfo from "./productRequestInfo";
 
 import ExternalLink from "../../icons/externalLink";
 import { v4 as uuidv4 } from "uuid";
@@ -83,9 +82,16 @@ const Accordion = ({ userName, location, products, status }) => {
 			dropDownOption1 = "";
 	}
 
-	let productInfo = products[1].price ? <productRequestInfo /> : "";
-
-	console.log(products);
+	let productInfo = requestDummy.price ? (
+		""
+	) : (
+		<div className="accordion_dropdown_info">
+			<div>
+				Qty : {requestDummy.quantity} <span>Price : {requestDummy.price}$</span>
+			</div>
+			<div>Farm : Divine Farms</div>
+		</div>
+	);
 
 	let productsInfo = products.map((product) => {
 		return (
@@ -98,7 +104,7 @@ const Accordion = ({ userName, location, products, status }) => {
 			>
 				{product.name}
 
-				{/* {productInfo} */}
+				{productInfo}
 			</div>
 		);
 	});
@@ -162,8 +168,8 @@ const Accordion = ({ userName, location, products, status }) => {
 				<div className="accordion_top_left">
 					<div className="accordion_top_date">date</div>
 					<div className="accordion_top_userInfo">
-						<span> {userName}</span>
-						<span> {location}</span>
+						<span> James Cameron</span>
+						<span> Edinburgh</span>
 					</div>
 				</div>
 				<div className="accordion_top_right">

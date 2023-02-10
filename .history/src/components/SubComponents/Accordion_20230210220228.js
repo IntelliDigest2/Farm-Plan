@@ -145,7 +145,7 @@ const Accordion = ({ userName, location, products, status }) => {
 			<div className="accordion_dropdown_products">
 				<div>
 					requested Products :{/* <span>{products}</span> */}
-					<div className="accordion_dropdown_productItems">{productsInfo}</div>
+					{/* <div className="accordion_dropdown_productItems">{productsInfo}</div> */}
 				</div>
 
 				{dropDownOption2}

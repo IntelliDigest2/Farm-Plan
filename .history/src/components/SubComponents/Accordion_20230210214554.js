@@ -18,24 +18,24 @@ const Accordion = ({ userName, location, products, status }) => {
 	let dropDownOption1;
 	let dropDownOption2;
 
-	let productPricing = products.map((product) => {
-		return (
-			<div>
-				{/* {product.name} */}
-				<div>{product.name}</div>
-				<div className="accordion_productUpdate_input">
-					<input type="number"></input>
+	// let productPricing = products.map((product) => {
+	// 	return (
+	// 		<div>
+	// 			{/* {product.name} */}
+	// 			<div>{product.name}</div>
+	// 			<div className="accordion_productUpdate_input">
+	// 				<input type="number"></input>
 
-					<select name="units" id="unit-select">
-						<option value="kg">kg</option>
-						<option value="g">g</option>
-						<option value="ltr">ltr</option>
-						<option value="unit">unit</option>
-					</select>
-				</div>
-			</div>
-		);
-	});
+	// 				<select name="units" id="unit-select">
+	// 					<option value="kg">kg</option>
+	// 					<option value="g">g</option>
+	// 					<option value="ltr">ltr</option>
+	// 					<option value="unit">unit</option>
+	// 				</select>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// });
 
 	switch (status) {
 		case "completed":
@@ -61,7 +61,7 @@ const Accordion = ({ userName, location, products, status }) => {
 						className="accordion_productUpdate"
 					>
 						{/* <div></div> */}
-						{productPricing}
+						{/* {productPricing} */}
 					</form>
 					<button className="accordion_productUpdateBtn">Submit</button>
 				</div>
@@ -83,9 +83,11 @@ const Accordion = ({ userName, location, products, status }) => {
 			dropDownOption1 = "";
 	}
 
-	let productInfo = products[1].price ? <productRequestInfo /> : "";
-
-	console.log(products);
+	// let productInfo = .price ? (
+	// 	""
+	// ) : (
+	// 	<productRequestInfo/>
+	// );
 
 	let productsInfo = products.map((product) => {
 		return (

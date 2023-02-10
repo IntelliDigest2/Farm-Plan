@@ -83,7 +83,11 @@ const Accordion = ({ userName, location, products, status }) => {
 			dropDownOption1 = "";
 	}
 
-	let productInfo = products[1].price ? <productRequestInfo /> : "";
+	// let productInfo = .price ? (
+	// 	""
+	// ) : (
+	// 	<productRequestInfo/>
+	// );
 
 	console.log(products);
 
@@ -145,7 +149,7 @@ const Accordion = ({ userName, location, products, status }) => {
 			<div className="accordion_dropdown_products">
 				<div>
 					requested Products :{/* <span>{products}</span> */}
-					<div className="accordion_dropdown_productItems">{productsInfo}</div>
+					{/* <div className="accordion_dropdown_productItems">{productsInfo}</div> */}
 				</div>
 
 				{dropDownOption2}

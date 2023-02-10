@@ -11,7 +11,7 @@ const Admin = () => {
 
 	const productsDummy = {
 		name: "Rice",
-		price: 20,
+		// price: 20,
 		quantity: 8,
 	};
 
