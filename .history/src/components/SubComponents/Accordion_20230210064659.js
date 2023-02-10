@@ -24,9 +24,7 @@ const Accordion = () =>
 				<div>
 					{/* {product.name} */}
 					Name
-					<span>
-						<input></input>
-					</span>
+					<input></input>
 				</div>
 			);
 		});
@@ -51,9 +49,8 @@ const Accordion = () =>
 							// ref={gridItem}
 							key={`gridItem-${uuidv4()}`}
 							className="accordion_dropdown_productUpdate"
-						>
-							{productPricing}
-						</div>
+						></div>
+						{productPricing}
 					</div>
 				);
 

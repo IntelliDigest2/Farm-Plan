@@ -21,12 +21,19 @@ const Accordion = () =>
 
 		let productPricing = requestedProducts.map((product) => {
 			return (
-				<div>
+				<div
+					// ref={gridItem}
+					key={`gridItem-${uuidv4()}`}
+					className="accordion_dropdown_productUpdate"
+					onMouseEnter={() => extraInfoHandler(true)}
+					onMouseLeave={() => extraInfoHandler(false)}
+				>
 					{/* {product.name} */}
 					Name
-					<span>
-						<input></input>
-					</span>
+					<div className="accordion_dropdown_info">
+						<div>Qty : 8</div>
+						<div>Farm : Divine Farms</div>
+					</div>
 				</div>
 			);
 		});
@@ -44,18 +51,7 @@ const Accordion = () =>
 						<input type="checkbox" id="farmermail" name="farmermail"></input>
 					</>
 				);
-				dropDownOption2 = (
-					<div>
-						UPLOAD PRICING
-						<div
-							// ref={gridItem}
-							key={`gridItem-${uuidv4()}`}
-							className="accordion_dropdown_productUpdate"
-						>
-							{productPricing}
-						</div>
-					</div>
-				);
+				dropDownOption2 = <div>UPLOAD PRICING</div>;
 
 				break;
 			case "canceled":
@@ -70,6 +66,31 @@ const Accordion = () =>
 			default:
 				dropDownOption1 = "";
 		}
+
+		// switch (status) {
+		// 	case status === "completed":
+		// 		setColor("green");
+
+		// 		break;
+		// 	case status === "progress":
+		// 		setColor("purple");
+		// 		break;
+		// 	case status === "canceled":
+		// 		setColor("red");
+		// 		break;
+		// 	case status === "pending":
+		// 		setColor("yellow");
+		// 		break;
+
+		// 	default:
+		// 		setColor("grey");
+		// }
+
+		// useEffect(() => {
+		// 	console.log(gridItem.current); // logs <div>I'm an element</div>
+		// }, [gridItem]);
+
+		// const [dropDownContent , setDropDownContent] = useState(status)
 
 		let products = requestedProducts.map((product) => {
 			return (

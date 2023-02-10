@@ -10,66 +10,66 @@ const Accordion = () =>
 	// { status, requestedProducts }
 	{
 		const [color, setColor] = useState();
-		const status = "progress";
+		const status = "completed";
 		const [accordionOpen, setAccordionOpen] = useState(false);
 		// const gridItem = useRef([]);
 
 		const requestedProducts = Array.from(Array(10).keys());
 
-		let dropDownOption1;
-		let dropDownOption2;
+		let dropDownOption;
 
-		let productPricing = requestedProducts.map((product) => {
-			return (
-				<div>
-					{/* {product.name} */}
-					Name
-					<span>
-						<input></input>
-					</span>
-				</div>
-			);
-		});
+		// switch (status) {
+		// 	case "completed":
+		// 		setColor("green");
+
+		// 		break;
+		// 	case "progress":
+		// 		dropDownOption = (
+		// 			<>
+		// 				{" "}
+		// 				<label for="farmermail">SENT FARMER EMAIL </label>
+		// 				<input type="checkbox" id="farmermail" name="farmermail"></input>
+		// 			</>
+		// 		);
+		// 		setColor("purple");
+		// 		break;
+		// 	case "canceled":
+		// 		dropDownOption = <>reason for cancellation: </>;
+		// 		setColor("red");
+		// 		break;
+		// 	case "pending":
+		// 		dropDownOption = <>pending</>;
+		// 		setColor("yellow");
+		// 		break;
+
+		// 	default:
+		// 		dropDownOption = "";
+		// }
 
 		switch (status) {
-			case "completed":
-				dropDownOption1 = "";
+			case status === "completed":
+				setColor("green");
 
 				break;
-			case "progress":
-				dropDownOption1 = (
-					<>
-						{" "}
-						<label for="farmermail">SENT FARMER EMAIL </label>
-						<input type="checkbox" id="farmermail" name="farmermail"></input>
-					</>
-				);
-				dropDownOption2 = (
-					<div>
-						UPLOAD PRICING
-						<div
-							// ref={gridItem}
-							key={`gridItem-${uuidv4()}`}
-							className="accordion_dropdown_productUpdate"
-						>
-							{productPricing}
-						</div>
-					</div>
-				);
-
+			case status === "progress":
+				setColor("purple");
 				break;
-			case "canceled":
-				dropDownOption1 = <>reason for cancellation: </>;
-
+			case status === "canceled":
+				setColor("red");
 				break;
-			case "pending":
-				dropDownOption1 = <>pending payment</>;
-
+			case status === "pending":
+				setColor("yellow");
 				break;
 
 			default:
-				dropDownOption1 = "";
+				setColor("grey");
 		}
+
+		// useEffect(() => {
+		// 	console.log(gridItem.current); // logs <div>I'm an element</div>
+		// }, [gridItem]);
+
+		// const [dropDownContent , setDropDownContent] = useState(status)
 
 		let products = requestedProducts.map((product) => {
 			return (
@@ -81,7 +81,8 @@ const Accordion = () =>
 					onMouseLeave={() => extraInfoHandler(false)}
 				>
 					{/* {product.name} */}
-					Name
+					<div>Name</div>
+
 					<div className="accordion_dropdown_info">
 						<div>Qty : 8</div>
 						<div>Farm : Divine Farms</div>
@@ -140,12 +141,11 @@ const Accordion = () =>
 							<ExternalLink />
 						</span>
 					</div>
-					{dropDownOption1}
+					{dropDownOption}
 				</div>
 				<div className="accordion_dropdown_products">
 					requested Products :{/* <span>{products}</span> */}
 					<div className="accordion_dropdown_productItems">{products}</div>
-					{dropDownOption2}
 				</div>
 			</div>
 		) : (
@@ -164,7 +164,7 @@ const Accordion = () =>
 					</div>
 					<div className="accordion_top_right">
 						{/* status: {status} */}
-						<span>{status}</span>
+						<span>completed</span>
 
 						<StatusBulb
 							color={color}

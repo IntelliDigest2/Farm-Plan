@@ -19,18 +19,6 @@ const Accordion = () =>
 		let dropDownOption1;
 		let dropDownOption2;
 
-		let productPricing = requestedProducts.map((product) => {
-			return (
-				<div>
-					{/* {product.name} */}
-					Name
-					<span>
-						<input></input>
-					</span>
-				</div>
-			);
-		});
-
 		switch (status) {
 			case "completed":
 				dropDownOption1 = "";
@@ -44,18 +32,7 @@ const Accordion = () =>
 						<input type="checkbox" id="farmermail" name="farmermail"></input>
 					</>
 				);
-				dropDownOption2 = (
-					<div>
-						UPLOAD PRICING
-						<div
-							// ref={gridItem}
-							key={`gridItem-${uuidv4()}`}
-							className="accordion_dropdown_productUpdate"
-						>
-							{productPricing}
-						</div>
-					</div>
-				);
+				dropDownOption2 = <div>UPLOAD PRICING</div>;
 
 				break;
 			case "canceled":
@@ -70,6 +47,31 @@ const Accordion = () =>
 			default:
 				dropDownOption1 = "";
 		}
+
+		// switch (status) {
+		// 	case status === "completed":
+		// 		setColor("green");
+
+		// 		break;
+		// 	case status === "progress":
+		// 		setColor("purple");
+		// 		break;
+		// 	case status === "canceled":
+		// 		setColor("red");
+		// 		break;
+		// 	case status === "pending":
+		// 		setColor("yellow");
+		// 		break;
+
+		// 	default:
+		// 		setColor("grey");
+		// }
+
+		// useEffect(() => {
+		// 	console.log(gridItem.current); // logs <div>I'm an element</div>
+		// }, [gridItem]);
+
+		// const [dropDownContent , setDropDownContent] = useState(status)
 
 		let products = requestedProducts.map((product) => {
 			return (
@@ -164,7 +166,7 @@ const Accordion = () =>
 					</div>
 					<div className="accordion_top_right">
 						{/* status: {status} */}
-						<span>{status}</span>
+						<span>completed</span>
 
 						<StatusBulb
 							color={color}

@@ -21,12 +21,19 @@ const Accordion = () =>
 
 		let productPricing = requestedProducts.map((product) => {
 			return (
-				<div>
+				<div
+					// ref={gridItem}
+					key={`gridItem-${uuidv4()}`}
+					className="accordion_dropdown_productUpdate"
+					onMouseEnter={() => extraInfoHandler(true)}
+					onMouseLeave={() => extraInfoHandler(false)}
+				>
 					{/* {product.name} */}
 					Name
-					<span>
-						<input></input>
-					</span>
+					<div className="accordion_dropdown_info">
+						<div>Qty : 8</div>
+						<div>Farm : Divine Farms</div>
+					</div>
 				</div>
 			);
 		});
@@ -44,18 +51,7 @@ const Accordion = () =>
 						<input type="checkbox" id="farmermail" name="farmermail"></input>
 					</>
 				);
-				dropDownOption2 = (
-					<div>
-						UPLOAD PRICING
-						<div
-							// ref={gridItem}
-							key={`gridItem-${uuidv4()}`}
-							className="accordion_dropdown_productUpdate"
-						>
-							{productPricing}
-						</div>
-					</div>
-				);
+				dropDownOption2 = <div>UPLOAD PRICING</div>;
 
 				break;
 			case "canceled":

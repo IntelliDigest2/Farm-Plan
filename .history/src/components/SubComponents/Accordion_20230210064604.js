@@ -21,13 +21,10 @@ const Accordion = () =>
 
 		let productPricing = requestedProducts.map((product) => {
 			return (
-				<div>
+				
 					{/* {product.name} */}
-					Name
-					<span>
-						<input></input>
-					</span>
-				</div>
+					<>Name</>
+				
 			);
 		});
 
@@ -48,12 +45,11 @@ const Accordion = () =>
 					<div>
 						UPLOAD PRICING
 						<div
-							// ref={gridItem}
-							key={`gridItem-${uuidv4()}`}
-							className="accordion_dropdown_productUpdate"
-						>
-							{productPricing}
-						</div>
+					// ref={gridItem}
+					key={`gridItem-${uuidv4()}`}
+					className="accordion_dropdown_productUpdate"
+				></div>
+						{productPricing}
 					</div>
 				);
 

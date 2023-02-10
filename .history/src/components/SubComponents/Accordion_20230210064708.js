@@ -24,9 +24,7 @@ const Accordion = () =>
 				<div>
 					{/* {product.name} */}
 					Name
-					<span>
-						<input></input>
-					</span>
+					<input></input>
 				</div>
 			);
 		});

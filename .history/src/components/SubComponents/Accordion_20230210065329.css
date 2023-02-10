@@ -124,10 +124,9 @@ margin-right: 10px;
 
 }
 
-.accordion_dropdown_productUpdate  input{
+.accordion_dropdown_productUpdate > input{
     width: 2.5rem;
     margin-left: 4rem;
-    place-self: center;
 }
 .accordion_dropdown_productItem{
 width: auto;

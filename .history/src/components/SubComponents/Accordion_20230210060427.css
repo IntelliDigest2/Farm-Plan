@@ -113,22 +113,6 @@ margin-right: 10px;
     justify-items: center;
 
 }
-.accordion_dropdown_productUpdate{
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(5, calc(100% / 5));
-    margin-top: 4px;
-    grid-row-gap: 9px;
-    /* word-wrap: break-word; */
-    /* justify-items: center; */
-
-}
-
-.accordion_dropdown_productUpdate  input{
-    width: 2.5rem;
-    margin-left: 4rem;
-    place-self: center;
-}
 .accordion_dropdown_productItem{
 width: auto;
 /* margin-right: 10px; */
