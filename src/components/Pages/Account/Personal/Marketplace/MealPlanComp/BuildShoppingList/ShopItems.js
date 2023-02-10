@@ -7,7 +7,7 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getShoppingList, getShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { addToShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
-import { addToPurchaseItems } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { addToPurchaseItems, getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
 import Checkbox from '@mui/material/Checkbox';
@@ -29,9 +29,47 @@ function ShopItems(props) {
   const [list, setList] = useState([]);
   const [allList, setAllList] = useState([]);
   const [newList, setNewList] = useState([]);
+  const [inventory, setInventory] = useState([]);
   const [showModal, setShow] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [shoppingList, setShoppingList] = useState([]);
 
+  //this sends data request
+  useEffect(() => {
+    props.getInventory();
+  }, [props.value, props.update]);
+
+  useEffect(() => {
+    forceUpdate()
+  }, [props.data]);
+
+  const getInventoryList = async () => {
+    //clears the items array before each update- IMPORTANT
+    setInventory([]);
+
+    //sets a new item object in the array for every document
+    props.inventory.forEach((doc) => {
+      // id is the docref for deletion
+      var item = doc.item;
+      var measure = doc.measure;
+      var quantity = doc.quantity;
+
+      setInventory((list) => [
+        ...list,
+        {
+          item: item,
+          quantity: quantity,
+          measure: measure,
+        },
+      ]);
+    });
+  };
+
+  //this sends data request
+  useEffect(() => {
+    getInventoryList();
+    console.log("xx======>>>>>", inventory)
+  }, [props.update]);
 
   //trigger this when editing/deleting items
  const [update, setUpdate] = useState(0);
@@ -295,20 +333,7 @@ const result = Object.values(
 //setNewResult(result)
 //console.log("difference =>", result);
 
-//add item to new shopping list
-const addToList = () => {
 
-  const data = {
-
-    week: props.value.format("w"),
-    upload: {
-      result: result
-    },
-  };
-    props.addToShoppingListUpdate(data)
-    setShow(false);
-  }
- 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -319,6 +344,54 @@ const addToList = () => {
   const Close = () => {
     setOpen(false);
   };
+
+
+  function test() {
+    let check = [];
+
+   const diff = result.filter(({ data: id1 }) => !inventory.some(({ item: id2 }) => id2 === id1));
+
+    // console.log("checked the common:",diff);
+
+    diff.forEach(data => { check.push(data)})
+
+    result.forEach(opt => {
+      inventory.forEach(item => {
+        if (opt.data == item.item) {
+          check.push({
+            data: opt.data,
+            food: opt.food,
+            measure: opt.measure,
+            quantity: opt.quantity - item.quantity,
+            week: opt.week
+          }) 
+        }
+      });
+    });        
+
+    setShoppingList(check)
+
+    // console.log("checkked ther loop bruh:",check);
+
+  }
+
+  useEffect(() => {
+    test();
+  }, [props.newPlans]);
+  //add item to new shopping list
+const addToList = () => {
+
+  const data = {
+
+    week: props.value.format("w"),
+    upload: {
+      result: shoppingList
+    },
+  };
+    props.addToShoppingListUpdate(data)
+    setShow(false);
+  }
+ 
 
   return (
     <>
@@ -384,7 +457,7 @@ const addToList = () => {
               >
                 <div>
                   <p>
-                    {ingr.food}
+                    {ingr.item} {ingr.quantity} {ingr.measure}
                     </p>
                     <br />
 
@@ -518,7 +591,8 @@ const mapStateToProps = (state) => {
     newShoppingList: state.mealPlan.newShoppingList,
     shoppingList: state.mealPlanner.allItems,
     newPlans: state.mealPlanner.newPlans,
-    profile: state.firebase.profile
+    profile: state.firebase.profile,
+    inventory: state.mealPlan.inventory,
   };
 };
 
@@ -529,7 +603,8 @@ const mapDispatchToProps = (dispatch) => {
     getAllItems: (plan) => dispatch(getAllItems(plan)),
     addToShoppingListUpdate: (data) => dispatch(addToShoppingListUpdate(data)),
     getPlanData: (plan) => dispatch(getPlanData(plan)),
-    addToPurchaseItems: (data) => dispatch(addToPurchaseItems(data))
+    addToPurchaseItems: (data) => dispatch(addToPurchaseItems(data)),
+    getInventory: (item) => dispatch(getInventory(item)),
   };
 };
 
