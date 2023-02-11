@@ -148,7 +148,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			>
 				{product.name}
 
-				<ProductRequestInfo ref={extraInfoRef} />
+				<ProductRequestInfo />
 			</div>
 		);
 	});
@@ -161,14 +161,10 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		}
 	}
 
-	function extraInfoHandler(value) {
-		if (value) {
-			console.log(extraInfoRef);
-		} else {
-		}
-	}
+	function extraInfoHandler() {}
+	// let productName = product.name
 
-	// if (name.length > 7){
+	// if (product.name.length > 7){
 	// 	function divide(str, index) {
 	// 		const result = [str.slice(0, index), str.slice(index)];
 

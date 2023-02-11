@@ -2,53 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 import "./Accordion.css";
 import "./Button.css";
 import ArrowIcon from "../../icons/ArrowIcon";
-import ProductRequestInfo from "./ProductRequestInfo";
-import { useFormik } from "formik";
+import productRequestInfo from "./productRequestInfo";
 
 import ExternalLink from "../../icons/externalLink";
 import { v4 as uuidv4 } from "uuid";
 
 const Accordion = ({ userName, location, products, status, date }) => {
+	// const [color, setColor] = useState();
+	// const status = "progress";
 	const [accordionOpen, setAccordionOpen] = useState(false);
 	let color;
-	let newObj = {};
-
-	const copyProduct = [...products];
-
-	let quantities = copyProduct.forEach((product, i) => {
-		newObj[`${product.name}-qty${i}`] = "0";
-	});
-
-	// console.log(newObj, {
-	// 	pageNumber1: "",
-	// 	pageNumber2: "",
-	// 	pageNumber3: "",
-	// 	pageNumber4: "",
-	// });
-
-	const extraInfoRef = useRef();
-
-	//used formik to get details to get pricing information
-
-	const productPricingForm = useFormik({
-		initialValues: { ...quantities },
-		onSubmit: submitAccordionForm,
-	});
-
-	//used formik to get details to know if farmer has been sent an email
-	const farmerMailForm = useFormik({
-		initialValues: {
-			sentFarmerMail: false,
-		},
-	});
-
-	// function to submit the forms
-	function submitAccordionForm() {
-		// productPricingForm.values
-		// farmerMailForm.values
-	}
-
-	// console.log(productPricingForm.values);
 
 	// const gridItem = useRef([]);
 
@@ -61,14 +24,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				{/* {product.name} */}
 				<div>{product.name}</div>
 				<div className="accordion_productUpdate_input">
-					<input
-						id={product.name}
-						name={product.name}
-						type="number"
-						placeholder="0"
-						onChange={productPricingForm.handleChange}
-						value={productPricingForm.values[`${product.name}-qty`]}
-					></input>
+					<input type="number"></input>
 
 					<select name="units" id="unit-select">
 						<option value="kg">kg</option>
@@ -91,16 +47,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			dropDownOption1 = (
 				<>
 					{" "}
-					<form>
-						<label for="farmermail">SENT FARMER EMAIL </label>
-						<input
-							onChange={farmerMailForm.handleChange}
-							value={farmerMailForm.values.sentFarmerMail}
-							type="checkbox"
-							id="sentFarmerMail"
-							name="sentFarmerMail"
-						></input>
-					</form>
+					<label for="farmermail">SENT FARMER EMAIL </label>
+					<input type="checkbox" id="farmermail" name="farmermail"></input>
 				</>
 			);
 			color = "purple";
@@ -108,14 +56,14 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				<div className="accordion_dropdown_Option2">
 					UPLOAD PRICING
 					<form
+						// ref={gridItem}
 						key={`gridItem-${uuidv4()}`}
 						className="accordion_productUpdate"
 					>
+						{/* <div></div> */}
 						{productPricing}
 					</form>
-					<button type="submit" className="accordion_productUpdateBtn">
-						Submit
-					</button>
+					<button className="accordion_productUpdateBtn">Submit</button>
 				</div>
 			);
 
@@ -135,7 +83,9 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			dropDownOption1 = "";
 	}
 
-	// console.log(products);
+	let productInfo = products[1].price ? <productRequestInfo /> : "";
+
+	console.log(products);
 
 	let productsInfo = products.map((product) => {
 		return (
@@ -148,7 +98,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			>
 				{product.name}
 
-				<ProductRequestInfo ref={extraInfoRef} />
+				{/* {productInfo} */}
 			</div>
 		);
 	});
@@ -161,14 +111,10 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		}
 	}
 
-	function extraInfoHandler(value) {
-		if (value) {
-			console.log(extraInfoRef);
-		} else {
-		}
-	}
+	function extraInfoHandler() {}
+	// let productName = product.name
 
-	// if (name.length > 7){
+	// if (product.name.length > 7){
 	// 	function divide(str, index) {
 	// 		const result = [str.slice(0, index), str.slice(index)];
 

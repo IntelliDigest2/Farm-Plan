@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./Accordion.css";
 import "./Button.css";
 import ArrowIcon from "../../icons/ArrowIcon";
-import ProductRequestInfo from "./ProductRequestInfo";
+import ProductRequestInfo from "./productRequestInfo";
 import { useFormik } from "formik";
 
 import ExternalLink from "../../icons/externalLink";
@@ -25,8 +25,6 @@ const Accordion = ({ userName, location, products, status, date }) => {
 	// 	pageNumber3: "",
 	// 	pageNumber4: "",
 	// });
-
-	const extraInfoRef = useRef();
 
 	//used formik to get details to get pricing information
 
@@ -148,7 +146,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			>
 				{product.name}
 
-				<ProductRequestInfo ref={extraInfoRef} />
+				<ProductRequestInfo />
 			</div>
 		);
 	});
@@ -161,14 +159,10 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		}
 	}
 
-	function extraInfoHandler(value) {
-		if (value) {
-			console.log(extraInfoRef);
-		} else {
-		}
-	}
+	function extraInfoHandler() {}
+	// let productName = product.name
 
-	// if (name.length > 7){
+	// if (product.name.length > 7){
 	// 	function divide(str, index) {
 	// 		const result = [str.slice(0, index), str.slice(index)];
 

@@ -4,7 +4,9 @@ import ArrowIcon from "../../icons/ArrowIcon";
 import { useFormik } from "formik";
 
 function Paginator() {
-	// const currentPage=1
+
+
+    // const currentPage=1
 	const resultPageForm = useFormik({
 		initialValues: {
 			pageNumber: "",
@@ -14,19 +16,16 @@ function Paginator() {
 		},
 	});
 
-	const goToPreviousPage = (value) => {
-		// function to fetch previoius page
-	};
-	const goToNextPage = (value) => {
-		// function to fetch nex page
-	};
+    const goToPreviousPage=(value)=>{
+        function to fetch page
+    }
+    const goToNextPage=(value)=>{
+        if()
+    }
 
 	return (
 		<div className="paginator">
-			<button
-				onClick={goToPreviousPage}
-				className="paginatorBtn paginatorBtn-left"
-			>
+			<button onClick={goToPreviousPage} className="paginatorBtn paginatorBtn-left">
 				<ArrowIcon />
 			</button>
 			<form
@@ -47,10 +46,7 @@ function Paginator() {
 				</button>
 			</form>
 
-			<button
-				onClick={goToNextPage}
-				className="paginatorBtn paginatorBtn-right"
-			>
+			<button onClick={goToNextPage} className="paginatorBtn paginatorBtn-right">
 				<ArrowIcon />
 			</button>
 		</div>

@@ -25,7 +25,7 @@ const Admin = () => {
 		products: requestedProducts,
 		date: "feb 15 2022",
 
-		status: "progress",
+		status: "pending",
 	};
 
 	const accordionInfos = Array.from(Array(10).fill(requestDummy));
@@ -45,7 +45,6 @@ const Admin = () => {
 				location={accordionInfo.location}
 				status={accordionInfo.status}
 				products={accordionInfo.products}
-				date={accordionInfo.date}
 				key={`accordion-${i}`}
 			/>
 		);

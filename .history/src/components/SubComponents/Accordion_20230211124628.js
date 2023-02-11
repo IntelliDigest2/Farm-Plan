@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./Accordion.css";
 import "./Button.css";
 import ArrowIcon from "../../icons/ArrowIcon";
-import ProductRequestInfo from "./ProductRequestInfo";
+import productRequestInfo from "./productRequestInfo";
 import { useFormik } from "formik";
 
 import ExternalLink from "../../icons/externalLink";
@@ -26,23 +26,17 @@ const Accordion = ({ userName, location, products, status, date }) => {
 	// 	pageNumber4: "",
 	// });
 
-	const extraInfoRef = useRef();
-
-	//used formik to get details to get pricing information
-
 	const productPricingForm = useFormik({
 		initialValues: { ...quantities },
 		onSubmit: submitAccordionForm,
 	});
 
-	//used formik to get details to know if farmer has been sent an email
 	const farmerMailForm = useFormik({
 		initialValues: {
 			sentFarmerMail: false,
 		},
 	});
 
-	// function to submit the forms
 	function submitAccordionForm() {
 		// productPricingForm.values
 		// farmerMailForm.values
@@ -108,9 +102,11 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				<div className="accordion_dropdown_Option2">
 					UPLOAD PRICING
 					<form
+						// ref={gridItem}
 						key={`gridItem-${uuidv4()}`}
 						className="accordion_productUpdate"
 					>
+						{/* <div></div> */}
 						{productPricing}
 					</form>
 					<button type="submit" className="accordion_productUpdateBtn">
@@ -135,6 +131,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			dropDownOption1 = "";
 	}
 
+	let productInfo = products[1].price ? <productRequestInfo /> : "";
+
 	// console.log(products);
 
 	let productsInfo = products.map((product) => {
@@ -148,7 +146,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			>
 				{product.name}
 
-				<ProductRequestInfo ref={extraInfoRef} />
+				{/* {productInfo} */}
 			</div>
 		);
 	});
@@ -161,14 +159,10 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		}
 	}
 
-	function extraInfoHandler(value) {
-		if (value) {
-			console.log(extraInfoRef);
-		} else {
-		}
-	}
+	function extraInfoHandler() {}
+	// let productName = product.name
 
-	// if (name.length > 7){
+	// if (product.name.length > 7){
 	// 	function divide(str, index) {
 	// 		const result = [str.slice(0, index), str.slice(index)];
 
