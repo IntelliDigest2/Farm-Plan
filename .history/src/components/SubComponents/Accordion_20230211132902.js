@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Accordion.css";
 import "./Button.css";
 import ArrowIcon from "../../icons/ArrowIcon";
+import ProductRequestInfo from "./ProductRequestInfo";
 import { useFormik } from "formik";
 
 import ExternalLink from "../../icons/externalLink";
@@ -14,19 +15,23 @@ const Accordion = ({ userName, location, products, status, date }) => {
 
 	const copyProduct = [...products];
 
-	copyProduct.forEach((product) => {
-		newObj[`${product.name}_unit`] = "";
-		newObj[`${product.name}_price`] = "";
-		newObj[`${product.name}_sply`] = "";
+	let quantities = copyProduct.forEach((product, i) => {
+		newObj[`${product.name}-qty${i}`] = "0";
 	});
 
-	console.log(newObj);
+	// console.log(newObj, {
+	// 	pageNumber1: "",
+	// 	pageNumber2: "",
+	// 	pageNumber3: "",
+	// 	pageNumber4: "",
+	// });
+
+	const extraInfoRef = useRef();
 
 	//used formik to get details to get pricing information
 
 	const productPricingForm = useFormik({
-		initialValues: newObj,
-
+		initialValues: { ...quantities },
 		onSubmit: submitAccordionForm,
 	});
 
@@ -43,82 +48,38 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		// farmerMailForm.values
 	}
 
+	// console.log(productPricingForm.values);
+
+	// const gridItem = useRef([]);
+
 	let dropDownOption1;
+	let dropDownOption2;
 
-	let EditableRow = ({ productInfo }) => {
-		const { name, quantity } = productInfo;
-
+	let productPricing = products.map((product) => {
 		return (
-			<tr>
-				<td>{name}</td>
-				<td>{quantity}</td>
-				<td>
+			<div>
+				{/* {product.name} */}
+				<div>{product.name}</div>
+				<div className="accordion_productUpdate_input">
 					<input
-						id={`${name}_price`}
-						name={`${name}_price`}
+						id={product.name}
+						name={product.name}
 						type="number"
 						placeholder="0"
 						onChange={productPricingForm.handleChange}
-						value={productPricingForm.values[`${name}_price`]}
+						value={productPricingForm.values[`${product.name}-qty`]}
 					></input>
-				</td>
-				<td>
-					<select name={`${name}_unit`} id="unit_select">
+
+					<select name="units" id="unit-select">
 						<option value="kg">kg</option>
 						<option value="g">g</option>
 						<option value="ltr">ltr</option>
 						<option value="unit">unit</option>
 					</select>
-				</td>
-				<td>
-					<input
-						id={`${name}`}
-						name={`${name}_sply`}
-						type="text"
-						placeholder="farm"
-						onChange={productPricingForm.handleChange}
-						value={productPricingForm.values[`${name}_sply`]}
-					></input>
-				</td>
-			</tr>
+				</div>
+			</div>
 		);
-	};
-
-	let Row = ({ productInfo }) => {
-		const { name, quantity, price, unit, supplier } = productInfo;
-
-		return (
-			<tr>
-				<td>{name}</td>
-				<td>{quantity}</td>
-				<td>{price}</td>
-				<td>{unit}</td>
-				<td>{supplier}</td>
-			</tr>
-		);
-	};
-
-	let tableRowType = products.map((product) => {
-		if (status === "progress") {
-			return (
-				<EditableRow
-					key={`gridItem-${uuidv4()}`}
-					productInfo={product}
-				></EditableRow>
-			);
-		} else {
-			return <Row key={`gridItem-${uuidv4()}`} productInfo={product}></Row>;
-		}
 	});
-
-	let submitBtn =
-		status === "progress" ? (
-			<button type="submit" className="accordion_productUpdateBtn">
-				Submit
-			</button>
-		) : (
-			""
-		);
 
 	switch (status) {
 		case "completed":
@@ -143,6 +104,20 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				</>
 			);
 			color = "purple";
+			dropDownOption2 = (
+				<div className="accordion_dropdown_Option2">
+					UPLOAD PRICING
+					<form
+						key={`gridItem-${uuidv4()}`}
+						className="accordion_productUpdate"
+					>
+						{productPricing}
+					</form>
+					<button type="submit" className="accordion_productUpdateBtn">
+						Submit
+					</button>
+				</div>
+			);
 
 			break;
 		case "canceled":
@@ -160,23 +135,23 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			dropDownOption1 = "";
 	}
 
-	let tableInfo = (
-		<>
-			<table className="accordion_table">
-				<thead className="accordion_table_head">
-					<tr>
-						<th>Product</th>
-						<th>Quantity</th>
-						<th>price</th>
-						<th>Unit</th>
-						<th>Supplier</th>
-					</tr>
-				</thead>
-				<tbody className="tbody">{tableRowType}</tbody>
-			</table>
-			{submitBtn}
-		</>
-	);
+	// console.log(products);
+
+	let productsInfo = products.map((product) => {
+		return (
+			<div
+				// ref={(el)=>gridItem(el)}
+				key={`gridItem-${uuidv4()}`}
+				className="accordion_dropdown_productItem"
+				onMouseEnter={() => extraInfoHandler(true)}
+				onMouseLeave={() => extraInfoHandler(false)}
+			>
+				{product.name}
+
+				<ProductRequestInfo ref={extraInfoRef} />
+			</div>
+		);
+	});
 
 	function accordionHandler() {
 		if (accordionOpen) {
@@ -185,6 +160,24 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			setAccordionOpen(true);
 		}
 	}
+
+	function extraInfoHandler(value) {
+		if (value) {
+			console.log(extraInfoRef);
+		} else {
+		}
+	}
+
+	// if (name.length > 7){
+	// 	function divide(str, index) {
+	// 		const result = [str.slice(0, index), str.slice(index)];
+
+	// 		return result;
+	// 	  }
+	// 	const [first,second]= divide(product.name, 4)
+	// 	productName = <><span className="">{first}</span><span>{second}</span></>
+
+	// }
 
 	let accordionDropDown = accordionOpen ? (
 		<div className="accordion_dropDown">
@@ -203,14 +196,19 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				</div>
 				{dropDownOption1}
 			</div>
+			<div className="accordion_dropdown_products">
+				<div>
+					requested Products :{/* <span>{products}</span> */}
+					<div className="accordion_dropdown_productItems">{productsInfo}</div>
+				</div>
 
-			<div className=".accordion_dropdown_products">
-				requested Products :{tableInfo}
+				{dropDownOption2}
 			</div>
 		</div>
 	) : (
 		""
 	);
+	// let color1 = {--color2:${color}};
 
 	return (
 		<div className="accordion">

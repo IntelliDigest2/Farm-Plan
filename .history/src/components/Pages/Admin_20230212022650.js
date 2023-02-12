@@ -50,7 +50,7 @@ const Admin = () => {
 		products: productsDummy,
 		date: "feb 15 2022",
 
-		status: "progress",
+		status: "completed",
 	};
 
 	const accordionInfos = Array.from(Array(10).fill(requestDummy));

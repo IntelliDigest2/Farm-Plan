@@ -162,8 +162,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 
 	let tableInfo = (
 		<>
-			<table className="accordion_table">
-				<thead className="accordion_table_head">
+			<table className="table">
+				<thead>
 					<tr>
 						<th>Product</th>
 						<th>Quantity</th>
@@ -178,6 +178,28 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		</>
 	);
 
+	// console.log(products);
+
+	// let productsInfo = products.map((product, i) => {
+	// 	return (
+	// 		<div
+	// 			// ref={(el)=>gridItem(el)}
+	// 			key={`gridItem-${uuidv4()}`}
+	// 			className="accordion_dropdown_productItem"
+	// 			onMouseEnter={() => extraInfoHandler(true)}
+	// 			onMouseLeave={() => extraInfoHandler(false)}
+	// 		>
+	// 			{product.name}
+
+	// 			<ProductRequestInfo
+	// 				id={`extraInfo-${i}`}
+	// 				key={`extraInfo-${i}`}
+	// 				ref={extraInfoRef}
+	// 			/>
+	// 		</div>
+	// 	);
+	// });
+
 	function accordionHandler() {
 		if (accordionOpen) {
 			setAccordionOpen(false);
@@ -185,6 +207,17 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			setAccordionOpen(true);
 		}
 	}
+
+	// if (name.length > 7){
+	// 	function divide(str, index) {
+	// 		const result = [str.slice(0, index), str.slice(index)];
+
+	// 		return result;
+	// 	  }
+	// 	const [first,second]= divide(product.name, 4)
+	// 	productName = <><span className="">{first}</span><span>{second}</span></>
+
+	// }
 
 	let accordionDropDown = accordionOpen ? (
 		<div className="accordion_dropDown">
@@ -204,13 +237,12 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				{dropDownOption1}
 			</div>
 
-			<div className=".accordion_dropdown_products">
-				requested Products :{tableInfo}
-			</div>
+			<div>requested Products :{tableInfo}</div>
 		</div>
 	) : (
 		""
 	);
+	// let color1 = {--color2:${color}};
 
 	return (
 		<div className="accordion">

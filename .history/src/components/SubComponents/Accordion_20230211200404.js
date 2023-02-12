@@ -30,6 +30,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		onSubmit: submitAccordionForm,
 	});
 
+	// console.log(productPricingForm.values);
+
 	//used formik to get details to know if farmer has been sent an email
 	const farmerMailForm = useFormik({
 		initialValues: {
@@ -45,70 +47,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 
 	let dropDownOption1;
 
-	let EditableRow = ({ productInfo }) => {
-		const { name, quantity } = productInfo;
-
-		return (
-			<tr>
-				<td>{name}</td>
-				<td>{quantity}</td>
-				<td>
-					<input
-						id={`${name}_price`}
-						name={`${name}_price`}
-						type="number"
-						placeholder="0"
-						onChange={productPricingForm.handleChange}
-						value={productPricingForm.values[`${name}_price`]}
-					></input>
-				</td>
-				<td>
-					<select name={`${name}_unit`} id="unit_select">
-						<option value="kg">kg</option>
-						<option value="g">g</option>
-						<option value="ltr">ltr</option>
-						<option value="unit">unit</option>
-					</select>
-				</td>
-				<td>
-					<input
-						id={`${name}`}
-						name={`${name}_sply`}
-						type="text"
-						placeholder="farm"
-						onChange={productPricingForm.handleChange}
-						value={productPricingForm.values[`${name}_sply`]}
-					></input>
-				</td>
-			</tr>
-		);
-	};
-
-	let Row = ({ productInfo }) => {
-		const { name, quantity, price, unit, supplier } = productInfo;
-
-		return (
-			<tr>
-				<td>{name}</td>
-				<td>{quantity}</td>
-				<td>{price}</td>
-				<td>{unit}</td>
-				<td>{supplier}</td>
-			</tr>
-		);
-	};
-
-	let tableRowType = products.map((product) => {
-		if (status === "progress") {
-			return (
-				<EditableRow
-					key={`gridItem-${uuidv4()}`}
-					productInfo={product}
-				></EditableRow>
-			);
-		} else {
-			return <Row key={`gridItem-${uuidv4()}`} productInfo={product}></Row>;
-		}
+	let productsData = products.map((product) => {
+		return <Row key={`gridItem-${uuidv4()}`} productInfo={product}></Row>;
 	});
 
 	let submitBtn =
@@ -162,8 +102,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 
 	let tableInfo = (
 		<>
-			<table className="accordion_table">
-				<thead className="accordion_table_head">
+			<table className="table">
+				<thead>
 					<tr>
 						<th>Product</th>
 						<th>Quantity</th>
@@ -172,11 +112,33 @@ const Accordion = ({ userName, location, products, status, date }) => {
 						<th>Supplier</th>
 					</tr>
 				</thead>
-				<tbody className="tbody">{tableRowType}</tbody>
+				<tbody className="tbody">{productsData}</tbody>
 			</table>
 			{submitBtn}
 		</>
 	);
+
+	// console.log(products);
+
+	// let productsInfo = products.map((product, i) => {
+	// 	return (
+	// 		<div
+	// 			// ref={(el)=>gridItem(el)}
+	// 			key={`gridItem-${uuidv4()}`}
+	// 			className="accordion_dropdown_productItem"
+	// 			onMouseEnter={() => extraInfoHandler(true)}
+	// 			onMouseLeave={() => extraInfoHandler(false)}
+	// 		>
+	// 			{product.name}
+
+	// 			<ProductRequestInfo
+	// 				id={`extraInfo-${i}`}
+	// 				key={`extraInfo-${i}`}
+	// 				ref={extraInfoRef}
+	// 			/>
+	// 		</div>
+	// 	);
+	// });
 
 	function accordionHandler() {
 		if (accordionOpen) {
@@ -185,6 +147,56 @@ const Accordion = ({ userName, location, products, status, date }) => {
 			setAccordionOpen(true);
 		}
 	}
+
+	// if (name.length > 7){
+	// 	function divide(str, index) {
+	// 		const result = [str.slice(0, index), str.slice(index)];
+
+	// 		return result;
+	// 	  }
+	// 	const [first,second]= divide(product.name, 4)
+	// 	productName = <><span className="">{first}</span><span>{second}</span></>
+
+	// }
+
+	let Row = ({ productInfo }) => {
+		const { name, quantity } = productInfo;
+
+		return (
+			<tr>
+				<td>{name}</td>
+				<td>{quantity}</td>
+				<td>
+					<input
+						id={`${name}_price`}
+						name={`${name}_price`}
+						type="number"
+						placeholder="0"
+						onChange={productPricingForm.handleChange}
+						value={productPricingForm.values[`${name}_price`]}
+					></input>
+				</td>
+				<td>
+					<select name={`${name}_unit`} id="unit_select">
+						<option value="kg">kg</option>
+						<option value="g">g</option>
+						<option value="ltr">ltr</option>
+						<option value="unit">unit</option>
+					</select>
+				</td>
+				<td>
+					<input
+						id={`${name}`}
+						name={`${name}_sply`}
+						type="text"
+						placeholder="farm"
+						onChange={productPricingForm.handleChange}
+						value={productPricingForm.values[`${name}_sply`]}
+					></input>
+				</td>
+			</tr>
+		);
+	};
 
 	let accordionDropDown = accordionOpen ? (
 		<div className="accordion_dropDown">
@@ -204,13 +216,12 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				{dropDownOption1}
 			</div>
 
-			<div className=".accordion_dropdown_products">
-				requested Products :{tableInfo}
-			</div>
+			<div>requested Products :{tableInfo}</div>
 		</div>
 	) : (
 		""
 	);
+	// let color1 = {--color2:${color}};
 
 	return (
 		<div className="accordion">

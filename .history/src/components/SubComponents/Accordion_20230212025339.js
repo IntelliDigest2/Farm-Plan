@@ -163,7 +163,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 	let tableInfo = (
 		<>
 			<table className="accordion_table">
-				<thead className="accordion_table_head">
+				<thead>
 					<tr>
 						<th>Product</th>
 						<th>Quantity</th>

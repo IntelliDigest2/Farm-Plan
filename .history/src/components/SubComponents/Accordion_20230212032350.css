@@ -114,7 +114,6 @@ margin-right: 10px;
 .accordion_table_head th {
     width: 8.5rem;
     text-align: center;
-    background-color: #7acfd5;
 }
 .accordion_table th, .accordion_table td{
     padding: .6rem;
@@ -124,7 +123,13 @@ margin-right: 10px;
     width: 100%
 }
 
+/* .accordion_table{
+    text-align: center;
+} */
 
+/* .accordion_table > td{
+    width: 6rem;
+} */
 
 .accordion_dropDown_left > div:not(:last-child){
     margin-bottom: 8px;

@@ -162,8 +162,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 
 	let tableInfo = (
 		<>
-			<table className="accordion_table">
-				<thead className="accordion_table_head">
+			<table className="table">
+				<thead>
 					<tr>
 						<th>Product</th>
 						<th>Quantity</th>
@@ -204,9 +204,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				{dropDownOption1}
 			</div>
 
-			<div className=".accordion_dropdown_products">
-				requested Products :{tableInfo}
-			</div>
+			<div>requested Products :{tableInfo}</div>
 		</div>
 	) : (
 		""

@@ -14,40 +14,32 @@ const Admin = () => {
 			name: "Rice",
 			price: 20,
 			quantity: 8,
-			supplier: "dale farms",
-			unit: "kg",
 		},
 		{
 			name: "Beans",
 			price: 15,
 			quantity: 2,
-			supplier: "sam farms",
-			unit: "ltr",
 		},
 		{
 			name: "garri",
 			price: 10,
 			quantity: 8,
-			supplier: "steven farms",
-			unit: "kg",
 		},
 		{
 			name: "yam",
 			price: 8,
 			quantity: 5,
-			supplier: "dale farms",
-			unit: "ltr",
 		},
 	];
 
-	// const requestedProducts = Array.from(Array(10).fill(productsDummy));
+	const requestedProducts = Array.from(Array(10).fill(productsDummy));
 
-	// console.log(requestedProducts);
+	console.log(requestedProducts);
 
 	let requestDummy = {
 		userName: "Jamed Deen",
 		location: "Edinburgh",
-		products: productsDummy,
+		products: requestedProducts,
 		date: "feb 15 2022",
 
 		status: "progress",

@@ -51,7 +51,13 @@ margin-right: 10px;
 
 }
 
-
+/* .accordion_top_right > span:first-child::after{
+    content: '';
+    background-color: red;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+} */
 
 .accordion_status[data-color= red]::after{
     background-color: red;
@@ -63,7 +69,7 @@ margin-right: 10px;
     background-color: purple;
 }
 .accordion_status[data-color= yellow]::after{
-    background-color: #e8b904;
+    background-color: yellow;
 }
 
 
@@ -80,7 +86,7 @@ margin-right: 10px;
     font-weight: 600;
 }
 .accordion_status_name[data-color= yellow]{
-    color: #e8b904;
+    color: yellow;
     font-weight: 600;
 }
 
@@ -99,32 +105,17 @@ margin-right: 10px;
     
    
     background-color: #fafafa;
-   
+    /* display: none; */
     padding:22px 20px;
 }
 .accordion_dropdown_products{
-    width: 75%;
-}
+    width: 78%;
+    /* background-color: red; */
+    
 
+   
 
-.accordion_table{
-    text-align: center;
-    margin-top: 1rem;
 }
-.accordion_table_head th {
-    width: 8.5rem;
-    text-align: center;
-    background-color: #7acfd5;
-}
-.accordion_table th, .accordion_table td{
-    padding: .6rem;
-}
-
-.accordion_table input{
-    width: 100%
-}
-
-
 
 .accordion_dropDown_left > div:not(:last-child){
     margin-bottom: 8px;
@@ -150,6 +141,69 @@ margin-right: 10px;
 }
 
 
+
+
+
+.status-green{
+    color: #07F202;
+}
+.status-blue{
+    color:#0440D8;
+}
+.status-red{
+    color: #FF0000;
+}
+.status-purple{
+    color: #9747FF;
+}
+
+
+
+.accordion_dropdown_productItems{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(8, calc(100% / 8));
+    margin-top: 4px;
+    grid-row-gap: 9px;
+    /* word-wrap: break-word; */
+    /* justify-items: center; */
+
+}
+.accordion_productUpdate{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, calc(100% / 5));
+    margin-top: 4px;
+    grid-row-gap: 9px;
+    /* word-wrap: break-word; */
+    /* justify-items: center; */
+
+}
+
+/* .accordion_productUpdate_input{
+    background-color: #7acfd5;
+    width: 118px;
+    border-radius: 4px;
+    padding: 4px;
+    display: inline-block;
+    
+    
+    display: flex;
+    justify-content: space-evenly;
+} */
+
+/* .accordion_productUpdate  input{
+    width: 2.4rem;
+    margin-right: 8px;
+    
+   
+    text-align: center;
+   
+
+
+
+} */
+
 .accordion_productUpdateBtn{
     width: 114px;
     height: 35px;
@@ -158,12 +212,16 @@ margin-right: 10px;
     border-radius: 4px;
     float: right;
     margin-right: 10px;
-    margin-top: 10px;
 }
 
 .accordion_dropdown_Option2{
     margin-top: 25px;
 }
+
+
+
+
+
 
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -175,6 +233,9 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+
+
 
 /*=====  End of accordion styling  ======*/
 

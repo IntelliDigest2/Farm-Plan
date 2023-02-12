@@ -340,6 +340,7 @@ body {
   display: flex;
   background-color: #fff;
   min-height: 100vh;
+  padding-bottom: 4rem;
 
 }
 .admin_header{
@@ -350,8 +351,7 @@ body {
 .admin_left_section{
    width: 70%; ;
   background-color:#f8f8f8 ;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  /* margin: 10px 0px; */
 }
 
 .admin_left_section > div:not(:last-child){
@@ -374,8 +374,7 @@ body {
     position: fixed;
    
     bottom: 30px;
-    left: 30%;
-    
+    width: inherit;
 }
 
 .admin_calendar_mock{

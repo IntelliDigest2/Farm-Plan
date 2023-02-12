@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Accordion.css";
 import "./Button.css";
 import ArrowIcon from "../../icons/ArrowIcon";
+import ProductRequestInfo from "./ProductRequestInfo";
 import { useFormik } from "formik";
 
 import ExternalLink from "../../icons/externalLink";
@@ -20,6 +21,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		newObj[`${product.name}_sply`] = "";
 	});
 
+	const extraInfoRef = useRef();
+
 	console.log(newObj);
 
 	//used formik to get details to get pricing information
@@ -29,6 +32,8 @@ const Accordion = ({ userName, location, products, status, date }) => {
 
 		onSubmit: submitAccordionForm,
 	});
+
+	// console.log(productPricingForm.values);
 
 	//used formik to get details to know if farmer has been sent an email
 	const farmerMailForm = useFormik({
@@ -43,9 +48,131 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		// farmerMailForm.values
 	}
 
-	let dropDownOption1;
+	// console.log(productPricingForm.values);
 
-	let EditableRow = ({ productInfo }) => {
+	// const gridItem = useRef([]);
+
+	let dropDownOption1;
+	let dropDownOption2;
+
+	let productsData = products.map((product) => {
+		return <Row key={`gridItem-${uuidv4()}`} productInfo={product}></Row>;
+	});
+
+	let editableTable = (
+		<table className="table">
+			<thead>
+				<tr>
+					<th>Product</th>
+					<th>Quantity</th>
+					<th>price</th>
+					<th>Unit</th>
+					<th>Supplier</th>
+				</tr>
+			</thead>
+			<tbody className="tbody">{productsData}</tbody>
+		</table>
+	);
+
+	switch (status) {
+		case "completed":
+			dropDownOption1 = "";
+			color = "green";
+
+			break;
+		case "progress":
+			dropDownOption1 = (
+				<>
+					{" "}
+					<form>
+						<label for="farmermail">SENT FARMER EMAIL </label>
+						<input
+							onChange={farmerMailForm.handleChange}
+							value={farmerMailForm.values.sentFarmerMail}
+							type="checkbox"
+							id="sentFarmerMail"
+							name="sentFarmerMail"
+						></input>
+					</form>
+				</>
+			);
+			color = "purple";
+			dropDownOption2 = (
+				<div className="accordion_dropdown_Option2">
+					{editableTable}
+					<button type="submit" className="accordion_productUpdateBtn">
+						Submit
+					</button>
+				</div>
+			);
+
+			break;
+		case "canceled":
+			dropDownOption1 = <>reason for cancellation: </>;
+			color = "red";
+
+			break;
+		case "pending":
+			dropDownOption1 = <>pending payment</>;
+			color = "yellow";
+
+			break;
+
+		default:
+			dropDownOption1 = "";
+	}
+
+	// console.log(products);
+
+	// let productsInfo = products.map((product, i) => {
+	// 	return (
+	// 		<div
+	// 			// ref={(el)=>gridItem(el)}
+	// 			key={`gridItem-${uuidv4()}`}
+	// 			className="accordion_dropdown_productItem"
+	// 			onMouseEnter={() => extraInfoHandler(true)}
+	// 			onMouseLeave={() => extraInfoHandler(false)}
+	// 		>
+	// 			{product.name}
+
+	// 			<ProductRequestInfo
+	// 				id={`extraInfo-${i}`}
+	// 				key={`extraInfo-${i}`}
+	// 				ref={extraInfoRef}
+	// 			/>
+	// 		</div>
+	// 	);
+	// });
+
+	function accordionHandler() {
+		if (accordionOpen) {
+			setAccordionOpen(false);
+		} else {
+			setAccordionOpen(true);
+		}
+	}
+
+	function extraInfoHandler(value) {
+		if (value) {
+			extraInfoRef.current.style.display = "block";
+			// console.log(extraInfoRef.current.id);
+		} else {
+			extraInfoRef.current.style.display = "none";
+		}
+	}
+
+	// if (name.length > 7){
+	// 	function divide(str, index) {
+	// 		const result = [str.slice(0, index), str.slice(index)];
+
+	// 		return result;
+	// 	  }
+	// 	const [first,second]= divide(product.name, 4)
+	// 	productName = <><span className="">{first}</span><span>{second}</span></>
+
+	// }
+
+	let Row = ({ productInfo }) => {
 		const { name, quantity } = productInfo;
 
 		return (
@@ -84,108 +211,6 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		);
 	};
 
-	let Row = ({ productInfo }) => {
-		const { name, quantity, price, unit, supplier } = productInfo;
-
-		return (
-			<tr>
-				<td>{name}</td>
-				<td>{quantity}</td>
-				<td>{price}</td>
-				<td>{unit}</td>
-				<td>{supplier}</td>
-			</tr>
-		);
-	};
-
-	let tableRowType = products.map((product) => {
-		if (status === "progress") {
-			return (
-				<EditableRow
-					key={`gridItem-${uuidv4()}`}
-					productInfo={product}
-				></EditableRow>
-			);
-		} else {
-			return <Row key={`gridItem-${uuidv4()}`} productInfo={product}></Row>;
-		}
-	});
-
-	let submitBtn =
-		status === "progress" ? (
-			<button type="submit" className="accordion_productUpdateBtn">
-				Submit
-			</button>
-		) : (
-			""
-		);
-
-	switch (status) {
-		case "completed":
-			dropDownOption1 = "";
-			color = "green";
-
-			break;
-		case "progress":
-			dropDownOption1 = (
-				<>
-					{" "}
-					<form>
-						<label for="farmermail">SENT FARMER EMAIL </label>
-						<input
-							onChange={farmerMailForm.handleChange}
-							value={farmerMailForm.values.sentFarmerMail}
-							type="checkbox"
-							id="sentFarmerMail"
-							name="sentFarmerMail"
-						></input>
-					</form>
-				</>
-			);
-			color = "purple";
-
-			break;
-		case "canceled":
-			dropDownOption1 = <>reason for cancellation: </>;
-			color = "red";
-
-			break;
-		case "pending":
-			dropDownOption1 = <>pending payment</>;
-			color = "yellow";
-
-			break;
-
-		default:
-			dropDownOption1 = "";
-	}
-
-	let tableInfo = (
-		<>
-			<table className="accordion_table">
-				<thead className="accordion_table_head">
-					<tr>
-						<th>Product</th>
-						<th>Quantity</th>
-						<th>price</th>
-						<th>Unit</th>
-						<th>Supplier</th>
-					</tr>
-				</thead>
-				<tbody className="tbody">{tableRowType}</tbody>
-			</table>
-			{submitBtn}
-		</>
-	);
-
-	function accordionHandler() {
-		if (accordionOpen) {
-			setAccordionOpen(false);
-		} else {
-			setAccordionOpen(true);
-		}
-	}
-
 	let accordionDropDown = accordionOpen ? (
 		<div className="accordion_dropDown">
 			<div className="accordion_dropDown_left">
@@ -204,13 +229,12 @@ const Accordion = ({ userName, location, products, status, date }) => {
 				{dropDownOption1}
 			</div>
 
-			<div className=".accordion_dropdown_products">
-				requested Products :{tableInfo}
-			</div>
+			<div>requested Products :{table}</div>
 		</div>
 	) : (
 		""
 	);
+	// let color1 = {--color2:${color}};
 
 	return (
 		<div className="accordion">
