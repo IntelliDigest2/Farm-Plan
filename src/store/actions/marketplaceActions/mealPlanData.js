@@ -243,7 +243,7 @@ export const editMealData = (mealPlan) => {
         break;
     }
 
-    console.log("check:", mealPlan)
+    //console.log("check:", mealPlan)
     
     getFirebase()
       .firestore()

@@ -85,6 +85,7 @@ export const addToPurchaseItems = (data) => {
         break;
     }
 
+
     getFirestore()
     .collection("marketplace")
     .doc(uid)

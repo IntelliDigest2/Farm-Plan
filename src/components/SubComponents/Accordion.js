@@ -195,54 +195,11 @@ const Accordion = ({ userName, location, products, status, date }) => {
 						{status}
 					</span>
 				</div>
-<<<<<<< HEAD
-				<div className="accordion_dropdown_products">
-					requested Products :{/* <span>{products}</span> */}
-					<div className="accordion_dropdown_productItems">
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							productName
-						</span>
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							Quantity
-						</span>
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							Measure
-						</span>
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							productName
-						</span>
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							productName
-						</span>
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							productName
-						</span>
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							productName
-						</span>
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							productName
-						</span>
-						<span className="accordion_dropdown_productItem">
-							{/* {product.name} */}
-							productName
-						</span>
-					</div>
-=======
 				<div>
 					Link to mail{" "}
 					<span>
 						<ExternalLink />
 					</span>
->>>>>>> 5451d78cb3292f060e56275c8f764ec5072cd4e2
 				</div>
 				{dropDownOption1}
 			</div>

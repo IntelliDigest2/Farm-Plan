@@ -37,7 +37,7 @@ function EditInventoryForm(props) {
         storage: storage
       }, 
     };
-    console.log("checking ingredients props ==>", data)
+    //console.log("checking ingredients props ==>", data)
     if (props.saved) {
       props.editSavedMeal(data);
       props.forceUpdate();
