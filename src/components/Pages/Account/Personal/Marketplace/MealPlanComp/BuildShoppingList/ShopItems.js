@@ -10,6 +10,8 @@ import { addToShoppingListUpdate } from "../../../../../../../store/actions/mark
 import { addToPurchaseItems, getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
+import Edit from "../Icons/EditIconShop";
+import EditAddedItems from "../Icons/EditIconShopAddedItems";
 import Checkbox from '@mui/material/Checkbox';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Dialog from '@mui/material/Dialog';
@@ -68,7 +70,7 @@ function ShopItems(props) {
   //this sends data request
   useEffect(() => {
     getInventoryList();
-    console.log("xx======>>>>>", inventory)
+    //console.log("xx======>>>>>", inventory)
   }, [props.update]);
 
   //trigger this when editing/deleting items
@@ -87,6 +89,7 @@ function ShopItems(props) {
           sx={{ ml: 2 }}
           onClick={() => {
             forceUpdate();
+            submitNotification("Refreshing..");
           }}
         >
           <SyncIcon style={{ fontSize: 35 }} 
@@ -119,7 +122,8 @@ const addToCart = (ingr) => {
           className="list"
           style={{ alignItems: "flex-end" }}
         >      
-        <b>{`${ingr.item}: `}  </b> &nbsp; {`${ingr.quantity} ${ingr.measure}`} &nbsp;
+        <b>{`${ingr.data}: `}  </b> &nbsp; {`${ingr.quantity} ${ingr.measure}`} &nbsp;
+        {/* <input type="text" value={ingr.data} /> */}
         {/* <input type="submit" value="remove" onClick={() => removeFromCart(ingr)} /> */}
         <HighlightOffIcon onClick={() => removeFromCart(ingr)} />
       </ListItem>
@@ -218,16 +222,16 @@ useEffect(() => {
       var data = doc.ingredient.data;
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
-      //var expiry = doc.ingredient.expiry;
+      var week = doc.ingredient.week;
 
       setAllList((list) => [
         ...list,
         {
           food: food,
-          item: data,
+          data: data,
           measure: measure,
           quantity: quantity,
-          //expiry: expiry,
+          week: week,
           id: id,
         },
       ]);
@@ -247,16 +251,16 @@ useEffect(() => {
       var data = doc.ingredient.data
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
-      //var expiry = doc.ingredient.expiry;
+      var week = doc.ingredient.week;
 
       setNewList((list) => [
         ...list,
         {
           food: food,
-          item: data,
+          data: data,
           measure: measure,
           quantity: quantity,
-          //expiry: expiry,
+          week: week,
           id: id,
         },
       ]);
@@ -407,7 +411,7 @@ const addToList = () => {
               >
                 <div>
                   <p>
-                    {ingr.food}
+                  {ingr.data} {ingr.quantity} {ingr.measure}
                     </p>
                     <br />
 
@@ -425,12 +429,24 @@ const addToList = () => {
                   <BoughtItemIcon 
                    value={props.value}
                    food={ingr.food}
-                   item={ingr.item}
+                   item={ingr.data}
                    id={ingr.id}
                    measure={ingr.measure}
                    quantity={ingr.quantity}
                    update={update}
                    setUpdate={setUpdate}
+                  /> 
+
+                  <EditAddedItems
+                    value={props.value}
+                    food={ingr.food}
+                    data={ingr.data}
+                    week={ingr.week}
+                    id={ingr.id}
+                    measure={ingr.measure}
+                    quantity={ingr.quantity}
+                    update={update}
+                    setUpdate={setUpdate}
                   /> 
 
 
@@ -457,7 +473,7 @@ const addToList = () => {
               >
                 <div>
                   <p>
-                    {ingr.item} {ingr.quantity} {ingr.measure}
+                    {ingr.data} {ingr.quantity} {ingr.measure}
                     </p>
                     <br />
 
@@ -476,7 +492,18 @@ const addToList = () => {
                   <BoughtItemIcon 
                     value={props.value}
                     food={ingr.food}
-                    item={ingr.item}
+                    item={ingr.data}
+                    id={ingr.id}
+                    measure={ingr.measure}
+                    quantity={ingr.quantity}
+                    update={update}
+                    setUpdate={setUpdate}
+                  /> 
+                  <Edit
+                    value={props.value}
+                    food={ingr.food}
+                    data={ingr.data}
+                    week={ingr.week}
                     id={ingr.id}
                     measure={ingr.measure}
                     quantity={ingr.quantity}
@@ -528,6 +555,35 @@ const addToList = () => {
         </Modal.Footer>
       </Modal>
 
+      <div className="empty basic-title-left">
+          <p>Regenerate Your Shopping List</p>
+          <Button className="blue-btn shadow-none" type="submit"
+            onClick={handleShow}>
+              Generate
+          </Button>
+
+          <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Generate Your Shopping List</Modal.Title>
+          </Modal.Header>
+        <Modal.Body>
+            Generate a new list?
+          </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={()=> {
+          addToList()
+          submitNotification("Generating new list..");
+
+          }}>
+            Yes
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
+        </div>
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -535,7 +591,7 @@ const addToList = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Oder Reqest"}
+          {"Order Request"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -571,7 +627,10 @@ const addToList = () => {
             Generate a new list?
           </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={addToList}>
+        <Button variant="secondary" onClick={()=> {
+          addToList()
+          submitNotification("Generating new list..");
+          }}>
             Yes
           </Button>
           <Button variant="secondary" onClick={handleClose}>

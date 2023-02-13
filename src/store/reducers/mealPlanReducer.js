@@ -209,6 +209,18 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Add to shop failed",
       };
+      case "EDIT_SHOPPING_LIST":
+        console.log("succesfully editted shoping list", action.payload);
+        return {
+          ...state,
+          authError: null,
+        };
+      case "EDIT_SHOPPING_LIST_ERROR":
+        console.log("error, couldn't edit shopping list", action.err);
+        return {
+          ...state,
+          authError: "Add to shop failed",
+        };
     case "DELETE_SHOP":
       console.log("successfully deleted item");
       return {
