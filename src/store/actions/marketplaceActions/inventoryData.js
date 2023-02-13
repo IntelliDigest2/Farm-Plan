@@ -85,7 +85,6 @@ export const addToPurchaseItems = (data) => {
         break;
     }
 
-    console.log("cjjjjjjjjj ==>", data.upload)
 
     getFirestore()
     .collection("marketplace")
