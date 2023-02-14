@@ -151,7 +151,7 @@ const addToCart = (ingr) => {
       };
 
       props.addToPurchaseItems(data);
-    submitNotification("Order Successful", "You will be contected shortly..");
+    submitNotification("Thanks for placing your order with us", "We will contact local sustainable farmers and grocery shops and get back to you shortly with prices and delivery time");
 
     }
 
@@ -399,7 +399,11 @@ const addToList = () => {
 
   return (
     <>
+     <Button className="blue-btn shadow-none" variant="contained" onClick={handleClickOpen}>
+              All
+     </Button>
       <Refresh />
+
       {newList.length ? (
         <>
           <List>
@@ -536,7 +540,7 @@ const addToList = () => {
           
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Request Items</Modal.Title>
+            <Modal.Title>List of items to order</Modal.Title>
           </Modal.Header>
         <Modal.Body>
             {cartItems}
@@ -555,7 +559,7 @@ const addToList = () => {
         </Modal.Footer>
       </Modal>
 
-      <div className="empty basic-title-left">
+      {/* <div className="empty basic-title-left">
           <p>Regenerate Your Shopping List</p>
           <Button className="blue-btn shadow-none" type="submit"
             onClick={handleShow}>
@@ -582,7 +586,7 @@ const addToList = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-        </div>
+        </div> */}
 
       <Dialog
         open={open}
@@ -595,7 +599,7 @@ const addToList = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Do you want to request all the items on the shopping List?
+          Order your food items from your shopping list
           </DialogContentText>
         </DialogContent>
         <DialogActions>
