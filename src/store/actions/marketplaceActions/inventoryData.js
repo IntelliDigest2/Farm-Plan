@@ -54,7 +54,7 @@ export const addToInventory = (data) => {
   };
 };
 
-export const addToGiftItems = (data) => {
+export const addToPurchaseItems = (data) => {
   return (dispatch, getState, { getFirestore }) => {
     //make async call to database
     const profile = getState().firebase.profile;
@@ -85,17 +85,18 @@ export const addToGiftItems = (data) => {
         break;
     }
 
+
     getFirestore()
     .collection("marketplace")
     .doc(uid)
-    .collection("giftedItems")
+    .collection("PurchasedItems")
     .add(data.upload)
     .then((docRef) => {
       // make the docId easily accessible so that we can delete it later if we want.
       getFirestore()
         .collection("marketplace")
         .doc(uid)
-        .collection("giftedItems")
+        .collection("PurchasedItems")
         .doc(docRef.id)
         .set({ id: docRef.id }, { merge: true });
       dispatch({ type: "CREATE_GIFT_ITEM", data });

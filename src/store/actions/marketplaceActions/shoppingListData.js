@@ -1,3 +1,61 @@
+// export const addToShoppingList = (data) => {
+//   return (dispatch, getState, { getFirestore }) => {
+//     //make async call to database
+//     const profile = getState().firebase.profile;
+//     const authUID = getState().firebase.auth.uid;
+
+//     var uid;
+//     switch (profile.type) {
+//       case "business_admin":
+//         uid = authUID;
+//         break;
+//       case "business_sub":
+//         uid = profile.admin;
+//         break;
+//       case "academic_admin":
+//         uid = authUID;
+//         break;
+//       case "academic_sub":
+//         uid = profile.admin;
+//         break;
+//       case "household_admin":
+//         uid = authUID;
+//         break;
+//       case "household_sub":
+//         uid = profile.admin;
+//         break;
+//       default:
+//         uid = authUID;
+//         break;
+//     }
+
+//     const ingr = data.upload.ingredients;
+
+//     const firestore = getFirestore();
+//     const batch = firestore.batch();
+
+//     //send each separate ingredient to its own document
+//     ingr.forEach((element) => {
+//       var docRef = firestore
+//         .collection("marketplace")
+//         .doc(uid)
+//         .collection("shoppingList")
+//         .doc(data.week)
+//         .collection(data.week)
+//         .doc();
+//       batch.set(docRef, { id: docRef.id, ingredient: element });
+//     });
+//     batch
+//       .commit()
+//       .then(() => {
+//         dispatch({ type: "CREATE_SHOP", ingr });
+//       })
+//       .catch((err) => {
+//         dispatch({ type: "CREATE_SHOP_ERROR", err });
+//       });
+//   };
+// };
+
 export const addToShoppingList = (data) => {
   return (dispatch, getState, { getFirestore }) => {
     //make async call to database
@@ -29,32 +87,34 @@ export const addToShoppingList = (data) => {
         break;
     }
 
-    const ingr = data.upload.ingredients;
+    const item = data.upload.item;
 
-    const firestore = getFirestore();
-    const batch = firestore.batch();
-
-    //send each separate ingredient to its own document
-    ingr.forEach((element) => {
-      var docRef = firestore
+    getFirestore()
+    .collection("marketplace")
+    .doc(uid)
+    .collection("shoppingList")
+    .doc(data.week)
+    .collection(data.week)
+    .add(data.upload)
+    .then((docRef) => {
+      // make the docId easily accessible so that we can delete it later if we want.
+      getFirestore()
         .collection("marketplace")
         .doc(uid)
         .collection("shoppingList")
         .doc(data.week)
         .collection(data.week)
-        .doc();
-      batch.set(docRef, { id: docRef.id, ingredient: element });
+        .doc(docRef.id)
+        .set({ id: docRef.id }, { merge: true });
+      dispatch({ type: "CREATE_SHOP" });
+    })
+    .catch((err) => {
+      dispatch({ type: "CREATE_SHOP_ERROR", err });
     });
-    batch
-      .commit()
-      .then(() => {
-        dispatch({ type: "CREATE_SHOP", ingr });
-      })
-      .catch((err) => {
-        dispatch({ type: "CREATE_SHOP_ERROR", err });
-      });
   };
 };
+
+
  
 export const addToShoppingListUpdate = (data) => {
   return (dispatch, getState, { getFirestore }) => {
@@ -201,7 +261,6 @@ export const getShoppingListUpdate = (data) => {
         break;
     }
 
-    console.log("----", data)
 
     getFirestore()
       .collection("marketplace")
@@ -311,6 +370,106 @@ export const newRemoveFromShop = (data) => {
       .then(() => dispatch({ type: "DELETE_NEW_SHOP" }))
       .catch((err) => {
         dispatch({ type: "DELETE_BEW_SHOP_ERROR", err });
+      });
+  };
+};
+
+export const editShoppingListData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    console.log("---->>>>>>", data)
+
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("newShoppingList")
+      .doc(`${data.week}`)
+      .collection(`${data.week}`)
+      .doc(data.id)
+      .set(data.upload, { merge: true })
+      .then(() => dispatch({ type: "EDIT_SHOPPING_LIST", payload: data }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_SHOPPING_LIST_ERROR", err });
+      });
+  };
+};
+
+export const editShoppingListDataAddedItems = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    console.log("---->>>>>>", data)
+
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("shoppingList")
+      .doc(`${data.week}`)
+      .collection(`${data.week}`)
+      .doc(data.id)
+      .set(data.upload, { merge: true })
+      .then(() => dispatch({ type: "EDIT_SHOPPING_LIST", payload: data }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_SHOPPING_LIST_ERROR", err });
       });
   };
 };

@@ -7,33 +7,185 @@ import ListItem from "@mui/material/ListItem";
 import { connect } from "react-redux";
 import { getShoppingList, getShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { addToShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
-import RemoveFromShop from "../Icons/RemoveFromShop";
-import { getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { addToPurchaseItems, getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
-import { ItemAlreadyInInventoryIcon } from "../Icons/ItemAlreadyInInventoryIcon";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
-import FullCalendar from "../Plan/CalendarPlanner/FullCalendar";
+import Edit from "../Icons/EditIconShop";
+import EditAddedItems from "../Icons/EditIconShopAddedItems";
+import Checkbox from '@mui/material/Checkbox';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack';
 import moment from "moment";
+import { submitNotification } from "../../../../../../lib/Notifications";
+import SyncIcon from '@mui/icons-material/Sync';
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 
 
 function ShopItems(props) {
   const [list, setList] = useState([]);
   const [allList, setAllList] = useState([]);
   const [newList, setNewList] = useState([]);
+  const [inventory, setInventory] = useState([]);
   const [showModal, setShow] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [shoppingList, setShoppingList] = useState([]);
 
+  //this sends data request
+  useEffect(() => {
+    props.getInventory();
+  }, [props.value, props.update]);
 
+  useEffect(() => {
+    forceUpdate()
+  }, [props.data]);
 
-  //console.log("whats props:", newList)
+  const getInventoryList = async () => {
+    //clears the items array before each update- IMPORTANT
+    setInventory([]);
 
+    //sets a new item object in the array for every document
+    props.inventory.forEach((doc) => {
+      // id is the docref for deletion
+      var item = doc.item;
+      var measure = doc.measure;
+      var quantity = doc.quantity;
+
+      setInventory((list) => [
+        ...list,
+        {
+          item: item,
+          quantity: quantity,
+          measure: measure,
+        },
+      ]);
+    });
+  };
+
+  //this sends data request
+  useEffect(() => {
+    getInventoryList();
+    //console.log("xx======>>>>>", inventory)
+  }, [props.update]);
 
   //trigger this when editing/deleting items
-  const [update, setUpdate] = useState(0);
+ const [update, setUpdate] = useState(0);
+ 
+ const forceUpdate = () => {
+   setUpdate(update + 1);
+ };
 
-  // //this sends data request
-  // useEffect(() => {
-  //   props.getAllItems();
-  // }, [update]);
+ function Refresh() {
+  return (
+    <>
+      <Tooltip title="Refresh">
+        <IconButton
+          aria-label="Refresh"
+          sx={{ ml: 2 }}
+          onClick={() => {
+            forceUpdate();
+            submitNotification("Refreshing..");
+          }}
+        >
+          <SyncIcon style={{ fontSize: 35 }} 
+          />
+        </IconButton>
+      </Tooltip>
+  </>
+  );
+ }
+
+ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+const [cart, setCart] = useState([]);
+
+
+const addToCart = (ingr) => {
+  setCart([...cart, ingr]);
+  };
+
+  const removeFromCart = (ingr) => {
+    let hardCopy = [...cart];
+    hardCopy = hardCopy.filter((cartItem) => cartItem.id !== ingr.id);
+    setCart(hardCopy);
+    };
+
+  const cartItems = cart.map((ingr, index) => (
+    <List>
+      <ListItem
+          key={`ingr${index}`}
+          className="list"
+          style={{ alignItems: "flex-end" }}
+        >      
+        <b>{`${ingr.data}: `}  </b> &nbsp; {`${ingr.quantity} ${ingr.measure}`} &nbsp;
+        {/* <input type="text" value={ingr.data} /> */}
+        {/* <input type="submit" value="remove" onClick={() => removeFromCart(ingr)} /> */}
+        <HighlightOffIcon onClick={() => removeFromCart(ingr)} />
+      </ListItem>
+    </List>
+    ));
+
+    const PurchaseItem = () => {
+
+      const cartList = cart
+  
+      const data = {
+  
+        upload: {
+         cartList,
+          profile: props.profile,
+          // FirstName: props.profile.firstName, 
+          // LastName: props.profile.lastName,
+          // Country: props.profile.country,
+          // City: props.profile.city,
+          // Email: props.profile.email,
+          date: props.value.format("YYYY/MM/DD"),
+          status: "pending"
+        }
+       
+      };
+
+      props.addToPurchaseItems(data);
+    submitNotification("Order Successful", "You will be contected shortly..");
+
+    }
+
+    const AllPurchaseItem = () => {
+
+      const firstList = allList
+      const secondList = newList 
+  
+      const data = {
+  
+        upload: {
+          firstList,
+          secondList,
+          profile: props.profile,
+          // FirstName: props.profile.firstName, 
+          // LastName: props.profile.lastName,
+          // Country: props.profile.country,
+          // City: props.profile.city,
+          // Email: props.profile.email,
+          date: props.value.format("YYYY/MM/DD"),
+          status: "pending"
+        }
+       
+      };
+
+      props.addToPurchaseItems(data);
+    submitNotification("Order Successful", "You will be contected shortly..");
+
+    }
+  
+
+useEffect(() => {
+  console.log("cart", cart);
+}, [cart]);
 
   //this sends data request
   useEffect(() => {
@@ -70,16 +222,16 @@ function ShopItems(props) {
       var data = doc.ingredient.data;
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
-      var expiry = doc.ingredient.expiry;
+      var week = doc.ingredient.week;
 
       setAllList((list) => [
         ...list,
         {
           food: food,
-          item: data,
+          data: data,
           measure: measure,
           quantity: quantity,
-          expiry: expiry,
+          week: week,
           id: id,
         },
       ]);
@@ -99,16 +251,16 @@ function ShopItems(props) {
       var data = doc.ingredient.data
       var quantity = doc.ingredient.quantity;
       var measure = doc.ingredient.measure;
-      var expiry = doc.ingredient.expiry;
+      var week = doc.ingredient.week;
 
       setNewList((list) => [
         ...list,
         {
           food: food,
-          item: data,
+          data: data,
           measure: measure,
           quantity: quantity,
-          expiry: expiry,
+          week: week,
           id: id,
         },
       ]);
@@ -163,7 +315,6 @@ function ShopItems(props) {
   function getFilteredProducts() {
     return list.filter(product => {
       const week = props.value.format("w")
-      //console.log("week", product.week)
     
       return week == product.week;
     });
@@ -172,20 +323,6 @@ function ShopItems(props) {
   useEffect(() => {
     getFilteredProducts();
   }, [props.newPlans]);
-
-  // const isItemInInventory = (strItem) => {
-  //   for (let i = 0; i < props.inventory.length; i++) {
-  //     if (props.inventory[i].item.toLowerCase().includes(strItem.toLowerCase()))
-  //       // if(strItem.includes(props.inventory[i].item))
-  //       return true;
-  //   }
-  //   return false;
-  // };
-
-  // const addToList = () => {
-
-  //   console.log("this is function", getFilteredProducts())
-  // }
  
 // filter products based on similar meal name
 const result = Object.values(
@@ -200,26 +337,69 @@ const result = Object.values(
 //setNewResult(result)
 //console.log("difference =>", result);
 
-//add item to new shopping list
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const Close = () => {
+    setOpen(false);
+  };
+
+
+  function test() {
+    let check = [];
+
+   const diff = result.filter(({ data: id1 }) => !inventory.some(({ item: id2 }) => id2 === id1));
+
+    // console.log("checked the common:",diff);
+
+    diff.forEach(data => { check.push(data)})
+
+    result.forEach(opt => {
+      inventory.forEach(item => {
+        if (opt.data == item.item) {
+          check.push({
+            data: opt.data,
+            food: opt.food,
+            measure: opt.measure,
+            quantity: opt.quantity - item.quantity,
+            week: opt.week
+          }) 
+        }
+      });
+    });        
+
+    setShoppingList(check)
+
+    // console.log("checkked ther loop bruh:",check);
+
+  }
+
+  useEffect(() => {
+    test();
+  }, [props.newPlans]);
+  //add item to new shopping list
 const addToList = () => {
 
   const data = {
 
     week: props.value.format("w"),
     upload: {
-      result: result
+      result: shoppingList
     },
   };
-    console.log("this is function", data)
     props.addToShoppingListUpdate(data)
     setShow(false);
   }
  
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   return (
     <>
+      <Refresh />
       {newList.length ? (
         <>
           <List>
@@ -231,27 +411,47 @@ const addToList = () => {
               >
                 <div>
                   <p>
-                    {ingr.food}
+                  {ingr.data} {ingr.quantity} {ingr.measure}
                     </p>
                     <br />
-
 
                 </div>
                 <div style={{ marginLeft: "20px" }}>
                   
                 </div>
                 <div className="icons">
-                  {/* {isItemInInventory(ingr.food) ? (
-                    <ItemAlreadyInInventoryIcon />
-                  ) : null} */}
+                <Checkbox {...label} color="success" 
+                    onClick={(e) => {
+                        addToCart(ingr);
+                    }}
+                  />
+
                   <BoughtItemIcon 
+                   value={props.value}
+                   food={ingr.food}
+                   item={ingr.data}
+                   id={ingr.id}
+                   measure={ingr.measure}
+                   quantity={ingr.quantity}
+                   update={update}
+                   setUpdate={setUpdate}
+                  /> 
+
+                  <EditAddedItems
                     value={props.value}
                     food={ingr.food}
+                    data={ingr.data}
+                    week={ingr.week}
                     id={ingr.id}
-                    item={ingr.item}
+                    measure={ingr.measure}
+                    quantity={ingr.quantity}
                     update={update}
                     setUpdate={setUpdate}
                   /> 
+
+
+                  
+                  
                   {/* <RemoveFromShop
                     id={ingr.id}
                     value={props.value}
@@ -273,7 +473,7 @@ const addToList = () => {
               >
                 <div>
                   <p>
-                    {ingr.food}
+                    {ingr.data} {ingr.quantity} {ingr.measure}
                     </p>
                     <br />
 
@@ -283,13 +483,27 @@ const addToList = () => {
                   
                 </div>
                 <div className="icons">
-                  {/* {isItemInInventory(ingr.food) ? (
-                    <ItemAlreadyInInventoryIcon />
-                  ) : null} */}
+
+                  <Checkbox {...label} color="success" 
+                    onClick={(e) => {
+                        addToCart(ingr);
+                    }}
+                  />
                   <BoughtItemIcon 
                     value={props.value}
                     food={ingr.food}
-                    item={ingr.item}
+                    item={ingr.data}
+                    id={ingr.id}
+                    measure={ingr.measure}
+                    quantity={ingr.quantity}
+                    update={update}
+                    setUpdate={setUpdate}
+                  /> 
+                  <Edit
+                    value={props.value}
+                    food={ingr.food}
+                    data={ingr.data}
+                    week={ingr.week}
                     id={ingr.id}
                     measure={ingr.measure}
                     quantity={ingr.quantity}
@@ -308,20 +522,59 @@ const addToList = () => {
             ))}
           </List>
 
-          <Button className="blue-btn shadow-none" type="submit"
-            onClick={handleShow}>
-              Update
-          </Button>
+          <Stack spacing={2} direction="row" style={{justifyContent: 'center'}}>
+            <Button className="blue-btn shadow-none" type="submit"
+              onClick={handleShow}>
+                View Cart
+            </Button>
 
+            <Button className="blue-btn shadow-none" variant="contained" onClick={handleClickOpen}>
+              All
+            </Button>
+          </Stack>
+
+          
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Update Shopping List</Modal.Title>
+            <Modal.Title>Request Items</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            Update this Shopping list?
+            {cartItems}
           </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={addToList}>
+        <Button variant="secondary" onClick={() => {
+          PurchaseItem()
+          setCart([])
+          handleClose()
+          }}>
+            Confirm
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <div className="empty basic-title-left">
+          <p>Regenerate Your Shopping List</p>
+          <Button className="blue-btn shadow-none" type="submit"
+            onClick={handleShow}>
+              Generate
+          </Button>
+
+          <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Generate Your Shopping List</Modal.Title>
+          </Modal.Header>
+        <Modal.Body>
+            Generate a new list?
+          </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={()=> {
+          addToList()
+          submitNotification("Generating new list..");
+
+          }}>
             Yes
           </Button>
           <Button variant="secondary" onClick={handleClose}>
@@ -329,6 +582,33 @@ const addToList = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+        </div>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Order Request"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to request all the items on the shopping List?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={Close}>Cancel</Button>
+          <Button onClick={() => {
+            AllPurchaseItem()
+            Close()
+          }} 
+            autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
           
         </>
       ) : (
@@ -347,7 +627,10 @@ const addToList = () => {
             Generate a new list?
           </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={addToList}>
+        <Button variant="secondary" onClick={()=> {
+          addToList()
+          submitNotification("Generating new list..");
+          }}>
             Yes
           </Button>
           <Button variant="secondary" onClick={handleClose}>
@@ -365,9 +648,10 @@ const mapStateToProps = (state) => {
   return {
     UpdatedShoppingList: state.mealPlan.shoppingList,
     newShoppingList: state.mealPlan.newShoppingList,
-    inventory: state.mealPlan.inventory,
     shoppingList: state.mealPlanner.allItems,
     newPlans: state.mealPlanner.newPlans,
+    profile: state.firebase.profile,
+    inventory: state.mealPlan.inventory,
   };
 };
 
@@ -375,10 +659,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getShoppingList: (product) => dispatch(getShoppingList(product)),
     getShoppingListUpdate: (product) => dispatch(getShoppingListUpdate(product)),
-    getInventory: () => dispatch(getInventory()),
     getAllItems: (plan) => dispatch(getAllItems(plan)),
     addToShoppingListUpdate: (data) => dispatch(addToShoppingListUpdate(data)),
     getPlanData: (plan) => dispatch(getPlanData(plan)),
+    addToPurchaseItems: (data) => dispatch(addToPurchaseItems(data)),
+    getInventory: (item) => dispatch(getInventory(item)),
   };
 };
 
