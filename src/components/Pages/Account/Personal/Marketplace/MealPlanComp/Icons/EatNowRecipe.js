@@ -62,7 +62,7 @@ export default function EatNowRecipe({ value }) {
               className="btn success shadow-none qrcode-btn"
               onClick={() => handleSetScan()}
             >
-              {expand}
+              {expand} 
             </button>
             {scan ? (
               <Scanner value={value} handleFormClose={handleFormClose} />

@@ -32,6 +32,7 @@ export default function MealsBox(props) {
         <option value="all">Meal Plan List</option>
         <option value="breakfast">beakfast</option>
         <option value="lunch/dinner">lunch/dinner</option>
+        <option value="snack">snack</option>
       </select>
     </p>
 
