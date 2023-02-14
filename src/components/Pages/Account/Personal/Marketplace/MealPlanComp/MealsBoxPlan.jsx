@@ -29,7 +29,7 @@ export default function MealsBox(props) {
     <br />
     <p>
       <select onChange={selectGroup}>
-        <option value="all">All</option>
+        <option value="all">Meal Plan List</option>
         <option value="breakfast">beakfast</option>
         <option value="lunch/dinner">lunch/dinner</option>
       </select>
