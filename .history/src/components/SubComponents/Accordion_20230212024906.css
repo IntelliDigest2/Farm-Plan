@@ -1,0 +1,196 @@
+
+
+
+/*=============================================
+=            accordion styling            =
+=============================================*/
+
+.accordion{
+    width: calc(100% - 100px);
+    height: auto;
+    font-size: 13px;
+    border: 1px solid #D2D2D7;
+
+    border-radius: 1px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-transform: uppercase;
+    border-bottom: 2px solid #d0cece ;
+    
+
+}
+
+.accordion_top{
+    display: flex;
+    width: 100%;
+  
+    height: 55px;
+    padding:4px 20px;
+    background-color: #F2F2F2;
+    cursor: pointer;
+    align-items: center;
+
+}
+
+.accordion_top_left{
+    width: 77%;
+    /* background-color: pink; */
+}
+
+.accordion_top_userInfo > span:first-child {
+    color:#0440D8;
+    font-weight: 600;
+}
+
+.accordion_top_right::before{
+content: '';
+background-color: #D3D3D3;
+height: 21px;
+width: 1px;
+margin-right: 10px;
+
+}
+
+/* .accordion_top_right > span:first-child::after{
+    content: '';
+    background-color: red;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+} */
+
+.accordion_status[data-color= red]::after{
+    background-color: red;
+}
+.accordion_status[data-color= green]::after{
+    background-color:green;
+}
+.accordion_status[data-color= purple]::after{
+    background-color: purple;
+}
+.accordion_status[data-color= yellow]::after{
+    background-color: yellow;
+}
+
+
+.accordion_status_name[data-color= red]{
+    color: red;
+    font-weight: 600;
+}
+.accordion_status_name[data-color= green]{
+    color:green;
+    font-weight: 600;
+}
+.accordion_status_name[data-color= purple]{
+    color: purple;
+    font-weight: 600;
+}
+.accordion_status_name[data-color= yellow]{
+    color: yellow;
+    font-weight: 600;
+}
+
+.accordion_top_right{
+    display: flex;
+    justify-content: space-evenly;
+    width: 23%;
+    /* align-items: center; */
+}
+
+.accordion_dropDown{
+    width: auto;
+    height:auto;
+    display: flex;
+    justify-content: space-between;
+    
+   
+    background-color: #fafafa;
+    /* display: none; */
+    padding:22px 20px;
+}
+.accordion_dropdown_products{
+    width: 75%;
+    /* background-color: red; */
+    
+
+   
+
+}
+
+.accordion_dropDown_left > div:not(:last-child){
+    margin-bottom: 8px;
+}
+.accordion_status{
+    width: 100px;
+    display: inline-block;
+    position: relative;
+}
+
+.accordion_status::after{
+    content: '';
+    /* background-color: black; */
+    width: 8px;
+    height: 8px;
+    margin-left: 1rem;
+    position: absolute;
+    border-radius: 50%;
+    /* transform: translate(0,50%); */
+    top: calc(50% - 4px);
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.accordion_productUpdateBtn{
+    width: 114px;
+    height: 35px;
+    background-color:#0C0847 ;
+    color: white;
+    border-radius: 4px;
+    float: right;
+    margin-right: 10px;
+}
+
+.accordion_dropdown_Option2{
+    margin-top: 25px;
+}
+
+
+
+
+
+
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .accordion_dropdown_productUpdate  input::-webkit-outer-spin-button,
+.accordion_dropdown_productUpdate  input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+
+/*=====  End of accordion styling  ======*/
+
+
+
+
+
+
+
