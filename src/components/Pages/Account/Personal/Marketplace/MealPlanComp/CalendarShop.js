@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Alert } from "react-bootstrap";
 
 import { AddMealModalShop } from "./Icons/AddMealModalShop";
 import Scanner from "../../../../../SubComponents/QRCode/Scanner";
@@ -58,6 +59,9 @@ export const CalendarShop = ({ value, onChange }) => {
       <div className="row">
         <div className="col-8" style={{textAlign: "left"}}>Add other items to your Shopping List🙂</div>
         <div className="col-4" style={{textAlign: "right"}}><AddMealModalShop value={values} show={show} setShow={setShow} /></div>
+        <Alert variant="primary">
+          Order all food items by clicking the 'All' button or  select items by checking the boxes. You can edit food items before placing an order.
+        </Alert>
       </div>
       <div className="plan-box">
         <div className="header">{chosenDay()}</div>

@@ -25,7 +25,7 @@ function BoughtItemIcon(props) {
       },
     };
     props.addToInventory(data);
-    submitNotification("Success", "Item added to Inventory!");
+    submitNotification("Success", `${data.upload.item}` + " added to Inventory!");
   };
 
   const handleDelete = (id) => {
