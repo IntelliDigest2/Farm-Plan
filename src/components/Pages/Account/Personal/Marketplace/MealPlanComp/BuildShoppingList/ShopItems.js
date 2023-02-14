@@ -10,6 +10,7 @@ import { addToShoppingListUpdate } from "../../../../../../../store/actions/mark
 import { addToPurchaseItems, getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
+import AddToCartIcon from "../Icons/AddToCartIcon";
 import Edit from "../Icons/EditIconShop";
 import EditAddedItems from "../Icons/EditIconShopAddedItems";
 import Checkbox from '@mui/material/Checkbox';
@@ -25,6 +26,7 @@ import { submitNotification } from "../../../../../../lib/Notifications";
 import SyncIcon from '@mui/icons-material/Sync';
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
 function ShopItems(props) {
@@ -33,6 +35,7 @@ function ShopItems(props) {
   const [newList, setNewList] = useState([]);
   const [inventory, setInventory] = useState([]);
   const [showModal, setShow] = useState(false);
+  const [showModalList, setShowList] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [shoppingList, setShoppingList] = useState([]);
 
@@ -80,6 +83,10 @@ function ShopItems(props) {
    setUpdate(update + 1);
  };
 
+ function notify(ingr){
+  submitNotification(`${ingr}` + " added to cart");
+ }
+
  function Refresh() {
   return (
     <>
@@ -125,7 +132,17 @@ const addToCart = (ingr) => {
         <b>{`${ingr.data}: `}  </b> &nbsp; {`${ingr.quantity} ${ingr.measure}`} &nbsp;
         {/* <input type="text" value={ingr.data} /> */}
         {/* <input type="submit" value="remove" onClick={() => removeFromCart(ingr)} /> */}
-        <HighlightOffIcon onClick={() => removeFromCart(ingr)} />
+        <Tooltip title="Remove">
+                    <IconButton
+                      aria-label="Remove"
+                      sx={{ ml: 2 }}
+                      onClick={() => {
+                        removeFromCart(ingr)
+                      }}
+                    >
+                      <HighlightOffIcon fontSize="50"/>
+                    </IconButton>
+                  </Tooltip>
       </ListItem>
     </List>
     ));
@@ -341,6 +358,10 @@ const result = Object.values(
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //modal for generate new shopping list
+  const handleCloseList = () => setShowList(false);
+  const handleShowList = () => setShowList(true);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -424,11 +445,24 @@ const addToList = () => {
                   
                 </div>
                 <div className="icons">
-                <Checkbox {...label} color="success" 
-                    onClick={(e) => {
-                        addToCart(ingr);
-                    }}
-                  />
+
+                  {/* <AddToCartIcon 
+                   item={ingr.data}
+                   measure={ingr.measure}
+                   quantity={ingr.quantity}
+                  />  */}
+                  <Tooltip title="Add to cart">
+                    <IconButton
+                      aria-label="Add to cart"
+                      sx={{ ml: 2 }}
+                      onClick={() => {
+                        notify(ingr.data);
+                      }}
+                    >
+                      <AddCircleOutlineIcon fontSize="25" />
+                    </IconButton>
+                  </Tooltip>
+
 
                   <BoughtItemIcon 
                    value={props.value}
@@ -488,11 +522,19 @@ const addToList = () => {
                 </div>
                 <div className="icons">
 
-                  <Checkbox {...label} color="success" 
-                    onClick={(e) => {
-                        addToCart(ingr);
-                    }}
-                  />
+                  <Tooltip title="Add to cart">
+                    <IconButton
+                      aria-label="Add to cart"
+                      sx={{ ml: 2 }}
+                      onClick={() => {
+                        addToCart(ingr)
+                        notify(ingr.data);
+                      }}
+                    >
+                      <AddCircleOutlineIcon fontSize="25" />
+                    </IconButton>
+                  </Tooltip>
+
                   <BoughtItemIcon 
                     value={props.value}
                     food={ingr.food}
@@ -559,14 +601,14 @@ const addToList = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* <div className="empty basic-title-left">
+      <div className="empty basic-title-left">
           <p>Regenerate Your Shopping List</p>
           <Button className="blue-btn shadow-none" type="submit"
-            onClick={handleShow}>
+            onClick={handleShowList}>
               Generate
           </Button>
 
-          <Modal show={showModal} onHide={handleClose}>
+          <Modal show={showModalList} onHide={handleCloseList}>
           <Modal.Header closeButton>
             <Modal.Title>Generate Your Shopping List</Modal.Title>
           </Modal.Header>
@@ -581,12 +623,12 @@ const addToList = () => {
           }}>
             Yes
           </Button>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleCloseList}>
             No
           </Button>
         </Modal.Footer>
       </Modal>
-        </div> */}
+        </div>
 
       <Dialog
         open={open}
