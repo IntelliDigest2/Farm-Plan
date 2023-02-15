@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
-function SaveMealPlanIcon(props) {
+function SaveMealPlanIconPlan(props) {
   const handleSelect = async () => {
     const data = {
       upload: {
@@ -17,7 +17,7 @@ function SaveMealPlanIcon(props) {
         url: props.url,
         totalNutrients: props.totalNutrients,
         totalDaily: props.totalDaily,
-        yield: props.yield,
+        recipeYield: props.recipeYield,
         nonNativeData: true,
       },
     };
@@ -54,4 +54,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SaveMealPlanIcon);
+export default connect(mapStateToProps, mapDispatchToProps)(SaveMealPlanIconPlan);
