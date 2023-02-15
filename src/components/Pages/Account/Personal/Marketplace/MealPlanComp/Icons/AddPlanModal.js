@@ -1,35 +1,40 @@
 import React, { useState } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
-import EatingOut from "./EatingOut";
-import { PreparedOrRaw } from "./PreparedOrRaw";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
-import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
-import AddPlanForm from "./AddPlanForm";
 import Breakfast from "../Plan/Forms/Breakfast";
 import Lunch from "../Plan/Forms/Lunch";
 import Dinner from "../Plan/Forms/Dinner";
 import RecipeSearch from "../Plan/Forms/Search/RecipeSearch";
 import ScannerPlan from "../../../../../../SubComponents/QRCode/ScannerPlan";
+import SavedMealsPlan from "../SavedMealsPlan";
 
 export function AddPlanModal({ show, setShow, value }) {
   const [eatingOut, setEatingOut] = useState("unconfirmed");
   const [page, setPage] = useState(0);
   const [date, setDate] = useState([value])
+  const [showS, setShowS] = useState(false);
+
 
   //control barcode scanner
   const [scan, setScan] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [expand, setExpand] = useState("+ scan from barcode");
+
+
+  const handleClose = () => setShowS(false);
+  const handleShow = () => setShowS(true);
+
   //scanning items will add item as a meal in meal plan including nutrition info and ingrs if information available
   const handleSetScan = () => {
     setScan(!scan);
+    setSaved(!saved)
     if (scan) {
       setExpand("+ scan from barcode");
     } else {
       setExpand("- input manually");
     }
   };
- 
 
   const [formData, setFormData] = useState({
     Breakfast: [],
@@ -96,13 +101,38 @@ export function AddPlanModal({ show, setShow, value }) {
                   className="btn success shadow-none qrcode-btn"
                   onClick={() => handleSetScan()}
             >
+            
               {expand} 
+            </button>
+            <button
+                  className="btn success shadow-none qrcode-btn"
+                  onClick={() => handleShow()}
+            >
+              Add From Saved Meal 
             </button>
             {scan ? (
               <ScannerPlan value={value} handleFormClose={handleFormClose} />
             ) : (
               <RecipeSearch value={value} />
               )}
+          
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={showS}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="add meal"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="add-meal" className="basic-title-left basic-lg">
+            Add from saved meal
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <SavedMealsPlan />
         </Modal.Body>
       </Modal>
     </>
