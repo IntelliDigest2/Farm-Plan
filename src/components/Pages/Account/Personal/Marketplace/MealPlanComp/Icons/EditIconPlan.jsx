@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
-import { EditMeal } from "./EditMeal";
+import { EditMealPlan } from "./EditMealPlan";
 
 //takes props value, meal(name), ingredients, id, forceUpdate and whether or not it is saved
 function Edit(props) {
@@ -24,7 +24,7 @@ function Edit(props) {
           <EditIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>
-      <EditMeal
+      <EditMealPlan
         value={props.value}
         show={show}
         setShow={setShow}
