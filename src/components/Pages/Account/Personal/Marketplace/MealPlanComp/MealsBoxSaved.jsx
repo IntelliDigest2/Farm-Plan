@@ -6,17 +6,13 @@ import ListItem from "@mui/material/ListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
-import Delete from "./Icons/DeleteIcon";
-import Edit from "./Icons/EditIcon";
-import Add from "./Icons/AddIcon";
-import AteMealIcon from "./Icons/AteMealIcon";
-import AteMealIconPlan from "./Icons/AteMealIconPlan";
+import SaveMealPlanIconPlan from "./Icons/SaveMealPlanIconPlan";
 
-export default function MealsBox(props) {
+export default function MealsBoxSaved(props) {
 
-  //console.log("let fetch what weekly props is ==> ", props)
   return (
     <>
+
       {props.meals.map((newMeal, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
           <div className="ingredients">
@@ -29,46 +25,17 @@ export default function MealsBox(props) {
                 {newMeal.mealType ? (
                   <div className="meal-type">{newMeal.mealType}</div>
                 ) : null}
+                
                 <div className="icons">
-                  <Delete
-                    value={props.value}
-                    id={newMeal.id}
-                    forceUpdate={props.forceUpdate}
-                    saved={props.saved}
+                  <SaveMealPlanIconPlan 
+                    mealType={newMeal.mealType}
+                    meal={newMeal.meal}
+                    ingredients={newMeal.ingredients}
+                    url={newMeal.url}
+                    totalNutrients={newMeal.totalNutrients}
+                    totalDaily={newMeal.totalDaily}
+                    recipeYield={newMeal.recipeYield}
                   />
-                  {props.saved ? (
-                    <Add
-                      value={props.value}
-                      meal={newMeal.meal}
-                      ingredients={newMeal.ingredients}
-                      mealType={newMeal.mealType}
-                      id={newMeal.id}
-                      onChange={props.onChange}
-                      saved={props.saved}
-                      nonNativeData={newMeal.nonNativeData}
-                      totalDaily={newMeal.totalDaily}
-                      totalNutrients={newMeal.totalNutrients}
-                      url={newMeal.url}
-                      recipeYield={newMeal.recipeYield}
-                    />
-                  ) : null}
-                  {newMeal.nonNativeData ? null : (
-                    <Edit
-                      value={props.value}
-                      meal={newMeal.meal}
-                      ingredients={newMeal.ingredients}
-                      id={newMeal.id}
-                      forceUpdate={props.forceUpdate}
-                      saved={props.saved}
-                    />
-                  )}
-                  {props.isMealPlan ? (
-                    <AteMealIcon
-                      meal={newMeal}
-                      value={props.value}
-                      id={newMeal.id}
-                    />
-                  ) : null}
                 </div>
               </ListSubheader>
 
