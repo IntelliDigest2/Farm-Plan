@@ -14,7 +14,6 @@ function SaveMealPlanIconPlan(props) {
         meal: props.meal,
         mealType: props.mealType,
         ingredients: props.ingredients,
-        url: props.url,
         totalNutrients: props.totalNutrients,
         totalDaily: props.totalDaily,
         recipeYield: props.recipeYield,
