@@ -35,6 +35,7 @@ export default function RecipeList(props) {
                         totalDaily={item.recipe.totalDaily}
                         yield={item.recipe.yield}
                       />
+                      
                     </div>
                   </ListSubheader>
                   {item.recipe.ingredients &&
