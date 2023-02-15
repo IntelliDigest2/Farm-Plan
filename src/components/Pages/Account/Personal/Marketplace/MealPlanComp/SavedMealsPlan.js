@@ -32,7 +32,6 @@ const SavedMealsPlan = (props) => {
       var nonNativeData = doc.nonNativeData;
       var totalDaily = doc.totalDaily;
       var totalNutrients = doc.totalNutrients;
-      var url = doc.url;
       var recipeYield = doc.yield;
 
 
@@ -47,7 +46,6 @@ const SavedMealsPlan = (props) => {
             nonNativeData: nonNativeData,
             totalDaily: totalDaily,
             totalNutrients: totalNutrients,
-            url: url,
             recipeYield: recipeYield
           },
         ]);
@@ -66,7 +64,6 @@ const SavedMealsPlan = (props) => {
             nonNativeData: nonNativeData,
             totalDaily: totalDaily,
             totalNutrients: totalNutrients,
-            url: url,
             recipeYield: recipeYield
           },
         ]);
