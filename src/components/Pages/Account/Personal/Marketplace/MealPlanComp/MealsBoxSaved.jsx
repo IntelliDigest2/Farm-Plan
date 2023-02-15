@@ -31,10 +31,9 @@ export default function MealsBoxSaved(props) {
                     mealType={newMeal.mealType}
                     meal={newMeal.meal}
                     ingredients={newMeal.ingredients}
-                    url={newMeal.url}
-                    totalNutrients={newMeal.totalNutrients}
-                    totalDaily={newMeal.totalDaily}
-                    recipeYield={newMeal.recipeYield}
+                    totalNutrients={newMeal.totalNutrients ? (newMeal.totalNutrients) : null}
+                    totalDaily={newMeal.totalDaily ? (newMeal.totalDaily) : null}
+                    recipeYield={newMeal.recipeYield ? (newMeal.recipeYield) : null}
                   />
                 </div>
               </ListSubheader>
@@ -59,9 +58,7 @@ export default function MealsBoxSaved(props) {
                   )}
                 </ListItem>
               ))}
-              <ListItem>
-                {newMeal.url ? <a href={newMeal.url}>{newMeal.url}</a> : null}
-              </ListItem>
+              
             </List>
           </div>
         </div>

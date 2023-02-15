@@ -177,12 +177,10 @@ function MyMeals(props) {
  
   useEffect(() => {
     updateMeals();
-    console.log("xxxxxxxxxx==> ", weeklyMeals)
   }, [props.mealPlan, props.mealPlanner]);
 
   useEffect(() => {
     updateWeeklyMeals();
-    console.log("===========> ", meals)
   }, [props.weekPlans]);
 
 
