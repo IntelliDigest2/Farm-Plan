@@ -84,26 +84,53 @@ export const addToPurchaseItems = (data) => {
         uid = authUID;
         break;
     }
-
-
+   
     getFirestore()
-    .collection("marketplace")
-    .doc(uid)
-    .collection("PurchasedItems")
+    .collection("purchases")
     .add(data.upload)
     .then((docRef) => {
+
       // make the docId easily accessible so that we can delete it later if we want.
       getFirestore()
-        .collection("marketplace")
-        .doc(uid)
-        .collection("PurchasedItems")
+        .collection("purchases")
         .doc(docRef.id)
-        .set({ id: docRef.id }, { merge: true });
-      dispatch({ type: "CREATE_GIFT_ITEM", data });
+        .set({ id: docRef.id, uid: uid }, { merge: true })
+      dispatch({ type: "ADD_PURCHASE_ITEM", data });
     })
     .catch((err) => {
-      dispatch({ type: "CREATE_GIFT_ITEM_ERROR", err });
+      dispatch({ type: "ADD_PURCHASE_ITEM_ERROR", err });
     });
+  };
+};
+
+export const editPurchaseStatus = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+
+    getFirestore()
+    .collection("purchases")
+    .doc(data.refNum)
+    .set({status: data.status}, { merge: true })
+      .then(() => dispatch({ type: "EDIT_PURCHASE", data }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_PURCHASE_ERROR", err });
+      });
+  };
+};
+
+export const editPurchaseItem = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+
+    //console.log("check:", mealPlan)
+    
+    getFirebase()
+      .firestore()
+      .collection("purchases")
+      .doc(data.id)
+      .set(data.upload, { merge: true })
+      .then(() => dispatch({ type: "EDIT_MEAL", data }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_MEAL_ERROR", err });
+      });
   };
 };
 
