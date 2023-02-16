@@ -197,6 +197,33 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Add to shop failed",
       };
+
+      case "ADD_PURCHASE_ITEM":
+      console.log("added to purchases", action.data);
+      return {
+        ...state,
+        authError: null,
+      };
+    case "ADD_PURCHASE_ITEM_ERROR":
+      console.log("error, couldn't add to purchase list", action.err);
+      return {
+        ...state,
+        authError: "Add to purchase failed",
+      };
+
+      case "SEND_TO_USER":
+        console.log("sent to user", action.data);
+        return {
+          ...state,
+          authError: null,
+        };
+      case "SEND_TO_USER_ERROR":
+        console.log("error, couldn't send to user collection", action.err);
+        return {
+          ...state,
+          authError: "Add to purchase failed",
+        };
+
       case "CREATE_SHOP_ITEMS":
       console.log("added to shop", action.ingr);
       return {

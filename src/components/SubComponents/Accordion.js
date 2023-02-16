@@ -20,7 +20,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		newObj[`${product.name}_sply`] = "";
 	});
 
-	console.log(newObj);
+	//console.log(newObj);
 
 	//used formik to get details to get pricing information
 
