@@ -530,3 +530,50 @@ export const createReserveItemsData = (data) => {
       });
   };
 };
+
+
+export const getPurchaseData = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+    
+    getFirestore()
+      .collection("purchases")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_PURCHASE_DATA", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
+      });
+  };
+};
+ 
+export const sendToUser = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+    //make async call to database
+
+    
+    getFirestore()
+    .collection("marketplace")
+    .doc(data.uid)
+    .collection("messages")
+    .add(data.upload)
+    .then((docRef) => {
+      // make the docId easily accessible so that we can delete it later if we want.
+      getFirestore()
+        .collection("marketplace")
+        .doc(data.uid)
+        .collection("messages")
+        .doc(docRef.id)
+        .set({ id: docRef.id }, { merge: true });
+      dispatch({ type: "SEND_TO_USER" });
+    })
+    .catch((err) => {
+      dispatch({ type: "SEND_TO_USER_ERROR", err });
+    });
+  };
+};
+

@@ -9,6 +9,8 @@ import { getShoppingList, getShoppingListUpdate } from "../../../../../../../sto
 import { addToShoppingListUpdate } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { addToPurchaseItems, getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
+// import { addToPurchaseItems } from "../../../../../../../store/actions/dataActions";
+
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
 import AddToCartIcon from "../Icons/AddToCartIcon";
 import Edit from "../Icons/EditIconShop";
@@ -27,9 +29,12 @@ import SyncIcon from '@mui/icons-material/Sync';
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-
+import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 
 function ShopItems(props) {
+  
+  // console.log("All hail props", props)
+
   const [list, setList] = useState([]);
   const [allList, setAllList] = useState([]);
   const [newList, setNewList] = useState([]);
@@ -38,6 +43,7 @@ function ShopItems(props) {
   const [showModalList, setShowList] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [shoppingList, setShoppingList] = useState([]);
+  const [clicked, setClicked] = useState(false)
 
   //this sends data request
   useEffect(() => {
@@ -521,14 +527,15 @@ const addToList = () => {
                   
                 </div>
                 <div className="icons">
-
+                
                   <Tooltip title="Add to cart">
                     <IconButton
                       aria-label="Add to cart"
                       sx={{ ml: 2 }}
-                      onClick={() => {
+                      onClick={(e) => {
                         addToCart(ingr)
                         notify(ingr.data);
+                        e.target.disabled = true;
                       }}
                     >
                       <AddCircleOutlineIcon fontSize="25" />

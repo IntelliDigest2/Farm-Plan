@@ -1,6 +1,7 @@
 const initState = {
   authError: null,
   getData: [],
+  purchaseData: []
 };
 
 const dataReducer = (state = initState, action) => {
@@ -28,6 +29,19 @@ const dataReducer = (state = initState, action) => {
       return {
         ...state,
         getData: action.payload,
+        authError: null,
+      };
+      case "GET_PURCHASE_DATA_ERROR":
+      console.log("get purchase error " + action.err.message);
+      return {
+        ...state,
+        authError: "Get failed",
+      };
+    case "GET_PURCHASE_DATA":
+      console.log("get purchase success", action.payload);
+      return {
+        ...state,
+        purchaseData: action.payload,
         authError: null,
       };
     case "SIGNOUT_SUCCESS":
