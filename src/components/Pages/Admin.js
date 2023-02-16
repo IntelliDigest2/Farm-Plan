@@ -12,7 +12,7 @@ import SendItemIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/Send
 import EditPurchaseIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/EditPurchaseIcon";
 
 
-function AdminS(props) {
+function Admin(props) {
 
 	const [list, setList ] = useState([])
 	const [update, setUpdate] = useState(0);
@@ -36,8 +36,13 @@ function AdminS(props) {
 		//sets a new item object in the array for every document
 		props.purchase.forEach((doc) => {
 		  // id is the docref for deletion
+
+		  //array of object
 		  var cartList = doc.cartList;
+
+		  //array of object
 		  var profile = doc.profile;
+
 		  var date = doc.date;
 		  var status = doc.status;
 		  var id = doc.id;
@@ -63,77 +68,7 @@ function AdminS(props) {
 		console.log("xxxxxxx>>>>>>>>>", list)
 	  }, [props.purchase]);
 
-	// let userRequests = userRequests.map(userRequestInfo=>{
-	// 	return <Accordion userRequestInfo={userRequestInfo}/>
-	// })
-	// const accordionRef = useRef([]);
-
-	// const productsDummy = [
-	// 	{
-	// 		name: "Rice",
-	// 		price: 20,
-	// 		quantity: 8,
-	// 		supplier: "dale farms",
-	// 		unit: "kg",
-	// 	},
-	// 	{
-	// 		name: "Beans",
-	// 		price: 15,
-	// 		quantity: 2,
-	// 		supplier: "sam farms",
-	// 		unit: "ltr",
-	// 	},
-	// 	{
-	// 		name: "garri",
-	// 		price: 10,
-	// 		quantity: 8,
-	// 		supplier: "steven farms",
-	// 		unit: "kg",
-	// 	},
-	// 	{
-	// 		name: "yam",
-	// 		price: 8,
-	// 		quantity: 5,
-	// 		supplier: "dale farms",
-	// 		unit: "ltr",
-	// 	},
-	// ];
-
-	// const requestedProducts = Array.from(Array(10).fill(productsDummy));
-
-	// console.log(requestedProducts);
-
-	// let requestDummy = {
-	// 	userName: "Jamed Deen",
-	// 	location: "Edinburgh",
-	// 	products: productsDummy,
-	// 	date: "feb 15 2022",
-
-	// 	status: "progress",
-	// };
-
-	//const accordionInfos = Array.from(Array(10).fill(requestDummy));
-
-	// const requestedProducts = Array.from(Array(10).keys());
-
-	// useEffect(() => {
-	// 	console.log(accordionRef.current);
-	// }, [accordionRef]);
-
-	// const entries = Array.from(Array(15).keys());
-
-	// let accordions = accordionInfos.map((accordionInfo, i) => {
-	// 	return (
-	// 		<Accordion
-	// 			userName={accordionInfo.userName}
-	// 			location={accordionInfo.location}
-	// 			status={accordionInfo.status}
-	// 			products={accordionInfo.products}
-	// 			date={accordionInfo.date}
-	// 			key={`accordion-${i}`}
-	// 		/>
-	// 	);
-	// });
+	
 
 	return (
 		<>
@@ -180,7 +115,7 @@ function AdminS(props) {
 							<div>
 							<p>
 								<SendItemIcon 
-									id={item.id}
+									refID={item.id}
 									uid={item.uid}
 									cart={item.cartList}
 								/>
@@ -228,6 +163,6 @@ const mapStateToProps = (state) => {
 	};
   };
   
-export default connect(mapStateToProps, mapDispatchToProps)(AdminS);
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);
   
 

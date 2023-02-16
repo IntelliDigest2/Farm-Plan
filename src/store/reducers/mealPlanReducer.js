@@ -9,6 +9,7 @@ const initState = {
   shopItems: [],
   inventory: [],
   giftedFood: [],
+  purchaseInfo: [],
 };
 
 const mealPlanReducer = (state = initState, action) => {
@@ -212,7 +213,7 @@ const mealPlanReducer = (state = initState, action) => {
       };
 
       case "SEND_TO_USER":
-        console.log("sent to user", action.data);
+        // console.log("sent to user", action.data);
         return {
           ...state,
           authError: null,
@@ -221,8 +222,23 @@ const mealPlanReducer = (state = initState, action) => {
         console.log("error, couldn't send to user collection", action.err);
         return {
           ...state,
-          authError: "Add to purchase failed",
+          authError: "send to user failed",
         };
+
+        case "GET_PURCHASE_INFO":
+          console.log("sent to user", action.payload);
+          return {
+            ...state,
+            purchaseInfo: action.payload,
+            authError: null,
+          };
+        case "GET_PURCHASE_INFO_ERROR":
+          console.log("error, couldn't get purchase info", action.err);
+          return {
+            ...state,
+            authError: "fetch purchase info failed",
+          };
+  
 
       case "CREATE_SHOP_ITEMS":
       console.log("added to shop", action.ingr);
@@ -248,6 +264,20 @@ const mealPlanReducer = (state = initState, action) => {
           ...state,
           authError: "Add to shop failed",
         };
+
+        case "EDIT_PURCHASE_STATUS":
+        console.log("succesfully editted status", action.payload);
+        return {
+          ...state,
+          authError: null,
+        };
+      case "EDIT_PURCHASE_STATUS_ERROR":
+        console.log("error, couldn't edit status", action.err);
+        return {
+          ...state,
+          authError: "edit status failed",
+        };
+
     case "DELETE_SHOP":
       console.log("successfully deleted item");
       return {
