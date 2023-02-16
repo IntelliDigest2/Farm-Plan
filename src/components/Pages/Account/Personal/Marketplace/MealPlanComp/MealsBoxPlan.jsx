@@ -8,14 +8,23 @@ import ListSubheader from "@mui/material/ListSubheader";
 import { Dropdown } from "../../../../../SubComponents/Dropdown";
 
 import Delete from "./Icons/DeletePlanIcon"; 
-import Edit from "./Icons/EditIcon";
+import EditIconPlan from "./Icons/EditIconPlan";
 import Add from "./Icons/AddIcon";
 import AteMealIconPlan from "./Icons/AteMealIconPlan";
 
 export default function MealsBox(props) {
 
+
+  //trigger this when updating items
+ const [update, setUpdate] = useState(0);
+ 
+ const forceUpdate = () => {
+   setUpdate(update + 1);
+ };
+
+
   const [filter, setFilter] = useState([]);
-  
+
 
   function selectGroup(e) {
     const value = e.target.value;
@@ -32,6 +41,7 @@ export default function MealsBox(props) {
         <option value="all">Meal Plan List</option>
         <option value="breakfast">beakfast</option>
         <option value="lunch/dinner">lunch/dinner</option>
+        <option value="snack">snack</option>
       </select>
     </p>
 
@@ -48,12 +58,13 @@ export default function MealsBox(props) {
                   <div className="meal-type">{newMeal.mealType}</div>
                 ) : null}
                 <div className="icons">
-                  {/* <Delete
+                  <Delete
                     value={props.value}
                     id={newMeal.id}
-                    forceUpdate={props.forceUpdate}
+                    meal={newMeal.meal}
                     saved={props.saved}
-                  /> */}
+                    forceUpdate={forceUpdate}
+                  />
                   {/* {props.saved ? (
                     <Add
                       value={props.value}
@@ -70,23 +81,23 @@ export default function MealsBox(props) {
                       recipeYield={newMeal.recipeYield}
                     />
                   ) : null} */}
-                  {/* {newMeal.nonNativeData ? null : (
-                    <Edit
+                  {newMeal.nonNativeData ? null : (
+                    <EditIconPlan
                       value={props.value}
                       meal={newMeal.meal}
                       ingredients={newMeal.ingredients}
                       id={newMeal.id}
-                      forceUpdate={props.forceUpdate}
+                      forceUpdate={forceUpdate}
                       saved={props.saved}
                     />
-                  )} */}
-                  {props.isMealPlan ? (
+                  )}
+                  {/* {props.isMealPlan ? (
                     <AteMealIconPlan
                       meal={newMeal}
                       value={props.value}
                       id={newMeal.id}
                     />
-                  ) : null}
+                  ) : null} */}
                 </div>
               </ListSubheader>
 

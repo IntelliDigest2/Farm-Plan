@@ -14,7 +14,7 @@ import AteMealIconPlan from "./Icons/AteMealIconPlan";
 
 export default function MealsBox(props) {
 
-  console.log("let fetch what weekly props is ==> ", props)
+  //console.log("let fetch what weekly props is ==> ", props)
   return (
     <>
       {props.meals.map((newMeal, index) => (

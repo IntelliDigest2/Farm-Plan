@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
-import { EditMealPlan } from "./EditMealPlan";
+import { EditPurchase } from "./EditPurchase";
 
 //takes props value, meal(name), ingredients, id, forceUpdate and whether or not it is saved
-function Edit(props) {
+function EditPurchaseIcon(props) {
   //shows edit modal
   const [show, setShow] = useState(false);
 
@@ -24,18 +24,16 @@ function Edit(props) {
           <EditIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>
-      <EditMealPlan
-        value={props.value}
+      <EditPurchase
         show={show}
         setShow={setShow}
-        meal={props.meal}
-        ingredients={props.ingredients}
+        cart={props.cart}
         id={props.id}
+        uid={props.uid}
         forceUpdate={props.forceUpdate}
-        saved={props.saved}
       />
     </>
   );
 }
 
-export default Edit;
+export default EditPurchaseIcon;

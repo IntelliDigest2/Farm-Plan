@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 const Accordion = ({ userName, location, products, status, date }) => {
 	const [accordionOpen, setAccordionOpen] = useState(false);
 	let color;
-	let newObj = {};
+	let newObj = {}; 
 
 	const copyProduct = [...products];
 
@@ -20,7 +20,7 @@ const Accordion = ({ userName, location, products, status, date }) => {
 		newObj[`${product.name}_sply`] = "";
 	});
 
-	console.log(newObj);
+	//console.log(newObj);
 
 	//used formik to get details to get pricing information
 
