@@ -73,6 +73,18 @@
   display: flex;
 }
 
+.table-header {
+  background-color: #32797e;
+  text-align: center; 
+  font-family: "Source Sans Pro";
+  color: antiquewhite;
+  /* font-weight: 300;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  color: white;
+  display: flex; */
+} 
+
 .calendar .day-names {
   display: flex;
   flex-wrap: wrap;
