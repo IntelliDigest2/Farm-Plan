@@ -14,10 +14,12 @@ function SendItemIcon(props) {
   const handleSelect = async () => {
     const data = {
       uid: props.uid,
-      refNum: props.id,
+      refID: props.refID,
       status: "IN PROGRESS",
       upload: {
         cart: props.cart,
+        refID: props.refID,
+        status: "IN PROGRESS"
       },
     };
     console.log(">>>>>>>>>", data)

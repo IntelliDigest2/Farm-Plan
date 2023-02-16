@@ -108,11 +108,69 @@ export const editPurchaseStatus = (data) => {
 
     getFirestore()
     .collection("purchases")
-    .doc(data.refNum)
+    .doc(data.refID)
     .set({status: data.status}, { merge: true })
       .then(() => dispatch({ type: "EDIT_PURCHASE", data }))
       .catch((err) => {
         dispatch({ type: "EDIT_PURCHASE_ERROR", err });
+      });
+  };
+};
+
+export const editPurchaseStatusFromUser = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+
+    getFirestore()
+    .collection("purchases")
+    .doc(data.refID)
+    .set({status: data.status}, { merge: true })
+      .then(() => dispatch({ type: "EDIT_PURCHASE", data }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_PURCHASE_ERROR", err });
+      });
+  };
+};
+
+export const editPurchaseStatusOnUser = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+ //make async call to database
+ const profile = getState().firebase.profile;
+ const authUID = getState().firebase.auth.uid;
+
+ var uid;
+ switch (profile.type) {
+   case "business_admin":
+     uid = authUID;
+     break;
+   case "business_sub":
+     uid = profile.admin;
+     break;
+   case "academic_admin":
+     uid = authUID;
+     break;
+   case "academic_sub":
+     uid = profile.admin;
+     break;
+   case "household_admin":
+     uid = authUID;
+     break;
+   case "household_sub":
+     uid = profile.admin;
+     break;
+   default:
+     uid = authUID;
+     break;
+ }
+
+    getFirestore()
+    .collection("marketplace")
+    .doc(uid)
+    .collection("messages")
+    .doc(data.id)
+    .set({status: data.status}, { merge: true })
+      .then(() => dispatch({ type: "EDIT_PURCHASE_STATUS", payload: data }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_PURCHASE_STATUS_ERROR", err });
       });
   };
 };
