@@ -19,7 +19,6 @@ const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
 if (useEmulator === "development") {
 	process.env["FIRESTORE_EMULATOR_HOST"] = "localhost:8080";
 	admin.initializeApp({
-		//projectId inserted her for local testing
 		projectId: "suschemtrade-93a26",
 	});
 } else {
@@ -41,8 +40,6 @@ itrackerPaymentFunction.use(
 		{
 			origin: [
 				//insert the name of the firebase account ere
-				// -----------------------------------
-				// -----------------------------------
 				"firebase application  name suschemtrade-93a26.web.app",
 				"another example suschemtrade-93a26.firebaseapp.com",
 			],
