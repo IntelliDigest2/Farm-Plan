@@ -19,7 +19,6 @@ const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
 if (useEmulator === "development") {
 	process.env["FIRESTORE_EMULATOR_HOST"] = "localhost:8080";
 	admin.initializeApp({
-		//projectId inserted her for local testing
 		projectId: "suschemtrade-93a26",
 	});
 } else {
@@ -40,29 +39,46 @@ itrackerPaymentFunction.use(
 	cors([
 		{
 			origin: [
-				//insert the link of the app link here
-				// -----------------------------------
-				// -----------------------------------
-				"firebase application  name suschemtrade-93a26.web.app", //this is just a sample eg http://worldfoodtracker.com/
-				"suschemtrade-93a26.firebaseapp.com", //another example incase it has two links
+                //insert the name of the firebase account ere
+				"firebase application  name suschemtrade-93a26.web.app",
+				"another example suschemtrade-93a26.firebaseapp.com",
 			],
-
+			
 			methods: [["GET", "PUT", "POST"]],
 		},
 	])
 );
 
+
+
+
+
 const calculateOrderAmount = async (orderId) => {
+	// let totalCost = [];
+	console.log("here");
+
+	// assuming purchase request is the name of the collection
+
+	// also assumming that the structure of the data stored in the database is in the format
+
+	
+
 	let QuerySnapshot = await fireStoreDB
 		.collection("purchases")
-		.doc(orderId)
+        .doc(orderId)
 		.get();
+
+	QuerySnapshot.((doc) => {
+		if (item.productId === doc.id) {
+			totalCost.push(item.numberOfProductForPurchase * doc.data().price);
+	    }
+		})
 
 	let totalArray = [];
 
-	QuerySnapshot.cartList.forEach((cartItem) => {
-		totalArray.push(cartItem.price * cartItem.quantity);
-	});
+	 QuerySnapshot.cartList.forEach((cartItem)=>{
+        totalArray.push(cartItem.price * cartItem.quantity)
+     }) 
 
 	// calculation of the order amount
 	return totalArray.reduce((total, num) => {
@@ -93,6 +109,4 @@ itrackerPaymentFunction.post("/create-payment-intent", async (req, res) => {
 	});
 });
 
-exports.itrackerPaymentFunction = functions.https.onRequest(
-	itrackerPaymentFunction
-);
+exports.itrackerPaymentFunction = functions.https.onRequest(itrackerPaymentFunction);
