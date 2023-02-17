@@ -1129,32 +1129,33 @@ const ProfileList = (props) => {
       change: "changeLocation",
       icon: <EditLocationAltIcon />,
     },
-    {
-      key: "restaurantName",
-      item: props.restaurantName,
-      change: "changeRestaurantName",
-      icon: <DriveFileRenameOutlineIcon />,
-    },{
-      key: "regulatoryBody",
-      item:props.regulatoryBody,
-      change: "changeRegulatoryBody",
-      icon: <BadgeIcon />,
-    },{
-      key: "regulatoryBodyID",
-      item: props.regulatoryBodyID,
-      change: "changeRegulatoryBodyID",
-      icon: <BadgeIcon />,
-    },{
-      key: "cuisine",
-      item: props.cuisine,
-      change: "changeCuisine",
-      icon: <RestaurantIcon />,
-    },{
-      key: "restaurantDescription",
-      item: props.restaurantDescription,
-      change: "changeRestaurantDescription",
-      icon: <DescriptionIcon />,
-    },
+    
+    // {
+    //   key: "restaurantName",
+    //   item: props.restaurantName,
+    //   change: "changeRestaurantName",
+    //   icon: <DriveFileRenameOutlineIcon />,
+    // },{
+    //   key: "regulatoryBody",
+    //   item:props.regulatoryBody,
+    //   change: "changeRegulatoryBody",
+    //   icon: <BadgeIcon />,
+    // },{
+    //   key: "regulatoryBodyID",
+    //   item: props.regulatoryBodyID,
+    //   change: "changeRegulatoryBodyID",
+    //   icon: <BadgeIcon />,
+    // },{
+    //   key: "cuisine",
+    //   item: props.cuisine,
+    //   change: "changeCuisine",
+    //   icon: <RestaurantIcon />,
+    // },{
+    //   key: "restaurantDescription",
+    //   item: props.restaurantDescription,
+    //   change: "changeRestaurantDescription",
+    //   icon: <DescriptionIcon />,
+    // },
   ];
 
   return (
