@@ -270,6 +270,10 @@ function Settings(props) {
       adminCollection = "restaurant_users";
       subType = "restaurant_sub";
     }
+    else if (props.profile.type === "admin_admin") {
+      adminCollection = "admin_users";
+      subType = "admin_sub";
+    }
 
     var data = {
       masterCollection: adminCollection,
