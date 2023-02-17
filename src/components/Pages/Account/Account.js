@@ -20,6 +20,8 @@ import * as Farm from "./Farm/FarmTabs";
 import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Academic/AcademicTabs";
 import * as Restaurant from "./Business/Restaurant/RestaurantTabs";
+import * as Admin from "./Admin/Admin/AdminTabs";
+
 
 import { Colors } from "../../lib/Colors";
 
@@ -74,12 +76,14 @@ const NewAccount = (props) => {
   if (loading) {
     return <LoadingScreen />;
   }
-
+  
+  console.log("profff", props.profile.buildingFunction)
   return (
     <>
-      {modal && !props.profile.isConsumer ? (
+      {modal && !props.profile.isConsumer && !props.profile.buildingFunction == "Admin" ?  (
         <PTSModal show={show} setShow={setShow} />
       ) : null}
+      
       {chooseModal ? <PTSModal show={show} setShow={setShow} /> : null}
       <PageWrapMini>
         <Container className="web-center">
@@ -230,6 +234,38 @@ const AccountType = (props) => {
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Restaurant.FSSP />
+            </TabPanel>
+          </SwipeableViews>
+        </>
+      );
+
+      case "admin_admin":
+      case "admin_sub":      
+      return (
+        <>
+          <TabList
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: Colors.brandGreen,
+              },
+            }}
+            variant="standard"
+            onChange={props.handleChange}
+            centered
+          >
+            <Tab disableRipple label="Food" value="0" />
+
+          </TabList>
+          <SwipeableViews
+            axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={parseInt(props.value)}
+            onChangeIndex={props.handleChangeIndex}
+          >
+            <TabPanel value={props.value} index={0} dir={props.theme.direction}>
+              <Admin.Dashboard
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
             </TabPanel>
           </SwipeableViews>
         </>

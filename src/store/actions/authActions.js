@@ -190,6 +190,9 @@ export const signUp = (newUser) => {
       case "Restaurants":
         type = "restaurant_admin";
         break
+      case "Admin":
+        type = "admin_admin";
+        break
       case "Schools":
         type = "academic_admin";
         break;
