@@ -46,6 +46,10 @@ const SignUp = (props) => {
   const [regulatoryBody, setRegulatoryBody] = useState("");
   const [regulatoryBodyID, setRegulatoryBodyID] = useState("");
 
+  //Stage6
+  const [IDType, setIDType] = useState("");
+  const [IDNumber, setIDNumber] = useState("");
+
   //Stage5
   const [cuisine, setCuisine] = useState("");
   const [restaurantDescription, setRestaurantDescription] = useState("");
@@ -207,6 +211,10 @@ const SignUp = (props) => {
             <p>First, create your account.</p>
           </div>
           <Stage2
+            setIDType={setIDType}
+            IDType={IDType}
+            setIDNumber={setIDNumber}
+            IDNumber={IDNumber}
             setTown={setTown}
             town={town}
             setCountry={setCountry}
@@ -227,6 +235,10 @@ const SignUp = (props) => {
             <h5>Confirmation</h5>
           </div>
           <Stage3
+            setIDType={setIDType}
+            IDType={IDType}
+            setIDNumber={setIDNumber}
+            IDNumber={IDNumber}
             setStage={setStage}
             firstName={firstName}
             lastName={lastName}
@@ -285,6 +297,10 @@ const SignUp = (props) => {
               <p>First, create your account.</p>
             </div>
             <Stage4
+              setIDType={setIDType}
+              IDType={IDType}
+              setIDNumber={setIDNumber}
+              IDNumber={IDNumber}
               setTown={setTown}
               town={town}
               setCountry={setCountry}
@@ -312,6 +328,10 @@ const SignUp = (props) => {
                 <p>First, create your account.</p>
               </div>
               <Stage5
+                setIDType={setIDType}
+                IDType={IDType}
+                setIDNumber={setIDNumber}
+                IDNumber={IDNumber}
                 setTown={setTown}
                 town={town}
                 setCountry={setCountry}
@@ -332,6 +352,39 @@ const SignUp = (props) => {
               />
             </Title>
           );
+          case 6:
+          return (
+            <Title subtitle="Sign Up">
+              <div className="signup-center subtitles">
+                <p>First, create your account.</p>
+              </div>
+              <Stage6
+                setIDType={setIDType}
+                IDType={IDType}
+                setIDNumber={setIDNumber}
+                IDNumber={IDNumber}
+                setTown={setTown}
+                town={town}
+                setCountry={setCountry}
+                country={country}
+                setRegion={setRegion}
+                region={region}
+                setBuildingFunction={setBuildingFunction}
+                buildingFunction={buildingFunction}
+                setStage={setStage}
+                countries={countryNames}
+                restaurantName = {restaurantName}
+                regulatoryBody = {regulatoryBody}
+                regulatoryBodyID = {regulatoryBodyID}
+                setCuisine={setCuisine}
+                cuisine = {cuisine}
+                setRestaurantDescription={setRestaurantDescription}
+                restaurantDescription = {restaurantDescription}
+              />
+            </Title>
+          );
+
+
   }
 };
 
@@ -473,6 +526,7 @@ const Stage2 = (props) => {
               placeholder="Please Select an Account Type"
               items={[
                 "Households",
+                "Admin",
                 "Personal",
                 "Hospitals",
                 "Schools",
@@ -512,8 +566,19 @@ const Stage2 = (props) => {
               e.preventDefault();
               //Next Stage
 
+              // switch(props.buildingFunction){
+              //   // case "Restaurants":
+              //   //   props.setStage(4) //stage for restaurant-specific questions
+              //   case "Admin":
+              //     props.setStage(4)
+              //   default:
+              //     props.setStage(3)
+              // }
+
               if (props.buildingFunction=="Restaurants") {
                 props.setStage(4) //stage for restaurant-specific questions
+              } else if (props.buildingFunction=="Admin") {
+                props.setStage(6) //stage for restaurant-specific questions
               } else {
               props.setStage(3);}
             }}
@@ -613,6 +678,83 @@ const Stage4 = (props) => {
 };
 
 
+//If account type == restaurant, this routes 
+const Stage6 = (props) => {
+  return(
+  <div>
+    <FormStyle>
+      <Form>
+        <Form.Group className="mb-3">
+            <Form.Label>Identification</Form.Label>
+            <Select
+              id="buildingFunction"
+              function={(e) => {
+                props.setIDType(e.target.value);
+              }}
+              value={props.IDType}
+              placeholder="Please an Identity Type"
+              items={[
+                "Int'l Passport",
+                "Voters Card",
+                "Driver's License",
+                "National Identity Card",
+              ]}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="Enter Identification Number"
+            defaultValue={props.setIDNumber}
+            required
+            onChange={(e) => {
+              props.setIDNumber(e.target.value);
+            }}
+          />
+        </Form.Group>
+
+        <div className="signup-center">
+        <div className="row">
+          <Button
+            variant="default"
+            className="signup-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              //Previous Stage
+              props.setStage(2);
+            }}
+          >
+            Back
+          </Button>
+
+          <Button
+            variant="default"
+            className="signup-btn"
+
+            onClick={(e) => {
+              e.preventDefault();
+              //Next Stage
+
+              if (props.buildingFunction=="Admin") {
+                props.setStage(3) //confimation page
+              } else {
+              props.setStage(2);}
+            }}
+          >
+            Next
+          </Button>
+
+        </div>
+      </div>
+      </Form>
+    </FormStyle>
+  </div>
+
+  );
+};
+
+
 const Stage5 = (props) => {
   return(
   <div>
@@ -685,111 +827,308 @@ const Stage5 = (props) => {
 }
 
 const Stage3 = (props) => {
-  if (props.buildingFunction=="Restaurants"){
-  return (
-    <div>
-      <List>
-        <ListItem>
-          <ListItemIcon>
-            <DriveFileRenameOutlineIcon />
-          </ListItemIcon>
-          <ListItemText>
-            {props.firstName} {props.lastName}
-          </ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <EmailIcon />
-          </ListItemIcon>
-          <ListItemText>{props.email}</ListItemText>
-        </ListItem>
-        <ListItem className="space-between">
-          <ListItemIcon>
-            <EditLocationAltIcon />
-          </ListItemIcon>
-          <ListItemText>
-            {props.town}, {props.country}, {props.region}
-          </ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <HomeWorkIcon />
-          </ListItemIcon>
-          <ListItemText>{props.buildingFunction}</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <HomeWorkIcon />
-          </ListItemIcon>
-          <ListItemText>{props.restaurantName}</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <HomeWorkIcon />
-          </ListItemIcon>
-          <ListItemText>{props.regulatoryBody}</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <HomeWorkIcon />
-          </ListItemIcon>
-          <ListItemText>{props.regulatoryBodyID}</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <HomeWorkIcon />
-          </ListItemIcon>
-          <ListItemText>{props.cuisine}</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <HomeWorkIcon />
-          </ListItemIcon>
-          <ListItemText>{props.restaurantDescription}</ListItemText>
-        </ListItem>
+  switch (props.buildingFunction){
+    case "Restaurants":
+    return (
+      <div>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <DriveFileRenameOutlineIcon />
+            </ListItemIcon>
+            <ListItemText>
+              {props.firstName} {props.lastName}
+            </ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <EmailIcon />
+            </ListItemIcon>
+            <ListItemText>{props.email}</ListItemText>
+          </ListItem>
+          <ListItem className="space-between">
+            <ListItemIcon>
+              <EditLocationAltIcon />
+            </ListItemIcon>
+            <ListItemText>
+              {props.town}, {props.country}, {props.region}
+            </ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.buildingFunction}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.restaurantName}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.regulatoryBody}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.regulatoryBodyID}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.cuisine}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.restaurantDescription}</ListItemText>
+          </ListItem>
 
-      </List>
-    </div>
-  );
-} else {
-  return (
-    <div>
-      <List>
-        <ListItem>
-          <ListItemIcon>
-            <DriveFileRenameOutlineIcon />
-          </ListItemIcon>
-          <ListItemText>
-            {props.firstName} {props.lastName}
-          </ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <EmailIcon />
-          </ListItemIcon>
-          <ListItemText>{props.email}</ListItemText>
-        </ListItem>
-        <ListItem className="space-between">
-          <ListItemIcon>
-            <EditLocationAltIcon />
-          </ListItemIcon>
-          <ListItemText>
-            {props.town}, {props.country}, {props.region}
-          </ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <HomeWorkIcon />
-          </ListItemIcon>
-          <ListItemText>{props.buildingFunction}</ListItemText>
-        </ListItem>
-      </List>
-    </div>
-  );
+        </List>
+      </div>
+    );
+    case "Admin":
+      return (
+      <div>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <DriveFileRenameOutlineIcon />
+            </ListItemIcon>
+            <ListItemText>
+              {props.firstName} {props.lastName}
+            </ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <EmailIcon />
+            </ListItemIcon>
+            <ListItemText>{props.email}</ListItemText>
+          </ListItem>
+          <ListItem className="space-between">
+            <ListItemIcon>
+              <EditLocationAltIcon />
+            </ListItemIcon>
+            <ListItemText>
+              {props.town}, {props.country}, {props.region}
+            </ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.buildingFunction}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.IDType}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <HomeWorkIcon />
+            </ListItemIcon>
+            <ListItemText>{props.IDNumber}</ListItemText>
+          </ListItem>
 
-
+        </List>
+      </div>
+      );
+      case "Households":
+      case "Personal":
+      case "Hospitals":
+      case "Schools":
+      case "Hotels":
+      case "Offices":
+      case "Shop/Supermarket":
+      case "Farm":
+      case "Recreational Centers":
+      case "Restaurants":
+      case "Other":
+        return (
+          <div>
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <DriveFileRenameOutlineIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  {props.firstName} {props.lastName}
+                </ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <EmailIcon />
+                </ListItemIcon>
+                <ListItemText>{props.email}</ListItemText>
+              </ListItem>
+              <ListItem className="space-between">
+                <ListItemIcon>
+                  <EditLocationAltIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  {props.town}, {props.country}, {props.region}
+                </ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <HomeWorkIcon />
+                </ListItemIcon>
+                <ListItemText>{props.buildingFunction}</ListItemText>
+              </ListItem>
+            </List>
+          </div>
+        );
+  }
 }
-}
+
+// const Stage3 = (props) => {
+//   if (props.buildingFunction=="Restaurants"){
+//   return (
+//     <div>
+//       <List>
+//         <ListItem>
+//           <ListItemIcon>
+//             <DriveFileRenameOutlineIcon />
+//           </ListItemIcon>
+//           <ListItemText>
+//             {props.firstName} {props.lastName}
+//           </ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <EmailIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.email}</ListItemText>
+//         </ListItem>
+//         <ListItem className="space-between">
+//           <ListItemIcon>
+//             <EditLocationAltIcon />
+//           </ListItemIcon>
+//           <ListItemText>
+//             {props.town}, {props.country}, {props.region}
+//           </ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <HomeWorkIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.buildingFunction}</ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <HomeWorkIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.restaurantName}</ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <HomeWorkIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.regulatoryBody}</ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <HomeWorkIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.regulatoryBodyID}</ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <HomeWorkIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.cuisine}</ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <HomeWorkIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.restaurantDescription}</ListItemText>
+//         </ListItem>
+
+//       </List>
+//     </div>
+//   );
+// } else if (props.buildingFunction=="Admin") {
+//   return (
+//     <div>
+//       <List>
+//         <ListItem>
+//           <ListItemIcon>
+//             <DriveFileRenameOutlineIcon />
+//           </ListItemIcon>
+//           <ListItemText>
+//             {props.firstName} {props.lastName}
+//           </ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <EmailIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.email}</ListItemText>
+//         </ListItem>
+//         <ListItem className="space-between">
+//           <ListItemIcon>
+//             <EditLocationAltIcon />
+//           </ListItemIcon>
+//           <ListItemText>
+//             {props.town}, {props.country}, {props.region}
+//           </ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <HomeWorkIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.buildingFunction}</ListItemText>
+//         </ListItem>
+//       </List>
+//     </div>
+//   );
+// } else {
+//   return (
+//     <div>
+//       <List>
+//         <ListItem>
+//           <ListItemIcon>
+//             <DriveFileRenameOutlineIcon />
+//           </ListItemIcon>
+//           <ListItemText>
+//             {props.firstName} {props.lastName}
+//           </ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <EmailIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.email}</ListItemText>
+//         </ListItem>
+//         <ListItem className="space-between">
+//           <ListItemIcon>
+//             <EditLocationAltIcon />
+//           </ListItemIcon>
+//           <ListItemText>
+//             {props.town}, {props.country}, {props.region}
+//           </ListItemText>
+//         </ListItem>
+//         <ListItem>
+//           <ListItemIcon>
+//             <HomeWorkIcon />
+//           </ListItemIcon>
+//           <ListItemText>{props.buildingFunction}</ListItemText>
+//         </ListItem>
+//       </List>
+//     </div>
+//   );
+//   }
+// }
 
 const FormStyle = styled.div`
   form {

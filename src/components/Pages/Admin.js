@@ -10,7 +10,7 @@ import Paginator from "../SubComponents/Paginator";
 import { getPurchaseData } from "../../store/actions/dataActions";
 import SendItemIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/SendItemIcon";
 import EditPurchaseIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/EditPurchaseIcon";
-
+import { PageWrap } from "../SubComponents/PageWrap";
 
 function Admin(props) {
 
@@ -72,6 +72,7 @@ function Admin(props) {
 
 	return (
 		<>
+		    <PageWrap goTo="/account" header="My Plan to Save">
 			<div>
 			<header className="admin_header"></header>
 			<div className="adminCont">
@@ -140,11 +141,12 @@ function Admin(props) {
 					<Paginator />
 				</div>
 				</main>
-				<div className="admin_right_section">
+				{/* <div className="admin_right_section">
 					<div className="admin_calendar_mock"></div>
-				</div>
+				</div> */}
 			</div>
 		</div>
+		</PageWrap>
 		</>
 		
 	);

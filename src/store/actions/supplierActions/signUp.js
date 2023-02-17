@@ -24,6 +24,9 @@ export const signUp = (supplier) => {
       case 'Restaurant':
         type = 'restaurant_admin';
           break;
+      case 'Admin':
+        type = 'admin_admin';
+          break;
       default:
         type = 'user';
         break;
