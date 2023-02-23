@@ -64,6 +64,11 @@ const StripeCall = (props) => {
 			<div>Loading...</div>
 		);
 
+	console.log(clientSecret);
+	console.log(
+		"🚀 ~ file: StripeCall.js:65 ~ StripeCall ~ clientSecret:",
+		clientSecret
+	);
 	return (
 		<Modal size="lg" centered>
 			{showElement}
