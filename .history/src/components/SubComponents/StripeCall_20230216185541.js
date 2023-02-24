@@ -2,16 +2,10 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
-import { Modal } from "react-bootstrap";
+import { Modal, Row, Col } from "react-bootstrap";
 
 const StripeCall = (props) => {
-	// const itemsForPurchase = props.orderId; // ie the id of the order
-
-	// let itemsForPurchase = {
-	// 	orderId: "VtgzV6WzjxsoKYfAqUqI",
-	// 	userId: "w9NErzIw0ayzPP1JcNzN",
-	// };
-
+	const itemsForPurchase = props.orderId; // ie the id of the order
 
 	useEffect(() => {
 		// Create PaymentIntent as soon as the page loads7
@@ -22,15 +16,11 @@ const StripeCall = (props) => {
 		fetch(
 			//This is supposed to point to the url of the stripe payment function on firebase
 			// which will be provided after the function as been deployed
-			"http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent", //this is just a sample
+			"http://localhost:5001/staging/us-central1/suschemTrade/create-payment-intent", //this is just a sample
 			{
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					orderId: props.orderId,
-					userId: props.userId,
-				}),
-
+				body: JSON.stringify({ orderId: props.orderId }),
 			}
 		)
 			.then((res) => {
