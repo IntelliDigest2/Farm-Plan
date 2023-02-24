@@ -221,6 +221,7 @@ export const signUp = (newUser) => {
             // ...newUser,
             firstName: newUser.firstName,
             lastName: newUser.lastName,
+            mobile: newUser.mobile,
             initials: newUser.firstName[0] + newUser.lastName[0],
             email: newUser.email,
             buildingFunction: newUser.function,
