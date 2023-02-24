@@ -77,7 +77,6 @@ const NewAccount = (props) => {
     return <LoadingScreen />;
   }
   
-  console.log("profff", props.profile.buildingFunction)
   return (
     <>
       {modal && !props.profile.isConsumer && !props.profile.buildingFunction == "Admin" ?  (
