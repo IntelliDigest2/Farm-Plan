@@ -54,8 +54,10 @@ itrackerPaymentFunction.use(
 
 const calculateOrderAmount = async (orderId) => {
 	let QuerySnapshot = await fireStoreDB
-		.collection("purchases")
-		.doc(orderId)
+		.collection("marketplace")
+		.doc(uid)
+		.collection("messages")
+		.doc(id).where("orderID", "==", {orderID})
 		.get();
 
 	let totalArray = [];

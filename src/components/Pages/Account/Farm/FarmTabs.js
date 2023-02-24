@@ -48,8 +48,7 @@ export function Food({ isSeller }) {
         icon="chart"
         label="Produce Chart"
         color="yellow"
-        goTo="/"
-        disabled
+        goTo="/produce"
       />
       <IconButton
         icon="notes"
