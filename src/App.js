@@ -51,6 +51,7 @@ import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
 import FarmerAuth from "./components/Pages/Account/Farm/Marketplace/Auth/Farmer-Auth";
 import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
 import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan";
+import ProduceTab from "./components/Pages/Account/Farm/Marketplace/ProduceComp/ProduceTab";
 import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 
@@ -235,6 +236,7 @@ const App = (props) => {
 						</Route>
 						<Route path="/cons-auth" component={ConsumerAuth} />
 						<Route path="/meal-plan" component={MealPlan} />
+						<Route path="/produce" component={ProduceTab} />
 						<Route path="/nutrient-gap" component={NutrientGap} />
 						<Route path="/view-products" component={ViewProducts} />
 

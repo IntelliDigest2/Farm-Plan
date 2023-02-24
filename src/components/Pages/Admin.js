@@ -74,9 +74,7 @@ function Admin(props) {
 		<>
 		    <PageWrap goTo="/account" header="My Plan to Save">
 			<div>
-			<header className="admin_header"></header>
-			<div className="adminCont">
-				<main className="admin_left_section">
+				<main>
 				{list.map((item, index) => (
 					<Accordion key={`item${index}`}>
 						<Card>
@@ -144,7 +142,6 @@ function Admin(props) {
 				{/* <div className="admin_right_section">
 					<div className="admin_calendar_mock"></div>
 				</div> */}
-			</div>
 		</div>
 		</PageWrap>
 		</>
