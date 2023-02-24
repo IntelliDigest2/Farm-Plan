@@ -4,6 +4,8 @@ import "../Account/UserAccount.css";
 import "./Mob.css";
 import { Select } from "../../SubComponents/Dropdown";
 import { Title } from "./MobComponents";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 import { Form, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
@@ -32,6 +34,7 @@ const SignUp = (props) => {
   //Stage1
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -64,6 +67,7 @@ const SignUp = (props) => {
     let data = {
       firstName: firstName,
       lastName: lastName,
+      mobile: mobile,
       initials: firstName[0] + lastName[0],
       email: email,
       password: password,
@@ -189,6 +193,8 @@ const SignUp = (props) => {
             firstName={firstName}
             setLastName={setLastName}
             lastName={lastName}
+            setMobile={setMobile}
+            mobile={mobile}
             setEmail={setEmail}
             email={email}
             setPassword={setPassword}
@@ -242,6 +248,7 @@ const SignUp = (props) => {
             setStage={setStage}
             firstName={firstName}
             lastName={lastName}
+            mobile={mobile}
             email={email}
             town={town}
             region={region}
@@ -426,8 +433,18 @@ const Stage1 = (props) => {
             </Form.Group>
           </Form.Row>
 
+            <Form.Group
+                className="mb-3"
+                style={{ backgroundColor: "white" }}
+              >
+
+              <PhoneInput
+                value={props.mobile}
+                onChange={props.setMobile}/>
+            </Form.Group>
+
           <Form.Group className="mb-3">
-            <Form.Label>Email address</Form.Label>
+            {/* <Form.Label>Email address</Form.Label> */}
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -439,6 +456,8 @@ const Stage1 = (props) => {
               We'll never share your email with anyone else.
             </Form.Text>
           </Form.Group>
+
+
 
           <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
