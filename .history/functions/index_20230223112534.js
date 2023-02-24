@@ -18,7 +18,6 @@ const functions = require("firebase-functions");
 //   response.send("Hello from Firebase!");
 // });
 
-
 const express = require("express");
 const itrackerPaymentFunction = express();
 const admin = require("firebase-admin");
@@ -32,7 +31,6 @@ if (useEmulator === "development") {
 	admin.initializeApp({
 		//projectId inserted here for local testing
 		projectId: "itracker-development",
-
 	});
 } else {
 	admin.initializeApp(functions.config().firebase);
@@ -55,7 +53,6 @@ itrackerPaymentFunction.use(
 				// -----------------------------------
 				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 				"http://worldfoodtracker.com/", //another example incase it has two links
-
 			],
 
 			methods: [["GET", "PUT", "POST"]],
@@ -68,7 +65,6 @@ const calculateOrderAmount = async (userId, orderId) => {
 		.collection("marketplace")
 		.doc(userId)
 		.collection("messages")
-
 		.doc(orderId)
 		.get();
 
@@ -79,7 +75,6 @@ const calculateOrderAmount = async (userId, orderId) => {
 	});
 
 	// // // calculation of the order amount
-
 	return totalArray.reduce((total, num) => {
 		return total + num;
 	}, 0);
@@ -99,7 +94,6 @@ itrackerPaymentFunction.post("/create-payment-intent", async (req, res) => {
 		amount: await calculateOrderAmount(userId, orderId),
 		currency: "gbp",
 		automatic_payment_methods: { enabled: true },
-
 	});
 
 	res.send({
@@ -148,4 +142,3 @@ exports.SendFarmerNotification = functions.firestore
 			});
 		}
 	});
-

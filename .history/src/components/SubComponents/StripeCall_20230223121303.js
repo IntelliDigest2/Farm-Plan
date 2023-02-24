@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
-import { Modal } from "react-bootstrap";
+import { Modal, Row, Col } from "react-bootstrap";
 
 const StripeCall = (props) => {
 	// const itemsForPurchase = props.orderId; // ie the id of the order
@@ -11,7 +11,6 @@ const StripeCall = (props) => {
 	// 	orderId: "VtgzV6WzjxsoKYfAqUqI",
 	// 	userId: "w9NErzIw0ayzPP1JcNzN",
 	// };
-
 
 	useEffect(() => {
 		// Create PaymentIntent as soon as the page loads7
@@ -30,7 +29,6 @@ const StripeCall = (props) => {
 					orderId: props.orderId,
 					userId: props.userId,
 				}),
-
 			}
 		)
 			.then((res) => {
@@ -66,6 +64,11 @@ const StripeCall = (props) => {
 			<div>Loading...</div>
 		);
 
+	console.log(clientSecret);
+	console.log(
+		"🚀 ~ file: StripeCall.js:65 ~ StripeCall ~ clientSecret:",
+		clientSecret
+	);
 	return (
 		<Modal size="lg" centered>
 			{showElement}
