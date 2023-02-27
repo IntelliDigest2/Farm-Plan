@@ -52,6 +52,8 @@ const SignUp = (props) => {
   //Stage6
   const [IDType, setIDType] = useState("");
   const [IDNumber, setIDNumber] = useState("");
+  const [image, setImage ] = useState("");
+  const [ IDUrl, setUrl ] = useState("");
 
   //Stage5
   const [cuisine, setCuisine] = useState("");
@@ -63,6 +65,7 @@ const SignUp = (props) => {
 
   const [errorNotification, setErrorNotification] = useState();
 
+  
   function handleSubmit() {
     let data = {
       firstName: firstName,
@@ -78,6 +81,9 @@ const SignUp = (props) => {
       restaurantName: restaurantName, 
       regulatoryBody: regulatoryBody,
       regulatoryBodyID: regulatoryBodyID,
+      IDType: IDType,
+      IDNumber: IDNumber,
+      IDUrl: IDUrl,
       cuisine: cuisine,
       restaurantDescription: restaurantDescription,
       type: "user",
@@ -221,6 +227,8 @@ const SignUp = (props) => {
             IDType={IDType}
             setIDNumber={setIDNumber}
             IDNumber={IDNumber}
+            IDUrl={IDUrl}
+            setUrl={setUrl}
             setTown={setTown}
             town={town}
             setCountry={setCountry}
@@ -245,6 +253,8 @@ const SignUp = (props) => {
             IDType={IDType}
             setIDNumber={setIDNumber}
             IDNumber={IDNumber}
+            IDUrl={IDUrl}
+            setUrl={setUrl}
             setStage={setStage}
             firstName={firstName}
             lastName={lastName}
@@ -308,6 +318,8 @@ const SignUp = (props) => {
               IDType={IDType}
               setIDNumber={setIDNumber}
               IDNumber={IDNumber}
+              IDUrl={IDUrl}
+              setUrl={setUrl}
               setTown={setTown}
               town={town}
               setCountry={setCountry}
@@ -339,6 +351,8 @@ const SignUp = (props) => {
                 IDType={IDType}
                 setIDNumber={setIDNumber}
                 IDNumber={IDNumber}
+                IDUrl={IDUrl}
+                setUrl={setUrl}
                 setTown={setTown}
                 town={town}
                 setCountry={setCountry}
@@ -370,6 +384,10 @@ const SignUp = (props) => {
                 IDType={IDType}
                 setIDNumber={setIDNumber}
                 IDNumber={IDNumber}
+                IDUrl={IDUrl}
+                setUrl={setUrl}
+                image={image}
+                setImage={setImage}
                 setTown={setTown}
                 town={town}
                 setCountry={setCountry}
@@ -699,6 +717,23 @@ const Stage4 = (props) => {
 
 //If account type == restaurant, this routes 
 const Stage6 = (props) => {
+  //upload immage to cloudinary
+    const uploadImage = async () => {
+        const data = new FormData()
+        data.append("file", props.image)
+        data.append("upload_preset", "wft-app")
+        data.append("cloud_name","dghm4xm7k")
+        await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",{
+          method:"post",
+          body: data
+        })
+        .then(resp => resp.json())
+        .then(data => {
+        props.setUrl(data.url)
+        })
+        .catch(err => console.log(err))
+    }
+
   return(
   <div>
     <FormStyle>
@@ -731,7 +766,19 @@ const Stage6 = (props) => {
               props.setIDNumber(e.target.value);
             }}
           />
-        </Form.Group>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Control
+              type="file"
+              placeholder="Upload Image"
+              defaultValue={""}
+              required
+              onChange={(e) => {
+                props.setImage(e.target.files[0]);
+              }}
+            />
+          </Form.Group>
 
         <div className="signup-center">
         <div className="row">
@@ -753,7 +800,10 @@ const Stage6 = (props) => {
 
             onClick={(e) => {
               e.preventDefault();
+
+              uploadImage()
               //Next Stage
+
 
               if (props.buildingFunction=="Admin") {
                 props.setStage(3) //confimation page
