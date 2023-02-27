@@ -65,14 +65,13 @@ function Admin(props) {
 	  //this sends data request
 	useEffect(() => {
 		purchaseList()
-		console.log("xxxxxxx>>>>>>>>>", list)
 	  }, [props.purchase]);
 
 	
 
 	return (
 		<>
-		    <PageWrap goTo="/account" header="My Plan to Save">
+		    <PageWrap goTo="/account" header="Admin Dashboard">
 			<div>
 				<main>
 				{list.map((item, index) => (
