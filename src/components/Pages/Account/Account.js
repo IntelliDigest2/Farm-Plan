@@ -253,7 +253,7 @@ const AccountType = (props) => {
             onChange={props.handleChange}
             centered
           >
-            <Tab disableRipple label="Food" value="0" />
+            <Tab disableRipple label="Admin" value="0" />
 
           </TabList>
           <SwipeableViews

@@ -40,10 +40,10 @@ itrackerPaymentFunction.use(
 	cors([
 		{
 			origin: [
-				//insert the link of the app link here
+				//insert the name of the firebase app link here
 				// -----------------------------------
 				// -----------------------------------
-				"firebase application  name suschemtrade-93a26.web.app", //this is just a sample eg http://worldfoodtracker.com/
+				"firebase application  name suschemtrade-93a26.web.app", //this is just a sample
 				"suschemtrade-93a26.firebaseapp.com", //another example incase it has two links
 			],
 
@@ -54,10 +54,8 @@ itrackerPaymentFunction.use(
 
 const calculateOrderAmount = async (orderId) => {
 	let QuerySnapshot = await fireStoreDB
-		.collection("marketplace")
-		.doc(uid)
-		.collection("messages")
-		.doc(id).where("orderID", "==", {orderID})
+		.collection("purchases")
+		.doc(orderId)
 		.get();
 
 	let totalArray = [];

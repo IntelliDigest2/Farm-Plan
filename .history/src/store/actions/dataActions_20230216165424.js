@@ -539,6 +539,7 @@ export const getPurchaseData = (data) => {
 			.then((snapshot) => {
 				const data = [];
 				snapshot.forEach((doc) => {
+					console.log(doc);
 					data.push(doc.data());
 				});
 				dispatch({ type: "GET_PURCHASE_DATA", payload: data });
