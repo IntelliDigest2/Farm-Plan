@@ -12,7 +12,6 @@ const StripeCall = (props) => {
 	// 	userId: "w9NErzIw0ayzPP1JcNzN",
 	// };
 
-
 	useEffect(() => {
 		// Create PaymentIntent as soon as the page loads7
 		// console.log([itemsForPurchase]);
@@ -30,7 +29,6 @@ const StripeCall = (props) => {
 					orderId: props.orderId,
 					userId: props.userId,
 				}),
-
 			}
 		)
 			.then((res) => {
