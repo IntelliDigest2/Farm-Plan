@@ -180,7 +180,7 @@ function InventoryItems(props) {
                     } else {
                       return (
                         <div>
-                          {console.log("false")}
+                          
                         </div>
                 
                       )
