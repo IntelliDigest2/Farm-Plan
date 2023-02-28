@@ -10,7 +10,7 @@ const functions = require("firebase-functions");
 
 const express = require("express");
 const itrackerPaymentFunction = express();
-const getFarmersInLocationWithProducts = express();
+const getFarmersInLocatonWithProducts = express();
 const sendFarmersNotification = express();
 const admin = require("firebase-admin");
 
@@ -110,10 +110,12 @@ const getFarmersInSameLocation = async (city) => {
 		if (!doc.exists) {
 			console.log("No such document!");
 		} else {
-			// console.log("Document data:", doc.data());
-			// console.log(doc.id, "this is the documents id");
+			console.log("Document data:", doc.data());
+			console.log(doc.id, "this is the documents id");
 		}
 	});
+
+	// console.log(result);
 
 	return result;
 };
@@ -141,18 +143,22 @@ sendFarmersNotification.use(
 
 sendFarmersNotification.post("/send-message", async (req, res) => {
 	const { cart, city } = req.body;
-
-	let cartPass = cart;
+	console.log(
+		"🚀 ~ file: index.js:146 ~ sendFarmersNotification.post ~ userCart:",
+		cart
+	);
 
 	let farmersInCity = await getFarmersInSameLocation(city);
-
 	farmersInCity.forEach((doc) => {
+		console.log(doc.id, "line 149");
 		fireStoreDB
 			.collection("farm_users")
 			.doc(`${doc.id}`)
-			.collection("messages")
-			.add({ cart: cartPass });
+			.collection("message")
+			.add({ cart: cart });
 	});
+
+	// console.log("here");
 
 	res.send({ status: "success" });
 });
@@ -163,11 +169,10 @@ exports.sendFarmersNotification = functions.https.onRequest(
 
 //firestore trigger for user request
 
-getFarmersInLocationWithProducts.use(express.json());
-sendFarmersNotification.use(express.static("public"));
+getFarmersInLocatonWithProducts.use(express.json());
 
-getFarmersInLocationWithProducts.options("*", cors());
-getFarmersInLocationWithProducts.use(
+getFarmersInLocatonWithProducts.options("*", cors());
+getFarmersInLocatonWithProducts.use(
 	cors([
 		{
 			origin: [
@@ -175,85 +180,38 @@ getFarmersInLocationWithProducts.use(
 				"http://worldfoodtracker.com/", //another example incase it has two links
 			],
 
-			methods: [["GET", "PUT", "POST"]],
+			methods: [["POST"]],
 		},
 	])
 );
 
-const farmersProduce = async (id, arrayOfNamesOfObjectInCart) => {
-	let result = await fireStoreDB
-		.collection("marketplace")
-		.doc(id)
-		.collection("produce")
-		.where("item", "in", arrayOfNamesOfObjectInCart)
-		.get();
-
-	return result;
-};
-
-getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
-	const { cart, city } = req.body;
-	let arrayOfNamesOfObjectInCart = cart.map((obj) => {
+getFarmersInLocatonWithProducts.post("/farmers", async (req, res) => {
+	const { adminInfo, city, cartList } = req.body;
+	let arrayOfNamesOfObjectInCart = cartList.map((obj) => {
 		return obj.data;
 	});
-	// let arr
-	let farmers = await getFarmersInSameLocation(city);
 
-	const result = farmers.forEach(async (farmer) => {
-		let produce = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+	let farmerArray = [];
 
-		produce.forEach((doc) => {
-			// console.log({
-			// 	name: farmer.data().name,
-			// 	id: farmer.id,
-			// 	products: doc.data(),
-			// });
-			return {
-				name: farmer.data().name,
-				id: farmer.id,
-				products: doc.data(),
-			};
-		});
+	// if (adminInfo.role === "admin") {
+	let farmersInCity = getFarmersInSameLocation(city);
 
-		// console.log(valve);
+	farmersInCity.forEach(async (farmer) => {
+		farmerArray.push(
+			fireStoreDB
+				.collection("marketplace")
+				.doc(farmer.id)
+				.collection("produce")
+				.where("item", "in", arrayOfNamesOfObjectInCart)
+		);
 	});
+	// }
 
-	// console.log(valve, "this is the farmers");
-
-	// getFarmersInSameLocation(city)
-	// 	.then((result) => {
-	// 		let data = [];
-	// 		result.forEach(async (farmer) => {
-	// 			const value = farmersProduce(
-	// 				farmer.id,
-	// 				arrayOfNamesOfObjectInCart
-	// 			).then((value) => {
-	// 				value.forEach((doc) => {
-	// 					return {
-	// 						name: farmer.data().name,
-	// 						id: farmer.id,
-	// 						products: doc.data(),
-	// 					};
-	// 				});
-	// 			});
-
-	// 			data.push(value);
-	// 		});
-
-	// 		return data;
-	// 	})
-	// 	.then((link) => {
-	// 		console.log(link);
-	// 	});
-
-	// res.send({
-	// 	farmersInfo: farmerArray,
-	// });
-
-	console.log(result, "this is the result");
-	res.json({ status: result });
+	res.send({
+		farmersInfo: farmerArray,
+	});
 });
 
-exports.getFarmersInLocationWithProducts = functions.https.onRequest(
-	getFarmersInLocationWithProducts
+exports.getFarmersInLocatonWithProducts = functions.https.onRequest(
+	getFarmersInLocatonWithProducts
 );

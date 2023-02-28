@@ -196,62 +196,29 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 	let arrayOfNamesOfObjectInCart = cart.map((obj) => {
 		return obj.data;
 	});
-	// let arr
-	let farmers = await getFarmersInSameLocation(city);
 
-	const result = farmers.forEach(async (farmer) => {
-		let produce = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+	let farmersInCity = await getFarmersInSameLocation(city);
 
-		produce.forEach((doc) => {
-			// console.log({
-			// 	name: farmer.data().name,
-			// 	id: farmer.id,
-			// 	products: doc.data(),
-			// });
-			return {
+	let data;
+
+	farmersInCity.forEach(async (farmer) => {
+		let result = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+
+		result.forEach((doc) => {
+			data.push({
 				name: farmer.data().name,
 				id: farmer.id,
 				products: doc.data(),
-			};
+			});
 		});
-
-		// console.log(valve);
 	});
 
-	// console.log(valve, "this is the farmers");
-
-	// getFarmersInSameLocation(city)
-	// 	.then((result) => {
-	// 		let data = [];
-	// 		result.forEach(async (farmer) => {
-	// 			const value = farmersProduce(
-	// 				farmer.id,
-	// 				arrayOfNamesOfObjectInCart
-	// 			).then((value) => {
-	// 				value.forEach((doc) => {
-	// 					return {
-	// 						name: farmer.data().name,
-	// 						id: farmer.id,
-	// 						products: doc.data(),
-	// 					};
-	// 				});
-	// 			});
-
-	// 			data.push(value);
-	// 		});
-
-	// 		return data;
-	// 	})
-	// 	.then((link) => {
-	// 		console.log(link);
-	// 	});
+	// console.log(response);
 
 	// res.send({
 	// 	farmersInfo: farmerArray,
 	// });
-
-	console.log(result, "this is the result");
-	res.json({ status: result });
+	res.json({ status: data });
 });
 
 exports.getFarmersInLocationWithProducts = functions.https.onRequest(

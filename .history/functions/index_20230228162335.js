@@ -10,7 +10,7 @@ const functions = require("firebase-functions");
 
 const express = require("express");
 const itrackerPaymentFunction = express();
-const getFarmersInLocationWithProducts = express();
+const getFarmersInLocatonWithProducts = express();
 const sendFarmersNotification = express();
 const admin = require("firebase-admin");
 
@@ -163,11 +163,11 @@ exports.sendFarmersNotification = functions.https.onRequest(
 
 //firestore trigger for user request
 
-getFarmersInLocationWithProducts.use(express.json());
+getFarmersInLocatonWithProducts.use(express.json());
 sendFarmersNotification.use(express.static("public"));
 
-getFarmersInLocationWithProducts.options("*", cors());
-getFarmersInLocationWithProducts.use(
+getFarmersInLocatonWithProducts.options("*", cors());
+getFarmersInLocatonWithProducts.use(
 	cors([
 		{
 			origin: [
@@ -191,69 +191,36 @@ const farmersProduce = async (id, arrayOfNamesOfObjectInCart) => {
 	return result;
 };
 
-getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
-	const { cart, city } = req.body;
+getFarmersInLocatonWithProducts.post("/farmers", async (req, res) => {
+	const { adminInfo, cart, city } = req.body;
 	let arrayOfNamesOfObjectInCart = cart.map((obj) => {
 		return obj.data;
 	});
-	// let arr
-	let farmers = await getFarmersInSameLocation(city);
 
-	const result = farmers.forEach(async (farmer) => {
-		let produce = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+	// let farmerArray = [];
 
-		produce.forEach((doc) => {
-			// console.log({
-			// 	name: farmer.data().name,
-			// 	id: farmer.id,
-			// 	products: doc.data(),
-			// });
-			return {
-				name: farmer.data().name,
-				id: farmer.id,
-				products: doc.data(),
-			};
-		});
+	// if (adminInfo.role === "admin") {
+	let farmersInCity = await getFarmersInSameLocation(city);
 
-		// console.log(valve);
+	farmersInCity.forEach(async (farmer) => {
+		console.log(farmer.id, "this is the farmer id");
+		let result = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+
+		console.log(result.docs, "this is the result");
+		console.log(result.size, "empty");
+		console.log(result.empty, "size");
+		console.log(typeof result);
+		// result.forEach((doc) => {
+		// 	console.log(doc.data(), "over here");
+		// });
 	});
-
-	// console.log(valve, "this is the farmers");
-
-	// getFarmersInSameLocation(city)
-	// 	.then((result) => {
-	// 		let data = [];
-	// 		result.forEach(async (farmer) => {
-	// 			const value = farmersProduce(
-	// 				farmer.id,
-	// 				arrayOfNamesOfObjectInCart
-	// 			).then((value) => {
-	// 				value.forEach((doc) => {
-	// 					return {
-	// 						name: farmer.data().name,
-	// 						id: farmer.id,
-	// 						products: doc.data(),
-	// 					};
-	// 				});
-	// 			});
-
-	// 			data.push(value);
-	// 		});
-
-	// 		return data;
-	// 	})
-	// 	.then((link) => {
-	// 		console.log(link);
-	// 	});
 
 	// res.send({
 	// 	farmersInfo: farmerArray,
 	// });
-
-	console.log(result, "this is the result");
-	res.json({ status: result });
+	res.send({ status: "success" });
 });
 
-exports.getFarmersInLocationWithProducts = functions.https.onRequest(
-	getFarmersInLocationWithProducts
+exports.getFarmersInLocatonWithProducts = functions.https.onRequest(
+	getFarmersInLocatonWithProducts
 );

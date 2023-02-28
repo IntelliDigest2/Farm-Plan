@@ -196,18 +196,18 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 	let arrayOfNamesOfObjectInCart = cart.map((obj) => {
 		return obj.data;
 	});
-	// let arr
+
 	let farmers = await getFarmersInSameLocation(city);
 
-	const result = farmers.forEach(async (farmer) => {
+	const value = farmers.forEach(async (farmer) => {
 		let produce = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
 
-		produce.forEach((doc) => {
-			// console.log({
-			// 	name: farmer.data().name,
-			// 	id: farmer.id,
-			// 	products: doc.data(),
-			// });
+		return produce.forEach((doc) => {
+			console.log({
+				name: farmer.data().name,
+				id: farmer.id,
+				products: doc.data(),
+			});
 			return {
 				name: farmer.data().name,
 				id: farmer.id,
@@ -215,10 +215,10 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 			};
 		});
 
-		// console.log(valve);
+		// console.log(mee);
 	});
 
-	// console.log(valve, "this is the farmers");
+	console.log(value);
 
 	// getFarmersInSameLocation(city)
 	// 	.then((result) => {
@@ -249,9 +249,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 	// res.send({
 	// 	farmersInfo: farmerArray,
 	// });
-
-	console.log(result, "this is the result");
-	res.json({ status: result });
+	// res.json({ status: data });
 });
 
 exports.getFarmersInLocationWithProducts = functions.https.onRequest(
