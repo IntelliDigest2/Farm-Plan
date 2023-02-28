@@ -65,7 +65,6 @@ function Admin(props) {
 	  //this sends data request
 	useEffect(() => {
 		purchaseList()
-		console.log("xxxxxxx>>>>>>>>>", list)
 	  }, [props.purchase]);
 
 	
