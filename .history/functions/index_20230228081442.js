@@ -150,6 +150,7 @@ exports.sendFarmersNotification = functions.https.onRequest(
 
 //firestore trigger for user request
 
+getFarmersInLocatonWithProducts.use(express.static("public"));
 getFarmersInLocatonWithProducts.use(express.json());
 
 getFarmersInLocatonWithProducts.options("*", cors());
@@ -157,18 +158,17 @@ getFarmersInLocatonWithProducts.use(
 	cors([
 		{
 			origin: [
-				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
-				"http://worldfoodtracker.com/", //another example incase it has two links
+				// "www.worldfood.com",
 			],
 
-			methods: [["POST"]],
+			methods: [["GET", "PUT", "POST"]],
 		},
 	])
 );
 
 getFarmersInLocatonWithProducts.post("/farmers", async (req, res) => {
 	const { adminInfo, city, cartList } = req.body;
-	let arrayOfNamesOfObjectInCart = cartList.map((obj) => {
+	let arr = cartList.map((obj) => {
 		return obj.data;
 	});
 
@@ -183,7 +183,7 @@ getFarmersInLocatonWithProducts.post("/farmers", async (req, res) => {
 					.collection("marketplace")
 					.doc(farmer.id)
 					.collection("produce")
-					.where("item", "in", arrayOfNamesOfObjectInCart)
+					.where("item", "in", arr)
 			);
 		});
 	}
