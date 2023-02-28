@@ -175,8 +175,7 @@ function InventoryItems(props) {
                   {(() => {
                     if (today == moment(item.expiry).subtract(7,'days').format('dd/MM/yyyy') ) {
                       return (
-                        sendMail(item.food),
-                        console.log("true", props.profile.email)
+                        sendMail(item.food)
                       )
                     } else {
                       return (
