@@ -24,9 +24,9 @@ function InventoryItems(props) {
   // console.log("let get it, park well", props)
 
   const [list, setList] = useState([]);
-  const [expiryDate, setExpiryDate] = useState("DD-MM-YYYY");
+  const [expiryDate, setExpiryDate] = useState("dd/MM/yyyy");
 
-  var today = moment(new Date()).format("dd/mm/yyyy")
+  var today = moment(new Date()).format("dd/MM/yyyy")
 
    //trigger this when updating items
  const [update, setUpdate] = useState(0);
@@ -117,14 +117,14 @@ function InventoryItems(props) {
   }, [props.data]);
 
   function sendMail(item) {
-    emailjs.send("service_33mgmp6","template_o8lxppf",{
+    emailjs.send("service_va4tbyn","template_9uvo597",{
       from_name: "intellidigest",
       to_name: props.profile.firstName,
       message: item + " is about to expire!! please use it before the expiry date",
       reply_to: props.profile.email,
       to_email: props.profile.email,
       }, 
-      "pG3M3Ncz-i7qCJ2GD");  
+      "user_Yh6fJKoLLp3ZNYYieHO3r");  
   }
   
   return (
@@ -173,13 +173,17 @@ function InventoryItems(props) {
                     </>
                   { }
                   {(() => {
-                    if (today == moment(item.expiry).subtract(7,'d').format('dd/mm/yyyy') ) {
+                    if (today == moment(item.expiry).subtract(7,'days').format('dd/MM/yyyy') ) {
                       return (
-                        sendMail(item.food)
+                        sendMail(item.food),
+                        console.log("true", props.profile.email)
                       )
                     } else {
                       return (
-                        <div></div>
+                        <div>
+                          {console.log("false")}
+                        </div>
+                
                       )
                     }
                   })()}

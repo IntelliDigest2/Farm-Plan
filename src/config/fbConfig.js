@@ -17,7 +17,7 @@ var fbConfig = {
 //var app = firebase.initializeApp(fbConfig);
 
 firebase.initializeApp(fbConfig);
-// firebase.firestore;
+//firebase.firestore;
 
 // if (window.location.hostname === "localhost") {
 //   app.auth().useEmulator("http://localhost:9099");
