@@ -6,15 +6,20 @@ import { connect } from "react-redux";
 import { editSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { editPurchaseItem } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { submitNotification } from "../../../../../../lib/Notifications";
+import DatePicker from "react-datepicker";
+import moment from "moment";
+
 
 function EditPurchaseForm(props) {
   const [cart, setCart] = useState(props.cart);
+  const [date, setDate] = useState(new Date())
 
   const handleSubmit = () => {
     const data = {
       id: props.id,
       upload: {
         cartList: cart,
+        deliveryDate: date
       },
     };
     props.editPurchaseItem(data);
@@ -47,6 +52,7 @@ function EditPurchaseForm(props) {
                     measure: item.measure,
                     price: 0,
                     currency: "$",
+                    supplier: ""
                   },
                   ...cart.slice(i + 1, cart.length),
                 ]);
@@ -70,7 +76,7 @@ function EditPurchaseForm(props) {
                       quantity: e.target.value,
                       measure: item.measure,
                       price: 0,
-                      supplier: ""
+                      supplier: "",
                     },
                     ...cart.slice(i + 1, cart.length),
                   ]);
@@ -90,7 +96,7 @@ function EditPurchaseForm(props) {
                       quantity: item.quantity,
                       measure: e,
                       price: 0,
-                      supplier: ""
+                      supplier: "",
                     },
                     ...cart.slice(i + 1, cart.length),
                   ])
@@ -100,23 +106,49 @@ function EditPurchaseForm(props) {
           </Form.Group>
 
           <Form.Group>
-            <Form.Control
-              type="text"
-              id="price"
-              onChange={(e) => {
-                setCart([
-                  ...cart.slice(0, i),
-                  {
-                    data: item.data,
-                    quantity: item.quantity,
-                    measure: item.measure,
-                    price: e.target.value,
-                    supplier: ""
-                  },
-                  ...cart.slice(i + 1, cart.length),
-                ]);
-              }}
-              placeholder="Enter price"             />
+          <InputGroup>
+              <Form.Control
+                id="price"
+                type="number"
+                min="0"
+                step="1"
+                onChange={(e) => {
+                  setCart([
+                    ...cart.slice(0, i),
+                    {
+                      data: item.data,
+                      quantity: item.quantity,
+                      measure: item.measure,
+                      price: e.target.value,
+                      currency: "$",
+                      supplier: "",
+                    },
+                    ...cart.slice(i + 1, cart.length),
+                  ]);
+                }}
+                defaultValue={item.price}
+              />
+              <Dropdown
+                id="currency"
+                styling="grey dropdown-input"
+                data={item.currency}
+                items={["$", "€", "£"]}
+                function={(e) =>
+                  setCart([
+                    ...cart.slice(0, i),
+                    {
+                      data: item.data,
+                      quantity: item.quantity,
+                      measure: item.measure,
+                      price: item.price,
+                      currency: e,
+                      supplier: "",
+                    },
+                    ...cart.slice(i + 1, cart.length),
+                  ])
+                }
+              />
+            </InputGroup>
           </Form.Group>
 
           <Form.Group>
@@ -131,13 +163,26 @@ function EditPurchaseForm(props) {
                     quantity: item.quantity,
                     measure: item.measure,
                     price: 0,
-                    supplier: e.target.value
+                    supplier: e.target.value,
                   },
                   ...cart.slice(i + 1, cart.length),
                 ]);
               }}
               placeholder="Name of supplier"             />
           </Form.Group>
+
+          <Form.Group>
+          <Form.Label>Delivery Date</Form.Label>
+          <DatePicker 
+          type="text"
+          id="deliveryDate"
+          selected={date} 
+          onChange={(e) => {
+            setDate(e)
+          }}
+          dateFormat="dd/MM/yyyy"  
+          />
+          </Form.Group> 
          
          
 
