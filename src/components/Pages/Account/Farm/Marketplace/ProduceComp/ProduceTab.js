@@ -8,7 +8,7 @@ import { Tab, Tabs } from "react-bootstrap";
 // import { Calendar } from "./Calendar";
 // import { CalendarShop } from "./CalendarShop";
 import { ProducePlan } from "./ProducePlan";
-import { ProduceChart } from "../../../Charts/ProduceChart"
+// import { ProduceChart } from "../../../Charts/ProduceChart"
 // import  CalendarPlanner from './Plan/CalendarPlanner/CalendarPlanner'
 
 
@@ -46,7 +46,7 @@ export default function ProduceTab() {
           <ProducePlan value={value} onChange={setValue} />
         </Tab>
         <Tab eventKey="recipes" title="PRODUCE CHART" className="mealtab">
-          <ProduceChart/>
+          {/* <ProduceChart/> */}
           <h2>Produce chart here</h2>
         </Tab>
       </Tabs> 
