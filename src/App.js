@@ -86,6 +86,7 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 import ChartView from "./components/Pages/Account/Charts/Chart";
 import GiftFoodChart from "./components/Pages/Account/Charts/GiftFoodChart";
 
+
 import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 
 const App = (props) => {
@@ -219,6 +220,7 @@ const App = (props) => {
 						<Route path="/table" component={InfoTable} />
 
 						<Route path="/chart" exact component={ChartView} />
+
 
 						<Route path="/gift-chart" exact component={GiftFoodChart} />
 

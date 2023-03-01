@@ -218,7 +218,7 @@ const AddProduceForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Estimated Price</Form.Label>
+            <Form.Label>Estimated Price per Unit</Form.Label>
             <InputGroup>
               <Form.Control
                 id="price"
