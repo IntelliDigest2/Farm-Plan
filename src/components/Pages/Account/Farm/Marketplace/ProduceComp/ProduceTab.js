@@ -8,6 +8,7 @@ import { Tab, Tabs } from "react-bootstrap";
 // import { Calendar } from "./Calendar";
 // import { CalendarShop } from "./CalendarShop";
 import { ProducePlan } from "./ProducePlan";
+// import { ProduceChart } from "../../../Charts/ProduceChart"
 // import  CalendarPlanner from './Plan/CalendarPlanner/CalendarPlanner'
 
 
@@ -42,12 +43,10 @@ export default function ProduceTab() {
         fill
       >
         <Tab eventKey="calendar" title="PRODUCE LIST" className="mealtab">
-          {/* Calender returns daily meal plan and monthly calendar- since they both use the "value" prop */}
           <ProducePlan value={value} onChange={setValue} />
         </Tab>
         <Tab eventKey="recipes" title="PRODUCE CHART" className="mealtab">
-          {/* returns all saved recipes */}
-          {/* <ProduceChart value={value} onChange={setValue} /> */}
+          {/* <ProduceChart/> */}
           <h2>Produce chart here</h2>
         </Tab>
       </Tabs> 
