@@ -5,24 +5,14 @@ import { PageWrap } from "../../../../../SubComponents/PageWrap";
 import LoadingScreen from "../../../../../SubComponents/Loading/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 
-// import { Calendar } from "./Calendar";
-// import { CalendarShop } from "./CalendarShop";
 import { ProducePlan } from "./ProducePlan";
-// import { ProduceChart } from "../../../Charts/ProduceChart"
-// import  CalendarPlanner from './Plan/CalendarPlanner/CalendarPlanner'
-
-
-// import SavedMeals from "./SavedMeals";
-// import RecipeSearch from "./Search/RecipeSearch";
-// import { ShoppingList } from "./BuildShoppingList/ShoppingList";
 import moment from "moment";
-// import { Inventory } from "./Inventory";
-// import WaveLoader from "../../../../../SubComponents/Loading/WaveLoader";
+import ChartProduce from "../../../Charts/ChartProduce";
 
 export default function ProduceTab() {
 
   const [loading, setLoading] = useState(true);
-  const [getItems, setGetItems] = useState([])
+  
   useEffect(() => {
     setTimeout(() => setLoading(false), 1500);
   });
@@ -46,8 +36,8 @@ export default function ProduceTab() {
           <ProducePlan value={value} onChange={setValue} />
         </Tab>
         <Tab eventKey="recipes" title="PRODUCE CHART" className="mealtab">
-          {/* <ProduceChart/> */}
-          <h2>Produce chart here</h2>
+          <ChartProduce />
+          <h2>Produce Summary</h2>
         </Tab>
       </Tabs> 
 
