@@ -56,6 +56,8 @@ function ProduceItems(props) {
       var farmType = doc.farmType;
       var measure = doc.measure;
       var quantity = doc.quantity;
+      var price = doc.price;
+      var currency = doc. currency;
       var date = doc.date;
 
       setProduce((produce) => [
@@ -66,6 +68,8 @@ function ProduceItems(props) {
           id: id,
           measure: measure,
           quantity: quantity,
+          price: price,
+          currency: currency,
           date: date,
         },
       ]);
