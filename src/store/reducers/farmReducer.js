@@ -1,6 +1,7 @@
 const initState = {
     authError: null,
     produce: [],
+    purchaseInfoFarm: [],
   };
   
   const farmReducer = (state = initState, action) => {
@@ -44,6 +45,20 @@ const initState = {
           ...state,
           authError: "Edit produce failed",
         };
+        case "GET_PURCHASE_INFO_FARM":
+          console.log("sent to user", action.payload);
+          return {
+            ...state,
+            purchaseInfoFarm: action.payload,
+            authError: null,
+          };
+        case "GET_PURCHASE_INFO_FARM_ERROR":
+          console.log("error, couldn't get purchase info", action.err);
+          return {
+            ...state,
+            authError: "fetch purchase info failed",
+          };
+  
 
         case "DELETE_PRODUCE":
           console.log("successfully deleted item");

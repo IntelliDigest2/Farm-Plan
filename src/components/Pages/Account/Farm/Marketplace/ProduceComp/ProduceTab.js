@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import "./ProduceTab.css";
-import { PageWrap } from "../../../../../SubComponents/PageWrap";
+import { PageWrapFarm } from "../../../../../SubComponents/PageWrapFarm";
 import LoadingScreen from "../../../../../SubComponents/Loading/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 
@@ -24,7 +24,7 @@ export default function ProduceTab() {
   }
 
   return (
-    <PageWrap goTo="/account" header="Produce">
+    <PageWrapFarm goTo="/account" header="Produce">
       {/* <WaveLoader /> */}
       <Tabs
         defaultActiveKey="calendar"
@@ -43,6 +43,6 @@ export default function ProduceTab() {
 
       {/* input available locations for picking up */}
       {/* shopping list */}
-    </PageWrap>
+    </PageWrapFarm>
   );
 }
