@@ -188,3 +188,98 @@ export const deleteProduceData = (data) => {
       });
   };
 };
+
+export const getPurchaseInfoFarm = (info) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirebase()
+      .firestore()
+      .collection("farm_users")
+      .doc(uid)
+      .collection("messages")
+      .get()
+      .then((snapshot) => {
+        const orderInfo = [];
+        snapshot.forEach((doc) => {
+          orderInfo.push(doc.data());
+        });
+        dispatch({ type: "GET_PURCHASE_INFO_FARM", payload: orderInfo });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_PURCHASE_INFO_FARM_ERROR", err });
+      });
+  };
+};
+
+
+export const editPurchaseStatusOnFarmer = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+ //make async call to database
+ const profile = getState().firebase.profile;
+ const authUID = getState().firebase.auth.uid;
+
+ var uid;
+ switch (profile.type) {
+   case "business_admin":
+     uid = authUID;
+     break;
+   case "business_sub":
+     uid = profile.admin;
+     break;
+   case "academic_admin":
+     uid = authUID;
+     break;
+   case "academic_sub":
+     uid = profile.admin;
+     break;
+   case "household_admin":
+     uid = authUID;
+     break;
+   case "household_sub":
+     uid = profile.admin;
+     break;
+   default:
+     uid = authUID;
+     break;
+ }
+
+    getFirestore()
+    .collection("farm_users")
+    .doc(uid)
+    .collection("messages")
+    .doc(data.id)
+    .set({status: data.status}, { merge: true })
+      .then(() => dispatch({ type: "EDIT_PURCHASE_STATUS", payload: data }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_PURCHASE_STATUS_ERROR", err });
+      });
+  };
+};

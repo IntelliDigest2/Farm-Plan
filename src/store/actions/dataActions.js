@@ -573,3 +573,44 @@ export const sendToUser = (data) => {
 			});
 	};
 };
+
+
+export const sendToFarmer = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+
+		getFirestore()
+			.collection("farm_users")
+			.doc(data.farmerId)
+			.collection("messages")
+			.add(data.upload)
+			.then((docRef) => {
+				// make the docId easily accessible so that we can delete it later if we want.
+				getFirestore()
+					.collection("farm_users")
+					.doc(data.farmerId)
+					.collection("messages")
+					.doc(docRef.id)
+					.set({ id: docRef.id }, { merge: true });
+				dispatch({ type: "SEND_TO_FARMER" });
+			})
+			.catch((err) => {
+				dispatch({ type: "SEND_TO_FARMER_ERROR", err });
+			});
+	};
+};
+
+export const editConfirmStatus = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+  
+	  getFirestore()
+	  .collection("purchases")
+	  .doc(data.refID)
+	  .set({status: data.status}, { merge: true })
+		.then(() => dispatch({ type: "EDIT_PURCHASE", data }))
+		.catch((err) => {
+		  dispatch({ type: "EDIT_PURCHASE_ERROR", err });
+		});
+	};
+  };
+  
