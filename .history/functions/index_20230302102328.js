@@ -215,6 +215,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		const getAllInfo = (values) => {
 			return new Promise((resolve, reject) => {
+				// let arr = [];
 				let results = values.map((value) => {
 					const { farmerId, farmerName, result } = value;
 					let arr = [];

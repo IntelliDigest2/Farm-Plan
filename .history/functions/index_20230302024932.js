@@ -99,6 +99,7 @@ exports.itrackerPaymentFunction = functions.https.onRequest(
 
 // function to get the farmers In Same Location
 const getFarmersInSameLocation = async (city) => {
+	console.log(city);
 	const result = await fireStoreDB
 		.collection("users")
 		.where("city", "==", city)
@@ -191,60 +192,77 @@ const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
 };
 
 getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
-	try {
-		const { cart, city } = req.body;
-		let arrayOfNamesOfObjectInCart = cart.map((obj) => {
-			return obj.data;
-		});
+	const { cart, city } = req.body;
+	let arrayOfNamesOfObjectInCart = cart.map((obj) => {
+		return obj.data;
+	});
 
-		let farmers = await getFarmersInSameLocation(city);
+	console.log(arrayOfNamesOfObjectInCart);
 
-		let promises = [];
+	let farmers = await getFarmersInSameLocation(city);
 
-		farmers.forEach(async (farmer) => {
-			let farmerName = farmer.data().firstName;
-			let producePromises = farmersProduce(
-				farmer.id,
-				farmerName,
-				arrayOfNamesOfObjectInCart
-			);
-			promises.push(producePromises);
-		});
+	let promises = [];
 
-		let values = await Promise.all(promises);
+	farmers.forEach(async (farmer) => {
+		let farmerName = farmer.data().firstName;
+		let produce = farmersProduce(
+			farmer.id,
+			farmerName,
+			arrayOfNamesOfObjectInCart
+		);
+		promises.push(produce);
+	});
 
-		const getAllInfo = (values) => {
-			return new Promise((resolve, reject) => {
-				let results = values.map((value) => {
-					const { farmerId, farmerName, result } = value;
-					let arr = [];
+	let values = await Promise.all(promises);
 
-					result.forEach((doc) => {
-						arr.push({
-							product: doc.data(),
-							productId: doc.id,
-						});
-					});
-
-					// console.log(arr);
-
+	const getAllInfo = (values) => {
+		return new Promise((resolve, reject) => {
+			let arr = [];
+			let results = values.map((value) => {
+				const { farmerId, farmerName, result } = value;
+				let arr = [];
+				// const getfarmerProduce = (result) => {
+				// return new Promise((resolve, reject) => {
+				let bee = result.docs.map((doc) => {
 					return {
-						farmerId: farmerId,
-						farmerName: farmerName,
-						farmerProducts: arr,
+						product: doc.data(),
+						productId: doc.id,
 					};
 				});
 
-				resolve(results);
+				result.forEach((doc) => {
+					arr.push({
+						product: doc.data(),
+						productId: doc.id,
+					});
+				});
+
+				console.log(bee);
+				console.log(arr);
+				// resolve(bee);
+				// });
+				// };
+
+				// let prod =  getfarmerProduce(result);
+
+				// console.log(prod);
+
+				return {
+					farmerId: farmerId,
+					farmerName: farmerName,
+					farmerProducts: prod,
+				};
 			});
-		};
 
-		let result = await getAllInfo(values);
+			resolve(results);
+		});
+	};
 
-		res.json({ data: result });
-	} catch {
-		res.json("something went wrong");
-	}
+	let result = await getAllInfo(values);
+
+	console.log(result);
+
+	res.json({ status: result });
 });
 
 exports.getFarmersInLocationWithProducts = functions.https.onRequest(

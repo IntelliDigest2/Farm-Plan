@@ -99,6 +99,7 @@ exports.itrackerPaymentFunction = functions.https.onRequest(
 
 // function to get the farmers In Same Location
 const getFarmersInSameLocation = async (city) => {
+	console.log(city);
 	const result = await fireStoreDB
 		.collection("users")
 		.where("city", "==", city)
@@ -179,7 +180,7 @@ getFarmersInLocationWithProducts.use(
 	])
 );
 
-const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
+const farmersProduce = async (id, arrayOfNamesOfObjectInCart) => {
 	let result = await fireStoreDB
 		.collection("marketplace")
 		.doc(id)
@@ -187,7 +188,7 @@ const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
 		.where("item", "in", arrayOfNamesOfObjectInCart)
 		.get();
 
-	return { farmerId: id, farmerName: farmerName, result: result };
+	return result;
 };
 
 getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
@@ -199,51 +200,30 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		let farmers = await getFarmersInSameLocation(city);
 
-		let promises = [];
+		const result = farmers.docs.map(async (farmer) => {
+			let produce = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+			console.log(farmer.data(), "this is the farmer info");
 
-		farmers.forEach(async (farmer) => {
-			let farmerName = farmer.data().firstName;
-			let producePromises = farmersProduce(
-				farmer.id,
-				farmerName,
-				arrayOfNamesOfObjectInCart
-			);
-			promises.push(producePromises);
-		});
-
-		let values = await Promise.all(promises);
-
-		const getAllInfo = (values) => {
-			return new Promise((resolve, reject) => {
-				let results = values.map((value) => {
-					const { farmerId, farmerName, result } = value;
-					let arr = [];
-
-					result.forEach((doc) => {
-						arr.push({
-							product: doc.data(),
-							productId: doc.id,
-						});
-					});
-
-					// console.log(arr);
-
-					return {
-						farmerId: farmerId,
-						farmerName: farmerName,
-						farmerProducts: arr,
-					};
-				});
-
-				resolve(results);
+			const fetch = produce.docs.map((doc) => {
+				// console.log({
+				// 	//name: farmer.data().name,
+				// 	id: doc.id,
+				// 	products: doc.data(),
+				// });
+				return {
+					name: farmer.data().firstname,
+					id: doc.id,
+					products: doc.data(),
+				};
+				//return doc.data();
 			});
-		};
 
-		let result = await getAllInfo(values);
+			console.log("this is the result", fetch);
 
-		res.json({ data: result });
-	} catch {
-		res.json("something went wrong");
+			res.json({ data: fetch });
+		});
+	} catch (error) {
+		res.json({ msg: "Server Error" });
 	}
 });
 

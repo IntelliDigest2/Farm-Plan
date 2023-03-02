@@ -99,6 +99,7 @@ exports.itrackerPaymentFunction = functions.https.onRequest(
 
 // function to get the farmers In Same Location
 const getFarmersInSameLocation = async (city) => {
+	console.log(city);
 	const result = await fireStoreDB
 		.collection("users")
 		.where("city", "==", city)
@@ -179,7 +180,7 @@ getFarmersInLocationWithProducts.use(
 	])
 );
 
-const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
+const farmersProduce = async (id, arrayOfNamesOfObjectInCart) => {
 	let result = await fireStoreDB
 		.collection("marketplace")
 		.doc(id)
@@ -187,64 +188,92 @@ const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
 		.where("item", "in", arrayOfNamesOfObjectInCart)
 		.get();
 
-	return { farmerId: id, farmerName: farmerName, result: result };
+	return result;
 };
 
 getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
-	try {
-		const { cart, city } = req.body;
-		let arrayOfNamesOfObjectInCart = cart.map((obj) => {
-			return obj.data;
-		});
+	const { cart, city } = req.body;
+	let arrayOfNamesOfObjectInCart = cart.map((obj) => {
+		return obj.data;
+	});
 
-		let farmers = await getFarmersInSameLocation(city);
+	let farmers = await getFarmersInSameLocation(city);
 
-		let promises = [];
-
+	let value = await Promise.all(
+		// for(let farmer of farmers){}
 		farmers.forEach(async (farmer) => {
-			let farmerName = farmer.data().firstName;
-			let producePromises = farmersProduce(
-				farmer.id,
-				farmerName,
-				arrayOfNamesOfObjectInCart
-			);
-			promises.push(producePromises);
-		});
-
-		let values = await Promise.all(promises);
-
-		const getAllInfo = (values) => {
-			return new Promise((resolve, reject) => {
-				let results = values.map((value) => {
-					const { farmerId, farmerName, result } = value;
-					let arr = [];
-
-					result.forEach((doc) => {
-						arr.push({
-							product: doc.data(),
-							productId: doc.id,
-						});
-					});
-
-					// console.log(arr);
-
-					return {
-						farmerId: farmerId,
-						farmerName: farmerName,
-						farmerProducts: arr,
-					};
-				});
-
-				resolve(results);
+			// subscribedUsers.map(async (farmer) => {
+			let produce = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+			produce.forEach((doc) => {
+				return {
+					name: farmer.data().name,
+					id: farmer.id,
+					products: doc.data(),
+				};
 			});
-		};
+		})
+	);
 
-		let result = await getAllInfo(values);
+	// let getListOfFarmers = new Promise((resolve, reject) => {
+	// 	let arr = [];
 
-		res.json({ data: result });
-	} catch {
-		res.json("something went wrong");
-	}
+	// 	farmers.forEach(async (farmer) => {
+	// 		let produce = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+
+	// 		let me = produce.forEach((doc) => {
+	// 			return {
+	// 				name: farmer.data().name,
+	// 				id: farmer.id,
+	// 				products: doc.data(),
+	// 			}
+	// 			arr.push({
+	// 				name: farmer.data().name,
+	// 				id: farmer.id,
+	// 				products: doc.data(),
+	// 			});
+	// 		});
+
+	// 		console.log(me);
+	// 		console.log(produce);
+	// 	});
+
+	// 	// resolve(arr);
+	// });
+
+	// const result = await getListOfFarmers;
+
+	// const search = (res, farmers, arrayOfNamesOfObjectInCart) => {
+	// 	farmers.forEach(async (farmer) => {
+	// 		let produce = await farmersProduce(farmer.id, arrayOfNamesOfObjectInCart);
+
+	// 		// for(let doc of produce){
+
+	// 		// }
+
+	// 		produce.forEach((doc) => {
+	// 			// console.log({
+	// 			// 	name: farmer.data().name,
+	// 			// 	id: farmer.id,
+	// 			// 	products: doc.data(),
+	// 			// });
+	// 			return arr.push({
+	// 				name: farmer.data().name,
+	// 				id: farmer.id,
+	// 				products: doc.data(),
+	// 			});
+	// 			// return {
+	// 			// 	name: farmer.data().name,
+	// 			// 	id: farmer.id,
+	// 			// 	products: doc.data(),
+	// 			// };
+	// 		});
+	// 	});
+	// };
+
+	// console.log(farmers);
+
+	// res.json({ status: result });
+	console.log(value);
 });
 
 exports.getFarmersInLocationWithProducts = functions.https.onRequest(
