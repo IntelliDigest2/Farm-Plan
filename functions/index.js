@@ -9,12 +9,13 @@ const functions = require("firebase-functions");
 // });
 
 const express = require("express");
+var cors = require("cors");
+const admin = require("firebase-admin");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY1);
+
 const itrackerPaymentFunction = express();
 const getFarmersInLocationWithProducts = express();
 const sendFarmersNotification = express();
-const admin = require("firebase-admin");
-
-var cors = require("cors");
 
 const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
 
@@ -30,8 +31,6 @@ if (useEmulator === "development") {
 
 const fireStoreDB = admin.firestore();
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY1);
-
 itrackerPaymentFunction.use(express.static("public"));
 itrackerPaymentFunction.use(express.json());
 
@@ -43,7 +42,7 @@ itrackerPaymentFunction.use(
 				//insert the link of the app link here
 				// -----------------------------------
 				// -----------------------------------
-				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
+				// "http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 				"http://worldfoodtracker.com/", //another example incase it has two links
 			],
 
@@ -129,7 +128,7 @@ sendFarmersNotification.use(
 				//insert the link of the app link here
 				// -----------------------------------
 				// -----------------------------------
-				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
+				// "http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 				"http://worldfoodtracker.com/", //another example incase it has two links
 			],
 
@@ -139,21 +138,25 @@ sendFarmersNotification.use(
 );
 
 sendFarmersNotification.post("/send-message", async (req, res) => {
-	const { cart, city } = req.body;
+	try {
+		const { cartList, city } = req.body;
 
-	let cartPass = cart;
+		let cartPass = cartList;
 
-	let farmersInCity = await getFarmersInSameLocation(city);
+		let farmersInCity = await getFarmersInSameLocation(city);
 
-	farmersInCity.forEach((doc) => {
-		fireStoreDB
-			.collection("farm_users")
-			.doc(`${doc.id}`)
-			.collection("messages")
-			.add({ cart: cartPass });
-	});
+		farmersInCity.forEach((doc) => {
+			fireStoreDB
+				.collection("farm_users")
+				.doc(`${doc.id}`)
+				.collection("messages")
+				.add({ cart: cartPass });
+		});
 
-	res.send({ status: "success" });
+		res.send({ status: "success" });
+	} catch {
+		res.send({ message: "something went wrong" });
+	}
 });
 
 exports.sendFarmersNotification = functions.https.onRequest(
@@ -170,7 +173,7 @@ getFarmersInLocationWithProducts.use(
 	cors([
 		{
 			origin: [
-				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
+				// "http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 				"http://worldfoodtracker.com/", //another example incase it has two links
 			],
 
@@ -203,7 +206,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		farmers.forEach(async (farmer) => {
 			let farmerName = farmer.data().firstName;
-			console.log(farmerName);
+			// console.log(farmerName);
 			let producePromises = farmersProduce(
 				farmer.id,
 				farmerName,
@@ -245,7 +248,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		res.json({ data: result });
 	} catch {
-		res.json("something went wrong");
+		res.json({ message: "something went wrong" });
 	}
 });
 
