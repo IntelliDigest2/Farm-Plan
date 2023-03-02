@@ -203,7 +203,6 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		farmers.forEach(async (farmer) => {
 			let farmerName = farmer.data().firstName;
-			console.log(farmerName);
 			let producePromises = farmersProduce(
 				farmer.id,
 				farmerName,
