@@ -79,7 +79,7 @@ const AddProduceForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Estimated Price</Form.Label>
+            <Form.Label>Estimated Price Per Unit</Form.Label>
             <InputGroup>
               <Form.Control
                 id="price"
@@ -149,7 +149,7 @@ const AddProduceForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-            <Form.Label>Estimated Price</Form.Label>
+            <Form.Label>Estimated Price Per Unit</Form.Label>
             <InputGroup>
               <Form.Control
                 id="price"
