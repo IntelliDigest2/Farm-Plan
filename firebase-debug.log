@@ -4919,3 +4919,397 @@ SyntaxError: missing ) after argument list
 
 [info] +  functions: Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts."}}
 [debug] [2023-03-02T03:07:42.007Z] Received signal SIGHUP 1
+[debug] [2023-03-02T09:15:21.841Z] ----------------------------------------------------------------------
+[debug] [2023-03-02T09:15:21.844Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --import=./dir --export-on-exit=./dir
+[debug] [2023-03-02T09:15:21.844Z] CLI Version:   11.24.0
+[debug] [2023-03-02T09:15:21.844Z] Platform:      win32
+[debug] [2023-03-02T09:15:21.845Z] Node Version:  v16.17.0
+[debug] [2023-03-02T09:15:21.853Z] Time:          Thu Mar 02 2023 10:15:21 GMT+0100 (West Africa Standard Time)
+[debug] [2023-03-02T09:15:21.854Z] Env Overrides: FIRESTORE_EMULATOR_HOST
+[debug] [2023-03-02T09:15:21.854Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-02T09:15:21.980Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-02T09:15:21.981Z] > authorizing via signed-in user (a.badamasi@intellidigest.com)
+[debug] [2023-03-02T09:15:22.344Z] java version "18.0.2.1" 2022-08-18
+
+[debug] [2023-03-02T09:15:22.345Z] Java(TM) SE Runtime Environment (build 18.0.2.1+1-1)
+Java HotSpot(TM) 64-Bit Server VM (build 18.0.2.1+1-1, mixed mode, sharing)
+
+[debug] [2023-03-02T09:15:22.379Z] Parsed Java major version: 18
+[info] i  emulators: Starting emulators: auth, functions, firestore, database, hosting {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, database, hosting"}}
+[debug] [2023-03-02T09:15:22.417Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-03-02T09:15:22.418Z] [auth] Authentication Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-03-02T09:15:22.418Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-03-02T09:15:22.418Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-03-02T09:15:22.419Z] [database] Database Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[warn] !  hosting: Hosting Emulator unable to start on port 5000, starting on 5002 instead. {"metadata":{"emulator":{"name":"hosting"},"message":"Hosting Emulator unable to start on port 5000, starting on 5002 instead."}}
+[debug] [2023-03-02T09:15:22.422Z] [hosting] Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-03-02T09:15:22.423Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":5000},{"address":"::1","family":"IPv6","port":5000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"database":[{"address":"127.0.0.1","family":"IPv4","port":9000}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[warn] !  emulators: It seems that you are running multiple instances of the emulator suite for project itracker-development. This may result in unexpected behavior. 
+[debug] [2023-03-02T09:15:22.439Z] [hub] writing locator at C:\Users\Ali\AppData\Local\Temp\hub-itracker-development.json
+[debug] [2023-03-02T09:15:22.482Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-03-02T09:15:22.483Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-03-02T09:15:22.484Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":5000},{"address":"::1","family":"IPv6","port":5000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"database":[{"address":"127.0.0.1","family":"IPv4","port":9000}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: pubsub, storage {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mpubsub, storage\u001b[22m"}}
+[debug] [2023-03-02T09:15:22.496Z] defaultcredentials: writing to file C:\Users\Ali\AppData\Roaming\firebase\a_badamasi_intellidigest.com_application_default_credentials.json
+[debug] [2023-03-02T09:15:22.507Z] Setting GAC to C:\Users\Ali\AppData\Roaming\firebase\a_badamasi_intellidigest.com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\Ali\\AppData\\Roaming\\firebase\\a_badamasi_intellidigest.com_application_default_credentials.json"}}
+[debug] [2023-03-02T09:15:22.509Z] > refreshing access token with scopes: []
+[debug] [2023-03-02T09:15:22.513Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-03-02T09:15:22.513Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-03-02T09:15:23.344Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-03-02T09:15:23.344Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-03-02T09:15:23.376Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development/adminSdkConfig [none]
+[debug] [2023-03-02T09:15:24.728Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development/adminSdkConfig 200
+[debug] [2023-03-02T09:15:24.728Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development/adminSdkConfig {"projectId":"itracker-development","databaseURL":"https://itracker-development-default-rtdb.europe-west1.firebasedatabase.app","storageBucket":"itracker-development.appspot.com","locationId":"europe-west2"}
+[info] i  firestore: Importing data from C:\Users\Ali\Desktop\intellidigest\itracker\dir\firestore_export\firestore_export.overall_export_metadata {"metadata":{"emulator":{"name":"firestore"},"message":"Importing data from C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\dir\\firestore_export\\firestore_export.overall_export_metadata"}}
+[warn] !  firestore: Did not find a Cloud Firestore rules file specified in a firebase.json config file. {"metadata":{"emulator":{"name":"firestore"},"message":"Did not find a Cloud Firestore rules file specified in a firebase.json config file."}}
+[warn] !  firestore: The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration. {"metadata":{"emulator":{"name":"firestore"},"message":"The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration."}}
+[debug] [2023-03-02T09:15:24.769Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-03-02T09:15:24.769Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2023-03-02T09:15:24.770Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\Ali\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.16.0.jar","--host","127.0.0.1","--port",8080,"--websocket_port",9150,"--project_id","itracker-development","--seed_from_export","C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\dir\\firestore_export\\firestore_export.overall_export_metadata","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\Ali\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.16.0.jar\",\"--host\",\"127.0.0.1\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"itracker-development\",\"--seed_from_export\",\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\dir\\\\firestore_export\\\\firestore_export.overall_export_metadata\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2023-03-02T09:15:27.475Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development [none]
+[debug] [2023-03-02T09:15:28.506Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development 200
+[debug] [2023-03-02T09:15:28.507Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development {"projectId":"itracker-development","projectNumber":"57163396396","displayName":"iTracker-Development","name":"projects/itracker-development","resources":{"hostingSite":"itracker-development","realtimeDatabaseInstance":"itracker-development-default-rtdb","storageBucket":"itracker-development.appspot.com","locationId":"europe-west2"},"state":"ACTIVE","etag":"1_f1ca705f-6488-4234-b72e-f64d0b56d406"}
+[debug] [2023-03-02T09:15:28.507Z] database rules config:  []
+[warn] !  database: Did not find a Realtime Database rules file specified in a firebase.json config file. The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration. {"metadata":{"emulator":{"name":"database"},"message":"Did not find a Realtime Database rules file specified in a firebase.json config file. The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration."}}
+[debug] [2023-03-02T09:15:28.515Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2023-03-02T09:15:28.515Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-03-02T09:15:28.515Z] Ignoring unsupported arg: rules {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: rules"}}
+[debug] [2023-03-02T09:15:28.515Z] Starting Database Emulator with command {"binary":"java","args":["-Duser.language=en","-jar","C:\\Users\\Ali\\.cache\\firebase\\emulators\\firebase-database-emulator-v4.11.0.jar","--host","127.0.0.1","--port",9000,"--single_project_mode","Warning","--functions_emulator_host","127.0.0.1","--functions_emulator_port",5001],"optionalArgs":["port","host","functions_emulator_port","functions_emulator_host","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"database"},"message":"Starting Database Emulator with command {\"binary\":\"java\",\"args\":[\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\Ali\\\\.cache\\\\firebase\\\\emulators\\\\firebase-database-emulator-v4.11.0.jar\",\"--host\",\"127.0.0.1\",\"--port\",9000,\"--single_project_mode\",\"Warning\",\"--functions_emulator_host\",\"127.0.0.1\",\"--functions_emulator_port\",5001],\"optionalArgs\":[\"port\",\"host\",\"functions_emulator_port\",\"functions_emulator_host\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  database: Database Emulator logging to database-debug.log {"metadata":{"emulator":{"name":"database"},"message":"Database Emulator logging to \u001b[1mdatabase-debug.log\u001b[22m"}}
+[info] i  auth: Importing config from C:\Users\Ali\Desktop\intellidigest\itracker\dir\auth_export\config.json {"metadata":{"emulator":{"name":"auth"},"message":"Importing config from C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\dir\\auth_export\\config.json"}}
+[info] i  auth: Importing accounts from C:\Users\Ali\Desktop\intellidigest\itracker\dir\auth_export\accounts.json {"metadata":{"emulator":{"name":"auth"},"message":"Importing accounts from C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\dir\\auth_export\\accounts.json"}}
+[debug] [2023-03-02T09:15:41.761Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/itracker-development/sites 
+[debug] [2023-03-02T09:15:43.364Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/itracker-development/sites 200
+[debug] [2023-03-02T09:15:43.364Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/itracker-development/sites {"sites":[{"name":"projects/itracker-development/sites/itracker-development","defaultUrl":"https://itracker-development.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-03-02T09:15:43.364Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development/webApps/-/config [none]
+[debug] [2023-03-02T09:15:44.797Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development/webApps/-/config 200
+[debug] [2023-03-02T09:15:44.797Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development/webApps/-/config {"projectId":"itracker-development","databaseURL":"https://itracker-development-default-rtdb.europe-west1.firebasedatabase.app","storageBucket":"itracker-development.appspot.com","locationId":"europe-west2","apiKey":"AIzaSyDuu8Fpwa2gYlCKcL-LlN-uqH5seEJpk9w","authDomain":"itracker-development.firebaseapp.com","messagingSenderId":"57163396396"}
+[debug] [2023-03-02T09:15:44.811Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development [none]
+[debug] [2023-03-02T09:15:46.103Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development 200
+[debug] [2023-03-02T09:15:46.103Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/itracker-development {"projectId":"itracker-development","projectNumber":"57163396396","displayName":"iTracker-Development","name":"projects/itracker-development","resources":{"hostingSite":"itracker-development","realtimeDatabaseInstance":"itracker-development-default-rtdb","storageBucket":"itracker-development.appspot.com","locationId":"europe-west2"},"state":"ACTIVE","etag":"1_f1ca705f-6488-4234-b72e-f64d0b56d406"}
+[info] i  hosting[itracker-development]: Serving hosting files from: dist {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mdist\u001b[22m"}}
+[info] +  hosting[itracker-development]: Local server: http://127.0.0.1:5002 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://127.0.0.1:5002\u001b[22m\u001b[24m"}}
+[debug] [2023-03-02T09:15:46.159Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-03-02T09:15:46.160Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-03-02T09:15:46.160Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\Ali\\.cache\\firebase\\emulators\\ui-v1.11.4\\server\\server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\Ali\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.11.4\\\\server\\\\server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-03-02T09:15:46.423Z] Web / API server started at 127.0.0.1:5000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:5000\n"}}
+[debug] [2023-03-02T09:15:46.424Z] Web / API server started at ::1:5000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:5000\n"}}
+[info] i  functions: Watching "C:\Users\Ali\Desktop\intellidigest\itracker\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\" for Cloud Functions..."}}
+[debug] [2023-03-02T09:15:46.460Z] Validating nodejs source
+[debug] [2023-03-02T09:15:49.938Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^4.2.1",
+    "stripe": "^11.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2023-03-02T09:15:49.938Z] Building nodejs source
+[debug] [2023-03-02T09:15:49.939Z] Failed to find version of module node: reached end of search path C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules
+[info] +  functions: Using node@16 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-03-02T09:15:49.947Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-03-02T09:15:49.969Z] Found firebase-functions binary at 'C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-03-02T09:15:50.642Z] Serving at port 8298
+
+[debug] [2023-03-02T09:15:51.567Z] Got response from /__/functions.yaml {"endpoints":{"itrackerPaymentFunction":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"itrackerPaymentFunction"},"sendFarmersNotification":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"sendFarmersNotification"},"getFarmersInLocationWithProducts":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getFarmersInLocationWithProducts"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-03-02T09:15:51.586Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions: Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts."}}
+[info] +  functions[us-central1-itrackerPaymentFunction]: http function initialized (http://127.0.0.1:5001/itracker-development/us-central1/itrackerPaymentFunction). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/itracker-development/us-central1/itrackerPaymentFunction)."}}
+[info] +  functions[us-central1-sendFarmersNotification]: http function initialized (http://127.0.0.1:5001/itracker-development/us-central1/sendFarmersNotification). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/itracker-development/us-central1/sendFarmersNotification)."}}
+[info] +  functions[us-central1-getFarmersInLocationWithProducts]: http function initialized (http://127.0.0.1:5001/itracker-development/us-central1/getFarmersInLocationWithProducts). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/itracker-development/us-central1/getFarmersInLocationWithProducts)."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:5000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬─────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:5000/auth      │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Functions      │ 127.0.0.1:5001 │ http://127.0.0.1:5000/functions │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Firestore      │ 127.0.0.1:8080 │ http://127.0.0.1:5000/firestore │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Database       │ 127.0.0.1:9000 │ http://127.0.0.1:5000/database  │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Hosting        │ 127.0.0.1:5002 │ n/a                             │
+└────────────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500, 9150
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2023-03-02T09:18:00.106Z] File C:\Users\Ali\Desktop\intellidigest\itracker\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\index.js changed, reloading triggers"}}
+[debug] [2023-03-02T09:18:01.131Z] Validating nodejs source
+[debug] [2023-03-02T09:18:05.471Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^4.2.1",
+    "stripe": "^11.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2023-03-02T09:18:05.472Z] Building nodejs source
+[debug] [2023-03-02T09:18:05.472Z] Failed to find version of module node: reached end of search path C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules
+[info] +  functions: Using node@16 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-03-02T09:18:05.481Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-03-02T09:18:05.506Z] Found firebase-functions binary at 'C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-03-02T09:18:06.243Z] Serving at port 8770
+
+[debug] [2023-03-02T09:18:07.145Z] Got response from /__/functions.yaml {"endpoints":{"itrackerPaymentFunction":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"itrackerPaymentFunction"},"sendFarmersNotification":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"sendFarmersNotification"},"getFarmersInLocationWithProducts":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getFarmersInLocationWithProducts"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-03-02T09:18:07.154Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions: Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts."}}
+[debug] [2023-03-02T09:18:43.164Z] [work-queue] {"queuedWork":["/itracker-development/us-central1/getFarmersInLocationWithProducts/farmers-2023-03-02T09:18:43.164Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2023-03-02T09:18:43.165Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/itracker-development/us-central1/getFarmersInLocationWithProducts/farmers-2023-03-02T09:18:43.164Z"],"workRunningCount":1}
+[debug] [2023-03-02T09:18:43.165Z] Accepted request POST /itracker-development/us-central1/getFarmersInLocationWithProducts/farmers --> us-central1-getFarmersInLocationWithProducts
+[debug] [2023-03-02T09:18:43.171Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-03-02T09:18:43.173Z] [functions] Got req.url=/itracker-development/us-central1/getFarmersInLocationWithProducts/farmers, mapping to path=/farmers {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/itracker-development/us-central1/getFarmersInLocationWithProducts/farmers, mapping to path=/farmers"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-03-02T09:18:43.207Z] [worker-pool] addWorker(us-central1-getFarmersInLocationWithProducts) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-getFarmersInLocationWithProducts)"}}
+[debug] [2023-03-02T09:18:43.210Z] [worker-pool] Adding worker with key us-central1-getFarmersInLocationWithProducts, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-getFarmersInLocationWithProducts, total=1"}}
+[debug] [2023-03-02T09:18:48.518Z] [runtime-status] [18328] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\node_modules\\firebase-admin\\lib\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\\\\node_modules\\\\firebase-admin\\\\lib\\\\index.js\"}"}}
+[debug] [2023-03-02T09:18:48.527Z] [runtime-status] [18328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.2.1","resolution":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\node_modules\\firebase-functions\\lib\\v1\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\v1\\\\index.js\"}"}}
+[debug] [2023-03-02T09:18:48.528Z] [runtime-status] [18328] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2023-03-02T09:18:48.532Z] [runtime-status] [18328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.2.1","resolution":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\node_modules\\firebase-functions\\lib\\v1\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\v1\\\\index.js\"}"}}
+[debug] [2023-03-02T09:18:49.470Z] [runtime-status] [18328] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Checked functions.config() {\"config\":{}}"}}
+[debug] [2023-03-02T09:18:49.472Z] [runtime-status] [18328] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"4.2.1","resolution":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\node_modules\\firebase-functions\\lib\\v1\\index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\v1\\\\index.js\"}}"}}
+[debug] [2023-03-02T09:18:49.474Z] [runtime-status] [18328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.2.1","resolution":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\node_modules\\firebase-functions\\lib\\v1\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\v1\\\\index.js\"}"}}
+[debug] [2023-03-02T09:18:49.478Z] [runtime-status] [18328] Resolved module firebase-admin {"declared":true,"installed":true,"version":"10.3.0","resolution":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\node_modules\\firebase-admin\\lib\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\\\\node_modules\\\\firebase-admin\\\\lib\\\\index.js\"}"}}
+[debug] [2023-03-02T09:18:49.486Z] [runtime-status] [18328] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.2.1","resolution":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\node_modules\\firebase-functions\\lib\\v1\\index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\v1\\\\index.js\"}"}}
+[debug] [2023-03-02T09:18:49.488Z] [runtime-status] [18328] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"10.3.0","resolution":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\node_modules\\firebase-admin\\lib\\index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"10.3.0\",\"resolution\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\\\\node_modules\\\\firebase-admin\\\\lib\\\\index.js\"}}"}}
+[debug] [2023-03-02T09:18:49.975Z] [runtime-status] [18328] initializeApp(DEFAULT) {"projectId":"itracker-development"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] initializeApp(DEFAULT) {\"projectId\":\"itracker-development\"}"}}
+[debug] [2023-03-02T09:18:51.244Z] [runtime-status] [18328] Functions runtime initialized. {"cwd":"C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions","node_version":"16.17.0"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Functions runtime initialized. {\"cwd\":\"C:\\\\Users\\\\Ali\\\\Desktop\\\\intellidigest\\\\itracker\\\\functions\",\"node_version\":\"16.17.0\"}"}}
+[debug] [2023-03-02T09:18:51.245Z] [runtime-status] [18328] Listening to port: \\?\pipe\fire_emu_3c3e8b1d22d98e1f {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[runtime-status] [18328] Listening to port: \\\\?\\pipe\\fire_emu_3c3e8b1d22d98e1f"}}
+[debug] [2023-03-02T09:18:51.297Z] [worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: IDLE"}}
+[debug] [2023-03-02T09:18:51.298Z] [worker-pool] submitRequest(triggerId=us-central1-getFarmersInLocationWithProducts) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-getFarmersInLocationWithProducts)"}}
+[info] i  functions: Beginning execution of "us-central1-getFarmersInLocationWithProducts" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"Beginning execution of \"us-central1-getFarmersInLocationWithProducts\""}}
+[debug] [2023-03-02T09:18:51.411Z] [worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: BUSY"}}
+[info] >  [ 'garri', 'mackerel' ] {"user":"[ 'garri', 'mackerel' ]","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"\u001b[90m> \u001b[39m [ 'garri', 'mackerel' ]"}}
+[info] >  Abuja {"user":"Abuja","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"\u001b[90m> \u001b[39m Abuja"}}
+[info] i  functions: Finished "us-central1-getFarmersInLocationWithProducts" in 4643.2546999999995ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"Finished \"us-central1-getFarmersInLocationWithProducts\" in 4643.2546999999995ms"}}
+[debug] [2023-03-02T09:18:56.062Z] [worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: IDLE"}}
+[debug] [2023-03-02T09:18:56.063Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2023-03-02T09:21:12.484Z] File C:\Users\Ali\Desktop\intellidigest\itracker\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\index.js changed, reloading triggers"}}
+[debug] [2023-03-02T09:21:13.496Z] Validating nodejs source
+[debug] [2023-03-02T09:21:18.217Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^4.2.1",
+    "stripe": "^11.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2023-03-02T09:21:18.218Z] Building nodejs source
+[debug] [2023-03-02T09:21:18.219Z] Failed to find version of module node: reached end of search path C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules
+[info] +  functions: Using node@16 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-03-02T09:21:18.235Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-03-02T09:21:18.268Z] Found firebase-functions binary at 'C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-03-02T09:21:19.436Z] Serving at port 8934
+
+[debug] [2023-03-02T09:21:20.350Z] Got response from /__/functions.yaml {"endpoints":{"itrackerPaymentFunction":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"itrackerPaymentFunction"},"sendFarmersNotification":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"sendFarmersNotification"},"getFarmersInLocationWithProducts":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getFarmersInLocationWithProducts"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-03-02T09:21:20.363Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions: Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts."}}
+[debug] [2023-03-02T09:21:20.382Z] [worker-pool] Shutting down IDLE worker (us-central1-getFarmersInLocationWithProducts) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-getFarmersInLocationWithProducts)"}}
+[debug] [2023-03-02T09:21:20.382Z] [worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: FINISHING"}}
+[debug] [2023-03-02T09:21:20.401Z] [worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: exited"}}
+[debug] [2023-03-02T09:21:20.401Z] [worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-getFarmersInLocationWithProducts"},"extension":{},"message":"[worker-us-central1-getFarmersInLocationWithProducts-c9dee73a-8210-4005-b22f-93b43a594230]: FINISHED"}}
+[debug] [2023-03-02T09:22:10.573Z] File C:\Users\Ali\Desktop\intellidigest\itracker\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\index.js changed, reloading triggers"}}
+[debug] [2023-03-02T09:22:11.592Z] Validating nodejs source
+[debug] [2023-03-02T09:22:16.349Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^4.2.1",
+    "stripe": "^11.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2023-03-02T09:22:16.349Z] Building nodejs source
+[debug] [2023-03-02T09:22:16.349Z] Failed to find version of module node: reached end of search path C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules
+[info] +  functions: Using node@16 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-03-02T09:22:16.357Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-03-02T09:22:16.396Z] Found firebase-functions binary at 'C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-03-02T09:22:17.168Z] Serving at port 8676
+
+[debug] [2023-03-02T09:22:18.046Z] Got response from /__/functions.yaml {"endpoints":{"itrackerPaymentFunction":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"itrackerPaymentFunction"},"sendFarmersNotification":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"sendFarmersNotification"},"getFarmersInLocationWithProducts":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getFarmersInLocationWithProducts"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-03-02T09:22:18.055Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions: Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts."}}
+[debug] [2023-03-02T09:23:27.822Z] File C:\Users\Ali\Desktop\intellidigest\itracker\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\index.js changed, reloading triggers"}}
+[debug] [2023-03-02T09:23:28.835Z] Validating nodejs source
+[debug] [2023-03-02T09:23:32.778Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^4.2.1",
+    "stripe": "^11.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2023-03-02T09:23:32.778Z] Building nodejs source
+[debug] [2023-03-02T09:23:32.778Z] Failed to find version of module node: reached end of search path C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules
+[info] +  functions: Using node@16 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-03-02T09:23:32.785Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-03-02T09:23:32.804Z] Found firebase-functions binary at 'C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-03-02T09:23:33.573Z] Serving at port 8229
+
+[debug] [2023-03-02T09:23:34.452Z] Got response from /__/functions.yaml {"endpoints":{"itrackerPaymentFunction":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"itrackerPaymentFunction"},"sendFarmersNotification":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"sendFarmersNotification"},"getFarmersInLocationWithProducts":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getFarmersInLocationWithProducts"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-03-02T09:23:34.468Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions: Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts."}}
+[debug] [2023-03-02T09:23:55.676Z] File C:\Users\Ali\Desktop\intellidigest\itracker\functions\index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File C:\\Users\\Ali\\Desktop\\intellidigest\\itracker\\functions\\index.js changed, reloading triggers"}}
+[debug] [2023-03-02T09:23:56.689Z] Validating nodejs source
+[debug] [2023-03-02T09:24:01.230Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^4.2.1",
+    "stripe": "^11.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[debug] [2023-03-02T09:24:01.231Z] Building nodejs source
+[debug] [2023-03-02T09:24:01.231Z] Failed to find version of module node: reached end of search path C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules
+[info] +  functions: Using node@16 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-03-02T09:24:01.239Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-03-02T09:24:01.290Z] Found firebase-functions binary at 'C:\Users\Ali\Desktop\intellidigest\itracker\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-03-02T09:24:02.178Z] Serving at port 8807
+
+[debug] [2023-03-02T09:24:03.156Z] Got response from /__/functions.yaml {"endpoints":{"itrackerPaymentFunction":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"itrackerPaymentFunction"},"sendFarmersNotification":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"sendFarmersNotification"},"getFarmersInLocationWithProducts":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getFarmersInLocationWithProducts"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-03-02T09:24:03.168Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions: Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: itrackerPaymentFunction, sendFarmersNotification, getFarmersInLocationWithProducts."}}
