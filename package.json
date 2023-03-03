@@ -29,6 +29,7 @@
     "date-fns": "^2.29.3",
     "emailjs-com": "^2.6.4",
     "firebase": "^8.2.10",
+    "firebase-admin": "^11.5.0",
     "firebase-functions": "^3.14.1",
     "firebase-tools": "^9.16.0",
     "formik": "^2.2.9",
@@ -85,5 +86,8 @@
     "last 1 chrome version",
     "last 1 firefox version",
     "last 1 safari version"
-  ]
+  ],
+  "devDependencies": {
+    "eslint-config-google": "^0.14.0"
+  }
 }

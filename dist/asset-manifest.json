@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.45ea6a2c.chunk.css",
-    "main.js": "/static/js/main.823ed577.chunk.js",
-    "main.js.map": "/static/js/main.823ed577.chunk.js.map",
+    "main.js": "/static/js/main.7078bd1d.chunk.js",
+    "main.js.map": "/static/js/main.7078bd1d.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.9862f740.js",
     "runtime-main.js.map": "/static/js/runtime-main.9862f740.js.map",
     "static/css/2.d2b316fb.chunk.css": "/static/css/2.d2b316fb.chunk.css",
-    "static/js/2.244bf1d3.chunk.js": "/static/js/2.244bf1d3.chunk.js",
-    "static/js/2.244bf1d3.chunk.js.map": "/static/js/2.244bf1d3.chunk.js.map",
+    "static/js/2.8cbad87b.chunk.js": "/static/js/2.8cbad87b.chunk.js",
+    "static/js/2.8cbad87b.chunk.js.map": "/static/js/2.8cbad87b.chunk.js.map",
     "static/js/3.ee368892.chunk.js": "/static/js/3.ee368892.chunk.js",
     "static/js/3.ee368892.chunk.js.map": "/static/js/3.ee368892.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.d2b316fb.chunk.css.map": "/static/css/2.d2b316fb.chunk.css.map",
     "static/css/main.45ea6a2c.chunk.css.map": "/static/css/main.45ea6a2c.chunk.css.map",
-    "static/js/2.244bf1d3.chunk.js.LICENSE.txt": "/static/js/2.244bf1d3.chunk.js.LICENSE.txt",
+    "static/js/2.8cbad87b.chunk.js.LICENSE.txt": "/static/js/2.8cbad87b.chunk.js.LICENSE.txt",
     "static/media/Blueberries.81f84019.jpg": "/static/media/Blueberries.81f84019.jpg",
     "static/media/Edamam_Badge_White.d317b3d5.svg": "/static/media/Edamam_Badge_White.d317b3d5.svg",
     "static/media/Environment.3a48bc88.jpg": "/static/media/Environment.3a48bc88.jpg",
@@ -44,8 +44,8 @@
   "entrypoints": [
     "static/js/runtime-main.9862f740.js",
     "static/css/2.d2b316fb.chunk.css",
-    "static/js/2.244bf1d3.chunk.js",
+    "static/js/2.8cbad87b.chunk.js",
     "static/css/main.45ea6a2c.chunk.css",
-    "static/js/main.823ed577.chunk.js"
+    "static/js/main.7078bd1d.chunk.js"
   ]
 }
