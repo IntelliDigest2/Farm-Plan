@@ -18,7 +18,7 @@ function FarmerListIcon(props) {
 
    // ...
    const fetchFarmers = async () => {
-    await fetch('http://localhost:5001/itracker-development/us-central1/getFarmersInLocationWithProducts/farmers', {
+    await fetch('https://us-central1-itracker-development.cloudfunctions.net/getFarmersInLocationWithProducts', {
        method: 'POST',
        body: JSON.stringify({
           cart: cart,

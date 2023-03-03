@@ -18,7 +18,7 @@ function FarmerListInfo(props) {
   
   return (
     <>
-      {props.list.length ? (
+      {props.cart.length ? (
         <>
         
           <List>
@@ -60,7 +60,7 @@ function FarmerListInfo(props) {
         </>
       ) : (
         <div className="empty basic-title-left">
-          <p>No farmer has this item :( </p>
+          <p>This farmer does not have this item :( </p>
         </div>
       )}
     </>
