@@ -4,6 +4,8 @@ import "../Account/UserAccount.css";
 import "./Mob.css";
 import { Select } from "../../SubComponents/Dropdown";
 import { Title } from "./MobComponents";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 import { Form, Col, Button } from "react-bootstrap";
 import styled from "styled-components";
@@ -32,6 +34,7 @@ const SignUp = (props) => {
   //Stage1
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -49,6 +52,8 @@ const SignUp = (props) => {
   //Stage6
   const [IDType, setIDType] = useState("");
   const [IDNumber, setIDNumber] = useState("");
+  const [image, setImage ] = useState("");
+  const [ IDUrl, setUrl ] = useState("");
 
   //Stage5
   const [cuisine, setCuisine] = useState("");
@@ -60,10 +65,12 @@ const SignUp = (props) => {
 
   const [errorNotification, setErrorNotification] = useState();
 
+  
   function handleSubmit() {
     let data = {
       firstName: firstName,
       lastName: lastName,
+      mobile: mobile,
       initials: firstName[0] + lastName[0],
       email: email,
       password: password,
@@ -74,6 +81,9 @@ const SignUp = (props) => {
       restaurantName: restaurantName, 
       regulatoryBody: regulatoryBody,
       regulatoryBodyID: regulatoryBodyID,
+      IDType: IDType,
+      IDNumber: IDNumber,
+      IDUrl: IDUrl,
       cuisine: cuisine,
       restaurantDescription: restaurantDescription,
       type: "user",
@@ -189,6 +199,8 @@ const SignUp = (props) => {
             firstName={firstName}
             setLastName={setLastName}
             lastName={lastName}
+            setMobile={setMobile}
+            mobile={mobile}
             setEmail={setEmail}
             email={email}
             setPassword={setPassword}
@@ -215,6 +227,8 @@ const SignUp = (props) => {
             IDType={IDType}
             setIDNumber={setIDNumber}
             IDNumber={IDNumber}
+            IDUrl={IDUrl}
+            setUrl={setUrl}
             setTown={setTown}
             town={town}
             setCountry={setCountry}
@@ -239,9 +253,12 @@ const SignUp = (props) => {
             IDType={IDType}
             setIDNumber={setIDNumber}
             IDNumber={IDNumber}
+            IDUrl={IDUrl}
+            setUrl={setUrl}
             setStage={setStage}
             firstName={firstName}
             lastName={lastName}
+            mobile={mobile}
             email={email}
             town={town}
             region={region}
@@ -301,6 +318,8 @@ const SignUp = (props) => {
               IDType={IDType}
               setIDNumber={setIDNumber}
               IDNumber={IDNumber}
+              IDUrl={IDUrl}
+              setUrl={setUrl}
               setTown={setTown}
               town={town}
               setCountry={setCountry}
@@ -332,6 +351,8 @@ const SignUp = (props) => {
                 IDType={IDType}
                 setIDNumber={setIDNumber}
                 IDNumber={IDNumber}
+                IDUrl={IDUrl}
+                setUrl={setUrl}
                 setTown={setTown}
                 town={town}
                 setCountry={setCountry}
@@ -363,6 +384,10 @@ const SignUp = (props) => {
                 IDType={IDType}
                 setIDNumber={setIDNumber}
                 IDNumber={IDNumber}
+                IDUrl={IDUrl}
+                setUrl={setUrl}
+                image={image}
+                setImage={setImage}
                 setTown={setTown}
                 town={town}
                 setCountry={setCountry}
@@ -426,8 +451,18 @@ const Stage1 = (props) => {
             </Form.Group>
           </Form.Row>
 
+            <Form.Group
+                className="mb-3"
+                style={{ backgroundColor: "white" }}
+              >
+
+              <PhoneInput
+                value={props.mobile}
+                onChange={props.setMobile}/>
+            </Form.Group>
+
           <Form.Group className="mb-3">
-            <Form.Label>Email address</Form.Label>
+            {/* <Form.Label>Email address</Form.Label> */}
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -439,6 +474,8 @@ const Stage1 = (props) => {
               We'll never share your email with anyone else.
             </Form.Text>
           </Form.Group>
+
+
 
           <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
@@ -680,6 +717,23 @@ const Stage4 = (props) => {
 
 //If account type == restaurant, this routes 
 const Stage6 = (props) => {
+  //upload immage to cloudinary
+    const uploadImage = async () => {
+        const data = new FormData()
+        data.append("file", props.image)
+        data.append("upload_preset", "wft-app")
+        data.append("cloud_name","dghm4xm7k")
+        await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",{
+          method:"post",
+          body: data
+        })
+        .then(resp => resp.json())
+        .then(data => {
+        props.setUrl(data.url)
+        })
+        .catch(err => console.log(err))
+    }
+
   return(
   <div>
     <FormStyle>
@@ -712,7 +766,19 @@ const Stage6 = (props) => {
               props.setIDNumber(e.target.value);
             }}
           />
-        </Form.Group>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Control
+              type="file"
+              placeholder="Upload Image"
+              defaultValue={""}
+              required
+              onChange={(e) => {
+                props.setImage(e.target.files[0]);
+              }}
+            />
+          </Form.Group>
 
         <div className="signup-center">
         <div className="row">
@@ -734,7 +800,10 @@ const Stage6 = (props) => {
 
             onClick={(e) => {
               e.preventDefault();
+
+              uploadImage()
               //Next Stage
+
 
               if (props.buildingFunction=="Admin") {
                 props.setStage(3) //confimation page

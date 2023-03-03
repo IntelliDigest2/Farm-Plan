@@ -10,7 +10,8 @@ import Paginator from "../SubComponents/Paginator";
 import { getPurchaseData } from "../../store/actions/dataActions";
 import SendItemIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/SendItemIcon";
 import EditPurchaseIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/EditPurchaseIcon";
-import { PageWrap } from "../SubComponents/PageWrap";
+import { PageWrapAdmin } from "../SubComponents/PageWrapAdmin";
+import FarmerListIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/FarmerListIcon";
 
 function Admin(props) {
 
@@ -65,18 +66,15 @@ function Admin(props) {
 	  //this sends data request
 	useEffect(() => {
 		purchaseList()
-		console.log("xxxxxxx>>>>>>>>>", list)
 	  }, [props.purchase]);
 
 	
 
 	return (
 		<>
-		    <PageWrap goTo="/account" header="My Plan to Save">
+		    <PageWrapAdmin goTo="/account" header="Admin Dashboard">
 			<div>
-			<header className="admin_header"></header>
-			<div className="adminCont">
-				<main className="admin_left_section">
+				<main>
 				{list.map((item, index) => (
 					<Accordion key={`item${index}`}>
 						<Card>
@@ -125,6 +123,12 @@ function Admin(props) {
 									uid={item.uid}
 									cart={item.cartList}
 								/>
+								<FarmerListIcon 
+								id={item.id}
+								uid={item.uid}
+								cart={item.cartList}
+								city={item.profile.city}
+								/>
 							</p>
 							<ListGroup className="list-group-flush">
 								<ListGroupItem>Status: {item.status}</ListGroupItem>
@@ -144,9 +148,8 @@ function Admin(props) {
 				{/* <div className="admin_right_section">
 					<div className="admin_calendar_mock"></div>
 				</div> */}
-			</div>
 		</div>
-		</PageWrap>
+		</PageWrapAdmin>
 		</>
 		
 	);

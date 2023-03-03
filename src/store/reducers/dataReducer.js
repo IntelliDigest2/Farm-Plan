@@ -31,6 +31,18 @@ const dataReducer = (state = initState, action) => {
         getData: action.payload,
         authError: null,
       };
+      case "SEND_TO_FARMER":
+        console.log("sent to farmer");
+        return {
+          ...state,
+          authError: null,
+        };
+      case "SEND_TO_FARMER_ERROR":
+        console.log("error, couldn't send to farmer collection", action.err);
+        return {
+          ...state,
+          authError: "send to farmer failed",
+        };
       case "GET_PURCHASE_DATA_ERROR":
       console.log("get purchase error " + action.err.message);
       return {

@@ -77,7 +77,6 @@ const NewAccount = (props) => {
     return <LoadingScreen />;
   }
   
-  console.log("profff", props.profile.buildingFunction)
   return (
     <>
       {modal && !props.profile.isConsumer && !props.profile.buildingFunction == "Admin" ?  (
@@ -253,7 +252,7 @@ const AccountType = (props) => {
             onChange={props.handleChange}
             centered
           >
-            <Tab disableRipple label="Food" value="0" />
+            <Tab disableRipple label="Admin" value="0" />
 
           </TabList>
           <SwipeableViews

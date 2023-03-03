@@ -1,0 +1,12 @@
+[debug] [2023-03-02T16:26:41.695Z] ----------------------------------------------------------------------
+[debug] [2023-03-02T16:26:41.697Z] Command:       /home/coded/.nvm/versions/node/v16.14.0/bin/node /home/coded/.nvm/versions/node/v16.14.0/bin/firebase emulators:export /home/coded/dev/wft
+[debug] [2023-03-02T16:26:41.697Z] CLI Version:   11.18.0
+[debug] [2023-03-02T16:26:41.697Z] Platform:      linux
+[debug] [2023-03-02T16:26:41.698Z] Node Version:  v16.14.0
+[debug] [2023-03-02T16:26:41.704Z] Time:          Thu Mar 02 2023 17:26:41 GMT+0100 (West Africa Standard Time)
+[debug] [2023-03-02T16:26:41.705Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-02T16:26:41.812Z] >>> [apiv2][query] GET http://127.0.0.1:4400/ [none]
+[debug] [2023-03-02T16:26:41.839Z] <<< [apiv2][status] GET http://127.0.0.1:4400/ 200
+[debug] [2023-03-02T16:26:41.840Z] <<< [apiv2][body] GET http://127.0.0.1:4400/ {"version":"11.18.0","origins":["http://127.0.0.1:4400","http://[::1]:4400"],"host":"127.0.0.1","port":4400}
+[info] i  Found running emulator hub for project itracker-development at http://127.0.0.1:4400 
