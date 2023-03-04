@@ -19,10 +19,10 @@ function SendItemIcon(props) {
       upload: {
         cart: props.cart,
         refID: props.refID,
+        uid: props.uid,
         status: "IN PROGRESS"
       },
     };
-    console.log(">>>>>>>>>", data)
     props.sendToUser(data);
     props.editPurchaseStatus(data)
     submitNotification("Success", " Items has been sent to user!");

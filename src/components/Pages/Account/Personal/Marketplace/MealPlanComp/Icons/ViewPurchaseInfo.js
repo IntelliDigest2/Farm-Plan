@@ -8,6 +8,7 @@ import ConfirmItemIcon from "../Icons/ConfirmItemIcon"
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import PayIcon from "./PayIcon";
 
 function ViewPurchaseInfo(props) {
 
@@ -18,7 +19,7 @@ function ViewPurchaseInfo(props) {
 useEffect(() => {
   props.getPurchaseInfo();
   //console.log("getting inv ==>", props.data)
-}, [props.info]);
+}, []);
 
 const getPurchaseInfoList = async () => {
   //clears the items array before each update- IMPORTANT
@@ -30,6 +31,7 @@ const getPurchaseInfoList = async () => {
     var id = doc.id;
     var cart = doc.cart;
     var refID = doc.refID;
+    var uid = doc.uid;
     var status = doc.status;
 
 
@@ -39,6 +41,7 @@ const getPurchaseInfoList = async () => {
         cart: cart,
         id: id,
         refID: refID,
+        uid: uid,
         status: status,
       },
     ]);
@@ -93,12 +96,26 @@ useEffect(() => {
 									))}
 									
 								</tbody>
-                <div className="table-header">
+                <div className="">
                       <ConfirmItemIcon
                         //value={props.value}
                         refID={item.refID}
                         id={item.id}
                       />
+                      {
+                        item.status == "CONFIRMED" ? (
+                        <PayIcon
+                          //value={props.value}
+                          refID={item.refID}
+                          id={item.id}
+                          uid={item.uid}
+                        />
+                        ):(
+                          ""
+                        )
+                      }
+                      
+
                   </div>
 								
 								
