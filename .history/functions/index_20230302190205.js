@@ -42,7 +42,7 @@ itrackerPaymentFunction.use(
 				//insert the link of the app link here
 				// -----------------------------------
 				// -----------------------------------
-				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
+				// "http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 				"http://worldfoodtracker.com/", //another example incase it has two links
 			],
 
@@ -128,7 +128,7 @@ sendFarmersNotification.use(
 				//insert the link of the app link here
 				// -----------------------------------
 				// -----------------------------------
-				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
+				// "http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 				"http://worldfoodtracker.com/", //another example incase it has two links
 			],
 
@@ -173,7 +173,7 @@ getFarmersInLocationWithProducts.use(
 	cors([
 		{
 			origin: [
-				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
+				// "http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 				"http://worldfoodtracker.com/", //another example incase it has two links
 			],
 

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="8AQlfNjkcH1g4LnfkPKo" name="Page-1">
-        <mxGraphModel dx="9343" dy="3620" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="3641" dy="1591" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -47,7 +47,7 @@
                 <mxCell id="10" value="PRICE" style="whiteSpace=wrap;html=1;strokeColor=#525252;strokeWidth=2;fontSize=15;fontColor=#313030;fillColor=#FFFFFF;" parent="20" vertex="1">
                     <mxGeometry x="13" y="100" width="95" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="QUANTITY&lt;br&gt;AVAILABLE" style="whiteSpace=wrap;html=1;strokeColor=#525252;strokeWidth=2;fontSize=15;fontColor=#313030;fillColor=#FFFFFF;" parent="20" vertex="1">
+                <mxCell id="12" value="QUANTITY&lt;br&gt;ABAILABLE" style="whiteSpace=wrap;html=1;strokeColor=#525252;strokeWidth=2;fontSize=15;fontColor=#313030;fillColor=#FFFFFF;" parent="20" vertex="1">
                     <mxGeometry x="13" y="145" width="95" height="65" as="geometry"/>
                 </mxCell>
                 <mxCell id="14" value="NAME" style="whiteSpace=wrap;html=1;strokeColor=#525252;strokeWidth=2;fontSize=15;fontColor=#313030;fillColor=#FFFFFF;" parent="20" vertex="1">
@@ -114,9 +114,6 @@
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="97" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.465;entryY=0.995;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#2D7600;strokeWidth=3;fontSize=14;fontColor=#1A1A1A;fillColor=#60a917;" edge="1" parent="1" source="54" target="85">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="126" style="edgeStyle=orthogonalEdgeStyle;rounded=1;jumpStyle=arc;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.988;entryY=0.701;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#2D7600;strokeWidth=3;fontSize=26;fontColor=#1A1A1A;fillColor=#60a917;" edge="1" parent="1" source="54" target="36">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="54" value="ADMIN PAGE GETS UPDATES ON STATUS OF TRANSACTION PRICE AND QUANTITY" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=#FFFFFF;strokeColor=#787373;strokeWidth=2;fontSize=15;fontColor=#000000;fillColor=#FFFFFF;" parent="1" vertex="1">
