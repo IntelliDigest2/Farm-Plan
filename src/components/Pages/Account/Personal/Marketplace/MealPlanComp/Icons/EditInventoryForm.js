@@ -136,7 +136,7 @@ function EditInventoryForm(props) {
           id="expiry"
           selected={ExpiryDate} 
           onChange={(e) => setExpiryDate(e)} 
-          dateFormat="dd/mm/yyyy"  
+          dateFormat="dd/MM/yyyy"  
         />
       </Form.Group>
 

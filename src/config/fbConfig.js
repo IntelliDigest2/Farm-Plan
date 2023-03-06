@@ -14,10 +14,10 @@ var fbConfig = {
 };
 
 // Initialize Firebase
-//var app = firebase.initializeApp(fbConfig);
+// var app = firebase.initializeApp(fbConfig);
 
 firebase.initializeApp(fbConfig);
-// firebase.firestore;
+//firebase.firestore;
 
 // if (window.location.hostname === "localhost") {
 //   app.auth().useEmulator("http://localhost:9099");

@@ -86,7 +86,9 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 import ChartView from "./components/Pages/Account/Charts/Chart";
 import GiftFoodChart from "./components/Pages/Account/Charts/GiftFoodChart";
 
+
 import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
+import Payment from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Payment";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -182,6 +184,7 @@ const App = (props) => {
 						<Route path="/questionnaire" exact component={Questionnaire} />
 						<Route path="/contact" exact component={Contact} />
 						<Route path="/forgot-password" exact component={ForgotPassword} />
+						<Route path="/payment-process" exact component={Payment} />
 
 						<Route exact path="/consultants" component={Homepage} />
 						<Route path="/consultants/question2" exact component={Question2} />
@@ -219,6 +222,7 @@ const App = (props) => {
 						<Route path="/table" component={InfoTable} />
 
 						<Route path="/chart" exact component={ChartView} />
+
 
 						<Route path="/gift-chart" exact component={GiftFoodChart} />
 

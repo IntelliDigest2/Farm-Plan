@@ -6,7 +6,7 @@ import CheckoutForm from "./CheckoutForm";
 import { Modal, Row, Col } from "react-bootstrap";
 
 const StripeCall = (props) => {
-	const itemsForPurchase = props.orderId; // ie the id of the order
+	// const itemsForPurchase = props.orderId; // ie the id of the order
 
 	useEffect(() => {
 		// Create PaymentIntent as soon as the page loads7
@@ -18,7 +18,8 @@ const StripeCall = (props) => {
 			//This is supposed to point to the url of the stripe payment function on firebase
 			// which will be provided after the function as been deployed
 
-			"https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction", //this is just a sample
+			"https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction/create-payment-intent", //this is just a sample
+			// "http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent", //this is just a sample
 			{
 				method: "POST",
 				headers: { "Content-Type": "application/json" },

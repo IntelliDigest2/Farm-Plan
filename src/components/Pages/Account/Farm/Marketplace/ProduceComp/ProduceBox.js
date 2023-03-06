@@ -51,6 +51,9 @@ export default function ProduceBox(props) {
                       <p>
                         {newProduce.quantity} {newProduce.measure}
                       </p>
+                      <p>
+                      {newProduce.currency} {newProduce.price} 
+                      </p>
                       <p><b>Date of Yield: </b>{newProduce.date}</p>
                     </div>
                 </ListItem>

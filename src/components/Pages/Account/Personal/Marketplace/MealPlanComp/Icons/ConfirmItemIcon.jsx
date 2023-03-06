@@ -4,7 +4,6 @@ import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { editPurchaseStatusFromUser, editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
-
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 
@@ -34,14 +33,13 @@ function ConfirmItemIcon(props) {
 
   return (
     <>
-      <Tooltip title="Bought Item">
+      <Tooltip title="Confirm Item">
         <IconButton
-          aria-label="Bought Item"
+          aria-label="Confirm Item"
           sx={{ ml: 2 }}
+          onClick={handleShow}
         >
-          <Button variant="outlined" color="success" onClick={handleShow}>
-            Confirm
-          </Button> 
+            <ThumbUpAltIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>
 

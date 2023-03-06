@@ -9,13 +9,12 @@ const functions = require("firebase-functions");
 // });
 
 const express = require("express");
-var cors = require("cors");
-const admin = require("firebase-admin");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY1);
-
 const itrackerPaymentFunction = express();
 const getFarmersInLocationWithProducts = express();
 const sendFarmersNotification = express();
+const admin = require("firebase-admin");
+var cors = require("cors");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY1);
 
 const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
 
@@ -206,7 +205,6 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		farmers.forEach(async (farmer) => {
 			let farmerName = farmer.data().firstName;
-			// console.log(farmerName);
 			let producePromises = farmersProduce(
 				farmer.id,
 				farmerName,
@@ -230,7 +228,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 						});
 					});
 
-					console.log(farmerId, farmerName);
+					// console.log(arr);
 
 					return {
 						farmerId: farmerId,
