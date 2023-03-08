@@ -16,9 +16,11 @@ function FarmerListIcon(props) {
   //shows edit modal
   const [show, setShow] = useState(false);
 
+  console.log("testtt", cart, city)
+
    // ...
    const fetchFarmers = async () => {
-    await fetch('https://us-central1-itracker-development.cloudfunctions.net/getFarmersInLocationWithProducts', {
+    await fetch('https://us-central1-itracker-development.cloudfunctions.net/getFarmersInLocationWithProducts/farmers', {
        method: 'POST',
        body: JSON.stringify({
           cart: cart,

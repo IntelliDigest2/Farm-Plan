@@ -16,6 +16,15 @@ const admin = require("firebase-admin");
 
 var cors = require("cors");
 
+var fbConfig = {
+	apiKey: "AIzaSyDuu8Fpwa2gYlCKcL-LlN-uqH5seEJpk9w",
+	authDomain: "itracker-development.firebaseapp.com",
+	projectId: "itracker-development",
+	storageBucket: "itracker-development.appspot.com",
+	messagingSenderId: "57163396396",
+	appId: "1:57163396396:web:dd800621173f5733a4a889",
+  };
+
 const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
 
 if (useEmulator === "development") {
@@ -25,7 +34,7 @@ if (useEmulator === "development") {
 		projectId: "itracker-development",
 	});
 } else {
-	admin.initializeApp(functions.config().firebase);
+	admin.initializeApp(fbConfig);
 }
 
 const fireStoreDB = admin.firestore();
@@ -44,7 +53,7 @@ itrackerPaymentFunction.use(
 				// -----------------------------------
 				// -----------------------------------
 				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
-				"http://worldfoodtracker.com/", //another example incase it has two links
+				"https://worldfoodtracker.com/", //another example incase it has two links
 			],
 
 			methods: [["GET", "PUT", "POST"]],
@@ -130,6 +139,7 @@ sendFarmersNotification.use(
 				// -----------------------------------
 				// -----------------------------------
 				"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
+				"http://localhost:5000/", //this is just a sample eg http://worldfoodtracker.com/
 				"http://worldfoodtracker.com/", //another example incase it has two links
 			],
 
