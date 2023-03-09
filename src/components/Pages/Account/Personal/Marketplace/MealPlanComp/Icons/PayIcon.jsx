@@ -13,11 +13,13 @@ function PayIcon(props) {
 
   let history = useHistory();
 
+  console.log("check userId and orderId  ", props.uid, props.id)
+
   const [showModal, setShow] = useState(false);
 
   const handlePay = async () => {
-    await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
-    // await fetch('https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction', {
+    // await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
+    await fetch('https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction/create-payment-intent', {
 
        method: 'POST',
        body: JSON.stringify({

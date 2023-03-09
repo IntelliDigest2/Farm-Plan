@@ -6,8 +6,10 @@ import CheckoutForm from './CheckoutForm';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`);
 
+const stripeKey= 'pk_live_51IdK0FEtXlP6Uv4NAZ15ILAzo8f2s24jyEiimLaYVQrfiHjstZGc4g8XwE526R3XDol3xqaIuZ8tRiaQsfpYOGLs00xzffdRzA'
+
+const stripePromise = loadStripe(stripeKey);
 export default function Payment() {
 
     const location = useLocation();
