@@ -125,7 +125,7 @@ sendFarmersNotification.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
+		methods: [["GET", "PUT", "POST"]],
 	})
 );
 
@@ -170,7 +170,7 @@ getFarmersInLocationWithProducts.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
+		methods: [["GET", "PUT", "POST"]],
 	})
 );
 

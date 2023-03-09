@@ -104,6 +104,15 @@ const getFarmersInSameLocation = async (city) => {
 			.where("buildingFunction", "==", "Farm")
 			.get();
 
+		result.forEach((doc) => {
+			if (!doc.exists) {
+				console.log("No such document!");
+			} else {
+				// console.log("Document data:", doc.data());
+				// console.log(doc.id, "this is the documents id");
+			}
+		});
+
 		return result;
 	} catch (err) {
 		return err;
@@ -125,7 +134,7 @@ sendFarmersNotification.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
+		methods: [["GET", "PUT", "POST"]],
 	})
 );
 
@@ -170,7 +179,7 @@ getFarmersInLocationWithProducts.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
+		methods: [["GET", "PUT", "POST"]],
 	})
 );
 

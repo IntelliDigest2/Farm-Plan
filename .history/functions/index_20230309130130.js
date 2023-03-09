@@ -11,6 +11,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY1);
 const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
 
 if (useEmulator === "development") {
+	// process.env["FIRESTORE_EMULATOR_HOST"] = "localhost:8080";
 	admin.initializeApp({
 		//projectId inserted here for local testing
 		projectId: "itracker-development",
@@ -25,8 +26,9 @@ itrackerPaymentFunction.use(express.static("public"));
 itrackerPaymentFunction.use(express.json());
 
 itrackerPaymentFunction.options("*", cors());
-itrackerPaymentFunction.use(
-	cors({
+itrackerPaymentFunction.use([
+	// cors()
+	{
 		origin: [
 			//insert the link of the app link here
 			// -----------------------------------
@@ -35,9 +37,9 @@ itrackerPaymentFunction.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
-	})
-);
+		methods: [["GET", "PUT", "POST"]],
+	},
+]);
 
 const calculateOrderAmount = async (userId, orderId) => {
 	try {
@@ -85,8 +87,8 @@ itrackerPaymentFunction.post("/create-payment-intent", async (req, res) => {
 			clientSecret: paymentIntent.client_secret,
 		});
 	} catch (err) {
-		res.status(500).json({
-			message: "something went wrong",
+		res.send({
+			message: err,
 		});
 	}
 });
@@ -104,6 +106,15 @@ const getFarmersInSameLocation = async (city) => {
 			.where("buildingFunction", "==", "Farm")
 			.get();
 
+		result.forEach((doc) => {
+			if (!doc.exists) {
+				console.log("No such document!");
+			} else {
+				// console.log("Document data:", doc.data());
+				// console.log(doc.id, "this is the documents id");
+			}
+		});
+
 		return result;
 	} catch (err) {
 		return err;
@@ -115,8 +126,8 @@ sendFarmersNotification.use(express.json());
 sendFarmersNotification.use(express.static("public"));
 
 sendFarmersNotification.options("*", cors());
-sendFarmersNotification.use(
-	cors({
+sendFarmersNotification.use([
+	{
 		origin: [
 			//insert the link of the app link here
 			// -----------------------------------
@@ -125,9 +136,9 @@ sendFarmersNotification.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
-	})
-);
+		methods: [["GET", "PUT", "POST"]],
+	},
+]);
 
 sendFarmersNotification.post("/send-message", async (req, res) => {
 	try {
@@ -147,9 +158,7 @@ sendFarmersNotification.post("/send-message", async (req, res) => {
 
 		res.send({ status: "success" });
 	} catch {
-		res.status(500).json({
-			message: "something went wrong",
-		});
+		res.send({ message: "something went wrong" });
 	}
 });
 
@@ -163,16 +172,16 @@ getFarmersInLocationWithProducts.use(express.json());
 sendFarmersNotification.use(express.static("public"));
 
 getFarmersInLocationWithProducts.options("*", cors());
-getFarmersInLocationWithProducts.use(
-	cors({
+getFarmersInLocationWithProducts.use([
+	{
 		origin: [
 			"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
-	})
-);
+		methods: [["GET", "PUT", "POST"]],
+	},
+]);
 
 const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
 	try {
@@ -243,9 +252,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		res.json({ data: result });
 	} catch {
-		res.status(500).json({
-			message: "something went wrong",
-		});
+		res.json({ message: "something went wrong" });
 	}
 });
 

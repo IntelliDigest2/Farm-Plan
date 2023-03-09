@@ -1,5 +1,13 @@
 const functions = require("firebase-functions");
 
+// // Create and deploy your first functions
+// // https://firebase.google.com/docs/functions/get-started
+//
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+// 	functions.logger.info("Hello logs!", { structuredData: true });
+// 	response.send("Hello from Firebase!");
+// });
+
 const express = require("express");
 const itrackerPaymentFunction = express();
 const getFarmersInLocationWithProducts = express();
@@ -11,6 +19,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY1);
 const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
 
 if (useEmulator === "development") {
+	// process.env["FIRESTORE_EMULATOR_HOST"] = "localhost:8080";
 	admin.initializeApp({
 		//projectId inserted here for local testing
 		projectId: "itracker-development",
@@ -25,8 +34,9 @@ itrackerPaymentFunction.use(express.static("public"));
 itrackerPaymentFunction.use(express.json());
 
 itrackerPaymentFunction.options("*", cors());
-itrackerPaymentFunction.use(
-	cors({
+itrackerPaymentFunction.use([
+	// cors()
+	{
 		origin: [
 			//insert the link of the app link here
 			// -----------------------------------
@@ -35,11 +45,13 @@ itrackerPaymentFunction.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
-	})
-);
+		methods: [["GET", "PUT", "POST"]],
+	},
+]);
 
 const calculateOrderAmount = async (userId, orderId) => {
+	console.log(fireStoreDB, "line 58");
+
 	try {
 		let QuerySnapshot = await fireStoreDB
 			.collection("marketplace")
@@ -71,24 +83,18 @@ const calculateOrderAmount = async (userId, orderId) => {
 };
 
 itrackerPaymentFunction.post("/create-payment-intent", async (req, res) => {
-	try {
-		const { userId, orderId } = req.body;
+	const { userId, orderId } = req.body;
 
-		// Create a PaymentIntent with the order amount and currency
-		const paymentIntent = await stripe.paymentIntents.create({
-			amount: await calculateOrderAmount(userId, orderId),
-			currency: "gbp",
-			automatic_payment_methods: { enabled: true },
-		});
+	// Create a PaymentIntent with the order amount and currency
+	const paymentIntent = await stripe.paymentIntents.create({
+		amount: await calculateOrderAmount(userId, orderId),
+		currency: "gbp",
+		automatic_payment_methods: { enabled: true },
+	});
 
-		res.send({
-			clientSecret: paymentIntent.client_secret,
-		});
-	} catch (err) {
-		res.status(500).json({
-			message: "something went wrong",
-		});
-	}
+	res.send({
+		clientSecret: paymentIntent.client_secret,
+	});
 });
 
 exports.itrackerPaymentFunction = functions.https.onRequest(
@@ -97,17 +103,22 @@ exports.itrackerPaymentFunction = functions.https.onRequest(
 
 // function to get the farmers In Same Location
 const getFarmersInSameLocation = async (city) => {
-	try {
-		const result = await fireStoreDB
-			.collection("users")
-			.where("city", "==", city)
-			.where("buildingFunction", "==", "Farm")
-			.get();
+	const result = await fireStoreDB
+		.collection("users")
+		.where("city", "==", city)
+		.where("buildingFunction", "==", "Farm")
+		.get();
 
-		return result;
-	} catch (err) {
-		return err;
-	}
+	result.forEach((doc) => {
+		if (!doc.exists) {
+			console.log("No such document!");
+		} else {
+			// console.log("Document data:", doc.data());
+			// console.log(doc.id, "this is the documents id");
+		}
+	});
+
+	return result;
 };
 
 // section for the http Request to send farmers Notifications
@@ -115,8 +126,8 @@ sendFarmersNotification.use(express.json());
 sendFarmersNotification.use(express.static("public"));
 
 sendFarmersNotification.options("*", cors());
-sendFarmersNotification.use(
-	cors({
+sendFarmersNotification.use([
+	{
 		origin: [
 			//insert the link of the app link here
 			// -----------------------------------
@@ -125,9 +136,9 @@ sendFarmersNotification.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
-	})
-);
+		methods: [["GET", "PUT", "POST"]],
+	},
+]);
 
 sendFarmersNotification.post("/send-message", async (req, res) => {
 	try {
@@ -147,9 +158,7 @@ sendFarmersNotification.post("/send-message", async (req, res) => {
 
 		res.send({ status: "success" });
 	} catch {
-		res.status(500).json({
-			message: "something went wrong",
-		});
+		res.send({ message: "something went wrong" });
 	}
 });
 
@@ -163,30 +172,26 @@ getFarmersInLocationWithProducts.use(express.json());
 sendFarmersNotification.use(express.static("public"));
 
 getFarmersInLocationWithProducts.options("*", cors());
-getFarmersInLocationWithProducts.use(
-	cors({
+getFarmersInLocationWithProducts.use([
+	{
 		origin: [
 			"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
-	})
-);
+		methods: [["GET", "PUT", "POST"]],
+	},
+]);
 
 const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
-	try {
-		let result = await fireStoreDB
-			.collection("marketplace")
-			.doc(id)
-			.collection("produce")
-			.where("item", "in", arrayOfNamesOfObjectInCart)
-			.get();
+	let result = await fireStoreDB
+		.collection("marketplace")
+		.doc(id)
+		.collection("produce")
+		.where("item", "in", arrayOfNamesOfObjectInCart)
+		.get();
 
-		return { farmerId: id, farmerName: farmerName, result: result };
-	} catch (err) {
-		return err;
-	}
+	return { farmerId: id, farmerName: farmerName, result: result };
 };
 
 getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
@@ -243,9 +248,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		res.json({ data: result });
 	} catch {
-		res.status(500).json({
-			message: "something went wrong",
-		});
+		res.json({ message: "something went wrong" });
 	}
 });
 

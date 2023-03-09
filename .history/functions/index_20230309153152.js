@@ -48,6 +48,10 @@ const calculateOrderAmount = async (userId, orderId) => {
 			.doc(orderId)
 			.get();
 
+		console.log(userId, "line 51");
+		console.log(orderId, "line 52");
+		console.log(QuerySnapshot, "line 53");
+
 		let totalArray = [];
 
 		QuerySnapshot.data().cart.forEach((cartItem) => {
@@ -62,6 +66,26 @@ const calculateOrderAmount = async (userId, orderId) => {
 		console.log(err);
 		return err;
 	}
+	console.log(
+		"🚀 ~ file: index.js:67 ~ calculateOrderAmount ~ userId:",
+		userId
+	);
+	console.log(
+		"🚀 ~ file: index.js:67 ~ calculateOrderAmount ~ userId:",
+		userId
+	);
+	console.log(
+		"🚀 ~ file: index.js:67 ~ calculateOrderAmount ~ userId:",
+		userId
+	);
+	console.log(
+		"🚀 ~ file: index.js:67 ~ calculateOrderAmount ~ userId:",
+		userId
+	);
+	console.log(
+		"🚀 ~ file: index.js:67 ~ calculateOrderAmount ~ userId:",
+		userId
+	);
 
 	// const orderTotal = product.price * items.multiplier;
 	// Calculate the order total on the server to prevent
@@ -104,6 +128,15 @@ const getFarmersInSameLocation = async (city) => {
 			.where("buildingFunction", "==", "Farm")
 			.get();
 
+		result.forEach((doc) => {
+			if (!doc.exists) {
+				console.log("No such document!");
+			} else {
+				// console.log("Document data:", doc.data());
+				// console.log(doc.id, "this is the documents id");
+			}
+		});
+
 		return result;
 	} catch (err) {
 		return err;
@@ -125,7 +158,7 @@ sendFarmersNotification.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
+		methods: [["GET", "PUT", "POST"]],
 	})
 );
 
@@ -170,7 +203,7 @@ getFarmersInLocationWithProducts.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
+		methods: [["GET", "PUT", "POST"]],
 	})
 );
 

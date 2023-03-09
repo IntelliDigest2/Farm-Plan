@@ -85,7 +85,7 @@ itrackerPaymentFunction.post("/create-payment-intent", async (req, res) => {
 			clientSecret: paymentIntent.client_secret,
 		});
 	} catch (err) {
-		res.status(500).json({
+		res.send({
 			message: "something went wrong",
 		});
 	}
@@ -103,6 +103,15 @@ const getFarmersInSameLocation = async (city) => {
 			.where("city", "==", city)
 			.where("buildingFunction", "==", "Farm")
 			.get();
+
+		result.forEach((doc) => {
+			if (!doc.exists) {
+				console.log("No such document!");
+			} else {
+				// console.log("Document data:", doc.data());
+				// console.log(doc.id, "this is the documents id");
+			}
+		});
 
 		return result;
 	} catch (err) {
@@ -125,7 +134,7 @@ sendFarmersNotification.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
+		methods: [["GET", "PUT", "POST"]],
 	})
 );
 
@@ -147,7 +156,8 @@ sendFarmersNotification.post("/send-message", async (req, res) => {
 
 		res.send({ status: "success" });
 	} catch {
-		res.status(500).json({
+		res.json({
+			status: 500,
 			message: "something went wrong",
 		});
 	}
@@ -170,7 +180,7 @@ getFarmersInLocationWithProducts.use(
 			// "http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
-		methods: ["GET", "PUT", "POST"],
+		methods: [["GET", "PUT", "POST"]],
 	})
 );
 
@@ -243,7 +253,8 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		res.json({ data: result });
 	} catch {
-		res.status(500).json({
+		res.json({
+			status: 500,
 			message: "something went wrong",
 		});
 	}
