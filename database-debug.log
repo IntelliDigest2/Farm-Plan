@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 WARNING: An illegal reflective access operation has occurred
 WARNING: Illegal reflective access by io.netty.util.internal.ReflectionUtil (file:/home/coded/.cache/firebase/emulators/firebase-database-emulator-v4.11.0.jar) to field sun.nio.ch.SelectorImpl.selectedKeys
 WARNING: Please consider reporting this to the maintainers of io.netty.util.internal.ReflectionUtil
@@ -7,3 +8,5 @@ WARNING: All illegal access operations will be denied in a future release
 10:27:02.135 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9000
 12:32:11.671 [Thread-0] INFO com.firebase.server.forge.App$ - Attempting graceful shutdown.
 12:32:11.683 [Thread-0] INFO com.firebase.server.forge.App$ - Graceful shutdown complete.
+=======
+>>>>>>> d53949278832527c9dfbd3aad6b19fdf12debfc2
