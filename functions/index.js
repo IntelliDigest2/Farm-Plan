@@ -252,3 +252,4 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 exports.getFarmersInLocationWithProducts = functions.https.onRequest(
 	getFarmersInLocationWithProducts
 );
+
