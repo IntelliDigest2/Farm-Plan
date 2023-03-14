@@ -25,7 +25,7 @@ function Paginator() {
 		<div className="paginator">
 			<button
 				onClick={goToPreviousPage}
-				className={`${classes.paginatorBtn} ${classes.paginatorBtn_left}`}
+				className={`${classes.paginatorBtn} ${classes.paginatorBtn - left}`}
 			>
 				<ArrowIcon />
 			</button>
@@ -52,7 +52,7 @@ function Paginator() {
 
 			<button
 				onClick={goToNextPage}
-				className={`${classes.paginatorBtn} ${classes.paginatorBtn_right}`}
+				className={`${classes.paginatorBtn} ${classes.paginatorBtn - right}`}
 			>
 				<ArrowIcon />
 			</button>

@@ -31,7 +31,7 @@ const Homepage = () => {
 									textDecoration: "none",
 									padding: "10px 40px",
 								}}
-								to="/consultants/login"
+								to="/consultantslogin"
 							>
 								Login
 							</Link>

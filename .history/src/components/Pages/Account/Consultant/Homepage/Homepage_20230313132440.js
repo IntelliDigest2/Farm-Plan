@@ -26,12 +26,8 @@ const Homepage = () => {
 						</button>
 						<button>
 							<Link
-								style={{
-									color: "white",
-									textDecoration: "none",
-									padding: "10px 40px",
-								}}
-								to="/consultants/login"
+								style={{ color: "white", textDecoration: "none" }}
+								to="/consultantslogin"
 							>
 								Login
 							</Link>

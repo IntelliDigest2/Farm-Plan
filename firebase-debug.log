@@ -1206,3 +1206,25 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [info] i  functions: Loaded environment variables from .env. 
 [debug] [2023-03-09T14:37:18.496Z] Could not find functions.yaml. Must use http discovery
 [debug] [2023-03-09T14:37:18.517Z] Found firebase-functions binary at 'E:\intellidigest\itracker\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-03-13T12:20:42.008Z] ----------------------------------------------------------------------
+[debug] [2023-03-13T12:20:42.011Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js use --add
+[debug] [2023-03-13T12:20:42.011Z] CLI Version:   11.24.0
+[debug] [2023-03-13T12:20:42.012Z] Platform:      win32
+[debug] [2023-03-13T12:20:42.012Z] Node Version:  v16.17.0
+[debug] [2023-03-13T12:20:42.017Z] Time:          Mon Mar 13 2023 13:20:42 GMT+0100 (West Africa Standard Time)
+[debug] [2023-03-13T12:20:42.017Z] Env Overrides: FIRESTORE_EMULATOR_HOST
+[debug] [2023-03-13T12:20:42.017Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-13T12:20:42.037Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-03-13T12:20:42.279Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-13T12:20:42.280Z] > authorizing via signed-in user (a.badamasi@intellidigest.com)
+[debug] [2023-03-13T12:20:42.282Z] > refreshing access token with scopes: []
+[debug] [2023-03-13T12:20:42.283Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-03-13T12:20:42.283Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-03-13T12:20:42.885Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-03-13T12:20:42.886Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-03-13T12:20:42.928Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2023-03-13T12:20:42.940Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2023-03-13T12:20:42.941Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2023-03-13T12:20:43.898Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2023-03-13T12:20:43.898Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]

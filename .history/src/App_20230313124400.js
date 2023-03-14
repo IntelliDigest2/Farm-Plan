@@ -16,11 +16,11 @@ import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
-import ConsultantSignup from "./components/Pages/Account/Consultant/Auth/ConsultantSignup";
-import OnboardMessage from "./components/Pages/Account/Consultant/Auth/OnboardMessage";
+import ConsutltantSignup from "./components/Pages/Account/Consultant/Question/Signup";
+import OnboardMessage from "./components/Pages/Account/Consultant/Question/OnboardMessage";
 import ConsultantLogin from "./components/Pages/Account/Consultant/Login/ConsultantLogin";
 import ConsultantAccount from "./components/Pages/Account/Consultant/Login/ConsultantAccount";
-import ConsultantSettings from "./components/Pages/Account/Consultant/Login/ConsultantSettings";
+import ConsultantSetting from "./components/Pages/Account/Consultant/Login/ConsultantSetting";
 
 import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
@@ -174,22 +174,11 @@ const App = (props) => {
 
 					<Switch>
 						{/* <Route path="/example" exact component={Example} /> */}
-						<Route path="/login" exact component={Login} />
-						<Route path="/admin" exact component={Admin} />
-						<Route path="/landing" exact component={LandingPage} />
-						<Route path="/about-us" exact component={AboutUs} />
-						<Route path="/signup" exact component={SignUp} />
-						<Route path="/settings" exact component={Settings} />
-						<Route path="/questionnaire" exact component={Questionnaire} />
-						<Route path="/contact" exact component={Contact} />
-						<Route path="/forgot-password" exact component={ForgotPassword} />
-						<Route path="/payment-process" exact component={Payment} />
-
 						<Route exact path="/consultants" component={Homepage} />
 						<Route
 							path="/consultants/signup"
 							exact
-							component={ConsultantSignup}
+							component={ConsutltantSignup}
 						/>
 						<Route
 							path="/consultants/onboard"
@@ -209,8 +198,18 @@ const App = (props) => {
 						<Route
 							path="/consultant-settings"
 							exact
-							component={ConsultantSettings}
+							component={ConsultantSetting}
 						/>
+						<Route path="/login" exact component={Login} />
+						<Route path="/admin" exact component={Admin} />
+						<Route path="/landing" exact component={LandingPage} />
+						<Route path="/about-us" exact component={AboutUs} />
+						<Route path="/signup" exact component={SignUp} />
+						<Route path="/settings" exact component={Settings} />
+						<Route path="/questionnaire" exact component={Questionnaire} />
+						<Route path="/contact" exact component={Contact} />
+						<Route path="/forgot-password" exact component={ForgotPassword} />
+						<Route path="/payment-process" exact component={Payment} />
 
 						<Route path="/account" exact component={NewAccount} />
 						<Route path="/pts" exact component={PlanToSave} />

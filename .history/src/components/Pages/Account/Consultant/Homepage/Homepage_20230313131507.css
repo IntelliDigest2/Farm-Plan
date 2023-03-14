@@ -24,7 +24,7 @@
     height: 90vh;
     width: 50%;
     color: white;
-    /* text-align: center; */
+    text-align: center;
     background-color: white;
 
 }
@@ -53,7 +53,9 @@ align-items: center;
     background-color:#afba15 ;
 }
 
-
+.home-btn > a{
+    padding: 0 4rem
+}
 .home-btn>button:hover{
 /* transform: scale(1.1); */
 /* border-radius: 20px; */

@@ -25,7 +25,7 @@ function Paginator() {
 		<div className="paginator">
 			<button
 				onClick={goToPreviousPage}
-				className={`${classes.paginatorBtn} ${classes.paginatorBtn_left}`}
+				className={classes.paginatorBtn classes.paginatorBtn-left}
 			>
 				<ArrowIcon />
 			</button>
@@ -42,17 +42,14 @@ function Paginator() {
 					onChange={resultPageForm.handleChange}
 					value={resultPageForm.values.pageNumber}
 				></input>
-				<button
-					type="submit"
-					className={`${classes.paginator_goBtn} ${classes.paginatorBtn}`}
-				>
+				<button type="submit" className=" paginator_goBtn paginatorBtn ">
 					GO
 				</button>
 			</form>
 
 			<button
 				onClick={goToNextPage}
-				className={`${classes.paginatorBtn} ${classes.paginatorBtn_right}`}
+				className="paginatorBtn paginatorBtn-right"
 			>
 				<ArrowIcon />
 			</button>

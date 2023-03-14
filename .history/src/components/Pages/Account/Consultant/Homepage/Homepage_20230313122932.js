@@ -14,11 +14,7 @@ const Homepage = () => {
 					<div className="home-btn">
 						<button>
 							<Link
-								style={{
-									color: "white",
-									textDecoration: "none",
-									padding: "10px 40px",
-								}}
+								style={{ color: "white", textDecoration: "none" }}
 								to="/consultants/signup"
 							>
 								Register
@@ -26,12 +22,8 @@ const Homepage = () => {
 						</button>
 						<button>
 							<Link
-								style={{
-									color: "white",
-									textDecoration: "none",
-									padding: "10px 40px",
-								}}
-								to="/consultants/login"
+								style={{ color: "white", textDecoration: "none" }}
+								to="/consultant-login"
 							>
 								Login
 							</Link>

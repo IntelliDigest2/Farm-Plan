@@ -16,8 +16,8 @@ import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
-import ConsultantSignup from "./components/Pages/Account/Consultant/Auth/ConsultantSignup";
-import OnboardMessage from "./components/Pages/Account/Consultant/Auth/OnboardMessage";
+import ConsutltantSignup from "./components/Pages/Account/Consultant/Question/Signup";
+import OnboardMessage from "./components/Pages/Account/Consultant/Question/OnboardMessage";
 import ConsultantLogin from "./components/Pages/Account/Consultant/Login/ConsultantLogin";
 import ConsultantAccount from "./components/Pages/Account/Consultant/Login/ConsultantAccount";
 import ConsultantSettings from "./components/Pages/Account/Consultant/Login/ConsultantSettings";
@@ -189,7 +189,7 @@ const App = (props) => {
 						<Route
 							path="/consultants/signup"
 							exact
-							component={ConsultantSignup}
+							component={ConsutltantSignup}
 						/>
 						<Route
 							path="/consultants/onboard"
