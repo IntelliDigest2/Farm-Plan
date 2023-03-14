@@ -25,7 +25,7 @@ function RemoveFoodWasteIcon(props) {
     const data = {
 
       upload: {
-        id: getItem.id,
+        //id: getItem.id,
         food: getItem.food,
         item: getItem.item,
         measure: getItem.measure,
@@ -34,7 +34,7 @@ function RemoveFoodWasteIcon(props) {
      
     };
 
-
+    //console.log("xxx",data)
     //props.removeFromInventory(data);
     props.addToWasteItems(data);
    // props.setUpdate(props.update + 1);
@@ -59,7 +59,7 @@ function RemoveFoodWasteIcon(props) {
         <IconButton
           aria-label="Remove"
           sx={{ ml: 2 }}
-          // onClick={() => handleDelete(props.id)}
+          onClick={() => WasteFood()}
           // onClick={()=> {
           //   handleDelete(props.id)
           //   history.push("/food-waste")
