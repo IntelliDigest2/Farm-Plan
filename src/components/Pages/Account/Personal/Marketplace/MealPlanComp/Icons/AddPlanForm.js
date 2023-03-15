@@ -94,6 +94,7 @@ function AddPlanForm(props) {
         meal: mealName,
         mealType: mealType,
         ingredients: ingredients,
+        createdAt: new Date()
       },
     };
 

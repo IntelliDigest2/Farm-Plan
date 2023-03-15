@@ -19,6 +19,8 @@ function EditMealForm(props) {
         meal: mealName,
         ingredients: ingredients,
         id: props.id,
+        updatedAt: new Date()
+
       },
     };
     if (props.saved) {

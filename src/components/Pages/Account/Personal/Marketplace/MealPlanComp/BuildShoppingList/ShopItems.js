@@ -201,7 +201,7 @@ const addToCart = (ingr) => {
       };
 
       props.addToPurchaseItems(data);
-    submitNotification("Order Successful", "You will be contected shortly..");
+    submitNotification("Order Successful", "You will be contacted shortly..");
 
     }
   
@@ -231,7 +231,7 @@ useEffect(() => {
     props.getShoppingListUpdate(data);
   }, [props.value, update]);
 
-
+  // shopping list added by user using the add button
   const ShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
     setAllList([]);
@@ -239,6 +239,7 @@ useEffect(() => {
     //sets a new meal object in the array for every document with this date attached
     props.UpdatedShoppingList.forEach((doc) => {
 
+      
       //id is the docref for deletion
       var id = doc.id;
       var food = doc.ingredient.food;
@@ -261,6 +262,7 @@ useEffect(() => {
     });
   };
 
+  // shopping list from ingredient of generated meal plan
   const newShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT
     setNewList([]);
@@ -295,6 +297,7 @@ useEffect(() => {
     ShoppingList();
     newShoppingList();
   }, [props.UpdatedShoppingList, props.newShoppingList]);
+
 
   const updateShoppingList = async () => {
     //clears the meals array before each update- IMPORTANT

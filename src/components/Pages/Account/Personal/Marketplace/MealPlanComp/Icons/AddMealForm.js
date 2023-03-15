@@ -94,17 +94,18 @@ function AddMealForm(props) {
         meal: mealName,
         mealType: mealType,
         ingredients: ingredients,
+        createdAt: new Date()
       },
     };
 
-    console.log("checking props:", props)
-    props.createMealPlanData(data);
-    forceUpdate();
 
     if (save) {
       props.createRecipe(data);
+      forceUpdate();
+
     }
-    props.addToShoppingList(data);
+    props.createMealPlanData(data);
+    forceUpdate();
   };
 
   return (

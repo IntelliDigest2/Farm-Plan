@@ -433,6 +433,7 @@ export const generateNewPlan = (plan) => {
       .collection("newPlan")
       .add(plan.upload)
       .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
         // make the docId easily accessible so that we can delete it later if we want.
         getFirebase()
           .firestore()
