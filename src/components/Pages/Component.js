@@ -12,8 +12,9 @@ import SendItemIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/Send
 import EditPurchaseIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/EditPurchaseIcon";
 import { PageWrapAdmin } from "../SubComponents/PageWrapAdmin";
 import FarmerListIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/FarmerListIcon";
+import LoadingScreen from "../SubComponents/Loading/LoadingScreen"
 
-function Admin(props) {
+const Component = (props) => {
 
 	const [list, setList ] = useState([])
 	const [update, setUpdate] = useState(0);
@@ -22,13 +23,18 @@ function Admin(props) {
 	 const forceUpdate = () => {
 	   setUpdate(update + 1);
 	 };
+
+	 	//this sends data request
+	useEffect(() => {
+		console.log("printing props", props)
+		//forceUpdate()
+	  }, [props.purchase]);
 	
 	//this sends data request
 	useEffect(() => {
-		props.getPurchaseData();
+		props.getPurchaseData(props.region.region);
 		//forceUpdate()
 	  }, [props.data]);
-
 
 	  const purchaseList = async () => {
 		//clears the items array before each update- IMPORTANT
@@ -69,7 +75,6 @@ function Admin(props) {
 	  }, [props.purchase]);
 
 	
-
 	return (
 		<>
 		    <PageWrapAdmin goTo="/account" header="Admin Dashboard">
@@ -132,7 +137,6 @@ function Admin(props) {
 							</p>
 							<ListGroup className="list-group-flush">
 								<ListGroupItem>Status: {item.status}</ListGroupItem>
-								<ListGroupItem>Link To Email</ListGroupItem>
 								<ListGroupItem>Ref Number: {item.id}</ListGroupItem>
 							</ListGroup>
 							</div>
@@ -159,6 +163,7 @@ function Admin(props) {
 const mapStateToProps = (state) => {
 	return {
 	  purchase: state.data.purchaseData,
+	  userRegion: state.firebase.profile,
 	};
   };
   
@@ -168,6 +173,7 @@ const mapStateToProps = (state) => {
 	};
   };
   
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
-  
+
+export default connect(mapStateToProps, mapDispatchToProps)(Component);
+    
 

@@ -106,7 +106,7 @@ const AddProduceForm = (props) => {
               <DatePicker 
                 selected={produceDate} 
                 onChange={(date) => setProduceDate(date)} 
-                dateFormat="dd/mm/yyyy"  
+                dateFormat="dd/MM/yyyy"  
               />
             </Form.Group>
 

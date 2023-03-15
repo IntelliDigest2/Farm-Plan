@@ -29,7 +29,8 @@ function EditShopFormAddedItem(props) {
           data: item,
           quantity: quantity,
           measure: measure,
-          week: props.week
+          week: props.week,
+          updatedAt: new Date()
         }
       }, 
     };

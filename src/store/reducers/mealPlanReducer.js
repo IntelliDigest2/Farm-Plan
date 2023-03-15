@@ -6,9 +6,8 @@ const initState = {
   savedMeals: [],
   shoppingList: [],
   newShoppingList: [],
-  shopItems: [],
   inventory: [],
-  giftedFood: [],
+  giftedFood: [], 
   purchaseInfo: [],
 };
 

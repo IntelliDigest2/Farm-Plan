@@ -64,7 +64,8 @@ const AddToInventoryForm = (props) => {
         measure: local.measure,
         quantity: local.quantity,
         //quantity: local.quantity
-        expiry: moment(startDate).format("DD/MM/yyyy")
+        expiry: moment(startDate).format("DD/MM/yyyy"),
+        createdAt: new Date()
       },
     }; 
 

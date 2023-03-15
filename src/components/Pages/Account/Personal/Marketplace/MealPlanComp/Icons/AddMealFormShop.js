@@ -76,6 +76,8 @@ const AddMealFormShop = (props) => {
           measure: local.measure,
           quantity: local.quantity,
           week: props.value.format("w"),
+          createdAt: new Date()
+
         }
       },
     }; 

@@ -533,8 +533,13 @@ export const createReserveItemsData = (data) => {
 
 export const getPurchaseData = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
+		// const profile = getState().firebase.profile;
+
+		// console.log("user region", profile.region)
+
 		getFirestore()
-			.collection("purchases")
+			// .collection("purchases")
+			.collection("purchases").where('profile.region', "==", data)
 			.get()
 			.then((snapshot) => {
 				const data = [];
@@ -613,4 +618,58 @@ export const editConfirmStatus = (data) => {
 		});
 	};
   };
+
+  export const updateNutrientData = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+	
+		var uid;
+		switch (profile.type) {
+		  case "business_admin":
+			uid = authUID;
+			break;
+		  case "business_sub":
+			uid = profile.admin;
+			break;
+		  case "academic_admin":
+			uid = authUID;
+			break;
+		  case "academic_sub":
+			uid = profile.admin;
+			break;
+		  case "household_admin":
+			uid = authUID;
+			break;
+		  case "household_sub":
+			uid = profile.admin;
+			break;
+		  default:
+			uid = authUID;
+			break;
+		}
+
+		getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("nutrientData")
+			.add(data.upload)
+			.then((docRef) => {
+				// make the docId easily accessible so that we can delete it later if we want.
+				getFirestore()
+					.collection("marketplace")
+					.doc(uid)
+					.collection("nutrientData")
+					.doc(docRef.id)
+					.set({ id: docRef.id }, { merge: true });
+				dispatch({ type: "UPDATE_NUTRIENT" });
+			})
+			.catch((err) => {
+				dispatch({ type: "UPDATE_NUTRIENT_ERROR", err });
+			});
+	};
+};
   

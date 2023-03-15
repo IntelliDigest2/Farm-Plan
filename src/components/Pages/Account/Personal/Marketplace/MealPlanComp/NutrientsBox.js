@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Collapse, Accordion, Table } from "react-bootstrap";
 import { connect } from "react-redux";
+import { updateNutrientData } from "../../../../../../store/actions/dataActions";
 import { getMealData } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
 import NutrientsBoxHeader from "./NutrientsBoxHeader";
 
@@ -145,6 +146,23 @@ const NutrientsBox = (props) => {
   };
 
   console.log("fuck around => ", meals)
+
+  const updateNutrientList = () => {
+
+    const data = {
+        upload: {
+        nutrient: allTotalNutrients,
+        daily: allTotalDaily,
+        updatedAt: new Date()
+      },
+    };
+      props.updateNutrientData(data)
+    }
+
+    useEffect(() => {
+      updateNutrientList()
+    }, [props.mealPlan]);
+
   return (
     <div>
       <Accordion defaultActiveKey="0">
@@ -210,7 +228,7 @@ const NutrientsBox = (props) => {
                       );
                     })}
                   </tbody>
-                </Table>
+                </Table> 
               ) : (
                 <div className="empty basic-title-left">
                   <p>
@@ -236,6 +254,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMealData: (product) => dispatch(getMealData(product)),
+    updateNutrientData: (data) => dispatch(updateNutrientData(data))
   };
 };
 

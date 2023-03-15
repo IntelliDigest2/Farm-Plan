@@ -34,17 +34,18 @@ function EditInventoryForm(props) {
         id: props.id,
         expiry: moment(ExpiryDate).format("DD/MM/yyyy"),
         purchase: placeOfPurchase,
-        storage: storage
+        storage: storage,
+        updatedAt: new Date()
       }, 
     };
-    //console.log("checking ingredients props ==>", data)
-    if (props.saved) {
-      props.editSavedMeal(data);
-      props.forceUpdate();
-    } else {
-      props.editInventoryData(data);
-      props.setUpdate(props.update + 1);
-    }
+    console.log("checking ingredients props ==>", data)
+    // if (props.saved) {
+    //   props.editSavedMeal(data);
+    //   props.forceUpdate();
+    // } else {
+    //   props.editInventoryData(data);
+    //   props.setUpdate(props.update + 1);
+    // }
   };
 
   return (
