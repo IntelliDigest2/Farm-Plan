@@ -28,10 +28,8 @@
    width: 240px;
    margin-bottom: 10px;
 }
-.logo-header{
-     top: 0;
-     position: absolute;
-     margin: 30px;
+.consultant_logo-header{
+     width: 100%;
      
 }.question-main{
     border-radius: 20px;
@@ -44,8 +42,14 @@
     width: 50%;
     text-align: center;
     background-color: white;
+    padding: 40px;
 
 }
+.consultant_previewImg{
+    object-fit: cover;
+}
+
+/* .consut */
 .default-form2{
     margin-top: 180px;
 }
@@ -57,7 +61,8 @@
 
  .form-group{
     margin-top: 40px;
-   padding: 0px 40px;
+   /* padding: 0px 40px; */
+   position: relative;
  }
  
   .form-control{
@@ -92,9 +97,11 @@ border-radius: 20px;
 .eye-style{
     font-size: 20px; 
     cursor: pointer;
-    margin-top: -28px;
+    /* margin-top: -28px; */
+
     position: absolute;
-    right: 100px;
+    right: 10px;
+    bottom: 8px
 }
 .fixed-service-money{
     margin-top: -38px;

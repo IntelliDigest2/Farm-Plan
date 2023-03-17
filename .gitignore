@@ -19,7 +19,7 @@
 # .DS_Store
 /dir
  .env.local
- /.history
+ .history/
 # .env.development.local
 # .env.test.local
 # .env.production.local
