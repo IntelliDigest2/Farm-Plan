@@ -7,6 +7,7 @@ import { FaRegAddressBook } from "react-icons/fa";
 import { AiOutlineCalendar } from "react-icons/ai";
 import ImageProfile from "./ImageProfile";
 import ConsultantSettings from "./ConsultantSettings";
+import { Link } from "react-router-dom";
 
 const SecondPage = () => {
 	const [current, setCurrent] = useState(
@@ -37,25 +38,25 @@ const SecondPage = () => {
 				</section>
 
 				<section className="feature-buttons">
-					<div style={{ backgroundColor: "#afba15" }}>
+					<Link to="consultant/sessions" style={{ backgroundColor: "#afba15" }}>
 						<BsPeople className="icons-style" />
-						<p style={{ padding: "9px" }}>Potential Customers</p>
-					</div>
+						<p style={{ padding: "9px" }}>Sessions</p>
+					</Link>
 
-					<div style={{ backgroundColor: "#0c0847" }}>
+					<Link to="consultant/requests" style={{ backgroundColor: "#0c0847" }}>
 						<AiOutlineCalendar className="icons-style" />
-						<p style={{ padding: "9px" }}>Confirm Meetings</p>
-					</div>
+						<p style={{ padding: "9px" }}>Requests</p>
+					</Link>
 
-					<div style={{ backgroundColor: "#afba15" }}>
+					<Link to="consultant/records" style={{ backgroundColor: "#afba15" }}>
 						<FaRegAddressBook className="icons-style" />
 						<p style={{ padding: "9px" }}>Customer Records</p>
-					</div>
+					</Link>
 
-					<div style={{ backgroundColor: "#0c0847" }}>
+					{/* <div style={{ backgroundColor: "#0c0847" }}>
 						<BsChatDots className="icons-style" />
 						<p style={{ padding: "9px" }}>Connect</p>
-					</div>
+					</div> */}
 				</section>
 				{show && <ImageProfile setShow={setShow} />}
 				{setting && <ConsultantSettings setting={setSetting} />}

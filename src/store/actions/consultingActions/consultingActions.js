@@ -1,4 +1,5 @@
 import axios from "axios";
+import emailjs from "@emailjs/browser";
 
 function generateId(length) {
 	let result = "";
@@ -12,6 +13,16 @@ function generateId(length) {
 	}
 	return result;
 }
+
+// for the email
+const sendConsultantAccountCreatedEmail = (consultantId, consultantEmail) => {
+	const params = {
+		consultantId: consultantId,
+		dateCreated: new Date(),
+		newConsultantEmail: consultantEmail,
+	};
+	emailjs.sendForm("gmail", "template_zgc9kqb", params);
+};
 
 const uploadImgs = (files, userId) => {
 	const uploaders = files.map((file, index) => {
@@ -74,6 +85,7 @@ export const consultantSignup = (data) => {
 					});
 			})
 			.then(() => {
+				sendConsultantAccountCreatedEmail(newUserId, data.email);
 				// dispatch({ type: "GET_DATA", payload: data });
 			})
 			.catch((err) => {

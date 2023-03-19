@@ -5,6 +5,8 @@ The itracker project is an emcompassing food sustainablility project that intend
 ## Technology Scope
 
 This project is mainly developed using [react-bootstrap](https://react-bootstrap.github.io/getting-started/introduction) package (might need to move to component creation later on)
+This project uses react-routerV5 [react-routerV5 documentation](https://v5.reactrouter.com/web/guides/quick-start)
+Firebase [firebase build documentation](https://firebase.google.com/docs/build) web-version8
 
 ## Applicaton build practices
 

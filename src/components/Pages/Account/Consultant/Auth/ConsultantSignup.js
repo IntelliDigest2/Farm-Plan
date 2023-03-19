@@ -10,6 +10,7 @@ import { AddButton, IconButton } from "../../../../SubComponents/Button";
 
 const ConsultantSignup = (props) => {
 	const [completed, setCompleted] = useState(false);
+	const [isLoading, setIsLoading] = useState(null);
 	const [show, setShow] = useState("password");
 	const [certificateImg, setCertificateImg] = useState();
 	const [IDImg, setIDImg] = useState();
@@ -33,7 +34,6 @@ const ConsultantSignup = (props) => {
 
 	//preview uploaded image
 	useEffect(() => {
-		function updateImage(img) {}
 		if (!certificateImg) {
 			setImgPreview1(undefined);
 			return;
