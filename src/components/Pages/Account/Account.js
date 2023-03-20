@@ -2,6 +2,8 @@ import React, { useState, useEffect, Fragment } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { useTranslation, Trans } from 'react-i18next';
+
 import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "../../SubComponents/Profile";
@@ -29,7 +31,17 @@ import { createSubAccount } from "../../../store/actions/authActions";
 import { PTSModal } from "./PlanToSave/PTSModal";
 import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
+
 const NewAccount = (props) => {
+
+  const { i18n } = useTranslation();
+
+
+  const lngs = {
+    en: { nativeName: 'English' },
+    fr: { nativeName: 'French' }
+  };
+
   //handles loading page
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -96,6 +108,14 @@ const NewAccount = (props) => {
             <Profile profile={props.profile} type={type} />
           </div>
 
+          <div>
+            {Object.keys(lngs).map((lng) => (
+              <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal', padding: '10px' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+                {lngs[lng].nativeName}
+              </button>
+            ))}
+          </div>
+
           <div className="tabs">
             <TabContext value={value}>
               <AccountType
@@ -117,6 +137,11 @@ const NewAccount = (props) => {
 };
 
 const AccountType = (props) => {
+
+  
+
+  const { t } = useTranslation();
+
   switch (props.type) {
     case "farm_admin":
     case "farm_sub":
@@ -323,6 +348,7 @@ const AccountType = (props) => {
     default:
       return (
         <>
+        
           <TabList
             TabIndicatorProps={{
               style: {
@@ -333,9 +359,9 @@ const AccountType = (props) => {
             onChange={props.handleChange}
             centered
           >
-            <Tab disableRipple label="Food" value="0" />
-            <Tab disableRipple label="Health" value="1" />
-            <Tab disableRipple label="Environment" value="2" />
+            <Tab disableRipple label={t('description.tab_food')} value="0" />
+            <Tab disableRipple label={t('description.tab_health')} value="1" />
+            <Tab disableRipple label={t('description.tab_environment')} value="2" />
           </TabList>
           <SwipeableViews
             axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}

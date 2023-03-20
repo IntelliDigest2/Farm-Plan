@@ -3,18 +3,23 @@ import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 // import Accordion from "@mui/material/Accordion";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import AccordionDetails from "@mui/material/AccordionDetails";
 
 export function Food({ setShow, setChooseModal }) {
 
+  const { t } = useTranslation();
+
   return (
     <>
       <IconButton
         title="Plan your meals with us, search a range of delicious recipes."
         icon="notes"
-        label="My Food Diary"
+        label={t('description.icon_diary')}
         color="turquoise"
         goTo="/meal-plan"
       />
@@ -22,7 +27,7 @@ export function Food({ setShow, setChooseModal }) {
       <IconButton
         title="Find out more about the Plan to Save campaign, and what you can do to help."
         icon="food"
-        label="Plan to Save"
+        label={t('description.icon_save')}
         color="yellow"
         onClick={() => {
           setShow(true);

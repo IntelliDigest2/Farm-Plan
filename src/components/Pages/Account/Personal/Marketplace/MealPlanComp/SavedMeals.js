@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 import MealsBoxRecipe from "./MealsBox";
 import { connect } from "react-redux";
 import { getRecipes } from "../../../../../../store/actions/marketplaceActions/savedMealData";
 import { getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { AddMealModalRecipe } from "./Icons/AddMealModalRecipe";
 const SavedMeals = (props) => {
+
+  const { t } = useTranslation();
+
   const [sMeals, setSMeals] = useState([]);
   const [weeklyMeals, setWeeklyMeals] = useState([]);
   const [show, setShow] = useState(false);
@@ -120,7 +126,7 @@ const SavedMeals = (props) => {
   return (
     <>
       <div className="row">
-        <div className="col-8 basic-title-left mb-3">My Saved Meals</div>
+        <div className="col-8 basic-title-left mb-3">{t('description.my_saved_meals')}</div>
         <div className="col-4" style={{textAlign: "right"}}><AddMealModalRecipe show={show} setShow={setShow} /></div>
       </div>
       <div className="saved-meals">
