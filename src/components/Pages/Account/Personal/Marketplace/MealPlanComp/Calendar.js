@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { useTranslation, Trans } from 'react-i18next';
+
 import { AddMealModal } from "./Icons/AddMealModal";
 import Scanner from "../../../../../SubComponents/QRCode/Scanner";
 
@@ -11,6 +13,9 @@ import MyMeals from "./meals";
 import { PreparedOrRaw } from "./Icons/PreparedOrRaw";
 
 export const Calendar = ({ value, onChange }) => {
+
+  const { t } = useTranslation();
+
   const [calendar, setCalendar] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -52,7 +57,7 @@ export const Calendar = ({ value, onChange }) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-8" style={{textAlign: "left"}}>Add casual meals to your calendar or edit added meals 🙂</div>
+        <div className="col-8" style={{textAlign: "left"}}>{t('description.add_meal_diary')} 🙂</div>
         <div className="col-4" style={{textAlign: "right"}}><AddMealModal value={value} show={show} setShow={setShow} />
       </div>
       </div>

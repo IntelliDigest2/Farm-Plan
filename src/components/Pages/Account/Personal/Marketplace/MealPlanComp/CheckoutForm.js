@@ -4,7 +4,7 @@ import { Form, InputGroup, Button } from "react-bootstrap";
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-
+ 
   const handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
