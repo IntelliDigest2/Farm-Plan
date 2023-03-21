@@ -4,12 +4,16 @@ import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { editPurchaseStatusOnFarmer } from "../../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { useTranslation, Trans } from 'react-i18next';
 
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function ConfirmItemIconFarm(props) {
+
+  const { t } = useTranslation();
+
 
   const [showModal, setShow] = useState(false);
 
@@ -37,17 +41,17 @@ function ConfirmItemIconFarm(props) {
           sx={{ ml: 2 }}
         >
           <Button variant="outlined" color="success" onClick={handleShow}>
-            Confirm
+          {t('description.button_confirm')}
           </Button> 
         </IconButton>
       </Tooltip>
 
       <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Confirm</Modal.Title>
+            <Modal.Title>{t('description.button_confirm')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            <p><h5>Accept to Deliver this Order?</h5></p>
+            <p><h5>{t('description.accept_to_deliver')}</h5></p>
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"
@@ -55,12 +59,12 @@ function ConfirmItemIconFarm(props) {
           handleSelect()
           handleClose()
         }}>
-            Yes
+            {t('description.button_yes')}
           </Button>
           <Button variant="secondary" 
             onClick={handleClose}
           >
-            Cancel
+            {t('description.button_cancel')}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -24,7 +24,7 @@ function AteMealIcon(props) {
   const handleEat = (id) => {
    
     submitNotification(
-      "Geddit",
+      "Success",
       "Food has just been marked as eaten"
     );
 

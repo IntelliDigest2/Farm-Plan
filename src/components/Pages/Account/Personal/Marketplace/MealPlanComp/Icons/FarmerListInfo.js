@@ -4,6 +4,7 @@ import { Form, InputGroup, Button, Card } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
 import { getPurchaseInfo } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
+import { useTranslation, Trans } from 'react-i18next';
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -11,10 +12,11 @@ import { ListItemText } from "@mui/material";
 import SendToFarmerIcon from "./SendToFarmerIcon";
 
 function FarmerListInfo(props) {
+  const { t } = useTranslation();
 
   const [farmers, setFarmers ] = useState(props.list)
 
-  console.log("this is farmers", farmers)
+ // console.log("this is farmers", farmers)
   
   return (
     <>
@@ -60,7 +62,7 @@ function FarmerListInfo(props) {
         </>
       ) : (
         <div className="empty basic-title-left">
-          <p>This farmer does not have this item :( </p>
+          <p>{t('description.farmer_list_info')} :( </p>
         </div>
       )}
     </>

@@ -29,7 +29,7 @@ function AteMealIconPlan(props) {
     );
 
     var getMeal = props.meal
-    console.log("grr =====>", getMeal)
+    //console.log("grr =====>", getMeal)
     var ingr = getMeal.ingredients
 
     ingr.forEach(e => {

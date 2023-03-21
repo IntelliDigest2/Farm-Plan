@@ -4,6 +4,7 @@ import MealType from "../Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
+import { useTranslation, Trans } from 'react-i18next';
 
 import { connect } from "react-redux";
 import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
@@ -12,6 +13,9 @@ import { addToShoppingList } from "../../../../../../../store/actions/marketplac
 import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
 
 function AddPlanForm(props) {
+
+  const { t } = useTranslation();
+
   const [mealName, setMealName] = useState("");
   const [mealType, setMealType] = useState("");
   const [err, setErr] = useState("");
@@ -123,7 +127,7 @@ function AddPlanForm(props) {
         send test
       </button> */}
       <Form.Group>
-        <Form.Label>Give this plan a name</Form.Label>
+        <Form.Label>{t('description.give_this_plan_name')}</Form.Label>
         <Form.Control
           type="text"
           id="mealName"
@@ -159,7 +163,7 @@ function AddPlanForm(props) {
             handleIngredient();
           }}
         >
-          Add Meal
+          {t('description.add_meal')}
         </Button>
       </Form.Group>
 
@@ -174,7 +178,7 @@ function AddPlanForm(props) {
 
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn shadow-none" type="submit">
-          Done
+        {t('description.button_done')}
         </Button>
       </div>
     </Form>

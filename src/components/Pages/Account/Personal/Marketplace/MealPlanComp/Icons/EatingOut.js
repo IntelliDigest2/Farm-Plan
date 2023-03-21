@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import "../../../../../../SubComponents/Button.css";
+import { useTranslation, Trans } from 'react-i18next';
 
 import { recommend } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 
 function EatingOut(props) {
+
+  const { t } = useTranslation();
+
   const [restaurant, setRestaurant] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
@@ -23,8 +27,7 @@ function EatingOut(props) {
     <>
       <div className="basic-title-left">
         <div className="mb-3">
-          We have not identified a sustainable restaurant in your location,
-          please, recommend a restaurant or check back later.
+          {t('description.we_have_not_restaurant')}
         </div>
         <Form
           onSubmit={(e) => {
@@ -34,28 +37,28 @@ function EatingOut(props) {
           }}
         >
           <Form.Group>
-            <Form.Label>Restaurant Name.</Form.Label>
+            <Form.Label>{t('description.restaurant_name')}</Form.Label>
             <Form.Control
               type="text"
               onChange={(e) => setRestaurant(e.target.value)}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Location.</Form.Label>
+            <Form.Label>{t('description.location')}</Form.Label>
             <Form.Control
               type="text"
               onChange={(e) => setLocation(e.target.value)}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Their email address.</Form.Label>
+            <Form.Label>{t('description.email_address')}</Form.Label>
             <Form.Control
               type="text"
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
           <Button className="green-btn" type="submit">
-            Submit
+            {t('description.button_submit')}
           </Button>
         </Form>
       </div>

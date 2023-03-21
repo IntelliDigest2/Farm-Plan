@@ -5,9 +5,13 @@ import AddMealFormShop from "./AddMealFormShop";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import ScannerShop from "../../../../../../SubComponents/QRCode/ScannerShop";
+import { useTranslation, Trans } from 'react-i18next';
 
 export function AddMealModalShop({ show, setShow, value }) {
   const [eatingOut, setEatingOut] = useState("unconfirmed");
+
+
+  const { t } = useTranslation();
 
   //control barcode scanner
   const [scan, setScan] = useState(false);
@@ -45,7 +49,7 @@ export function AddMealModalShop({ show, setShow, value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add new meal for {value.format("DD/MM")}
+          {t('description.add_new_meal_for')} {value.format("DD/MM")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -68,6 +72,8 @@ export function AddMealModalShop({ show, setShow, value }) {
 }
 
 function InOrOut(props) {
+
+
   switch (props.eatingOut) {
     default:
     case "unconfirmed":

@@ -10,9 +10,11 @@ import Button from '@mui/material/Button';
 import GiftFood from "../../../GiftFoodE"
 import { connect } from "react-redux";
 import GiftFoodE from "../../../GiftFoodE";
+import { useTranslation, Trans } from 'react-i18next';
 
 //need props id
 function GiftFoodIcon(props) {
+  const { t } = useTranslation();
 
   const [showModal, setShow] = useState(false);
 
@@ -69,19 +71,19 @@ function GiftFoodIcon(props) {
           // }}
         >
         <Button variant="outlined" color="success" onClick={handleShow}>
-          Gift Food
+          {t('description.gift_food')}
         </Button>        
       </IconButton>
       </Tooltip>
       <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Gifted Item?</Modal.Title>
+            <Modal.Title>{t('description.gifted_item')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-        <p><h5>Remove {props.item.quantity} {props.item.measure} of {props.item.item} from the inventory?</h5></p>
+        <p><h5>{t('description.remove')} {props.item.quantity} {props.item.measure} {t('description.of')} {props.item.item} {t('description.from_your_inventory')}</h5></p>
            
         <Alert variant="primary">
-          Cannot find the measurement unit? select another unit, measure and update
+          {t('description.cannot_find_measurement')} 
         </Alert>
             <GiftFood item={props.item}/>
           </Modal.Body>
@@ -93,7 +95,7 @@ function GiftFoodIcon(props) {
           handleClose();
           //history.push("/gift-food")
         }}>
-            Done
+            {t('description.button_done')}
           </Button>
           {/* <Button variant="secondary" 
           onClick={handleClose}

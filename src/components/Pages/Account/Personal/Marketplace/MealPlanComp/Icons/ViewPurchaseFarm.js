@@ -2,12 +2,15 @@ import React from "react";
 import { useId } from "react";
 import { Modal } from "react-bootstrap";
 import ViewPurchaseInfoFarm from "./ViewPurchaseInfoFarm";
+import { useTranslation, Trans } from 'react-i18next';
 
 export function ViewPurchaseFarm({
   show,
   setShow,
   forceUpdate,
 }) {
+  const { t } = useTranslation();
+
   const handleFormClose = () => setShow(false);
   return (
     <Modal
@@ -18,7 +21,7 @@ export function ViewPurchaseFarm({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="add-meal">Orders</Modal.Title>
+        <Modal.Title id="add-meal">{t('description.order')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <ViewPurchaseInfoFarm />

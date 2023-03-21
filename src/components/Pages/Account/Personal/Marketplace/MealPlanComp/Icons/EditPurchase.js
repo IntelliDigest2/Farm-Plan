@@ -2,6 +2,8 @@ import React from "react";
 import { useId } from "react";
 import { Modal } from "react-bootstrap";
 import EditPurchaseForm from "./EditPurchaseForm";
+import { useTranslation, Trans } from 'react-i18next';
+
 
 export function EditPurchase({
   cart,
@@ -11,6 +13,8 @@ export function EditPurchase({
   forceUpdate,
   uid,
 }) {
+  const { t } = useTranslation();
+
   const handleFormClose = () => setShow(false);
   return (
     <Modal
@@ -21,7 +25,7 @@ export function EditPurchase({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="add-meal">Edit Meal</Modal.Title>
+        <Modal.Title id="add-meal">{t('description.edit_meal')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* <p>bleeeeeeeeh</p> */}

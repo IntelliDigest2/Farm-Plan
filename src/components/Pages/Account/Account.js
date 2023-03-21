@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { useTranslation, Trans } from 'react-i18next';
 
-import { Container } from "react-bootstrap";
+import { Container, Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "../../SubComponents/Profile";
 import "../Pages.css";
@@ -39,7 +39,11 @@ const NewAccount = (props) => {
 
   const lngs = {
     en: { nativeName: 'English' },
-    fr: { nativeName: 'French' }
+    fr: { nativeName: 'French' },
+    es: { nativeName: 'Spanish' },
+    ar: { nativeName: 'Arabic' },
+    zh: { nativeName: 'Chinese' },
+    ru: { nativeName: 'Russian' }
   };
 
   //handles loading page
@@ -109,11 +113,22 @@ const NewAccount = (props) => {
           </div>
 
           <div>
-            {Object.keys(lngs).map((lng) => (
-              <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal', padding: '10px' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+
+            
+              <>
+               {/* <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal', padding: '10px' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
                 {lngs[lng].nativeName}
-              </button>
-            ))}
+              </button> */}
+
+              <DropdownButton id="dropdown-basic-button" title="Language" variant='success'>
+                
+                {Object.keys(lngs).map((lng) => (
+                  <Dropdown.Item onSelect={() => i18n.changeLanguage(lng)}>{lngs[lng].nativeName}</Dropdown.Item>
+                  ))}
+
+              </DropdownButton>
+              </>
+             
           </div>
 
           <div className="tabs">

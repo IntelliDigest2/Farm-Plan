@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";  
+import { useTranslation, Trans } from 'react-i18next';
 
 
 import buildCalendar from "../BuildCalendar/Build";
@@ -14,6 +15,8 @@ import { createMealPlanData } from "../../../../../../../store/actions/marketpla
 import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 
 function AddToCalendar(props) {
+  const { t } = useTranslation();
+
   const [calendar, setCalendar] = useState([]);
   const handleFormClose = () => props.setShow(false);
 
@@ -72,7 +75,7 @@ function AddToCalendar(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-to-calendar">
-            Add {props.selected.meal} to Calendar
+          {t('description.add')}  {props.selected.meal} {t('description.to_calendar')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

@@ -6,10 +6,12 @@ import CreditScoreIcon from '@mui/icons-material/CreditScore';import { editPurch
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
+import { useTranslation, Trans } from 'react-i18next';
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function PayIcon(props) {
+  const { t } = useTranslation();
 
   let history = useHistory();
 
@@ -59,10 +61,10 @@ function PayIcon(props) {
 
       <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Payment</Modal.Title>
+            <Modal.Title>{t('description.payment')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            <p><h5>Continue to payment?</h5></p>
+            <p><h5>{t('description.continue_to_payment')}</h5></p>
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"
@@ -70,12 +72,12 @@ function PayIcon(props) {
           handlePay()
           handleClose()
         }}>
-            Yes
+            {t('description.button_yes')}
           </Button>
           <Button variant="secondary" 
             onClick={handleClose}
           >
-            Cancel
+            {t('description.button_cancel')}
           </Button>
         </Modal.Footer>
       </Modal>

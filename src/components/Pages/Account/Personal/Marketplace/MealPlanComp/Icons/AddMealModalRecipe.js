@@ -5,8 +5,11 @@ import AddMealFormRecipe from "./AddMealFormRecipe";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import ScannerShop from "../../../../../../SubComponents/QRCode/ScannerShop";
+import { useTranslation, Trans } from 'react-i18next';
 
 export function AddMealModalRecipe({ show, setShow, value }) {
+  const { t } = useTranslation();
+
   const [eatingOut, setEatingOut] = useState("unconfirmed");
 
   //control barcode scanner
@@ -45,7 +48,7 @@ export function AddMealModalRecipe({ show, setShow, value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add To Saved Meals
+            {t('description.add_save_meal')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

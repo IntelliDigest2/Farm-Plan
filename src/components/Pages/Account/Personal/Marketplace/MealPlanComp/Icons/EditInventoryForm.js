@@ -7,9 +7,12 @@ import { editSavedMeal } from "../../../../../../../store/actions/marketplaceAct
 import { editInventoryData } from "../../../../../../../store/actions/marketplaceActions/inventoryData"
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import { useTranslation, Trans } from 'react-i18next';
 
 
 function EditInventoryForm(props) {
+  const { t } = useTranslation();
+
   const [food, setFood] = useState(props.food);
   const [quantity, setQuantity] = useState(props.quantity);
   const [updatedQty, setUpdatedQty] = useState("");
@@ -57,7 +60,7 @@ function EditInventoryForm(props) {
       }}
     >
       <Form.Group>
-        <Form.Label>Ingredient</Form.Label>
+        <Form.Label>{t('description.ingredient')}</Form.Label>
         <Form.Control
           type="text"
           id="food"
@@ -81,7 +84,7 @@ function EditInventoryForm(props) {
       </Form.Group> */}
 
       <Form.Group>
-        <Form.Label>Weight/volume - Meal plan</Form.Label>
+        <Form.Label>{t('description.weight_volume')}</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -106,7 +109,7 @@ function EditInventoryForm(props) {
       </Form.Group>
 
       <Form.Group>
-        <Form.Label>Weight/Volume - Purchased food item </Form.Label>
+        <Form.Label>{t('description.weight_volume_food')} </Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -131,7 +134,7 @@ function EditInventoryForm(props) {
       </Form.Group>
 
       <Form.Group>
-        <Form.Label>Expiry Date</Form.Label>
+        <Form.Label>{t('description.expiry_date')}</Form.Label>
         <DatePicker 
           type="text"
           id="expiry"
@@ -142,7 +145,7 @@ function EditInventoryForm(props) {
       </Form.Group>
 
       <Form.Group>
-        <Form.Label>Place of Purchase</Form.Label>
+        <Form.Label>{t('description.place_of_purchase')}</Form.Label>
         <Form.Control
           type="text"
           id="food"
@@ -173,7 +176,7 @@ function EditInventoryForm(props) {
       
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn" type="submit">
-          Done
+          {t('description.button_done')}
         </Button>
       </div>
     </Form>

@@ -10,6 +10,7 @@ import { addToShoppingListUpdate } from "../../../../../../../store/actions/mark
 import { addToPurchaseItems, getInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { getAllItems, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 // import { addToPurchaseItems } from "../../../../../../../store/actions/dataActions";
+import { useTranslation, Trans } from 'react-i18next';
 
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
 import AddToCartIcon from "../Icons/AddToCartIcon";
@@ -34,6 +35,9 @@ import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 function ShopItems(props) {
   
   // console.log("All hail props", props)
+
+  const { t } = useTranslation();
+
 
   const [list, setList] = useState([]);
   const [allList, setAllList] = useState([]);
@@ -430,7 +434,7 @@ const addToList = () => {
   return (
     <>
      <Button className="blue-btn shadow-none" variant="contained" onClick={handleClickOpen}>
-              All
+      {t('description.button_all')} 
      </Button>
       <Refresh />
 
@@ -581,18 +585,18 @@ const addToList = () => {
           <Stack spacing={2} direction="row" style={{justifyContent: 'center'}}>
             <Button className="blue-btn shadow-none" type="submit"
               onClick={handleShow}>
-                View Cart
+                {t('description.button_view_cart')} 
             </Button>
 
             <Button className="blue-btn shadow-none" variant="contained" onClick={handleClickOpen}>
-              All
+              {t('description.button_all')} 
             </Button>
           </Stack>
 
           
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>List of items to order</Modal.Title>
+            <Modal.Title>{t('description.list_of_items')} </Modal.Title>
           </Modal.Header>
         <Modal.Body>
             {cartItems}
@@ -603,27 +607,27 @@ const addToList = () => {
           setCart([])
           handleClose()
           }}>
-            Confirm
+            {t('description.button_confirm')}
           </Button>
           <Button variant="secondary" onClick={handleClose}>
-            Cancel
+            {t('description.button_cancel')}
           </Button>
         </Modal.Footer>
       </Modal>
 
       <div className="empty basic-title-left">
-          <p>Regenerate Your Shopping List</p>
+          <p>{t('description.regenerate_shop_list')}</p>
           <Button className="blue-btn shadow-none" type="submit"
             onClick={handleShowList}>
-              Generate
+              {t('description.button_generate')}
           </Button>
 
           <Modal show={showModalList} onHide={handleCloseList}>
           <Modal.Header closeButton>
-            <Modal.Title>Generate Your Shopping List</Modal.Title>
+            <Modal.Title>{t('description.generate_shop_list')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            Generate a new list?
+            {t('description.generate_new_list')}
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={()=> {
@@ -631,10 +635,10 @@ const addToList = () => {
           submitNotification("Generating new list..");
 
           }}>
-            Yes
+            {t('description.button_yes')}
           </Button>
           <Button variant="secondary" onClick={handleCloseList}>
-            No
+            {t('description.button_no')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -651,17 +655,17 @@ const addToList = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-          Order your food items from your shopping list
+          {t('description.order_food_items')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={Close}>Cancel</Button>
+          <Button onClick={Close}>{t('description.button_cancel')}</Button>
           <Button onClick={() => {
             AllPurchaseItem()
             Close()
           }} 
             autoFocus>
-            Yes
+            {t('description.button_yes')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -669,28 +673,28 @@ const addToList = () => {
         </>
       ) : (
         <div className="empty basic-title-left">
-          <p>There are no items in the list yet :( please refresh page</p>
+          <p>There are no items in the list yet :( please refresh page{t('description.list_of_items')}</p>
           <Button className="blue-btn shadow-none" type="submit"
             onClick={handleShow}>
-              Generate
+              Generate{t('description.list_of_items')}
           </Button>
 
           <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Generate New Shopping List</Modal.Title>
+            <Modal.Title>{t('description.no_items_shop')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            Generate a new list?
+            {t('description.generate_new_list')}
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" onClick={()=> {
           addToList()
           submitNotification("Generating new list..");
           }}>
-            Yes
+            {t('description.button_yes')}
           </Button>
           <Button variant="secondary" onClick={handleClose}>
-            No
+            {t('description.button_no')}
           </Button>
         </Modal.Footer>
       </Modal>

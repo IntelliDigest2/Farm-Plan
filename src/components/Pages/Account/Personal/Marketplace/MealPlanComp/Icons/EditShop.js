@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import EditShopForm from "./EditShopForm";
+import { useTranslation, Trans } from 'react-i18next';
 
 export function EditShop({
   food,
@@ -16,6 +17,8 @@ export function EditShop({
   setUpdate,
   saved,
 }) {
+  const { t } = useTranslation();
+
   const handleFormClose = () => setShow(false);
 
   return (
@@ -27,7 +30,7 @@ export function EditShop({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="add-meal">Edit Item</Modal.Title>
+        <Modal.Title id="add-meal">{t('description.edit_item')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* <p>bleeeeeeeeh</p> */}
