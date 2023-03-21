@@ -6,8 +6,11 @@ import { connect } from "react-redux";
 import { editSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { editMealDataPlan } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { submitNotification } from "../../../../../../lib/Notifications";
+import { useTranslation, Trans } from 'react-i18next';
 
 function EditMealFormPlan(props) {
+  const { t } = useTranslation();
+
   const [mealName, setMealName] = useState(props.meal);
   const [ingredients, setIngredients] = useState(props.ingredient);
 
@@ -34,7 +37,7 @@ function EditMealFormPlan(props) {
       }}
     >
       <Form.Group>
-        <Form.Label>Meal Name</Form.Label>
+        <Form.Label>{t('description.meal_name')}</Form.Label>
         <Form.Control
           type="text"
           id="mealName"
@@ -48,7 +51,7 @@ function EditMealFormPlan(props) {
       {ingredients.map((ingredient, i) => (
         <div className="form" key={i}>
           <Form.Group>
-            <Form.Label>Ingredients</Form.Label>
+            <Form.Label>{t('description.ingredient')}</Form.Label>
             <Form.Control
               type="text"
               id="food"
@@ -110,7 +113,7 @@ function EditMealFormPlan(props) {
 
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn" type="submit">
-          Done
+          {t('description.button_done')}
         </Button>
       </div>
     </Form>

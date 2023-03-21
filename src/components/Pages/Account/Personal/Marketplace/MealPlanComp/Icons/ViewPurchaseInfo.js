@@ -5,12 +5,14 @@ import "../../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
 import { getPurchaseInfo } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 import ConfirmItemIcon from "../Icons/ConfirmItemIcon"
+import { useTranslation, Trans } from 'react-i18next';
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import PayIcon from "./PayIcon";
 
 function ViewPurchaseInfo(props) {
+  const { t } = useTranslation();
 
   const [list, setList] = useState([]);
 
@@ -72,16 +74,16 @@ useEffect(() => {
 								
 								<thead >
                   <tr>
-                  <h6><b>Order ID: </b>{item.refID}</h6>
-                  <h6><b>Status: </b>{item.status}</h6>
+                  <h6><b>{t('description.order_id')} </b>{item.refID}</h6>
+                  <h6><b>{t('description.order_status')} </b>{item.status}</h6>
 
                   </tr>
 									<tr>
-										<th className="table-header">Product</th>
-										<th className="table-header">Quantity</th>
-										<th className="table-header">Measure</th>
-										<th className="table-header">Price</th>
-										<th className="table-header">Supplier</th>
+										<th className="table-header">{t('description.product')}</th>
+										<th className="table-header">{t('description.quantity')}</th>
+										<th className="table-header">{t('description.measure')}</th>
+										<th className="table-header">{t('description.price')}</th>
+										<th className="table-header">{t('description.supplier')}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -126,7 +128,7 @@ useEffect(() => {
         </>
       ) : (
         <div className="empty basic-title-left">
-          <p>You dont have any Notifications :( </p>
+          <p>{t('description.no_notifications')} </p>
         </div>
       )}
     </>

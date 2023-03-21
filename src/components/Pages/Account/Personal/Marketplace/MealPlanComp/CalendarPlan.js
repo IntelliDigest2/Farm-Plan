@@ -8,10 +8,16 @@ import buildCalendar from "./BuildCalendar/Build";
 import dayStyles from "./BuildCalendar/dayStyles";
 import CalendarHeader from "./BuildCalendar/header";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 import MyPlans from "./plans";
 import { PreparedOrRaw } from "./Icons/PreparedOrRaw";
 
 export const CalendarPlan = ({ value, onChange }) => {
+
+  const { t } = useTranslation();
+
   const [calendar, setCalendar] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -53,10 +59,10 @@ export const CalendarPlan = ({ value, onChange }) => {
         </div>
       </div> */}
       <div className="row">
-        <div className="col-8" style={{textAlign: "left"}}>Want to make changes to your meal plan? Add more meals to your meal plan by clicking the 'plus' button or remove meals from the meal plan by deleting from the meal plan list  🙂</div>
+        <div className="col-8" style={{textAlign: "left"}}>{t('description.changes_to_mealplan')}  🙂</div>
         <div className="col-4" style={{textAlign: "right"}}><AddPlanModal value={value} show={show} setShow={setShow} /></div>
         <Alert variant="primary">
-          New to meal planning? Create your 6-Months meal plan by clicking on the 'plus' button, using the search button or your saved meals or the barcode scanner, add at least 7 meals each for breakfast, lunch and dinner; then go to the View Plan tab to generate a 6 month meal plan
+          {t('description.changes_to_mealplan')}
         </Alert>
       </div>
       <div className="plan-box">

@@ -4,7 +4,13 @@ import Calendar from "./CalendarPlan";
 import FullCalendarApp from "./FullCalendar";
 import Details from "./Details";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 export default function CalendarPlanner(props, getItems, setGetItems) {
+
+  const { t } = useTranslation();
+
   const [showDetails, setShowDetails] = useState(false);
   const [data, setData] = useState(null);
 
@@ -15,7 +21,7 @@ export default function CalendarPlanner(props, getItems, setGetItems) {
 
   return (
     <div>
-      <h2>6-Months Meal Plan</h2>
+      <h2>{t('description.six_month_plan')}</h2>
       <FullCalendarApp value={props.value} getItems={getItems} setGetItems={setGetItems}/>
       <br />
       {showDetails && <Details data={data} />}

@@ -2,12 +2,15 @@ import React from "react";
 import { useId } from "react";
 import { Modal } from "react-bootstrap";
 import ViewPurchaseInfo from "./ViewPurchaseInfo";
+import { useTranslation, Trans } from 'react-i18next';
 
 export function ViewPurchase({
   show,
   setShow,
   forceUpdate,
 }) {
+  const { t } = useTranslation();
+
   const handleFormClose = () => setShow(false);
   return (
     <Modal
@@ -18,7 +21,7 @@ export function ViewPurchase({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="add-meal">Orders</Modal.Title>
+        <Modal.Title id="add-meal">{t('description.order')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <ViewPurchaseInfo />

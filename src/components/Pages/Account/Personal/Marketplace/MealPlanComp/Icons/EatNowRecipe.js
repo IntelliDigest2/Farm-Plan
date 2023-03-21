@@ -6,9 +6,12 @@ import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
 import ScannerPrepared from "../../../../../../SubComponents/QRCode/ScannerPrepared";
+import { useTranslation, Trans } from 'react-i18next';
 
 
 export default function EatNowRecipe({ value }) {
+  const { t } = useTranslation();
+
   const [eatRecipe, setEatRecipe] = useState("unconfirmed");
   const [show, setShow] = useState(true);
 
@@ -48,7 +51,7 @@ export default function EatNowRecipe({ value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Eat Now or Add Recipe
+          {t('description.eat_now_or_add_recipe')} 
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -77,13 +80,15 @@ export default function EatNowRecipe({ value }) {
 }
 
 function NowOrRecipe(props) {
+  const { t } = useTranslation();
+
   switch (props.eatRecipe) {
     default:
     case "unconfirmed":
       return (
         <>
           <div className="basic-title-left">
-            Eat Now or Add Recipe
+          {t('description.eat_now_or_add_recipe')} 
           </div>
           <Row>
             <Col>

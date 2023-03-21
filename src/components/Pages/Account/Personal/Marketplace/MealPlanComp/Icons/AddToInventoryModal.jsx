@@ -3,8 +3,12 @@ import Tooltip from "@mui/material/Tooltip";
 import { AddButton } from "../../../../../../SubComponents/Button";
 import { Modal } from "react-bootstrap";
 import AddToInventoryForm from "./AddToInventoryForm";
+import { useTranslation, Trans } from 'react-i18next';
 
 export const AddToInventoryModal = ({ show, setShow, update, setUpdate }) => {
+
+  const { t } = useTranslation();
+
   const handleForm = () => setShow(true);
   const handleFormClose = () => setShow(false);
 
@@ -24,7 +28,7 @@ export const AddToInventoryModal = ({ show, setShow, update, setUpdate }) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-item" className="basic-title-left basic-lg">
-            Add new item to inventory
+          {t('description.add_to_inventory')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

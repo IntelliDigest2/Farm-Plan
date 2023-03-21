@@ -7,6 +7,8 @@ import AddToCalendar from "./AddToCalendar";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function Add(props) {
+
+
   //shows add to calendar modal only for saved or searched meals tab
   const [showCalendar, setShowCalendar] = useState(false);
   //sets the selected meal to be passed down
