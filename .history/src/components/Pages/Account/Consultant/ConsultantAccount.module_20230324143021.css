@@ -1,0 +1,112 @@
+.login_main{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 50%;
+    text-align: center;
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+.profile_main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings_icon_contanier{
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    height:25px;
+    width:25px;
+    background-color:#afba15;
+    opacity:0.7;
+    cursor: pointer;
+}
+
+.settings_icon_contanier{
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    height:25px;
+    width:25px;
+    background-color:#afba15;
+    opacity:0.7;
+    cursor: pointer;
+}
+.settings_icon{
+   color: white;
+   text-align: center;
+   cursor:pointer;
+}
+
+.profile_update{
+    position: absolute;
+    top: 145px;
+    margin-left: 45px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    color: white;
+    cursor: pointer;
+    background-color: #0c0847;
+}
+
+.feature_buttons{
+    position: absolute;
+    display: flex;
+     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    top: 310px;
+    margin-bottom: 20px;
+}
+.feature_buttons>div{
+    margin:  15px 30px ;
+    cursor: pointer;
+    width: 140px;
+    height: 140px;
+    border-radius: 10px;
+    transition: all 0.3 ease-in;
+    color: white;
+}
+.feature_buttons>div:hover{
+    transform: scale(1.1);
+ }
+
+.login_text{
+    position: absolute;
+    top: 200px;
+    border-bottom:1px solid #afba15;
+    width: 100%;
+}
+
+.login-contanier{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.defaultImg{
+    width: 30px;
+}
+
+a:hover,a:visited,a:active{
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+
+@media screen and (max-width:767px){
+    .login_main{
+        width: 100vw;
+        height: 100vh;
+        overflow-y: scroll;
+    }
+    
+}

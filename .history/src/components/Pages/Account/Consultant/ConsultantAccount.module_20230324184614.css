@@ -1,0 +1,137 @@
+.consultant_main{
+    position: relative;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    height: auto;
+    /* width: 50%; */
+    /* text-align: center; */
+    background-color: white;
+    padding: 40px
+    /* margin-bottom: 20px; */
+}
+
+.consultant_cont{
+    max-width: 100%;
+    /* width: 800px; */
+    margin: 0 auto;
+    /* bakc */
+}
+
+.consultant_header{
+    width: 100%;
+    height: 100px;
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+}
+
+.profile_main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profileImg{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    background-color: red;
+}
+
+.settings_icon_contanier{
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    height:25px;
+    width:25px;
+    background-color:#afba15;
+    opacity:0.7;
+    cursor: pointer;
+}
+
+.settings_icon_contanier{
+    /* position: absolute; */
+    top: 50px;
+    right: 50px;
+    height:25px;
+    width:25px;
+    background-color:#afba15;
+    opacity:0.7;
+    cursor: pointer;
+}
+.settings_icon{
+   color: white;
+   text-align: center;
+   cursor:pointer;
+}
+
+.profile_update{
+    /* position: absolute; */
+    top: 145px;
+    margin-left: 45px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    color: white;
+    cursor: pointer;
+    background-color: #0c0847;
+}
+
+.feature_buttons{
+    /* position: absolute; */
+    display: flex;
+     justify-content: center;
+    align-items: center;
+    /* flex-wrap: wrap; */
+    /* top: 310px; */
+    /* margin-bottom: 20px; */
+}
+.feature_buttons>div{
+    margin:  15px 30px ;
+    cursor: pointer;
+    width: 140px;
+    height: 140px;
+    border-radius: 10px;
+    transition: all 0.3 ease-in;
+    color: white;
+}
+.feature_buttons>div:hover{
+    transform: scale(1.1);
+ }
+
+.login_text{
+    /* position: absolute; */
+    top: 200px;
+    border-bottom:1px solid #afba15;
+    width: 100%;
+}
+
+.login-contanier{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    width: ;
+    margin: 0 auto;
+}
+.defaultImg{
+    width: 30px;
+}
+
+a:hover,a:visited,a:active{
+    text-decoration: none;
+    
+}
+
+
+
+
+@media screen and (max-width:767px){
+    .login_main{
+        width: 100vw;
+        height: 100vh;
+        overflow-y: scroll;
+    }
+    
+}

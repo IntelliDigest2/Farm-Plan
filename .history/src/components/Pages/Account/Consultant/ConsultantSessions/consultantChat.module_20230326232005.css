@@ -1,0 +1,11 @@
+.chat_heading{
+    font-weight: 600;
+
+}
+
+.chat_card{
+    width: 40%;
+    border-radius: 25px;
+    height:100px;
+    border: 1px solid #dee2e6;
+}

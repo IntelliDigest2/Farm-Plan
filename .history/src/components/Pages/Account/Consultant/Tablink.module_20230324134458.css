@@ -1,0 +1,11 @@
+.tabLink{
+    width: 9rem;
+    height: 9rem;
+    padding: 1rem;
+    color: #000;
+    text-decoration: none;
+    
+   
+    margin: 20px;
+    border-radius: 15px;
+}
