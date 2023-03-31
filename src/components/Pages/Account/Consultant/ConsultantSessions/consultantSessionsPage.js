@@ -20,18 +20,24 @@ function ConsultantSessionsPage() {
 	const events = [
 		{
 			title: "Open for avian consultation",
-			start: "2023-03-20T08:00:00",
-			end: "2023-03-20T09:00:00",
+			start: "2023-03-20T08:00:00.000Z",
+			end: "2023-03-20T09:00:00.000Z",
+			status: null,
+			booked: false,
 		},
 		{
 			title: "Open for pig consultation",
-			start: "2023-03-23T14:00:00",
-			end: "2023-03-23T16:00:00",
+			start: "2023-03-23T14:00:00.000Z",
+			end: "2023-03-23T16:00:00.000Z",
+			status: null,
+			booked: false,
 		},
 		{
 			title: "Open for cow consultation",
-			start: "2023-03-23T12:00:00",
-			end: "2023-03-23T03:00:00",
+			start: "2023-03-23T12:00:00.000Z",
+			end: "2023-03-23T03:00:00.000Z",
+			status: null,
+			booked: false,
 		},
 	];
 
@@ -81,20 +87,20 @@ function ConsultantSessionsPage() {
 				</nav>
 
 				<section className={classes.subCont}>
-					{/* <Switch> */}
-					<Route exact path={`${url}/chats`}>
-						<ConsultantChats />
-					</Route>
-					<Route exact path={`${url}/video-bookings`}>
-						<ConsultantVideoBookings />
-					</Route>
-					<Route exact path={`${url}/notes`}>
-						<ConsultantNotes />
-					</Route>
-					<Route exact path={`${url}`}>
-						<AvailabilityOrganiser consultantCalendarInfo={events} />
-					</Route>
-					{/* </Switch> */}
+					<Switch>
+						<Route path={`${url}/chats`}>
+							<ConsultantChats />
+						</Route>
+						<Route exact path={`${url}/video-bookings`}>
+							<ConsultantVideoBookings />
+						</Route>
+						<Route exact path={`${url}/notes`}>
+							<ConsultantNotes />
+						</Route>
+						<Route exact path={`${url}`}>
+							<AvailabilityOrganiser consultantCalendarInfo={events} />
+						</Route>
+					</Switch>
 				</section>
 			</Router>
 		</div>

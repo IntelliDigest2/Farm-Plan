@@ -67,6 +67,7 @@
  
   .form-control{
     width: 100%;
+    /* text-align: left; */
   } 
   
 .form-label{

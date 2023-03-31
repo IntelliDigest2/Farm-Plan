@@ -202,25 +202,18 @@ const App = (props) => {
 						/> */}
 						{/* <Route path="/consultant/login" exact component={ConsultantLogin} /> */}
 						<Route path="/consultant" exact component={ConsultantAccount} />
-						<Route
-							path="/consultant/settings"
-							exact
-							component={ConsultantSettings}
-						/>
+						<Route path="/consultant/settings" component={ConsultantSettings} />
 						<Route
 							path="/consultant/sessions"
-							exact
 							component={ConsultantSessionPage}
 						/>
 
 						<Route
 							path="/consultant/requests"
-							exact
 							component={ConsultantRequestsPage}
 						/>
 						<Route
 							path="/consultant/records"
-							exact
 							component={ConsultantRecordsPage}
 						/>
 

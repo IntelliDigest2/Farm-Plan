@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Fullcalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -13,9 +13,12 @@ function ConsultantCalendar({
 	addBookableEventToDay,
 	editBookableDayEvent,
 }) {
+	const calendarRef = useRef("");
+
 	return (
 		<>
 			<Fullcalendar
+				ref={calendarRef}
 				plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 				initialView={"dayGridMonth"}
 				headerToolbar={{
