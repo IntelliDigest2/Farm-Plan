@@ -204,12 +204,6 @@ function MyMeals(props) {
     updateWeeklyMeals();
   }, [props.weekPlans]);
 
-  
-  useEffect(() => {
-    console.log("why no the user list", meals);
-    console.log("why no the plan list", weeklyMeals);
-  }, [props.mealPlan, props.mealPlanner]);
-
   return (
     <>
     <Refresh />

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 
 // import "./Mealplan.css";
-import { PageWrap } from "../../../../SubComponents/PageWrap";
+import { PageWrapRes } from "../../../../SubComponents/PageWrapRes";
 // import LoadingScreen from "../../../../SubComponents/Loading/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "../../Personal/Marketplace/MealPlanComp/Calendar";
-import SavedMeals from "../../Personal/Marketplace/MealPlanComp/SavedMeals";
+import SavedMeals from "../../Business/Restaurant/SavedMeals";
 import RecipeSearch from "../../Personal/Marketplace/MealPlanComp/Search/RecipeSearch";
 import { ShoppingList } from "../../Personal/Marketplace/MealPlanComp/BuildShoppingList/ShoppingList";
 import moment from "moment";
 import { Inventory } from "../../Personal/Marketplace/MealPlanComp/Inventory";
 // import WaveLoader from "../../../../../SubComponents/Loading/WaveLoader";
-import AddMealForm_restaurant from "../../Personal/Marketplace/MealPlanComp/Icons/AddMealForm_restaurant";
+import AddMealForm_restaurant from "../Restaurant/Icons/AddMealForm_restaurant";
 import MenuPreview from "./MenuPreview";
 
 export default function RestaurantMealPlan() {
@@ -28,7 +28,7 @@ export default function RestaurantMealPlan() {
   // }
 
   return (
-    <PageWrap goTo="/account" header="My Plan to Save">
+    <PageWrapRes goTo="/account" header="Dashboard">
       {/* <WaveLoader /> */}
       <Tabs
         defaultActiveKey="calendar"
@@ -63,6 +63,6 @@ export default function RestaurantMealPlan() {
 
       {/* input available locations for picking up */}
       {/* shopping list */}
-    </PageWrap>
+    </PageWrapRes>
   );
 }

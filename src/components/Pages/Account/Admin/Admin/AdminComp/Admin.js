@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 
 import { connect } from "react-redux";
+import { useTranslation, Trans } from 'react-i18next';
 
 // import Accordion from "../SubComponents/Accordion";
 import { Accordion, Card, Table, ListGroup, ListGroupItem } from 'react-bootstrap';
@@ -14,6 +15,7 @@ import { PageWrapAdmin } from "../../../../../SubComponents/PageWrapAdmin";
 import FarmerListIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/FarmerListIcon";
 
 function Admin(props) {
+	const { t } = useTranslation();
 
 	const [list, setList ] = useState([])
 	const [update, setUpdate] = useState(0);
@@ -87,11 +89,11 @@ function Admin(props) {
 								
 								<thead>
 									<tr>
-										<th>Product</th>
-										<th>Quantity</th>
-										<th>Measure</th>
-										<th>Price</th>
-										<th>Supplier</th>
+										<th>{t('description.product')}</th>
+										<th>{t('description.quantity')}</th>
+										<th>{t('description.measure')}</th>
+										<th>{t('description.price')}</th>
+										<th>{t('description.supplier')}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -130,8 +132,8 @@ function Admin(props) {
 								/>
 							</p>
 							<ListGroup className="list-group-flush">
-								<ListGroupItem>Status: {item.status}</ListGroupItem>
-								<ListGroupItem>Ref Number: {item.id}</ListGroupItem>
+								<ListGroupItem>{t('description.status')}: {item.status}</ListGroupItem>
+								<ListGroupItem>{t('description.ref_num')}: {item.id}</ListGroupItem>
 							</ListGroup>
 							</div>
 							</Card.Body>

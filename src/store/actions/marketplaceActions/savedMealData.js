@@ -31,19 +31,15 @@ export const createRecipe = (recipe) => {
 
     getFirebase()
       .firestore()
-      .collection("marketplace")
-      .doc(uid)
-      .collection("mySavedMeals")
+      .collection("menus")
       .add(recipe.upload)
       .then((docRef) => {
         // make the docId easily acsessible so that we can delete it later if we want.
         getFirebase()
           .firestore()
-          .collection("marketplace")
-          .doc(uid)
-          .collection("mySavedMeals")
+          .collection("menus")
           .doc(docRef.id)
-          .set({ id: docRef.id }, { merge: true });
+          .set({ id: docRef.id, restaurantID: uid }, { merge: true });
         dispatch({ type: "CREATE_RECIPE", recipe });
       })
       .catch((err) => {
@@ -84,9 +80,7 @@ export const getRecipes = (recipe) => {
     }
 
     getFirestore()
-      .collection("marketplace")
-      .doc(uid)
-      .collection("mySavedMeals")
+      .collection("menus").where("restaurantID", "==", uid)
       .get()
       .then((snapshot) => {
         const data = [];
