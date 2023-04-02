@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown } from "../../../../../../SubComponents/Dropdown";
-import MenuSection from "../Search/menuSection";
-import MealType from "../Search/mealType";
+import { Dropdown } from "../../../../../SubComponents/Dropdown";
+import MenuSection from "../../../Personal/Marketplace/MealPlanComp/Search/menuSection";
+import MealType from "../../../Personal/Marketplace/MealPlanComp/Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import FoodItemSearch from "./InputRecipe/FoodItemSearch";
-import "../../../../../../SubComponents/Button.css";
+import FoodItemSearch from "../../../Personal/Marketplace/MealPlanComp/Icons/InputRecipe/FoodItemSearch";
+import "../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
-import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData"
-import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
-import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
-import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
-import SaveMealIcon from "../Icons/SaveMealIcon";
+import { foodIdAPI, nutritionAPI } from "../../../Personal/Marketplace/MealPlanComp/Icons/InputRecipe/NutritionApi";
+import SaveMealIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/SaveMealIcon";
+import { createMenu } from "../../../../../../store/actions/marketplaceActions/restaurantData";
 
 function AddMealForm_restaurant(props) {
+
   const [mealName, setMealName] = useState("");
   const [mealDescription, setMealDescription] = useState("");
   const [mealPrice, setMealPrice] = useState("");
@@ -102,6 +101,11 @@ function AddMealForm_restaurant(props) {
         menuSection: menuSection,
         // mealType: mealType,
         ingredients: ingredients,
+        restaurantName: props.profile.restaurantName,
+        city: props.profile.city,
+        region: props.profile.region,
+        mobile: props.profile.mobile,
+        email: props.profile.email
       },
     };
 
@@ -109,7 +113,7 @@ function AddMealForm_restaurant(props) {
     // forceUpdate();
 
     if (save) {
-      props.createRecipe(data);
+      props.createMenu(data);
     }
     // props.addToShoppingList(data);
   };
@@ -232,12 +236,16 @@ function AddMealForm_restaurant(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
-    createRecipe: (data) => dispatch(createRecipe(data)),
-    addToShoppingList: (data) => dispatch(addToShoppingList(data)),
+    profile: state.firebase.profile,
   };
 };
 
-export default connect(null, mapDispatchToProps)(AddMealForm_restaurant);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createMenu: (data) => dispatch(createMenu(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddMealForm_restaurant);

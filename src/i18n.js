@@ -117,7 +117,9 @@ i18n
                 button_submit: 'Submit',
                 ingredient: 'Ingredients',
                 edit_meal: 'Edit Meal',
-                delivery_date: 'Delivery Date'
+                delivery_date: 'Delivery Date',
+                farm: 'FARM',
+                ref_num: 'Ref Num:'
               }
             }
           },
@@ -221,7 +223,10 @@ i18n
                 button_submit: 'Soumettre',
                 ingredient: 'Ingrédients',
                 edit_meal: 'Modifier le repas',
-                delivery_date: 'La date de livraison'
+                delivery_date: 'La date de livraison',
+                farm: 'CULTIVER',
+                ref_num: 'Numéro de référence',
+                purchase_list: 'Purchase List'
             }
         }
         },
@@ -325,7 +330,10 @@ i18n
               button_submit: 'Entregar',
               ingredient: 'Ingredientes',
               edit_meal: 'Editar comida',
-              delivery_date: 'Fecha de entrega'
+              delivery_date: 'Fecha de entrega',
+              farm: 'GRANJA',
+              ref_num: 'Número de Ref.',
+              purchase_list: 'Liste d"achat'
             }
           }
         },
@@ -429,7 +437,10 @@ i18n
               button_submit: 'يُقدِّم',
               ingredient: 'مكونات',
               edit_meal: 'تحرير الوجبة',
-              delivery_date: 'تاريخ التسليم او الوصول'
+              delivery_date: 'تاريخ التسليم او الوصول',
+              farm: 'مزرعة',
+              ref_num: 'المرجع Num',
+              purchase_list: 'قائمة الشراء'
             }
           }
         },
@@ -533,7 +544,10 @@ i18n
               button_submit: '提交',
               ingredient: '原料',
               edit_meal: '编辑膳食',
-              delivery_date: '交货日期'
+              delivery_date: '交货日期',
+              farm: '农场',
+              ref_num: '参考编号',
+              purchase_list: '采购清单'
             }
           }
         },
@@ -637,7 +651,10 @@ i18n
               button_submit: 'Представлять на рассмотрение',
               ingredient: 'Ингредиенты',
               edit_meal: 'Изменить еду',
-              delivery_date: 'Дата доставки'
+              delivery_date: 'Дата доставки',
+              farm: 'ФЕРМА',
+              ref_num: '№ ссылки',
+              purchase_list: 'Список покупок'
             }
           }
         },

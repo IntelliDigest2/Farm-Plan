@@ -5,10 +5,9 @@ import "./PageWrap.css";
 import { SubButton } from "./Button";
 import Divider from "@mui/material/Divider";
 import { Container } from "react-bootstrap";
-import NotificationIcon from "../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/NotificationIcon"
-import NotificationOrderIcon from "../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/NotificationOrderIcon"
+import NotificationIconRes from "../Pages/Account/Business/Restaurant/Icons/NotificationIconRes"
 
-export const PageWrap = (props) => {
+export const PageWrapRes = (props) => {
   return (
     <>
       <div>
@@ -17,8 +16,7 @@ export const PageWrap = (props) => {
             <SubButton styling="green" goTo={props.goTo} text="Back" />
           </div>
           <div className="basic-title basic-lg">{props.header}</div>
-          <NotificationIcon />
-          <NotificationOrderIcon />
+          <NotificationIconRes />
         </div>
         <Divider />
       </div>

@@ -418,6 +418,56 @@ export const getMealDataForUID = (uid, meals) => {
   };
 };
 
+export const getOrderInfo = (info) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("restaurantOrders")
+      .get()
+      .then((snapshot) => {
+        const orderInfo = [];
+        snapshot.forEach((doc) => {
+          orderInfo.push(doc.data());
+        });
+        dispatch({ type: "GET_PURCHASE_ORDER_RES", payload: orderInfo });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_PURCHASE_ORDER_RES_ERROR", err });
+      });
+  };
+};
+
 export const getPurchaseInfo = (info) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
