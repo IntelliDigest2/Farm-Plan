@@ -15,7 +15,8 @@ function AddMealForm_restaurant(props) {
 
   const [mealName, setMealName] = useState("");
   const [mealDescription, setMealDescription] = useState("");
-  const [mealPrice, setMealPrice] = useState("");
+  const [mealPrice, setMealPrice] = useState(0);
+  const [mealCurrency, setMealCurrency] = useState("$");
   const [menuSection, setMenuSection] = useState("");
     // const [mealType, setMealType] = useState("");
   const [err, setErr] = useState("");
@@ -98,6 +99,7 @@ function AddMealForm_restaurant(props) {
         meal: mealName,
         mealDescription: mealDescription,
         mealPrice: mealPrice,
+        mealCurrency: mealCurrency,
         menuSection: menuSection,
         // mealType: mealType,
         ingredients: ingredients,
@@ -156,13 +158,28 @@ function AddMealForm_restaurant(props) {
         />  
 
         <Form.Label>Dish price</Form.Label>
-        <Form.Control
-          type="number"
-          id="mealPrice"
-          onChange={(e) => {
-            setMealPrice(e.target.value);
-          }}
-          />
+          <InputGroup>
+              <Form.Control
+                id="mealPrice"
+                type="number"
+                min="0"
+                step="1"
+                onChange={(e) => {
+                  setMealPrice(e.target.value);
+                }}
+                defaultValue={mealPrice}
+              />
+              <Dropdown
+                id="currency"
+                styling="grey dropdown-input"
+                data={mealCurrency}
+                items={["$", "€", "£"]}
+                function={(e) => {
+                  setMealCurrency(e)
+                  }
+                }
+              />
+            </InputGroup>
       </Form.Group>
 
 

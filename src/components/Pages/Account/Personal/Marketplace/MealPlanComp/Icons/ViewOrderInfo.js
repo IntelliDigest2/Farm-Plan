@@ -4,7 +4,6 @@ import { Form, InputGroup, Button } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
 import { getOrderInfo } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
-import ConfirmItemIcon from "./ConfirmItemIcon"
 import { useTranslation, Trans } from 'react-i18next';
 
 import List from "@mui/material/List";
@@ -78,7 +77,9 @@ useEffect(() => {
 
                   </tr>
 									<tr>
-										<th className="table-header">{t('description.product')}</th>
+										<th className="table-header">Meal</th>
+                    <th className="table-header">Price</th>
+										<th className="table-header">Reservations</th>
                     
 									</tr>
 								</thead>
@@ -90,15 +91,10 @@ useEffect(() => {
 									</tr>
 									))} */}
                   <td>{item.order.meal}</td>
-									<td>{item.order.mealPrice}</td>
+									<td>{item.order.mealPrice}{item.order.mealCurrency}</td>
                   <td>{item.seat} seats</td>
 								</tbody>
                 <div className="">
-                      <ConfirmItemIcon
-                        //value={props.value}
-                        refID={item.refID}
-                        id={item.id}
-                      />
                       {
                         item.status == "CONFIRMED" ? (
                         <PayIcon
