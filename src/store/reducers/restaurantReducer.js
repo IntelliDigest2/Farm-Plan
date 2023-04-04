@@ -62,6 +62,18 @@ const initState = {
           authError: "send order to user failed",
         };
 
+        case "EDIT_MENU_STATUS":
+          console.log("status updated", action.payload);
+          return {
+            ...state,
+            authError: null,
+          };
+        case "EDIT_MENU_STATUS_ERROR":
+          console.log("error, couldn't update status", action.err);
+          return {
+            ...state,
+            authError: "update status failed",
+          };
       
       
       //#endregion

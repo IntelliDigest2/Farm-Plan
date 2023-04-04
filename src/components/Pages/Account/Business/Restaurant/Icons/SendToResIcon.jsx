@@ -22,7 +22,7 @@ function SendToRes(props) {
       },
     };
     props.sendToRes(data);
-    props.sendOrderToUser(data);
+    // props.sendOrderToUser(data);
     //props.editPurchaseStatus(data)
     submitNotification("Success", " Items has been sent to restaurant!");
   };
@@ -47,7 +47,7 @@ function SendToRes(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     sendToRes: (data) => dispatch(sendToRes(data)),
-    sendOrderToUser: (data) => dispatch(sendOrderToUser(data))
+    // sendOrderToUser: (data) => dispatch(sendOrderToUser(data))
   };
 };
 

@@ -146,6 +146,35 @@ return (dispatch, getState, { getFirestore }) => {
 export const sendToRes = (data) => {
 return (dispatch, getState, { getFirestore }) => {
   //make async call to database
+  //make async call to database
+  const profile = getState().firebase.profile;
+  const authUID = getState().firebase.auth.uid;
+
+  var uid;
+  switch (profile.type) {
+    case "business_admin":
+      uid = authUID;
+      break;
+    case "business_sub":
+      uid = profile.admin;
+      break;
+    case "academic_admin":
+      uid = authUID;
+      break;
+    case "academic_sub":
+      uid = profile.admin;
+      break;
+    case "household_admin":
+      uid = authUID;
+      break;
+    case "household_sub":
+      uid = profile.admin;
+      break;
+    default:
+      uid = authUID;
+      break;
+  }
+
 
   getFirestore()
     .collection("restaurant_users")
@@ -159,7 +188,7 @@ return (dispatch, getState, { getFirestore }) => {
         .doc(data.restaurantID)
         .collection("messages")
         .doc(docRef.id)
-        .set({ id: docRef.id }, { merge: true });
+        .set({ id: docRef.id, uid: uid }, { merge: true });
       dispatch({ type: "SEND_TO_RESTAURANT" });
     })
     .catch((err) => {
@@ -202,17 +231,17 @@ export const sendOrderToUser = (data) => {
   
     getFirestore()
       .collection("marketplace")
-      .doc(uid)
+      .doc(data.item.uid)
       .collection("restaurantOrders")
-      .add(data.upload)
+      .add(data.item)
       .then((docRef) => {
         // make the docId easily accessible so that we can delete it later if we want.
         getFirestore()
           .collection("marketplace")
-          .doc(uid)
+          .doc(data.item.uid)
           .collection("restaurantOrders")
           .doc(docRef.id)
-          .set({ id: docRef.id }, { merge: true });
+          .set({ id: docRef.id, status: data.status }, { merge: true });
         dispatch({ type: "SEND_ORDER_TO_USER" });
       })
       .catch((err) => {
@@ -272,7 +301,49 @@ export const getPurchaseInfoRes = (info) => {
   };
 };
 
+export const editMenuStatusOnRes = (data) => {
+  return (dispatch, getState, { getFirestore }) => {
+ //make async call to database
+ const profile = getState().firebase.profile;
+ const authUID = getState().firebase.auth.uid;
 
+ var uid;
+ switch (profile.type) {
+   case "business_admin":
+     uid = authUID;
+     break;
+   case "business_sub":
+     uid = profile.admin;
+     break;
+   case "academic_admin":
+     uid = authUID;
+     break;
+   case "academic_sub":
+     uid = profile.admin;
+     break;
+   case "household_admin":
+     uid = authUID;
+     break;
+   case "household_sub":
+     uid = profile.admin;
+     break;
+   default:
+     uid = authUID;
+     break;
+ }
+
+    getFirestore()
+    .collection("restaurant_users")
+    .doc(uid)
+    .collection("messages")
+    .doc(data.id)
+    .set({status: data.status}, { merge: true })
+      .then(() => dispatch({ type: "EDIT_MENU_STATUS", payload: data }))
+      .catch((err) => {
+        dispatch({ type: "EDIT_MENU_STATUS_ERROR", err });
+      });
+  };
+};
 // export const deleteSavedMeal = (recipe) => {
 //   return (dispatch, getState, { getFirebase }) => {
 //     //make async call to database
@@ -362,3 +433,4 @@ export const getPurchaseInfoRes = (info) => {
 //       });
 //   };
 // };
+

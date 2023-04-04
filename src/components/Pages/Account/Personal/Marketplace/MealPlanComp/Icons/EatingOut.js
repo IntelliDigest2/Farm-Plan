@@ -44,11 +44,12 @@ function EatingOut(props) {
 
     //sets a new meal object in the array for every document with this date attached
     props.Res.forEach((doc) => {
-      var id = doc.id;
+      var mealID = doc.id;
       var restaurantName = doc.restaurantName;
       var meal = doc.meal;
       var mealDescription = doc.mealDescription;
       var mealPrice = doc.mealPrice;
+      var mealCurrency = doc.mealCurrency;
       var ingredients = doc.ingredients;
       var city = doc.city;
       var email = doc.email;
@@ -59,11 +60,12 @@ function EatingOut(props) {
       setRes((res) => [
         ...res,
         {
-          id: id,
+          mealID: mealID,
           meal: meal,
           restaurantName: restaurantName,
           mealDescription: mealDescription,
           mealPrice: mealPrice,
+          mealCurrency: mealCurrency,
           ingredients: ingredients,
           city: city,
           email: email,

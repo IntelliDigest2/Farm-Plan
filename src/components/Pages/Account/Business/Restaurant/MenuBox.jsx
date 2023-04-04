@@ -6,19 +6,20 @@ import ListItem from "@mui/material/ListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { Form, InputGroup } from "react-bootstrap";
-
+import DatePicker from "react-datepicker";
 import SendToRes from "./Icons/SendToResIcon";
 // import Edit from "./Icons/EditIcon";
+import { useTranslation, Trans } from 'react-i18next';
+
 
 export default function MenuBox(props) {
 
-  const [seat, setSeat] = useState("");
+  const { t } = useTranslation();
+
+  const [seat, setSeat] = useState("0");
+  const [reservationDate, setReservationDate] = useState(Date.now());
   const [fullname, setFullname] = useState("");
 
-
-
-  console.log("find props", props)
-  //console.log("let fetch what weekly props is ==> ", props)
   return (
     <>
       {props.menu.map((newMenu, index) => (
@@ -34,13 +35,13 @@ export default function MenuBox(props) {
                   <div className="meal-type">{newMenu.restaurantName}</div>
                 ) : null}
 
-                <div className="meal-name">{newMenu.mealDescription}</div>
                 <div className="icons">
                   <SendToRes
                     order={newMenu}
                     forceUpdate={props.forceUpdate}
                     seat={seat}
                     fullname={fullname}
+                    reservationDate={reservationDate}
                   />
                   {/* {newMeal.nonNativeData ? null : (
                     <Edit
@@ -70,7 +71,10 @@ export default function MenuBox(props) {
                 </ListItem>
               ))}
               <ListItem>
-                Price: <div className="meal-name"> {newMenu.mealPrice}</div>
+                <div className="meal-name">{newMenu.mealDescription}</div>
+              </ListItem>
+              <ListItem>
+                Price: <div className="meal-name"> {newMenu.mealPrice}{newMenu.mealCurrency}</div>
               </ListItem>
               <ListItem>
                 <Form>
@@ -81,7 +85,7 @@ export default function MenuBox(props) {
                       id="quantity"
                       type="number"
                       min="0"
-                      step=".1"
+                      step="1"
                       onChange={(e) => {
                         setSeat(e.target.value);
                       }}
@@ -101,6 +105,16 @@ export default function MenuBox(props) {
                       value={fullname}
                     />
                   </InputGroup>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Date</Form.Label>
+                  <DatePicker 
+                    type="text"
+                    id="expiry"
+                    selected={reservationDate} 
+                    onChange={(e) => setReservationDate(e)} 
+                    dateFormat="dd/MM/yyyy"  
+                  />
                 </Form.Group>
                 </Form>
               </ListItem>
