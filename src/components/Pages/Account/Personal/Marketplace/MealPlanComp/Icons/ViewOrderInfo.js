@@ -8,7 +8,7 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import PayIcon from "./PayIcon";
+import PayIconRes from "./PayIconRes";
 
 function ViewOderInfo(props) {
   const { t } = useTranslation();
@@ -30,6 +30,7 @@ const getPurchaseInfoList = async () => {
   props.info.forEach((doc) => {
     // id is the docref for deletion
     var id = doc.id;
+    var uid = doc.uid;
     var order = doc.order;
     var seat = doc.seat;
     var fullname = doc.fullname;
@@ -42,6 +43,7 @@ const getPurchaseInfoList = async () => {
         order: order,
         seat: seat,
         id: id,
+        uid: uid,
         fullname: fullname,
         status: status,
       },
@@ -97,7 +99,7 @@ useEffect(() => {
                 <div className="">
                       {
                         item.status == "CONFIRMED" ? (
-                        <PayIcon
+                        <PayIconRes
                           //value={props.value}
                           refID={item.refID}
                           id={item.id}

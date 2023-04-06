@@ -13,12 +13,13 @@ var fbConfig = {
   appId: "1:57163396396:web:dd800621173f5733a4a889",
 };
 
+// uncomment this for testing
 // Initialize Firebase
 // var app = firebase.initializeApp(fbConfig);
 
 firebase.initializeApp(fbConfig);
-//firebase.firestore;
 
+// uncomment this for testing
 // if (window.location.hostname === "localhost") {
 //   app.auth().useEmulator("http://localhost:9099");
 //   app.firestore().settings({
