@@ -54,6 +54,7 @@ export const addToInventory = (data) => {
   };
 };
 
+
 export const addToPurchaseItems = (data) => {
   return (dispatch, getState, { getFirestore }) => {
     //make async call to database

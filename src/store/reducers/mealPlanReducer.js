@@ -375,18 +375,6 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Get inventory failed",
       };
-    case "CREATE_INVENTORY_ITEM":
-      console.log("inventory item created", action.mealPlan);
-      return {
-        ...state,
-        authError: null,
-      };
-    case "CREATE_INVENTORY_ITEM_ERROR":
-      console.log("error, inventory item not created", action.err);
-      return {
-        ...state,
-        authError: "Create inventory item failed",
-      };
       case "CREATE_GIFT_ITEM":
       console.log("gifted item created", action.data);
       return {
