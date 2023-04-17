@@ -10,6 +10,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import Admin from "./Admin";
 import moment from "moment";
 import ChartProduce from "../../../Charts/ChartProduce";
+import AdminRes from "./AdminRes";
 
 export default function AdminTab() {
 
@@ -67,11 +68,11 @@ export default function AdminTab() {
         className="mb-3 mealtabs basic-title"
         fill
       >
-        <Tab eventKey="calendar" title={t('description.purchase_list')} className="mealtab">
+        <Tab eventKey="calendar" title="Users" className="mealtab">
           <Admin value={value} onChange={setValue} />
         </Tab>
-        <Tab eventKey="recipes" title="Items" className="mealtab">
-          <h2>{t('description.farm')}</h2>
+        <Tab eventKey="recipes" title="Restaurant" className="mealtab">
+          <AdminRes />
         </Tab>
       </Tabs> 
 

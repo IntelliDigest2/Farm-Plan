@@ -1,7 +1,8 @@
 const initState = {
   authError: null,
   getData: [],
-  purchaseData: []
+  purchaseData: [],
+  purchaseDataRes: [],
 };
 
 const dataReducer = (state = initState, action) => {
@@ -43,6 +44,18 @@ const dataReducer = (state = initState, action) => {
           ...state,
           authError: "send to farmer failed",
         };
+        case "SEND_TO_RES":
+        // console.log("sent to user", action.data);
+        return {
+          ...state,
+          authError: null,
+        };
+      case "SEND_TO_RES_ERROR":
+        console.log("error, couldn't send to restaurant collection", action.err);
+        return {
+          ...state,
+          authError: "send to restaurant failed",
+        };
       case "GET_PURCHASE_DATA_ERROR":
       console.log("get purchase error " + action.err.message);
       return {
@@ -54,6 +67,19 @@ const dataReducer = (state = initState, action) => {
       return {
         ...state,
         purchaseData: action.payload,
+        authError: null,
+      };
+      case "GET_PURCHASE_DATA_RES_ERROR":
+      console.log("get purchase res error " + action.err.message);
+      return {
+        ...state,
+        authError: "Get failed",
+      };
+    case "GET_PURCHASE_DATA_RES":
+      console.log("get purchase res success", action.payload);
+      return {
+        ...state,
+        purchaseDataRes: action.payload,
         authError: null,
       };
     case "SIGNOUT_SUCCESS":

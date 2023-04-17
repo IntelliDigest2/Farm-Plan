@@ -9025,10 +9025,10 @@ i18next-browser-languagedetector@^7.0.1:
   dependencies:
     "@babel/runtime" "^7.19.4"
 
-i18next@^22.4.12:
-  version "22.4.12"
-  resolved "https://registry.npmjs.org/i18next/-/i18next-22.4.12.tgz"
-  integrity sha512-2lE+vRXxQ3lGLub1CVbwgO0IfkLHmUSDVOAVdPh22CsxttMXi+35n2qgxh2wZIkKl6t/NMzPfgFPRDiFQOmiCg==
+i18next@^22.4.14:
+  version "22.4.14"
+  resolved "https://registry.npmjs.org/i18next/-/i18next-22.4.14.tgz"
+  integrity sha512-VtLPtbdwGn0+DAeE00YkiKKXadkwg+rBUV+0v8v0ikEjwdiJ0gmYChVE4GIa9HXymY6wKapkL93vGT7xpq6aTw==
   dependencies:
     "@babel/runtime" "^7.20.6"
 
