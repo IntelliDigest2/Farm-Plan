@@ -209,6 +209,18 @@ const initState = {
                     ...state,
                     authError: "Get user added shopping list failed",
                   };
+                case "ADD_PURCHASE_ITEM_RES":
+                  console.log("added to purchases for restaurant", action.data);
+                  return {
+                    ...state,
+                    authError: null,
+                  };
+                case "ADD_PURCHASE_ITEM_RES_ERROR":
+                  console.log("error, couldn't add to purchase list for restaurant", action.err);
+                  return {
+                    ...state,
+                    authError: "Add to purchase for restaurant failed",
+                  };
       
       //#endregion
 

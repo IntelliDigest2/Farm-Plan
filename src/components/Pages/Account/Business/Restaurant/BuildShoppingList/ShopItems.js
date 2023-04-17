@@ -5,17 +5,20 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 import { connect } from "react-redux";
-import {  getShoppingListUpdateRes } from "../../../../../../store/actions/marketplaceActions/restaurantData";
-import { addToShoppingListUpdateRes, getPlanData, getShoppingListRes } from "../../../../../../store/actions/marketplaceActions/restaurantData";
-import { addToPurchaseItems, getInventory } from "../../../../../../store/actions/marketplaceActions/inventoryData";
+import { 
+  addToPurchaseItemsRes, 
+  getShoppingListUpdateRes, 
+  addToShoppingListUpdateRes, 
+  getPlanData, 
+  getShoppingListRes, 
+  getInventoryRes 
+} from "../../../../../../store/actions/marketplaceActions/restaurantData";
 // import { addToPurchaseItems } from "../../../../../../../store/actions/dataActions";
 import { useTranslation, Trans } from 'react-i18next';
 
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
-import AddToCartIcon from "../Icons/AddToCartIcon";
 import Edit from "../Icons/EditIconShop";
 import EditAddedItems from "../Icons/EditIconShopAddedItems";
-import Checkbox from '@mui/material/Checkbox';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -49,7 +52,7 @@ function ShopItems(props) {
 
   //this sends data request
   useEffect(() => {
-    props.getInventory();
+    props.getInventoryRes();
   }, [props.value, props.update]);
 
   useEffect(() => {
@@ -175,7 +178,7 @@ const addToCart = (ingr) => {
        
       };
 
-      props.addToPurchaseItems(data);
+      props.addToPurchaseItemsRes(data);
     submitNotification("Thanks for placing your order with us", "We will contact local sustainable farmers and grocery shops and get back to you shortly with prices and delivery time");
 
     }
@@ -716,8 +719,8 @@ const mapDispatchToProps = (dispatch) => {
     getShoppingListUpdateRes: (product) => dispatch(getShoppingListUpdateRes(product)),
     addToShoppingListUpdateRes: (data) => dispatch(addToShoppingListUpdateRes(data)),
     getPlanData: (plan) => dispatch(getPlanData(plan)),
-    addToPurchaseItems: (data) => dispatch(addToPurchaseItems(data)),
-    getInventory: (item) => dispatch(getInventory(item)),
+    addToPurchaseItemsRes: (data) => dispatch(addToPurchaseItemsRes(data)),
+    getInventoryRes: (item) => dispatch(getInventoryRes(item)),
   };
 };
 
