@@ -190,6 +190,9 @@ export const signUp = (newUser) => {
       case "Restaurants":
         type = "restaurant_admin";
         break
+      case "Machinery/Supply":
+        type = "supply_admin";
+        break
       case "Admin":
         type = "admin_admin";
         break
@@ -231,6 +234,8 @@ export const signUp = (newUser) => {
             uid: resp.user.uid,
             //restaurant-specific user data:
             restaurantName: newUser.restaurantName,
+            companyName: newUser.companyName,
+            companyDescription: newUser.companyDescription,
             regulatoryBody: newUser.regulatoryBody,
             regulatoryBodyID: newUser.regulatoryBodyID,
             IDUrl: newUser.IDUrl,
@@ -251,6 +256,8 @@ export const signUp = (newUser) => {
           adminCollection = "farm_users";
         } else if (type === "household_admin") {
           adminCollection = "household_users";
+        } else if (type === "supply_admin") {
+          adminCollection = "supply_users";
         } else {
           adminCollection = "user";
         }

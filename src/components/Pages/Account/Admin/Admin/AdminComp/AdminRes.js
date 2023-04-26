@@ -24,6 +24,8 @@ function Admin(props) {
 	 const forceUpdate = () => {
 	   setUpdate(update + 1);
 	 };
+
+	 
 	 	
 	//this sends data request
 	useEffect(() => {

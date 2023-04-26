@@ -561,7 +561,6 @@ export const getPurchaseDataRes = (data) => {
 		// console.log("user region", profile.region)
 
 		getFirestore()
-			// .collection("purchases")
 			.collection("purchasesRes").where('profile.region', "==", data)
 			.get()
 			.then((snapshot) => {

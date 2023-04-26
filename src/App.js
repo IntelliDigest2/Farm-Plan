@@ -63,6 +63,7 @@ import RestaurantShoppingListPlanner from "./components/Pages/Account/Business/R
 import RestaurantInventory from "./components/Pages/Account/Business/Restaurant/RestaurantInventory";
 import RestaurantDashboard from "./components/Pages/Account/Business/Restaurant/RestaurantDashboard";
 import RestaurantMealPlan from "./components/Pages/Account/Business/Restaurant/RestaurantMealPlan";
+import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan";
 
 import NewAccount from "./components/Pages/Account/Account";
 
@@ -266,6 +267,10 @@ const App = (props) => {
 						<Route
 							path="/restaurant-meal-plan"
 							component={RestaurantMealPlan}
+						/>
+						<Route
+							path="/supply-plan"
+							component={SupplyPlan}
 						/>
 
 						<Route component={NotFound} />

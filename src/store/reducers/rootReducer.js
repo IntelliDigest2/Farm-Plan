@@ -8,6 +8,7 @@ import mealPlanReducer from "./mealPlanReducer";
 import mealPlannerReducer from "./mealPlannerReducer";
 import farmReducer from "./farmReducer";
 import restaurantReducer from "./restaurantReducer";
+import supplierReducer from "./supplierReducer"
 
 
 //fireStoreReducer is a premade reducer for syncing firestore data with state in the background.
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   mealPlanner: mealPlannerReducer,
   farmData: farmReducer,
   restaurant: restaurantReducer,
+  supplier: supplierReducer,
   firebase: firebaseReducer,
   firestore: firestoreReducer,
 });
