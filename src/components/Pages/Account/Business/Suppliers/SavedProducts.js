@@ -3,16 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useTranslation, Trans } from 'react-i18next';
 
 
-import MealsBoxRecipe from "./MealsBoxRecipe";
+import ProductBox from "./ProductBox";
 import { connect } from "react-redux";
-import { getMenus } from "../../../../../store/actions/marketplaceActions/restaurantData";
-const SavedMeals = (props) => {
+import { getProducts} from "../../../../../store/actions/supplierActions/supplierData";
+const SavedProducts = (props) => {
 
   const { t } = useTranslation();
 
-  const [sMeals, setSMeals] = useState([]);
-  const [weeklyMeals, setWeeklyMeals] = useState([]);
-  const [show, setShow] = useState(false);
+  const [sProducts, setSProducts] = useState([]);
 
 
 
@@ -24,65 +22,47 @@ const SavedMeals = (props) => {
 
   //this sends data request
   useEffect(() => {
-    props.getMenus();
+    props.getProducts();
   }, [update]);
 
   
 
-  const updateSMeals = async () => {
+  const updateSProducts = async () => {
     //clears the meals array before each update- IMPORTANT
-    setSMeals([]);
+    setSProducts([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.Menus.forEach((doc) => {
-      var mealName = doc.meal;
-      var ingredients = doc.ingredients;
+    props.Products.forEach((doc) => {
+      var productName = doc.productName;
+      var productDescription = doc.productDescription;
       var id = doc.id;
-      var mealType = doc.mealType;
-      var nonNativeData = doc.nonNativeData;
-      var totalDaily = doc.totalDaily;
-      var totalNutrients = doc.totalNutrients;
-      var url = doc.url;
-      var recipeYield = doc.yield;
+      var productCurrency = doc.productCurrency;
+      var productPrice = doc.productPrice;
+      var productMeasure = doc.productMeasure;
+      var productQty = doc.productQty
 
-
-      if(nonNativeData) {
-        setSMeals((sMeals) => [
-          ...sMeals,
-          {
-            meal: mealName,
-            mealType: mealType,
-            ingredients: ingredients,
-            id: id,
-            nonNativeData: nonNativeData,
-            totalDaily: totalDaily,
-            totalNutrients: totalNutrients,
-            url: url,
-            recipeYield: recipeYield
-          },
-        ]);
-      }
-      else {
-        setSMeals((sMeals) => [
-          ...sMeals,
-          {
-            meal: mealName,
-            mealType: mealType,
-            ingredients: ingredients,
-            id: id,
-          },
-        ]);
-     }
+      setSProducts((sProducts) => [
+        ...sProducts,
+        {
+          productName: productName,
+          productDescription: productDescription,
+          productCurrency: productCurrency,
+          id: id,
+          productPrice: productPrice,
+          productMeasure: productMeasure,
+          productQty: productQty,
+        },
+      ]);
     });
   };
 
   useEffect(() => {
     // const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-    updateSMeals();
-    // console.log("Saved Meals", sMeals);
+    updateSProducts();
+    console.log("Saved Meals", sProducts);
     // .then(setSMeals(sorted));
     // console.log(props.data);
-  }, [props.Menus]);
+  }, [props.Products]);
 
   return (
     <>
@@ -90,10 +70,10 @@ const SavedMeals = (props) => {
         <div className="col-8 basic-title-left mb-3">My available products listing</div>
       </div>
       <div className="saved-meals">
-        <MealsBoxRecipe
+        <ProductBox
           forceUpdate={forceUpdate}
           onChange={props.onChange}
-          meals={sMeals}
+          products={sProducts}
         />
       </div>
     </>
@@ -102,14 +82,14 @@ const SavedMeals = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    Menus: state.restaurant.savedMenus,
+    Products: state.supplier.savedProducts,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMenus: (saved) => dispatch(getMenus(saved)),
+    getProducts: (saved) => dispatch(getProducts(saved)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedMeals);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedProducts);

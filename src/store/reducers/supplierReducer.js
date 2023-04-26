@@ -2,7 +2,7 @@ const initState = {
     authError: null,
     res: [],
     orderRes: [],
-    savedMenus: [],
+    savedProducts: [],
     plans: [],
     newPlans: [],
     newShoppingList: [],
@@ -237,18 +237,18 @@ const initState = {
         ...state,
         authError: "Create product failed",
       };
-    case "GET_MENUS":
-      console.log("get menus success", action.payload);
+    case "GET_PRODUCTS":
+      console.log("get products success", action.payload);
       return {
         ...state,
-        savedMenus: action.payload,
+        savedProducts: action.payload,
         authError: null,
       };
-    case "GET_RECIPES_ERROR":
-      console.log("error, couldn't fetch recipes", action.err);
+    case "GET_PRODUCT_ERROR":
+      console.log("error, couldn't fetch products", action.err);
       return {
         ...state,
-        authError: "Get recipe failed",
+        authError: "Get products failed",
       };
     case "DELETE_RECIPE":
       console.log("successfully deleted", action.recipe);

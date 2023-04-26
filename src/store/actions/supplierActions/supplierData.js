@@ -96,7 +96,7 @@ export const getRestaurantData = (data) => {
     };
     };
     
-    export const getMenus = (menu) => {
+    export const getProducts = (products) => {
     return (dispatch, getState, { getFirestore }) => {
       //make async call to database
       const profile = getState().firebase.profile;
@@ -128,17 +128,17 @@ export const getRestaurantData = (data) => {
       }
     
       getFirestore()
-        .collection("menus").where("restaurantID", "==", uid)
+        .collection("products").where("companyID", "==", uid)
         .get()
         .then((snapshot) => {
           const data = [];
           snapshot.forEach((doc) => {
             data.push(doc.data());
           });
-          dispatch({ type: "GET_MENUS", payload: data });
+          dispatch({ type: "GET_PRODUCTS", payload: data });
         })
         .catch((err) => {
-          dispatch({ type: "GET_MENUS_ERROR", err });
+          dispatch({ type: "GET_PRODUCTS_ERROR", err });
         });
     };
     };

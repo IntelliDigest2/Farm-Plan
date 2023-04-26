@@ -9,23 +9,20 @@ import ListSubheader from "@mui/material/ListSubheader";
 // import Delete from "./Icons/DeleteIcon";
 // import Edit from "./Icons/EditIcon";
 
-export default function MealsBoxRecipe(props) {
+export default function ProductBox(props) {
 
   //console.log("let fetch what weekly props is ==> ", props)
   return (
     <>
-      {props.meals.map((newMeal, index) => (
+      {props.products.map((newProduct, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
           <div className="ingredients">
              <List
-              key={`ingrs${index}`}
+              key={`product${index}`}
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
               <ListSubheader className="heading">
-                <div className="meal-name">{newMeal.meal}</div>
-                {newMeal.mealType ? (
-                  <div className="meal-type">{newMeal.mealType}</div>
-                ) : null}
+                <div className="meal-name">{newProduct.productName}</div>
                 <div className="icons">
                   {/* <Delete
                     value={props.value}
@@ -46,28 +43,25 @@ export default function MealsBoxRecipe(props) {
                 </div>
               </ListSubheader>
 
-              {newMeal.ingredients.map((ingredient, index) => (
                 <ListItem
-                  key={`item${index}`}
-                  className="list"
-                  style={{ alignItems: "baseline" }}
-                >
-                  {newMeal.nn ? (
-                    <>
-                      <p>{ingredient.text}</p>
-                    </>
-                  ) : (
-                    <>
-                      <p>
-                        {ingredient.food}: {ingredient.quantity}
-                        {ingredient.measure}
-                      </p>
-                    </>
-                  )}
-                </ListItem>
-              ))}
-              <ListItem>
-                {newMeal.url ? <a href={newMeal.url}>{newMeal.url}</a> : null}
+                key={`item${index}`}
+                className="list"
+                style={{ alignItems: "baseline" }}
+              >
+                  <div>
+                    <p>
+                      {newProduct.productName}
+                    </p>
+                    <p>
+                      {newProduct.productDescription}
+                    </p>
+                    <p>
+                      {newProduct.productQty} {newProduct.productMeasure}
+                    </p>
+                    <p>
+                    {newProduct.productCurrency} {newProduct.productPrice} 
+                    </p>
+                  </div>
               </ListItem>
             </List>
           </div>
