@@ -11,8 +11,13 @@ import CuisineType from "./cuisineType";
 import Requirements from "./Requirements";
 import InfoModal from "./InfoModal";
 import NextBack from "./Next";
+import { useTranslation, Trans } from 'react-i18next';
+
 
 export default function RecipeSearch(props) {
+
+  const { t } = useTranslation();
+
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
   //sends to api
@@ -76,7 +81,7 @@ export default function RecipeSearch(props) {
 
   return (
     <>
-      <div className="basic-title-left">Search Recipes</div>
+      <div className="basic-title-left">{t('description.search_recipes')}</div>
       <InfoModal show={show} setShow={setShow} />
       <Form
         onSubmit={(e) => {
@@ -89,7 +94,7 @@ export default function RecipeSearch(props) {
             <Form.Control
               className="shadow-none"
               type="text"
-              placeholder="Enter meal name"
+              placeholder={t('description.enter_meal_name')}
               id="query"
               defaultValue={query}
               onChange={(e) => {
@@ -97,20 +102,20 @@ export default function RecipeSearch(props) {
               }}
             />
             <Button type="submit" className="green-btn shadow-none">
-              Search
+            {t('description.button_search')}
             </Button>
           </InputGroup>
         </Form.Group>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-              <p>Meal Type:</p>
+              <p>{t('description.meal_type')}</p>
               <div>
                 <MealType setMealType={setMealType} />
               </div>
             </Grid>
             <Grid item xs={12} md={6}>
-              <p>Origin:</p>
+              <p>{t('description.origin')}</p>
               <div>
                 <CuisineType setCuisineType={setCuisineType} />
               </div>
@@ -118,7 +123,7 @@ export default function RecipeSearch(props) {
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-              <p>Requirements:</p>
+              <p>{t('description.requirements')}</p>
               <div>
                 <Requirements setRequirements={setRequirements} />
               </div>

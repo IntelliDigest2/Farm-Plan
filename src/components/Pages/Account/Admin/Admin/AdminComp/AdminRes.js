@@ -1,19 +1,21 @@
 import React, { useRef, useEffect, useState } from "react";
 
 import { connect } from "react-redux";
+import { useTranslation, Trans } from 'react-i18next';
 
 // import Accordion from "../SubComponents/Accordion";
 import { Accordion, Card, Table, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-import Paginator from "../SubComponents/Paginator";
+import Paginator from "../../../../../SubComponents/Paginator";
 // import { v4 as uuidv4 } from "uuid";
-import { getPurchaseData } from "../../store/actions/dataActions";
-import SendItemIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/SendItemIcon";
-import EditPurchaseIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/EditPurchaseIcon";
-import { PageWrapAdmin } from "../SubComponents/PageWrapAdmin";
-import FarmerListIcon from "./Account/Personal/Marketplace/MealPlanComp/Icons/FarmerListIcon";
+import { getPurchaseDataRes } from "../../../../../../store/actions/dataActions";
+import SendItemIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/SendItemIcon";
+import EditPurchaseIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/EditPurchaseIcon";
+import { PageWrapAdmin } from "../../../../../SubComponents/PageWrapAdmin";
+import FarmerListIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/FarmerListIcon";
 
 function Admin(props) {
+	const { t } = useTranslation();
 
 	const [list, setList ] = useState([])
 	const [update, setUpdate] = useState(0);
@@ -22,10 +24,10 @@ function Admin(props) {
 	 const forceUpdate = () => {
 	   setUpdate(update + 1);
 	 };
-	
+	 	
 	//this sends data request
 	useEffect(() => {
-		props.getPurchaseData();
+		props.getPurchaseDataRes(props.profile.region);
 		//forceUpdate()
 	  }, [props.data]);
 
@@ -35,7 +37,7 @@ function Admin(props) {
 		setList([]);
 	
 		//sets a new item object in the array for every document
-		props.purchase.forEach((doc) => {
+		props.purchaseRes.forEach((doc) => {
 		  // id is the docref for deletion
 
 		  //array of object
@@ -72,7 +74,6 @@ function Admin(props) {
 
 	return (
 		<>
-		    <PageWrapAdmin goTo="/account" header="Admin Dashboard">
 			<div>
 				<main>
 				{list.map((item, index) => (
@@ -88,11 +89,11 @@ function Admin(props) {
 								
 								<thead>
 									<tr>
-										<th>Product</th>
-										<th>Quantity</th>
-										<th>Measure</th>
-										<th>Price</th>
-										<th>Supplier</th>
+										<th>{t('description.product')}</th>
+										<th>{t('description.quantity')}</th>
+										<th>{t('description.measure')}</th>
+										<th>{t('description.price')}</th>
+										<th>{t('description.supplier')}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -131,9 +132,8 @@ function Admin(props) {
 								/>
 							</p>
 							<ListGroup className="list-group-flush">
-								<ListGroupItem>Status: {item.status}</ListGroupItem>
-								<ListGroupItem>Link To Email</ListGroupItem>
-								<ListGroupItem>Ref Number: {item.id}</ListGroupItem>
+								<ListGroupItem>{t('description.status')}: {item.status}</ListGroupItem>
+								<ListGroupItem>{t('description.ref_num')}: {item.id}</ListGroupItem>
 							</ListGroup>
 							</div>
 							</Card.Body>
@@ -149,7 +149,6 @@ function Admin(props) {
 					<div className="admin_calendar_mock"></div>
 				</div> */}
 		</div>
-		</PageWrapAdmin>
 		</>
 		
 	);
@@ -158,13 +157,14 @@ function Admin(props) {
 
 const mapStateToProps = (state) => {
 	return {
-	  purchase: state.data.purchaseData,
+	  purchaseRes: state.data.purchaseDataRes,
+	  profile: state.firebase.profile,
 	};
   };
   
   const mapDispatchToProps = (dispatch) => {
 	return {
-	  getPurchaseData: (item) => dispatch(getPurchaseData(item)),
+		getPurchaseDataRes: (item) => dispatch(getPurchaseDataRes(item)),
 	};
   };
   

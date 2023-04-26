@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 export default function MealType({ setMealType }) {
+
+  const { t } = useTranslation();
+
   const [control, setControl] = useState("Any");
 
   //mediates between the state of the dropdown and the format needed for the API

@@ -6,9 +6,12 @@ import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
 import ScannerPrepared from "../../../../../../SubComponents/QRCode/ScannerPrepared";
+import { useTranslation, Trans } from 'react-i18next';
 
 
 export default function EatNowLater({ value }) {
+  const { t } = useTranslation();
+
   const [eatLater, setEatLater] = useState("unconfirmed");
   const [show, setShow] = useState(true);
 
@@ -48,7 +51,7 @@ export default function EatNowLater({ value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add new meal for 
+            {t('description.add_new_meal_for')} 
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -77,13 +80,16 @@ export default function EatNowLater({ value }) {
 }
 
 function NowOrLater(props) {
+
+  const { t } = useTranslation();
+
   switch (props.eatLater) {
     default:
     case "unconfirmed":
       return (
         <>
           <div className="basic-title-left">
-            Eat Now or Later
+            {t('description.eat_now_or_later')} 
           </div>
           <Row>
             <Col>

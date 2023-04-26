@@ -5,11 +5,13 @@ import "../../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
 import { getPurchaseInfoFarm } from "../../../../../../../store/actions/marketplaceActions/farmPlanData";
 import ConfirmItemIconFarm from "../Icons/ConfirmItemIconFarm"
+import { useTranslation, Trans } from 'react-i18next';
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 function ViewPurchaseInfoFarm(props) {
+  const { t } = useTranslation();
 
   const [list, setList] = useState([]);
 
@@ -71,9 +73,9 @@ useEffect(() => {
 
                   </tr>
 									<tr>
-										<th className="table-header">Product</th>
-										<th className="table-header">Quantity</th>
-										<th className="table-header">Measure</th>
+										<th className="table-header">{t('description.product')}</th>
+										<th className="table-header">{t('description.quantity')}</th>
+										<th className="table-header">{t('description.measure')}</th>
 									
 									</tr>
 								</thead>
@@ -102,7 +104,7 @@ useEffect(() => {
         </>
       ) : (
         <div className="empty basic-title-left">
-          <p>You dont have any Notifications :( </p>
+          <p>{t('description.no_notifications')} </p>
         </div>
       )}
     </>

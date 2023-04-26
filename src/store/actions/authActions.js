@@ -228,6 +228,7 @@ export const signUp = (newUser) => {
             city: newUser.city,
             country: newUser.country,
             region: newUser.region,
+            uid: resp.user.uid,
             //restaurant-specific user data:
             restaurantName: newUser.restaurantName,
             regulatoryBody: newUser.regulatoryBody,

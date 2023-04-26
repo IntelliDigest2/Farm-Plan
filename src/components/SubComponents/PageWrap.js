@@ -6,6 +6,7 @@ import { SubButton } from "./Button";
 import Divider from "@mui/material/Divider";
 import { Container } from "react-bootstrap";
 import NotificationIcon from "../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/NotificationIcon"
+import NotificationOrderIcon from "../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/NotificationOrderIcon"
 
 export const PageWrap = (props) => {
   return (
@@ -17,6 +18,7 @@ export const PageWrap = (props) => {
           </div>
           <div className="basic-title basic-lg">{props.header}</div>
           <NotificationIcon />
+          <NotificationOrderIcon />
         </div>
         <Divider />
       </div>

@@ -8,9 +8,12 @@ import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Scanner from "../../../../../../SubComponents/QRCode/Scanner";
 import ScannerPrepared from "../../../../../../SubComponents/QRCode/ScannerPrepared";
+import { useTranslation, Trans } from 'react-i18next';
 
 
 export function PreparedOrRaw({ value }) {
+  const { t } = useTranslation();
+
   const [raw, setRaw] = useState("unconfirmed");
   const [show, setShow] = useState(true);
 
@@ -50,7 +53,7 @@ export function PreparedOrRaw({ value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add new meal for 
+          {t('description.add_new_meal_for')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -79,13 +82,15 @@ export function PreparedOrRaw({ value }) {
 }
 
 function YesOrNo(props) {
+  const { t } = useTranslation();
+
   switch (props.raw) {
     default:
     case "unconfirmed":
       return (
         <>
           <div className="basic-title-left">
-            Prepared Or Raw
+            {t('description.prepared_or_raw')}
           </div>
           <Row>
             <Col>

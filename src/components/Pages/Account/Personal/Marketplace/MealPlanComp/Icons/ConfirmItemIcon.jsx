@@ -6,9 +6,11 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { editPurchaseStatusFromUser, editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
+import { useTranslation, Trans } from 'react-i18next';
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function ConfirmItemIcon(props) {
+  const { t } = useTranslation();
 
   const [showModal, setShow] = useState(false);
 
@@ -45,10 +47,10 @@ function ConfirmItemIcon(props) {
 
       <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Confirm</Modal.Title>
+            <Modal.Title>{t('description.button_confirm')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            <p><h5>Accept and Process this Order?</h5></p>
+            <p><h5>{t('description.accept_and_process')}</h5></p>
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"
@@ -56,12 +58,12 @@ function ConfirmItemIcon(props) {
           handleSelect()
           handleClose()
         }}>
-            Yes
+            {t('description.button_yes')}
           </Button>
           <Button variant="secondary" 
             onClick={handleClose}
           >
-            Cancel
+            {t('description.button_cancel')}
           </Button>
         </Modal.Footer>
       </Modal>

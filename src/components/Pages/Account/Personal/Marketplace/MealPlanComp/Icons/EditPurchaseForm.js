@@ -8,9 +8,12 @@ import { editPurchaseItem } from "../../../../../../../store/actions/marketplace
 import { submitNotification } from "../../../../../../lib/Notifications";
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import { useTranslation, Trans } from 'react-i18next';
 
 
 function EditPurchaseForm(props) {
+  const { t } = useTranslation();
+
   const [cart, setCart] = useState(props.cart);
   const [date, setDate] = useState(new Date())
 
@@ -39,7 +42,7 @@ function EditPurchaseForm(props) {
       {cart.map((item, i) => (
         <div className="form" key={i}>
           <Form.Group>
-            <Form.Label>Edit Items</Form.Label>
+            <Form.Label>{t('description.edit_item')}</Form.Label>
             <Form.Control
               type="text"
               id="data"
@@ -172,7 +175,7 @@ function EditPurchaseForm(props) {
           </Form.Group>
 
           <Form.Group>
-          <Form.Label>Delivery Date</Form.Label>
+          <Form.Label>{t('description.delivery_date')}</Form.Label>
           <DatePicker 
           type="text"
           id="deliveryDate"
@@ -191,7 +194,7 @@ function EditPurchaseForm(props) {
 
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn" type="submit">
-          Done
+          {t('description.button_done')}
         </Button>
       </div>
     </Form>

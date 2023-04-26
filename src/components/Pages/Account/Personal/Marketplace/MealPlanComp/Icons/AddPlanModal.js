@@ -9,7 +9,13 @@ import RecipeSearch from "../Plan/Forms/Search/RecipeSearch";
 import ScannerPlan from "../../../../../../SubComponents/QRCode/ScannerPlan";
 import SavedMealsPlan from "../SavedMealsPlan";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 export function AddPlanModal({ show, setShow, value }) {
+
+  const { t } = useTranslation();
+
   const [eatingOut, setEatingOut] = useState("unconfirmed");
   const [page, setPage] = useState(0);
   const [date, setDate] = useState([value])
@@ -93,7 +99,7 @@ export function AddPlanModal({ show, setShow, value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Create 6-Months meal plan from {value.format("DD/MM")}
+          {t('description.create_six_plan_from')} {value.format("DD/MM")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -108,7 +114,7 @@ export function AddPlanModal({ show, setShow, value }) {
                   className="btn success shadow-none qrcode-btn"
                   onClick={() => handleShow()}
             >
-              Add From Saved Meal 
+              {t('description.add_from_saved_meal')} 
             </button>
             {scan ? (
               <ScannerPlan value={value} handleFormClose={handleFormClose} />
@@ -128,7 +134,7 @@ export function AddPlanModal({ show, setShow, value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add from saved meal
+          {t('description.add_from_saved_meal')} 
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

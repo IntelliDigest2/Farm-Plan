@@ -8,9 +8,11 @@ import { useHistory } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import FoodWaste from "../../../FoodWasteE";
 import { connect } from "react-redux";
+import { useTranslation, Trans } from 'react-i18next';
 
 //need props id
 function RemoveFoodWasteIcon(props) {
+  const { t } = useTranslation();
 
   const [showModal, setShow] = useState(false);
 
@@ -25,16 +27,17 @@ function RemoveFoodWasteIcon(props) {
     const data = {
 
       upload: {
-        id: getItem.id,
+        //id: getItem.id,
         food: getItem.food,
         item: getItem.item,
         measure: getItem.measure,
         quantity: getItem.quantity,
+        createdAt: new Date()
       }
      
     };
 
-
+    //console.log("xxx",data)
     //props.removeFromInventory(data);
     props.addToWasteItems(data);
    // props.setUpdate(props.update + 1);
@@ -59,26 +62,26 @@ function RemoveFoodWasteIcon(props) {
         <IconButton
           aria-label="Remove"
           sx={{ ml: 2 }}
-          // onClick={() => handleDelete(props.id)}
+          onClick={() => WasteFood()}
           // onClick={()=> {
           //   handleDelete(props.id)
           //   history.push("/food-waste")
           // }}
         >
         <Button variant="outlined" color="success" onClick={handleShow}>
-          Add To Food Waste
+        {t('description.add_to_food_waste')}
         </Button>        
       </IconButton>
       </Tooltip>
 
       <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Add To Food Waste</Modal.Title>
+            <Modal.Title>{t('description.add_to_food_waste')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            <p><h5>Remove {props.item.quantity} {props.item.measure} of {props.item.item} from the inventory?</h5></p>
+            <p><h5>{t('description.remove')} {props.item.quantity} {props.item.measure} {t('description.of')} {props.item.item} {t('description.from_your_inventory')}</h5></p>
             <Alert variant="primary">
-              Cannot find the measurement unit? select another unit, measure and update
+              {t('description.cannot_find_measurement')}
             </Alert>
             <FoodWaste item={props.item}/>
           </Modal.Body>
@@ -90,7 +93,7 @@ function RemoveFoodWasteIcon(props) {
           handleClose()
           //history.push("/food-waste-edible")
         }}>
-            Done
+            {t('description.button_done')}
           </Button>
           {/* <Button variant="secondary" 
           onClick={handleClose}

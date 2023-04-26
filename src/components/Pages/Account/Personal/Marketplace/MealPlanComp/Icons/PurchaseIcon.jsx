@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Alert } from "react-bootstrap";
+import { useTranslation, Trans } from 'react-i18next';
 
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -12,6 +13,7 @@ import { submitNotification } from "../../../../../../lib/Notifications";
 
 //need props id
 function PurchaseIcon(props) {
+  const { t } = useTranslation();
 
   const [showModal, setShow] = useState(false);
 
@@ -77,16 +79,16 @@ function PurchaseIcon(props) {
           // }}
         >
         <Button variant="outlined" color="success" onClick={handleShow}>
-          Purchase Item
+        {t('description.purchase_item')}
         </Button>        
       </IconButton>
       </Tooltip>
       <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Purchase Item?</Modal.Title>
+            <Modal.Title>{t('description.continue_purchase')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-          <p><h5>Hello {props.profile.firstName}, Do you want to request for {props.item.quantity} {props.item.measure} of {props.item.item} to be delivered to you?</h5></p>
+          <p><h5>{t('description.hello')} {props.profile.firstName}, {t('description.do_you_want_to')} {props.item.quantity} {props.item.measure} {t('description.of')} {props.item.item} {t('description.to_be_delivered')}</h5></p>
         </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"
@@ -96,12 +98,12 @@ function PurchaseIcon(props) {
           handleClose();
           //history.push("/gift-food")
         }}>
-            Order
+            {t('description.order')}
           </Button>
           <Button variant="secondary" 
           onClick={handleClose}
           >
-            Cancel
+            {t('description.button_cancel')}
           </Button>
         </Modal.Footer>
       </Modal>

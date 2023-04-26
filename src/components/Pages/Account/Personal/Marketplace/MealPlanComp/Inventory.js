@@ -6,8 +6,14 @@ import "./Inventory.css"
 import InventoryItems from "./InventoryItems";
 import { Alert } from "react-bootstrap";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 
 export const Inventory = ({forceUpdate, value, tab}) => {
+
+    const { t } = useTranslation();
+
     
     const [update, setUpdate] = useState(0);
     const [show, setShow] = useState(false);
@@ -16,10 +22,10 @@ export const Inventory = ({forceUpdate, value, tab}) => {
         <div>
              <div className="row">
                 <div className="col-8" style={{textAlign: "left"}}>
-                    <p>Add new items to your inventory 🙂</p>
+                    <p>{t('description.add_new_items')} 🙂</p>
                     <p>
                     <Alert variant="primary">
-                        Please, add the weight/volume  of each food item using the unit of measurement in the meal plan and and the food item purchased.
+                        {t('description.please_add_weight')}
                     </Alert>
                     </p>
                 </div>

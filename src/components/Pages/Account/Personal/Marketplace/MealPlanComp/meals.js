@@ -61,7 +61,7 @@ function MyMeals(props) {
   }, [props.value, update]);
 
 
-
+  // 3 meals per day from meal plan
   const updateWeeklyMeals = async () => {
     //clears the meals array before each update- IMPORTANT
     setWeeklyMeals([]);
@@ -100,7 +100,7 @@ function MyMeals(props) {
     });
   };
 
-
+  // meals added by user with the add button
   const updateMeals = async () => {
     //clears the meals array before each update- IMPORTANT
     setMeals([]);
@@ -111,16 +111,37 @@ function MyMeals(props) {
       var ingredients = doc.ingredients;
       var id = doc.id;
       var mealType = doc.mealType;
-      var url = doc.url;
-      var totalNutrients = doc.totalNutrients;
-      var totalDaily = doc.totalDaily;
-      var recipeYield = doc.recipeYield;
+      let url;
+      let totalNutrients;
+      let totalDaily;
+      let recipeYield;
       let nn;
       if (doc.nonNativeData) {
         nn = doc.nonNativeData;
       } else {
         nn = false;
       }
+      if (!doc.url) {
+        url = null;
+      } else {
+        url = doc.url;
+      }
+      if (!doc.totalNutrients) {
+        totalNutrients = null;
+      } else {
+        totalNutrients = doc.totalNutrients;
+      }
+      if (!doc.totalDaily) {
+        totalDaily = null;
+      } else {
+        totalDaily = doc.totalDaily;
+      }
+      if (!doc.recipeYield) {
+        recipeYield = null;
+      } else {
+        recipeYield = doc.recipeYield;
+      }
+
 
       setMeals((meals) => [
         ...meals,
@@ -129,8 +150,8 @@ function MyMeals(props) {
           mealType: mealType,
           ingredients: ingredients,
           id: id,
-          nn: nn,
           url: url,
+          nn: nn,
           totalNutrients: totalNutrients,
           totalDaily: totalDaily,
           recipeYield: recipeYield,
@@ -182,7 +203,6 @@ function MyMeals(props) {
   useEffect(() => {
     updateWeeklyMeals();
   }, [props.weekPlans]);
-
 
   return (
     <>

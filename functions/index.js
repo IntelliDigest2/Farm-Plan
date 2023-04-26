@@ -95,6 +95,57 @@ exports.itrackerPaymentFunction = functions.https.onRequest(
 	itrackerPaymentFunction
 );
 
+//payment process for the restaurant
+const calculateOrderAmountRes = async (userId, orderId) => {
+	try {
+		let result = await fireStoreDB
+			.collection("marketplace")
+			.doc(userId)
+			.collection("restaurantOrders")
+			// .where("orderId", "==", orderId)
+			.doc(orderId)
+			.get();
+
+		return result.data().order.mealPrice
+
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+
+	// const orderTotal = product.price * items.multiplier;
+	// Calculate the order total on the server to prevent
+	// people from directly manipulating the amount on the client
+	// return totalCost;
+	// return 2500;
+};
+
+itrackerPaymentFunction.post("/create-payment-intent-res", async (req, res) => {
+	try {
+		const { userId, orderId } = req.body;	
+
+		// // Create a PaymentIntent with the order amount and currency
+		const paymentIntent = await stripe.paymentIntents.create({
+			amount: await calculateOrderAmountRes(userId, orderId),
+			currency: "gbp",
+			automatic_payment_methods: { enabled: true },
+		});
+
+		res.send({
+			clientSecret: paymentIntent.client_secret,
+		});
+	} catch (err) {
+		res.status(500).json({
+			message: err.message,
+		});
+	}
+});
+
+exports.itrackerPaymentFunction = functions.https.onRequest(
+	itrackerPaymentFunction
+);
+
+
 // function to get the farmers In Same Location
 const getFarmersInSameLocation = async (city) => {
 	try {

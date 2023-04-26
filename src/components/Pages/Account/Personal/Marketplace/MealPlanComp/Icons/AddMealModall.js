@@ -5,9 +5,13 @@ import { PreparedOrRaw } from "./PreparedOrRaw";
 import { AddButton, SubButton } from "../../../../../../SubComponents/Button";
 import Tooltip from "@mui/material/Tooltip";
 import AddPlanForm from "./AddPlanForm";
+import { useTranslation, Trans } from 'react-i18next';
 
 
 export function AddMealModall({ show, setShow, value }) {
+
+  const { t } = useTranslation();
+
   const [eatingOut, setEatingOut] = useState("unconfirmed");
 
   //control barcode scanner
@@ -36,7 +40,7 @@ export function AddMealModall({ show, setShow, value }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
-            Add new meal for {value.format("DD/MM")}
+          {t('description.add_new_meal_for')} {value.format("DD/MM")}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -55,13 +59,15 @@ export function AddMealModall({ show, setShow, value }) {
 }
 
 function InOrOut(props) {
+  const { t } = useTranslation();
+
   switch (props.eatingOut) {
     default:
     case "unconfirmed":
       return (
         <>
           <div className="basic-title-left">
-            Are you cooking at home or eating out?
+          {t('description.eat_home_out')}
           </div>
           <Row>
             <Col>

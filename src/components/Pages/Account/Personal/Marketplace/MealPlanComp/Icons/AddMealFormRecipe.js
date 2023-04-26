@@ -4,6 +4,7 @@ import MealType from "../Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
+import { useTranslation, Trans } from 'react-i18next';
 
 import { connect } from "react-redux";
 import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
@@ -12,6 +13,9 @@ import { addToShoppingList } from "../../../../../../../store/actions/marketplac
 import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
 
 function AddMealFormRecipe(props) {
+
+  const { t } = useTranslation();
+
   const [mealName, setMealName] = useState("");
   const [mealType, setMealType] = useState("");
   const [err, setErr] = useState("");
@@ -90,6 +94,7 @@ function AddMealFormRecipe(props) {
         meal: mealName,
         mealType: mealType,
         ingredients: ingredients,
+        createdAt: new Date()
       },
     };
 
@@ -118,7 +123,7 @@ function AddMealFormRecipe(props) {
         send test
       </button> */}
       <Form.Group>
-        <Form.Label>Meal Name</Form.Label>
+        <Form.Label>{t('description.meal_name')}</Form.Label>
         <Form.Control
           type="text"
           id="mealName"
@@ -146,7 +151,7 @@ function AddMealFormRecipe(props) {
         <FoodItemSearch handleFoodSearch={handleFoodSearch} />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Weight/Volume</Form.Label>
+        <Form.Label>{t('description.weight_volume')}</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -176,7 +181,7 @@ function AddMealFormRecipe(props) {
             handleIngredient();
           }}
         >
-          Add Ingredient
+          {t('description.add_ingredient')}
         </Button>
       </Form.Group>
 
@@ -191,7 +196,7 @@ function AddMealFormRecipe(props) {
 
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn shadow-none" type="submit">
-          Done
+          {t('description.button_done')}
         </Button>
       </div>
     </Form>

@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 WARNING: An illegal reflective access operation has occurred
-WARNING: Illegal reflective access by io.netty.util.internal.ReflectionUtil (file:/home/coded/.cache/firebase/emulators/firebase-database-emulator-v4.11.0.jar) to field sun.nio.ch.SelectorImpl.selectedKeys
+WARNING: Illegal reflective access by io.netty.util.internal.ReflectionUtil (file:/home/codedfingers/.cache/firebase/emulators/firebase-database-emulator-v4.11.0.jar) to field sun.nio.ch.SelectorImpl.selectedKeys
 WARNING: Please consider reporting this to the maintainers of io.netty.util.internal.ReflectionUtil
 WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
 WARNING: All illegal access operations will be denied in a future release
-10:27:01.842 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-10:27:02.135 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9000
-12:32:11.671 [Thread-0] INFO com.firebase.server.forge.App$ - Attempting graceful shutdown.
-12:32:11.683 [Thread-0] INFO com.firebase.server.forge.App$ - Graceful shutdown complete.
-=======
->>>>>>> d53949278832527c9dfbd3aad6b19fdf12debfc2
+17:28:12.337 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+17:28:12.569 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9000
+17:39:14.641 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO com.firebase.core.namespace.NamespaceActor - itracker-development successfully activated FBKV (SurveyIdle(0)) wait: 2712ms, init: 0ms

@@ -2,7 +2,7 @@ import React from "react";
 import { IconButton } from "../../../../SubComponents/Button";
 import "../../UserAccount.css";
 
-export function Dashboard({ setShow, setChooseModal }) {
+export function Dashboard({ setShow, setChooseModal}) {
   return (
     <>
 

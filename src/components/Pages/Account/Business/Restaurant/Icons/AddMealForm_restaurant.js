@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown } from "../../../../../../SubComponents/Dropdown";
-import MenuSection from "../Search/menuSection";
-import MealType from "../Search/mealType";
+import { Dropdown } from "../../../../../SubComponents/Dropdown";
+import MenuSection from "../../../Personal/Marketplace/MealPlanComp/Search/menuSection";
+import MealType from "../../../Personal/Marketplace/MealPlanComp/Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import FoodItemSearch from "./InputRecipe/FoodItemSearch";
-import "../../../../../../SubComponents/Button.css";
+import FoodItemSearch from "../../../Personal/Marketplace/MealPlanComp/Icons/InputRecipe/FoodItemSearch";
+import "../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
-import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData"
-import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
-import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
-import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
-import SaveMealIcon from "../Icons/SaveMealIcon";
+import { foodIdAPI, nutritionAPI } from "../../../Personal/Marketplace/MealPlanComp/Icons/InputRecipe/NutritionApi";
+import SaveMealIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/SaveMealIcon";
+import { createMenu } from "../../../../../../store/actions/marketplaceActions/restaurantData";
 
 function AddMealForm_restaurant(props) {
+
   const [mealName, setMealName] = useState("");
   const [mealDescription, setMealDescription] = useState("");
-  const [mealPrice, setMealPrice] = useState("");
+  const [mealPrice, setMealPrice] = useState(0);
+  const [mealCurrency, setMealCurrency] = useState("$");
   const [menuSection, setMenuSection] = useState("");
     // const [mealType, setMealType] = useState("");
   const [err, setErr] = useState("");
@@ -99,9 +99,15 @@ function AddMealForm_restaurant(props) {
         meal: mealName,
         mealDescription: mealDescription,
         mealPrice: mealPrice,
+        mealCurrency: mealCurrency,
         menuSection: menuSection,
         // mealType: mealType,
         ingredients: ingredients,
+        restaurantName: props.profile.restaurantName,
+        city: props.profile.city,
+        region: props.profile.region,
+        mobile: props.profile.mobile,
+        email: props.profile.email
       },
     };
 
@@ -109,7 +115,7 @@ function AddMealForm_restaurant(props) {
     // forceUpdate();
 
     if (save) {
-      props.createRecipe(data);
+      props.createMenu(data);
     }
     // props.addToShoppingList(data);
   };
@@ -152,13 +158,28 @@ function AddMealForm_restaurant(props) {
         />  
 
         <Form.Label>Dish price</Form.Label>
-        <Form.Control
-          type="number"
-          id="mealPrice"
-          onChange={(e) => {
-            setMealPrice(e.target.value);
-          }}
-          />
+          <InputGroup>
+              <Form.Control
+                id="mealPrice"
+                type="number"
+                min="0"
+                step="1"
+                onChange={(e) => {
+                  setMealPrice(e.target.value);
+                }}
+                defaultValue={mealPrice}
+              />
+              <Dropdown
+                id="currency"
+                styling="grey dropdown-input"
+                data={mealCurrency}
+                items={["$", "€", "£"]}
+                function={(e) => {
+                  setMealCurrency(e)
+                  }
+                }
+              />
+            </InputGroup>
       </Form.Group>
 
 
@@ -232,12 +253,16 @@ function AddMealForm_restaurant(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
-    createRecipe: (data) => dispatch(createRecipe(data)),
-    addToShoppingList: (data) => dispatch(addToShoppingList(data)),
+    profile: state.firebase.profile,
   };
 };
 
-export default connect(null, mapDispatchToProps)(AddMealForm_restaurant);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createMenu: (data) => dispatch(createMenu(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddMealForm_restaurant);

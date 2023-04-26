@@ -8,9 +8,12 @@ import { editInventoryData } from "../../../../../../../store/actions/marketplac
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { editShoppingListData } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
+import { useTranslation, Trans } from 'react-i18next';
 
 
 function EditShopForm(props) {
+  const { t } = useTranslation();
+
   const [food, setFood] = useState(props.food);
   const [item, setItem] = useState(props.data);
   const [quantity, setQuantity] = useState(props.quantity);
@@ -29,7 +32,8 @@ function EditShopForm(props) {
           data: item,
           quantity: quantity,
           measure: measure,
-          week: props.week
+          week: props.week,
+          updatedAt: new Date()
         }
       }, 
     };
@@ -49,7 +53,7 @@ function EditShopForm(props) {
       }}
     >
       <Form.Group>
-        <Form.Label>Ingredient</Form.Label>
+        <Form.Label>{t('description.ingredient')}</Form.Label>
         <Form.Control
           type="text"
           id="food"
@@ -73,7 +77,7 @@ function EditShopForm(props) {
       </Form.Group> */}
 
       <Form.Group>
-        <Form.Label>Weight/volume - Meal plan</Form.Label>
+        <Form.Label>{t('description.weight_volume')}</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -101,7 +105,7 @@ function EditShopForm(props) {
      
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn" type="submit">
-          Done
+        {t('description.button_done')}
         </Button>
       </div>
     </Form>

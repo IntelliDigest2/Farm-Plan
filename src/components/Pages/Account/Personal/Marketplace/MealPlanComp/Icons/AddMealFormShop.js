@@ -8,11 +8,14 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
 import { submitNotification } from "../../../../../../lib/Notifications";
+import { useTranslation, Trans } from 'react-i18next';
 
 import { connect } from "react-redux";
 import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 
 const AddMealFormShop = (props) => {
+  const { t } = useTranslation();
+
   const [itemName, setItemName] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [measure, setMeasure] = useState("");
@@ -76,6 +79,8 @@ const AddMealFormShop = (props) => {
           measure: local.measure,
           quantity: local.quantity,
           week: props.value.format("w"),
+          createdAt: new Date()
+
         }
       },
     }; 
@@ -120,7 +125,7 @@ const AddMealFormShop = (props) => {
           
         <FoodItemSearch handleFoodSearch={handleFoodSearch} />
         <Form.Group>
-        <Form.Label>Amount</Form.Label>
+        <Form.Label>{t('description.amount')}</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -144,7 +149,7 @@ const AddMealFormShop = (props) => {
 
           <div style={{ alignItems: "center" }}>
             <Button className="blue-btn shadow-none mt-3" type="submit">
-              Done
+              {t('description.button_done')}
             </Button>
           </div>
         </Form>

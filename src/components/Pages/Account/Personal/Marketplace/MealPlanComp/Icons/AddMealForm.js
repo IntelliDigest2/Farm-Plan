@@ -5,6 +5,9 @@ import { Form, InputGroup, Button } from "react-bootstrap";
 import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 import { connect } from "react-redux";
 import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
@@ -12,6 +15,9 @@ import { addToShoppingList } from "../../../../../../../store/actions/marketplac
 import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
 
 function AddMealForm(props) {
+
+  const { t } = useTranslation();
+
   const [mealName, setMealName] = useState("");
   const [mealType, setMealType] = useState("");
   const [err, setErr] = useState("");
@@ -94,17 +100,18 @@ function AddMealForm(props) {
         meal: mealName,
         mealType: mealType,
         ingredients: ingredients,
+        createdAt: new Date()
       },
     };
 
-    console.log("checking props:", props)
-    props.createMealPlanData(data);
-    forceUpdate();
 
     if (save) {
       props.createRecipe(data);
+      forceUpdate();
+
     }
-    props.addToShoppingList(data);
+    props.createMealPlanData(data);
+    forceUpdate();
   };
 
   return (
@@ -123,7 +130,7 @@ function AddMealForm(props) {
         send test
       </button> */}
       <Form.Group>
-        <Form.Label>Meal Name</Form.Label>
+        <Form.Label>{t('description.meal_name')}</Form.Label>
         <Form.Control
           type="text"
           id="mealName"
@@ -151,7 +158,7 @@ function AddMealForm(props) {
         <FoodItemSearch handleFoodSearch={handleFoodSearch} />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Weight/Volume</Form.Label>
+        <Form.Label>{t('description.weight_volume')}</Form.Label>
         <InputGroup>
           <Form.Control
             id="quantity"
@@ -181,7 +188,7 @@ function AddMealForm(props) {
             handleIngredient();
           }}
         >
-          Add Ingredient
+          {t('description.add_ingredient')}
         </Button>
       </Form.Group>
 
@@ -196,7 +203,7 @@ function AddMealForm(props) {
 
       <div style={{ alignItems: "center" }}>
         <Button className="blue-btn shadow-none" type="submit">
-          Done
+        {t('description.button_done')}
         </Button>
       </div>
     </Form>

@@ -18,6 +18,8 @@ import { createFirestoreInstance, reduxFirestore } from "redux-firestore";
 import { getFirestore } from "redux-firestore";
 import fbConfig from "./config/fbConfig";
 
+import './i18n';
+
 const initialState = {};
 
 // developer tool for seeing Redux state using browser developer console (F12, then redux tab)

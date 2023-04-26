@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { PageWrap } from "../../../SubComponents/PageWrap";
 import LoadingScreen from "../../../SubComponents/Loading/LoadingScreen";
 import NutrientsBox from "./Marketplace/MealPlanComp/NutrientsBox";
-import moment from "moment";
+import moment from "moment"; 
 import "./Marketplace/MealPlanComp/Mealplan.css";
 
 export default function NutrientGap() {

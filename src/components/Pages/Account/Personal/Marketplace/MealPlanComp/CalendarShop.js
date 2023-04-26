@@ -9,12 +9,18 @@ import dayStyles from "./BuildCalendar/dayStyles";
 import CalendarHeader from "./BuildCalendar/header";
 import ShoppingListHeader from "./BuildShoppingList/header";
 
+import { useTranslation, Trans } from 'react-i18next';
+
+
 import moment from "moment";
 
 // import MyMeals from "./meals";
 import ShopItems from "./BuildShoppingList/ShopItems";
 
 export const CalendarShop = ({ value, onChange }) => {
+
+  const { t } = useTranslation();
+
   const [calendar, setCalendar] = useState([]);
   const [show, setShow] = useState(false);
   const [values, setValue] = useState(moment());
@@ -57,10 +63,10 @@ export const CalendarShop = ({ value, onChange }) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-8" style={{textAlign: "left"}}>Add other items to your Shopping List🙂</div>
+        <div className="col-8" style={{textAlign: "left"}}>{t('description.add_other_items')}🙂</div>
         <div className="col-4" style={{textAlign: "right"}}><AddMealModalShop value={values} show={show} setShow={setShow} /></div>
         <Alert variant="primary">
-          Order all food items by clicking the 'All' button or  select items by checking the boxes. You can edit food items before placing an order.
+        {t('description.order_all_food_text')}
         </Alert>
       </div>
       <div className="plan-box">

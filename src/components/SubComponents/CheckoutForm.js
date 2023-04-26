@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useLocation } from "react-router-dom";
+
+import swal from 'sweetalert2';
+//import withReactContent from 'sweetalert2-react-content'
 
 // import classes2 from "../modal.module.css";
 // import * as actions from "../../../store/actions/index";
@@ -11,7 +15,13 @@ import {
 	useElements,
 } from "@stripe/react-stripe-js";
 
+		
+ 
 const CheckoutForm = (props) => {
+
+ 
+	const location = useLocation();
+   	const myparam = location.state.params;
 	const stripe = useStripe();
 	const elements = useElements();
 
@@ -23,15 +33,25 @@ const CheckoutForm = (props) => {
 			return;
 		}
 
-		const clientSecret = new URLSearchParams(window.location.search).get(
-			"payment_intent_client_secret"
-		);
+		
+
+		const clientSecret = `${myparam}`
+
+		// const clientSecret = new URLSearchParams.get(
+		// 	"payment_intent_client_secret"
+		// );
+
+
+		console.log("client secret from checkout", clientSecret)
 
 		if (!clientSecret) {
 			return;
 		}
 
 		stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+
+			console.log("payment status", paymentIntent)
+
 			switch (paymentIntent.status) {
 				case "succeeded":
 					setMessage("Payment succeeded!");
@@ -67,12 +87,14 @@ const CheckoutForm = (props) => {
 
 				// Make sure to change this to your payment completion page
 				confirmParams: {
-					return_url: "https://example.com", // this is supposed to be the page to redirect to after purhcase is completed the example.com i used here means it would not redirect anywhere
-					receipt_email: "<suppose to be the email of the user>", //this is supposed to be the email of the user which a receipt would be sent to after a purchase is completed
+					return_url: "https://worldfoodtracker.com/meal-plan", // this is supposed to be the page to redirect to after purhcase is completed the example.com i used here means it would not redirect anywhere
+					receipt_email: "alexyikeh@gmail.com", //this is supposed to be the email of the user which a receipt would be sent to after a purchase is completed
 				},
 				redirect: "if_required",
 			})
 			.then((result) => {
+
+				console.log("payment rresult", result)
 				setIsLoading(false);
 				if (result.error) {
 					if (
@@ -80,15 +102,22 @@ const CheckoutForm = (props) => {
 						result.error.type === "validation_error"
 					) {
 						setMessage(result.error.message);
+						new swal("Failed", result.error.message, "error", {
+							buttons: false,
+							timer: 2000,
+						  })
+						
 					} else {
 						setMessage("An unexpected error occurred.");
 					}
 				}
 
-				if (result.paymentIntent.status === "succeeded") {
-					// console.log("this show that the payment was successful");
-					// save  to database to show purchase history🤷‍♀️
-				}
+				// if (result.paymentIntent.status === "succeeded") {
+				// 	// console.log("this show that the payment was successful");
+				// 	// save  to database to show purchase history🤷‍♀️
+				// } else {
+				// 	setMessage("An unexpected error occurred.");
+				// }
 			});
 	};
 
@@ -97,7 +126,16 @@ const CheckoutForm = (props) => {
 	return (
 		<form id="payment-form" onSubmit={handleSubmit}>
 			<PaymentElement />
-			<button disabled={!elements || isLoading || !stripe} id="submit">
+			<button disabled={!elements || isLoading || !stripe} id="submit"
+			style={{
+				height: "38px",
+				width: "243px",
+				borderRadius: "20px",
+				backgroundColor: "#00CB79",
+				fontSize: "16px",
+				color: "white",
+				marginTop: "15px"
+			  }}>
 				<span id="button-text">
 					{isLoading ? <div>Loading...</div> : "Pay now"}
 				</span>

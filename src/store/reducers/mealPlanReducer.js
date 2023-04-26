@@ -6,10 +6,10 @@ const initState = {
   savedMeals: [],
   shoppingList: [],
   newShoppingList: [],
-  shopItems: [],
   inventory: [],
-  giftedFood: [],
+  giftedFood: [], 
   purchaseInfo: [],
+  OrderInfo: [],
 };
 
 const mealPlanReducer = (state = initState, action) => {
@@ -121,7 +121,7 @@ const mealPlanReducer = (state = initState, action) => {
         authError: "Create recipe failed",
       };
     case "GET_RECIPES":
-      console.log("get meals success", action.payload);
+      console.log("get recipe success", action.payload);
       return {
         ...state,
         savedMeals: action.payload,
@@ -238,6 +238,20 @@ const mealPlanReducer = (state = initState, action) => {
             ...state,
             authError: "fetch purchase info failed",
           };
+
+          case "GET_PURCHASE_ORDER_RES":
+            console.log("order for restautant", action.payload);
+            return {
+              ...state,
+              OrderInfo: action.payload,
+              authError: null,
+            };
+          case "GET_PURCHASE_ORDER_RES_ERROR":
+            console.log("error, couldn't get order for restaurant", action.err);
+            return {
+              ...state,
+              authError: "fetch order for restaurant failed",
+            };
   
 
       case "CREATE_SHOP_ITEMS":
@@ -360,18 +374,6 @@ const mealPlanReducer = (state = initState, action) => {
       return {
         ...state,
         authError: "Get inventory failed",
-      };
-    case "CREATE_INVENTORY_ITEM":
-      console.log("inventory item created", action.mealPlan);
-      return {
-        ...state,
-        authError: null,
-      };
-    case "CREATE_INVENTORY_ITEM_ERROR":
-      console.log("error, inventory item not created", action.err);
-      return {
-        ...state,
-        authError: "Create inventory item failed",
       };
       case "CREATE_GIFT_ITEM":
       console.log("gifted item created", action.data);
