@@ -1,0 +1,18 @@
+.tabLink{
+    width: 9rem;
+    height: 9rem;
+    padding: 1rem;
+
+    /* display: flex; */
+    align-items: center;
+    margin: 20px;
+    border-radius: 15px;
+    color: #fff;
+
+    text-align: center;
+}
+
+.tablink_icon{
+    margin-top: 20px;
+}
+

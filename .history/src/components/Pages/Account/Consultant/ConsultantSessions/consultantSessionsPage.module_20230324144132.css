@@ -1,0 +1,9 @@
+.nav{
+    width: 50%;
+    display: flex;
+    list-style-type: none;
+}
+
+.nav> li:hover, .nav> li:active{
+    border-color: #dee2e6 #dee2e6 #fff
+}

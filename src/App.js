@@ -25,6 +25,8 @@ import ConsultantSessionPage from "./components/Pages/Account/Consultant/Consult
 import ConsultantRecordsPage from "./components/Pages/Account/Consultant/ConsultantRecords/consultantRecordsPage";
 import ConsultantRequestsPage from "./components/Pages/Account/Consultant/ConsultantRequests/consultantRequestsPage";
 
+import ConsultingPage from "./components/SubComponents/consulting/consultingPage";
+
 import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
 import Questionnaire from "./components/Pages/Auth/Questionnaire";
@@ -190,17 +192,13 @@ const App = (props) => {
 						<Route path="/payment-process" exact component={Payment} />
 
 						{/* <Route exact path="/consultant" component={Homepage} /> */}
-						<Route
-							path="/consultant/signup"
-							exact
-							component={ConsultantSignup}
-						/>
+						<Route path="/consultant/signup" component={ConsultantSignup} />
 						{/* <Route
 							path="/consultant/onboard"
 							exact
 							component={OnboardMessage}
 						/> */}
-						{/* <Route path="/consultant/login" exact component={ConsultantLogin} /> */}
+						<Route path="/consultant/login" exact component={ConsultantLogin} />
 						<Route path="/consultant" exact component={ConsultantAccount} />
 						<Route path="/consultant/settings" component={ConsultantSettings} />
 						<Route
@@ -216,6 +214,8 @@ const App = (props) => {
 							path="/consultant/records"
 							component={ConsultantRecordsPage}
 						/>
+
+						<Route path="/consult" component={ConsultingPage} />
 
 						<Route path="/account" exact component={NewAccount} />
 						<Route path="/pts" exact component={PlanToSave} />

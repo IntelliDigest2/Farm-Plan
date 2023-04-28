@@ -1,0 +1,84 @@
+.chat_heading{
+    font-weight: 500;
+    overflow: hidden;
+    font-size: 16px;
+
+}
+.chats_cont{
+    max-height: 90vh;
+    display: flex;
+    border: 1px solid #dee2e6 ;
+}
+/* a,a:hover,a:active{
+    text-decoration: none;
+    color: black
+
+} */
+
+.chat_cont{
+    padding: 8px
+}
+li{list-style: none;}
+.chat_card{
+    /* width: 40%; */
+    height:100px;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    /* margin-bottom: 20px; */
+    overflow:hidden;
+    cursor: pointer
+    
+}
+
+/* .chats_cont > div{
+    height: 100%;
+    overflow-y: scroll;
+} */
+
+.chatCont{
+    padding-top: 15px;
+}
+.chat_cards{
+    height: 100%;
+}
+.chat_topic{
+    font-size: 14px;
+}
+
+.chat_left{
+    height: 90vh;
+    overflow-y: scroll;
+    border-top: 1px solid dee2e6 ;
+    border-bottom: 1px solid dee2e6 ;
+}
+
+.chat_txt{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #80a3c8;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5f81a6;
+  }

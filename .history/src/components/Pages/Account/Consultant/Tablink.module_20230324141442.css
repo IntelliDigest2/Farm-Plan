@@ -1,0 +1,16 @@
+.tabLink{
+    width: 9rem;
+    height: 9rem;
+    padding: 1rem;
+    /* color: #000; */
+    /* text-decoration: none; */
+    text-align: center;
+   
+    margin: 20px;
+    border-radius: 15px;
+}
+
+a:hover,a:visited,a:active{
+    text-decoration: none;
+    color:#fff
+}

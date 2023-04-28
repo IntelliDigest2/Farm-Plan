@@ -1,0 +1,14 @@
+.chat_cont{
+    height: 100%;
+    background-color: pink;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat_input{
+    /* position:absolute ; */
+    height: 50px;
+    border-radius: 25px;
+    background-color: #5f81a6;
+}

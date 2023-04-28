@@ -1,0 +1,34 @@
+.nav{
+    width: 50%;
+    display: flex;
+    list-style-type: none;
+    font-size: 15px;
+    font-weight: 600;
+    color: #32797e
+}
+
+.link,.link:visited{
+    /* border-color: #000; */
+    border:1px solid transparent;
+    padding: 8px 10px;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 2px;
+    
+
+}
+
+.subCont{
+    
+}
+
+.nav .link:hover, .nav .link:active {
+   
+    border: 1px solid ;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.active{
+    border: 1px solid ;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
