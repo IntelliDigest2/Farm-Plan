@@ -139,15 +139,13 @@ export function IconButton(props) {
 		target = "_blank";
 	}
 
+  let new = ["icon-btn"].join(`${props.color}-btn`)
+
 	return (
 		<>
 			{props.title ? (
 				<Tooltip placement="bottom" arrow title={props.title}>
-					<div
-						className={["icon-btn", `${props.color}-btn`, "shadow-none"].join(
-							" "
-						)}
-					>
+					<div className={["icon-btn", `${props.color}-btn`, "shadow-none"]}>
 						<Link to={props.goTo} disabled={props.disabled}>
 							<div>
 								<IconType />
@@ -157,7 +155,7 @@ export function IconButton(props) {
 					</div>
 				</Tooltip>
 			) : (
-				<div className={["icon-btn", `${props.color}-btn`].join(" ")}>
+				<div className={new}>
 					<Link
 						// variant="default"
 

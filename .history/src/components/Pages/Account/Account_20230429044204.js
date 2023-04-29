@@ -85,9 +85,9 @@ const NewAccount = (props) => {
 	if (!props.auth.uid) {
 		return <Redirect to="/login" />;
 	}
-	// if (loading) {
-	// 	return <LoadingScreen />;
-	// }
+	if (loading) {
+		return <LoadingScreen />;
+	}
 
 	return (
 		<>

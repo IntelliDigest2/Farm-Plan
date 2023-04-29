@@ -2,7 +2,6 @@ import React from "react";
 import "./Button.css";
 import { Button as BootstrapButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
 // import { Colors } from "../../lib/Colors";
 
 import DeleteIconOutlined from "@mui/icons-material/DeleteOutlined";
@@ -143,36 +142,54 @@ export function IconButton(props) {
 		<>
 			{props.title ? (
 				<Tooltip placement="bottom" arrow title={props.title}>
-					<div
-						className={["icon-btn", `${props.color}-btn`, "shadow-none"].join(
-							" "
-						)}
-					>
-						<Link to={props.goTo} disabled={props.disabled}>
+					<span className={["icon-btn", `${props.color}-btn`, "shadow-none"]}>
+						<Link
+							to={props.goTo}
+							variant="default"
+							// href={props.goTo}
+							// onClick={props.onClick}
+							// target={target}
+							disabled={props.disabled}
+						>
 							<div>
 								<IconType />
 								{props.label}
 							</div>
 						</Link>
-					</div>
+					</span>
 				</Tooltip>
 			) : (
-				<div className={["icon-btn", `${props.color}-btn`].join(" ")}>
-					<Link
-						// variant="default"
-
-						to={props.goTo}
-						// href={props.goTo}
-						target={target}
-						disabled={props.disabled}
-					>
-						<div>
-							<IconType />
-							{props.label}
-						</div>
-					</Link>
-				</div>
+				<BootstrapButton
+					variant="default"
+					className={["icon-btn", `${props.color}-btn`]}
+					href={props.goTo}
+					target={target}
+					disabled={props.disabled}
+				>
+					<div>
+						<IconType />
+						{props.label}
+					</div>
+				</BootstrapButton>
 			)}
 		</>
 	);
 }
+
+// export function TabLink({ backgroundColor, link, icon, text }) {
+// 	return (
+// 		<>
+// 			<Link
+// 				to={link}
+// 				style={{ backgroundColor: `${backgroundColor}` }}
+// 				className={classes.tabLink}
+// 			>
+// 				{/* <div> */}
+// 				<div className={classes.tablink_icon}>{icon}</div>
+
+// 				<div>{text}</div>
+// 				{/* </div> */}
+// 			</Link>
+// 		</>
+// 	);
+// }

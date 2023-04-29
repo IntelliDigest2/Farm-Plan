@@ -143,12 +143,15 @@ export function IconButton(props) {
 		<>
 			{props.title ? (
 				<Tooltip placement="bottom" arrow title={props.title}>
-					<div
-						className={["icon-btn", `${props.color}-btn`, "shadow-none"].join(
-							" "
-						)}
-					>
-						<Link to={props.goTo} disabled={props.disabled}>
+					<div className={["icon-btn", `${props.color}-btn`, "shadow-none"]}>
+						<Link
+							// variant="default"
+							// href={props.goTo}
+							to={props.goTo}
+							// onClick={props.onClick}
+							// target={target}
+							disabled={props.disabled}
+						>
 							<div>
 								<IconType />
 								{props.label}
@@ -157,21 +160,18 @@ export function IconButton(props) {
 					</div>
 				</Tooltip>
 			) : (
-				<div className={["icon-btn", `${props.color}-btn`].join(" ")}>
-					<Link
-						// variant="default"
-
-						to={props.goTo}
-						// href={props.goTo}
-						target={target}
-						disabled={props.disabled}
-					>
-						<div>
-							<IconType />
-							{props.label}
-						</div>
-					</Link>
-				</div>
+				<BootstrapButton
+					variant="default"
+					className={["icon-btn", `${props.color}-btn`]}
+					href={props.goTo}
+					target={target}
+					disabled={props.disabled}
+				>
+					<div>
+						<IconType />
+						{props.label}
+					</div>
+				</BootstrapButton>
 			)}
 		</>
 	);

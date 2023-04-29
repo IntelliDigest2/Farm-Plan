@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton } from "../../../SubComponents/Button";
+import { IconButton, TabLink } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
@@ -20,6 +20,12 @@ export function Food({ setShow, setChooseModal }) {
 				label={t("description.icon_diary")}
 				color="turquoise"
 				goTo="/meal-plan"
+			/>
+			<TabLink
+				// icon={<RecordsIcon />}
+				link={"/meal-plan"}
+				text="My meal-plan"
+				backgroundColor="#afba15"
 			/>
 
 			<IconButton

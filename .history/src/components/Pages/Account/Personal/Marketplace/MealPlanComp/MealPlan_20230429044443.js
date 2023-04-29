@@ -30,9 +30,9 @@ export default function MealPlan() {
 
 	const [value, setValue] = useState(moment());
 
-	// if (loading) {
-	// 	return <LoadingScreen />;
-	// }
+	if (loading) {
+		return <LoadingScreen />;
+	}
 
 	return (
 		<PageWrap goTo="/account" header={t("description.my_plan_to_save")}>

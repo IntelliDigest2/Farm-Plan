@@ -43,10 +43,10 @@ const NewAccount = (props) => {
 	};
 
 	//handles loading page
-	const [loading, setLoading] = useState(false);
-	// useEffect(() => {
-	// 	setTimeout(() => setLoading(false), 1500);
-	// });
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		setTimeout(() => setLoading(false), 1500);
+	});
 
 	//AccountType/BuildingFunction Management
 	const [type, setType] = useState(props.profile.type);
@@ -85,9 +85,9 @@ const NewAccount = (props) => {
 	if (!props.auth.uid) {
 		return <Redirect to="/login" />;
 	}
-	// if (loading) {
-	// 	return <LoadingScreen />;
-	// }
+	if (loading) {
+		return <LoadingScreen />;
+	}
 
 	return (
 		<>

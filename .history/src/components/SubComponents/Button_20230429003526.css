@@ -25,22 +25,12 @@
   overflow: hidden;
   margin: 3%;
   border-radius: 15px;
-  display: inline-block;
   /* box-shadow: 4px 5px 5px -2px rgba(0, 0, 0, 0.5); */
 }
 
-.icon-btn a:link,
-.icon-btn a:visited,
-.icon-btn a:hover,
-.icon-btn a:active{
-  text-decoration: none;
-  color: white;
-  
-}
-
 .add-btn {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.5rem;
+  height: 2.5rem;
   /* margin: 0 0 0 5%; */
   padding: 0rem;
   border-radius: 5px;

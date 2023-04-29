@@ -25,25 +25,15 @@
   overflow: hidden;
   margin: 3%;
   border-radius: 15px;
-  display: inline-block;
   /* box-shadow: 4px 5px 5px -2px rgba(0, 0, 0, 0.5); */
 }
 
-.icon-btn a:link,
-.icon-btn a:visited,
-.icon-btn a:hover,
-.icon-btn a:active{
-  text-decoration: none;
-  color: white;
-  
-}
-
 .add-btn {
-  width: 2.4rem;
-  height: 2.4rem;
-  /* margin: 0 0 0 5%; */
+  width: 3rem;
+  height: 3rem;
+  margin: 0 0 0 5%;
   padding: 0rem;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .center {
@@ -59,18 +49,18 @@
   color: white;
   transition: transform 0.5s;
 }
-.turquoise-btn:hover,.turquoise-btn:focus,.turquoise-btn:active {
+.turquoise-btn:hover {
   background-color: #0c656b;
   color: white;
 }
-/* .turquoise-btn:focus {
+.turquoise-btn:focus {
   background-color: #0c656b;
   border-color: white;
 }
 .turquoise-btn:active {
   background-color: #32797e;
   border-color: white;
-} */
+}
 
 .green-btn {
   background-color: #afba15;
@@ -91,21 +81,21 @@
   border-color: white;
 }
 
-.green-light-btn {
+.green-light-btn,.green-light-btn:hover,.green-light-btn:focus,.green-light-btn:active {
   background-color: #bfc563;
   border-color: #bfc563;
   color: rgb(0, 0, 0);
   transition: transform 0.5s;
 }
-.green-light-btn:hover,.green-light-btn:focus,.green-light-btn:active {
+ /* {
   background-color: #d1d682;
   color: rgb(0, 0, 0);
 }
-/* .green-light-btn:focus {
+ {
   background-color: #bfc563;
   border-color: rgb(0, 0, 0);
 }
-.green-light-btn:active {
+ {
   background-color: #bfc563;
   border-color: rgb(0, 0, 0);
 } */
