@@ -142,6 +142,26 @@ export function Environment() {
 		</>
 	);
 }
+export function Consulting() {
+	return (
+		<>
+			<IconButton
+				title="View your food waste data."
+				icon="chart"
+				label="Consult"
+				color="yellow"
+				goTo="/consult"
+			/>
+			<IconButton
+				title="Record your food waste."
+				icon="waste"
+				label="Consultant"
+				color="turquoise"
+				goTo="/consultant"
+			/>
+		</>
+	);
+}
 
 export function Sustainability() {
 	return (
