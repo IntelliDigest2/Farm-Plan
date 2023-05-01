@@ -19,6 +19,26 @@ function AddProductForm_supply(props) {
   const [productCurrency, setProductCurrency] = useState("$");
   const [productQty, setProductQty] = useState("");
   const [productMeasure, setProductMeasure] = useState("g");
+  const [image, setImage ] = useState("");
+  const [ Url, setUrl ] = useState("");
+  //upload immage to cloudinary
+  const uploadImage = async () => {
+    const data = new FormData()
+    data.append("file", image)
+    data.append("upload_preset", "product_upload")
+    data.append("cloud_name","dghm4xm7k")
+    data.append("resize", "w_500,h_500,c_fit") 
+    await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",{
+      method:"post",
+      body: data
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      setUrl(data.url)
+      //console.log("image url", data.url)
+    })
+    .catch(err => console.log(err))
+}
 
     // const [mealType, setMealType] = useState("");
   const [err, setErr] = useState("");
@@ -43,6 +63,7 @@ function AddProductForm_supply(props) {
         productPrice: productPrice,
         productCurrency: productCurrency,
         productQty: productQty,
+        imageURL: Url,
         // mealType: mealType,
         productMeasure: productMeasure,
         companyName: props.profile.companyName,
@@ -148,8 +169,21 @@ function AddProductForm_supply(props) {
         </InputGroup>
       </Form.Group>
 
+      <Form.Group className="mb-3">
+        <Form.Control
+          type="file"
+          placeholder="Upload Image"
+          defaultValue={""}
+          required
+          onChange={(e) => {
+            setImage(e.target.files[0]);
+          }}
+        />
+      </Form.Group>
+
+
       <div style={{ alignItems: "center" }}>
-        <Button className="blue-btn shadow-none" type="submit">
+        <Button className="blue-btn shadow-none" type="submit" onClick={() => uploadImage()}>
         {/* <Button className="blue-btn shadow-none" type="submit"> */}
           Done
         </Button>

@@ -5,17 +5,13 @@ import { PageWrapRes } from "../../../../SubComponents/PageWrapRes";
 // import LoadingScreen from "../../../../SubComponents/Loading/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 
-import { Calendar } from "../../Personal/Marketplace/MealPlanComp/Calendar";
 import SavedProducts from "../Suppliers/SavedProducts";
-import RecipeSearch from "../../Personal/Marketplace/MealPlanComp/Search/RecipeSearch";
-import { ShoppingList } from "../Restaurant/BuildShoppingList/ShoppingList";
 import moment from "moment";
-import { Inventory } from "../Restaurant/Inventory";
 // import WaveLoader from "../../../../../SubComponents/Loading/WaveLoader";
-
-import { CalendarPlanRes } from "../Restaurant/CalendarPlanRes";
-import { CalendarShop } from "./CalendarShop";
 import AddProductForm_supply from "./Icons/AddProductForm_supply";
+import SavedSales from "./SavedSales";
+import SavedRent from "./SavedRent";
+
 
 export default function SupplyPlan() {
   const [loading, setLoading] = useState(true);
@@ -33,15 +29,23 @@ export default function SupplyPlan() {
     <PageWrapRes goTo="/account" header="Dashboard">
       {/* <WaveLoader /> */}
       <Tabs
-        defaultActiveKey="recipes"
+        defaultActiveKey="product"
         id="meal-plan-tabs"
         className="mb-3 mealtabs basic-title"
       >
-        <Tab eventKey="recipes" title="PRODUCT" className="mealtab">
-          {/* returns all saved recipes */}
+        <Tab eventKey="sales" title="SALES" className="mealtab">
+          {/* returns all saved sales item */}
+          <SavedSales value={value} onChange={setValue} />
+        </Tab>
+        <Tab eventKey="rentage" title="RENTAGE" className="mealtab">
+          <SavedRent value={value} onChange={setValue} />
+        </Tab>
+        <Tab eventKey="product" title="STOCK" className="mealtab">
+          {/* returns all saved products */}
           <SavedProducts value={value} onChange={setValue} />
-          {/* search for recipes via api */}
-          {/* <RestaurantRecipes value={value} onChange={setValue} /> */}
+        </Tab>
+        <Tab eventKey="add-product" title="ADD PRODUCT" className="mealtab">
+          
           <AddProductForm_supply/>
 
         </Tab>
@@ -49,11 +53,6 @@ export default function SupplyPlan() {
         {/* <Tab eventKey="menu-preview" title="Menu Preview" className="menupreview"> 
         <MenuPreview/>
         </Tab> */}
-
-        <Tab eventKey="shopping-list" title="STOCK" className="mealtab">
-        </Tab>
-        <Tab eventKey="inventory" title="SALES" className="mealtab">
-        </Tab>
         
       </Tabs>
 
