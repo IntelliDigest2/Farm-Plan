@@ -6,9 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import Image from "../../../../SubComponents/Image"
-import AddToRentIcon from "./Icons/AddToRentIcon";
 import AddToSalesIcon from "./Icons/AddToSalesIcon";
-
 // import Edit from "./Icons/EditIcon";
 
 export default function ProductBox(props) {
@@ -24,7 +22,7 @@ export default function ProductBox(props) {
   //console.log("let fetch what weekly props is ==> ", props)
   return (
     <>
-      {props.products.map((newProduct, index) => (
+      {props.sales.map((newProduct, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
           <div className="ingredients">
              <List
@@ -34,7 +32,7 @@ export default function ProductBox(props) {
               <ListSubheader className="heading">
                 <div className="meal-name">{newProduct.productName}</div>
                 <div className="icons">
-                <AddToSalesIcon 
+                {/* <AddToSalesIcon 
                    value={props.value}
                    productName={newProduct.productName}
                    imageURL={newProduct.imageURL}
@@ -47,22 +45,7 @@ export default function ProductBox(props) {
                    id={newProduct.id}
                   //  update={update}
                   //  setUpdate={setUpdate}
-                /> 
-
-                <AddToRentIcon 
-                   value={props.value}
-                   productName={newProduct.productName}
-                   imageURL={newProduct.imageURL}
-                   productDescription={newProduct.productDescription}
-                   productMeasure={newProduct.productMeasure}
-                   productQty={newProduct.productQty}
-                   productPrice={newProduct.productPrice}
-                   productCurrency={newProduct.productCurrency}
-                   companyID={newProduct.companyID}
-                   id={newProduct.id}
-                  //  update={update}
-                  //  setUpdate={setUpdate}
-                /> 
+                  />  */}
                   {/* {newMeal.nonNativeData ? null : (
                     <Edit
                       value={props.value}

@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useTranslation, Trans } from 'react-i18next';
 
 
-import ProductBox from "./ProductBox";
+import RentBox from "./RentBox";
 import { connect } from "react-redux";
-import { getProducts} from "../../../../../store/actions/supplierActions/supplierData";
-const SavedProducts = (props) => {
+import { getRent} from "../../../../../store/actions/supplierActions/supplierData";
+const SavedRent = (props) => {
 
   const { t } = useTranslation();
 
-  const [sProducts, setSProducts] = useState([]);
+  const [sRent, setSRent] = useState([]);
 
 
 
@@ -22,17 +22,17 @@ const SavedProducts = (props) => {
 
   //this sends data request
   useEffect(() => {
-    props.getProducts();
+    props.getRent();
   }, [update]);
 
   
 
-  const updateSProducts = async () => {
+  const updateSRent = async () => {
     //clears the meals array before each update- IMPORTANT
-    setSProducts([]);
+    setSRent([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.Products.forEach((doc) => {
+    props.Rent.forEach((doc) => {
       var productName = doc.productName;
       var productDescription = doc.productDescription;
       var id = doc.id;
@@ -43,8 +43,8 @@ const SavedProducts = (props) => {
       var productMeasure = doc.productMeasure;
       var productQty = doc.productQty
 
-      setSProducts((sProducts) => [
-        ...sProducts,
+      setSRent((sRent) => [
+        ...sRent,
         {
           productName: productName,
           productDescription: productDescription,
@@ -62,30 +62,30 @@ const SavedProducts = (props) => {
 
   useEffect(() => {
     // const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-    updateSProducts();
-    console.log("Saved Meals", sProducts);
+    updateSRent();
+    console.log("Saved Meals", sRent);
     // .then(setSMeals(sorted));
     // console.log(props.data);
-  }, [props.Products]);
+  }, [props.Rent]);
 
   return (
     <>
-      {sProducts.length ? (
+     {sRent.length ? (
       <>
        <div className="row">
        <div className="col-8 basic-title-left mb-3">My available products listing</div>
      </div>
      <div className="meals">
-       <ProductBox
+       <RentBox
          forceUpdate={forceUpdate}
          onChange={props.onChange}
-         products={sProducts}
+         rent={sRent}
        />
      </div>
      </>
     ):(
       <div className="empty basic-title-left">
-          <p> No item yet 🙂 add a product from ADD PRODUCT tab</p>
+          <p> No item yet 🙂 add a product from the stock tab </p>
         </div>
     )}
      
@@ -95,14 +95,14 @@ const SavedProducts = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    Products: state.supplier.savedProducts,
+    Rent: state.supplier.savedRent,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProducts: (saved) => dispatch(getProducts(saved)),
+    getRent: (saved) => dispatch(getRent(saved)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedProducts);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedRent);

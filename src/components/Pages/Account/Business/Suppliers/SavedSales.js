@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useTranslation, Trans } from 'react-i18next';
 
 
-import ProductBox from "./ProductBox";
+import SalesBox from "./SalesBox";
 import { connect } from "react-redux";
-import { getProducts} from "../../../../../store/actions/supplierActions/supplierData";
-const SavedProducts = (props) => {
+import { getSales} from "../../../../../store/actions/supplierActions/supplierData";
+const SavedSales = (props) => {
 
   const { t } = useTranslation();
 
-  const [sProducts, setSProducts] = useState([]);
+  const [sSales, setSSales] = useState([]);
 
 
 
@@ -22,17 +22,17 @@ const SavedProducts = (props) => {
 
   //this sends data request
   useEffect(() => {
-    props.getProducts();
+    props.getSales();
   }, [update]);
 
   
 
-  const updateSProducts = async () => {
+  const updateSSales = async () => {
     //clears the meals array before each update- IMPORTANT
-    setSProducts([]);
+    setSSales([]);
 
     //sets a new meal object in the array for every document with this date attached
-    props.Products.forEach((doc) => {
+    props.Sales.forEach((doc) => {
       var productName = doc.productName;
       var productDescription = doc.productDescription;
       var id = doc.id;
@@ -43,8 +43,8 @@ const SavedProducts = (props) => {
       var productMeasure = doc.productMeasure;
       var productQty = doc.productQty
 
-      setSProducts((sProducts) => [
-        ...sProducts,
+      setSSales((sSales) => [
+        ...sSales,
         {
           productName: productName,
           productDescription: productDescription,
@@ -62,30 +62,30 @@ const SavedProducts = (props) => {
 
   useEffect(() => {
     // const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-    updateSProducts();
-    console.log("Saved Meals", sProducts);
+    updateSSales();
+    console.log("Saved Meals", sSales);
     // .then(setSMeals(sorted));
     // console.log(props.data);
-  }, [props.Products]);
+  }, [props.Sales]);
 
   return (
     <>
-      {sProducts.length ? (
+    {sSales.length ? (
       <>
        <div className="row">
        <div className="col-8 basic-title-left mb-3">My available products listing</div>
      </div>
      <div className="meals">
-       <ProductBox
+       <SalesBox
          forceUpdate={forceUpdate}
          onChange={props.onChange}
-         products={sProducts}
+         sales={sSales}
        />
      </div>
      </>
     ):(
       <div className="empty basic-title-left">
-          <p> No item yet 🙂 add a product from ADD PRODUCT tab</p>
+          <p> No item yet 🙂 add a product from the stock tab </p>
         </div>
     )}
      
@@ -95,14 +95,14 @@ const SavedProducts = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    Products: state.supplier.savedProducts,
+    Sales: state.supplier.savedSales,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProducts: (saved) => dispatch(getProducts(saved)),
+    getSales: (saved) => dispatch(getSales(saved)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedProducts);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedSales);

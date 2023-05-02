@@ -757,6 +757,7 @@ const Stage6 = (props) => {
         data.append("file", props.image)
         data.append("upload_preset", "wft-app")
         data.append("cloud_name","dghm4xm7k")
+        data.append("folder", "restaurant_id") 
         await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",{
           method:"post",
           body: data

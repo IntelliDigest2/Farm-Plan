@@ -16,7 +16,7 @@ import {
 // import { addToPurchaseItems } from "../../../../../../../store/actions/dataActions";
 import { useTranslation, Trans } from 'react-i18next';
 
-import BoughtItemIcon from "../Icons/BoughtItemIcon";
+import BoughtItemIcon from "../Icons/AddToSalesIcon";
 import Edit from "../Icons/EditIconShop";
 import EditAddedItems from "../Icons/EditIconShopAddedItems";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
