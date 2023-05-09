@@ -67,33 +67,37 @@ function Chat(props) {
 
 	const selectedChatCompare = useRef();
 
-	console.log(uid, `this is the id from the chatabove`);
-
 	useEffect(() => {
 		//   fetchchat with id chatId
+
 		fetchMessages();
 		selectedChatCompare.current = selectedChatId;
 	}, [selectedChatId]);
 
 	useEffect(() => {
+		// console.log(!selectedChatCompare || selectedChatCompare.current);
 		socket.on("receive_message", (newMessageReceived) => {
-			// if (
-			// 	!selectedChatCompare ||
-			// 	selectedChatCompare.current !== newMessageReceived.chatId
-			// ) {
-			// 	//   give notifications
-			// 	if (!notification.includes(newMessageReceived.chatId)) {
-			// 		onNotification(newMessageReceived.chatId);
-			// 		// setFetchAgain(!fetchAgain);
-			// 	}
-			// } else {
-			// 	setMessages([...messages, newMessageReceived.content]);
-			// 	console.log(newMessageReceived);
-			// }
-			setMessages([...messages, newMessageReceived]);
-			console.log(newMessageReceived);
-			console.log(messages);
+			console.log(`received a new message`);
+
+			if (
+				!selectedChatCompare ||
+				selectedChatCompare.current !== newMessageReceived.chatId
+			) {
+				//   give notifications
+				if (!notification.includes(newMessageReceived.chatId)) {
+					onNotification(newMessageReceived.chatId);
+					// setFetchAgain(!fetchAgain);
+				}
+			} else {
+				setMessages([...messages, newMessageReceived]);
+			}
+			// console.log(newMessageReceived, `line 95`);
+			// setMessages([...messages, newMessageReceived]);
 		});
+
+		// return () => {
+		// socket.off("receive_message");
+		// };
 	});
 
 	useEffect(() => {
@@ -102,25 +106,42 @@ function Chat(props) {
 		socket.on("stop_typing", () => {
 			setIsTyping(false);
 		});
+
+		return () => {
+			socket.off("typing");
+			socket.off("stop_typing");
+		};
 	}, [socket]);
 
+	// useEffect(() => {
+
+	//   return () => {
+	// 	 const getChatMessages = async(chatId) => {
+	// 		try{
+	// 			let messages =   await axios
+	// 				.get(`http://localhost:3001/api/messages/${chatId}`)
+	// 		}catch(err){
+	// 			console.log(err)
+	// 		}
+
+	// 	};
+	//   }
+	// }, [])
+
 	useEffect(() => {
-		console.log(messages, "this are the messages ");
-		if (messages.length === 0) {
-			setMessages(chatMessages);
-		}
+		// console.log(chatMessages, "these are the messages ");
+		// if (messages.length === 0) {
+		setMessages(chatMessages);
+		// }
 		setPreviousMessagesLoading(false);
 	}, [chatMessages]);
 
 	const sendMessage = async (e) => {
-		e.preventDefault();
 		// if (e.key === "Enter" && newMessage.trim()) {
 		socket.emit("stop_typing", selectedChatId);
 
 		try {
 			setMessages([...messages, newMessage]);
-
-			// setNewMessage("");
 
 			const sentMessage = await axios.post(
 				"http://localhost:3001/api/messages",
@@ -142,10 +163,10 @@ function Chat(props) {
 	if (messages.length > 0) {
 		allMessages = messages.map(
 			({ content, senderId, _id, createdAt }, index) => {
-				// let time = format(parseISO(createdAt), "hh:mm a");
+				let time = format(parseISO(createdAt), "hh:mm a");
 				return (
 					<div
-						// attr=[time]
+						data-time={time}
 						key={`${_id}${index}`}
 						className={senderId !== uid ? classes.meMsg : classes.otherMsg}
 					>
@@ -170,6 +191,7 @@ function Chat(props) {
 			senderId: uid,
 			chatId: selectedChatId,
 			usersInfo: userChat[0].users,
+			createdAt: new Date().toISOString(),
 		});
 
 		if (!isTyping) {
@@ -178,7 +200,7 @@ function Chat(props) {
 		}
 
 		let lastTypingTime = new Date().getTime();
-		let timerLength = 3000;
+		let timerLength = 1000;
 
 		setTimeout(() => {
 			let timeNow = new Date().getTime();
@@ -202,7 +224,7 @@ function Chat(props) {
 
 	const submitWithKey = (e) => {
 		if (e.charCode === 13) {
-			console.log(e);
+			// console.log(e);
 			e.preventDefault();
 			sendMessage();
 		}
@@ -211,7 +233,6 @@ function Chat(props) {
 	return (
 		<div className={classes.chat_cont}>
 			<div>
-				<h1>James Taylor </h1>
 				<div className={classes.messages}>{loader}</div>
 				{isTyping ? (
 					<div className={classes.typing}>
@@ -247,7 +268,13 @@ function Chat(props) {
 						/>
 					</Col>
 					<Col>
-						<button type="button" onClick={sendMessage}>
+						<button
+							type="button"
+							onClick={(e) => {
+								e.preventDefault();
+								sendMessage();
+							}}
+						>
 							<SendIcon />
 						</button>
 					</Col>

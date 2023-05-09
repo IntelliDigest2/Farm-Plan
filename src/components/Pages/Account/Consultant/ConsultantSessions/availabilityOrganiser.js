@@ -29,8 +29,9 @@ function AvailabilityOrganiser(props) {
 
 	const [currentDate, setCurrentDate] = useState(
 		// new Date(Date.now()).toISOString().split("T")[0]
-		format(Date.now(), "yyyy-mm-dd")
+		format(Date.now(), "yyyy-MM-dd")
 	);
+
 	const [isLoading, setIsLoading] = useState(false);
 
 	// console.log(consultantCalendarInfo);

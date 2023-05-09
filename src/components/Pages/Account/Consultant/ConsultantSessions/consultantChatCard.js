@@ -9,12 +9,11 @@ function ConsultantChatCard(props) {
 	const [showNotification, setShowNotification] = useState(false);
 
 	// if (useParams())
-	const { chat, notifications, profile } = props;
-
-	console.log(chat);
+	const { chat, notifications, profile, notifClicked } = props;
 
 	const handleNotif = () => {
 		setShowNotification(false);
+		notifClicked(chat._id);
 	};
 
 	// let { pathname } = useLocation();
@@ -25,17 +24,19 @@ function ConsultantChatCard(props) {
 	};
 
 	let userName;
-	if (`${profile.first} ${profile.lastName}` === chat.consultantName) {
-		userName = chat.consultantName;
-	} else {
-		userName = chat.userName;
+	let users = [chat.consultantName, chat.userName];
+
+	if (profile.isLoaded !== false) {
+		userName = users.filter((user) => {
+			return user !== `${profile.firstName} ${profile.lastName}`;
+		});
 	}
 
 	useEffect(() => {
 		if (notifications.includes(chat._id)) {
 			setShowNotification(true);
 		}
-	}, [chat._id, notifications]);
+	}, [notifications]);
 
 	let notificationBulb = showNotification ? (
 		<div className={classes.notification}></div>
@@ -46,7 +47,7 @@ function ConsultantChatCard(props) {
 
 	const date = parseISO(new Date(chat.createdAt).toISOString());
 
-	const formattedDate = format(date, "yyyy-MM-dd HH:mm:ss");
+	const formattedDate = format(date, "yyyy-MM-dd ");
 
 	return (
 		<div className={active} onClick={(e) => handleNotif(e)}>
@@ -68,10 +69,10 @@ function ConsultantChatCard(props) {
 						</h2>
 						{/* <h2 className={classes.chat_topic}>Horticulture consulting</h2> */}
 					</div>
-					<div className={classes.chat_txt}>{chat.latestMessage}</div>
+					<div className={classes.chat_txt}>{chat.latestMessage.content}</div>
+					{notificationBulb}
 				</div>
 			</div>
-			{notificationBulb}
 		</div>
 	);
 }

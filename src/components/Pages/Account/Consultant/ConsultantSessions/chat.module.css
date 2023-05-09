@@ -40,7 +40,18 @@
     margin-bottom: 5px;
     text-align: right;
     max-width: 250px;
+    position: relative;
     margin-left: auto;
+    text-align: left;
+}
+
+.meMsg::after{
+    content: attr(data-time);
+    font-size: 10px;
+    color: grey;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
 }
 
 .allmsg{
@@ -54,6 +65,15 @@
     background-color: #6dce9e;
     margin-bottom: 5px;
     max-width: 250px;
+    position: relative;
    
 
+}
+.otherMsg::after{
+    position: absolute;
+    content: attr(data-time);
+    font-size: 10px;
+    color: grey;
+    bottom: 2px;
+    right: 2px;
 }

@@ -26,7 +26,6 @@ export function deleteUserChat() {}
 // export function getUserChats() {}
 
 export const createChat = catchAsync(async (req, res, next) => {
-	console.log(`it came here in the chats controller`);
 	if (!req.body.user1 || !req.body.user2) {
 		return res.status(400).json({
 			status: "error",
@@ -34,14 +33,6 @@ export const createChat = catchAsync(async (req, res, next) => {
 		});
 	}
 	const { user1, user2, userName, consultantName } = req.body;
-
-	console.log(
-		user1,
-		user2,
-		userName,
-		consultantName,
-		`these are the body content`
-	);
 
 	const newChat = await Chat.create({
 		chatId: `${user1}_${user2}`,

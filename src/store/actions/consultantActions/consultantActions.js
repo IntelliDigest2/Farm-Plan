@@ -89,20 +89,18 @@ export const getUserData = () => {
 //fetch consultant data
 
 export const fetchConsultantData = (consultantId) => {
-	console.log(`it got to this place `);
-
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		console.log(consultantId, `this is the consultantId that was passed`);
+		// console.log(consultantId, `this is the consultantId that was passed`);
 		getFirestore()
 			.collection("consultants")
 			.doc(consultantId)
 			.onSnapshot(
 				(doc) => {
 					let data = doc.data();
-					console.log(
-						data,
-						`this is the data result gotten from fetching the consultant information`
-					);
+					// console.log(
+					// 	data,
+					// 	`this is the data result gotten from fetching the consultant information`
+					// );
 
 					dispatch({ type: "FETCH_CONSULTANT_DATA_SUCCESS", payload: data });
 				},
@@ -136,7 +134,7 @@ export const addConsultantEventToDatabase = (newEvent, consultantId) => {
 };
 
 export const getUserChatsData = (userId) => {
-	console.log(userId);
+	// console.log(userId);
 	return (dispatch) => {
 		axios
 			.post(`http://localhost:3001/api/chats/getChats`, {

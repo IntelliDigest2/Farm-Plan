@@ -37,13 +37,20 @@ li{list-style: none;}
     overflow:hidden;
     cursor: pointer;
     position: relative;
+    text-decoration: none;
     
 }
 
+
+
 .notification{
-    width: 4px;
-    height: 4px;
-    background-color: greenyellow;
+    width: 8px;
+    height: 8px;
+    background-color: green;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 50%;
 }
 
 /* .chats_cont > div{
@@ -76,6 +83,10 @@ li{list-style: none;}
     overflow-y: scroll;
     border-top: 1px solid #dee2e6 ;
     border-bottom: 1px solid #dee2e6 ;
+}
+
+.chat_left a ,.chat_left a:hover{
+    text-decoration: none;
 }
 
 .chat_txt{

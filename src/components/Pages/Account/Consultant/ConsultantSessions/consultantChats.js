@@ -21,20 +21,16 @@ function ConsultantChats(props) {
 	const [chats, setChats] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [chatId, setChatId] = useState("");
+	const [socket, setSocket] = useState(null);
 	let { url } = useRouteMatch();
 	let userId = auth.uid;
 
-	console.log(url, `this it the url`);
-
 	useEffect(() => {
-		// getChats(auth.uid);
-
 		getChats(userId);
 	}, []);
 
 	useEffect(() => {
 		setChats(userChats);
-		console.log(userChats, `this is the result of the user chats`);
 
 		setIsLoading(false);
 	}, [userChats]);
@@ -43,39 +39,50 @@ function ConsultantChats(props) {
 		let chatWithNewMessage;
 	}, [notifications]);
 
-	const socket = io.connect("http://localhost:3001");
+	useEffect(() => {
+		let newSocket = io.connect("http://localhost:3001");
 
-	socket.emit("setup", userId);
-	// socket.emit("setup", auth.uid);
+		newSocket.emit("setup", userId);
+		// socket.emit("setup", userId);
+		// socket.emit("setup", auth.uid);
+		newSocket.on("connected", () => setSocketConnected(true));
+		newSocket.on("connect_error", (err) => {
+			console.log(err, "error occurred");
+		});
 
-	socket.on("connected", () => setSocketConnected(true));
+		setSocket(newSocket);
 
-	// socket.on("connect_error", (err) => {
-	// 	console.log(err, "error occurred");
-	// });
+		return () => {
+			newSocket.on("disconnect", () => {
+				console.log("disconnected");
+			});
+		};
+	}, []);
 
-	socket.on("disconnect", () => {
-		console.log("disconnected");
-	});
+	const removeFromNotif = (chatId) => {
+		let newNotif = notifications.filter((id) => {
+			return chatId !== id;
+		});
 
-	// console.log(auth, `this is from the consultantChtjs`);
-	// console.log(user, `this isthe user from  consultantChtjs`);
+		setNotification(newNotif);
+	};
 
-	const notificationHandler = (e, chatId) => {
+	const notificationHandler = (chatId) => {
 		setNotification([chatId, ...notifications]);
+
 		let chatWithNewMessage = chats.filter((chat) => {
 			return chat._id === chatId;
 		});
 
-		// let index = chats.indexOf(chatWithNewMessage);
+		let index = chats.indexOf(chatWithNewMessage);
 
 		// chats.slice(0, index);
 
-		// setChats([
-		// 	chatWithNewMessage,
-		// 	...chats.slice(0, index),
-		// 	...chats.slice(index),
-		// ]);
+		setChats([
+			chatWithNewMessage,
+			...chats.slice(0, index),
+			...chats.slice(index),
+		]);
 	};
 
 	let chatCards;
@@ -84,7 +91,11 @@ function ConsultantChats(props) {
 			return (
 				<li key={`chat-${index}`}>
 					<Link to={`${url}/${chat._id}`}>
-						<ConsultantChatCard notifications={notifications} chat={chat} />
+						<ConsultantChatCard
+							notifications={notifications}
+							chat={chat}
+							notifClicked={removeFromNotif}
+						/>
 					</Link>
 				</li>
 			);
@@ -112,7 +123,7 @@ function ConsultantChats(props) {
 							uid={userId}
 							// uid={auth.uid}
 							notification={notifications}
-							onNotification={(e) => notificationHandler(e)}
+							onNotification={notificationHandler}
 							socketConnected={socketConnected}
 							socket={socket}
 							chatIds={chatId}
