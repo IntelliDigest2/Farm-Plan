@@ -1,9 +1,0 @@
-.chat_cont{
-    height: 100%;
-    background-color: pink;
-    position: relative;
-}
-
-.chat_input{
-    position:absolute ;
-}

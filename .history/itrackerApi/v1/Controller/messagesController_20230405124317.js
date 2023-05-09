@@ -1,3 +1,0 @@
-function getUserMessage() {}
-
-function sendMessage() {}
