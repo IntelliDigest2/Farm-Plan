@@ -3,6 +3,8 @@ const initState = {
   getData: [],
   purchaseData: [],
   purchaseDataRes: [],
+  salesData: [],
+  rentData: [],
 };
 
 const dataReducer = (state = initState, action) => {
@@ -69,6 +71,34 @@ const dataReducer = (state = initState, action) => {
         purchaseData: action.payload,
         authError: null,
       };
+      case "GET_SALES_DATA_ERROR":
+      console.log("get sales item error " + action.err.message);
+      return {
+        ...state,
+        authError: "Get failed",
+      };
+    case "GET_SALES_DATA":
+      console.log("get sales item success", action.payload);
+      return {
+        ...state,
+        salesData: action.payload,
+        authError: null,
+      };
+
+      case "GET_RENT_DATA_ERROR":
+      console.log("get rent item error " + action.err.message);
+      return {
+        ...state,
+        authError: "Get failed",
+      };
+    case "GET_RENT_DATA":
+      console.log("get rent item success", action.payload);
+      return {
+        ...state,
+        rentData: action.payload,
+        authError: null,
+      };
+
       case "GET_PURCHASE_DATA_RES_ERROR":
       console.log("get purchase res error " + action.err.message);
       return {

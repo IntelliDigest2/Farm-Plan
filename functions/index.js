@@ -1,4 +1,6 @@
 const functions = require("firebase-functions");
+const algoliasearch = require('algoliasearch');
+
 
 const express = require("express");
 const itrackerPaymentFunction = express();
@@ -20,6 +22,95 @@ if (useEmulator === "development") {
 }
 
 const fireStoreDB = admin.firestore();
+
+
+// Set up Algolia.
+// The app id and API key are coming from the cloud functions environment
+const algoliaClient = algoliasearch(functions.config().algolia.appid, functions.config().algolia.apikey);
+// Since I'm using develop and production environments, I'm automatically defining 
+// the index name according to which environment is running. functions.config().projectId is a default 
+// property set by Cloud Functions.
+const collectionIndexName = functions.config().projectId === 'itracker-development' ? 'sales_dev' : 'sales_dev';
+const collectionIndex = algoliaClient.initIndex(collectionIndexName);
+
+// Create a HTTP request cloud function.
+exports.sendCollectionToAlgolia = functions.https.onRequest(async (req, res) => {
+
+	// This array will contain all records to be indexed in Algolia.
+	const algoliaRecords = [];
+
+	// Retrieve all documents from the SALES collection.
+	const querySnapshot = await fireStoreDB.collection('sales').get();
+
+	querySnapshot.docs.forEach(doc => {
+		const document = doc.data();
+        // Essentially, you want your records to contain any information that facilitates search, 
+        // display, filtering, or relevance. Otherwise, you can leave it out.
+        const record = {
+            objectID: doc.id,
+            productName: document.productName,
+			createdAt: document.createdAt,
+			productDescription: document.productDescription,
+			productPrice: document.productPrice,
+			companyName: document.companyName,
+			city: document.city,
+			region: document.region,
+        };
+
+        algoliaRecords.push(record);
+    });
+	
+	// After all records are created, we save them to 
+	collectionIndex.saveObjects(algoliaRecords, (error, content) => {
+		if (error) {
+		  console.error(error);
+		  res.status(500).send("An error occurred while indexing COLLECTION to Algolia.");
+		} else {
+		  console.log("COLLECTION was indexed to Algolia successfully.");
+		  res.status(200).send("COLLECTION was indexed to Algolia successfully.");
+		}
+	  });
+})
+
+exports.collectionOnCreate = functions.firestore.document('sales/{uid}').onCreate(async (snapshot, context) => {
+    await saveDocumentInAlgolia(snapshot);
+});
+
+exports.collectionOnUpdate = functions.firestore.document('sales/{uid}').onUpdate(async (change, context) => {
+    await updateDocumentInAlgolia(change);
+});
+
+exports.collectionOnDelete = functions.firestore.document('sales/{uid}').onDelete(async (snapshot, context) => {
+    await deleteDocumentFromAlgolia(snapshot);
+});
+
+async function saveDocumentInAlgolia(snapshot) {
+    if (snapshot.exists) {
+        const record = snapshot.data();
+        if (record) { // Removes the possibility of snapshot.data() being undefined.
+            record.objectID = snapshot.id;
+            
+            await collectionIndex.saveObject(record); // Adds or replaces a specific object.
+        }
+    }
+}
+
+async function updateDocumentInAlgolia(change) {
+    const docBeforeChange = change.before.data();
+    const docAfterChange = change.after.data();
+    if (docBeforeChange && docAfterChange) {
+        await deleteDocumentFromAlgolia(change.before); // Deletes the document from Algolia.
+        await saveDocumentInAlgolia(change.after); // Indexes the updated document in Algolia.
+    }
+}
+
+
+async function deleteDocumentFromAlgolia(snapshot) {
+    if (snapshot.exists) {
+        const objectID = snapshot.id;
+        await collectionIndex.deleteObject(objectID);
+    }
+}
 
 itrackerPaymentFunction.use(express.static("public"));
 itrackerPaymentFunction.use(express.json());

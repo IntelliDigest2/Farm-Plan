@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import NotificationIcon from '@mui/icons-material/Notifications';
-import { ViewOrderRes } from "./ViewOrderRes";
+import { ViewOrderSupply } from "./ViewOrderSupply";
 
 //takes props value, meal(name), ingredients, id, forceUpdate and whether or not it is saved
-function NotificationIconRes(props) {
+function NotificationIconSupply(props) {
   //shows edit modal
   const [show, setShow] = useState(false);
 
@@ -24,7 +24,7 @@ function NotificationIconRes(props) {
           <NotificationIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>
-      <ViewOrderRes
+      <ViewOrderSupply
         show={show}
         setShow={setShow}
         cart={props.cart}
@@ -36,4 +36,4 @@ function NotificationIconRes(props) {
   );
 }
 
-export default NotificationIconRes;
+export default NotificationIconSupply;
