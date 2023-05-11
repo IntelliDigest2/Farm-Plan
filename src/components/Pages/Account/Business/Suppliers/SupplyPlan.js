@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // import "./Mealplan.css";
-import { PageWrapRes } from "../../../../SubComponents/PageWrapRes";
+import { PageWrapSupply } from "../../../../SubComponents/PageWrapSupply";
 // import LoadingScreen from "../../../../SubComponents/Loading/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 
@@ -26,7 +26,7 @@ export default function SupplyPlan() {
   // }
 
   return (
-    <PageWrapRes goTo="/account" header="Dashboard">
+    <PageWrapSupply goTo="/account" header="Dashboard">
       {/* <WaveLoader /> */}
       <Tabs
         defaultActiveKey="product"
@@ -58,6 +58,6 @@ export default function SupplyPlan() {
 
       {/* input available locations for picking up */}
       {/* shopping list */}
-    </PageWrapRes>
+    </PageWrapSupply>
   );
 }

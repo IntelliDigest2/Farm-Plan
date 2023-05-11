@@ -37,11 +37,16 @@ const SavedProducts = (props) => {
       var productDescription = doc.productDescription;
       var id = doc.id;
       var companyID = doc.companyID;
+      var region = doc.region;
+      var city = doc.city;
+      var companyName = doc.companyName
       var imageURL = doc.imageURL
       var productCurrency = doc.productCurrency;
       var productPrice = doc.productPrice;
       var productMeasure = doc.productMeasure;
-      var productQty = doc.productQty
+      var productQty = doc.productQty;
+      var createdAt= doc.createdAt;
+
 
       setSProducts((sProducts) => [
         ...sProducts,
@@ -51,10 +56,14 @@ const SavedProducts = (props) => {
           productCurrency: productCurrency,
           id: id,
           companyID: companyID,
+          region: doc.region,
+          city: doc.city,
+          companyName: doc.companyName,
           imageURL: imageURL,
           productPrice: productPrice,
           productMeasure: productMeasure,
           productQty: productQty,
+          createdAt: createdAt,
         },
       ]);
     });

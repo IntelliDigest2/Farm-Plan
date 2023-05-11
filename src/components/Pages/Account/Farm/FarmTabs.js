@@ -64,6 +64,12 @@ export function Food({ isSeller }) {
         goTo="/"
         disabled
       />
+      <IconButton
+        icon="notes"
+        label="Rent/Buy Item"
+        color="turquoise"
+        goTo="/supply"
+      />
     </>
   );
 }

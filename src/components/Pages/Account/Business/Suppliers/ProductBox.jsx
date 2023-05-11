@@ -44,7 +44,11 @@ export default function ProductBox(props) {
                    productPrice={newProduct.productPrice}
                    productCurrency={newProduct.productCurrency}
                    companyID={newProduct.companyID}
+                   region={newProduct.region}
+                   city={newProduct.city}
+                   companyName={newProduct.companyName}
                    id={newProduct.id}
+                   createdAt={newProduct.createdAt}
                   //  update={update}
                   //  setUpdate={setUpdate}
                 /> 
@@ -59,7 +63,12 @@ export default function ProductBox(props) {
                    productPrice={newProduct.productPrice}
                    productCurrency={newProduct.productCurrency}
                    companyID={newProduct.companyID}
+                   region={newProduct.region}
+                   city={newProduct.city}
+                   companyName={newProduct.companyName}
                    id={newProduct.id}
+                   createdAt={newProduct.createdAt}
+
                   //  update={update}
                   //  setUpdate={setUpdate}
                 /> 

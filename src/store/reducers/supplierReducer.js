@@ -1,7 +1,7 @@
 const initState = {
     authError: null,
     res: [],
-    orderRes: [],
+    orderSupply: [],
     savedProducts: [],
     savedSales: [],
     savedRent: [],
@@ -97,6 +97,32 @@ const initState = {
       authError: "add rent failed",
     };
 
+    case "ADD_SUPPLY_PURCHASE_ITEM":
+      console.log("sales item added", action.data);
+      return { 
+        ...state,
+        authError: null,
+      };
+    case "ADD_SUPPLY_PURCHASE_ITEM_ERROR":
+    console.log("error, sales item not saved", action.err);
+    return {
+      ...state,
+      authError: "add sales failed",
+    };
+
+    case "GET_ORDER_INFO_SUPPLY":
+        console.log("restaurant order data", action.payload);
+        return {
+            ...state,
+            orderSupply: action.payload,
+            authError: null,
+          };
+      case "GET_ORDER_INFO_SUPPLY_ERROR":
+        console.log("error, restaurant order data not fetched", action.err);
+        return {
+          ...state,
+          authError: "get restaurant orders failed",
+        };
 
     //#endregion
 

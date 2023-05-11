@@ -24,24 +24,25 @@ function AddToRentIcon(props) {
         productCurrency:props.productCurrency,
         companyID: props.companyID,
         productID: props.id,
+        createdAt: props.createdAt,
       },
     };
     props.addToRent(data);
-    submitNotification("Success", `${data.upload.productName}` + " added to sals list!");
+    submitNotification("Success", `${data.upload.productName}` + " added to sales list!");
   };
 
 
   return (
     <>
-      <Tooltip title="Add To Sales">
+      <Tooltip title="Add To Rent">
         <IconButton
           aria-label="Add To Sales"
-          sx={{ ml: 2 }}
+          sx={{ ml: 5 }}
           onClick={() => {
             handleSelect();
           }}
         >
-          <DeliveryDiningIcon fontSize="25" />
+          <DeliveryDiningIcon fontSize="50" />
         </IconButton>
       </Tooltip>
     </>

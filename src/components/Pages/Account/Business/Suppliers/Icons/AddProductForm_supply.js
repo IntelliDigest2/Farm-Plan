@@ -70,7 +70,8 @@ function AddProductForm_supply(props) {
         city: props.profile.city,
         region: props.profile.region,
         mobile: props.profile.mobile,
-        email: props.profile.email
+        email: props.profile.email,
+        createdAt: new Date()
       },
     };
 

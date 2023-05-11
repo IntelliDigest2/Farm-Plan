@@ -22,7 +22,11 @@ function AddToSalesIcon(props) {
         productPrice:props.productPrice,
         productCurrency:props.productCurrency,
         companyID: props.companyID,
+        region: props.region,
+        city: props.city,
+        companyName: props.companyName,
         productID: props.id,
+        createdAt: props.createdAt
       },
     };
     props.addToSales(data);

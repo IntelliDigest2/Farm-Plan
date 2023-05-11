@@ -1,10 +1,10 @@
 import React from "react";
 import { useId } from "react";
 import { Modal } from "react-bootstrap";
-import ViewOrderInfoRes from "./ViewOderInfoRes";
+import ViewOrderInfoSupply from "./ViewOderInfoSupply";
 import { useTranslation, Trans } from 'react-i18next';
 
-export function ViewOrderRes({
+export function ViewOrderSupply({
   show,
   setShow,
   forceUpdate,
@@ -24,7 +24,7 @@ export function ViewOrderRes({
         <Modal.Title id="add-meal">{t('description.order')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <ViewOrderInfoRes />
+        <ViewOrderInfoSupply />
       </Modal.Body>
     </Modal>
   );
