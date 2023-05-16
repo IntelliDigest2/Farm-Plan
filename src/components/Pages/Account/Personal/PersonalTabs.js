@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
@@ -9,8 +9,38 @@ import { useTranslation, Trans } from "react-i18next";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import AccordionDetails from "@mui/material/AccordionDetails";
 
-export function Food({ setShow, setChooseModal }) {
+export function Food({ setShow, setChooseModal, profile }) {
 	const { t } = useTranslation();
+	const [consultantService, setConsultantService] = useState("");
+
+	console.log(profile);
+	useEffect(() => {
+		if (profile.isloaded) {
+			if (profile.consultant === "active") {
+				setConsultantService(true);
+			} else {
+				setConsultantService(false);
+			}
+		}
+	}, [profile]);
+
+	let consultingService = consultantService ? (
+		<IconButton
+			title="Become a consultant"
+			icon="consultant"
+			label="Consultant"
+			color="turquoise"
+			goTo="/consultant"
+		/>
+	) : (
+		<IconButton
+			title="connect with a consultant."
+			icon="consult"
+			label="Consult"
+			color="yellow"
+			goTo="/consult"
+		/>
+	);
 
 	return (
 		<>
@@ -31,7 +61,9 @@ export function Food({ setShow, setChooseModal }) {
 					setShow(true);
 					setChooseModal(true);
 				}}
+				goTo="#"
 			/>
+			{consultingService}
 		</>
 	);
 }
@@ -55,6 +87,7 @@ export function Health({ setShow, setChooseModal }) {
 					setShow(true);
 					setChooseModal(true);
 				}}
+				goTo="#"
 			/>
 
 			<IconButton
@@ -142,26 +175,26 @@ export function Environment() {
 		</>
 	);
 }
-export function Consulting() {
-	return (
-		<>
-			<IconButton
-				title="connect with a consultant."
-				icon="consult"
-				label="Consult"
-				color="yellow"
-				goTo="/consult"
-			/>
-			<IconButton
-				title="Become a consultant"
-				icon="consultant"
-				label="Consultant"
-				color="turquoise"
-				goTo="/consultant"
-			/>
-		</>
-	);
-}
+// export function Consulting() {
+// 	return (
+// 		<>
+// 			<IconButton
+// 				title="connect with a consultant."
+// 				icon="consult"
+// 				label="Consult"
+// 				color="yellow"
+// 				goTo="/consult"
+// 			/>
+// 			<IconButton
+// 				title="Become a consultant"
+// 				icon="consultant"
+// 				label="Consultant"
+// 				color="turquoise"
+// 				goTo="/consultant"
+// 			/>
+// 		</>
+// 	);
+// }
 
 export function Sustainability() {
 	return (

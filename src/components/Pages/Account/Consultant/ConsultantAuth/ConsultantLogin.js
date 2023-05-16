@@ -5,7 +5,7 @@ import "../../../Account/UserAccount.css";
 import "../../../Auth/Mob.css";
 import { Title } from "../../../Auth/MobComponents";
 
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 
 import { connect } from "react-redux";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
@@ -21,8 +21,15 @@ const ConsultantLogin = (props) => {
 	const [isLoginIn, setIsLoginIn] = useState(false);
 
 	const history = useHistory();
-	const { signIn, resetError, isLogInError, isLoggedIn, isLoadingLogin } =
-		props;
+	const {
+		signIn,
+		resetError,
+		isLogInError,
+		isLoggedIn,
+		isLoadingLogin,
+		profile,
+	} = props;
+	const [pendingAlert, setPendingAlert] = useState("");
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -35,7 +42,7 @@ const ConsultantLogin = (props) => {
 	}
 
 	useEffect(() => {
-		console.log(isLoggedIn);
+		// console.log(isLoggedIn);
 		if (isLoggedIn) {
 			history.push("/consultant");
 			console.log("here bro");
@@ -44,7 +51,7 @@ const ConsultantLogin = (props) => {
 			setErrorMsg(true);
 		}
 
-		console.log(isLoggedIn);
+		// console.log(isLoggedIn);
 	}, [history, isLogInError, isLoggedIn]);
 
 	useEffect(() => {
@@ -53,64 +60,91 @@ const ConsultantLogin = (props) => {
 
 	let error = errorMsg ? <p>something went wrong</p> : "";
 
-	console.log(isLoggedIn);
+	// console.log(isLoggedIn);
+
+	useEffect(() => {
+		console.log(profile);
+		if (profile.consultant === "pending") {
+			setPendingAlert(true);
+		}
+	}, [profile, profile.isLoaded]);
+
+	const navigateHome = () => {};
+
+	let consultantAlert = pendingAlert ? (
+		<Alert
+			key="primary"
+			variant="primary"
+			onClose={() => setPendingAlert(false)}
+			dismissible
+		>
+			Your consultant account registeration is still being reviewed we would
+			send you an email when all verifications have been made
+			<Button onClick={navigateHome}>Go back to home</Button>
+		</Alert>
+	) : (
+		""
+	);
 
 	return (
-		<Title subtitle="Log In to your Consultant Account">
-			<Form>
-				<Form.Group className="mb-3">
-					<Form.Label>Email address</Form.Label>
-					<Form.Control
-						type="email"
-						placeholder="Enter email"
-						required
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-				</Form.Group>
+		<>
+			{consultantAlert}
+			<Title subtitle="Log In to your Consultant Account">
+				<Form>
+					<Form.Group className="mb-3">
+						<Form.Label>Email address</Form.Label>
+						<Form.Control
+							type="email"
+							placeholder="Enter email"
+							required
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+					</Form.Group>
 
-				<Form.Group className="mb-3">
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type="password"
-						placeholder="Password"
-						required
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-				</Form.Group>
-				{/* {error} */}
-				<Button
-					style={{ fontWeight: "700", margin: "0 auto " }}
-					variant="default"
-					className="signup-confirm signup-center"
-					type="button"
-					onClick={(e) => {
-						handleSubmit(e);
-					}}
-				>
-					{isLoginIn ? "loading..." : `Submit`}
-				</Button>
-			</Form>
-			<div className="auth-error">
-				{/* {errorMsg ? <p> {isLogInError}</p> : null} */}
-				{error}
-			</div>
+					<Form.Group className="mb-3">
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							type="password"
+							placeholder="Password"
+							required
+							onChange={(e) => setPassword(e.target.value)}
+						/>
+					</Form.Group>
+					{/* {error} */}
+					<Button
+						style={{ fontWeight: "700", margin: "0 auto " }}
+						variant="default"
+						className="signup-confirm signup-center"
+						type="button"
+						onClick={(e) => {
+							handleSubmit(e);
+						}}
+					>
+						{isLoginIn ? "loading..." : `Submit`}
+					</Button>
+				</Form>
+				<div className="auth-error">
+					{/* {errorMsg ? <p> {isLogInError}</p> : null} */}
+					{error}
+				</div>
 
-			<div className=" subtitles">
-				<Link to="/forgot-password" style={{ color: "#AFBA15" }}>
-					Forgot your password?
-				</Link>
-			</div>
+				<div className=" subtitles">
+					<Link to="/forgot-password" style={{ color: "#AFBA15" }}>
+						Forgot your password?
+					</Link>
+				</div>
 
-			<div>
-				<span>
-					Don't have a worldfoodtracker account?
-					<Link to="../signup" style={{ color: "#AFBA15" }}>
-						SIGN UP
-					</Link>{" "}
-				</span>{" "}
-				here
-			</div>
-		</Title>
+				<div>
+					<span>
+						Don't have a worldfoodtracker account?
+						<Link to="../signup" style={{ color: "#AFBA15" }}>
+							SIGN UP
+						</Link>{" "}
+					</span>{" "}
+					here
+				</div>
+			</Title>
+		</>
 	);
 };
 
@@ -119,6 +153,7 @@ const mapStateToProps = (state) => {
 		isLoggedIn: state.consultantAuth.consultantLoggedIn,
 		isLogInError: state.consultantAuth.consultantLoggingError,
 		isLoadingLogin: state.consultantAuth.loadingLogIn,
+		profile: state.firebase.profile,
 	};
 };
 

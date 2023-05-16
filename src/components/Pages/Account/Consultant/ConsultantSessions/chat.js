@@ -18,7 +18,7 @@ import {
 	Modal,
 	Button,
 } from "react-bootstrap";
-import { Lottie } from "react-lottie";
+// import { Lottie } from "react-lottie";
 import { connect } from "react-redux";
 
 function Chat(props) {
@@ -77,7 +77,7 @@ function Chat(props) {
 	useEffect(() => {
 		// console.log(!selectedChatCompare || selectedChatCompare.current);
 		socket.on("receive_message", (newMessageReceived) => {
-			console.log(`received a new message`);
+			// console.log(`received a new message`);
 
 			if (
 				!selectedChatCompare ||

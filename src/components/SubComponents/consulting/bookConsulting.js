@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Accordion, Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { fetchConsultantData } from "../../../store/actions/consultingActions";
+import { fetchConsultantForDate } from "../../../store/actions/consultingActions";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import Fullcalendar from "@fullcalendar/react";
@@ -214,7 +214,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getConsultants: (consultationField, date) => {
-			dispatch(fetchConsultantData(consultationField, date));
+			dispatch(fetchConsultantForDate(consultationField, date));
 		},
 	};
 };

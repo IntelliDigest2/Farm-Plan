@@ -17,6 +17,7 @@ import Contact from "./components/Pages/Contact";
 
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
 import ConsultantRegister from "./components/Pages/Account/Consultant/ConsultantAuth/ConsultantRegister";
+import ConsultantVideo from "./components/Pages/Account/Consultant/ConsultantSessions/consultantVideo";
 import OnboardMessage from "./components/Pages/Account/Consultant/ConsultantAuth/OnboardMessage";
 import ConsultantLogin from "./components/Pages/Account/Consultant/ConsultantAuth/ConsultantLogin";
 import ConsultantAccount from "./components/Pages/Account/Consultant/ConsultantAccount";
@@ -192,7 +193,7 @@ const App = (props) => {
 						<Route path="/payment-process" exact component={Payment} />
 
 						{/* <Route exact path="/consultant" component={Homepage} /> */}
-						<Route path="/consultant/register" component={ConsultantRegister} />
+						{/* <Route path="/consultant/register" component={ConsultantRegister} /> */}
 						{/* <Route
 							path="/consultant/onboard"
 							exact
@@ -214,8 +215,10 @@ const App = (props) => {
 							path="/consultant/records"
 							component={ConsultantRecordsPage}
 						/>
+						<Route path="/consultant-video" component={ConsultantVideo} />
 
 						<Route path="/consult" component={ConsultingPage} />
+						<Route path="/consult-video" exact component={ConsultantVideo} />
 
 						<Route path="/account" exact component={NewAccount} />
 						<Route path="/pts" exact component={PlanToSave} />

@@ -12,7 +12,10 @@ function ConsultantRequestsPage(props) {
 
 	const handleProceed = () => {};
 
+	console.log(consultantCalendarEvents);
+
 	let requests = consultantCalendarEvents.filter((event) => {
+		console.log(event);
 		return event.status.requesterId !== null && !event.status.requestAccepted;
 	});
 
@@ -61,8 +64,7 @@ function ConsultantRequestsPage(props) {
 
 function mapStateToProps(state) {
 	return {
-		consultantCalendarEvents:
-			state.consultantState.consultantData.calendarEvents,
+		consultantCalendarEvents: state.consultantState.calendarEvents,
 	};
 }
 function mapDispatchToProps() {

@@ -14,7 +14,10 @@ import ConsultantChats from "./consultantChats";
 import ConsultantNotes from "./consultantNotes";
 import classes from "./consultantSessionsPage.module.css";
 import AvailabilityOrganiser from "./availabilityOrganiser";
-import { fetchConsultantData } from "../../../../../store/actions/consultantActions/consultantActions";
+import {
+	fetchConsultantData,
+	fetchConsultantCalendarInfo,
+} from "../../../../../store/actions/consultantActions/consultantActions";
 import { Form, Row, Col, Container, Modal, Button } from "react-bootstrap";
 
 function ConsultantSessionsPage(props) {
@@ -22,11 +25,20 @@ function ConsultantSessionsPage(props) {
 	const [calendarEvents, setCalendarEvents] = useState("");
 	const [userInfo, setUserInfo] = useState("");
 
-	let { getConsultantData, auth, consultantData } = props;
+	let {
+		getConsultantData,
+		auth,
+		consultantData,
+		consultantCalendar,
+		getConsultantCalendar,
+	} = props;
 	const consultantId = auth.uid;
+
+	console.log(`sessions first`);
 
 	useEffect(() => {
 		getConsultantData(consultantId);
+		getConsultantCalendar(consultantId);
 	}, []);
 
 	useEffect(() => {
@@ -101,7 +113,7 @@ function ConsultantSessionsPage(props) {
 						<Route exact path={`${url}`}>
 							<AvailabilityOrganiser
 								// consultantCalendarEvents={calendarEvents}
-								consultantInfo={userInfo}
+								consultantCalendar={consultantCalendar}
 								auth={auth}
 							/>
 						</Route>
@@ -115,15 +127,16 @@ function ConsultantSessionsPage(props) {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getConsultantData: (userId) => dispatch(fetchConsultantData(userId)), // getConsultantData: (item) => dispatch(),
+		getConsultantCalendar: (userId) =>
+			dispatch(fetchConsultantCalendarInfo(userId)), // getConsultantData: (item) => dispatch(),
 	};
 };
 
 const mapStateToProps = (state) => {
 	return {
-		consultantCalendarEvents:
-			state.consultantState.consultantData.calendarEvents,
 		auth: state.firebase.auth,
 		consultantData: state.consultantState.consultantData,
+		consultantCalendar: state.consultantState.consultantCalendar,
 	};
 };
 

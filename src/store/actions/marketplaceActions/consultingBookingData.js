@@ -1,4 +1,5 @@
 import axios from "axios";
+import { generateId } from "../../../components/Pages/Account/Consultant/utils/utils";
 
 function createChat(uid, userName, consultantId, consultantName) {
 	console.log(
@@ -19,6 +20,10 @@ function createChat(uid, userName, consultantId, consultantName) {
 		console.log(err);
 	}
 }
+
+const generateVideoCallId = () => {
+	return generateId(10);
+};
 
 export const changePurchaseStatus = (
 	bookingId,
@@ -59,28 +64,53 @@ export const changePurchaseStatus = (
 		}
 		dispatch({ type: "CHANGE_PURCHASE_STATUS_LOADING" });
 		console.log(bookingId, consultantId, consultantName, eventType);
-		getFirestore()
-			.collection("marketplace")
-			.doc(uid)
-			.collection("bookings")
-			.doc(bookingId)
-			.set({ status: "completed" }, { merge: true })
-			.then((result) => {
-				dispatch({ type: "CHANGE_PURCHASE_STATUS_SUCCESS", payload: result });
 
-				if (eventType === "Chat") {
-					createChat(
-						uid,
-						`${profile.firstName} ${profile.lastName}`,
-						consultantId,
-						consultantName
-					);
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-				dispatch({ type: "CHANGE_PURCHASE_STATUS_ERROR", err });
-			});
+		if (eventType === "Video call" || "Phone call") {
+			const channelId = generateVideoCallId();
+
+			getFirestore()
+				.collection("marketplace")
+				.doc(uid)
+				.collection("bookings")
+				.doc(bookingId)
+				.set({ status: "completed", channelId: channelId }, { merge: true })
+				.then(() => {
+					// getFirestore()
+					// 	.collection("consultant")
+					// 	.doc(uid)
+					// 	.set({ channelId: channelId })
+
+					getFirestore()
+						.collection("consultants")
+						.doc(consultantId)
+						.collection("calendarEvents")
+						.doc(bookingId)
+						.set({ callId: channelId }, { merge: true });
+				});
+		} else {
+			getFirestore()
+				.collection("marketplace")
+				.doc(uid)
+				.collection("bookings")
+				.doc(bookingId)
+				.set({ status: "completed" }, { merge: true })
+				.then((result) => {
+					dispatch({ type: "CHANGE_PURCHASE_STATUS_SUCCESS", payload: result });
+
+					if (eventType === "Chat") {
+						createChat(
+							uid,
+							`${profile.firstName} ${profile.lastName}`,
+							consultantId,
+							consultantName
+						);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					dispatch({ type: "CHANGE_PURCHASE_STATUS_ERROR", err });
+				});
+		}
 	};
 };
 

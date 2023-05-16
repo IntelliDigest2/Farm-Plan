@@ -32,23 +32,20 @@ const ConsultantAccountPage = (props) => {
 		props.getConsultantData(auth.uid);
 	}, []);
 
-	console.log(profile, `this is the profile`);
+	// console.log(profile, `this is the profile`);
 
 	useEffect(() => {
-		console.log(consultantData);
+		// console.log(consultantData);
 		if (consultantData) {
 			setUserInfo(consultantData);
 		}
 	}, [consultantData]);
 
-	console.log(profile, `first`);
+	// console.log(profile, `first`);
 	let consultantContent =
 		profile.isLoaded === false ? (
 			"loading..."
-		) : !auth.uid ? (
-			<Redirect to="/consultant/login" />
-		) : profile?.consultant === "active" ? (
-			// props.consultantData ? (
+		) : auth.uid && profile?.consultant === "active" ? (
 			<>
 				<main className={classes.consultant_main}>
 					<header className={classes.consultant_header}>
@@ -76,11 +73,11 @@ const ConsultantAccountPage = (props) => {
 
 					<section className={classes.consultant_nav}>
 						{/* <TabLink
-							icon={<SessionsIcon />}
-							link={"/consultant/sessions"}
-							text="Sessions"
-							backgroundColor="#afba15"
-						/> */}
+					icon={<SessionsIcon />}
+					link={"/consultant/sessions"}
+					text="Sessions"
+					backgroundColor="#afba15"
+				/> */}
 						<IconButton
 							title="view all consultation requests"
 							icon="requests"
@@ -96,19 +93,19 @@ const ConsultantAccountPage = (props) => {
 							goTo="/consultant/Sessions"
 						/>
 						{/* <IconButton
-							title="Check consultation requests"
-							icon="calendar"
-							label="Records"
-							color="turquoise"
-							goTo="/consultant/records"
-						/> */}
+					title="Check consultation requests"
+					icon="calendar"
+					label="Records"
+					color="turquoise"
+					goTo="/consultant/records"
+				/> */}
 
 						{/* <TabLink
-							icon={<CalendarIcon />}
-							link={"/consultant/requests"}
-							text="Requests"
-							backgroundColor="#0c0847"
-						/> */}
+					icon={<CalendarIcon />}
+					link={"/consultant/requests"}
+					text="Requests"
+					backgroundColor="#0c0847"
+				/> */}
 						<TabLink
 							icon={<RecordsIcon />}
 							link={"/consultant/records"}
@@ -121,8 +118,7 @@ const ConsultantAccountPage = (props) => {
 				</main>
 			</>
 		) : (
-			// )
-			<Redirect to="/consultant/register" />
+			<Redirect to="/consultant/login" />
 		);
 
 	return <>{consultantContent}</>;

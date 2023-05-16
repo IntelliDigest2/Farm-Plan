@@ -4,10 +4,7 @@ import {
 	Switch,
 	Route,
 	NavLink,
-	useParams,
-	Link,
 	useRouteMatch,
-	Redirect,
 	useHistory,
 	useLocation,
 } from "react-router-dom";
@@ -18,10 +15,8 @@ import { Button } from "react-bootstrap";
 
 import ConsultantChats from "../../Pages/Account/Consultant/ConsultantSessions/consultantChats";
 const ConsultingPage = (props) => {
-	let { path, url } = useRouteMatch();
-	const history = useHistory();
+	let { url } = useRouteMatch();
 	const { auth, user, profile } = props;
-	const location = useLocation();
 
 	function goBack() {}
 

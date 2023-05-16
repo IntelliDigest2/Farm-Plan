@@ -144,23 +144,3 @@ export function FSSP() {
 		</>
 	);
 }
-export function Consulting() {
-	return (
-		<>
-			<IconButton
-				title="connect with a consultant."
-				icon="consult"
-				label="Consult"
-				color="yellow"
-				goTo="/consult"
-			/>
-			<IconButton
-				title="Become a consultant"
-				icon="consultant"
-				label="Consultant"
-				color="turquoise"
-				goTo="/consultant"
-			/>
-		</>
-	);
-}

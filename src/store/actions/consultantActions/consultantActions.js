@@ -90,7 +90,7 @@ export const getUserData = () => {
 
 export const fetchConsultantData = (consultantId) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		// console.log(consultantId, `this is the consultantId that was passed`);
+		console.log(consultantId);
 		getFirestore()
 			.collection("consultants")
 			.doc(consultantId)
@@ -112,18 +112,64 @@ export const fetchConsultantData = (consultantId) => {
 	};
 };
 
-export const addConsultantEventToDatabase = (newEvent, consultantId) => {
+export const fetchConsultantCalendarInfo = (consultantId) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		const newEventDay = newEvent.start.split("T")[0];
+		// console.log(consultantId, `this is the consultantId that was passed`);
+
+		let data = [];
+		getFirestore()
+			.collection("consultants")
+			.doc(consultantId)
+			.collection("calendarEvents")
+			.onSnapshot(
+				(querySnapshot) => {
+					querySnapshot.forEach((doc) => {
+						console.log(doc.id, " => ", doc.data()); // Log the document ID and data
+						data.push({ eventId: doc.id, ...doc.data() });
+					});
+					console.log(data);
+					// (doc) => {
+					// 	// let data = doc.data();
+					// 	// console.log(
+					// 	// 	data,
+					// 	// 	`this is the data result gotten from fetching the consultant information`
+					// 	// );
+
+					// 	console.log(doc);
+
+					dispatch({
+						type: "FETCH_CONSULTANT_CALENDAR_SUCCESS",
+						payload: data,
+					});
+				},
+				(error) => {
+					console.log(error);
+					dispatch({ type: "FETCH_CONSULTANT_CALENDAR_ERROR", payload: error });
+				}
+			);
+	};
+};
+
+export const addConsultantEventToDatabase = (
+	newEvent,
+	consultantId,
+	industry
+) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		console.log(newEvent);
+		let date = (newEvent.Day = newEvent.start.split("T")[0]);
+		// let industry = industry;
 
 		dispatch({ type: "EVENT_ADD_LOADING", payload: true });
 		getFirestore()
 			.collection("consultants")
 			.doc(consultantId)
-			.update({
-				calendarEvents: firebase.firestore.FieldValue.arrayUnion(newEvent),
-				eventDaysArray: firebase.firestore.FieldValue.arrayUnion(newEventDay),
-			})
+			.collection("calendarEvents")
+			.add({ ...newEvent, date, industry })
+			// 	// .update({
+			// 	// 	calendarEvents: firebase.firestore.FieldValue.arrayUnion(newEvent),
+			// 	// 	eventDaysArray: firebase.firestore.FieldValue.arrayUnion(newEventDay),
+			// 	// })
 			.then((result) => {
 				dispatch({ type: "EVENT_ADD_SUCCESS", payload: result });
 			})

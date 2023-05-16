@@ -7,6 +7,8 @@ const initState = {
 	produce: [],
 	purchaseInfoFarm: [],
 	consultantData: "",
+	consultantCalendar: "",
+	consultantCalendarError: null,
 	consultantDataError: null,
 	userChats: [],
 	chatMessages: [],
@@ -48,6 +50,18 @@ const consultantReducer = (state = initState, action) => {
 			return {
 				...state,
 				consultantDataError: action.payload,
+			};
+		case "FETCH_CONSULTANT_CALENDAR_SUCCESS":
+			console.log("fetch success");
+			return {
+				...state,
+				consultantCalendar: action.payload,
+			};
+		case "FETCH_CONSULTANT_CALENDAR_ERROR":
+			console.log("fetch error");
+			return {
+				...state,
+				consultantCalendarError: action.payload,
 			};
 		case "FETCH_USER_CHATS_SUCCESS":
 			// console.log("fetch chats success");

@@ -70,20 +70,30 @@ function ConsultantChats(props) {
 	const notificationHandler = (chatId) => {
 		setNotification([chatId, ...notifications]);
 
-		let chatWithNewMessage = chats.filter((chat) => {
-			return chat._id === chatId;
-		});
+		// let chatWithNewMessage = chats.filter((chat) => {
+		// 	return chat._id === chatId;
+		// });
+		// console.log(chatWithNewMessage[0], `this is the chat with the new message`);
 
-		let index = chats.indexOf(chatWithNewMessage);
+		// let index = chats.indexOf(chatWithNewMessage[0]);
 
-		// chats.slice(0, index);
+		// console.log(index, `this is the index of the chat with the new message`);
 
-		setChats([
-			chatWithNewMessage,
-			...chats.slice(0, index),
-			...chats.slice(index),
-		]);
+		// // chats.slice(0, index);
+		// console.log([
+		// 	chatWithNewMessage[0],
+		// 	...chats.slice(0, index),
+		// 	...chats.slice(index),
+		// ]);
+
+		// setChats([
+		// 	chatWithNewMessage,
+		// 	...chats.slice(0, index),
+		// 	...chats.slice(index),
+		// ]);
 	};
+
+	// useEffect(() => {}, [chats]);
 
 	let chatCards;
 	if (chats.length > 0) {

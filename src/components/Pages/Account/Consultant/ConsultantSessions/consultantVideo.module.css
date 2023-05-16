@@ -1,0 +1,12 @@
+.video{
+    width: 40vw;
+    height: 40vh;
+}
+
+.streamCont{
+    display: flex;
+    width: 90%;
+    background-color: green;
+    height: 80vh;
+    border: 1px solid black;
+}

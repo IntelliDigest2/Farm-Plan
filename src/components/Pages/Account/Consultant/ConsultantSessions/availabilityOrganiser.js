@@ -17,13 +17,20 @@ function AvailabilityOrganiser(props) {
 			requesterId: null,
 			requestAccepted: false,
 		},
-		eventId: generateId(20),
+
+		// eventId: generateId(20),
 
 		booked: false,
 	};
 	const [newEvent, setNewEvent] = useState(initialState);
 
-	const { addEventToDB, isSubmitting, auth, consultantInfo } = props;
+	const {
+		addEventToDB,
+		isSubmitting,
+		auth,
+		consultantInfo,
+		consultantCalendar,
+	} = props;
 
 	const [duration, setDuration] = useState(0);
 
@@ -73,6 +80,8 @@ function AvailabilityOrganiser(props) {
 		setIsLoading(isSubmitting);
 	}, [isSubmitting]);
 
+	useEffect(() => {}, []);
+
 	//add event function
 	function addEvent(e) {
 		//add event to database
@@ -86,11 +95,13 @@ function AvailabilityOrganiser(props) {
 			return;
 		e.preventDefault();
 
-		addEventToDB(newEvent, auth.uid);
+		const newEventDay = newEvent.start.split("T")[0];
 
-		// addEventToDB(newEvent, auth.uid);
+		addEventToDB(newEvent, auth.uid, consultantInfo.expertise);
 		setNewEvent({ ...initialState });
 	}
+
+	console.log(`availabilty Second`);
 
 	function addBookableEventHandler(start) {
 		// console.log(start.startStr);
@@ -147,18 +158,19 @@ function AvailabilityOrganiser(props) {
 
 	// function editBookableDayEvent() {}
 	let calendarEmpty;
-	if (consultantInfo) {
+	if (consultantCalendar) {
 		calendarEmpty =
-			consultantInfo.calendarEvents.length === 0
+			consultantCalendar.length === 0
 				? "Your calendar is empty, Start out by adding new availability openings "
 				: "";
 
-		if (consultantInfo.calendarEvents.length > 0) {
-			localEventArray = transformUTCtoLocalTime(consultantInfo.calendarEvents);
+		if (consultantCalendar.length > 0) {
+			localEventArray = transformUTCtoLocalTime(consultantCalendar);
 		}
 	}
 
-	let mainContent = consultantInfo ? (
+	// console.log(localEventArray)
+	let mainContent = consultantCalendar ? (
 		<>
 			{calendarEmpty}
 			<p>Click on the date you would like to add an opening to</p>
@@ -257,7 +269,7 @@ function AvailabilityOrganiser(props) {
 					</Row>
 
 					<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-						<Form.Label>Description and Requirements</Form.Label>
+						<Form.Label>Any additional note or Requirements</Form.Label>
 						<Form.Control
 							onChange={(e) =>
 								setNewEvent({ ...newEvent, description: e.target.value })
@@ -309,17 +321,19 @@ function AvailabilityOrganiser(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		eventAddedError: state.consultantState.consultantData.calendarEvents,
+		// eventAddedError: state.consultantState.consultantData.calendarEvents,
 		isSubmitting: state.consultantState.eventAddLoading,
 		auth: state.firebase.auth,
+		consultantInfo: state.consultantState.consultantData,
+		// consultantCalendar: state.consultantState.consultantCalendar,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addEventToDB: (newEvent, consultantId) =>
+		addEventToDB: (newEvent, consultantId, industry) =>
 			dispatch(
-				addConsultantEventToDatabase(newEvent, consultantId)
+				addConsultantEventToDatabase(newEvent, consultantId, industry)
 				// addConsultantEventToDatabase(newEvent, auth.uid)
 			),
 	};

@@ -7,7 +7,7 @@ import { Title } from "./MobComponents";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
-import { Form, Col, Button } from "react-bootstrap";
+import { Form, Col, Button, Row } from "react-bootstrap";
 import styled from "styled-components";
 
 import List from "@mui/material/List";
@@ -28,6 +28,8 @@ import Geocode from "react-geocode";
 import { countryNames, regionNames } from "../../lib/Countries";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { submitNotification } from "../../lib/Notifications";
+import { AddButton } from "../../SubComponents/Button";
+
 //import TermsAndCons from "../../SubComponents/TermsAndConditions";
 
 const SignUp = (props) => {
@@ -63,6 +65,71 @@ const SignUp = (props) => {
 
 	const [errorNotification, setErrorNotification] = useState();
 
+	//stage8
+	const [certificateImg, setCertificateImg] = useState();
+	const [IDImg, setIDImg] = useState();
+	const [imgPreview1, setImgPreview1] = useState();
+	const [imgPreview2, setImgPreview2] = useState();
+	const [consultant, setConsultant] = useState({
+		urlLink: "",
+		experience: "",
+		expertise: "",
+		services: [{ service: "", price: "0" }],
+		summary: "",
+		isActive: true,
+		images: [{ certificateImg: null }, { identificationImg: null }],
+	});
+
+	//This block of code is used to preview uploaded image
+	useEffect(() => {
+		if (!certificateImg) {
+			setImgPreview1(undefined);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(certificateImg);
+		setImgPreview1(objectUrl);
+
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [certificateImg]);
+
+	useEffect(() => {
+		if (!IDImg) {
+			setImgPreview2(undefined);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(IDImg);
+		setImgPreview2(objectUrl);
+
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [IDImg]);
+
+	let certificateImg1 = certificateImg ? (
+		<img
+			className="consultant_previewImg"
+			alt="certificate preview"
+			height="120px"
+			width="70%"
+			src={imgPreview1}
+		/>
+	) : (
+		""
+	);
+
+	let IDImg1 = IDImg ? (
+		<img
+			alt="certificate preview"
+			height="120px"
+			width="70%"
+			src={imgPreview2}
+		/>
+	) : (
+		""
+	);
+
+	//
+
 	function handleSubmit() {
 		let data = {
 			firstName: firstName,
@@ -85,6 +152,11 @@ const SignUp = (props) => {
 			restaurantDescription: restaurantDescription,
 			type: "user",
 		};
+
+		if (data.function === "Consultant") {
+			data.consultantInfo = consultant;
+		}
+
 		if (validation()) {
 			console.log("signup");
 			props.signUp(data);
@@ -92,6 +164,125 @@ const SignUp = (props) => {
 			console.log("error");
 		}
 	}
+
+	let servicesInput = consultant.services.map((value, index) => {
+		return (
+			<div key={`userService-${index}`}>
+				<Row className="mb-3">
+					<Col md={8}>
+						<Form.Control
+							as="select"
+							className="form-control"
+							type="select"
+							onChange={(e) => updateService(e, index)}
+							required
+							aria-label="Default select example"
+							// id={`service-${index}`}
+						>
+							<option>select service</option>
+							<option value="Written feedback"> Written Feedback</option>
+							<option value="Chat"> Chat</option>
+							<option value="Phone call"> Phone call</option>
+							<option value="Video call"> Video call</option>
+							<option value="Visit to consultant"> Visit to consultant</option>
+							<option value="Consultant visitation">
+								{" "}
+								Consultant visitation
+							</option>
+						</Form.Control>
+					</Col>
+					<Col md={3}>
+						<div>
+							{/* <span>$</span> */}
+							<Form.Control
+								type="number"
+								aria-label="Amount (to the nearest dollar)"
+								placeholder="price"
+								onChange={(e) => updateService(e, index)}
+							/>
+						</div>
+					</Col>
+					<Col>{showDeleteBtn(index)}</Col>
+				</Row>
+			</div>
+		);
+	});
+
+	let addNewServiceBtn =
+		consultant.services.length < 5 ? (
+			<AddButton onClick={addService}></AddButton>
+		) : (
+			""
+		);
+
+	function addService() {
+		if (consultant.services.length < 5) {
+			let newArray = consultant.services.slice();
+			newArray.splice(consultant.services.length, 0, {
+				service: "",
+				price: 0,
+			});
+
+			setConsultant({ ...consultant, services: newArray });
+		}
+
+		return;
+	}
+
+	function deleteService(e, i) {
+		e.preventDefault();
+		// console.log(i, `this is the index of what should be deleted`);
+		let newArray = consultant.services.slice();
+		newArray = newArray.filter((item, index) => index !== i);
+		// console.log(newArray, `remaining arrays`);
+		// newArray.splice(i, 1);
+		setConsultant({ ...consultant, services: newArray });
+	}
+
+	function showDeleteBtn(index) {
+		if (index > 0) {
+			return (
+				<button type="button" onClick={(e) => deleteService(e, index)}>
+					D
+				</button>
+			);
+		}
+		return "";
+	}
+
+	function updateService(e, i) {
+		let newArray = consultant.services.slice();
+
+		if (e.target.type === "number") {
+			let newValue = newArray.map((value, index) => {
+				let newVal;
+				if (index === i) {
+					newVal = { ...value, price: e.target.value };
+					return newVal;
+				}
+				return newVal;
+			});
+			newArray.splice(i, 1, newValue[i]);
+
+			setConsultant({ ...consultant, services: newArray });
+		} else {
+			let newValue = newArray.map((value, index) => {
+				let newVal;
+				if (index === i) {
+					newVal = { ...value, service: e.target.value };
+					return newVal;
+				}
+				return newVal;
+			});
+			newArray.splice(i, 1, newValue[i]);
+
+			setConsultant({ ...consultant, services: newArray });
+		}
+	}
+
+	const editConsultant = (e, editedVar) => {
+		setConsultant({ ...consultant, expertise: e.target.value });
+	};
 
 	//If error, send notification
 	useEffect(() => {
@@ -178,6 +369,30 @@ const SignUp = (props) => {
 
 	//rerender every time the stage changes
 	useEffect(() => {}, [stage]);
+
+	const handleSelectedImage = (e) => {
+		if (!e.target.files || e.target.files.length === 0) {
+			setCertificateImg(undefined);
+			setIDImg(undefined);
+			return;
+		} else {
+		}
+
+		// I've kept this example simple by using the first image instead of multiple
+		if (e.target.id === "img1") {
+			let imageFile = e.target.files[0];
+			setCertificateImg(imageFile);
+			let newArray = consultant.images.slice();
+			newArray.splice(0, 1, { certificateImg: imageFile });
+			setConsultant({ ...consultant, images: newArray });
+		} else {
+			let imageFile = e.target.files[0];
+			let newArray = consultant.images.slice();
+			setIDImg(imageFile);
+			newArray.splice(1, 1, { identificationImg: imageFile });
+			setConsultant({ ...consultant, images: newArray });
+		}
+	};
 
 	if (isLoggedIn) {
 		return <Redirect to="/account" />;
@@ -404,6 +619,33 @@ const SignUp = (props) => {
 					/>
 				</Title>
 			);
+		case 8:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<p>First, create your account.</p>
+					</div>
+					<Stage8
+						setConsultant={setConsultant}
+						consultant={consultant}
+						addNewServiceBtn={addNewServiceBtn}
+						handleSelectedImage={handleSelectedImage}
+						IDImg1={IDImg1}
+						certificateImg1={certificateImg1}
+						servicesInput={servicesInput}
+						setTown={setTown}
+						town={town}
+						setCountry={setCountry}
+						country={country}
+						setRegion={setRegion}
+						region={region}
+						setBuildingFunction={setBuildingFunction}
+						buildingFunction={buildingFunction}
+						setStage={setStage}
+						countries={countryNames}
+					/>
+				</Title>
+			);
 	}
 };
 
@@ -559,6 +801,7 @@ const Stage2 = (props) => {
 								"Shop/Supermarket",
 								"Farm",
 								"Recreational Centers",
+								"Consultant",
 								"Other",
 							]}
 						/>
@@ -600,6 +843,8 @@ const Stage2 = (props) => {
 								props.setStage(4); //stage for restaurant-specific questions
 							} else if (props.buildingFunction == "Admin") {
 								props.setStage(6); //stage for restaurant-specific questions
+							} else if (props.buildingFunction === "Consultant") {
+								props.setStage(8); //stage for consultant-specific questions
 							} else {
 								props.setStage(3);
 							}
@@ -689,6 +934,180 @@ const Stage4 = (props) => {
 										props.setStage(5); //stage for restaurant-specific questions
 									} else {
 										props.setStage(2);
+									}
+								}}
+							>
+								Next
+							</Button>
+						</div>
+					</div>
+				</Form>
+			</FormStyle>
+		</div>
+	);
+};
+
+const Stage8 = (props) => {
+	return (
+		<div>
+			<FormStyle>
+				<Form>
+					<Form.Group className="form-group">
+						<Form.Label className="form-label">
+							Field of Expertise<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<Form.Control
+							as="select"
+							className="form-control"
+							onChange={(e) =>
+								props.setConsultant({
+									...props.consultant,
+									expertise: e.target.value,
+								})
+							}
+							required
+						>
+							<option>Select</option>
+							<option>Dietician</option>
+							<option>Nutrition</option>
+							<option>Food and Beverage</option>
+							<option>Food Safety</option>
+							<option>Sustainable Food Packaging</option>
+							<option>Aquaculture</option>
+							<option>Horticulture</option>
+							<option>Agro-Feed</option>
+							<option>Account and Legal</option>
+							<option>Supply Chain</option>
+						</Form.Control>
+					</Form.Group>
+					<Form.Group controlId="formBasicSummary" className="form-group">
+						<Form.Label className="form-label">
+							Brief Summary of your Expertise/Key areas in the Food System.
+							<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<Form.Control
+							as="textarea"
+							rows={4}
+							type="text"
+							onChange={(e) =>
+								props.setConsultant({
+									...props.consultant,
+									summary: e.target.value,
+								})
+							}
+							required
+						></Form.Control>
+					</Form.Group>
+
+					<Form.Group controlId="formBasicUrl" className="form-group">
+						<Form.Label className="form-label">
+							Website Url or (social media link)
+							<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<Form.Control
+							type="text"
+							className="form-control"
+							onChange={(e) =>
+								props.setConsultant({
+									...props.consultant,
+									urlLink: e.target.value,
+								})
+							}
+							required
+						></Form.Control>
+					</Form.Group>
+					<Form.Group controlId="formBasicText" className="form-group">
+						<Form.Label className="form-label1">
+							{" "}
+							How Long have you been a consultant? (in years)
+							<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<Form.Control
+							type="number"
+							className="form-control"
+							onChange={(e) =>
+								props.setConsultant({
+									...props.consultant,
+									experience: e.target.value,
+								})
+							}
+							required
+						></Form.Control>
+					</Form.Group>
+
+					<Form.Group controlId="formBasicService" className="form-group">
+						<Form.Label style={{ width: "100%" }}>
+							Select service and charge (hourly rate)
+							<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<div style={{ marginBottom: "1rem", textAlign: "left" }}>
+							{props.addNewServiceBtn}
+						</div>
+
+						{props.servicesInput}
+					</Form.Group>
+
+					<Form.Group>
+						<Form.Label style={{ width: "100%" }} className="form-label">
+							Upload consultancy certification and identity card.
+							<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<Row className="mb-3">
+							<Col>
+								<Form.Control
+									id="img1"
+									onChange={props.handleSelectedImage}
+									label="upload certificate"
+									type="file"
+								/>
+							</Col>
+							<Col>
+								<Form.Control
+									id="img2"
+									onChange={props.handleSelectedImage}
+									className="mb-3"
+									label="upload Identification document"
+									type="file"
+								/>
+							</Col>
+						</Row>
+						<Row>
+							<Col>{props.certificateImg1}</Col>
+							<Col>{props.IDImg1}</Col>
+						</Row>
+					</Form.Group>
+					<Form.Group controlId="formBasicOptional" className="form-group">
+						<Form.Label className="form-label">
+							Any other thing you would like to share with us ?(optional)
+						</Form.Label>
+						<Form.Control as="textarea" rows={4} type="text"></Form.Control>
+					</Form.Group>
+
+					<div className="signup-center">
+						<div className="row">
+							<Button
+								variant="default"
+								className="signup-btn"
+								onClick={(e) => {
+									e.preventDefault();
+									//Previous Stage
+									props.setStage(2);
+								}}
+							>
+								Back
+							</Button>
+
+							<Button
+								variant="default"
+								className="signup-btn"
+								onClick={(e) => {
+									e.preventDefault();
+									//Next Stage
+
+									if (props.buildingFunction === "Consultant") {
+										props.setStage(3); //stage for restaurant-specific questions
+									} else {
+										props.setStage(3);
 									}
 								}}
 							>
@@ -993,17 +1412,7 @@ const Stage3 = (props) => {
 					</List>
 				</div>
 			);
-		case "Households":
-		case "Personal":
-		case "Hospitals":
-		case "Schools":
-		case "Hotels":
-		case "Offices":
-		case "Shop/Supermarket":
-		case "Farm":
-		case "Recreational Centers":
-		case "Restaurants":
-		case "Other":
+		case "Consultant":
 			return (
 				<div>
 					<List>
@@ -1038,6 +1447,42 @@ const Stage3 = (props) => {
 					</List>
 				</div>
 			);
+		default:
+			return (
+				<div>
+					<List>
+						<ListItem>
+							<ListItemIcon>
+								<DriveFileRenameOutlineIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.firstName} {props.lastName}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<EmailIcon />
+							</ListItemIcon>
+							<ListItemText>{props.email}</ListItemText>
+						</ListItem>
+						<ListItem className="space-between">
+							<ListItemIcon>
+								<EditLocationAltIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.town}, {props.country}, {props.region}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.buildingFunction}</ListItemText>
+						</ListItem>
+					</List>
+				</div>
+			);
+		// default: return
 	}
 };
 
