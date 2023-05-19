@@ -14,6 +14,7 @@ import BookingConsultingEvent from "./bookingConsultingEvent";
 function BookConsulting(props) {
 	const [consultationType, setConsultationType] = useState("");
 	const [consultationDate, setConsultationDate] = useState(new Date());
+	const [consultationEventType, setConsultationEventType] = useState("");
 	const [result, setResult] = useState(null);
 	const [isFetching, setIsFetching] = useState();
 	const [showEventsForSelectedDay, setshowEventsForSelectedDay] =
@@ -29,12 +30,26 @@ function BookConsulting(props) {
 		setConsultationType(e.target.value);
 	}
 
-	useEffect(() => {
-		if (consultationType) {
-			let newFormat = format(consultationDate, "yyyy-MM-dd");
-			getConsultants(consultationType, newFormat);
-		}
-	}, [consultationDate, consultationType, getConsultants]);
+	const SearchForConsultant = (e) => {
+		e.preventDefault();
+		let newFormat = format(consultationDate, "yyyy-MM-dd");
+		getConsultants(consultationType, newFormat, consultationEventType);
+	};
+
+	// useEffect(() => {
+	// 	if (
+	// 		consultationType !== "" &&
+	// 		consultationDate !== "" &&
+	// 		consultationEventType !== ""
+	// 	) {
+
+	// 	}
+	// }, [
+	// 	consultationDate,
+	// 	consultationType,
+	// 	consultationEventType,
+	// 	getConsultants,
+	// ]);
 
 	useEffect(() => {
 		if (consultingResult && consultingResult.length >= 0) {
@@ -45,6 +60,7 @@ function BookConsulting(props) {
 	}, [consultingResult, isFetchingData]);
 
 	let displayResult;
+	console.log(result);
 
 	function transformUTCtoLocalTime(events) {
 		let localTimeEvents = events.map((ev) => {
@@ -72,44 +88,37 @@ function BookConsulting(props) {
 	}
 
 	if (result) {
-		displayResult = result.map(({ consultant, consultantId }, index) => {
-			console.log(consultant);
-			function listAllDateEvent(start, end, allDays) {
-				setshowEventsForSelectedDay(true);
-				setClickedDay(start.startStr);
-			}
+		displayResult = result.map((event, index) => {
+			console.log(event);
+			// function listAllDateEvent(start, end, allDays) {
+			// 	setshowEventsForSelectedDay(true);
+			// 	setClickedDay(start.startStr);
+			// }
 
-			let formatedEvents = transformUTCtoLocalTime(consultant.calendarEvents);
+			// let formatedEvents = transformUTCtoLocalTime(consultant.calendarEvents);
 
 			// let dayEvents = formatedEvents.find((event, _) => {
 
 			// 	return event.start.split("T")[0] === clickedDay;
 			// });
 
-			let dayEvents = formatedEvents.filter((event) => {
-				return event.start.split("T")[0] === clickedDay && !event.booked;
-			});
+			// let dayEvents = formatedEvents.filter((event) => {
+			// 	return event.start.split("T")[0] === clickedDay && !event.booked;
+			// });
 
-			let displayDayEvents = dayEvents.map((event, i) => {
-				return (
-					<BookingConsultingEvent
-						key={`event-${i}`}
-						consultantId={consultantId}
-						consultantName={consultant.fullName}
-						openEvent={event}
-						index={i}
-					/>
-				);
-			});
+			// let displayDayEvents = dayEvents.map((event, i) => {
+			// 	return (
+			// 	);
+			// });
 
 			return (
 				<div key={index}>
-					<div>{consultant.fullName}</div>
-					<div>{consultant.summary}</div>
-					<div>years of experience : {consultant.experience}</div>
-
+					<BookingConsultingEvent event={event} key={`event-${index}`} />
+					{/* <div>{consultant.fullName}</div> */}
+					{/* <div>{consultant.summary}</div> */}
+					{/* <div>years of experience : {consultant.experience}</div> */}
 					<hr></hr>
-					<div className={classes.consultant_calendar}>
+					{/* <div className={classes.consultant_calendar}>
 						<Fullcalendar
 							// ref={calendarRef}
 							plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -127,8 +136,8 @@ function BookConsulting(props) {
 								listAllDateEvent(start, end, allDays);
 							}}
 						></Fullcalendar>
-					</div>
-					{showEventsForSelectedDay && displayDayEvents.length > 0 ? (
+					</div> */}
+					{/* {showEventsForSelectedDay && displayDayEvents.length > 0 ? (
 						<div>
 							<div>date : {clickedDay}</div>
 							<div>
@@ -137,7 +146,7 @@ function BookConsulting(props) {
 						</div>
 					) : (
 						`click day on calendar to see booking Openings`
-					)}
+					)} */}
 				</div>
 			);
 		});
@@ -145,7 +154,7 @@ function BookConsulting(props) {
 
 	let resultContent = !result ? (
 		<div>
-			<p>select consultant specialty and date</p>
+			<p>Result of available consultants will appear here</p>
 		</div>
 	) : result.length === 0 ? (
 		<div>
@@ -161,7 +170,10 @@ function BookConsulting(props) {
 	return (
 		<div>
 			<h1>Search for consultant</h1>
-			<Row>
+			<div>
+				<p>select consultant specialty and date</p>
+			</div>
+			<Row style={{ alignItems: "baseline" }}>
 				<Col>
 					<Form.Group className="form-group">
 						<Form.Label className="form-label">
@@ -198,6 +210,38 @@ function BookConsulting(props) {
 						/>
 					</Form.Group>
 				</Col>
+				<Col>
+					<Form.Group className="form-group">
+						<Form.Label className="form-label">
+							pick type of consultation
+						</Form.Label>
+						<Form.Control
+							as="select"
+							className="form-control"
+							type="select"
+							onChange={(e) => setConsultationEventType(e.target.value)}
+							required
+							aria-label="Default select example"
+							// id={`service-${index}`}
+						>
+							<option>select service</option>
+							<option value="Written feedback"> Written Feedback</option>
+							<option value="Chat"> Chat</option>
+							<option value="Phone call"> Phone call</option>
+							<option value="Video call"> Video call</option>
+							<option value="Visit to consultant"> Visit to consultant</option>
+							<option value="Consultant visitation">
+								{" "}
+								Consultant visitation
+							</option>
+						</Form.Control>
+					</Form.Group>
+				</Col>
+				<Col>
+					<Button type="button" onClick={(e) => SearchForConsultant(e)}>
+						Search
+					</Button>
+				</Col>
 			</Row>
 			<div>{resultContent}</div>
 		</div>
@@ -213,8 +257,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getConsultants: (consultationField, date) => {
-			dispatch(fetchConsultantForDate(consultationField, date));
+		getConsultants: (consultationField, date, chatType) => {
+			dispatch(fetchConsultantForDate(consultationField, date, chatType));
 		},
 	};
 };

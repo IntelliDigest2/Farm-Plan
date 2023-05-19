@@ -7,11 +7,13 @@ const initState = {
 	produce: [],
 	purchaseInfoFarm: [],
 	consultantData: "",
-	consultantCalendar: "",
+	consultantCalendar: null,
 	consultantCalendarError: null,
 	consultantDataError: null,
 	userChats: [],
 	chatMessages: [],
+	consultantRequests: null,
+	consultantRequestsError: "",
 	newMessage: "",
 	newMessageError: null,
 	consultantLogin: null,
@@ -63,6 +65,18 @@ const consultantReducer = (state = initState, action) => {
 				...state,
 				consultantCalendarError: action.payload,
 			};
+		case "FETCH_REQUESTS_SUCCESS":
+			console.log("fetch success");
+			return {
+				...state,
+				consultantRequests: action.payload,
+			};
+		case "FETCH_REQUESTS_ERROR":
+			console.log("fetch error");
+			return {
+				...state,
+				consultantRequestsError: action.payload,
+			};
 		case "FETCH_USER_CHATS_SUCCESS":
 			// console.log("fetch chats success");
 			return {
@@ -94,7 +108,7 @@ const consultantReducer = (state = initState, action) => {
 				[`${action.payload}`]: null,
 			};
 		case "EVENT_ADD_SUCCESS":
-			console.log("add event successfull", action.payload);
+			console.log("add event successfull", action.payload.data());
 			return {
 				...state,
 				eventAdded: true,

@@ -97,7 +97,7 @@ function AvailabilityOrganiser(props) {
 
 		const newEventDay = newEvent.start.split("T")[0];
 
-		addEventToDB(newEvent, auth.uid, consultantInfo.expertise);
+		addEventToDB(newEvent, auth.uid, consultantInfo);
 		setNewEvent({ ...initialState });
 	}
 
@@ -169,6 +169,13 @@ function AvailabilityOrganiser(props) {
 		}
 	}
 
+	let options;
+	if (consultantInfo) {
+		options = consultantInfo.services.map(({ _, service }) => {
+			return <option value={service}> {`${service}`}</option>;
+		});
+	}
+
 	// console.log(localEventArray)
 	let mainContent = consultantCalendar ? (
 		<>
@@ -202,18 +209,9 @@ function AvailabilityOrganiser(props) {
 									// id={`service-${index}`}
 								>
 									<option>select service</option>
-									<option value="Phone call"> Phone call</option>
-									<option value="Written feedback"> Written Feedback</option>
-									<option value="Chat"> Chat</option>
-									<option value="Video call"> Video call</option>
-									<option value="Visit to consultant">
-										{" "}
-										Visit to consultant
-									</option>
-									<option value="Consultant visitation">
-										{" "}
-										Consultant visitation
-									</option>
+									{}
+
+									{options}
 								</Form.Control>
 							</Form.Group>
 						</Col>
@@ -269,7 +267,9 @@ function AvailabilityOrganiser(props) {
 					</Row>
 
 					<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-						<Form.Label>Any additional note or Requirements</Form.Label>
+						<Form.Label>
+							Any additional note or Requirements (optional)
+						</Form.Label>
 						<Form.Control
 							onChange={(e) =>
 								setNewEvent({ ...newEvent, description: e.target.value })
@@ -331,9 +331,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addEventToDB: (newEvent, consultantId, industry) =>
+		addEventToDB: (newEvent, consultantId, consultantInfo) =>
 			dispatch(
-				addConsultantEventToDatabase(newEvent, consultantId, industry)
+				addConsultantEventToDatabase(newEvent, consultantId, consultantInfo)
 				// addConsultantEventToDatabase(newEvent, auth.uid)
 			),
 	};

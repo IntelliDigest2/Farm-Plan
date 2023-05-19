@@ -171,7 +171,7 @@ function ViewPurchaseInfo(props) {
 
 							let date = format(parseISO(booking.event.start), "yyyy-mm-dd");
 							let startTime = format(parseISO(booking.event.start), "hh:mm a");
-							let endTime = format(parseISO(booking.event.start), "hh:mm a");
+							let endTime = format(parseISO(booking.event.end), "hh:mm a");
 
 							return (
 								<ListItem

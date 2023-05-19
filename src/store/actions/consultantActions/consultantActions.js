@@ -88,7 +88,7 @@ export const getUserData = () => {
 
 //fetch consultant data
 
-export const fetchConsultantData = (consultantId) => {
+export const fetchConsultantInfo = (consultantId) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		console.log(consultantId);
 		getFirestore()
@@ -153,19 +153,39 @@ export const fetchConsultantCalendarInfo = (consultantId) => {
 export const addConsultantEventToDatabase = (
 	newEvent,
 	consultantId,
-	industry
+	consultantInfo
 ) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		console.log(newEvent);
-		let date = (newEvent.Day = newEvent.start.split("T")[0]);
-		// let industry = industry;
+		console.log(
+			newEvent,
+			consultantId,
+			consultantInfo,
+			`this is what we needed`
+		);
+		let date = newEvent.start.split("T")[0];
+		// // let industry = industry;
+
+		let arr = consultantInfo.services.filter(({ price, service }) => {
+			return service === newEvent.eventType;
+		});
 
 		dispatch({ type: "EVENT_ADD_LOADING", payload: true });
 		getFirestore()
 			.collection("consultants")
 			.doc(consultantId)
 			.collection("calendarEvents")
-			.add({ ...newEvent, date, industry })
+			.add({
+				...newEvent,
+				date,
+				price: arr[0].price,
+				industry: consultantInfo.expertise,
+				consultant: {
+					id: consultantId,
+					name: consultantInfo.fullName,
+					experience: consultantInfo.experience,
+					summary: consultantInfo.summary,
+				},
+			})
 			// 	// .update({
 			// 	// 	calendarEvents: firebase.firestore.FieldValue.arrayUnion(newEvent),
 			// 	// 	eventDaysArray: firebase.firestore.FieldValue.arrayUnion(newEventDay),
@@ -221,13 +241,8 @@ export const setErrorToDefault = (errorName) => {
 };
 
 //
-
-export const acceptBookingRequest = (
-	event,
-	consultantId,
-	consultantName,
-	serviceCost
-) => {
+//work on this
+export const acceptBookingRequest = (event) => {
 	// console.log(
 	// 	event,
 	// 	consultantId,
@@ -236,25 +251,18 @@ export const acceptBookingRequest = (
 	// 	`these are the params`
 	// );
 
-	let batch = db.batch();
+	// let batch = db.batch();
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		console.log(event);
 		dispatch({
 			type: "ACCEPT_BOOKING_LOAD",
 		});
-		let consultantRef = getFirestore()
+		getFirestore()
 			.collection("consultants")
-			.doc(consultantId);
-		batch.update(consultantRef, {
-			calendarEvents: firebase.firestore.FieldValue.arrayRemove(event),
-		});
-		batch.update(consultantRef, {
-			calendarEvents: firebase.firestore.FieldValue.arrayUnion({
-				...event,
-				status: { ...event.status, requestAccepted: true },
-			}),
-		});
-		batch
-			.commit()
+			.doc(event.consultant.id)
+			.collection("calendarEvents")
+			.doc(event.eventId)
+			.update({ status: { ...event.status, requestAccepted: true } })
 			.then((result) => {
 				dispatch({
 					type: "ACCEPT_BOOKING_SUCCESS",
@@ -267,14 +275,14 @@ export const acceptBookingRequest = (
 					.set({
 						status: "pending",
 						consultant: {
-							consultantId: consultantId,
-							consultantName: consultantName,
+							consultantId: event.consultant.id,
+							consultantName: event.consultant.name,
 						},
 						event: {
 							start: event.start,
 							end: event.end,
 							description: event.description,
-							price: serviceCost,
+							price: event.price,
 							eventType: event.eventType,
 						},
 					});
@@ -286,37 +294,34 @@ export const acceptBookingRequest = (
 					payload: err,
 				});
 			});
-		batch = null;
 	};
 };
 
-export const cancelBookingRequest = (event, consultantId) => {
+export const cancelBookingRequest = (event) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		dispatch({
 			type: "CANCEL_BOOKING_LOAD",
 		});
-		const batch = db.batch();
+		// const batch = db.batch();
 
 		let consultantRef = getFirestore()
 			.collection("consultants")
-			.doc(consultantId);
+			.doc(event.consultant.id)
+			.collection("consultantEvents")
+			.doc(event.eventId);
 
 		//firestore transaction
+
+		// .update({
+		// 	calendarEvents: firebase.firestore.FieldValue.arrayRemove(event),
+		// })
+		// .then(() => {
 		consultantRef
 			.update({
-				calendarEvents: firebase.firestore.FieldValue.arrayRemove(event),
-			})
-			.then(() => {
-				consultantRef.update({
-					calendarEvents: firebase.firestore.FieldValue.arrayUnion({
-						...event,
-
-						status: {
-							requesterId: null,
-							requestAccepted: false,
-						},
-					}),
-				});
+				status: {
+					requesterId: null,
+					requestAccepted: false,
+				},
 			})
 			.then(() => {
 				dispatch({
@@ -329,5 +334,40 @@ export const cancelBookingRequest = (event, consultantId) => {
 					payload: err,
 				});
 			});
+	};
+};
+
+export const getBookingRequest = (consultantId) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		let docArray = [];
+		console.log(`it go to this place hold on a second`);
+		getFirestore()
+			.collection("consultants")
+			.doc(consultantId)
+			.collection("calendarEvents")
+			.where("status.requestAccepted", "==", false)
+			.where("status.requesterId", "!=", null)
+			.onSnapshot(
+				(querySnapshot) => {
+					querySnapshot.forEach((doc) => {
+						// Access the document data
+						//   doc.push({id: })
+						const data = { eventId: doc.id, ...doc.data() };
+						docArray.push(data);
+					});
+
+					dispatch({
+						type: "FETCH_REQUESTS_SUCCESS",
+						payload: docArray,
+					});
+				},
+				(error) => {
+					console.log(error);
+					dispatch({
+						type: "FETCH_REQUESTS_SUCCESS",
+						payload: docArray,
+					});
+				}
+			);
 	};
 };

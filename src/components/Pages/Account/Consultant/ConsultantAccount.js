@@ -11,7 +11,7 @@ import RecordsIcon from "./ConsutltantIcons/recordsIcon";
 import TabLink from "./TabLink";
 import SettingsIcon from "./ConsutltantIcons/settingsIcon";
 import { Link, useRouteMatch, Redirect } from "react-router-dom";
-import { fetchConsultantData } from "../../../../store/actions/consultantActions/consultantActions";
+import { fetchConsultantInfo } from "../../../../store/actions/consultantActions/consultantActions";
 import { IconButton } from "../../../SubComponents/Button";
 
 const ConsultantAccountPage = (props) => {
@@ -133,7 +133,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getConsultantData: (userId) => dispatch(fetchConsultantData(userId)),
+		getConsultantData: (userId) => dispatch(fetchConsultantInfo(userId)),
 	};
 };
 

@@ -15,7 +15,7 @@ import ConsultantNotes from "./consultantNotes";
 import classes from "./consultantSessionsPage.module.css";
 import AvailabilityOrganiser from "./availabilityOrganiser";
 import {
-	fetchConsultantData,
+	fetchConsultantInfo,
 	fetchConsultantCalendarInfo,
 } from "../../../../../store/actions/consultantActions/consultantActions";
 import { Form, Row, Col, Container, Modal, Button } from "react-bootstrap";
@@ -126,7 +126,7 @@ function ConsultantSessionsPage(props) {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getConsultantData: (userId) => dispatch(fetchConsultantData(userId)), // getConsultantData: (item) => dispatch(),
+		getConsultantData: (userId) => dispatch(fetchConsultantInfo(userId)), // getConsultantData: (item) => dispatch(),
 		getConsultantCalendar: (userId) =>
 			dispatch(fetchConsultantCalendarInfo(userId)), // getConsultantData: (item) => dispatch(),
 	};

@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconButton } from "../../../SubComponents/Button";
 
 import "../UserAccount.css";
 
-export function Food({ isSeller }) {
+export function Food({ isSeller, profile }) {
+	const [consultantService, setConsultantService] = useState("");
+
+	console.log(profile);
+	useEffect(() => {
+		if (profile.isloaded) {
+			if (profile.consultant === "active") {
+				setConsultantService(true);
+			} else {
+				setConsultantService(false);
+			}
+		}
+	}, [profile]);
+
+	let consultingService = consultantService ? (
+		<IconButton
+			title="Become a consultant"
+			icon="consultant"
+			label="Consultant"
+			color="turquoise"
+			goTo="/consultant"
+		/>
+	) : (
+		<IconButton
+			title="connect with a consultant."
+			icon="consult"
+			label="Consult"
+			color="yellow"
+			goTo="/consult"
+		/>
+	);
+
 	return (
 		<>
 			{isSeller ? (
@@ -64,6 +95,7 @@ export function Food({ isSeller }) {
 				goTo="/"
 				disabled
 			/>
+			{consultingService}
 		</>
 	);
 }

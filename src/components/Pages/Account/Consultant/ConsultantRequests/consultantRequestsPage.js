@@ -1,36 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import ConsultantRequest from "./consultantRequest";
 import { Button, Modal } from "react-bootstrap";
+import {
+	fetchConsultantInfo,
+	getBookingRequest,
+} from "../../../../../store/actions/consultantActions/consultantActions";
 
 function ConsultantRequestsPage(props) {
-	const { consultantCalendarEvents } = props;
+	const {
+		consultantCalendarEvents,
+		auth,
+		handleGetBookingRequest,
+		consultantRequests,
+		consultantData,
+		getConsultantInfo,
+	} = props;
 	const [show, setShow] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [requests, setRequests] = useState(null);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
 	const handleProceed = () => {};
 
-	console.log(consultantCalendarEvents);
+	useEffect(() => {
+		handleGetBookingRequest(auth.uid);
+		getConsultantInfo(auth.uid);
+	}, []);
 
-	let requests = consultantCalendarEvents.filter((event) => {
-		console.log(event);
-		return event.status.requesterId !== null && !event.status.requestAccepted;
-	});
+	useEffect(() => {
+		setRequests(consultantRequests);
+		setIsLoading(false);
+	}, [consultantRequests]);
 
-	let requestList = requests.map((request, index) => {
-		return (
-			<ConsultantRequest
-				showDialog={handleShow}
-				key={`request-${index}`}
-				event={request}
-			/>
-		);
-	});
+	console.log(requests, `this is the requests`);
 
+	// let requests = consultantCalendarEvents.filter((event) => {
+	// 	console.log(event);
+	// 	return event.status.requesterId !== null && !event.status.requestAccepted;
+	// });
+	let requestList;
+	if (requests) {
+		requestList = requests.map((request, index) => {
+			return (
+				<ConsultantRequest
+					showDialog={handleShow}
+					key={`request-${index}`}
+					event={request}
+					consultantData={consultantData}
+				/>
+			);
+		});
+	}
+	console.log(requests, `this is the requests stuff`);
 	let requestContent =
-		requests.length === 0 ? (
+		requests === null ? (
+			"...loading"
+		) : requests.length === 0 ? (
 			<div>You do not have any requests available</div>
 		) : (
 			requestList
@@ -64,11 +92,17 @@ function ConsultantRequestsPage(props) {
 
 function mapStateToProps(state) {
 	return {
-		consultantCalendarEvents: state.consultantState.calendarEvents,
+		// consultantCalendarEvents: state.consultantState.calendarEvents,
+		consultantData: state.consultantState.consultantData,
+		auth: state.firebase.auth,
+		consultantRequests: state.consultantState.consultantRequests,
 	};
 }
-function mapDispatchToProps() {
-	return {};
+function mapDispatchToProps(dispatch) {
+	return {
+		handleGetBookingRequest: (uid) => dispatch(getBookingRequest(uid)),
+		getConsultantInfo: (uid) => dispatch(fetchConsultantInfo(uid)),
+	};
 }
 
 export default connect(

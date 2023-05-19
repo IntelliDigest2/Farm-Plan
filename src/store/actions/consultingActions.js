@@ -3,14 +3,54 @@ const db = firebase.firestore();
 
 // const batch = firebase.firestore().batch();
 
-export const fetchConsultantData = (consultantExpertise, consultationDate) => {
-	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		// console.log(consultantExpertise, consultationDate);
+// export const fetchConsultantData = (consultantExpertise, consultationDate) => {
+// 	return (dispatch, getState, { getFirebase, getFirestore }) => {
+// 		// console.log(consultantExpertise, consultationDate);
 
+// 		getFirestore()
+// 			.collection("consultants")
+// 			.where("expertise", "==", `${consultantExpertise}`)
+// 			.where("eventDaysArray", "array-contains", `${consultationDate}`)
+// 			.onSnapshot(
+// 				(doc) => {
+// 					dispatch({
+// 						type: "SET_FETCHING",
+// 						payload: true,
+// 					});
+// 					let consultants = [];
+// 					doc.forEach((doc) => {
+// 						consultants.push({ consultant: doc.data(), consultantId: doc.id });
+// 						console.log(doc.id, " => ", doc.data());
+// 					});
+// 					console.log("Current data: ", consultants);
+// 					dispatch({
+// 						type: "FETCH_CONSULTING_DATA_SUCCESS",
+// 						payload: consultants,
+// 					});
+// 				},
+// 				(err) => {
+// 					console.log(err);
+// 					dispatch({ type: "FETCH_CONSULTING_DATA_ERROR", payload: err });
+// 				}
+// 			);
+
+// 		// getFirestore()
+// 		// .collection("consultants")
+// 	};
+// };
+
+export const fetchConsultantForDate = (
+	consultantExpertise,
+	consultationDate,
+	consultationType
+) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		getFirestore()
-			.collection("consultants")
-			.where("expertise", "==", `${consultantExpertise}`)
-			.where("eventDaysArray", "array-contains", `${consultationDate}`)
+			.collectionGroup("calendarEvents")
+			.where("date", "==", `${consultationDate}`)
+			.where("industry", "==", `${consultantExpertise}`)
+			.where("eventType", "==", `${consultationType}`)
+
 			.onSnapshot(
 				(doc) => {
 					dispatch({
@@ -19,8 +59,8 @@ export const fetchConsultantData = (consultantExpertise, consultationDate) => {
 					});
 					let consultants = [];
 					doc.forEach((doc) => {
-						consultants.push({ consultant: doc.data(), consultantId: doc.id });
-						console.log(doc.id, " => ", doc.data());
+						consultants.push({ ...doc.data(), eventId: doc.id });
+						// console.log(doc.id, " => ", doc.data());
 					});
 					console.log("Current data: ", consultants);
 					dispatch({
@@ -33,63 +73,20 @@ export const fetchConsultantData = (consultantExpertise, consultationDate) => {
 					dispatch({ type: "FETCH_CONSULTING_DATA_ERROR", payload: err });
 				}
 			);
-
-		// getFirestore()
-		// .collection("consultants")
-	};
-};
-
-export const fetchConsultantForDate = (
-	consultantExpertise,
-	consultationDate
-) => {
-	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		getFirestore()
-			.collectionGroup("calendarEvents")
-			.where("date", "==", `${consultationDate}`)
-			.where("industry", "==", `${consultantExpertise}`)
-			.onSnapshot(
-				(doc) => {
-					dispatch({
-						type: "SET_FETCHING",
-						payload: true,
-					});
-					let consultants = [];
-					doc.forEach((doc) => {
-						consultants.push({ consultant: doc.data(), consultantId: doc.id });
-						console.log(doc.id, " => ", doc.data());
-					});
-					console.log("Current data: ", consultants);
-					// dispatch({
-					// 	type: "FETCH_CONSULTING_DATA_SUCCESS",
-					// 	payload: consultants,
-					// });
-				},
-				(err) => {
-					console.log(err);
-					dispatch({ type: "FETCH_CONSULTING_DATA_ERROR", payload: err });
-				}
-			);
 	};
 };
 
 export const bookEvent = (
 	event,
-	consultantName,
-	consultantId,
-	userId,
-	eventId,
-	userName
+
+	userId
 ) => {
-	console.log(event, consultantId, userId, `this the information passed`);
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		let consultantRef = getFirestore()
 			.collection("consultants")
-			.doc(consultantId)
-			.collection("calendarEvent")
-			.doc(eventId);
-
-		console.log(consultantRef, `this is the consultantRef`);
+			.doc(event.consultant.id)
+			.collection("calendarEvents")
+			.doc(event.eventId);
 
 		dispatch({
 			type: "BOOKING_CONSULTANT",
@@ -101,10 +98,9 @@ export const bookEvent = (
 				// This code may get re-run multiple times if there are conflicts.
 
 				return transaction.get(consultantRef).then((sfDoc) => {
-					console.log(sfDoc.data(), `this is the sfDoc`);
 					let data = sfDoc.data();
-					// console.log(newArray, `this is the new Arry`);
-					if (!data.status === null) {
+
+					if (data.status.requesterId !== null) {
 						throw new Error("opening has been booked");
 					}
 
@@ -113,10 +109,10 @@ export const bookEvent = (
 					});
 				});
 			})
-			.then(() => {
-				console.log("Transaction successfully committed!");
+			.then((result) => {
 				dispatch({
 					type: "BOOKING_CONSULTANT_SUCCESS",
+					payload: result,
 				});
 			})
 			.catch((error) => {

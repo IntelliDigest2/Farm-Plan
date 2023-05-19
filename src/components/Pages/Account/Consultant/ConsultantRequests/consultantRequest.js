@@ -105,10 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		acceptBooking: (event, consultantId, consultantName, serviceCost) =>
-			dispatch(
-				acceptBookingRequest(event, consultantId, consultantName, serviceCost)
-			),
+		acceptBooking: (event) => dispatch(acceptBookingRequest(event)),
 
 		cancelBooking: (event, consultantId) =>
 			dispatch(cancelBookingRequest(event, consultantId)),

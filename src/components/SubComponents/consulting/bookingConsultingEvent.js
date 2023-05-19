@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { bookEvent } from "../../../store/actions/consultingActions";
 import { format, parseISO } from "date-fns";
 
@@ -12,13 +12,16 @@ export const BookingConsultingEvent = (props) => {
 		bookEvent,
 		bookingLoading,
 		consultantId,
-		consultantName,
+		// consultantName,
+		event,
 
 		auth,
 	} = props;
 
-	let startTime = format(parseISO(openEvent.start), "hh:mm a");
-	let endTime = format(parseISO(openEvent.end), "hh:mm a");
+	let startTime = format(parseISO(event.start), "hh:mm a");
+	let endTime = format(parseISO(event.end), "hh:mm a");
+
+	console.log(event);
 
 	useEffect(() => {
 		if (!bookingLoading) {
@@ -28,34 +31,37 @@ export const BookingConsultingEvent = (props) => {
 	}, [bookingLoading]);
 
 	const bookConsultantEvent = (e, event, consultantId) => {
-		//conveting the start and end time to isoString
-		let eventToSend = {
-			...event,
-			start: new Date(event.start).toISOString(),
-			end: new Date(event.end).toISOString(),
-		};
-		bookEvent(
-			eventToSend,
-			consultantName,
-			consultantId,
-			auth.uid,
-			auth.fullName
-		);
+		bookEvent(event, auth.uid);
 		setisBookingLoading(true);
 	};
+
 	return (
 		<>
 			<div>
-				<div>Event Type: {openEvent.eventType}</div>
-				<div> Description: {openEvent.description}</div>
+				<div>Event Type: {event.eventType}</div>
+				<div>
+					<h4>Consultant Information</h4>
+					{/* <p> Consultant Summary: {event.consultant.summary}</p> */}
+					<p> Consultant Name: {event.consultant.name}</p>
+					<p>Years of experience: {event.consultant.experience}</p>
+				</div>
+				<div> Additional information: {event.description}</div>
+				<div>{`Price : $${event.price}`}</div>
 
-				<div>Event Start: {startTime}</div>
-				<div> Event end: {endTime}</div>
+				<Row>
+					<Col>
+						<div>Start Time: {startTime}</div>
+					</Col>
+					<Col>
+						<div>End Time: {endTime}</div>
+					</Col>
+				</Row>
+
 				<Button
-					onClick={(e) => bookConsultantEvent(e, openEvent, consultantId)}
-					disabled={openEvent.status.requesterId !== null ? true : false}
+					onClick={(e) => bookConsultantEvent(e, event, consultantId)}
+					disabled={event.status.requesterId !== null ? true : false}
 				>
-					{openEvent.status.requesterId !== null
+					{event.status.requesterId !== null
 						? "Requested"
 						: isBookingLoading
 						? "booking..."
@@ -73,10 +79,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		bookEvent: (event, consultantName, consultantId, userId, userName) => {
-			dispatch(
-				bookEvent(event, consultantName, consultantId, userId, userName)
-			);
+		bookEvent: (event, userId) => {
+			dispatch(bookEvent(event, userId));
 		},
 	};
 };
