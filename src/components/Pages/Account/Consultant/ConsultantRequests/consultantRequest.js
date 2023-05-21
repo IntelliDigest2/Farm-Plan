@@ -54,10 +54,14 @@ export const ConsultantRequest = (props) => {
 	};
 
 	useEffect(() => {
-		if (!confirmLoad) {
+		if (event.status.requestAccepted) {
 			setAcceptLoading(false);
 		}
-	}, [cancelLoad, confirmLoad]);
+
+		console.log(event.status.requestAccepted);
+	}, [event.status.requestAccepted]);
+
+	// useE
 
 	return (
 		<div className={classes.cont}>

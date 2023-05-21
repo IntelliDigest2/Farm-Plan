@@ -34,7 +34,9 @@ function ConsultantSessionsPage(props) {
 	} = props;
 	const consultantId = auth.uid;
 
-	console.log(`sessions first`);
+	console.log(consultantCalendar);
+
+	// console.log(`sessions first`);
 
 	useEffect(() => {
 		getConsultantData(consultantId);
@@ -42,7 +44,7 @@ function ConsultantSessionsPage(props) {
 	}, []);
 
 	useEffect(() => {
-		console.log(consultantData);
+		// console.log(consultantData);
 		if (consultantData) {
 			setUserInfo(consultantData);
 		}
@@ -87,7 +89,7 @@ function ConsultantSessionsPage(props) {
 								OTHER BOOKINGS
 							</NavLink>
 						</li>
-						<li>
+						{/* <li>
 							<NavLink
 								className={classes.link}
 								activeClassName={classes.active}
@@ -95,7 +97,7 @@ function ConsultantSessionsPage(props) {
 							>
 								NOTES
 							</NavLink>
-						</li>
+						</li> */}
 					</ul>
 				</nav>
 

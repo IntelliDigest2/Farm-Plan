@@ -23,6 +23,7 @@ function AvailabilityOrganiser(props) {
 		booked: false,
 	};
 	const [newEvent, setNewEvent] = useState(initialState);
+	const [showModal, setShowModal] = useState();
 
 	const {
 		addEventToDB,
@@ -82,6 +83,13 @@ function AvailabilityOrganiser(props) {
 
 	useEffect(() => {}, []);
 
+	let options;
+	if (consultantInfo) {
+		options = consultantInfo.services.map(({ _, service }) => {
+			return <option value={service}> {`${service}`}</option>;
+		});
+	}
+
 	//add event function
 	function addEvent(e) {
 		//add event to database
@@ -101,11 +109,12 @@ function AvailabilityOrganiser(props) {
 		setNewEvent({ ...initialState });
 	}
 
-	console.log(`availabilty Second`);
+	// console.log(`availabilty Second`);
 
 	function addBookableEventHandler(start) {
 		// console.log(start.startStr);
 		setClickedDate(start.startStr);
+		setShowModal(true);
 	}
 
 	function calculateEndTime(date, duration) {
@@ -121,7 +130,7 @@ function AvailabilityOrganiser(props) {
 		// console.log(time, "time i inputed");
 
 		let date = `${clickedDate.split("T")[0]}T${time}:00`;
-		console.log(date, `this is the selected date`);
+		// console.log(date, `this is the selected date`);
 		if (date.length > 18) {
 			//it has to have the format 2023-03-30T16:30:00 before it can execute if not we get an error
 			let startDateAndTime = new Date(date).toISOString();
@@ -156,7 +165,11 @@ function AvailabilityOrganiser(props) {
 		//
 	}
 
+	const handleFormClose = () => setShowModal(false);
+
 	// function editBookableDayEvent() {}
+
+	console.log(consultantCalendar);
 	let calendarEmpty;
 	if (consultantCalendar) {
 		calendarEmpty =
@@ -168,13 +181,124 @@ function AvailabilityOrganiser(props) {
 			localEventArray = transformUTCtoLocalTime(consultantCalendar);
 		}
 	}
+	let modal = (
+		<Modal
+			show={showModal}
+			onHide={handleFormClose}
+			size="lg"
+			aria-labelledby="edit meal"
+			centered
+		>
+			<Modal.Header closeButton>
+				{/* <Modal.Title id="add-meal">{t("description.order")}</Modal.Title> */}
+			</Modal.Header>
+			<Modal.Body>
+				<div className={classes.calendar_inputs}>
+					<h1>Schedule Availability Opening</h1>
+					<h2>Add new open bookings for : {clickedDate}</h2>
+					<Form>
+						<Row>
+							<Col>
+								<Form.Group className="mb-3" controlId="consultationType">
+									<Form.Label>Event Type</Form.Label>
 
-	let options;
-	if (consultantInfo) {
-		options = consultantInfo.services.map(({ _, service }) => {
-			return <option value={service}> {`${service}`}</option>;
-		});
-	}
+									<Form.Control
+										as="select"
+										className="form-control"
+										type="select"
+										onChange={(e) =>
+											setNewEvent({ ...newEvent, eventType: e.target.value })
+										}
+										required
+										aria-label="Default select example"
+										// id={`service-${index}`}
+									>
+										<option>select service</option>
+										{}
+
+										{options}
+									</Form.Control>
+								</Form.Group>
+							</Col>
+
+							<Col>
+								<Form.Group className="mb-3" controlId="time">
+									<Form.Label>Start Time</Form.Label>
+									<Form.Control
+										type="time"
+										placeholder="Password"
+										onChange={(e) => setStartTime(e)}
+										required
+									/>
+								</Form.Group>
+							</Col>
+						</Row>
+						<Row>
+							<Col>
+								<Form.Group className="mb-3" controlId="availabilityDuration">
+									<Form.Label>Duration</Form.Label>
+									<Form.Control
+										onChange={(e) => setEndTime(e)}
+										as="select"
+										aria-label="Default select example"
+									>
+										{/* <option>Select availaibility period</option> */}
+										<option value="">Select event duration</option>
+										<option value="30">30 mins</option>
+										<option value="60">1 hr</option>
+										<option value="120">2 hrs</option>
+										<option value="180">3 hrs</option>
+										<option value="240">4 hrs</option>
+									</Form.Control>
+								</Form.Group>
+							</Col>
+							<Col>
+								<Form.Group className="mb-3" controlId="availabilityFrequency">
+									<Form.Label>Frequency of occurence</Form.Label>
+									<Form.Control
+										disabled
+										as="select"
+										onChange={(e) => setFrequencyOfOccurence(e)}
+									>
+										<option>Select availability frequency</option>
+										<option value="none">none</option>
+										<option value="weekly">Weekly</option>
+										<option value="biweekly">Biweekly</option>
+										{/* <option value="weekly"> Every 2 weeks</option> */}
+										<option value="monthly">Monthly</option>
+									</Form.Control>
+								</Form.Group>
+							</Col>
+						</Row>
+
+						<Form.Group
+							className="mb-3"
+							controlId="exampleForm.ControlTextarea1"
+						>
+							<Form.Label>
+								Any additional note or Requirements (optional)
+							</Form.Label>
+							<Form.Control
+								onChange={(e) =>
+									setNewEvent({ ...newEvent, description: e.target.value })
+								}
+								as="textarea"
+								rows={3}
+								required
+							/>
+						</Form.Group>
+						<Button
+							onClick={(e) => addEvent(e)}
+							variant="primary"
+							type="button"
+						>
+							{isLoading ? "loading..." : "Submit"}
+						</Button>
+					</Form>
+				</div>
+			</Modal.Body>
+		</Modal>
+	);
 
 	// console.log(localEventArray)
 	let mainContent = consultantCalendar ? (
@@ -188,7 +312,7 @@ function AvailabilityOrganiser(props) {
 					passCurrentDate={(date) => setCurrentDate(date)}
 				/>
 			</div>
-			<div className={classes.calendar_inputs}>
+			{/* <div className={classes.calendar_inputs}>
 				<h1>Schedule Availability Opening</h1>
 				<h2>Add new open bookings for : {clickedDate}</h2>
 				<Form>
@@ -237,7 +361,7 @@ function AvailabilityOrganiser(props) {
 									as="select"
 									aria-label="Default select example"
 								>
-									{/* <option>Select availaibility period</option> */}
+									 <option>Select availaibility period</option> 
 									<option value="">Select event duration</option>
 									<option value="30">30 mins</option>
 									<option value="60">1 hr</option>
@@ -259,7 +383,7 @@ function AvailabilityOrganiser(props) {
 									<option value="none">none</option>
 									<option value="weekly">Weekly</option>
 									<option value="biweekly">Biweekly</option>
-									{/* <option value="weekly"> Every 2 weeks</option> */}
+								 <option value="weekly"> Every 2 weeks</option> 
 									<option value="monthly">Monthly</option>
 								</Form.Control>
 							</Form.Group>
@@ -283,7 +407,8 @@ function AvailabilityOrganiser(props) {
 						{isLoading ? "loading..." : "Submit"}
 					</Button>
 				</Form>
-			</div>
+			</div> */}
+			{modal}
 		</>
 	) : (
 		"loading..."

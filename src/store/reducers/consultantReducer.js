@@ -25,6 +25,9 @@ const initState = {
 	acceptBookingError: "",
 	cancelBookingError: "",
 	cancelBookingLoad: false,
+
+	otherBookings: null,
+	otherBookingsError: "",
 };
 
 // const consultingReducer = {
@@ -42,13 +45,13 @@ const consultantReducer = (state = initState, action) => {
 			};
 
 		case "FETCH_CONSULTANT_DATA_SUCCESS":
-			console.log("fetch success");
+			// console.log("fetch success");
 			return {
 				...state,
 				consultantData: action.payload,
 			};
 		case "FETCH_CONSULTANT_DATA_ERROR":
-			console.log("fetch error");
+			// console.log("fetch error");
 			return {
 				...state,
 				consultantDataError: action.payload,
@@ -60,19 +63,19 @@ const consultantReducer = (state = initState, action) => {
 				consultantCalendar: action.payload,
 			};
 		case "FETCH_CONSULTANT_CALENDAR_ERROR":
-			console.log("fetch error");
+			// console.log("fetch error");
 			return {
 				...state,
 				consultantCalendarError: action.payload,
 			};
 		case "FETCH_REQUESTS_SUCCESS":
-			console.log("fetch success");
+			// console.log("fetch success");
 			return {
 				...state,
 				consultantRequests: action.payload,
 			};
 		case "FETCH_REQUESTS_ERROR":
-			console.log("fetch error");
+			// console.log("fetch error");
 			return {
 				...state,
 				consultantRequestsError: action.payload,
@@ -84,25 +87,25 @@ const consultantReducer = (state = initState, action) => {
 				userChats: action.payload,
 			};
 		case "FETCH_USER_CHATS_ERROR":
-			console.log("fetch chat error");
+			// console.log("fetch chat error");
 			return {
 				...state,
 				chatError: action.payload,
 			};
 		case "FETCH_CHAT_MESSAGES_SUCCESS":
-			console.log("fetch messages success");
+			// console.log("fetch messages success");
 			return {
 				...state,
 				chatMessages: action.payload,
 			};
 		case "FETCH_CHAT_MESSAGES_ERROR":
-			console.log("fetch messages error");
+			// console.log("fetch messages error");
 			return {
 				...state,
 				chatError: action.payload,
 			};
 		case "SET_DEFAULT_ERROR":
-			console.log("error set to default");
+			// console.log("error set to default");
 			return {
 				...state,
 				[`${action.payload}`]: null,
@@ -115,32 +118,32 @@ const consultantReducer = (state = initState, action) => {
 				eventAddLoading: false,
 			};
 		case "EVENT_ADD_ERROR":
-			console.log("error add event");
+			// console.log("error add event");
 			return {
 				...state,
 				eventAddedError: action.payload,
 				eventAddLoading: false,
 			};
 		case "EVENT_ADD_LOADING":
-			console.log("loading");
+			// console.log("loading");
 			return {
 				...state,
 				eventAddLoading: true,
 			};
 		case "ACCEPT_BOOKING_LOAD":
-			console.log("loading");
+			// console.log("loading");
 			return {
 				...state,
 				acceptBookingLoad: true,
 			};
 		case "ACCEPT_BOOKING_SUCCESS":
-			console.log("loading");
+			// console.log("loading");
 			return {
 				...state,
 				acceptBookingLoad: false,
 			};
 		case "ACCEPT_BOOKING_FAILED":
-			console.log("loading");
+			// console.log("loading");
 			return {
 				...state,
 				acceptBookingError: action.payload,
@@ -148,24 +151,36 @@ const consultantReducer = (state = initState, action) => {
 			};
 
 		case "CANCEL_BOOKING_SUCCESS":
-			console.log("loading");
+			// console.log("loading");
 			return {
 				...state,
 
 				cancelBookingLoad: false,
 			};
 		case "CANCEL_BOOKING_FAILED":
-			console.log("loading");
+			// console.log("loading");
 			return {
 				...state,
 				cancelBookingError: action.payload,
 				cancelBookingLoad: false,
 			};
 		case "CANCEL_BOOKING_LOAD":
-			console.log("loading");
+			// console.log("loading");
 			return {
 				...state,
 				cancelBookingLoad: true,
+			};
+		case "GET_OTHER_BOOKINGS_SUCCESS":
+			console.log("data fetched");
+			return {
+				...state,
+				otherBookings: action.payload,
+			};
+		case "GET_OTHER_BOOKINGS_FAILED":
+			console.log("data fetched");
+			return {
+				...state,
+				otherBookingsError: action.payload,
 			};
 
 		default:

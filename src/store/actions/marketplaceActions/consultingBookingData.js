@@ -31,8 +31,8 @@ export const changePurchaseStatus = (
 	consultantName,
 	eventType
 ) => {
-	console.log(`i have been clicked o`);
-	console.log(bookingId, consultantId, consultantName, eventType);
+	// console.log(`i have been clicked o`);
+	// console.log(bookingId, consultantId, consultantName, eventType);
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
@@ -65,6 +65,8 @@ export const changePurchaseStatus = (
 		dispatch({ type: "CHANGE_PURCHASE_STATUS_LOADING" });
 		console.log(bookingId, consultantId, consultantName, eventType);
 
+		//i didnt use a batch write her because it does not allow a merge operation
+
 		if (eventType === "Video call" || "Phone call") {
 			const channelId = generateVideoCallId();
 
@@ -73,7 +75,10 @@ export const changePurchaseStatus = (
 				.doc(uid)
 				.collection("bookings")
 				.doc(bookingId)
-				.set({ status: "completed", channelId: channelId }, { merge: true })
+				.set(
+					{ status: "completed", event: { callId: channelId } },
+					{ merge: true }
+				)
 				.then(() => {
 					// getFirestore()
 					// 	.collection("consultant")
@@ -85,7 +90,7 @@ export const changePurchaseStatus = (
 						.doc(consultantId)
 						.collection("calendarEvents")
 						.doc(bookingId)
-						.set({ callId: channelId }, { merge: true });
+						.set({ callId: channelId, booked: true }, { merge: true });
 				});
 		} else {
 			getFirestore()

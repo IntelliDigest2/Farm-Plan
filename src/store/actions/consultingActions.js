@@ -124,28 +124,34 @@ export const bookEvent = (
 	};
 };
 
-export const fetchOtherBookings = (userId) => {
+export const fetchOtherConsultingBookings = (userId) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		getFirestore()
-			.collection("consultants")
+			.collection("marketplace")
 			.doc(userId)
-			.collection("calendarEvents")
-			.where("eventType", "!=", "Chat")
-			.where("booked", "===", true)
-			.get()
-			.then((querySnapshot) => {
-				let otherBookings;
-				querySnapshot.forEach((doc) => {
-					console.log(doc.data());
-					otherBookings.push({ id: doc.id, data: doc.data() });
-				});
+			.collection("bookings")
+			.where("event.eventType", "!=", "Chat")
+			.where("status", "==", "completed")
+			.onSnapshot(
+				(querySnapshot) => {
+					let otherBookings = [];
+					querySnapshot.forEach((doc) => {
+						console.log(doc.data());
+						otherBookings.push({ id: doc.id, data: doc.data() });
+					});
 
-				dispatch({
-					type: "BOOKING_CONSULTANT_SUCCESS",
-				});
-			})
-			.catch((error) => {
-				console.log("Error getting documents: ", error);
-			});
+					dispatch({
+						type: "GET_OTHER_CONSULTING_BOOKINGS_SUCCESS",
+						payload: otherBookings,
+					});
+				},
+				(error) => {
+					console.log(error);
+					dispatch({
+						type: "GET_OTHER_CONSULTING_BOOKINGS_ERROR",
+						payload: error,
+					});
+				}
+			);
 	};
 };

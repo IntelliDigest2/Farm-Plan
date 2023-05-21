@@ -71,13 +71,13 @@ function ViewPurchaseInfo(props) {
 	const pay = (e, bookingId, consultantId, consultantName, eventType) => {
 		e.preventDefault();
 
-		console.log(
-			bookingId,
-			consultantId,
-			consultantName,
-			eventType,
-			`this is from the north side`
-		);
+		// console.log(
+		// 	bookingId,
+		// 	consultantId,
+		// 	consultantName,
+		// 	eventType,
+		// 	`this is from the north side`
+		// );
 
 		props.purchaseBooking(bookingId, consultantId, consultantName, eventType);
 	};
