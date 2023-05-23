@@ -3,7 +3,6 @@
 import firebase from "firebase";
 import axios from "axios";
 const db = firebase.firestore();
-const batch = db.batch();
 
 export const createExample = (data) => {
 	return (dispatch, getState, { getFirestore }, { getFirebase }) => {
@@ -156,12 +155,6 @@ export const addConsultantEventToDatabase = (
 	consultantInfo
 ) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		console.log(
-			newEvent,
-			consultantId,
-			consultantInfo,
-			`this is what we needed`
-		);
 		let date = newEvent.start.split("T")[0];
 		// // let industry = industry;
 
@@ -252,86 +245,74 @@ export const acceptBookingRequest = (event) => {
 	// );
 
 	// let batch = db.batch();
-	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		console.log(event);
-		dispatch({
-			type: "ACCEPT_BOOKING_LOAD",
-		});
+	const batch = db.batch();
+	// return (dispatch, getState, { getFirebase, getFirestore }) => {
+	// console.log(event);
 
-		let consultantRef = getFirestore()
-			.collection("consultants")
-			.doc(event.consultant.id)
-			.collection("calendarEvents")
-			.doc(event.eventId);
+	let consultantRef = db
+		.collection("consultants")
+		.doc(event.consultant.id)
+		.collection("calendarEvents")
+		.doc(event.eventId);
 
-		let consultRef = getFirestore()
-			.collection("marketplace")
-			.doc(event.status.requesterId)
-			.collection("bookings")
-			.doc(event.eventId);
+	let consultRef = db
+		.collection("marketplace")
+		.doc(event.status.requesterId)
+		.collection("bookings")
+		.doc(event.eventId);
 
-		batch.update(consultantRef, {
-			status: { ...event.status, requestAccepted: true },
-		});
+	batch.update(consultantRef, {
+		status: { ...event.status, requestAccepted: true },
+	});
 
-		batch.set(consultRef, {
-			status: "pending",
-			consultant: {
-				consultantId: event.consultant.id,
-				consultantName: event.consultant.name,
-			},
-			event: {
-				start: event.start,
-				end: event.end,
-				description: event.description,
-				price: event.price,
-				eventType: event.eventType,
-			},
-		});
+	batch.set(consultRef, {
+		status: "pending",
+		consultant: {
+			consultantId: event.consultant.id,
+			consultantName: event.consultant.name,
+		},
+		event: {
+			start: event.start,
+			end: event.end,
+			description: event.description,
+			price: event.price,
+			eventType: event.eventType,
+		},
+	});
 
-		batch
-			.commit()
-			// getFirestore()
-			// 	.collection("consultants")
-			// 	.doc(event.consultant.id)
-			// 	.collection("calendarEvents")
-			// 	.doc(event.eventId)
-			// 	.update({ status: { ...event.status, requestAccepted: true } })
-			// 	.then((result) => {
-			// 		dispatch({
-			// 			type: "ACCEPT_BOOKING_SUCCESS",
-			// 		});
-			// 		getFirestore()
-			// 			.collection("marketplace")
-			// 			.doc(event.status.requesterId)
-			// 			.collection("bookings")
-			// 			.doc(event.eventId)
-			// 			.set({
-			// 				status: "pending",
-			// 				consultant: {
-			// 					consultantId: event.consultant.id,
-			// 					consultantName: event.consultant.name,
-			// 				},
-			// 				event: {
-			// 					start: event.start,
-			// 					end: event.end,
-			// 					description: event.description,
-			// 					price: event.price,
-			// 					eventType: event.eventType,
-			// 				},
-			// 			});
-			// 	})
-			// .then(()=>{
+	batch.commit();
+	// getFirestore()
+	// 	.collection("consultants")
+	// 	.doc(event.consultant.id)
+	// 	.collection("calendarEvents")
+	// 	.doc(event.eventId)
+	// 	.update({ status: { ...event.status, requestAccepted: true } })
+	// 	.then((result) => {
+	// 		dispatch({
+	// 			type: "ACCEPT_BOOKING_SUCCESS",
+	// 		});
+	// 		getFirestore()
+	// 			.collection("marketplace")
+	// 			.doc(event.status.requesterId)
+	// 			.collection("bookings")
+	// 			.doc(event.eventId)
+	// 			.set({
+	// 				status: "pending",
+	// 				consultant: {
+	// 					consultantId: event.consultant.id,
+	// 					consultantName: event.consultant.name,
+	// 				},
+	// 				event: {
+	// 					start: event.start,
+	// 					end: event.end,
+	// 					description: event.description,
+	// 					price: event.price,
+	// 					eventType: event.eventType,
+	// 				},
+	// 			});
+	// 	})
 
-			// })
-			.catch((err) => {
-				console.log(err);
-				dispatch({
-					type: "ACCEPT_BOOKING_FAILED",
-					payload: err,
-				});
-			});
-	};
+	// };
 };
 
 export const cancelBookingRequest = (event) => {
@@ -376,7 +357,6 @@ export const cancelBookingRequest = (event) => {
 
 export const getBookingRequest = (consultantId) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		let docArray = [];
 		console.log(`it go to this place hold on a second`);
 		getFirestore()
 			.collection("consultants")
@@ -386,6 +366,7 @@ export const getBookingRequest = (consultantId) => {
 			.where("status.requesterId", "!=", null)
 			.onSnapshot(
 				(querySnapshot) => {
+					let docArray = [];
 					querySnapshot.forEach((doc) => {
 						// Access the document data
 						//   doc.push({id: })
@@ -401,8 +382,8 @@ export const getBookingRequest = (consultantId) => {
 				(error) => {
 					console.log(error);
 					dispatch({
-						type: "FETCH_REQUESTS_SUCCESS",
-						payload: docArray,
+						type: "FETCH_REQUESTS_ERROR",
+						payload: error,
 					});
 				}
 			);
@@ -422,8 +403,9 @@ export const fetchOtherBookings = (userId) => {
 					let otherBookings = [];
 					querySnapshot.forEach((doc) => {
 						console.log(doc.data());
-						otherBookings.push({ id: doc.id, data: doc.data() });
+						otherBookings.push({ id: doc.id, ...doc.data() });
 					});
+					console.log(otherBookings, `these are all the bookings`);
 
 					dispatch({
 						type: "GET_OTHER_BOOKINGS_SUCCESS",
@@ -439,4 +421,11 @@ export const fetchOtherBookings = (userId) => {
 				}
 			);
 	};
+};
+
+export const fetchUserLocation = (userId) => {
+	// return (dispatch, getState, { getFirebase, getFirestore }) => {
+	return db.collection("users").doc(userId).get();
+
+	// };
 };

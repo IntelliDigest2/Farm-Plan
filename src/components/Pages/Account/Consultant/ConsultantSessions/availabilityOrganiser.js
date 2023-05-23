@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Row, Col, Container, Modal, Button } from "react-bootstrap";
 import classes from "./availabilityOrganiser.module.css";
 import ConsultantCalendar from "./consultantCalendar";
@@ -12,7 +12,7 @@ function AvailabilityOrganiser(props) {
 		eventType: "",
 		start: "",
 		end: "",
-		description: "",
+		description: null,
 		status: {
 			requesterId: null,
 			requestAccepted: false,
@@ -24,6 +24,7 @@ function AvailabilityOrganiser(props) {
 	};
 	const [newEvent, setNewEvent] = useState(initialState);
 	const [showModal, setShowModal] = useState();
+	const formRef = useRef(null);
 
 	const {
 		addEventToDB,
@@ -69,7 +70,12 @@ function AvailabilityOrganiser(props) {
 
 			// console.log(localStartEvent, localEndEvent);
 
-			return { ...ev, start: localStartEvent, end: localEndEvent };
+			return {
+				...ev,
+				start: localStartEvent,
+				end: localEndEvent,
+				title: ev.eventType,
+			};
 		});
 
 		return localTimeEvents;
@@ -81,7 +87,9 @@ function AvailabilityOrganiser(props) {
 		setIsLoading(isSubmitting);
 	}, [isSubmitting]);
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		console.log(newEvent);
+	}, [newEvent]);
 
 	let options;
 	if (consultantInfo) {
@@ -94,19 +102,20 @@ function AvailabilityOrganiser(props) {
 	function addEvent(e) {
 		//add event to database
 
-		if (
-			newEvent.eventType === "" ||
-			newEvent.start === "" ||
-			newEvent.end === "" ||
-			newEvent.description === ""
-		)
+		// newEvent.end === "" ||
+		// newEvent.description === ""
+		if (newEvent.eventType === "" || newEvent.start === "") {
 			return;
+		}
 		e.preventDefault();
 
-		const newEventDay = newEvent.start.split("T")[0];
+		let endDate = calculateEndTime(duration);
 
-		addEventToDB(newEvent, auth.uid, consultantInfo);
-		setNewEvent({ ...initialState });
+		// const newEventDay = newEvent.start.split("T")[0];
+
+		addEventToDB({ ...newEvent, end: endDate }, auth.uid, consultantInfo);
+
+		formRef.current.reset();
 	}
 
 	// console.log(`availabilty Second`);
@@ -117,7 +126,9 @@ function AvailabilityOrganiser(props) {
 		setShowModal(true);
 	}
 
-	function calculateEndTime(date, duration) {
+	function calculateEndTime(duration) {
+		let date = new Date(`${newEvent.start}`);
+
 		let endDate = new Date(
 			date.getTime() + parseInt(duration) * 60000
 		).toISOString();
@@ -135,31 +146,23 @@ function AvailabilityOrganiser(props) {
 			//it has to have the format 2023-03-30T16:30:00 before it can execute if not we get an error
 			let startDateAndTime = new Date(date).toISOString();
 
-			if (newEvent.end !== "") {
-				let endDate = calculateEndTime(
-					new Date(`${startDateAndTime}`),
-					duration
-				);
+			// if (newEvent.end !== "") {
+			// 	let endDate = calculateEndTime(
+			// 		new Date(`${startDateAndTime}`),
+			// 		duration
+			// 	);
 
-				setNewEvent({ ...newEvent, end: endDate, start: startDateAndTime });
-			} else {
-				setNewEvent({ ...newEvent, start: startDateAndTime });
-			}
+			// 	setNewEvent({ ...newEvent, end: endDate, start: startDateAndTime });
+			// } else {
+			setNewEvent({ ...newEvent, start: startDateAndTime });
+			// }
 		}
 	}
 
-	function setEndTime(e) {
+	function setDurationTime(e) {
 		if (e.target.value !== "") {
 			let duration = e.target.value;
 			setDuration(duration);
-
-			let date = new Date(`${newEvent.start}`);
-
-			let endDate = calculateEndTime(date, duration);
-
-			if (newEvent.start !== "") {
-				setNewEvent({ ...newEvent, end: endDate });
-			}
 		}
 		return;
 		//
@@ -169,7 +172,7 @@ function AvailabilityOrganiser(props) {
 
 	// function editBookableDayEvent() {}
 
-	console.log(consultantCalendar);
+	// console.log(consultantCalendar);
 	let calendarEmpty;
 	if (consultantCalendar) {
 		calendarEmpty =
@@ -196,7 +199,7 @@ function AvailabilityOrganiser(props) {
 				<div className={classes.calendar_inputs}>
 					<h1>Schedule Availability Opening</h1>
 					<h2>Add new open bookings for : {clickedDate}</h2>
-					<Form>
+					<Form ref={formRef}>
 						<Row>
 							<Col>
 								<Form.Group className="mb-3" controlId="consultationType">
@@ -238,7 +241,7 @@ function AvailabilityOrganiser(props) {
 								<Form.Group className="mb-3" controlId="availabilityDuration">
 									<Form.Label>Duration</Form.Label>
 									<Form.Control
-										onChange={(e) => setEndTime(e)}
+										onChange={(e) => setDurationTime(e)}
 										as="select"
 										aria-label="Default select example"
 									>
@@ -284,7 +287,7 @@ function AvailabilityOrganiser(props) {
 								}
 								as="textarea"
 								rows={3}
-								required
+								// required
 							/>
 						</Form.Group>
 						<Button
@@ -300,7 +303,6 @@ function AvailabilityOrganiser(props) {
 		</Modal>
 	);
 
-	// console.log(localEventArray)
 	let mainContent = consultantCalendar ? (
 		<>
 			{calendarEmpty}
@@ -312,102 +314,7 @@ function AvailabilityOrganiser(props) {
 					passCurrentDate={(date) => setCurrentDate(date)}
 				/>
 			</div>
-			{/* <div className={classes.calendar_inputs}>
-				<h1>Schedule Availability Opening</h1>
-				<h2>Add new open bookings for : {clickedDate}</h2>
-				<Form>
-					<Row>
-						<Col>
-							<Form.Group className="mb-3" controlId="consultationType">
-								<Form.Label>Event Type</Form.Label>
 
-								<Form.Control
-									as="select"
-									className="form-control"
-									type="select"
-									onChange={(e) =>
-										setNewEvent({ ...newEvent, eventType: e.target.value })
-									}
-									required
-									aria-label="Default select example"
-									// id={`service-${index}`}
-								>
-									<option>select service</option>
-									{}
-
-									{options}
-								</Form.Control>
-							</Form.Group>
-						</Col>
-
-						<Col>
-							<Form.Group className="mb-3" controlId="time">
-								<Form.Label>Start Time</Form.Label>
-								<Form.Control
-									type="time"
-									placeholder="Password"
-									onChange={(e) => setStartTime(e)}
-									required
-								/>
-							</Form.Group>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							<Form.Group className="mb-3" controlId="availabilityDuration">
-								<Form.Label>Duration</Form.Label>
-								<Form.Control
-									onChange={(e) => setEndTime(e)}
-									as="select"
-									aria-label="Default select example"
-								>
-									 <option>Select availaibility period</option> 
-									<option value="">Select event duration</option>
-									<option value="30">30 mins</option>
-									<option value="60">1 hr</option>
-									<option value="120">2 hrs</option>
-									<option value="180">3 hrs</option>
-									<option value="240">4 hrs</option>
-								</Form.Control>
-							</Form.Group>
-						</Col>
-						<Col>
-							<Form.Group className="mb-3" controlId="availabilityFrequency">
-								<Form.Label>Frequency of occurence</Form.Label>
-								<Form.Control
-									disabled
-									as="select"
-									onChange={(e) => setFrequencyOfOccurence(e)}
-								>
-									<option>Select availability frequency</option>
-									<option value="none">none</option>
-									<option value="weekly">Weekly</option>
-									<option value="biweekly">Biweekly</option>
-								 <option value="weekly"> Every 2 weeks</option> 
-									<option value="monthly">Monthly</option>
-								</Form.Control>
-							</Form.Group>
-						</Col>
-					</Row>
-
-					<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-						<Form.Label>
-							Any additional note or Requirements (optional)
-						</Form.Label>
-						<Form.Control
-							onChange={(e) =>
-								setNewEvent({ ...newEvent, description: e.target.value })
-							}
-							as="textarea"
-							rows={3}
-							required
-						/>
-					</Form.Group>
-					<Button onClick={(e) => addEvent(e)} variant="primary" type="button">
-						{isLoading ? "loading..." : "Submit"}
-					</Button>
-				</Form>
-			</div> */}
 			{modal}
 		</>
 	) : (
@@ -459,7 +366,6 @@ const mapDispatchToProps = (dispatch) => {
 		addEventToDB: (newEvent, consultantId, consultantInfo) =>
 			dispatch(
 				addConsultantEventToDatabase(newEvent, consultantId, consultantInfo)
-				// addConsultantEventToDatabase(newEvent, auth.uid)
 			),
 	};
 };

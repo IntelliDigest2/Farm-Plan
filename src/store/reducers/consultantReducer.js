@@ -28,6 +28,8 @@ const initState = {
 
 	otherBookings: null,
 	otherBookingsError: "",
+	userInfo: null,
+	userInfoError: "",
 };
 
 // const consultingReducer = {
@@ -171,7 +173,7 @@ const consultantReducer = (state = initState, action) => {
 				cancelBookingLoad: true,
 			};
 		case "GET_OTHER_BOOKINGS_SUCCESS":
-			console.log("data fetched");
+			console.log(action.payload, "data fetched");
 			return {
 				...state,
 				otherBookings: action.payload,
@@ -181,6 +183,18 @@ const consultantReducer = (state = initState, action) => {
 			return {
 				...state,
 				otherBookingsError: action.payload,
+			};
+		case "FETCH_USER_SUCCESS":
+			console.log("data fetched");
+			return {
+				...state,
+				userInfo: action.payload,
+			};
+		case "FETCH_USER_FAILED":
+			console.log("data ERROR");
+			return {
+				...state,
+				userInfoError: action.payload,
 			};
 
 		default:

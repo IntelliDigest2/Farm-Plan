@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import ConsultantRequest from "./consultantRequest";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, ListGroup, ListGroupItem } from "react-bootstrap";
 import {
 	fetchConsultantInfo,
 	getBookingRequest,
@@ -43,16 +43,22 @@ function ConsultantRequestsPage(props) {
 	// });
 	let requestList;
 	if (requests) {
-		requestList = requests.map((request, index) => {
-			return (
-				<ConsultantRequest
-					showDialog={handleShow}
-					key={`request-${index}`}
-					event={request}
-					consultantData={consultantData}
-				/>
-			);
-		});
+		requestList = (
+			<ListGroup>
+				{requests.map((request, index) => {
+					return (
+						<ListGroupItem>
+							<ConsultantRequest
+								showDialog={handleShow}
+								key={`request-${index}`}
+								event={request}
+								consultantData={consultantData}
+							/>
+						</ListGroupItem>
+					);
+				})}
+			</ListGroup>
+		);
 	}
 	console.log(requests, `this is the requests stuff`);
 	let requestContent =

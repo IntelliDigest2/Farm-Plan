@@ -29,12 +29,17 @@ function ConsultantVideo() {
 	useEffect(() => {}, [channelName, client]);
 
 	console.log(remoteVideoTrack);
+	console.log(
+		process.env.REACT_APP_AGORA_CERT,
+		`this is the token value for the agora process env`
+	);
 
 	const options = {
 		// Pass your app ID here
-		appId: "0fb01569f39e4cc7b44fc0b0be4c6c5d",
+		appId: process.env.REACT_APP_AGORA_ID,
+		// appId: "0fb01569f39e4cc7b44fc0b0be4c6c5d",
 		// Pass a token if your project enables the App Certificate
-		token: process.env.AGORA_APP_CERT,
+		token: process.env.REACT_APP_AGORA_CERT,
 	};
 
 	useEffect(() => {
@@ -149,12 +154,16 @@ function ConsultantVideo() {
 
 			setJoined(true);
 
+			console.log(options.appId, `this is the appId`);
+
 			const uid = await newClient.join(
 				options.appId,
 				channelName,
 				options.token,
 				null
 			);
+
+			console.log(options.appId, uid, `this is the appId and the uid`);
 
 			const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
 			setLocalAudioTrack(localAudioTrack);
@@ -166,7 +175,7 @@ function ConsultantVideo() {
 			// Play localStream
 			localVideoTrack.play("local-stream");
 		} catch (err) {
-			console.error(err);
+			console.error(err, `this is the error generated`);
 		}
 	}
 

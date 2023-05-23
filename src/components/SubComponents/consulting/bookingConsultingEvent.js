@@ -9,7 +9,7 @@ export const BookingConsultingEvent = (props) => {
 	const {
 		openEvent,
 		index,
-		bookEvent,
+		// bookEvent,
 		bookingLoading,
 		consultantId,
 		// consultantName,
@@ -23,15 +23,18 @@ export const BookingConsultingEvent = (props) => {
 
 	console.log(event);
 
-	useEffect(() => {
-		if (!bookingLoading) {
-			setisBookingLoading(false);
-		}
-		// setisBookingLoading(bookingLoading);
-	}, [bookingLoading]);
+	// useEffect(() => {
+	// 	if (!bookingLoading) {
+	// 		setisBookingLoading(false);
+	// 	}
+	// 	// setisBookingLoading(bookingLoading);
+	// }, [bookingLoading]);
 
 	const bookConsultantEvent = (e, event, consultantId) => {
-		bookEvent(event, auth.uid);
+		setisBookingLoading(true);
+		bookEvent(event, auth.uid).then((result) => {
+			setisBookingLoading(false);
+		});
 		setisBookingLoading(true);
 	};
 
@@ -73,15 +76,15 @@ export const BookingConsultingEvent = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-	bookingLoading: state.consultingState.isBooking,
+	// bookingLoading: state.consultingState.isBooking,
 	auth: state.firebase.auth,
 });
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		bookEvent: (event, userId) => {
-			dispatch(bookEvent(event, userId));
-		},
+		// bookEvent: (event, userId) => {
+		// 	dispatch(bookEvent(event, userId));
+		// },
 	};
 };
 

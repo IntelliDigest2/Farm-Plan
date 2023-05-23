@@ -38,28 +38,42 @@ export const ConsultantRequest = (props) => {
 	let serviceCost = prices[event.eventType];
 	// console.log(profile, "this is the service cost");
 	const acceptRequest = () => {
-		acceptBooking(
+		setAcceptLoading(true);
+		acceptBookingRequest(
 			event,
 			auth.uid,
 			`${profile.firstName} ${profile.lastName}`,
 			serviceCost
-		);
-		// showDialog();
-		setAcceptLoading(true);
+		)
+			.then((result) => {
+				console.log(result);
+				setAcceptLoading(false);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 	const rejectRequest = () => {
-		cancelBooking(auth.uid, event);
-		//showDialog
 		setCancelLoading(true);
+		cancelBookingRequest(auth.uid, event)
+			.then((result) => {
+				console.log(result);
+				setCancelLoading(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		//showDialog
+		// setCancelLoading(true);
 	};
 
-	useEffect(() => {
-		if (event.status.requestAccepted) {
-			setAcceptLoading(false);
-		}
+	// useEffect(() => {
+	// 	if (confirmLoad === false) {
+	// 		setAcceptLoading(confirmLoad);
+	// 	}
 
-		console.log(event.status.requestAccepted);
-	}, [event.status.requestAccepted]);
+	// 	// console.log(event.status.requestAccepted);
+	// }, [confirmLoad]);
 
 	// useE
 
@@ -102,17 +116,16 @@ export const ConsultantRequest = (props) => {
 const mapStateToProps = (state) => ({
 	consultantData: state.consultantState.consultantData,
 	cancelLoad: state.consultantState.cancelBookingLoad,
-	confirmLoad: state.consultantState.acceptBookingLoad,
+	// confirmLoad: state.consultantState.acceptBookingLoad,
 	auth: state.firebase.auth,
 	profile: state.firebase.profile,
 });
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		acceptBooking: (event) => dispatch(acceptBookingRequest(event)),
-
-		cancelBooking: (event, consultantId) =>
-			dispatch(cancelBookingRequest(event, consultantId)),
+		// acceptBooking: (event) => dispatch(acceptBookingRequest(event)),
+		// cancelBooking: (event, consultantId) =>
+		// 	dispatch(cancelBookingRequest(event, consultantId)),
 	};
 };
 

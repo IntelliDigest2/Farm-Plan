@@ -81,47 +81,46 @@ export const bookEvent = (
 
 	userId
 ) => {
-	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		let consultantRef = getFirestore()
-			.collection("consultants")
-			.doc(event.consultant.id)
-			.collection("calendarEvents")
-			.doc(event.eventId);
+	// return (dispatch, getState, { getFirebase, getFirestore }) => {
+	let consultantRef = db
+		.collection("consultants")
+		.doc(event.consultant.id)
+		.collection("calendarEvents")
+		.doc(event.eventId);
 
-		dispatch({
-			type: "BOOKING_CONSULTANT",
-			payload: true,
-		});
+	// dispatch({
+	// 	type: "BOOKING_CONSULTANT",
+	// 	payload: true,
+	// });
 
-		return db
-			.runTransaction(async (transaction) => {
-				// This code may get re-run multiple times if there are conflicts.
+	return db.runTransaction(async (transaction) => {
+		// This code may get re-run multiple times if there are conflicts.
 
-				return transaction.get(consultantRef).then((sfDoc) => {
-					let data = sfDoc.data();
+		return transaction.get(consultantRef).then((sfDoc) => {
+			let data = sfDoc.data();
 
-					if (data.status.requesterId !== null) {
-						throw new Error("opening has been booked");
-					}
+			if (data.status.requesterId !== null) {
+				throw new Error("opening has been booked");
+			}
 
-					transaction.update(consultantRef, {
-						status: { ...event.status, requesterId: userId },
-					});
-				});
-			})
-			.then((result) => {
-				dispatch({
-					type: "BOOKING_CONSULTANT_SUCCESS",
-					payload: result,
-				});
-			})
-			.catch((error) => {
-				console.log("Transaction failed: ", error);
-				dispatch({
-					type: "BOOKING_CONSULTANT_FAILED",
-				});
+			transaction.update(consultantRef, {
+				status: { ...event.status, requesterId: userId },
 			});
-	};
+		});
+	});
+	// .then((result) => {
+	// 	dispatch({
+	// 		type: "BOOKING_CONSULTANT_SUCCESS",
+	// 		payload: result,
+	// 	});
+	// })
+	// .catch((error) => {
+	// 	console.log("Transaction failed: ", error);
+	// 	dispatch({
+	// 		type: "BOOKING_CONSULTANT_FAILED",
+	// 	});
+	// });
+	// };
 };
 
 export const fetchOtherConsultingBookings = (userId) => {
