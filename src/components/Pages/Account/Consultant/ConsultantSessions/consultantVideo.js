@@ -52,6 +52,8 @@ function ConsultantVideo(props) {
 		cert: process.env.REACT_APP_AGORA_CERT,
 	};
 
+	console.log(options.appId, options.cert, `these are what we are looking for`);
+
 	useEffect(() => {
 		const handleUserLeft = (user) => {
 			// Get the dynamically created DIV container
@@ -70,12 +72,14 @@ function ConsultantVideo(props) {
 
 			// console.log(user);
 
+			console.log(callType);
+
 			if (callType === "xV") {
 				if (mediaType === "video" || mediaType === "all") {
 					// Get `RemoteVideoTrack` in the `user` object.
 					const remoteVideoTrack = user.videoTrack;
 					setRemoteVideoTrack(remoteVideoTrack);
-					console.log(remoteVideoTrack, `41`);
+					// console.log(remoteVideoTrack, `41`);
 
 					// Dynamically create a container in the form of a DIV element for playing the remote video track.
 
@@ -91,7 +95,7 @@ function ConsultantVideo(props) {
 
 					const newNode = document.createElement("div");
 					newNode.id = user.uid;
-					newNode.classList.add(`${classes.video}`);
+					newNode.classList.add(`${classes.subVid}`);
 					// const PlayerContainer = React.createElement(App);
 
 					// console.log(PlayerContainer);
@@ -165,33 +169,44 @@ function ConsultantVideo(props) {
 		setClient(newClient);
 		try {
 			if (channelRef.current.value === "") {
-				return console.log("Please Enter Channel Name");
+				return console.log("Please Enter Channel Id");
 			}
 
-			// const role = AgoraRTC.Role.PUBLISHER;
+			// const role = newClient.setClientRole("host");
 
 			// console.log(role, `this is the role`);
+
+			const role = "publisher";
 			setJoined(true);
 
-			let result = await getAgoraToken(
-				duration,
-				auth.uid,
-				channelName
-				// role
-			);
+			// const token = AgoraRTC.createToken(
+			// 	options.appId,
+			// 	options.cert,
+			// 	channelName,
+			// 	auth.uid,
+			// 	duration
+			// );
 
-			console.log(result.token, `this is the token`);
+			console.log(auth.uid, `this is the uid***`);
 
+			let result = await getAgoraToken(duration, auth.uid, channelName, role);
+
+			console.log(result, `this is the token`);
+
+			// const uid = await newClient.join(
+			// 	options.appId,
+			// 	channelName,
+			// 	options.cert,
+			// 	result.token,
+			// 	result.uid
+			// 	// options.appId
+			// );
 			const uid = await newClient.join(
 				options.appId,
 				channelName,
-				options.cert,
-				result.token,
-				result.uid
-				// options.appId
+				result.data.token,
+				auth.uid
 			);
-
-			console.log(options.appId, `this is the appId and the uid`);
 
 			const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
 			setLocalAudioTrack(localAudioTrack);
@@ -214,13 +229,12 @@ function ConsultantVideo(props) {
 					<div>
 						Room: {channelName}
 						<div className={classes.streamCont}>
-							<div id="local-stream" className={classes.video}>
-								<LocalPhoneRoundedIcon />
-							</div>
+							{/* <LocalPhoneRoundedIcon /> */}
+							<div id="local-stream" className={classes.localVid}></div>
 							<div
 								id="remote-stream"
 								ref={remoteRef}
-								className={classes.video}
+								className={classes.remoteVid}
 							></div>
 						</div>
 						<Button

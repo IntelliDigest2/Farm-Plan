@@ -435,15 +435,15 @@ export const getAgoraToken = (duration, uid, channel, role) => {
 	console.log(
 		"🚀 ~ file: consultantActions.js:435 ~ getAgoraToken ~ duration, userId, channel, isPublisher:",
 		duration,
-		// uid,
-		channel
-		// role
+		uid,
+		channel,
+		role
 	);
 
 	return axios.post(`http://localhost:3001/api/rtctoken`, {
 		duration: duration,
 		uid: uid,
 		channel: channel,
-		// isPublisher: role,
+		role: role,
 	});
 };

@@ -87,7 +87,7 @@ export const ConsultantOtherBookings = (props) => {
 
 		const part1 = id.substring(0, 4);
 		const part2 = id.substring(4);
-		let callType = booking.eventType ? "xV" : "Lq";
+		let callType = booking.eventType === "Video call" ? "xV" : "Lq";
 
 		return `${part1}-${callDuration}-${callType}${part2}`;
 	}
