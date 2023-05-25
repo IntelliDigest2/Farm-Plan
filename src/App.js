@@ -215,7 +215,7 @@ const App = (props) => {
 							path="/consultant/records"
 							component={ConsultantRecordsPage}
 						/>
-						<Route path="/video-call" component={ConsultantVideo} />
+						<Route path="/call/:id" component={ConsultantVideo} />
 
 						<Route path="/consult" component={ConsultingPage} />
 						<Route path="/consult-video" exact component={ConsultantVideo} />

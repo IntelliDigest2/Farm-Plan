@@ -1,19 +1,32 @@
-import React, { useEffect, useState, useRef, ReactDOM } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import classes from "./consultantVideo.module.css";
-import { Form, Col, Button, Row } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
+import { connect } from "react-redux";
 // import ReactDOM from "react-dom";
+import { getAgoraToken } from "../../../../../store/actions/consultantActions/consultantActions";
+import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 
-function ConsultantVideo() {
+import { useParams } from "react-router-dom";
+import { PageWrapPayment } from "../../../../SubComponents/PageWrapPayment";
+
+function ConsultantVideo(props) {
 	const [joined, setJoined] = useState(false);
 
 	const [channelName, setChannelName] = useState("");
+	const [videoLoading, setVideoLoading] = useState(false);
 	const [client, setClient] = useState(null);
 	const [localAudioTrack, setLocalAudioTrack] = useState(null);
 	const [localVideoTrack, setLocalVideoTrack] = useState(null);
 	const [remoteVideoTrack, setRemoteVideoTrack] = useState([]);
 
-	// const [rt]
+	let { id } = useParams();
+
+	let callType = id.split("-")[2].substring(0, 2);
+
+	let duration = id.split("-")[1];
+
+	// console.log(duration, `this is the call type`);
 	const [RTC, setRTC] = useState({
 		// For the local client
 		client: null,
@@ -26,32 +39,29 @@ function ConsultantVideo() {
 	const remoteRef = useRef("");
 	const leaveRef = useRef("");
 
+	const { auth } = props;
+
 	useEffect(() => {}, [channelName, client]);
 
-	console.log(remoteVideoTrack);
-	console.log(
-		process.env.REACT_APP_AGORA_CERT,
-		`this is the token value for the agora process env`
-	);
+	// console.log(remoteVideoTrack);
 
 	const options = {
 		// Pass your app ID here
 		appId: process.env.REACT_APP_AGORA_ID,
-		// appId: "0fb01569f39e4cc7b44fc0b0be4c6c5d",
 		// Pass a token if your project enables the App Certificate
-		token: process.env.REACT_APP_AGORA_CERT,
+		cert: process.env.REACT_APP_AGORA_CERT,
 	};
 
 	useEffect(() => {
 		const handleUserLeft = (user) => {
 			// Get the dynamically created DIV container
 			const playerContainer = document.getElementById(user.uid);
-			// console.log(playerContainer);
 			// Destroy the container
 			if (playerContainer) {
 				playerContainer.remove();
 			}
 		};
+
 		const handleUserJoined = async (user, mediaType) => {
 			console.log(mediaType, `JOINNEDDD HEEREEEEEE`);
 			// Subscribe to a remote user
@@ -60,39 +70,41 @@ function ConsultantVideo() {
 
 			// console.log(user);
 
-			if (mediaType === "video" || mediaType === "all") {
-				// Get `RemoteVideoTrack` in the `user` object.
-				const remoteVideoTrack = user.videoTrack;
-				setRemoteVideoTrack(remoteVideoTrack);
-				console.log(remoteVideoTrack, `41`);
+			if (callType === "xV") {
+				if (mediaType === "video" || mediaType === "all") {
+					// Get `RemoteVideoTrack` in the `user` object.
+					const remoteVideoTrack = user.videoTrack;
+					setRemoteVideoTrack(remoteVideoTrack);
+					console.log(remoteVideoTrack, `41`);
 
-				// Dynamically create a container in the form of a DIV element for playing the remote video track.
+					// Dynamically create a container in the form of a DIV element for playing the remote video track.
 
-				// const PlayerContainer = React.createElement("div", {
-				// 	id: user.uid,
-				// 	// className: `${classes.video}`,
-				// });
+					// const PlayerContainer = React.createElement("div", {
+					// 	id: user.uid,
+					// 	// className: `${classes.video}`,
+					// });
 
-				// const ui = React.createElement("div", {
-				// 	id: user.uid,
-				// 	className: "myClass",
-				// });
+					// const ui = React.createElement("div", {
+					// 	id: user.uid,
+					// 	className: "myClass",
+					// });
 
-				const newNode = document.createElement("div");
-				newNode.id = user.uid;
-				newNode.classList.add(`${classes.video}`);
-				// const PlayerContainer = React.createElement(App);
+					const newNode = document.createElement("div");
+					newNode.id = user.uid;
+					newNode.classList.add(`${classes.video}`);
+					// const PlayerContainer = React.createElement(App);
 
-				// console.log(PlayerContainer);
-				remoteRef.current.appendChild(newNode);
-				// ReactDOM.render(
-				// 	PlayerContainer,
-				// 	document.getElementById("remote-stream")
-				// );
-				// const videoBox = document.getElementById("remote-stream");
-				// videoBox.appendChild(PlayerContainer);
-				console.log(user, `this is the user that will display`);
-				user.videoTrack.play(`${user.uid}`);
+					// console.log(PlayerContainer);
+					remoteRef.current.appendChild(newNode);
+					// ReactDOM.render(
+					// 	PlayerContainer,
+					// 	document.getElementById("remote-stream")
+					// );
+					// const videoBox = document.getElementById("remote-stream");
+					// videoBox.appendChild(PlayerContainer);
+					console.log(user, `this is the user that will display`);
+					user.videoTrack.play(`${user.uid}`);
+				}
 			}
 
 			if (mediaType === "audio" || mediaType === "all") {
@@ -146,24 +158,40 @@ function ConsultantVideo() {
 
 	async function handleJoinStream(e) {
 		const newClient = AgoraRTC.createClient({ mode: "rtc", codec: "h264" });
+		// const agoraToken = await getAgoraToken(callDuration, auth.uid, channelName);
+		// console.log(agoraToken);
+
+		// client.join(agoraAppId, channelName, agoraToken, uid,)
 		setClient(newClient);
 		try {
 			if (channelRef.current.value === "") {
 				return console.log("Please Enter Channel Name");
 			}
 
+			// const role = AgoraRTC.Role.PUBLISHER;
+
+			// console.log(role, `this is the role`);
 			setJoined(true);
 
-			console.log(options.appId, `this is the appId`);
+			let result = await getAgoraToken(
+				duration,
+				auth.uid,
+				channelName
+				// role
+			);
+
+			console.log(result.token, `this is the token`);
 
 			const uid = await newClient.join(
 				options.appId,
 				channelName,
-				options.token,
-				null
+				options.cert,
+				result.token,
+				result.uid
+				// options.appId
 			);
 
-			console.log(options.appId, uid, `this is the appId and the uid`);
+			console.log(options.appId, `this is the appId and the uid`);
 
 			const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
 			setLocalAudioTrack(localAudioTrack);
@@ -180,61 +208,71 @@ function ConsultantVideo() {
 	}
 
 	return (
-		<div>
-			{joined ? (
-				<div>
-					Room: {channelName}
-					<div className={classes.streamCont}>
-						<div id="local-stream" className={classes.video}></div>
-						<div
-							id="remote-stream"
-							ref={remoteRef}
-							className={classes.video}
-						></div>
-					</div>
-					<Button
-						type="button"
-						ref={leaveRef}
-						// value="Leave"
-						onClick={handleLeave}
-						disabled={joined ? false : true}
-					>
-						Leave meeting
-					</Button>
-				</div>
-			) : (
-				<div className="container">
-					<Form.Group>
-						<Form.Label
-							type="text"
-							ref={channelRef}
-							id="channel"
-							placeholder="Enter Channel name"
-						>
-							Enter Channel name
-						</Form.Label>
-						<Form.Control
-							type="text"
-							placeholder="channel Name"
-							id="name"
-							// name="name"
-							onChange={(e) => setChannelName(e.target.value)}
-							//   value={name}
-							required
-						/>
+		<PageWrapPayment header="Call">
+			<div>
+				{joined ? (
+					<div>
+						Room: {channelName}
+						<div className={classes.streamCont}>
+							<div id="local-stream" className={classes.video}>
+								<LocalPhoneRoundedIcon />
+							</div>
+							<div
+								id="remote-stream"
+								ref={remoteRef}
+								className={classes.video}
+							></div>
+						</div>
 						<Button
 							type="button"
-							// value="Join"
-							onClick={handleJoinStream}
-							disabled={joined ? true : false}
+							ref={leaveRef}
+							// value="Leave"
+							onClick={handleLeave}
+							disabled={joined ? false : true}
 						>
-							Join meeting
+							Leave meeting
 						</Button>
-					</Form.Group>
-				</div>
-			)}
-		</div>
+					</div>
+				) : (
+					<div className="container">
+						<Form.Group>
+							<Form.Label
+								type="text"
+								ref={channelRef}
+								id="channel"
+								placeholder="Enter Channel name"
+							>
+								Enter Channel name
+							</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="channel Name"
+								id="name"
+								// name="name"
+								onChange={(e) => setChannelName(e.target.value)}
+								//   value={name}
+								required
+							/>
+							<Button
+								type="button"
+								// value="Join"
+								onClick={handleJoinStream}
+								disabled={joined ? true : false}
+							>
+								Join meeting
+							</Button>
+						</Form.Group>
+					</div>
+				)}
+			</div>
+		</PageWrapPayment>
 	);
 }
 
-export default ConsultantVideo;
+const mapStateToProps = (state) => {
+	return {
+		auth: state.firebase.auth,
+	};
+};
+
+export default connect(mapStateToProps)(ConsultantVideo);

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
 	fetchOtherBookings,
-	fetchUserLocation,
+	fetchUserInfo,
 } from "../../../../../store/actions/consultantActions/consultantActions";
-import { parseISO, format } from "date-fns";
+import { parseISO, format, differenceInSeconds } from "date-fns";
 import { Link } from "react-router-dom";
 import {
 	Form,
@@ -14,14 +14,15 @@ import {
 	ListGroup,
 	ListGroupItem,
 } from "react-bootstrap";
+import { generateId } from "../utils/utils";
 
 export const ConsultantOtherBookings = (props) => {
-	const { auth, getOtherBookings, otherBookings, profile, fetchLocation } =
-		props;
+	const { auth, getOtherBookings, otherBookings, profile } = props;
 
 	const [showUserInfo, setShowUserInfo] = useState(false);
 	const [locationLoading, setLocationLoading] = useState(false);
 	const [userInfo, setUserInfo] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		// fetchOtherBookings(auth.uid);
@@ -32,7 +33,7 @@ export const ConsultantOtherBookings = (props) => {
 		return !showUserInfo ? (
 			<Button
 				onClick={(e) => {
-					revealLocation(e, booking);
+					revealInformation(e, booking);
 				}}
 			>
 				{locationLoading
@@ -43,8 +44,30 @@ export const ConsultantOtherBookings = (props) => {
 			<div>
 				<div>consultee Information:</div>
 
-				<div>username : {`${userInfo.firstName} ${userInfo.lastName}`} </div>
-				<div>user Address : {userInfo.address}</div>
+				<div>
+					Consultee Name : {`${userInfo.firstName} ${userInfo.lastName}`}{" "}
+				</div>
+				<div>Consultee Address : {userInfo.address}</div>
+			</div>
+		);
+	}
+
+	function RevealConsulteeInfo(booking) {
+		return !showUserInfo ? (
+			<Button
+				onClick={(e) => {
+					revealInformation(e, booking);
+				}}
+			>
+				{loading ? "...loading" : "Click to reveal location information"}
+			</Button>
+		) : (
+			<div>
+				<div>consultee Information:</div>
+
+				<div>
+					Consultee Name : {`${userInfo.firstName} ${userInfo.lastName}`}{" "}
+				</div>
 			</div>
 		);
 	}
@@ -53,11 +76,27 @@ export const ConsultantOtherBookings = (props) => {
 		console.log(otherBookings);
 	}, [otherBookings]);
 
-	function revealLocation(e, booking) {
+	function genereateRandomLink(booking) {
+		// Math.floor(
+
+		let callDuration =
+			differenceInSeconds(parseISO(booking.end), parseISO(booking.start)) / 100;
+		// );
+
+		let id = generateId(6);
+
+		const part1 = id.substring(0, 4);
+		const part2 = id.substring(4);
+		let callType = booking.eventType ? "xV" : "Lq";
+
+		return `${part1}-${callDuration}-${callType}${part2}`;
+	}
+
+	function revealInformation(e, booking) {
 		e.preventDefault();
 		setLocationLoading(true);
 		// console.log(booking, `this is the booking`);
-		fetchUserLocation(booking.status.requesterId)
+		fetchUserInfo(booking.status.requesterId)
 			.then((result) => {
 				console.log(result.data());
 				setUserInfo(result.data());
@@ -86,8 +125,12 @@ export const ConsultantOtherBookings = (props) => {
 				let startTime = format(parseISO(booking.start), "hh:mm a");
 				let endTime = format(parseISO(booking.end), "hh:mm a");
 				let value;
+
+				let randomLink;
+
 				switch (booking.eventType) {
 					case "Video call":
+						randomLink = genereateRandomLink(booking);
 						value = (
 							<ListGroupItem>
 								<p>Booking info</p>
@@ -112,7 +155,7 @@ export const ConsultantOtherBookings = (props) => {
 								</Row>
 								<div>Channel id for video call: {booking.callId}</div>
 								<Link
-									to="/video-call"
+									to={`/call/${randomLink}`}
 									target="_blank"
 									rel="noopener noreferrer"
 								>
@@ -123,6 +166,8 @@ export const ConsultantOtherBookings = (props) => {
 						);
 						break;
 					case "Phone call":
+						randomLink = genereateRandomLink(booking);
+
 						value = (
 							<ListGroupItem>
 								<p>Booking info</p>
@@ -148,7 +193,7 @@ export const ConsultantOtherBookings = (props) => {
 
 								<div>Channel id for call: {booking.callId}</div>
 								<Link
-									to="/video-call"
+									to={`/call/${randomLink}`}
 									target="_blank"
 									rel="noopener noreferrer"
 								>
@@ -181,6 +226,7 @@ export const ConsultantOtherBookings = (props) => {
 										<div>End time: {endTime}</div>
 									</Col>
 								</Row>
+								{RevealConsulteeInfo(booking)}
 							</ListGroupItem>
 						);
 						break;
@@ -261,7 +307,7 @@ export const ConsultantOtherBookings = (props) => {
 		</ListGroup>
 	);
 
-	return <div>{events}</div>;
+	return <div style={{ overflowY: "scroll", height: "730px" }}>{events}</div>;
 };
 
 const mapStateToProps = (state) => ({

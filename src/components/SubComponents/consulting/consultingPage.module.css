@@ -22,10 +22,10 @@
 .session_cont{
     margin: 0 auto;
     margin-top: 5rem;
-    background-color: #fff;
-    width:900px;
-    border-radius: 25px;
-    padding: 30px;
+    /* background-color: #fff; */
+    width:700px;
+    /* border-radius: 25px; */
+    padding: 10px;
 }
 
 .subCont{
