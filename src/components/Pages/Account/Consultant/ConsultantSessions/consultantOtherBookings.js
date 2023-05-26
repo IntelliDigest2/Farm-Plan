@@ -16,6 +16,167 @@ import {
 } from "react-bootstrap";
 import { generateId } from "../utils/utils";
 
+const VisitConsulltant = (props) => {
+	const [showUserInfo, setShowUserInfo] = useState(false);
+
+	const [userInfo, setUserInfo] = useState(null);
+
+	const [locationLoading, setLocationLoading] = useState(false);
+	const [loading, setLoading] = useState(false);
+
+	const { booking } = props;
+
+	function revealInformation(e, booking) {
+		e.preventDefault();
+		setLocationLoading(true);
+		// console.log(booking, `this is the booking`);
+		fetchUserInfo(booking.status.requesterId)
+			.then((result) => {
+				console.log(result.data());
+				setUserInfo(result.data());
+				setLocationLoading(false);
+				setShowUserInfo(true);
+			})
+			.catch((error) => {
+				// Handle error, if any
+				console.error("Error:", error);
+				// Reset loading state
+				setLocationLoading(false);
+			});
+		//revealUserLocation
+	}
+
+	function RevealConsulteeInfo(booking) {
+		return !showUserInfo ? (
+			<Button
+				onClick={(e) => {
+					revealInformation(e, booking);
+				}}
+			>
+				{loading ? "...loading" : "Click to reveal location information"}
+			</Button>
+		) : (
+			<div>
+				<div>consultee Information:</div>
+
+				<div>
+					Consultee Name : {`${userInfo.firstName} ${userInfo.lastName}`}{" "}
+				</div>
+			</div>
+		);
+	}
+
+	let startTime = format(parseISO(booking.start), "hh:mm a");
+	let endTime = format(parseISO(booking.end), "hh:mm a");
+
+	return (
+		<ListGroupItem>
+			<p>Booking info:</p>
+			<Row>
+				<Col>
+					{" "}
+					<div>Event type: {booking.eventType}</div>
+				</Col>
+				<Col>
+					<div>Event date: {booking.date}</div>
+				</Col>
+			</Row>
+
+			<div>Industry: {booking.industry}</div>
+			<Row>
+				<Col>
+					<div>Start time: {startTime}</div>
+				</Col>
+				<Col>
+					<div>End time: {endTime}</div>
+				</Col>
+			</Row>
+			{RevealConsulteeInfo(booking)}
+		</ListGroupItem>
+	);
+};
+
+const ConsultantVisitation = (props) => {
+	const [showUserInfo, setShowUserInfo] = useState(false);
+
+	const [locationLoading, setLocationLoading] = useState(false);
+
+	const [userInfo, setUserInfo] = useState(null);
+
+	const { booking } = props;
+
+	function revealInformation(e, booking) {
+		e.preventDefault();
+		setLocationLoading(true);
+		// console.log(booking, `this is the booking`);
+		fetchUserInfo(booking.status.requesterId)
+			.then((result) => {
+				console.log(result.data());
+				setUserInfo(result.data());
+				setLocationLoading(false);
+				setShowUserInfo(true);
+			})
+			.catch((error) => {
+				// Handle error, if any
+				console.error("Error:", error);
+				// Reset loading state
+				setLocationLoading(false);
+			});
+		//revealUserLocation
+	}
+
+	function showVisitToConsultantLocation(booking) {
+		return !showUserInfo ? (
+			<Button
+				onClick={(e) => {
+					revealInformation(e, booking);
+				}}
+			>
+				{locationLoading
+					? "...loading"
+					: "Click to reveal location information"}
+			</Button>
+		) : (
+			<div>
+				<div>consultee Information:</div>
+
+				<div>
+					Consultee Name : {`${userInfo.firstName} ${userInfo.lastName}`}{" "}
+				</div>
+				<div>Consultee Address : {userInfo.address}</div>
+			</div>
+		);
+	}
+
+	let startTime = format(parseISO(booking.start), "hh:mm a");
+	let endTime = format(parseISO(booking.end), "hh:mm a");
+
+	return (
+		<ListGroupItem>
+			<p>Booking info:</p>
+			<Row>
+				<Col>
+					<div>Event type: {booking.eventType}</div>
+				</Col>
+				<Col>
+					<div>End time: {booking.date}</div>
+				</Col>
+			</Row>
+
+			<div>Industry: {booking.industry}</div>
+			<Row>
+				<Col>
+					<div>Start time: {startTime}</div>
+				</Col>
+				<Col>
+					<div>End time: {endTime}</div>
+				</Col>
+			</Row>
+			{showVisitToConsultantLocation(booking)}
+		</ListGroupItem>
+	);
+};
+
 export const ConsultantOtherBookings = (props) => {
 	const { auth, getOtherBookings, otherBookings, profile } = props;
 
@@ -205,55 +366,57 @@ export const ConsultantOtherBookings = (props) => {
 						break;
 					case "Consultant visitation":
 						value = (
-							<ListGroupItem>
-								<p>Booking info:</p>
-								<Row>
-									<Col>
-										{" "}
-										<div>Event type: {booking.eventType}</div>
-									</Col>
-									<Col>
-										<div>End time: {booking.date}</div>
-									</Col>
-								</Row>
+							// <ListGroupItem>
+							// 	<p>Booking info:</p>
+							// 	<Row>
+							// 		<Col>
+							// 			{" "}
+							// 			<div>Event type: {booking.eventType}</div>
+							// 		</Col>
+							// 		<Col>
+							// 			<div>Event Date: {booking.date}</div>
+							// 		</Col>
+							// 	</Row>
 
-								<div>Industry: {booking.industry}</div>
-								<Row>
-									<Col>
-										<div>Start time: {startTime}</div>
-									</Col>
-									<Col>
-										<div>End time: {endTime}</div>
-									</Col>
-								</Row>
-								{RevealConsulteeInfo(booking)}
-							</ListGroupItem>
+							// 	<div>Industry: {booking.industry}</div>
+							// 	<Row>
+							// 		<Col>
+							// 			<div>Start time: {startTime}</div>
+							// 		</Col>
+							// 		<Col>
+							// 			<div>End time: {endTime}</div>
+							// 		</Col>
+							// 	</Row>
+							// 	{RevealConsulteeInfo(booking)}
+							// </ListGroupItem>
+							<ConsultantVisitation booking={booking} />
 						);
 						break;
 					case "Visit to consultant":
 						value = (
-							<ListGroupItem>
-								<p>Booking info:</p>
-								<Row>
-									<Col>
-										<div>Event type: {booking.eventType}</div>
-									</Col>
-									<Col>
-										<div>End time: {booking.date}</div>
-									</Col>
-								</Row>
+							// <ListGroupItem>
+							// 	<p>Booking info:</p>
+							// 	<Row>
+							// 		<Col>
+							// 			<div>Event type: {booking.eventType}</div>
+							// 		</Col>
+							// 		<Col>
+							// 			<div>End time: {booking.date}</div>
+							// 		</Col>
+							// 	</Row>
 
-								<div>Industry: {booking.industry}</div>
-								<Row>
-									<Col>
-										<div>Start time: {startTime}</div>
-									</Col>
-									<Col>
-										<div>End time: {endTime}</div>
-									</Col>
-								</Row>
-								{showVisitToConsultantLocation(booking)}
-							</ListGroupItem>
+							// 	<div>Industry: {booking.industry}</div>
+							// 	<Row>
+							// 		<Col>
+							// 			<div>Start time: {startTime}</div>
+							// 		</Col>
+							// 		<Col>
+							// 			<div>End time: {endTime}</div>
+							// 		</Col>
+							// 	</Row>
+							// 	{showVisitToConsultantLocation(booking)}
+							// </ListGroupItem>
+							<VisitConsulltant booking={booking} />
 						);
 						break;
 					case "Written feedback":

@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 // import ReactDOM from "react-dom";
 import { getAgoraToken } from "../../../../../store/actions/consultantActions/consultantActions";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
+import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 
 import { useParams } from "react-router-dom";
 import { PageWrapPayment } from "../../../../SubComponents/PageWrapPayment";
@@ -19,6 +20,7 @@ function ConsultantVideo(props) {
 	const [localAudioTrack, setLocalAudioTrack] = useState(null);
 	const [localVideoTrack, setLocalVideoTrack] = useState(null);
 	const [remoteVideoTrack, setRemoteVideoTrack] = useState([]);
+	// const [first, setfirst] = useState(second)
 
 	let { id } = useParams();
 
@@ -52,8 +54,6 @@ function ConsultantVideo(props) {
 		cert: process.env.REACT_APP_AGORA_CERT,
 	};
 
-	console.log(options.appId, options.cert, `these are what we are looking for`);
-
 	useEffect(() => {
 		const handleUserLeft = (user) => {
 			// Get the dynamically created DIV container
@@ -70,8 +70,6 @@ function ConsultantVideo(props) {
 			await client.subscribe(user, mediaType);
 			console.log("subscribe success", mediaType);
 
-			// console.log(user);
-
 			console.log(callType);
 
 			if (callType === "xV") {
@@ -79,34 +77,15 @@ function ConsultantVideo(props) {
 					// Get `RemoteVideoTrack` in the `user` object.
 					const remoteVideoTrack = user.videoTrack;
 					setRemoteVideoTrack(remoteVideoTrack);
-					// console.log(remoteVideoTrack, `41`);
 
 					// Dynamically create a container in the form of a DIV element for playing the remote video track.
-
-					// const PlayerContainer = React.createElement("div", {
-					// 	id: user.uid,
-					// 	// className: `${classes.video}`,
-					// });
-
-					// const ui = React.createElement("div", {
-					// 	id: user.uid,
-					// 	className: "myClass",
-					// });
 
 					const newNode = document.createElement("div");
 					newNode.id = user.uid;
 					newNode.classList.add(`${classes.subVid}`);
-					// const PlayerContainer = React.createElement(App);
 
-					// console.log(PlayerContainer);
 					remoteRef.current.appendChild(newNode);
-					// ReactDOM.render(
-					// 	PlayerContainer,
-					// 	document.getElementById("remote-stream")
-					// );
-					// const videoBox = document.getElementById("remote-stream");
-					// videoBox.appendChild(PlayerContainer);
-					console.log(user, `this is the user that will display`);
+
 					user.videoTrack.play(`${user.uid}`);
 				}
 			}
@@ -119,7 +98,6 @@ function ConsultantVideo(props) {
 			}
 		};
 		if (client !== null) {
-			console.log(`check chek chekc`);
 			client.on("user-published", handleUserJoined);
 
 			client.on("user-unpublished", handleUserLeft);
@@ -161,46 +139,22 @@ function ConsultantVideo(props) {
 	}
 
 	async function handleJoinStream(e) {
+		if (e.target.value.trim() === " ") {
+			return;
+		}
 		const newClient = AgoraRTC.createClient({ mode: "rtc", codec: "h264" });
-		// const agoraToken = await getAgoraToken(callDuration, auth.uid, channelName);
-		// console.log(agoraToken);
 
-		// client.join(agoraAppId, channelName, agoraToken, uid,)
 		setClient(newClient);
 		try {
 			if (channelRef.current.value === "") {
 				return console.log("Please Enter Channel Id");
 			}
 
-			// const role = newClient.setClientRole("host");
-
-			// console.log(role, `this is the role`);
-
 			const role = "publisher";
 			setJoined(true);
 
-			// const token = AgoraRTC.createToken(
-			// 	options.appId,
-			// 	options.cert,
-			// 	channelName,
-			// 	auth.uid,
-			// 	duration
-			// );
-
-			console.log(auth.uid, `this is the uid***`);
-
 			let result = await getAgoraToken(duration, auth.uid, channelName, role);
 
-			console.log(result, `this is the token`);
-
-			// const uid = await newClient.join(
-			// 	options.appId,
-			// 	channelName,
-			// 	options.cert,
-			// 	result.token,
-			// 	result.uid
-			// 	// options.appId
-			// );
 			const uid = await newClient.join(
 				options.appId,
 				channelName,
@@ -211,32 +165,61 @@ function ConsultantVideo(props) {
 			const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
 			setLocalAudioTrack(localAudioTrack);
 			// Create a video track from the video captured by a camera
-			const localVideoTrack = await AgoraRTC.createCameraVideoTrack();
-			setLocalVideoTrack(localVideoTrack);
-			await newClient.publish([localAudioTrack, localVideoTrack]);
+			if (callType === "xV") {
+				const localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+				setLocalVideoTrack(localVideoTrack);
+			}
 
-			// Play localStream
-			localVideoTrack.play("local-stream");
+			console.log(localVideoTrack);
+
+			if (callType === "xV") {
+				await newClient.publish([localAudioTrack, localVideoTrack]);
+			} else {
+				await newClient.publish([localAudioTrack]);
+			}
+
+			if (callType === "xV") {
+				// Play localStream
+				localVideoTrack.play("local-stream");
+			}
 		} catch (err) {
 			console.error(err, `this is the error generated`);
 		}
 	}
+
+	let callContent =
+		callType === "xV" ? (
+			<>
+				<div id="local-stream" className={classes.localVid}></div>
+				<div
+					id="remote-stream"
+					ref={remoteRef}
+					className={classes.remoteVid}
+				></div>
+			</>
+		) : (
+			<>
+				<div id="local-stream" className={classes.localAud}>
+					{" "}
+					<LocalPhoneRoundedIcon className={classes.phonebg} />{" "}
+				</div>
+				<div
+					id="remote-stream"
+					// ref={remoteRef}
+					className={classes.remoteAud}
+				>
+					<PhoneEnabledIcon className={classes.phonesm} />
+				</div>
+			</>
+		);
 
 	return (
 		<PageWrapPayment header="Call">
 			<div>
 				{joined ? (
 					<div>
-						Room: {channelName}
-						<div className={classes.streamCont}>
-							{/* <LocalPhoneRoundedIcon /> */}
-							<div id="local-stream" className={classes.localVid}></div>
-							<div
-								id="remote-stream"
-								ref={remoteRef}
-								className={classes.remoteVid}
-							></div>
-						</div>
+						Channel Id : {channelName}
+						<div className={classes.streamCont}>{callContent}</div>
 						<Button
 							type="button"
 							ref={leaveRef}
