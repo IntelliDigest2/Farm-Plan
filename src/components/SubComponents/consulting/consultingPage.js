@@ -12,6 +12,7 @@ import classes from "./consultingPage.module.css";
 import BookConsulting from "./bookConsulting";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
+import ConsultingBookings from "./consultingBookings";
 
 import ConsultantChats from "../../Pages/Account/Consultant/ConsultantSessions/consultantChats";
 import { PageWrapPayment } from "../../SubComponents/PageWrapPayment";
@@ -70,6 +71,10 @@ const ConsultingPage = (props) => {
 
 							<Route exact path={`${url}`}>
 								<BookConsulting />
+							</Route>
+
+							<Route exact path={`${url}/bookings`}>
+								<ConsultingBookings />
 							</Route>
 						</Switch>
 					</section>

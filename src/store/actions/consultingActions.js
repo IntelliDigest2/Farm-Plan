@@ -135,8 +135,8 @@ export const fetchOtherConsultingBookings = (userId) => {
 				(querySnapshot) => {
 					let otherBookings = [];
 					querySnapshot.forEach((doc) => {
-						console.log(doc.data());
-						otherBookings.push({ id: doc.id, data: doc.data() });
+						// console.log(doc.data());
+						otherBookings.push({ id: doc.id, ...doc.data() });
 					});
 
 					dispatch({

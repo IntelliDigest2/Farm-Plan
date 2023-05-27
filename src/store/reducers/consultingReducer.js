@@ -1,8 +1,10 @@
 const initState = {
 	fetchingError: null,
 	consultingData: null,
-	isFetching: false,
+	// isFetching: false,
 	isBooking: false,
+	otherBookings: null,
+	otherBookingsError: "",
 };
 
 const consultingReducer = (state = initState, action) => {
@@ -21,29 +23,42 @@ const consultingReducer = (state = initState, action) => {
 				...state,
 				fetchingError: action.payload,
 			};
-		case "SET_FETCHING":
-			console.log("data fetched");
+		// case "SET_FETCHING":
+		// 	console.log("data fetched");
+		// 	return {
+		// 		...state,
+		// 		isFetching: true,
+		// 	};
+		// case "BOOKING_CONSULTANT":
+		// 	console.log("data fetched");
+		// 	return {
+		// 		...state,
+		// 		isBooking: true,
+		// 	};
+		// case "BOOKING_CONSULTANT_SUCCESS":
+		// 	console.log("data fetched");
+		// 	return {
+		// 		...state,
+		// 		isBooking: false,
+		// 	};
+		// case "BOOKING_CONSULTANT_FAILED":
+		// 	console.log("data fetched");
+		// 	return {
+		// 		...state,
+		// 		isBooking: false,
+		// 	};
+		case "GET_OTHER_CONSULTING_BOOKINGS_SUCCESS":
+			console.log("data fetched", action.payload);
 			return {
 				...state,
-				isFetching: true,
+				otherBookings: action.payload,
+				otherBookingsError: "",
 			};
-		case "BOOKING_CONSULTANT":
+		case "GET_OTHER_CONSULTING_BOOKINGS_ERROR":
 			console.log("data fetched");
 			return {
 				...state,
-				isBooking: true,
-			};
-		case "BOOKING_CONSULTANT_SUCCESS":
-			console.log("data fetched");
-			return {
-				...state,
-				isBooking: false,
-			};
-		case "BOOKING_CONSULTANT_FAILED":
-			console.log("data fetched");
-			return {
-				...state,
-				isBooking: false,
+				otherBookingsError: action.payload,
 			};
 
 		default:

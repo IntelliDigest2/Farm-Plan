@@ -32,10 +32,14 @@ export const BookingConsultingEvent = (props) => {
 
 	const bookConsultantEvent = (e, event, consultantId) => {
 		setisBookingLoading(true);
-		bookEvent(event, auth.uid).then((result) => {
-			setisBookingLoading(false);
-		});
-		setisBookingLoading(true);
+		bookEvent(event, auth.uid)
+			.then((result) => {
+				setisBookingLoading(false);
+			})
+			.catch((err) => {
+				console.log(err);
+				setisBookingLoading(false);
+			});
 	};
 
 	return (

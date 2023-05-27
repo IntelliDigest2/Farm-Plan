@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import {
-	fetchOtherBookings,
-	fetchUserInfo,
-} from "../../../../../store/actions/consultantActions/consultantActions";
+import { fetchOtherConsultingBookings } from "../../../store/actions/consultingActions";
+
+import { fetchUserInfo } from "./../../../store/actions/consultantActions/consultantActions";
+
 import { parseISO, format, differenceInSeconds } from "date-fns";
 import { Link } from "react-router-dom";
 import {
@@ -14,7 +14,7 @@ import {
 	ListGroup,
 	ListGroupItem,
 } from "react-bootstrap";
-import { generateId } from "../utils/utils";
+import { generateId } from "../../Pages/Account/Consultant/utils/utils";
 
 const VisitConsulltant = (props) => {
 	const [showUserInfo, setShowUserInfo] = useState(false);
@@ -30,7 +30,7 @@ const VisitConsulltant = (props) => {
 		e.preventDefault();
 		setLocationLoading(true);
 		// console.log(booking, `this is the booking`);
-		fetchUserInfo(booking.status.requesterId)
+		fetchUserInfo(booking.consultant.consultantId)
 			.then((result) => {
 				console.log(result.data());
 				setUserInfo(result.data());
@@ -66,8 +66,8 @@ const VisitConsulltant = (props) => {
 		);
 	}
 
-	let startTime = format(parseISO(booking.start), "hh:mm a");
-	let endTime = format(parseISO(booking.end), "hh:mm a");
+	let startTime = format(parseISO(booking.event.start), "hh:mm a");
+	let endTime = format(parseISO(booking.event.end), "hh:mm a");
 
 	return (
 		<ListGroupItem>
@@ -75,14 +75,12 @@ const VisitConsulltant = (props) => {
 			<Row>
 				<Col>
 					{" "}
-					<div>Event type: {booking.eventType}</div>
+					<div>Event type: {booking.event.eventType}</div>
 				</Col>
-				<Col>
-					<div>Event date: {booking.date}</div>
-				</Col>
+				<Col>{/* <div>Event date: {booking.date}</div> */}</Col>
 			</Row>
 
-			<div>Industry: {booking.industry}</div>
+			{/* <div>Industry: {booking.industry}</div> */}
 			<Row>
 				<Col>
 					<div>Start time: {startTime}</div>
@@ -109,7 +107,7 @@ const ConsultantVisitation = (props) => {
 		e.preventDefault();
 		setLocationLoading(true);
 		// console.log(booking, `this is the booking`);
-		fetchUserInfo(booking.status.requesterId)
+		fetchUserInfo(booking.consultant.consultantId)
 			.then((result) => {
 				console.log(result.data());
 				setUserInfo(result.data());
@@ -148,22 +146,20 @@ const ConsultantVisitation = (props) => {
 		);
 	}
 
-	let startTime = format(parseISO(booking.start), "hh:mm a");
-	let endTime = format(parseISO(booking.end), "hh:mm a");
+	let startTime = format(parseISO(booking.event.start), "hh:mm a");
+	let endTime = format(parseISO(booking.event.end), "hh:mm a");
 
 	return (
 		<ListGroupItem>
 			<p>Booking info:</p>
 			<Row>
 				<Col>
-					<div>Event type: {booking.eventType}</div>
+					<div>Event type: {booking.event.eventType}</div>
 				</Col>
-				<Col>
-					<div>End time: {booking.date}</div>
-				</Col>
+				<Col>{/* <div>End time: {booking.date}</div> */}</Col>
 			</Row>
 
-			<div>Industry: {booking.industry}</div>
+			{/* <div>Industry: {booking.industry}</div> */}
 			<Row>
 				<Col>
 					<div>Start time: {startTime}</div>
@@ -181,14 +177,17 @@ function genereateRandomLink(booking) {
 	// Math.floor(
 
 	let callDuration =
-		differenceInSeconds(parseISO(booking.end), parseISO(booking.start)) / 100;
+		differenceInSeconds(
+			parseISO(booking.event.end),
+			parseISO(booking.event.start)
+		) / 100;
 	// );
 
 	let id = generateId(6);
 
 	const part1 = id.substring(0, 4);
 	const part2 = id.substring(4);
-	let callType = booking.eventType === "Video call" ? "xV" : "Lq";
+	let callType = booking.event.eventType === "Video call" ? "xV" : "Lq";
 
 	return `${part1}-${callDuration}-${callType}${part2}`;
 }
@@ -196,22 +195,20 @@ const Call = (props) => {
 	const { booking } = props;
 	let randomLink = genereateRandomLink(booking);
 
-	let startTime = format(parseISO(booking.start), "hh:mm a");
-	let endTime = format(parseISO(booking.end), "hh:mm a");
+	let startTime = format(parseISO(booking.event.start), "hh:mm a");
+	let endTime = format(parseISO(booking.event.end), "hh:mm a");
 	return (
 		<ListGroupItem>
 			<p>Booking info</p>
 			<Row>
 				<Col>
 					{" "}
-					<div>Event type: {booking.eventType}</div>
+					<div>Event type: {booking.event.eventType}</div>
 				</Col>
-				<Col>
-					<div>End time:{booking.date}</div>
-				</Col>
+				<Col>{/* <div>End time:{booking.date}</div> */}</Col>
 			</Row>
 
-			<div>Industry: {booking.industry}</div>
+			{/* <div>Industry: {booking.industry}</div> */}
 			<Row>
 				<Col>
 					<div>Start time: {startTime}</div>
@@ -221,7 +218,7 @@ const Call = (props) => {
 				</Col>
 			</Row>
 
-			<div>Channel id for call: {booking.callId}</div>
+			<div>Channel id for call: {booking.event.callId}</div>
 			<Link
 				to={`/call/${randomLink}`}
 				target="_blank"
@@ -242,21 +239,19 @@ const submitRequest = (e) => {
 const WrittenFeedback = (props) => {
 	const { booking } = props;
 
-	let startTime = format(parseISO(booking.start), "hh:mm a");
-	let endTime = format(parseISO(booking.end), "hh:mm a");
+	let startTime = format(parseISO(booking.event.start), "hh:mm a");
+	let endTime = format(parseISO(booking.event.end), "hh:mm a");
 	return (
 		<ListGroupItem>
 			<p>Booking info:</p>
 			<Row>
 				<Col>
-					<div>Event type: {booking.eventType}</div>
+					<div>Event type: {booking.event.eventType}</div>
 				</Col>
-				<Col>
-					<div>Event date: {booking.date}</div>
-				</Col>
+				<Col>{/* <div>Event date: {booking.date}</div> */}</Col>
 			</Row>
 
-			<div>Industry: {booking.industry}</div>
+			{/* <div>Industry: {booking.industry}</div> */}
 			<Row>
 				<Col>
 					<div>Start time: {startTime}</div>
@@ -265,7 +260,7 @@ const WrittenFeedback = (props) => {
 					<div>End time: {endTime}</div>
 				</Col>
 			</Row>
-			{booking.question ? <p>{booking.question}</p> : ""}
+			{booking.question ? <p>{booking.event.question}</p> : ""}
 			{booking.question ? (
 				<div>
 					<Form.Label className="form-label">
@@ -281,7 +276,7 @@ const WrittenFeedback = (props) => {
 	);
 };
 
-export const ConsultantOtherBookings = (props) => {
+export const ConsultingBookings = (props) => {
 	const { auth, getOtherBookings, otherBookings, profile } = props;
 
 	const [showUserInfo, setShowUserInfo] = useState(false);
@@ -366,14 +361,14 @@ export const ConsultantOtherBookings = (props) => {
 	let events = (
 		<ListGroup>
 			{otherBookings?.map((booking) => {
-				let startTime = format(parseISO(booking.start), "hh:mm a");
-				let endTime = format(parseISO(booking.end), "hh:mm a");
+				let startTime = format(parseISO(booking.event.start), "hh:mm a");
+				let endTime = format(parseISO(booking.event.end), "hh:mm a");
 				let value;
 
 				let randomLink;
 
-				switch (booking.eventType) {
-					case( ("Video call" )|| ("Phone call")):
+				switch (booking.event.eventType) {
+					case "Video call" || "Phone call":
 						// randomLink = genereateRandomLink(booking);
 						value = (
 							// <ListGroupItem>
@@ -524,19 +519,16 @@ export const ConsultantOtherBookings = (props) => {
 
 const mapStateToProps = (state) => ({
 	auth: state.firebase.auth,
-	otherBookings: state.consultantState.otherBookings,
+	otherBookings: state.consultingState.otherBookings,
 	profile: state.firebase.profile,
 });
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getOtherBookings: (uid) => {
-			dispatch(fetchOtherBookings(uid));
+			dispatch(fetchOtherConsultingBookings(uid));
 		},
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(ConsultantOtherBookings);
+export default connect(mapStateToProps, mapDispatchToProps)(ConsultingBookings);
