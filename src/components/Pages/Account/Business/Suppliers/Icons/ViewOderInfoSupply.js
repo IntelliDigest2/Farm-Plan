@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
-import ConfirmItemIconRes from "./ConfirmItemIconRes"
+import ConfirmItemIconSup from "./ConfirmItemIconSup"
 import { useTranslation, Trans } from 'react-i18next';
 
 import List from "@mui/material/List";
@@ -95,11 +95,11 @@ useEffect(() => {
 
 								</tbody>
                 <div className="">
-                      {/* <ConfirmItemIconRes
+                      <ConfirmItemIconSup
                         //value={props.value}
                         id={item.id}
                         item={item}
-                      /> */}
+                      />
                   </div>
 								
 								

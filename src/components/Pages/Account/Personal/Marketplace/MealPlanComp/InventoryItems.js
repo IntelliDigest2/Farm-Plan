@@ -172,7 +172,7 @@ function InventoryItems(props) {
 
                     </>
                   { }
-                  {(() => {
+                  {/* {(() => {
                     if (today == moment(item.expiry).subtract(7,'days').format('dd/MM/yyyy') || today == moment(item.expiry).subtract(6,'days').format('dd/MM/yyyy') ) {
                       return (
                         sendMail(item.food)
@@ -185,7 +185,7 @@ function InventoryItems(props) {
                 
                       )
                     }
-                  })()}
+                  })()} */}
                   
                 </div>
                 
