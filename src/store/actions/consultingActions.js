@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import { fs } from "./../../config/fbConfig";
 const db = firebase.firestore();
 
 // const batch = firebase.firestore().batch();
@@ -131,6 +132,7 @@ export const fetchOtherConsultingBookings = (userId) => {
 			.collection("bookings")
 			.where("event.eventType", "!=", "Chat")
 			.where("status", "==", "completed")
+			.where("eventCompleted", "==", false)
 			.onSnapshot(
 				(querySnapshot) => {
 					let otherBookings = [];
@@ -148,6 +150,66 @@ export const fetchOtherConsultingBookings = (userId) => {
 					console.log(error);
 					dispatch({
 						type: "GET_OTHER_CONSULTING_BOOKINGS_ERROR",
+						payload: error,
+					});
+				}
+			);
+	};
+};
+
+export const markEventAsComplete = async (userId, consultantId, eventId) => {
+	console.log(userId, consultantId, eventId, `this is the flaggeer`);
+	const batch = db.batch();
+
+	let consultRef = db
+		.collection("marketplace")
+		.doc(userId)
+		.collection("bookings")
+		.doc(eventId);
+
+	let consultantRef = db
+		.collection("consultants")
+		.doc(consultantId)
+		.collection("calendarEvents")
+		.doc(eventId);
+
+	batch.update(consultRef, {
+		eventCompleted: true,
+	});
+
+	batch.update(consultantRef, {
+		eventCompleted: true,
+	});
+
+	batch.commit();
+};
+
+export const fetchAllCompletedEvents = (userId) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		getFirestore()
+			.collection("marketplace")
+			.doc(userId)
+			.collection("bookings")
+			.where("event.eventType", "!=", "Chat")
+			.where("status", "==", "completed")
+			.where("eventCompleted", "==", true)
+			.onSnapshot(
+				(querySnapshot) => {
+					let completedBookings = [];
+					querySnapshot.forEach((doc) => {
+						// console.log(doc.data());
+						completedBookings.push({ id: doc.id, ...doc.data() });
+					});
+
+					dispatch({
+						type: "GET_COMPLETED_CONSULTING_BOOKINGS_SUCCESS",
+						payload: completedBookings,
+					});
+				},
+				(error) => {
+					console.log(error);
+					dispatch({
+						type: "GET_COMPLETED_CONSULTING_BOOKINGS_ERROR",
 						payload: error,
 					});
 				}

@@ -1,12 +1,13 @@
 import React from "react";
 import ConsultantRecord from "./consultantRecord";
+import { PageWrapPayment } from "./../../../../SubComponents/PageWrapPayment";
 
 function ConsultantRecordsPage() {
 	return (
-		<div>
-			consultantRecordsPage
+		<PageWrapPayment goTo="/consultant" header="Records">
+			{/* consultantRecordsPage */}
 			<ConsultantRecord />
-		</div>
+		</PageWrapPayment>
 	);
 }
 

@@ -57,7 +57,7 @@ function ConsultantSessionsPage(props) {
 	};
 
 	return (
-		<PageWrapPayment goTo="/consultant" header="Consultant">
+		<PageWrapPayment goTo="/consultant" header="Sessions">
 			<div className={classes.session_cont}>
 				{/* <Button onClick={goBack}>Back</Button> */}
 				<Router>

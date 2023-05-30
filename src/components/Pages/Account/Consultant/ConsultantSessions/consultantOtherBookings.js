@@ -108,7 +108,6 @@ const ConsultantVisitation = (props) => {
 	function revealInformation(e, booking) {
 		e.preventDefault();
 		setLocationLoading(true);
-		// console.log(booking, `this is the booking`);
 		fetchUserInfo(booking.status.requesterId)
 			.then((result) => {
 				console.log(result.data());
@@ -159,7 +158,7 @@ const ConsultantVisitation = (props) => {
 					<div>Event type: {booking.eventType}</div>
 				</Col>
 				<Col>
-					<div>End time: {booking.date}</div>
+					<div>Event date: {booking.date}</div>
 				</Col>
 			</Row>
 
@@ -207,7 +206,7 @@ const Call = (props) => {
 					<div>Event type: {booking.eventType}</div>
 				</Col>
 				<Col>
-					<div>End time:{booking.date}</div>
+					<div>Event date:{booking.date}</div>
 				</Col>
 			</Row>
 
@@ -373,141 +372,19 @@ export const ConsultantOtherBookings = (props) => {
 				let randomLink;
 
 				switch (booking.eventType) {
-					case( ("Video call" )|| ("Phone call")):
-						// randomLink = genereateRandomLink(booking);
-						value = (
-							// <ListGroupItem>
-							// 	<p>Booking info</p>
-							// 	<Row>
-							// 		<Col>
-							// 			{" "}
-							// 			<div>Event type: {booking.eventType}</div>
-							// 		</Col>
-							// 		<Col>
-							// 			<div>Event date: {booking.date}</div>
-							// 		</Col>
-							// 	</Row>
-
-							// 	<div>Industry: {booking.industry}</div>
-							// 	<Row>
-							// 		<Col>
-							// 			<div>Start time: {startTime}</div>
-							// 		</Col>
-							// 		<Col>
-							// 			<div>End time: {endTime}</div>
-							// 		</Col>
-							// 	</Row>
-							// 	<div>Channel id for video call: {booking.callId}</div>
-							// 	<Link
-							// 		to={`/call/${randomLink}`}
-							// 		target="_blank"
-							// 		rel="noopener noreferrer"
-							// 	>
-							// 		{" "}
-							// 		Go to call
-							// 	</Link>
-							// </ListGroupItem>
-							<Call booking={booking} />
-						);
+					case "Video call":
+					case "Phone call":
+						value = <Call booking={booking} />;
 						break;
 
 					case "Consultant visitation":
-						value = (
-							// <ListGroupItem>
-							// 	<p>Booking info:</p>
-							// 	<Row>
-							// 		<Col>
-							// 			{" "}
-							// 			<div>Event type: {booking.eventType}</div>
-							// 		</Col>
-							// 		<Col>
-							// 			<div>Event Date: {booking.date}</div>
-							// 		</Col>
-							// 	</Row>
-
-							// 	<div>Industry: {booking.industry}</div>
-							// 	<Row>
-							// 		<Col>
-							// 			<div>Start time: {startTime}</div>
-							// 		</Col>
-							// 		<Col>
-							// 			<div>End time: {endTime}</div>
-							// 		</Col>
-							// 	</Row>
-							// 	{RevealConsulteeInfo(booking)}
-							// </ListGroupItem>
-							<ConsultantVisitation booking={booking} />
-						);
+						value = <ConsultantVisitation booking={booking} />;
 						break;
 					case "Visit to consultant":
-						value = (
-							// <ListGroupItem>
-							// 	<p>Booking info:</p>
-							// 	<Row>
-							// 		<Col>
-							// 			<div>Event type: {booking.eventType}</div>
-							// 		</Col>
-							// 		<Col>
-							// 			<div>End time: {booking.date}</div>
-							// 		</Col>
-							// 	</Row>
-
-							// 	<div>Industry: {booking.industry}</div>
-							// 	<Row>
-							// 		<Col>
-							// 			<div>Start time: {startTime}</div>
-							// 		</Col>
-							// 		<Col>
-							// 			<div>End time: {endTime}</div>
-							// 		</Col>
-							// 	</Row>
-							// 	{showVisitToConsultantLocation(booking)}
-							// </ListGroupItem>
-							<VisitConsulltant booking={booking} />
-						);
+						value = <VisitConsulltant booking={booking} />;
 						break;
 					case "Written feedback":
-						value = (
-							// <ListGroupItem>
-							// 	<p>Booking info:</p>
-							// 	<Row>
-							// 		<Col>
-							// 			<div>Event type: {booking.eventType}</div>
-							// 		</Col>
-							// 		<Col>
-							// 			<div>Event date: {booking.date}</div>
-							// 		</Col>
-							// 	</Row>
-
-							// 	<div>Industry: {booking.industry}</div>
-							// 	<Row>
-							// 		<Col>
-							// 			<div>Start time: {startTime}</div>
-							// 		</Col>
-							// 		<Col>
-							// 			<div>End time: {endTime}</div>
-							// 		</Col>
-							// 	</Row>
-							// 	{booking.question ? <p>{booking.question}</p> : ""}
-							// 	{booking.question ? (
-							// 		<div>
-							// 			<Form.Label className="form-label">
-							// 				Type your Response here and click send
-							// 			</Form.Label>
-							// 			<Form.Control
-							// 				as="textarea"
-							// 				rows={4}
-							// 				type="text"
-							// 			></Form.Control>
-							// 			<Button onClick={(e) => submitRequest(e)}>Send</Button>{" "}
-							// 		</div>
-							// 	) : (
-							// 		""
-							// 	)}
-							// </ListGroupItem>
-
-							<WrittenFeedback booking={booking} />
-						);
+						value = <WrittenFeedback booking={booking} />;
 						break;
 
 					default:

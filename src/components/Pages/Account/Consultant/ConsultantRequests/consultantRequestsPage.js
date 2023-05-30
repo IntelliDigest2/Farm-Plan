@@ -6,6 +6,7 @@ import {
 	fetchConsultantInfo,
 	getBookingRequest,
 } from "../../../../../store/actions/consultantActions/consultantActions";
+import { PageWrapPayment } from "./../../../../SubComponents/PageWrapPayment";
 
 function ConsultantRequestsPage(props) {
 	const {
@@ -71,28 +72,30 @@ function ConsultantRequestsPage(props) {
 		);
 
 	return (
-		<div>
-			<Modal show={show} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Modal heading</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					You are about to accept a booking. You cannot cancel after you click
-					'proceed'
-				</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
-						Cancel
-					</Button>
-					<Button variant="primary" onClick={handleProceed}>
-						Proceed
-					</Button>
-				</Modal.Footer>
-			</Modal>
+		<PageWrapPayment goTo="/consultant" header="Requests">
 			<div>
-				<li>{requestContent}</li>
+				<Modal show={show} onHide={handleClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Modal heading</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						You are about to accept a booking. You cannot cancel after you click
+						'proceed'
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleClose}>
+							Cancel
+						</Button>
+						<Button variant="primary" onClick={handleProceed}>
+							Proceed
+						</Button>
+					</Modal.Footer>
+				</Modal>
+				<div>
+					<li>{requestContent}</li>
+				</div>
 			</div>
-		</div>
+		</PageWrapPayment>
 	);
 }
 

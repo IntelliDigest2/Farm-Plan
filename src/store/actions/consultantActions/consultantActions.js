@@ -179,6 +179,7 @@ export const addConsultantEventToDatabase = (
 					experience: consultantInfo.experience,
 					summary: consultantInfo.summary,
 				},
+				eventCompleted: false,
 			})
 			// 	// .update({
 			// 	// 	calendarEvents: firebase.firestore.FieldValue.arrayUnion(newEvent),
@@ -278,7 +279,9 @@ export const acceptBookingRequest = (event) => {
 			description: event.description,
 			price: event.price,
 			eventType: event.eventType,
+			industry: event.industry,
 		},
+		eventCompleted: false,
 	});
 
 	batch.commit();
@@ -399,6 +402,7 @@ export const fetchOtherBookings = (userId) => {
 			.collection("calendarEvents")
 			.where("eventType", "!=", "Chat")
 			.where("booked", "==", true)
+			.where("eventCompleted", "==", false)
 			.onSnapshot(
 				(querySnapshot) => {
 					let otherBookings = [];
@@ -406,7 +410,7 @@ export const fetchOtherBookings = (userId) => {
 						console.log(doc.data());
 						otherBookings.push({ id: doc.id, ...doc.data() });
 					});
-					console.log(otherBookings, `these are all the bookings`);
+					// console.log(otherBookings, `these are all the bookings`);
 
 					dispatch({
 						type: "GET_OTHER_BOOKINGS_SUCCESS",
@@ -417,6 +421,40 @@ export const fetchOtherBookings = (userId) => {
 					console.log(error);
 					dispatch({
 						type: "GET_OTHER_BOOKINGS_ERROR",
+						payload: error,
+					});
+				}
+			);
+	};
+};
+
+export const fetchCompletedBookings = (userId) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		getFirestore()
+			.collection("consultants")
+			.doc(userId)
+			.collection("calendarEvents")
+			.where("eventType", "!=", "Chat")
+			.where("booked", "==", true)
+			.where("eventCompleted", "==", true)
+			.onSnapshot(
+				(querySnapshot) => {
+					let completedBookings = [];
+					querySnapshot.forEach((doc) => {
+						console.log(doc.data());
+						completedBookings.push({ id: doc.id, ...doc.data() });
+					});
+					// console.log(otherBookings, `these are all the bookings`);
+
+					dispatch({
+						type: "GET_COMPLETED_BOOKINGS_SUCCESS",
+						payload: completedBookings,
+					});
+				},
+				(error) => {
+					console.log(error);
+					dispatch({
+						type: "GET_COMPLETED_BOOKINGS_ERROR",
 						payload: error,
 					});
 				}
