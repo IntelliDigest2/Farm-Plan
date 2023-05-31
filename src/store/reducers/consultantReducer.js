@@ -20,6 +20,8 @@ const initState = {
 	eventAdded: "",
 	eventAddedError: null,
 	eventAddLoading: false,
+	completedBookings: null,
+	completedBookingsError: "",
 
 	acceptBookingLoad: false,
 	acceptBookingError: "",
@@ -183,6 +185,18 @@ const consultantReducer = (state = initState, action) => {
 			return {
 				...state,
 				otherBookingsError: action.payload,
+			};
+		case "GET_COMPLETED_BOOKINGS_SUCCESS":
+			console.log(action.payload, "data fetched");
+			return {
+				...state,
+				completedBookings: action.payload,
+			};
+		case "GET_COMPLETED_BOOKINGS_FAILED":
+			console.log("data fetched");
+			return {
+				...state,
+				completedBookingsError: action.payload,
 			};
 		case "FETCH_USER_SUCCESS":
 			console.log("data fetched");

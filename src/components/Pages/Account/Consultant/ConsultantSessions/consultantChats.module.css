@@ -79,7 +79,7 @@ li{list-style: none;}
 
 .chat_left{
     height: 90vh;
-    width: 370px;
+    width: 290px;
     overflow-y: scroll;
     border-top: 1px solid #dee2e6 ;
     border-bottom: 1px solid #dee2e6 ;

@@ -16,6 +16,8 @@ import ConsultingBookings from "./consultingBookings";
 
 import ConsultantChats from "../../Pages/Account/Consultant/ConsultantSessions/consultantChats";
 import { PageWrapPayment } from "../../SubComponents/PageWrapPayment";
+import ConsultingRecords from "./consultingRecords";
+
 const ConsultingPage = (props) => {
 	let { url } = useRouteMatch();
 	const { auth, user, profile } = props;
@@ -60,6 +62,15 @@ const ConsultingPage = (props) => {
 									BOOKINGS
 								</NavLink>
 							</li>
+							<li>
+								<NavLink
+									className={classes.link}
+									activeClassName={classes.active}
+									to={{ pathname: `${url}/records` }}
+								>
+									RECORDS
+								</NavLink>
+							</li>
 						</ul>
 					</nav>
 
@@ -75,6 +86,9 @@ const ConsultingPage = (props) => {
 
 							<Route exact path={`${url}/bookings`}>
 								<ConsultingBookings />
+							</Route>
+							<Route exact path={`${url}/records`}>
+								<ConsultingRecords />
 							</Route>
 						</Switch>
 					</section>

@@ -1,5 +1,5 @@
 import React from "react";
-import ConsultantRecord from "./consultantRecord";
+import ConsultantRecord from "./consultantRecords";
 import { PageWrapPayment } from "./../../../../SubComponents/PageWrapPayment";
 
 function ConsultantRecordsPage() {

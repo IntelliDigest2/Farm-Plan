@@ -429,22 +429,23 @@ export const fetchOtherBookings = (userId) => {
 };
 
 export const fetchCompletedBookings = (userId) => {
+	console.log(`it reach here`);
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		getFirestore()
 			.collection("consultants")
 			.doc(userId)
 			.collection("calendarEvents")
-			.where("eventType", "!=", "Chat")
-			.where("booked", "==", true)
+			// .where("eventType", "!=", "Chat")
+			// .where("booked", "==", true)
 			.where("eventCompleted", "==", true)
 			.onSnapshot(
 				(querySnapshot) => {
 					let completedBookings = [];
 					querySnapshot.forEach((doc) => {
-						console.log(doc.data());
+						// console.log(doc.data());
 						completedBookings.push({ id: doc.id, ...doc.data() });
 					});
-					// console.log(otherBookings, `these are all the bookings`);
+					console.log(completedBookings, `these are the completed bookings`);
 
 					dispatch({
 						type: "GET_COMPLETED_BOOKINGS_SUCCESS",

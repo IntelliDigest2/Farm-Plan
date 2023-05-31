@@ -184,14 +184,13 @@ export const markEventAsComplete = async (userId, consultantId, eventId) => {
 	batch.commit();
 };
 
-export const fetchAllCompletedEvents = (userId) => {
+export const fetchConsultingCompletedBookings = (userId) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		getFirestore()
 			.collection("marketplace")
 			.doc(userId)
 			.collection("bookings")
-			.where("event.eventType", "!=", "Chat")
-			.where("status", "==", "completed")
+
 			.where("eventCompleted", "==", true)
 			.onSnapshot(
 				(querySnapshot) => {

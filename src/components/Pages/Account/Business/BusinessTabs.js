@@ -34,7 +34,7 @@ export function Food({ setShow, setChooseModal, profile }) {
 	);
 	return (
 		<>
-			<IconButton
+			{/* <IconButton
 				icon="notes"
 				label="Meal Plan"
 				color="turquoise"
@@ -75,7 +75,7 @@ export function Food({ setShow, setChooseModal, profile }) {
 				color="turquoise"
 				goTo="/"
 				disabled
-			/>
+			/> */}
 			<IconButton
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="kitchen"
