@@ -81,6 +81,7 @@ function ConsultantVideo(props) {
 					// Dynamically create a container in the form of a DIV element for playing the remote video track.
 
 					const newNode = document.createElement("div");
+					console.log(`t`);
 					newNode.id = user.uid;
 					newNode.classList.add(`${classes.subVid}`);
 
@@ -174,6 +175,7 @@ function ConsultantVideo(props) {
 
 			if (callType === "xV") {
 				await newClient.publish([localAudioTrack, localVideoTrack]);
+				// console.log(`here`);
 			} else {
 				await newClient.publish([localAudioTrack]);
 			}
@@ -181,6 +183,7 @@ function ConsultantVideo(props) {
 			if (callType === "xV") {
 				// Play localStream
 				localVideoTrack.play("local-stream");
+				// console.log(`here 2`);
 			}
 		} catch (err) {
 			console.error(err, `this is the error generated`);
