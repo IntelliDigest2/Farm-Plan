@@ -561,7 +561,6 @@ export const getPurchaseDataRes = (data) => {
 		// console.log("user region", profile.region)
 
 		getFirestore()
-			// .collection("purchases")
 			.collection("purchasesRes").where('profile.region', "==", data)
 			.get()
 			.then((snapshot) => {
@@ -576,6 +575,52 @@ export const getPurchaseDataRes = (data) => {
 			});
 	};
 };
+
+export const getSalesData = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		// const profile = getState().firebase.profile;
+
+		// console.log("user region", profile.region)
+
+		getFirestore()
+			.collection("sales")
+			.get()
+			.then((snapshot) => {
+				const data = [];
+				snapshot.forEach((doc) => {
+					data.push(doc.data());
+				});
+				dispatch({ type: "GET_SALES_DATA", payload: data });
+			})
+			.catch((err) => {
+				dispatch({ type: "GET_SALES_DATA_ERROR", err });
+			});
+	};
+};
+
+export const getRentData = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		// const profile = getState().firebase.profile;
+
+		// console.log("user region", profile.region)
+
+		getFirestore()
+			.collection("rent")
+			.get()
+			.then((snapshot) => {
+				const data = [];
+				snapshot.forEach((doc) => {
+					data.push(doc.data());
+				});
+				dispatch({ type: "GET_RENT_DATA", payload: data });
+			})
+			.catch((err) => {
+				dispatch({ type: "GET_RENT_DATA_ERROR", err });
+			});
+	};
+};
+
+
 
 
 export const sendToUser = (data) => {
