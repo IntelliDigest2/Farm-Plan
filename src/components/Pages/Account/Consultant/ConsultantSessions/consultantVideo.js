@@ -25,6 +25,7 @@ function ConsultantVideo(props) {
 	let { id } = useParams();
 
 	let callType = id.split("-")[2].substring(0, 2);
+	console.log(callType, `this is the call type here`);
 
 	let duration = id.split("-")[1];
 
@@ -72,24 +73,24 @@ function ConsultantVideo(props) {
 
 			console.log(callType);
 
-			if (callType === "xV") {
-				if (mediaType === "video" || mediaType === "all") {
-					// Get `RemoteVideoTrack` in the `user` object.
-					const remoteVideoTrack = user.videoTrack;
-					setRemoteVideoTrack(remoteVideoTrack);
+			// if (callType === "xV") {
+			if (mediaType === "video" || mediaType === "all") {
+				// Get `RemoteVideoTrack` in the `user` object.
+				const remoteVideoTrack = user.videoTrack;
+				setRemoteVideoTrack(remoteVideoTrack);
 
-					// Dynamically create a container in the form of a DIV element for playing the remote video track.
+				// Dynamically create a container in the form of a DIV element for playing the remote video track.
 
-					const newNode = document.createElement("div");
-					console.log(`t`);
-					newNode.id = user.uid;
-					newNode.classList.add(`${classes.subVid}`);
+				const newNode = document.createElement("div");
+				// console.log(`t`);
+				newNode.id = user.uid;
+				newNode.classList.add(`${classes.subVid}`);
 
-					remoteRef.current.appendChild(newNode);
+				remoteRef.current.appendChild(newNode);
 
-					user.videoTrack.play(`${user.uid}`);
-				}
+				user.videoTrack.play(`${user.uid}`);
 			}
+			// }
 
 			if (mediaType === "audio" || mediaType === "all") {
 				// Get `RemoteAudioTrack` in the `user` object.
@@ -120,7 +121,9 @@ function ConsultantVideo(props) {
 			const localContainer = document.getElementById("local-stream");
 
 			localAudioTrack.close();
-			localVideoTrack.close();
+			if (callType === "xV") {
+				localVideoTrack.close();
+			}
 
 			setJoined(false);
 			localContainer.textContent = "";
@@ -166,8 +169,10 @@ function ConsultantVideo(props) {
 			const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
 			setLocalAudioTrack(localAudioTrack);
 			// Create a video track from the video captured by a camera
+			console.log(callType, `this is the callType before the if statement`);
+			let localVideoTrack;
 			if (callType === "xV") {
-				const localVideoTrack = await AgoraRTC.createCameraVideoTrack();
+				localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 				setLocalVideoTrack(localVideoTrack);
 			}
 

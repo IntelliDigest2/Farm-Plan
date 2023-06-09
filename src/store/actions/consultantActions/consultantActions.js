@@ -284,7 +284,7 @@ export const acceptBookingRequest = (event) => {
 		eventCompleted: false,
 	});
 
-	batch.commit();
+	return batch.commit();
 	// getFirestore()
 	// 	.collection("consultants")
 	// 	.doc(event.consultant.id)

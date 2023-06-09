@@ -169,7 +169,7 @@ function ViewPurchaseInfo(props) {
 							let consultantId = booking.consultant.consultantId;
 							let consultantName = booking.consultant.consultantName;
 
-							let date = format(parseISO(booking.event.start), "yyyy-mm-dd");
+							let date = format(parseISO(booking.event.start), "yyyy-MM-dd");
 							let startTime = format(parseISO(booking.event.start), "hh:mm a");
 							let endTime = format(parseISO(booking.event.end), "hh:mm a");
 

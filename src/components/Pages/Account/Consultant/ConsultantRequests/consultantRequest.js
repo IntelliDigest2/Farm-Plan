@@ -25,7 +25,7 @@ export const ConsultantRequest = (props) => {
 		auth,
 	} = props;
 
-	let date = format(parseISO(event.start), "yyyy-mm-dd");
+	let date = format(parseISO(event.start), "yyyy-MM-dd");
 	let startTime = format(parseISO(event.start), "hh:mm a");
 	let endTime = format(parseISO(event.end), "hh:mm a");
 
