@@ -196,92 +196,94 @@ function uploadImgs(files, userId) {
 }
 
 export const signUp = (newUser) => {
-  return (dispatch, getState, { getFirebase }) => {
-    //Determine account type
-    var type;
-    switch (newUser.function) {
-      case "Hospitals":
-      case "Hotels":
-      case "Offices":
-      case "Shop/Supermarket":
-      case "Recreational Centers":
-      case "Business":
-        type = "business_admin";
-        break;
-      case "Restaurants":
-        type = "restaurant_admin";
-        break
-      case "Machinery/Supply":
-        type = "supply_admin";
-        break
-      case "Admin":
-        type = "admin_admin";
-        break
-      case "Schools":
-        type = "academic_admin";
-        break;
-      case "Farm":
-        type = "farm_admin";
-        break;
-      case "Households":
-      case "Personal":
-        type = "household_admin";
-        break;
-      default:
-        type = "user";
-        break;
-    }
+	return (dispatch, getState, { getFirebase }) => {
+		//Determine account type
+		var type;
+		switch (newUser.function) {
+			case "Hospitals":
+			case "Hotels":
+			case "Offices":
+			case "Shop/Supermarket":
+			case "Recreational Centers":
+			case "Business":
+				type = "business_admin";
+				break;
+			case "Restaurants":
+				type = "restaurant_admin";
+				break;
+			case "Machinery/Supply":
+				type = "supply_admin";
+				break;
+			case "Admin":
+				type = "admin_admin";
+				break;
+			case "Schools":
+				type = "academic_admin";
+				break;
+			case "Farm":
+				type = "farm_admin";
+				break;
+			case "Households":
+			case "Personal":
+				type = "household_admin";
+				break;
+			default:
+				type = "user";
+				break;
+		}
 
-    const firestore = getFirebase().firestore();
-    const firebase = getFirebase();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(newUser.email, newUser.password)
-      .then((resp) => {
-        firestore
-          .collection("users")
-          .doc(resp.user.uid)
-          .set({
-            // ...newUser,
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            mobile: newUser.mobile,
-            initials: newUser.firstName[0] + newUser.lastName[0],
-            email: newUser.email,
-            buildingFunction: newUser.function,
-            city: newUser.city,
-            country: newUser.country,
-            region: newUser.region,
-            uid: resp.user.uid,
-            //restaurant-specific user data:
-            restaurantName: newUser.restaurantName,
-            companyName: newUser.companyName,
-            companyDescription: newUser.companyDescription,
-            regulatoryBody: newUser.regulatoryBody,
-            regulatoryBodyID: newUser.regulatoryBodyID,
-            IDUrl: newUser.IDUrl,
-            IDNumber: newUser.IDNumber,
-            IDType: newUser.IDType,
-            cuisine: newUser.cuisine,
-            restaurantDescription: newUser.restaurantDescription,
-            type: type,
-          });
+		const firestore = getFirebase().firestore();
+		const firebase = getFirebase();
+		let newUserId;
+		firebase
+			.auth()
+			.createUserWithEmailAndPassword(newUser.email, newUser.password)
+			.then((resp) => {
+				newUserId = resp.user.uid;
+				firestore
+					.collection("users")
+					.doc(resp.user.uid)
+					.set({
+						// ...newUser,
+						firstName: newUser.firstName,
+						lastName: newUser.lastName,
+						mobile: newUser.mobile,
+						initials: newUser.firstName[0] + newUser.lastName[0],
+						email: newUser.email,
+						buildingFunction: newUser.function,
+						city: newUser.city,
+						country: newUser.country,
+						region: newUser.region,
+						uid: resp.user.uid,
+						//restaurant-specific user data:
+						restaurantName: newUser.restaurantName,
+						companyName: newUser.companyName,
+						companyDescription: newUser.companyDescription,
+						regulatoryBody: newUser.regulatoryBody,
+						regulatoryBodyID: newUser.regulatoryBodyID,
+						IDUrl: newUser.IDUrl,
+						IDNumber: newUser.IDNumber,
+						IDType: newUser.IDType,
+						cuisine: newUser.cuisine,
+						restaurantDescription: newUser.restaurantDescription,
+						type: type,
+					});
 
-        //Setup Admin account in relevent users collection
-        var adminCollection;
-        if (type === "business_admin") {
-          adminCollection = "business_users";
-        } else if (type === "academic_admin") {
-          adminCollection = "academic_users";
-        } else if (type === "farm_admin") {
-          adminCollection = "farm_users";
-        } else if (type === "household_admin") {
-          adminCollection = "household_users";
-        } else if (type === "supply_admin") {
-          adminCollection = "supply_users";
-        } else {
-          adminCollection = "user";
-        }
+				//Setup Admin account in relevent users collection
+				var adminCollection;
+				if (type === "business_admin") {
+					adminCollection = "business_users";
+				} else if (type === "academic_admin") {
+					adminCollection = "academic_users";
+				} else if (type === "farm_admin") {
+					adminCollection = "farm_users";
+				} else if (type === "household_admin") {
+					adminCollection = "household_users";
+				} else if (type === "supply_admin") {
+					adminCollection = "supply_users";
+				} else {
+					adminCollection = "user";
+				}
 
 				if (adminCollection !== "user") {
 					firestore

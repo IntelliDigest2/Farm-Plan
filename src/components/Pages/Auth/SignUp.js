@@ -51,15 +51,15 @@ const SignUp = (props) => {
 	const [regulatoryBody, setRegulatoryBody] = useState("");
 	const [regulatoryBodyID, setRegulatoryBodyID] = useState("");
 
-  //Stage7
-  const [companyName, setCompanyName] = useState("");
-  const [companyDescription, setCompanyDescription] = useState("");
+	//Stage7
+	const [companyName, setCompanyName] = useState("");
+	const [companyDescription, setCompanyDescription] = useState("");
 
-  //Stage6
-  const [IDType, setIDType] = useState("");
-  const [IDNumber, setIDNumber] = useState("");
-  const [image, setImage ] = useState("");
-  const [ IDUrl, setUrl ] = useState("");
+	//Stage6
+	const [IDType, setIDType] = useState("");
+	const [IDNumber, setIDNumber] = useState("");
+	const [image, setImage] = useState("");
+	const [IDUrl, setUrl] = useState("");
 
 	//Stage5
 	const [cuisine, setCuisine] = useState("");
@@ -69,40 +69,110 @@ const SignUp = (props) => {
 
 	const [errorNotification, setErrorNotification] = useState();
 
-  
-  function handleSubmit() {
-    let data = {
-      firstName: firstName,
-      lastName: lastName,
-      mobile: mobile,
-      initials: firstName[0] + lastName[0],
-      email: email,
-      password: password,
-      function: buildingFunction,
-      city: town,
-      country: country,
-      region: region,
-      restaurantName: restaurantName, 
-      companyName: companyName, 
-      companyDescription: companyDescription,
-      regulatoryBody: regulatoryBody,
-      regulatoryBodyID: regulatoryBodyID,
-      IDType: IDType,
-      IDNumber: IDNumber,
-      IDUrl: IDUrl,
-      cuisine: cuisine,
-      restaurantDescription: restaurantDescription,
-      type: "user",
-    };
-    if (validation()) {
-      console.log("signup");
-      props.signUp(data);
-    } else {
-      console.log("error");
-    }
-  }
+	//stage8
+	const [certificateImg, setCertificateImg] = useState();
+	const [IDImg, setIDImg] = useState();
+	const [imgPreview1, setImgPreview1] = useState();
+	const [imgPreview2, setImgPreview2] = useState();
+	const [consultant, setConsultant] = useState({
+		urlLink: "",
+		experience: "",
+		expertise: "",
+		services: [{ service: "", price: "0" }],
+		summary: "",
+		isActive: true,
+		images: [{ certificateImg: null }, { identificationImg: null }],
+	});
+
+	//This block of code is used to preview uploaded image
+	useEffect(() => {
+		if (!certificateImg) {
+			setImgPreview1(undefined);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(certificateImg);
+		setImgPreview1(objectUrl);
+
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [certificateImg]);
+
+	useEffect(() => {
+		if (!IDImg) {
+			setImgPreview2(undefined);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(IDImg);
+		setImgPreview2(objectUrl);
+
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [IDImg]);
+
+	let certificateImg1 = certificateImg ? (
+		<img
+			className="consultant_previewImg"
+			alt="certificate preview"
+			height="120px"
+			width="70%"
+			src={imgPreview1}
+		/>
+	) : (
+		""
+	);
+
+	let IDImg1 = IDImg ? (
+		<img
+			alt="certificate preview"
+			height="120px"
+			width="70%"
+			src={imgPreview2}
+		/>
+	) : (
+		""
+	);
+
+	function handleSubmit() {
+		let data = {
+			firstName: firstName,
+			lastName: lastName,
+			mobile: mobile,
+			initials: firstName[0] + lastName[0],
+			email: email,
+			password: password,
+			function: buildingFunction,
+			city: town,
+			country: country,
+			region: region,
+			restaurantName: restaurantName,
+			companyName: companyName,
+			companyDescription: companyDescription,
+			regulatoryBody: regulatoryBody,
+			regulatoryBodyID: regulatoryBodyID,
+			IDType: IDType,
+			IDNumber: IDNumber,
+			IDUrl: IDUrl,
+			cuisine: cuisine,
+			restaurantDescription: restaurantDescription,
+			type: "user",
+		};
+		if (validation()) {
+			// console.log("signup");
+			props.signUp(data);
+		} else {
+			console.log("error");
+		}
+	}
+
+	useEffect(() => {
+		console.log(
+			consultant.services,
+			`the consultant service change and this is the new value`
+		);
+	}, [consultant.services]);
 
 	let servicesInput = consultant.services.map((value, index) => {
+		console.log(value, `valuecheck`);
 		return (
 			<div key={`userService-${index}`}>
 				<Row className="mb-3">
@@ -169,11 +239,18 @@ const SignUp = (props) => {
 	function deleteService(e, i) {
 		e.preventDefault();
 		// console.log(i, `this is the index of what should be deleted`);
-		let newArray = consultant.services.slice();
-		newArray = newArray.filter((item, index) => index !== i);
+		// let newArray = consultant.services.splice();
+		let newArray = consultant.services.filter((item, index) => {
+			return index !== i;
+		});
 		// console.log(newArray, `remaining arrays`);
 		// newArray.splice(i, 1);
-		setConsultant({ ...consultant, services: newArray });
+
+		// console.log(newArray, `remaining arrays`);
+		setConsultant({
+			...consultant,
+			services: newArray,
+		});
 	}
 
 	function showDeleteBtn(index) {
@@ -307,6 +384,8 @@ const SignUp = (props) => {
 	//rerender every time the stage changes
 	useEffect(() => {}, [stage]);
 
+	// useEffect(() => {}, [consultant.services.]);
+
 	const handleSelectedImage = (e) => {
 		if (!e.target.files || e.target.files.length === 0) {
 			setCertificateImg(undefined);
@@ -335,256 +414,282 @@ const SignUp = (props) => {
 		return <Redirect to="/account" />;
 	}
 
-  switch (stage) {
-    default:
-    case 1:
-      return (
-        <Title subtitle="Sign Up">
-          <div className="signup-center subtitles">
-            <p>First, create your account.</p>
-          </div>
-          <Stage1
-            setFirstName={setFirstName}
-            firstName={firstName}
-            setLastName={setLastName}
-            lastName={lastName}
-            setMobile={setMobile}
-            mobile={mobile}
-            setEmail={setEmail}
-            email={email}
-            setPassword={setPassword}
-            password={password}
-            setStage={setStage}
-          />
-          <div className="signup-center subtitles row">
-            <p>Already have an account? </p>
-            <Link style={{ color: "#AFBA15" }} to="/login">
-              {"  "}
-              Log In
-            </Link>
-          </div>
-        </Title>
-      );
-    case 2:
-      return (
-        <Title subtitle="Sign Up">
-          <div className="signup-center subtitles">
-            <p>First, create your account.</p>
-          </div>
-          <Stage2
-            setIDType={setIDType}
-            IDType={IDType}
-            setIDNumber={setIDNumber}
-            IDNumber={IDNumber}
-            IDUrl={IDUrl}
-            setUrl={setUrl}
-            setTown={setTown}
-            town={town}
-            setCountry={setCountry}
-            country={country}
-            setRegion={setRegion}
-            region={region}
-            setBuildingFunction={setBuildingFunction}
-            buildingFunction={buildingFunction}
-            setStage={setStage}
-            countries={countryNames}
-          />
-        </Title>
-      );
-    case 3:
-      return (
-        <Title subtitle="Sign Up">
-          <div className="signup-center subtitles">
-            <h5>Confirmation</h5>
-          </div>
-          <Stage3
-            setIDType={setIDType}
-            IDType={IDType}
-            setIDNumber={setIDNumber}
-            IDNumber={IDNumber}
-            IDUrl={IDUrl}
-            setUrl={setUrl}
-            setStage={setStage}
-            firstName={firstName}
-            lastName={lastName}
-            mobile={mobile}
-            email={email}
-            town={town}
-            region={region}
-            country={country}
-            buildingFunction={buildingFunction}
-            setRestaurantName={setRestaurantName}
-            restaurantName={restaurantName}
-            companyName={companyName}
-            setCuisine={setCuisine}
-            cuisine={cuisine}
-            setRegulatoryBody={setRegulatoryBody}
-            regulatoryBody={regulatoryBody}
-            setRegulatoryBodyID={setRegulatoryBodyID}
-            regulatoryBodyID={regulatoryBodyID}
-            setRestaurantDescription={setRestaurantDescription}
-            restaurantDescription={restaurantDescription}
+	switch (stage) {
+		default:
+		case 1:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<p>First, create your account.</p>
+					</div>
+					<Stage1
+						setFirstName={setFirstName}
+						firstName={firstName}
+						setLastName={setLastName}
+						lastName={lastName}
+						setMobile={setMobile}
+						mobile={mobile}
+						setEmail={setEmail}
+						email={email}
+						setPassword={setPassword}
+						password={password}
+						setStage={setStage}
+					/>
+					<div className="signup-center subtitles row">
+						<p>Already have an account? </p>
+						<Link style={{ color: "#AFBA15" }} to="/login">
+							{"  "}
+							Log In
+						</Link>
+					</div>
+				</Title>
+			);
+		case 2:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<p>First, create your account.</p>
+					</div>
+					<Stage2
+						setIDType={setIDType}
+						IDType={IDType}
+						setIDNumber={setIDNumber}
+						IDNumber={IDNumber}
+						IDUrl={IDUrl}
+						setUrl={setUrl}
+						setTown={setTown}
+						town={town}
+						setCountry={setCountry}
+						country={country}
+						setRegion={setRegion}
+						region={region}
+						setBuildingFunction={setBuildingFunction}
+						buildingFunction={buildingFunction}
+						setStage={setStage}
+						countries={countryNames}
+					/>
+				</Title>
+			);
+		case 3:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<h5>Confirmation</h5>
+					</div>
+					<Stage3
+						setIDType={setIDType}
+						IDType={IDType}
+						setIDNumber={setIDNumber}
+						IDNumber={IDNumber}
+						IDUrl={IDUrl}
+						setUrl={setUrl}
+						setStage={setStage}
+						firstName={firstName}
+						lastName={lastName}
+						mobile={mobile}
+						email={email}
+						town={town}
+						region={region}
+						country={country}
+						buildingFunction={buildingFunction}
+						setRestaurantName={setRestaurantName}
+						restaurantName={restaurantName}
+						companyName={companyName}
+						setCuisine={setCuisine}
+						cuisine={cuisine}
+						setRegulatoryBody={setRegulatoryBody}
+						regulatoryBody={regulatoryBody}
+						setRegulatoryBodyID={setRegulatoryBodyID}
+						regulatoryBodyID={regulatoryBodyID}
+						setRestaurantDescription={setRestaurantDescription}
+						restaurantDescription={restaurantDescription}
+					/>
+					<div className="signup-center">
+						<div className="auth-error">
+							{authError ? <p> {authError}</p> : null}
+						</div>
+						<div>
+							<Button
+								style={{ width: "30%" }}
+								variant="default"
+								className="signup-btn"
+								onClick={(e) => setStage(1)}
+							>
+								Change
+							</Button>
+						</div>
+						<div className="row">
+							<Button
+								style={{ fontWeight: "700" }}
+								variant="default"
+								className="signup-confirm"
+								onClick={(e) => {
+									e.preventDefault();
+									handleSubmit();
+								}}
+							>
+								Confirm
+							</Button>
+						</div>
+					</div>
+				</Title>
+			);
+		//Restaurant-specific
+		case 4:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<p>First, create your account.</p>
+					</div>
+					<Stage4
+						setIDType={setIDType}
+						IDType={IDType}
+						setIDNumber={setIDNumber}
+						IDNumber={IDNumber}
+						IDUrl={IDUrl}
+						setUrl={setUrl}
+						setTown={setTown}
+						town={town}
+						setCountry={setCountry}
+						country={country}
+						setRegion={setRegion}
+						region={region}
+						setBuildingFunction={setBuildingFunction}
+						buildingFunction={buildingFunction}
+						setStage={setStage}
+						countries={countryNames}
+						setRestaurantName={setRestaurantName}
+						restaurantName={restaurantName}
+						setRegulatoryBody={setRegulatoryBody}
+						regulatoryBody={regulatoryBody}
+						setRegulatoryBodyID={setRegulatoryBodyID}
+						regulatoryBodyID={regulatoryBodyID}
+					/>
+				</Title>
+			);
 
-          />
-          <div className="signup-center">
-            <div className="auth-error">
-              {authError ? <p> {authError}</p> : null}
-            </div>
-            <div>
-              <Button
-                style={{ width: "30%" }}
-                variant="default"
-                className="signup-btn"
-                onClick={(e) => setStage(1)}
-              >
-                Change
-              </Button>
-            </div>
-            <div className="row">
-              <Button
-                style={{ fontWeight: "700" }}
-                variant="default"
-                className="signup-confirm"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleSubmit();
-                }}
-              >
-                Confirm
-              </Button>
-            </div>
-          </div>
-        </Title>
-      );
-      //Restaurant-specific
-    case 4:
-      return (
-        <Title subtitle="Sign Up">
-          <div className="signup-center subtitles">
-            <p>First, create your account.</p>
-          </div>
-          <Stage4
-            setIDType={setIDType}
-            IDType={IDType}
-            setIDNumber={setIDNumber}
-            IDNumber={IDNumber}
-            IDUrl={IDUrl}
-            setUrl={setUrl}
-            setTown={setTown}
-            town={town}
-            setCountry={setCountry}
-            country={country}
-            setRegion={setRegion}
-            region={region}
-            setBuildingFunction={setBuildingFunction}
-            buildingFunction={buildingFunction}
-            setStage={setStage}
-            countries={countryNames}
-            setRestaurantName={setRestaurantName}
-            restaurantName = {restaurantName}
-            setRegulatoryBody={setRegulatoryBody}
-            regulatoryBody = {regulatoryBody}
-            setRegulatoryBodyID={setRegulatoryBodyID}
-            regulatoryBodyID = {regulatoryBodyID}
-          />
-        </Title>
-      );
-
-    case 5:
-      return (
-        <Title subtitle="Sign Up">
-          <div className="signup-center subtitles">
-            <p>First, create your account.</p>
-          </div>
-          <Stage5
-            setIDType={setIDType}
-            IDType={IDType}
-            setIDNumber={setIDNumber}
-            IDNumber={IDNumber}
-            IDUrl={IDUrl}
-            setUrl={setUrl}
-            setTown={setTown}
-            town={town}
-            setCountry={setCountry}
-            country={country}
-            setRegion={setRegion}
-            region={region}
-            setBuildingFunction={setBuildingFunction}
-            buildingFunction={buildingFunction}
-            setStage={setStage}
-            countries={countryNames}
-            restaurantName = {restaurantName}
-            regulatoryBody = {regulatoryBody}
-            regulatoryBodyID = {regulatoryBodyID}
-            setCuisine={setCuisine}
-            cuisine = {cuisine}
-            setRestaurantDescription={setRestaurantDescription}
-            restaurantDescription = {restaurantDescription}
-          />
-        </Title>
-      );
-    // Admin specific signup
-    case 6:
-    return (
-      <Title subtitle="Sign Up">
-        <div className="signup-center subtitles">
-          <p>First, create your account.</p>
-        </div>
-        <Stage6
-          setIDType={setIDType}
-          IDType={IDType}
-          setIDNumber={setIDNumber}
-          IDNumber={IDNumber}
-          IDUrl={IDUrl}
-          setUrl={setUrl}
-          image={image}
-          setImage={setImage}
-          setTown={setTown}
-          town={town}
-          setCountry={setCountry}
-          country={country}
-          setRegion={setRegion}
-          region={region}
-          setBuildingFunction={setBuildingFunction}
-          buildingFunction={buildingFunction}
-          setStage={setStage}
-          countries={countryNames}
-          restaurantName = {restaurantName}
-          regulatoryBody = {regulatoryBody}
-          regulatoryBodyID = {regulatoryBodyID}
-          setCuisine={setCuisine}
-          cuisine = {cuisine}
-          setRestaurantDescription={setRestaurantDescription}
-          restaurantDescription = {restaurantDescription}
-        />
-      </Title>
-    );
-    // supplier/ machinery specific signup
-    case 7:
-    return (
-      <Title subtitle="Sign Up">
-        <div className="signup-center subtitles">
-          <p>First, create your account.</p>
-        </div>
-        <Stage7
-          setTown={setTown}
-          town={town}
-          setCountry={setCountry}
-          country={country}
-          setRegion={setRegion}
-          region={region}
-          setBuildingFunction={setBuildingFunction}
-          buildingFunction={buildingFunction}
-          setStage={setStage}
-          countries={countryNames}
-          companyName = {companyName}
-          setCompanyName = {setCompanyName}
-          setCompanyDescription={setCompanyDescription}
-          companyDescription = {companyDescription}
-        />
-      </Title>
-    );
-  }
+		case 5:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<p>First, create your account.</p>
+					</div>
+					<Stage5
+						setIDType={setIDType}
+						IDType={IDType}
+						setIDNumber={setIDNumber}
+						IDNumber={IDNumber}
+						IDUrl={IDUrl}
+						setUrl={setUrl}
+						setTown={setTown}
+						town={town}
+						setCountry={setCountry}
+						country={country}
+						setRegion={setRegion}
+						region={region}
+						setBuildingFunction={setBuildingFunction}
+						buildingFunction={buildingFunction}
+						setStage={setStage}
+						countries={countryNames}
+						restaurantName={restaurantName}
+						regulatoryBody={regulatoryBody}
+						regulatoryBodyID={regulatoryBodyID}
+						setCuisine={setCuisine}
+						cuisine={cuisine}
+						setRestaurantDescription={setRestaurantDescription}
+						restaurantDescription={restaurantDescription}
+					/>
+				</Title>
+			);
+		// Admin specific signup
+		case 6:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<p>First, create your account.</p>
+					</div>
+					<Stage6
+						setIDType={setIDType}
+						IDType={IDType}
+						setIDNumber={setIDNumber}
+						IDNumber={IDNumber}
+						IDUrl={IDUrl}
+						setUrl={setUrl}
+						image={image}
+						setImage={setImage}
+						setTown={setTown}
+						town={town}
+						setCountry={setCountry}
+						country={country}
+						setRegion={setRegion}
+						region={region}
+						setBuildingFunction={setBuildingFunction}
+						buildingFunction={buildingFunction}
+						setStage={setStage}
+						countries={countryNames}
+						restaurantName={restaurantName}
+						regulatoryBody={regulatoryBody}
+						regulatoryBodyID={regulatoryBodyID}
+						setCuisine={setCuisine}
+						cuisine={cuisine}
+						setRestaurantDescription={setRestaurantDescription}
+						restaurantDescription={restaurantDescription}
+					/>
+				</Title>
+			);
+		// supplier/ machinery specific signup
+		case 7:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<p>First, create your account.</p>
+					</div>
+					<Stage7
+						setTown={setTown}
+						town={town}
+						setCountry={setCountry}
+						country={country}
+						setRegion={setRegion}
+						region={region}
+						setBuildingFunction={setBuildingFunction}
+						buildingFunction={buildingFunction}
+						setStage={setStage}
+						countries={countryNames}
+						companyName={companyName}
+						setCompanyName={setCompanyName}
+						setCompanyDescription={setCompanyDescription}
+						companyDescription={companyDescription}
+					/>
+				</Title>
+			);
+		case 8:
+			return (
+				<Title subtitle="Sign Up">
+					<div className="signup-center subtitles">
+						<p>First, create your account.</p>
+					</div>
+					<Stage8
+						setConsultant={setConsultant}
+						consultant={consultant}
+						addNewServiceBtn={addNewServiceBtn}
+						handleSelectedImage={handleSelectedImage}
+						IDImg1={IDImg1}
+						certificateImg1={certificateImg1}
+						servicesInput={servicesInput}
+						setTown={setTown}
+						town={town}
+						setCountry={setCountry}
+						country={country}
+						setRegion={setRegion}
+						region={region}
+						setBuildingFunction={setBuildingFunction}
+						buildingFunction={buildingFunction}
+						setStage={setStage}
+						countries={countryNames}
+					/>
+				</Title>
+			);
+	}
 };
 
 const Stage1 = (props) => {
@@ -718,34 +823,35 @@ const Stage2 = (props) => {
 						/>
 					</Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>What kind of account are you creating?</Form.Label>
-            <Select
-              id="buildingFunction"
-              function={(e) => {
-                props.setBuildingFunction(e.target.value);
-              }}
-              value={props.buildingFunction}
-              placeholder="Please Select an Account Type"
-              items={[
-                "Households",
-                "Admin",
-                "Personal",
-                "Hospitals",
-                "Schools",
-                "Hotels",
-                "Offices",
-                "Restaurants",
-                "Shop/Supermarket",
-                "Machinery/Supply",
-                "Farm",
-                "Recreational Centers",
-                "Other",
-              ]}
-            />
-          </Form.Group>
-        </Form>
-      </FormStyle>
+					<Form.Group className="mb-3">
+						<Form.Label>What kind of account are you creating?</Form.Label>
+						<Select
+							id="buildingFunction"
+							function={(e) => {
+								props.setBuildingFunction(e.target.value);
+							}}
+							value={props.buildingFunction}
+							placeholder="Please Select an Account Type"
+							items={[
+								"Households",
+								"Admin",
+								"Personal",
+								"Hospitals",
+								"Schools",
+								"Hotels",
+								"Offices",
+								"Restaurants",
+								"Shop/Supermarket",
+								"Machinery/Supply",
+								"Farm",
+								"Recreational Centers",
+								"Consultant",
+								"Other",
+							]}
+						/>
+					</Form.Group>
+				</Form>
+			</FormStyle>
 
 			<div className="signup-center">
 				<div className="row">
@@ -777,23 +883,25 @@ const Stage2 = (props) => {
 							//     props.setStage(3)
 							// }
 
-              if (props.buildingFunction=="Restaurants") {
-                props.setStage(4) //stage for restaurant-specific questions
-              } else if (props.buildingFunction=="Admin") {
-                props.setStage(6) //stage for admin-specific questions
-              } else if (props.buildingFunction=="Machinery/Supply"){
-                props.setStage(7) //stage for supplier/machinery-specific questions
-              } else {
-              props.setStage(3);}
-            }}
-          >
-            Next
-          </Button>
-
-        </div>
-      </div>
-    </div>
-  );
+							if (props.buildingFunction == "Restaurants") {
+								props.setStage(4); //stage for restaurant-specific questions
+							} else if (props.buildingFunction == "Admin") {
+								props.setStage(6); //stage for admin-specific questions
+							} else if (props.buildingFunction == "Machinery/Supply") {
+								props.setStage(7); //stage for supplier/machinery-specific questions
+							} else if (props.buildingFunction === "Consultant") {
+								props.setStage(8); //stage for consultant-specific questions
+							} else {
+								props.setStage(3);
+							}
+						}}
+					>
+						Next
+					</Button>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 //If account type == restaurant, this routes
@@ -1059,25 +1167,25 @@ const Stage8 = (props) => {
 	);
 };
 
-//If account type == admin, this routes 
+//If account type == admin, this routes
 const Stage6 = (props) => {
-  //upload immage to cloudinary
-    const uploadImage = async () => {
-        const data = new FormData()
-        data.append("file", props.image)
-        data.append("upload_preset", "wft-app")
-        data.append("cloud_name","dghm4xm7k")
-        data.append("folder", "restaurant_id") 
-        await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",{
-          method:"post",
-          body: data
-        })
-        .then(resp => resp.json())
-        .then(data => {
-        props.setUrl(data.url)
-        })
-        .catch(err => console.log(err))
-    }
+	//upload immage to cloudinary
+	const uploadImage = async () => {
+		const data = new FormData();
+		data.append("file", props.image);
+		data.append("upload_preset", "wft-app");
+		data.append("cloud_name", "dghm4xm7k");
+		data.append("folder", "restaurant_id");
+		await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload", {
+			method: "post",
+			body: data,
+		})
+			.then((resp) => resp.json())
+			.then((data) => {
+				props.setUrl(data.url);
+			})
+			.catch((err) => console.log(err));
+	};
 
 	return (
 		<div>
@@ -1165,98 +1273,92 @@ const Stage6 = (props) => {
 	);
 };
 
-//If account type == admin, this routes 
+//If account type == admin, this routes
 const Stage7 = (props) => {
-  //upload immage to cloudinary
-    // const uploadImage = async () => {
-    //     const data = new FormData()
-    //     data.append("file", props.image)
-    //     data.append("upload_preset", "supplier")
-    //     data.append("cloud_name","dghm4xm7k")
-    //     await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",{
-    //       method:"post",
-    //       body: data
-    //     })
-    //     .then(resp => resp.json())
-    //     .then(data => {
-    //     props.setUrl(data.url)
-    //     })
-    //     .catch(err => console.log(err))
-    // }
+	//upload immage to cloudinary
+	// const uploadImage = async () => {
+	//     const data = new FormData()
+	//     data.append("file", props.image)
+	//     data.append("upload_preset", "supplier")
+	//     data.append("cloud_name","dghm4xm7k")
+	//     await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",{
+	//       method:"post",
+	//       body: data
+	//     })
+	//     .then(resp => resp.json())
+	//     .then(data => {
+	//     props.setUrl(data.url)
+	//     })
+	//     .catch(err => console.log(err))
+	// }
 
-  return(
-    <div>
-    <FormStyle>
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>Company Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Company name"
-            defaultValue={props.companyName}
-            required
-            onChange={(e) => {
-              props.setCompanyName(e.target.value);
-            }}
-          />
-        </Form.Group>
+	return (
+		<div>
+			<FormStyle>
+				<Form>
+					<Form.Group className="mb-3">
+						<Form.Label>Company Name</Form.Label>
+						<Form.Control
+							type="text"
+							placeholder="Company name"
+							defaultValue={props.companyName}
+							required
+							onChange={(e) => {
+								props.setCompanyName(e.target.value);
+							}}
+						/>
+					</Form.Group>
 
-        <Form.Group className="mb-3">
-        <Form.Label>Company Description</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Describe what you do"
-            defaultValue={props.companyDescription}
-            required
-            onChange={(e) => {
-              props.setCompanyDescription(e.target.value);
-            }}
-          />
-        </Form.Group>
+					<Form.Group className="mb-3">
+						<Form.Label>Company Description</Form.Label>
+						<Form.Control
+							type="text"
+							placeholder="Describe what you do"
+							defaultValue={props.companyDescription}
+							required
+							onChange={(e) => {
+								props.setCompanyDescription(e.target.value);
+							}}
+						/>
+					</Form.Group>
 
+					<div className="signup-center">
+						<div className="row">
+							<Button
+								variant="default"
+								className="signup-btn"
+								onClick={(e) => {
+									e.preventDefault();
+									//Previous Stage
+									props.setStage(2);
+								}}
+							>
+								Back
+							</Button>
 
-        <div className="signup-center">
-        <div className="row">
-          <Button
-            variant="default"
-            className="signup-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              //Previous Stage
-              props.setStage(2);
-            }}
-          >
-            Back
-          </Button>
+							<Button
+								variant="default"
+								className="signup-btn"
+								onClick={(e) => {
+									e.preventDefault();
+									//Next Stage
 
-          <Button
-            variant="default"
-            className="signup-btn"
-
-            onClick={(e) => {
-              e.preventDefault();
-              //Next Stage
-
-              if (props.buildingFunction=="Restaurants") {
-                props.setStage(5) //stage for restaurant-specific questions
-              } else {
-              props.setStage(3);}
-            }}
-          >
-            Next
-          </Button>
-
-        </div>
-      </div>
-      </Form>
-    </FormStyle>
-  </div>
-
-
-  );
+									if (props.buildingFunction == "Restaurants") {
+										props.setStage(5); //stage for restaurant-specific questions
+									} else {
+										props.setStage(3);
+									}
+								}}
+							>
+								Next
+							</Button>
+						</div>
+					</div>
+				</Form>
+			</FormStyle>
+		</div>
+	);
 };
-
-
 
 const Stage5 = (props) => {
 	return (
@@ -1331,216 +1433,213 @@ const Stage5 = (props) => {
 };
 
 const Stage3 = (props) => {
-  switch (props.buildingFunction){
-    case "Restaurants":
-    return (
-      <div>
-        <List>
-          <ListItem>
-            <ListItemIcon>
-              <DriveFileRenameOutlineIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {props.firstName} {props.lastName}
-            </ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <EmailIcon />
-            </ListItemIcon>
-            <ListItemText>{props.email}</ListItemText>
-          </ListItem>
-          <ListItem className="space-between">
-            <ListItemIcon>
-              <EditLocationAltIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {props.town}, {props.country}, {props.region}
-            </ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.buildingFunction}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.restaurantName}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.regulatoryBody}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.regulatoryBodyID}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.cuisine}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.restaurantDescription}</ListItemText>
-          </ListItem>
-
-        </List>
-      </div>
-    );
-    case "Machinery/Supply":
-    return (
-      <div>
-        <List>
-          <ListItem>
-            <ListItemIcon>
-              <DriveFileRenameOutlineIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {props.firstName} {props.lastName}
-            </ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <EmailIcon />
-            </ListItemIcon>
-            <ListItemText>{props.email}</ListItemText>
-          </ListItem>
-          <ListItem className="space-between">
-            <ListItemIcon>
-              <EditLocationAltIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {props.town}, {props.country}, {props.region}
-            </ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.buildingFunction}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.companyName}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.companyDescription}</ListItemText>
-          </ListItem>
-
-        </List>
-      </div>
-    );
-    case "Admin":
-      return (
-      <div>
-        <List>
-          <ListItem>
-            <ListItemIcon>
-              <DriveFileRenameOutlineIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {props.firstName} {props.lastName}
-            </ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <EmailIcon />
-            </ListItemIcon>
-            <ListItemText>{props.email}</ListItemText>
-          </ListItem>
-          <ListItem className="space-between">
-            <ListItemIcon>
-              <EditLocationAltIcon />
-            </ListItemIcon>
-            <ListItemText>
-              {props.town}, {props.country}, {props.region}
-            </ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.buildingFunction}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.IDType}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <HomeWorkIcon />
-            </ListItemIcon>
-            <ListItemText>{props.IDNumber}</ListItemText>
-          </ListItem>
-
-        </List>
-      </div>
-      );
-      case "Households":
-      case "Personal":
-      case "Hospitals":
-      case "Schools":
-      case "Hotels":
-      case "Offices":
-      case "Shop/Supermarket":
-      case "Farm":
-      case "Recreational Centers":
-      case "Restaurants":
-      case "Other":
-        return (
-          <div>
-            <List>
-              <ListItem>
-                <ListItemIcon>
-                  <DriveFileRenameOutlineIcon />
-                </ListItemIcon>
-                <ListItemText>
-                  {props.firstName} {props.lastName}
-                </ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <EmailIcon />
-                </ListItemIcon>
-                <ListItemText>{props.email}</ListItemText>
-              </ListItem>
-              <ListItem className="space-between">
-                <ListItemIcon>
-                  <EditLocationAltIcon />
-                </ListItemIcon>
-                <ListItemText>
-                  {props.town}, {props.country}, {props.region}
-                </ListItemText>
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <HomeWorkIcon />
-                </ListItemIcon>
-                <ListItemText>{props.buildingFunction}</ListItemText>
-              </ListItem>
-            </List>
-          </div>
-        );
-  }
-}
+	switch (props.buildingFunction) {
+		case "Restaurants":
+			return (
+				<div>
+					<List>
+						<ListItem>
+							<ListItemIcon>
+								<DriveFileRenameOutlineIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.firstName} {props.lastName}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<EmailIcon />
+							</ListItemIcon>
+							<ListItemText>{props.email}</ListItemText>
+						</ListItem>
+						<ListItem className="space-between">
+							<ListItemIcon>
+								<EditLocationAltIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.town}, {props.country}, {props.region}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.buildingFunction}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.restaurantName}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.regulatoryBody}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.regulatoryBodyID}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.cuisine}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.restaurantDescription}</ListItemText>
+						</ListItem>
+					</List>
+				</div>
+			);
+		case "Machinery/Supply":
+			return (
+				<div>
+					<List>
+						<ListItem>
+							<ListItemIcon>
+								<DriveFileRenameOutlineIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.firstName} {props.lastName}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<EmailIcon />
+							</ListItemIcon>
+							<ListItemText>{props.email}</ListItemText>
+						</ListItem>
+						<ListItem className="space-between">
+							<ListItemIcon>
+								<EditLocationAltIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.town}, {props.country}, {props.region}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.buildingFunction}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.companyName}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.companyDescription}</ListItemText>
+						</ListItem>
+					</List>
+				</div>
+			);
+		case "Admin":
+			return (
+				<div>
+					<List>
+						<ListItem>
+							<ListItemIcon>
+								<DriveFileRenameOutlineIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.firstName} {props.lastName}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<EmailIcon />
+							</ListItemIcon>
+							<ListItemText>{props.email}</ListItemText>
+						</ListItem>
+						<ListItem className="space-between">
+							<ListItemIcon>
+								<EditLocationAltIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.town}, {props.country}, {props.region}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.buildingFunction}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.IDType}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.IDNumber}</ListItemText>
+						</ListItem>
+					</List>
+				</div>
+			);
+		case "Households":
+		case "Personal":
+		case "Hospitals":
+		case "Schools":
+		case "Hotels":
+		case "Offices":
+		case "Shop/Supermarket":
+		case "Farm":
+		case "Recreational Centers":
+		case "Restaurants":
+		case "Other":
+			return (
+				<div>
+					<List>
+						<ListItem>
+							<ListItemIcon>
+								<DriveFileRenameOutlineIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.firstName} {props.lastName}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<EmailIcon />
+							</ListItemIcon>
+							<ListItemText>{props.email}</ListItemText>
+						</ListItem>
+						<ListItem className="space-between">
+							<ListItemIcon>
+								<EditLocationAltIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.town}, {props.country}, {props.region}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.buildingFunction}</ListItemText>
+						</ListItem>
+					</List>
+				</div>
+			);
+	}
+};
 
 const FormStyle = styled.div`
 	form {
