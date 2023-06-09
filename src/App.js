@@ -37,6 +37,7 @@ import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 import AdminTab from "./components/Pages/Account/Admin/Admin/AdminComp/AdminTab";
+import CommerceTab from "./components/Pages/Account/Commerce/CommerceComp/CommerceTab";
 
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
@@ -69,6 +70,7 @@ import RestaurantShoppingListPlanner from "./components/Pages/Account/Business/R
 import RestaurantInventory from "./components/Pages/Account/Business/Restaurant/RestaurantInventory";
 import RestaurantDashboard from "./components/Pages/Account/Business/Restaurant/RestaurantDashboard";
 import RestaurantMealPlan from "./components/Pages/Account/Business/Restaurant/RestaurantMealPlan";
+import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan";
 
 import NewAccount from "./components/Pages/Account/Account";
 
@@ -182,7 +184,8 @@ const App = (props) => {
 					<Switch>
 						{/* <Route path="/example" exact component={Example} /> */}
 						<Route path="/login" exact component={Login} />
-						<Route path="/admin" exact component={AdminTab} />
+						<Route path="/admin" exact component={AdminTab}  />
+						<Route path="/supply" exact component={CommerceTab}  />
 						<Route path="/landing" exact component={LandingPage} />
 						<Route path="/about-us" exact component={AboutUs} />
 						<Route path="/signup" exact component={SignUp} />
@@ -280,6 +283,10 @@ const App = (props) => {
 						<Route
 							path="/restaurant-meal-plan"
 							component={RestaurantMealPlan}
+						/>
+						<Route
+							path="/supply-plan"
+							component={SupplyPlan}
 						/>
 
 						<Route component={NotFound} />

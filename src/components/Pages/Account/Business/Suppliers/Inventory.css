@@ -1,0 +1,13 @@
+.inventory {
+  margin: 0 2% 2% 0;
+  width: 100%;
+  min-height: 8rem;
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.inventory .button {
+  position: absolute;
+  /* bottom: 0.5%; */
+  right: 2%;
+}
