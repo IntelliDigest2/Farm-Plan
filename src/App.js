@@ -16,11 +16,17 @@ import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
 
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
-import Question2 from "./components/Pages/Account/Consultant/Question/Question2";
-import OnboardMessage from "./components/Pages/Account/Consultant/Question/OnboardMessage";
-import ConsultantLogin from "./components/Pages/Account/Consultant/Login/ConsultantLogin";
-import ConsultantAccount from "./components/Pages/Account/Consultant/Login/ConsultantAccount";
-import ConsultantSetting from "./components/Pages/Account/Consultant/Login/ConsultantSetting";
+import ConsultantRegister from "./components/Pages/Account/Consultant/ConsultantAuth/ConsultantRegister";
+import ConsultantVideo from "./components/Pages/Account/Consultant/ConsultantSessions/consultantVideo";
+import OnboardMessage from "./components/Pages/Account/Consultant/ConsultantAuth/OnboardMessage";
+import ConsultantLogin from "./components/Pages/Account/Consultant/ConsultantAuth/ConsultantLogin";
+import ConsultantAccount from "./components/Pages/Account/Consultant/ConsultantAccount";
+import ConsultantSettings from "./components/Pages/Account/Consultant/ConsultantSettings/ConsultantSettings";
+import ConsultantSessionPage from "./components/Pages/Account/Consultant/ConsultantSessions/consultantSessionsPage";
+import ConsultantRecordsPage from "./components/Pages/Account/Consultant/ConsultantRecords/consultantRecordsPage";
+import ConsultantRequestsPage from "./components/Pages/Account/Consultant/ConsultantRequests/consultantRequestsPage";
+
+import ConsultingPage from "./components/SubComponents/consulting/consultingPage";
 
 import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
@@ -87,7 +93,6 @@ import { getToken, onMessageListener } from "./config/fbConfig";
 //* Chart.js
 import ChartView from "./components/Pages/Account/Charts/Chart";
 import GiftFoodChart from "./components/Pages/Account/Charts/GiftFoodChart";
-
 
 import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 import Payment from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Payment";
@@ -156,6 +161,7 @@ const App = (props) => {
 						{notification.body}
 					</Toast.Body>
 				</Toast>
+
 				<div>
 					<MobileView>
 						<Route
@@ -189,24 +195,33 @@ const App = (props) => {
 						<Route path="/forgot-password" exact component={ForgotPassword} />
 						<Route path="/payment-process" exact component={Payment} />
 
-						<Route exact path="/consultants" component={Homepage} />
-						<Route path="/consultants/question2" exact component={Question2} />
-						<Route
-							path="/consultants/onboard"
+						{/* <Route exact path="/consultant" component={Homepage} /> */}
+						{/* <Route path="/consultant/register" component={ConsultantRegister} /> */}
+						{/* <Route
+							path="/consultant/onboard"
 							exact
 							component={OnboardMessage}
-						/>
-						<Route path="/consultant-login" exact component={ConsultantLogin} />
+						/> */}
+						<Route path="/consultant/login" exact component={ConsultantLogin} />
+						<Route path="/consultant" exact component={ConsultantAccount} />
+						<Route path="/consultant/settings" component={ConsultantSettings} />
 						<Route
-							path="/consultant-account"
-							exact
-							component={ConsultantAccount}
+							path="/consultant/sessions"
+							component={ConsultantSessionPage}
+						/>
+
+						<Route
+							path="/consultant/requests"
+							component={ConsultantRequestsPage}
 						/>
 						<Route
-							path="/consultant-settings"
-							exact
-							component={ConsultantSetting}
+							path="/consultant/records"
+							component={ConsultantRecordsPage}
 						/>
+						<Route path="/call/:id" component={ConsultantVideo} />
+
+						<Route path="/consult" component={ConsultingPage} />
+						<Route path="/consult-video" exact component={ConsultantVideo} />
 
 						<Route path="/account" exact component={NewAccount} />
 						<Route path="/pts" exact component={PlanToSave} />
@@ -225,7 +240,6 @@ const App = (props) => {
 						<Route path="/table" component={InfoTable} />
 
 						<Route path="/chart" exact component={ChartView} />
-
 
 						<Route path="/gift-chart" exact component={GiftFoodChart} />
 
@@ -281,7 +295,6 @@ const App = (props) => {
 			</Router>
 		</React.Fragment>
 	);
-
 };
 
 const mapStateToProps = (state) => {

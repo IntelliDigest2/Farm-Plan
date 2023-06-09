@@ -1,178 +1,199 @@
 import firebase from "firebase/app";
+import { generateId } from "../../components/Pages/Account/Consultant/utils/utils";
+import axios from "axios";
 
 export const signIn = (credentials) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then(() => {
-        dispatch({ type: "LOGIN_SUCCESS" });
-      })
-      .catch((err) => {
-        dispatch({ type: "LOGIN_ERROR", err });
-      });
-  };
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(credentials.email, credentials.password)
+			.then(() => {
+				dispatch({ type: "LOGIN_SUCCESS" });
+			})
+			.catch((err) => {
+				dispatch({ type: "LOGIN_ERROR", err });
+			});
+	};
 };
 
 export const signOut = () => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        dispatch({ type: "SIGNOUT_SUCCESS" });
-      });
-  };
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+		firebase
+			.auth()
+			.signOut()
+			.then(() => {
+				dispatch({ type: "SIGNOUT_SUCCESS" });
+			});
+	};
 };
 
 export const updatePassword = (credentials) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    firebase
-      .auth()
-      .currentUser.updatePassword(credentials.password)
-      .then(() => {
-        dispatch({ type: "CHANGE_SUCCESS" });
-      })
-      .catch((err) => {
-        dispatch({ type: "CHANGE_ERROR", err });
-      });
-  };
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+		firebase
+			.auth()
+			.currentUser.updatePassword(credentials.password)
+			.then(() => {
+				dispatch({ type: "CHANGE_SUCCESS" });
+			})
+			.catch((err) => {
+				dispatch({ type: "CHANGE_ERROR", err });
+			});
+	};
 };
 
 export const updateEmail = (credentials) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    const firestore = getFirebase().firestore();
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+		const firestore = getFirebase().firestore();
 
-    const creds = firebase.auth.EmailAuthProvider.credential(
-      credentials.email,
-      credentials.password
-    );
+		const creds = firebase.auth.EmailAuthProvider.credential(
+			credentials.email,
+			credentials.password
+		);
 
-    firebase
-      .auth()
-      .currentUser.reauthenticateWithCredential(creds)
-      .then(() => {
-        firebase
-          .auth()
-          .currentUser.verifyBeforeUpdateEmail(credentials.newEmail)
-          .then(() => {
-            return firestore.collection("users").doc(credentials.uid).update({
-              email: credentials.newEmail,
-            });
-          })
-          .then(() => {
-            dispatch({ type: "CHANGE_EMAIL_SUCCESS" });
-          })
-          .catch((err) => {
-           dispatch({ type: "CHANGE_EMAIL_ERROR", err });
-          });
-      });
-  };
+		firebase
+			.auth()
+			.currentUser.reauthenticateWithCredential(creds)
+			.then(() => {
+				firebase
+					.auth()
+					.currentUser.verifyBeforeUpdateEmail(credentials.newEmail)
+					.then(() => {
+						return firestore.collection("users").doc(credentials.uid).update({
+							email: credentials.newEmail,
+						});
+					})
+					.then(() => {
+						dispatch({ type: "CHANGE_EMAIL_SUCCESS" });
+					})
+					.catch((err) => {
+						dispatch({ type: "CHANGE_EMAIL_ERROR", err });
+					});
+			});
+	};
 };
 
 export const updateProfile = (users) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firestore = getFirebase().firestore();
+	return (dispatch, getState, { getFirebase }) => {
+		const firestore = getFirebase().firestore();
 
-    firestore
-      .collection("users")
-      .doc(users.uid)
-      .set({ ...users.profile }, { merge: true })
-      .then(() => {
-        dispatch({ type: "CHANGE_PROFILE_SUCCESS" });
-      })
-      .catch((err) => {
-        console.log("err");
-        dispatch({ type: "CHANGE_PROFILE_ERROR", err });
-      });
-  };
+		firestore
+			.collection("users")
+			.doc(users.uid)
+			.set({ ...users.profile }, { merge: true })
+			.then(() => {
+				dispatch({ type: "CHANGE_PROFILE_SUCCESS" });
+			})
+			.catch((err) => {
+				console.log("err");
+				dispatch({ type: "CHANGE_PROFILE_ERROR", err });
+			});
+	};
 };
 
 //sets isSeller in "users" and the profile in "marketplace"
 export const becomeSeller = (seller) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const profile = getState().firebase.profile;
-    const authUID = getState().firebase.auth.uid;
+	return (dispatch, getState, { getFirebase }) => {
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
 
-    var uid;
-    switch (profile.type) {
-      case "farm_admin":
-        uid = authUID;
-        break;
-      case "farm_sub":
-        uid = profile.admin;
-        break;
-      default:
-        uid = authUID;
-        break;
-    }
+		var uid;
+		switch (profile.type) {
+			case "farm_admin":
+				uid = authUID;
+				break;
+			case "farm_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
 
-    const firestore = getFirebase().firestore();
+		const firestore = getFirebase().firestore();
 
-    firestore
-      .collection("users")
-      .doc(uid)
-      .set({ ...seller.profile }, { merge: true })
-      .then(() => {
-        return firestore
-          .collection("marketplace")
-          .doc(uid)
-          .set({ ...seller.info }, { merge: true });
-      })
-      .then(() => {
-        dispatch({ type: "SELLER_SUCCESS" });
-      })
-      .catch((err) => {
-        console.log("err");
-        dispatch({ type: "SELLER_ERROR", err });
-      });
-  };
+		firestore
+			.collection("users")
+			.doc(uid)
+			.set({ ...seller.profile }, { merge: true })
+			.then(() => {
+				return firestore
+					.collection("marketplace")
+					.doc(uid)
+					.set({ ...seller.info }, { merge: true });
+			})
+			.then(() => {
+				dispatch({ type: "SELLER_SUCCESS" });
+			})
+			.catch((err) => {
+				console.log("err");
+				dispatch({ type: "SELLER_ERROR", err });
+			});
+	};
 };
 
 //sets isConsumer in "users" and the profile in "marketplace"
 export const becomeConsumer = (consumer) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firestore = getFirebase().firestore();
+	return (dispatch, getState, { getFirebase }) => {
+		const firestore = getFirebase().firestore();
 
-    firestore
-      .collection("users")
-      .doc(consumer.uid)
-      .set({ ...consumer.profile }, { merge: true })
-      .then(() => {
-        return firestore
-          .collection("marketplace")
-          .doc(consumer.uid)
-          .set({ ...consumer.upload }, { merge: true });
-      })
-      .then(() => {
-        dispatch({ type: "CONSUMER_SUCCESS" });
-      })
-      .catch((err) => {
-        console.log("err");
-        dispatch({ type: "CONSUMER_ERROR", err });
-      });
-  };
+		firestore
+			.collection("users")
+			.doc(consumer.uid)
+			.set({ ...consumer.profile }, { merge: true })
+			.then(() => {
+				return firestore
+					.collection("marketplace")
+					.doc(consumer.uid)
+					.set({ ...consumer.upload }, { merge: true });
+			})
+			.then(() => {
+				dispatch({ type: "CONSUMER_SUCCESS" });
+			})
+			.catch((err) => {
+				console.log("err");
+				dispatch({ type: "CONSUMER_ERROR", err });
+			});
+	};
 };
 
 //not currently working
 export const resetPassword = (credentials) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firebase = getFirebase();
-    firebase
-      .auth()
-      .sendPasswordResetEmail(credentials.email)
-      .then(() => {
-        dispatch({ type: "RESET_SUCCESS" });
-      })
-      .catch((err) => {
-        dispatch({ type: "RESET_ERROR", err });
-      });
-  };
+	return (dispatch, getState, { getFirebase }) => {
+		const firebase = getFirebase();
+		firebase
+			.auth()
+			.sendPasswordResetEmail(credentials.email)
+			.then(() => {
+				dispatch({ type: "RESET_SUCCESS" });
+			})
+			.catch((err) => {
+				dispatch({ type: "RESET_ERROR", err });
+			});
+	};
 };
+
+function uploadImgs(files, userId) {
+	const uploaders = files.map((file, index) => {
+		const randomId = generateId(20);
+		const fileToUpload = Object.values(file)[0];
+		const data = new FormData();
+		data.append("file", fileToUpload);
+		data.append("upload_preset", "wft-app-consultant");
+		data.append("cloud_name", "dghm4xm7k");
+		data.append("public_id", `${randomId}-${userId}`);
+
+		return axios.post(
+			"https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",
+			data
+		);
+	});
+
+	return uploaders;
+}
 
 export const signUp = (newUser) => {
   return (dispatch, getState, { getFirebase }) => {
@@ -262,52 +283,99 @@ export const signUp = (newUser) => {
           adminCollection = "user";
         }
 
-        if (adminCollection !== "user") {
-          firestore
-            .collection(adminCollection)
-            .doc(resp.user.uid)
-            .set({
-              name: newUser.firstName + " " + newUser.lastName,
-              email: newUser.email,
-            });
-        }
-      })
-      .then(() => {
-        firebase.auth().currentUser.sendEmailVerification();
-      })
-      .then(() => {
-        dispatch({ type: "SIGNUP_SUCCESS" });
-      })
-      .catch((err) => {
-        dispatch({ type: "SIGNUP_ERROR", err });
-      });
-  };
+				if (adminCollection !== "user") {
+					firestore
+						.collection(adminCollection)
+						.doc(resp.user.uid)
+						.set({
+							name: newUser.firstName + " " + newUser.lastName,
+							email: newUser.email,
+						});
+				}
+
+				return resp;
+			})
+			.then((resp) => {
+				console.log(resp, `this is the response`);
+				if (newUser.consultantInfo) {
+					let userSubString = resp.user.uid.substring(0, 7);
+
+					return Promise.all(
+						uploadImgs(newUser.consultantInfo.images, userSubString)
+					);
+				}
+			})
+			.then((resp) => {
+				// console.log(resp);
+				// console.log(newUserId, `this is the new userInfo stored earlier`);
+				// console.log(newUser);
+
+				if (newUser.consultantInfo) {
+					// let { user, imageUrls } = resp;
+					let urls = resp.map((result) => {
+						return result.data.secure_url;
+					});
+					// let data= resp.
+					// console.log(urls, `these are the urls`);
+					let fullName = `${newUser.firstName} ${newUser.lastName}`;
+					firestore
+						.collection("consultants")
+						.doc(newUserId)
+						.set({
+							fullName: fullName,
+							email: newUser.email,
+							urlLink: newUser.consultantInfo.urlLink,
+							experience: newUser.consultantInfo.experience,
+							expertise: newUser.consultantInfo.expertise,
+							createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+							services: newUser.consultantInfo.services,
+							summary: newUser.consultantInfo.summary,
+							isActive: true,
+							imgsLinks: [
+								{ certificateImg: urls[0] },
+								{ identificationImg: urls[1] },
+							],
+							// calendarEvents: [],
+							// eventDaysArray: [],
+						});
+				}
+
+				firebase.auth().currentUser.sendEmailVerification();
+			})
+			.then(() => {
+				dispatch({ type: "SIGNUP_SUCCESS" });
+			})
+			.catch((err) => {
+				console.log(err, `this is the error generated`);
+				dispatch({ type: "SIGNUP_ERROR", err });
+			});
+	};
 };
 
 export const getUserData = (data) => {
-  return (dispatch, getState, { getFirebase }) => {
-    getFirebase()
-      .firestore()
-      .collection(data.collection)
-      .doc(data.uid)
-      .get()
-      .then((snapshot) => {
-        const data = [];
-        snapshot.forEach((doc) => {
-          data.push(doc.data());
-        });
-        dispatch({ type: "GET_DATA", payload: data });
-      })
-      .catch((err) => {
-        dispatch({ type: "GET_DATA_ERROR", err });
-      });
-  };
+	return (dispatch, getState, { getFirebase }) => {
+		getFirebase()
+			.firestore()
+			.collection(data.collection)
+			.doc(data.uid)
+			.get()
+			.then((snapshot) => {
+				const data = [];
+				snapshot.forEach((doc) => {
+					data.push(doc.data());
+				});
+				dispatch({ type: "GET_DATA", payload: data });
+			})
+			.catch((err) => {
+				dispatch({ type: "GET_DATA_ERROR", err });
+			});
+	};
 };
 
 //Admin and Sub Account Auth Actions
 export const createSubAccount = (data) => {
-  return (dispatch, getState, { getFirebase }) => {
-    /* 
+	return (dispatch, getState, { getFirebase }) => {
+		/* 
     Initialize a secondary firebase app instance
     in order to create a new user account without
     automatically signing in as the new user.
@@ -319,78 +387,78 @@ export const createSubAccount = (data) => {
     This solution was found @:
     https://stackoverflow.com/questions/37517208/firebase-kicks-out-current-user/38013551#38013551
     */
-    var config = {
-      apiKey: "AIzaSyDuu8Fpwa2gYlCKcL-LlN-uqH5seEJpk9w",
-      authDomain: "itracker-development.firebaseapp.com",
-      projectId: "itracker-development",
-      storageBucket: "itracker-development.appspot.com",
-      messagingSenderId: "57163396396",
-      appId: "1:57163396396:web:dd800621173f5733a4a889",
-    };
+		var config = {
+			apiKey: "AIzaSyDuu8Fpwa2gYlCKcL-LlN-uqH5seEJpk9w",
+			authDomain: "itracker-development.firebaseapp.com",
+			projectId: "itracker-development",
+			storageBucket: "itracker-development.appspot.com",
+			messagingSenderId: "57163396396",
+			appId: "1:57163396396:web:dd800621173f5733a4a889",
+		};
 
-    let secondaryApp = firebase.initializeApp(config, "second");
+		let secondaryApp = firebase.initializeApp(config, "second");
 
-    var subUid;
+		var subUid;
 
-    secondaryApp
-      .auth()
-      .createUserWithEmailAndPassword(data.email, data.password)
-      .then((resp) => {
-        subUid = resp.user.uid;
-        //Create user document inside Admin's 'sub_accounts' collection
-        getFirebase()
-          .firestore()
-          .collection(data.masterCollection)
-          .doc(data.uid)
-          .collection("sub_accounts")
-          .doc(subUid)
-          .set({
-            email: data.email,
-            name: data.firstName + " " + data.lastName,
-            role: data.role,
-          });
-      })
-      .then(() => {
-        //Create user document inside 'users' base collection
-        getFirebase()
-          .firestore()
-          .collection("users")
-          .doc(subUid)
-          .set({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            initials: data.firstName[0] + data.lastName[0],
-            email: data.email,
-            buildingFunction: data.function,
-            city: data.city,
-            country: data.country,
-            region: data.region,
-            admin: data.uid,
-            type: data.type,
-            restaurantName: data.restaurantName,
-          });
-      })
-      .then(() => {
-        secondaryApp.auth().currentUser.sendEmailVerification();
-      })
-      .then(() => {
-        secondaryApp.auth().signOut();
-      })
-      .then(() => {
-        secondaryApp.delete();
-      })
-      .then(() => {
-        dispatch({ type: "CREATE_SUBACCOUNT" });
-      })
-      .catch((err) => {
-        dispatch({ type: "CREATE_SUBACCOUNT_ERROR", err });
-      });
-  };
+		secondaryApp
+			.auth()
+			.createUserWithEmailAndPassword(data.email, data.password)
+			.then((resp) => {
+				subUid = resp.user.uid;
+				//Create user document inside Admin's 'sub_accounts' collection
+				getFirebase()
+					.firestore()
+					.collection(data.masterCollection)
+					.doc(data.uid)
+					.collection("sub_accounts")
+					.doc(subUid)
+					.set({
+						email: data.email,
+						name: data.firstName + " " + data.lastName,
+						role: data.role,
+					});
+			})
+			.then(() => {
+				//Create user document inside 'users' base collection
+				getFirebase()
+					.firestore()
+					.collection("users")
+					.doc(subUid)
+					.set({
+						firstName: data.firstName,
+						lastName: data.lastName,
+						initials: data.firstName[0] + data.lastName[0],
+						email: data.email,
+						buildingFunction: data.function,
+						city: data.city,
+						country: data.country,
+						region: data.region,
+						admin: data.uid,
+						type: data.type,
+						restaurantName: data.restaurantName,
+					});
+			})
+			.then(() => {
+				secondaryApp.auth().currentUser.sendEmailVerification();
+			})
+			.then(() => {
+				secondaryApp.auth().signOut();
+			})
+			.then(() => {
+				secondaryApp.delete();
+			})
+			.then(() => {
+				dispatch({ type: "CREATE_SUBACCOUNT" });
+			})
+			.catch((err) => {
+				dispatch({ type: "CREATE_SUBACCOUNT_ERROR", err });
+			});
+	};
 };
 
 export const deleteSubAccount = (data) => {
-  return (dispatch, getState, { getFirebase }) => {
-    /* 
+	return (dispatch, getState, { getFirebase }) => {
+		/* 
     Initialize a secondary firebase app instance
     in order to delete a sub account without
     automatically signing in as the sub account
@@ -405,86 +473,86 @@ export const deleteSubAccount = (data) => {
     https://stackoverflow.com/questions/38800414/delete-a-specific-user-from-firebase
     */
 
-    var config = {
-      apiKey: "AIzaSyDuu8Fpwa2gYlCKcL-LlN-uqH5seEJpk9w",
-      authDomain: "itracker-development.firebaseapp.com",
-      projectId: "itracker-development",
-      storageBucket: "itracker-development.appspot.com",
-      messagingSenderId: "57163396396",
-      appId: "1:57163396396:web:dd800621173f5733a4a889",
-    };
+		var config = {
+			apiKey: "AIzaSyDuu8Fpwa2gYlCKcL-LlN-uqH5seEJpk9w",
+			authDomain: "itracker-development.firebaseapp.com",
+			projectId: "itracker-development",
+			storageBucket: "itracker-development.appspot.com",
+			messagingSenderId: "57163396396",
+			appId: "1:57163396396:web:dd800621173f5733a4a889",
+		};
 
-    let secondaryApp = firebase.initializeApp(config, "second");
+		let secondaryApp = firebase.initializeApp(config, "second");
 
-    var subUid;
+		var subUid;
 
-    secondaryApp
-      .auth()
-      .signInWithEmailAndPassword(data.email, data.password)
-      .then(() => {
-        subUid = secondaryApp.auth().currentUser.uid;
+		secondaryApp
+			.auth()
+			.signInWithEmailAndPassword(data.email, data.password)
+			.then(() => {
+				subUid = secondaryApp.auth().currentUser.uid;
 
-        //Delete user document inside Admin's 'sub_accounts' collection
-        getFirebase()
-          .firestore()
-          .collection(data.masterCollection)
-          .doc(data.uid)
-          .collection("sub_accounts")
-          .doc(subUid)
-          .delete();
+				//Delete user document inside Admin's 'sub_accounts' collection
+				getFirebase()
+					.firestore()
+					.collection(data.masterCollection)
+					.doc(data.uid)
+					.collection("sub_accounts")
+					.doc(subUid)
+					.delete();
 
-        //Delete sub accounts user document
-        getFirebase().firestore().collection("users").doc(subUid).delete();
-      })
-      .then(() => {
-        secondaryApp.auth().currentUser.delete();
-      })
-      .then(() => {
-        secondaryApp.auth().signOut();
-      })
-      .then(() => {
-        secondaryApp.delete();
-      })
-      .then(() => {
-        dispatch({ type: "DELETE_SUBACCOUNT" });
-      })
-      .catch((err) => {
-        dispatch({ type: "DELETE_SUBACCOUNT_ERROR", err });
-      });
-  };
+				//Delete sub accounts user document
+				getFirebase().firestore().collection("users").doc(subUid).delete();
+			})
+			.then(() => {
+				secondaryApp.auth().currentUser.delete();
+			})
+			.then(() => {
+				secondaryApp.auth().signOut();
+			})
+			.then(() => {
+				secondaryApp.delete();
+			})
+			.then(() => {
+				dispatch({ type: "DELETE_SUBACCOUNT" });
+			})
+			.catch((err) => {
+				dispatch({ type: "DELETE_SUBACCOUNT_ERROR", err });
+			});
+	};
 };
 
 export const changeConsumerPostcode = (consumer) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firestore = getFirebase().firestore();
+	return (dispatch, getState, { getFirebase }) => {
+		const firestore = getFirebase().firestore();
 
-      firestore
-      .collection("marketplace")
-      .doc(consumer.uid)
-      .set({ ...consumer.upload }, { merge: true })
-      .then(() => {
-        dispatch({ type: "CONSUMER_SUCCESS" });
-      })
-      .catch((err) => {
-        console.log("err");
-        dispatch({ type: "CONSUMER_ERROR", err });
-      });
-  };
+		firestore
+			.collection("marketplace")
+			.doc(consumer.uid)
+			.set({ ...consumer.upload }, { merge: true })
+			.then(() => {
+				dispatch({ type: "CONSUMER_SUCCESS" });
+			})
+			.catch((err) => {
+				console.log("err");
+				dispatch({ type: "CONSUMER_ERROR", err });
+			});
+	};
 };
 
 export const getConsumerPostcode = (uid) => {
-  return (dispatch, getState, { getFirebase }) => {
-    const firestore = getFirebase().firestore();
+	return (dispatch, getState, { getFirebase }) => {
+		const firestore = getFirebase().firestore();
 
-      firestore
-      .collection("marketplace")
-      .doc(uid)
-      .get()
-      .then((snapshot) => {
-        dispatch({ type: "GET_DATA", payload: snapshot.data() });
-      })
-      .catch((err) => {
-        dispatch({ type: "GET_DATA_ERROR", err });
-      });
-  };
+		firestore
+			.collection("marketplace")
+			.doc(uid)
+			.get()
+			.then((snapshot) => {
+				dispatch({ type: "GET_DATA", payload: snapshot.data() });
+			})
+			.catch((err) => {
+				dispatch({ type: "GET_DATA_ERROR", err });
+			});
+	};
 };

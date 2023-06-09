@@ -1,72 +1,103 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { IconButton } from "../../../SubComponents/Button";
 import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
-import { useTranslation, Trans } from 'react-i18next';
-
+import { useTranslation, Trans } from "react-i18next";
 
 // import Accordion from "@mui/material/Accordion";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import AccordionDetails from "@mui/material/AccordionDetails";
 
-export function Food({ setShow, setChooseModal }) {
+export function Food({ setShow, setChooseModal, profile }) {
+	const { t } = useTranslation();
+	const [consultantService, setConsultantService] = useState("");
 
-  const { t } = useTranslation();
+	console.log(profile);
+	useEffect(() => {
+		if (profile.isloaded) {
+			if (profile.consultant === "active") {
+				setConsultantService(true);
+			} else {
+				setConsultantService(false);
+			}
+		}
+	}, [profile]);
 
-  return (
-    <>
-      <IconButton
-        title="Plan your meals with us, search a range of delicious recipes."
-        icon="notes"
-        label={t('description.icon_diary')}
-        color="turquoise"
-        goTo="/meal-plan"
-      />
+	let consultingService = consultantService ? (
+		<IconButton
+			title="Become a consultant"
+			icon="consultant"
+			label="Consultant"
+			color="turquoise"
+			goTo="/consultant"
+		/>
+	) : (
+		<IconButton
+			title="connect with a consultant."
+			icon="consult"
+			label="Consult"
+			color="yellow"
+			goTo="/consult"
+		/>
+	);
 
-      <IconButton
-        title="Find out more about the Plan to Save campaign, and what you can do to help."
-        icon="food"
-        label={t('description.icon_save')}
-        color="yellow"
-        onClick={() => {
-          setShow(true);
-          setChooseModal(true);
-        }}
-      />
-    </>
-  );
+	return (
+		<>
+			<IconButton
+				title="Plan your meals with us, search a range of delicious recipes."
+				icon="notes"
+				label={t("description.icon_diary")}
+				color="turquoise"
+				goTo="/meal-plan"
+			/>
+
+			<IconButton
+				title="Find out more about the Plan to Save campaign, and what you can do to help."
+				icon="food"
+				label={t("description.icon_save")}
+				color="yellow"
+				onClick={() => {
+					setShow(true);
+					setChooseModal(true);
+				}}
+				goTo="#"
+			/>
+			{consultingService}
+		</>
+	);
 }
 
 export function Health({ setShow, setChooseModal }) {
-  return (
-    <>
-      <IconButton
-        icon="plant"
-        label="Nutrient Gap"
-        color="yellow"
-        goTo="/nutrient-gap"
-        // disabled="true"
-      />
-      <IconButton
-        title="Find out more about the Plan to Save campaign, and what you can do to help."
-        icon="food"
-        label="Plan to Save"
-        color="turquoise"
-        onClick={() => {
-          setShow(true);
-          setChooseModal(true);
-        }}
-      />
+	return (
+		<>
+			<IconButton
+				icon="plant"
+				label="Nutrient Gap"
+				color="yellow"
+				goTo="/nutrient-gap"
+				// disabled="true"
+			/>
+			<IconButton
+				title="Find out more about the Plan to Save campaign, and what you can do to help."
+				icon="food"
+				label="Plan to Save"
+				color="turquoise"
+				onClick={() => {
+					setShow(true);
+					setChooseModal(true);
+				}}
+				goTo="#"
+			/>
 
-      <IconButton
-        icon="plant"
-        label="Composition"
-        color="green"
-        goTo="/nutrient-composition"
-        // disabled="true"
-      />
-      {/* <Accordion
+			<IconButton
+				icon="plant"
+				label="Composition"
+				color="green"
+				goTo="/nutrient-composition"
+				// disabled="true"
+			/>
+			{/* <Accordion
         style={{
           width: "80%",
           justifyContent: "center",
@@ -92,86 +123,106 @@ export function Health({ setShow, setChooseModal }) {
           </Typography>
         </AccordionDetails>
       </Accordion> */}
-    </>
-  );
+		</>
+	);
 }
 
 export function Environment() {
-  return (
-    <>
-      <IconButton
-        title="Record your food waste."
-        icon="waste"
-        label="Food Waste"
-        color="turquoise"
-        goTo="/food-waste"
-      />
-      <IconButton
-        title="View your food waste data."
-        icon="chart"
-        label="Waste Chart"
-        color="yellow"
-        goTo="/chart"
-      />
-      <IconButton
-        title="Gift a Food Item."
-        icon="gift"
-        label="Gifted Items Chart"
-        color="turquoise"
-        goTo="/gift-food"
-      />
-       <IconButton
-        title="View your gifted food data."
-        icon="chart"
-        label="Gifted Item Chart"
-        color="yellow"
-        goTo="/gift-chart"
-      />
-      <IconButton
-        title="View the world map of WFT users!"
-        icon="world"
-        label="Users Map"
-        color="yellow"
-        goTo="/view-map"
-      />
-      <IconButton
-        title="Useful tips on how to reduce food waste in your home."
-        icon="info"
-        label="Waste Tips"
-        color="green"
-        goTo="/food-reduction"
-      />
-    </>
-  );
+	return (
+		<>
+			<IconButton
+				title="Record your food waste."
+				icon="waste"
+				label="Food Waste"
+				color="turquoise"
+				goTo="/food-waste"
+			/>
+			<IconButton
+				title="View your food waste data."
+				icon="chart"
+				label="Waste Chart"
+				color="yellow"
+				goTo="/chart"
+			/>
+			<IconButton
+				title="Gift a Food Item."
+				icon="gift"
+				label="Gifted Items Chart"
+				color="turquoise"
+				goTo="/gift-food"
+			/>
+			<IconButton
+				title="View your gifted food data."
+				icon="chart"
+				label="Gifted Item Chart"
+				color="yellow"
+				goTo="/gift-chart"
+			/>
+			<IconButton
+				title="View the world map of WFT users!"
+				icon="world"
+				label="Users Map"
+				color="yellow"
+				goTo="/view-map"
+			/>
+			<IconButton
+				title="Useful tips on how to reduce food waste in your home."
+				icon="info"
+				label="Waste Tips"
+				color="green"
+				goTo="/food-reduction"
+			/>
+		</>
+	);
 }
+// export function Consulting() {
+// 	return (
+// 		<>
+// 			<IconButton
+// 				title="connect with a consultant."
+// 				icon="consult"
+// 				label="Consult"
+// 				color="yellow"
+// 				goTo="/consult"
+// 			/>
+// 			<IconButton
+// 				title="Become a consultant"
+// 				icon="consultant"
+// 				label="Consultant"
+// 				color="turquoise"
+// 				goTo="/consultant"
+// 			/>
+// 		</>
+// 	);
+// }
 
 export function Sustainability() {
-  return (
-    <>
-      <IconButton
-        icon="plant"
-        label="Agrifood Technpreneur"
-        color="turquoise"
-        goTo="https://intellidigest.com/services/food-system-sustainability/agrifood-techpreneur-club/"
-      />
-      <IconButton
-        icon="book"
-        label="Masterclasses"
-        color="turquoise"
-        goTo="https://intellidigest.com/masterclasses-overview/"
-      />
-      <IconButton
-        icon="info"
-        label="FISI"
-        color="green"
-        goTo="https://intellidigest.com/services/food-system-sustainability/food-industry-sustainability-index/"
-      />
-      <IconButton
-        icon="kitchen"
-        label="Plan to Save"
-        color="turquoise"
-        goTo="/pts"
-      />
-    </>
-  );
+	return (
+		<>
+			<IconButton
+				icon="plant"
+				label="Agrifood Technpreneur"
+				color="turquoise"
+				goTo="https://intellidigest.com/services/food-system-sustainability/agrifood-techpreneur-club/"
+			/>
+			<IconButton
+				icon="book"
+				label="Masterclasses"
+				color="turquoise"
+				goTo="https://intellidigest.com/masterclasses-overview/"
+			/>
+			<IconButton
+				icon="info"
+				label="FISI"
+				color="green"
+				goTo="https://intellidigest.com/services/food-system-sustainability/food-industry-sustainability-index/"
+			/>
+			<IconButton
+				icon="kitchen"
+				label="Plan to Save"
+				color="turquoise"
+				goTo="/pts"
+			/>
+		</>
+	);
 }

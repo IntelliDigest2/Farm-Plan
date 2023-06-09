@@ -10,6 +10,10 @@ import farmReducer from "./farmReducer";
 import restaurantReducer from "./restaurantReducer";
 import supplierReducer from "./supplierReducer"
 
+import consultantReducer from "./consultantReducer";
+import consultantAuthReducer from "./consultantAuthReducer";
+import consultingReducer from "./consultingReducer";
+import consultingBookingReducer from "./consultingBookingReducer";
 
 //fireStoreReducer is a premade reducer for syncing firestore data with state in the background.
 
