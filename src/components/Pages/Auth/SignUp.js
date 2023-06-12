@@ -172,7 +172,7 @@ const SignUp = (props) => {
 	}, [consultant.services]);
 
 	let servicesInput = consultant.services.map((value, index) => {
-		console.log(value, `valuecheck`);
+		// console.log(value, `valuecheck`);
 		return (
 			<div key={`userService-${index}`}>
 				<Row className="mb-3">
@@ -1603,6 +1603,7 @@ const Stage3 = (props) => {
 		case "Farm":
 		case "Recreational Centers":
 		case "Restaurants":
+		case "Consultant":
 		case "Other":
 			return (
 				<div>
