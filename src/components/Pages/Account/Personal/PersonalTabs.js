@@ -13,16 +13,20 @@ export function Food({ setShow, setChooseModal, profile }) {
 	const { t } = useTranslation();
 	const [consultantService, setConsultantService] = useState("");
 
-	// console.log(profile);
+	console.log(profile);
 	useEffect(() => {
-		if (profile.isloaded) {
-			if (profile.consultant === "active") {
-				setConsultantService(true);
-			} else {
-				setConsultantService(false);
-			}
+		// if (profile.isloaded) {
+		console.log(
+			profile.consultant === "pending",
+			`this shows that the account is pending`
+		);
+		if (profile.consultant === "active" || profile.consultant === "pending") {
+			setConsultantService(true);
+		} else {
+			setConsultantService(false);
 		}
-	}, [profile]);
+		// }
+	}, [profile.consultant]);
 
 	let consultingService = consultantService ? (
 		<IconButton

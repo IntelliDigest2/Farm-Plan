@@ -68,41 +68,42 @@ export function Food({ isSeller, profile }) {
         color="turquoise"
         goTo="/view-products"
       /> */}
-      <IconButton
-        icon="my-products"
-        label="Food Returned"
-        color="turquoise"
-        goTo="/view-products"
-        disabled
-      />
-      <IconButton
-        icon="chart"
-        label="Produce Chart"
-        color="yellow"
-        goTo="/produce"
-      />
-      <IconButton
-        icon="notes"
-        label="Turnover"
-        color="turquoise"
-        goTo="/"
-        disabled
-      />
-      <IconButton
-        icon="notes"
-        label="Profit"
-        color="turquoise"
-        goTo="/"
-        disabled
-      />
-      <IconButton
-        icon="notes"
-        label="Rent/Buy Item"
-        color="turquoise"
-        goTo="/supply"
-      />
-    </>
-  );
+			<IconButton
+				icon="my-products"
+				label="Food Returned"
+				color="turquoise"
+				goTo="/view-products"
+				disabled
+			/>
+			<IconButton
+				icon="chart"
+				label="Produce Chart"
+				color="yellow"
+				goTo="/produce"
+			/>
+			<IconButton
+				icon="notes"
+				label="Turnover"
+				color="turquoise"
+				goTo="/"
+				disabled
+			/>
+			<IconButton
+				icon="notes"
+				label="Profit"
+				color="turquoise"
+				goTo="/"
+				disabled
+			/>
+			<IconButton
+				icon="notes"
+				label="Rent/Buy Item"
+				color="turquoise"
+				goTo="/supply"
+			/>
+			{consultingService}
+		</>
+	);
 }
 
 export function Environment() {

@@ -196,6 +196,9 @@ function uploadImgs(files, userId) {
 }
 
 export const signUp = (newUser) => {
+	console.log(newUser, `this is the new user`);
+
+	console.log(newUser.consultantInfo, `thes are the consultantInfo`);
 	return (dispatch, getState, { getFirebase }) => {
 		//Determine account type
 		var type;
@@ -205,6 +208,7 @@ export const signUp = (newUser) => {
 			case "Offices":
 			case "Shop/Supermarket":
 			case "Recreational Centers":
+			case "Consultant":
 			case "Business":
 				type = "business_admin";
 				break;
@@ -235,6 +239,7 @@ export const signUp = (newUser) => {
 		const firestore = getFirebase().firestore();
 		const firebase = getFirebase();
 		let newUserId;
+
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(newUser.email, newUser.password)
@@ -267,6 +272,7 @@ export const signUp = (newUser) => {
 						cuisine: newUser.cuisine,
 						restaurantDescription: newUser.restaurantDescription,
 						type: type,
+						[newUser.consultantInfo ? "consultant" : ""]: "pending",
 					});
 
 				//Setup Admin account in relevent users collection
@@ -298,7 +304,7 @@ export const signUp = (newUser) => {
 				return resp;
 			})
 			.then((resp) => {
-				console.log(resp, `this is the response`);
+				// console.log(resp, `this is the response`);
 				if (newUser.consultantInfo) {
 					let userSubString = resp.user.uid.substring(0, 7);
 
