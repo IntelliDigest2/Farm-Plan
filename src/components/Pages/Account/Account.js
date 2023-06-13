@@ -156,7 +156,7 @@ const NewAccount = (props) => {
 
 const AccountType = (props) => {
 	const { t } = useTranslation();
-	console.log(props.type);
+	// console.log(props.type);
 
 	switch (props.type) {
 		case "farm_admin":
@@ -289,69 +289,67 @@ const AccountType = (props) => {
 				</>
 			);
 
-      case "supply_admin":
-      case "supply_sub":      
-      return (
-        <>
-          <TabList
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: Colors.brandGreen,
-              },
-            }}
-            variant="standard"
-            onChange={props.handleChange}
-            centered
-          >
-            <Tab disableRipple label="Items" value="0" />
-          </TabList>
-          <SwipeableViews
-            axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={parseInt(props.value)}
-            onChangeIndex={props.handleChangeIndex}
-          >
-            <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <Supply.Items
-                setShow={props.setShow}
-                setChooseModal={props.setChooseModal}
-              />
-            </TabPanel>
-          </SwipeableViews>
-        </>
-      );
+		case "supply_admin":
+		case "supply_sub":
+			return (
+				<>
+					<TabList
+						TabIndicatorProps={{
+							style: {
+								backgroundColor: Colors.brandGreen,
+							},
+						}}
+						variant="standard"
+						onChange={props.handleChange}
+						centered
+					>
+						<Tab disableRipple label="Items" value="0" />
+					</TabList>
+					<SwipeableViews
+						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
+						index={parseInt(props.value)}
+						onChangeIndex={props.handleChangeIndex}
+					>
+						<TabPanel value={props.value} index={0} dir={props.theme.direction}>
+							<Supply.Items
+								setShow={props.setShow}
+								setChooseModal={props.setChooseModal}
+							/>
+						</TabPanel>
+					</SwipeableViews>
+				</>
+			);
 
-
-      case "admin_admin":
-      case "admin_sub":      
-      return (
-        <>
-          <TabList
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: Colors.brandGreen,
-              },
-            }}
-            variant="standard"
-            onChange={props.handleChange}
-            centered
-          >
-            <Tab disableRipple label="Admin" value="0" />
-
-          </TabList>
-          <SwipeableViews
-            axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={parseInt(props.value)}
-            onChangeIndex={props.handleChangeIndex}
-          >
-            <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <Admin.Dashboard
-                setShow={props.setShow}
-                setChooseModal={props.setChooseModal}
-              />
-            </TabPanel>
-          </SwipeableViews>
-        </>
-      );
+		case "admin_admin":
+		case "admin_sub":
+			return (
+				<>
+					<TabList
+						TabIndicatorProps={{
+							style: {
+								backgroundColor: Colors.brandGreen,
+							},
+						}}
+						variant="standard"
+						onChange={props.handleChange}
+						centered
+					>
+						<Tab disableRipple label="Admin" value="0" />
+					</TabList>
+					<SwipeableViews
+						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
+						index={parseInt(props.value)}
+						onChangeIndex={props.handleChangeIndex}
+					>
+						<TabPanel value={props.value} index={0} dir={props.theme.direction}>
+							<Admin.Dashboard
+								setShow={props.setShow}
+								setChooseModal={props.setChooseModal}
+							/>
+						</TabPanel>
+					</SwipeableViews>
+				</>
+			);
 
 		case "academic_admin":
 		case "academic_sub":
