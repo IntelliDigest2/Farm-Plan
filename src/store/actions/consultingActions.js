@@ -63,7 +63,7 @@ export const fetchConsultantForDate = (
 						consultants.push({ ...doc.data(), eventId: doc.id });
 						// console.log(doc.id, " => ", doc.data());
 					});
-					console.log("Current data: ", consultants);
+					// console.log("Current data: ", consultants);
 					dispatch({
 						type: "FETCH_CONSULTING_DATA_SUCCESS",
 						payload: consultants,
@@ -158,7 +158,7 @@ export const fetchOtherConsultingBookings = (userId) => {
 };
 
 export const markEventAsComplete = async (userId, consultantId, eventId) => {
-	console.log(userId, consultantId, eventId, `this is the flaggeer`);
+	// console.log(userId, consultantId, eventId, `this is the flaggeer`);
 	const batch = db.batch();
 
 	let consultRef = db

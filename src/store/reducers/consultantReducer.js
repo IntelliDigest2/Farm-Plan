@@ -61,7 +61,7 @@ const consultantReducer = (state = initState, action) => {
 				consultantDataError: action.payload,
 			};
 		case "FETCH_CONSULTANT_CALENDAR_SUCCESS":
-			console.log("fetch success");
+			// console.log("fetch success");
 			return {
 				...state,
 				consultantCalendar: action.payload,
@@ -115,7 +115,7 @@ const consultantReducer = (state = initState, action) => {
 				[`${action.payload}`]: null,
 			};
 		case "EVENT_ADD_SUCCESS":
-			console.log("add event successfull", action.payload.data());
+			// console.log("add event successfull", action.payload.data());
 			return {
 				...state,
 				eventAdded: true,
@@ -175,37 +175,37 @@ const consultantReducer = (state = initState, action) => {
 				cancelBookingLoad: true,
 			};
 		case "GET_OTHER_BOOKINGS_SUCCESS":
-			console.log(action.payload, "data fetched");
+			// console.log(action.payload, "data fetched");
 			return {
 				...state,
 				otherBookings: action.payload,
 			};
 		case "GET_OTHER_BOOKINGS_FAILED":
-			console.log("data fetched");
+			// console.log("data fetched");
 			return {
 				...state,
 				otherBookingsError: action.payload,
 			};
 		case "GET_COMPLETED_BOOKINGS_SUCCESS":
-			console.log(action.payload, "data fetched");
+			// console.log(action.payload, "data fetched");
 			return {
 				...state,
 				completedBookings: action.payload,
 			};
 		case "GET_COMPLETED_BOOKINGS_FAILED":
-			console.log("data fetched");
+			// console.log("data fetched");
 			return {
 				...state,
 				completedBookingsError: action.payload,
 			};
 		case "FETCH_USER_SUCCESS":
-			console.log("data fetched");
+			// console.log("data fetched");
 			return {
 				...state,
 				userInfo: action.payload,
 			};
 		case "FETCH_USER_FAILED":
-			console.log("data ERROR");
+			// console.log("data ERROR");
 			return {
 				...state,
 				userInfoError: action.payload,

@@ -60,7 +60,7 @@ function BookConsulting(props) {
 	}, [consultingResult, isFetchingData]);
 
 	let displayResult;
-	console.log(result);
+	// console.log(result);
 
 	function transformUTCtoLocalTime(events) {
 		let localTimeEvents = events.map((ev) => {
@@ -89,7 +89,7 @@ function BookConsulting(props) {
 
 	if (result) {
 		displayResult = result.map((event, index) => {
-			console.log(event);
+			// console.log(event);
 			// function listAllDateEvent(start, end, allDays) {
 			// 	setshowEventsForSelectedDay(true);
 			// 	setClickedDay(start.startStr);
@@ -164,7 +164,7 @@ function BookConsulting(props) {
 		displayResult
 	);
 
-	console.log(auth.uid, "this is the uid for the user that is consulting");
+	// console.log(auth.uid, "this is the uid for the user that is consulting");
 	// let content = isFetching ? <div>...</div> : resultContent;
 
 	return (

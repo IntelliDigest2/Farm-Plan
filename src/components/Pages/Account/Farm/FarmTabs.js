@@ -6,7 +6,7 @@ import "../UserAccount.css";
 export function Food({ isSeller, profile }) {
 	const [consultantService, setConsultantService] = useState("");
 
-	console.log(profile);
+	// console.log(profile);
 	useEffect(() => {
 		if (profile.isloaded) {
 			if (profile.consultant === "active") {

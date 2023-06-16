@@ -90,7 +90,7 @@ export const getUserData = () => {
 
 export const fetchConsultantInfo = (consultantId) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		console.log(consultantId);
+		// console.log(consultantId);
 		getFirestore()
 			.collection("consultants")
 			.doc(consultantId)
@@ -198,9 +198,13 @@ export const getUserChatsData = (userId) => {
 	// console.log(userId);
 	return (dispatch) => {
 		axios
-			.post(`http://localhost:3001/api/chats/getChats`, {
-				userId: userId,
-			})
+			.post(
+				// `https://itracker-development.nw.r.appspot.com/api/chats/getChats`,
+				"http://localhost:3001/api/chats/getChats",
+				{
+					userId: userId,
+				}
+			)
 			.then((result) => {
 				let chats = result.data.data;
 				// console.log(chats, "this is the chat from the db");
@@ -215,7 +219,9 @@ export const getUserChatsData = (userId) => {
 export const getChatMessages = (chatId) => {
 	return (dispatch) => {
 		axios
+			// .get(`https://itracker-development.nw.r.appspot.com/api/messages/${chatId}`)
 			.get(`http://localhost:3001/api/messages/${chatId}`)
+
 			.then((result) => {
 				dispatch({
 					type: "FETCH_CHAT_MESSAGES_SUCCESS",
@@ -361,7 +367,7 @@ export const cancelBookingRequest = (event) => {
 
 export const getBookingRequest = (consultantId) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		console.log(`it go to this place hold on a second`);
+		// console.log(`it go to this place hold on a second`);
 		getFirestore()
 			.collection("consultants")
 			.doc(consultantId)
@@ -407,7 +413,7 @@ export const fetchOtherBookings = (userId) => {
 				(querySnapshot) => {
 					let otherBookings = [];
 					querySnapshot.forEach((doc) => {
-						console.log(doc.data());
+						// console.log(doc.data());
 						otherBookings.push({ id: doc.id, ...doc.data() });
 					});
 					// console.log(otherBookings, `these are all the bookings`);
@@ -429,7 +435,7 @@ export const fetchOtherBookings = (userId) => {
 };
 
 export const fetchCompletedBookings = (userId) => {
-	console.log(`it reach here`);
+	// console.log(`it reach here`);
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		getFirestore()
 			.collection("consultants")
@@ -445,7 +451,7 @@ export const fetchCompletedBookings = (userId) => {
 						// console.log(doc.data());
 						completedBookings.push({ id: doc.id, ...doc.data() });
 					});
-					console.log(completedBookings, `these are the completed bookings`);
+					// console.log(completedBookings, `these are the completed bookings`);
 
 					dispatch({
 						type: "GET_COMPLETED_BOOKINGS_SUCCESS",
@@ -471,13 +477,13 @@ export const fetchUserInfo = (userId) => {
 };
 
 export const getAgoraToken = (duration, uid, channel, role) => {
-	console.log(
-		"🚀 ~ file: consultantActions.js:435 ~ getAgoraToken ~ duration, userId, channel, isPublisher:",
-		duration,
-		uid,
-		channel,
-		role
-	);
+	// console.log(
+	// 	"🚀 ~ file: consultantActions.js:435 ~ getAgoraToken ~ duration, userId, channel, isPublisher:",
+	// 	duration,
+	// 	uid,
+	// 	channel,
+	// 	role
+	// );
 
 	return axios.post(`http://localhost:3001/api/rtctoken`, {
 		duration: duration,

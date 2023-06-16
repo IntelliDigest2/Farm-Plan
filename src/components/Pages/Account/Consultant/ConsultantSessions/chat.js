@@ -44,6 +44,7 @@ function Chat(props) {
 	const [isTyping, setIsTyping] = useState("");
 
 	const { chatIdn } = useParams();
+	const formRef = useRef(null);
 
 	const selectedChatId = chatIdn;
 
@@ -144,6 +145,7 @@ function Chat(props) {
 			setMessages([...messages, newMessage]);
 
 			const sentMessage = await axios.post(
+				// "https://itracker-development.nw.r.appspot.com/api/messages",
 				"http://localhost:3001/api/messages",
 				{
 					content: newMessage.content,
@@ -152,6 +154,8 @@ function Chat(props) {
 					usersInfo: userChat[0].users,
 				}
 			);
+
+			formRef.current.reset();
 
 			socket.emit("new_message", sentMessage.data.data);
 		} catch (err) {
@@ -248,7 +252,7 @@ function Chat(props) {
 				)}
 			</div>
 
-			<Form className={classes.chat_input}>
+			<Form ref={formRef} className={classes.chat_input}>
 				<Row>
 					<Col>
 						<ImageUploadIcon />

@@ -69,7 +69,9 @@ function ConsultantChatCard(props) {
 						</h2>
 						{/* <h2 className={classes.chat_topic}>Horticulture consulting</h2> */}
 					</div>
-					<div className={classes.chat_txt}>{chat.latestMessage.content}</div>
+					<div className={classes.chat_txt}>
+						{chat.latestMessage ? chat.latestMessage?.content : ""}
+					</div>
 					{notificationBulb}
 				</div>
 			</div>

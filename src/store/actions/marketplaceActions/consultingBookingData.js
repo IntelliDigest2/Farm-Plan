@@ -2,20 +2,25 @@ import axios from "axios";
 import { generateId } from "../../../components/Pages/Account/Consultant/utils/utils";
 
 function createChat(uid, userName, consultantId, consultantName) {
-	console.log(
-		uid,
-		userName,
-		consultantId,
-		consultantName,
-		`these are the information we want to send to the chat`
-	);
+	// console.log(
+	// 	uid,
+	// 	userName,
+	// 	consultantId,
+	// 	consultantName,
+	// 	`these are the information we want to send to the chat`
+	// );
 	try {
-		axios.post("http://localhost:3001/api/chats/newChat", {
-			user1: uid,
-			user2: consultantId,
-			userName: userName,
-			consultantName: consultantName,
-		});
+		axios.post(
+			// "https://itracker-development.nw.r.appspot.com/api/chats/newChat",
+			"http://localhost:3001/api/chats/newChat",
+
+			{
+				user1: uid,
+				user2: consultantId,
+				userName: userName,
+				consultantName: consultantName,
+			}
+		);
 	} catch (err) {
 		console.log(err);
 	}
@@ -63,11 +68,11 @@ export const changePurchaseStatus = (
 				break;
 		}
 		dispatch({ type: "CHANGE_PURCHASE_STATUS_LOADING" });
-		console.log(bookingId, consultantId, consultantName, eventType);
+		// console.log(bookingId, consultantId, consultantName, eventType);
 
 		//i didnt use a batch write her because it does not allow a merge operation
 
-		if (eventType === "Video call" || "Phone call") {
+		if (eventType === "Video call" || eventType === "Phone call") {
 			const channelId = generateVideoCallId();
 
 			getFirestore()
@@ -93,6 +98,7 @@ export const changePurchaseStatus = (
 						.set({ callId: channelId, booked: true }, { merge: true });
 				});
 		} else {
+			// console.log(`layer 2 triggered`);
 			getFirestore()
 				.collection("marketplace")
 				.doc(uid)

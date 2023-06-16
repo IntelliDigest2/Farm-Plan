@@ -25,7 +25,7 @@ function ConsultantVideo(props) {
 	let { id } = useParams();
 
 	let callType = id.split("-")[2].substring(0, 2);
-	console.log(callType, `this is the call type here`);
+	// console.log(callType, `this is the call type here`);
 
 	let duration = id.split("-")[1];
 
@@ -46,7 +46,7 @@ function ConsultantVideo(props) {
 
 	useEffect(() => {}, [channelName, client]);
 
-	// console.log(remoteVideoTrack);
+	// console.log(process.env.REACT_APP_AGORA_ID);
 
 	const options = {
 		// Pass your app ID here
@@ -66,12 +66,12 @@ function ConsultantVideo(props) {
 		};
 
 		const handleUserJoined = async (user, mediaType) => {
-			console.log(mediaType, `JOINNEDDD HEEREEEEEE`);
+			// console.log(mediaType, `JOINNEDDD HEEREEEEEE`);
 			// Subscribe to a remote user
 			await client.subscribe(user, mediaType);
-			console.log("subscribe success", mediaType);
+			// console.log("subscribe success", mediaType);
 
-			console.log(callType);
+			// console.log(callType);
 
 			// if (callType === "xV") {
 			if (mediaType === "video" || mediaType === "all") {
@@ -150,9 +150,9 @@ function ConsultantVideo(props) {
 
 		setClient(newClient);
 		try {
-			if (channelRef.current.value === "") {
-				return console.log("Please Enter Channel Id");
-			}
+			// if (channelRef.current.value === "") {
+			// 	return console.log("Please Enter Channel Id");
+			// }
 
 			const role = "publisher";
 			setJoined(true);
@@ -169,14 +169,14 @@ function ConsultantVideo(props) {
 			const localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
 			setLocalAudioTrack(localAudioTrack);
 			// Create a video track from the video captured by a camera
-			console.log(callType, `this is the callType before the if statement`);
+			// console.log(callType, `this is the callType before the if statement`);
 			let localVideoTrack;
 			if (callType === "xV") {
 				localVideoTrack = await AgoraRTC.createCameraVideoTrack();
 				setLocalVideoTrack(localVideoTrack);
 			}
 
-			console.log(localVideoTrack);
+			// console.log(localVideoTrack);
 
 			if (callType === "xV") {
 				await newClient.publish([localAudioTrack, localVideoTrack]);

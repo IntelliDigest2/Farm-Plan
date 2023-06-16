@@ -88,13 +88,18 @@ function AvailabilityOrganiser(props) {
 	}, [isSubmitting]);
 
 	useEffect(() => {
-		console.log(newEvent);
+		// console.log(newEvent);
 	}, [newEvent]);
 
 	let options;
 	if (consultantInfo) {
-		options = consultantInfo.services.map(({ _, service }) => {
-			return <option value={service}> {`${service}`}</option>;
+		options = consultantInfo.services.map(({ _, service }, index) => {
+			return (
+				<option key={`opt-${index}`} value={service}>
+					{" "}
+					{`${service}`}
+				</option>
+			);
 		});
 	}
 

@@ -21,7 +21,7 @@ const handleCheckboxChange = (e, userId, consultantId, eventId) => {
 	if (e.target.checked) {
 		markEventAsComplete(userId, consultantId, eventId)
 			.then((result) => {
-				console.log("completed");
+				// console.log("completed");
 			})
 			.catch((err) => {
 				console.log(err);
@@ -53,7 +53,7 @@ const VisitConsultant = (props) => {
 		// console.log(booking, `this is the booking`);
 		fetchUserInfo(booking.consultant.consultantId)
 			.then((result) => {
-				console.log(result.data());
+				// console.log(result.data());
 				setUserInfo(result.data());
 				setLocationLoading(false);
 				setShowUserInfo(true);
@@ -419,7 +419,7 @@ export const ConsultingBookings = (props) => {
 		// console.log(otherBookings);
 	}, [otherBookings]);
 
-	console.log(profile);
+	// console.log(profile);
 
 	let events = (
 		<ListGroup>
