@@ -29,7 +29,7 @@ const ConsultantLogin = (props) => {
 		isLoadingLogin,
 		profile,
 	} = props;
-	const [pendingAlert, setPendingAlert] = useState("");
+	const [pendingAlert, setPendingAlert] = useState(false);
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -45,7 +45,7 @@ const ConsultantLogin = (props) => {
 		// console.log(isLoggedIn);
 		if (isLoggedIn) {
 			history.push("/consultant");
-			console.log("here bro");
+			// console.log("here bro");
 		}
 		if (isLogInError) {
 			setErrorMsg(true);
@@ -69,7 +69,7 @@ const ConsultantLogin = (props) => {
 		}
 	}, [profile, profile.isLoaded]);
 
-	const navigateHome = () => {};
+	// const navigateHome = () => {};
 
 	let consultantAlert = pendingAlert ? (
 		<Alert
@@ -80,7 +80,7 @@ const ConsultantLogin = (props) => {
 		>
 			Your consultant account registeration is still being reviewed we would
 			send you an email when all verifications have been made
-			<Button onClick={navigateHome}>Go back to home</Button>
+			<Link to="/account">Go back to home</Link>
 		</Alert>
 	) : (
 		""

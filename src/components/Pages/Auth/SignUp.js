@@ -156,6 +156,10 @@ const SignUp = (props) => {
 			restaurantDescription: restaurantDescription,
 			type: "user",
 		};
+
+		if (data.function === "Consultant") {
+			data.consultantInfo = consultant;
+		}
 		if (validation()) {
 			// console.log("signup");
 			props.signUp(data);
@@ -165,10 +169,10 @@ const SignUp = (props) => {
 	}
 
 	useEffect(() => {
-		console.log(
-			consultant.services,
-			`the consultant service change and this is the new value`
-		);
+		// console.log(
+		// 	consultant.services,
+		// 	`the consultant service change and this is the new value`
+		// );
 	}, [consultant.services]);
 
 	let servicesInput = consultant.services.map((value, index) => {

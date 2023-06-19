@@ -40,7 +40,10 @@ function ConsultantChats(props) {
 	}, [notifications]);
 
 	useEffect(() => {
-		let newSocket = io.connect("http://localhost:3001");
+		let newSocket = io.connect(
+			// "https://itracker-development.nw.r.appspot.com"
+			"http://localhost:3001"
+		);
 
 		newSocket.emit("setup", userId);
 		// socket.emit("setup", userId);

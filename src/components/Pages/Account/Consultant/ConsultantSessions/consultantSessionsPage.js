@@ -35,7 +35,7 @@ function ConsultantSessionsPage(props) {
 	} = props;
 	const consultantId = auth.uid;
 
-	console.log(consultantCalendar);
+	// console.log(consultantCalendar);
 
 	// console.log(`sessions first`);
 

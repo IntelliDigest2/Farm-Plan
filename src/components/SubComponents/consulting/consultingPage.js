@@ -16,7 +16,9 @@ import ConsultingBookings from "./consultingBookings";
 
 import ConsultantChats from "../../Pages/Account/Consultant/ConsultantSessions/consultantChats";
 import { PageWrapPayment } from "../../SubComponents/PageWrapPayment";
+
 import ConsultingRecords from "./consultingRecords";
+import { PageWrap } from "./../PageWrap";
 
 const ConsultingPage = (props) => {
 	let { url } = useRouteMatch();
@@ -28,7 +30,7 @@ const ConsultingPage = (props) => {
 	// console.log(user, `this is the user`);
 
 	return (
-		<PageWrapPayment goTo="/account" header="Consulting">
+		<PageWrap goTo="/account" header="Consulting">
 			<div className={classes.session_cont}>
 				{/* <Button onClick={goBack}>Back</Button> */}
 				<Router>
@@ -94,7 +96,7 @@ const ConsultingPage = (props) => {
 					</section>
 				</Router>
 			</div>
-		</PageWrapPayment>
+		</PageWrap>
 	);
 };
 

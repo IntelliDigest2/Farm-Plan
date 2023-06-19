@@ -11,8 +11,6 @@ const port = process.env.PORT || 3001;
 
 const server = http.createServer(app);
 
-console.log(process.env.DATABASE_CLOUD);
-
 mongoose
 	.connect(process.env.DATABASE_CLOUD, {
 		useNewUrlParser: true,
@@ -45,7 +43,7 @@ io.on("connection", (socket) => {
 
 	socket.on("join_chat", (chatId) => {
 		socket.join(chatId);
-		console.log(`user joined chat with Id: ${chatId}`);
+		// console.log(`user joined chat with Id: ${chatId}`);
 	});
 
 	socket.on("new_message", (newMessageReceived) => {

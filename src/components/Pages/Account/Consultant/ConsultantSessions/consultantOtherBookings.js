@@ -32,7 +32,7 @@ const VisitConsulltant = (props) => {
 		// console.log(booking, `this is the booking`);
 		fetchUserInfo(booking.status.requesterId)
 			.then((result) => {
-				console.log(result.data());
+				// console.log(result.data());
 				setUserInfo(result.data());
 				setLocationLoading(false);
 				setShowUserInfo(true);
@@ -110,7 +110,7 @@ const ConsultantVisitation = (props) => {
 		setLocationLoading(true);
 		fetchUserInfo(booking.status.requesterId)
 			.then((result) => {
-				console.log(result.data());
+				// console.log(result.data());
 				setUserInfo(result.data());
 				setLocationLoading(false);
 				setShowUserInfo(true);
@@ -337,7 +337,7 @@ export const ConsultantOtherBookings = (props) => {
 	}
 
 	useEffect(() => {
-		console.log(otherBookings);
+		// console.log(otherBookings);
 	}, [otherBookings]);
 
 	function revealInformation(e, booking) {
@@ -346,7 +346,7 @@ export const ConsultantOtherBookings = (props) => {
 		// console.log(booking, `this is the booking`);
 		fetchUserInfo(booking.status.requesterId)
 			.then((result) => {
-				console.log(result.data());
+				// console.log(result.data());
 				setUserInfo(result.data());
 				setLocationLoading(false);
 				setShowUserInfo(true);
@@ -360,11 +360,11 @@ export const ConsultantOtherBookings = (props) => {
 		//revealUserLocation
 	}
 
-	console.log(profile.consultant);
+	// console.log(profile.consultant);
 
 	let events = (
 		<ListGroup>
-			{otherBookings?.map((booking) => {
+			{otherBookings?.map((booking, index) => {
 				let startTime = format(parseISO(booking.start), "hh:mm a");
 				let endTime = format(parseISO(booking.end), "hh:mm a");
 				let value;
@@ -374,17 +374,26 @@ export const ConsultantOtherBookings = (props) => {
 				switch (booking.eventType) {
 					case "Video call":
 					case "Phone call":
-						value = <Call booking={booking} />;
+						value = <Call key={`booking-${index}`} booking={booking} />;
 						break;
 
 					case "Consultant visitation":
-						value = <ConsultantVisitation booking={booking} />;
+						value = (
+							<ConsultantVisitation
+								key={`booking-${index}`}
+								booking={booking}
+							/>
+						);
 						break;
 					case "Visit to consultant":
-						value = <VisitConsulltant booking={booking} />;
+						value = (
+							<VisitConsulltant key={`booking-${index}`} booking={booking} />
+						);
 						break;
 					case "Written feedback":
-						value = <WrittenFeedback booking={booking} />;
+						value = (
+							<WrittenFeedback key={`booking-${index}`} booking={booking} />
+						);
 						break;
 
 					default:

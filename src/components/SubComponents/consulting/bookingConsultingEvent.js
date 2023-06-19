@@ -21,7 +21,7 @@ export const BookingConsultingEvent = (props) => {
 	let startTime = format(parseISO(event.start), "hh:mm a");
 	let endTime = format(parseISO(event.end), "hh:mm a");
 
-	console.log(event);
+	// console.log(event);
 
 	// useEffect(() => {
 	// 	if (!bookingLoading) {

@@ -71,7 +71,7 @@ const NewAccount = (props) => {
 
 	useEffect(() => {}, [type]);
 
-	console.log(props.profile);
+	// console.log(props.profile);
 
 	//Tab Management
 	const theme = useTheme();
