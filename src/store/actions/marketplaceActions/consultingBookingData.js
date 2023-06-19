@@ -11,8 +11,8 @@ function createChat(uid, userName, consultantId, consultantName) {
 	// );
 	try {
 		axios.post(
-			// "https://itracker-development.nw.r.appspot.com/api/chats/newChat",
-			"http://localhost:3001/api/chats/newChat",
+			"https://itracker-development.nw.r.appspot.com/api/chats/newChat",
+			// "http://localhost:3001/api/chats/newChat",
 
 			{
 				user1: uid,

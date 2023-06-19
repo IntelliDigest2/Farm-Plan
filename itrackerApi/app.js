@@ -12,9 +12,9 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-app.get("/", (req, res) => {
-	res.send("Hello from App Engine v1!");
-});
+// app.get("/", (req, res) => {
+// 	res.send("Hello from App Engine v1!");
+// });
 
 app.use("/api/chats", chatsRoute);
 app.use("/api/messages", messagesRoute);

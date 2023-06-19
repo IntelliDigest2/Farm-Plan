@@ -145,8 +145,8 @@ function Chat(props) {
 			setMessages([...messages, newMessage]);
 
 			const sentMessage = await axios.post(
-				// "https://itracker-development.nw.r.appspot.com/api/messages",
-				"http://localhost:3001/api/messages",
+				"https://itracker-development.nw.r.appspot.com/api/messages",
+				// "http://localhost:3001/api/messages",
 				{
 					content: newMessage.content,
 					chatId: selectedChatId,
