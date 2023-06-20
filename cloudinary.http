@@ -1,0 +1,8 @@
+POST https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload
+Content-Type: multipart/form-data
+
+file=@/home/codedfingers/Downloads/images.jpeg
+upload_preset=product_upload
+resize=fill
+width=500
+height=500
