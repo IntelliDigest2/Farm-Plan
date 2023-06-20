@@ -17,7 +17,8 @@ export function Items({ setShow, setChooseModal }) {
         icon="chart" 
         label="Revenue"
         color="turquoise"
-        goTo="/restaurant-meal-plan"
+        goTo="/supply-plan"
+        disabled
         />
         
 {/* 

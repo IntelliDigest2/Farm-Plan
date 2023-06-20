@@ -21,24 +21,37 @@ function AddProductForm_supply(props) {
   const [productMeasure, setProductMeasure] = useState("g");
   const [image, setImage ] = useState("");
   const [ Url, setUrl ] = useState("");
+
+  useEffect(() => {
+    if (Url !== "") {
+      handleSubmit();
+    }
+  }, [Url]);
+  
   //upload immage to cloudinary
   const uploadImage = async () => {
-    const data = new FormData()
-    data.append("file", image)
-    data.append("upload_preset", "product_upload")
-    data.append("cloud_name","dghm4xm7k")
-    data.append("resize", "w_500,h_500,c_fit") 
-    await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",{
-      method:"post",
-      body: data
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      setUrl(data.url)
-      //console.log("image url", data.url)
-    })
-    .catch(err => console.log(err))
-}
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "product_upload");
+    formData.append("cloud_name", "dghm4xm7k");
+    formData.append("resize", "fill");
+    formData.append("width", "500");
+    formData.append("height", "500");
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const responseData = await response.json();
+      setUrl(responseData.url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
     // const [mealType, setMealType] = useState("");
   const [err, setErr] = useState("");
@@ -74,7 +87,6 @@ function AddProductForm_supply(props) {
         createdAt: new Date()
       },
     };
-
     props.createProduct(data);
     forceUpdate();
 
@@ -88,7 +100,7 @@ function AddProductForm_supply(props) {
     <Form
       onSubmit={(e) => {
         e.preventDefault();
-        handleSubmit();
+        uploadImage(); // Call uploadImage
         // props.handleFormClose();
       }}
     >
@@ -184,7 +196,7 @@ function AddProductForm_supply(props) {
 
 
       <div style={{ alignItems: "center" }}>
-        <Button className="blue-btn shadow-none" type="submit" onClick={() => uploadImage()}>
+        <Button className="blue-btn shadow-none" type="submit">
         {/* <Button className="blue-btn shadow-none" type="submit"> */}
           Done
         </Button>
