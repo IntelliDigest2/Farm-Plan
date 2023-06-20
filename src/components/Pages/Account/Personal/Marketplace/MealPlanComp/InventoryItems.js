@@ -25,7 +25,6 @@ function InventoryItems(props) {
 
   const [list, setList] = useState([]);
   const [expiryDate, setExpiryDate] = useState("dd/MM/yyyy");
-  const [emailSent, setEmailSent] = useState(false);
 
   var today = moment(new Date()).format("dd/MM/yyyy")
 
@@ -126,9 +125,6 @@ function InventoryItems(props) {
       to_email: props.profile.email,
       }, 
       "user_Yh6fJKoLLp3ZNYYieHO3r");  
-
-      setEmailSent(true);
-
   }
   
   return (
@@ -177,7 +173,7 @@ function InventoryItems(props) {
                     </>
                   { }
                   {(() => {
-                    if (today == moment(item.expiry).subtract(7,'days').format('dd/MM/yyyy') && !emailSent ) {
+                    if (today == moment(item.expiry).subtract(7,'days').format('dd/MM/yyyy') || today == moment(item.expiry).subtract(6,'days').format('dd/MM/yyyy') ) {
                       return (
                         sendMail(item.food)
                       )
