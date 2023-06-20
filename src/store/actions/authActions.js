@@ -245,35 +245,37 @@ export const signUp = (newUser) => {
 			.createUserWithEmailAndPassword(newUser.email, newUser.password)
 			.then((resp) => {
 				newUserId = resp.user.uid;
-				firestore
-					.collection("users")
-					.doc(resp.user.uid)
-					.set({
-						// ...newUser,
-						firstName: newUser.firstName,
-						lastName: newUser.lastName,
-						mobile: newUser.mobile,
-						initials: newUser.firstName[0] + newUser.lastName[0],
-						email: newUser.email,
-						buildingFunction: newUser.function,
-						city: newUser.city,
-						country: newUser.country,
-						region: newUser.region,
-						uid: resp.user.uid,
-						//restaurant-specific user data:
-						restaurantName: newUser.restaurantName,
-						companyName: newUser.companyName,
-						companyDescription: newUser.companyDescription,
-						regulatoryBody: newUser.regulatoryBody,
-						regulatoryBodyID: newUser.regulatoryBodyID,
-						IDUrl: newUser.IDUrl,
-						IDNumber: newUser.IDNumber,
-						IDType: newUser.IDType,
-						cuisine: newUser.cuisine,
-						restaurantDescription: newUser.restaurantDescription,
-						type: type,
-						[newUser.consultantInfo ? "consultant" : ""]: "pending",
-					});
+				let val = {
+					// ...newUser,
+					firstName: newUser.firstName,
+					lastName: newUser.lastName,
+					mobile: newUser.mobile,
+					initials: newUser.firstName[0] + newUser.lastName[0],
+					email: newUser.email,
+					buildingFunction: newUser.function,
+					city: newUser.city,
+					country: newUser.country,
+					region: newUser.region,
+					uid: resp.user.uid,
+					//restaurant-specific user data:
+					restaurantName: newUser.restaurantName,
+					companyName: newUser.companyName,
+					companyDescription: newUser.companyDescription,
+					regulatoryBody: newUser.regulatoryBody,
+					regulatoryBodyID: newUser.regulatoryBodyID,
+					IDUrl: newUser.IDUrl,
+					IDNumber: newUser.IDNumber,
+					IDType: newUser.IDType,
+					cuisine: newUser.cuisine,
+					restaurantDescription: newUser.restaurantDescription,
+					type: type,
+					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
+				};
+
+				if (newUser.consultantInfo) {
+					val.consultant = "pending";
+				}
+				firestore.collection("users").doc(resp.user.uid).set(val);
 
 				//Setup Admin account in relevent users collection
 				var adminCollection;
