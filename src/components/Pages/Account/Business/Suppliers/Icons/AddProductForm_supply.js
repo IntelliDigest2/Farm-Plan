@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { foodIdAPI, nutritionAPI } from "../../../Personal/Marketplace/MealPlanComp/Icons/InputRecipe/NutritionApi";
 import SaveMealIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/SaveMealIcon";
 import { createProduct } from "../../../../../../store/actions/supplierActions/supplierData";
+import { submitNotification } from "../../../../../lib/Notifications";
 
 function AddProductForm_supply(props) {
 
@@ -89,6 +90,7 @@ function AddProductForm_supply(props) {
     };
     props.createProduct(data);
     forceUpdate();
+    submitNotification("Success", `${productName}` + " has been added!");
 
     // if (save) {
     //   props.createMenu(data);
