@@ -15,7 +15,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import PayIcon from "./PayIcon";
 import { format, parseISO } from "date-fns";
-import { utcToZonedTime } from "date-fns-tz";
+// import {utcToZonedTime} from 'date-fns-tz'
 
 function ViewPurchaseInfo(props) {
 	const { t } = useTranslation();
@@ -83,20 +83,16 @@ function ViewPurchaseInfo(props) {
 		const ndate = parseISO(date);
 
 		// Convert to UTC
-		const utcDate = utcToZonedTime(ndate, "UTC");
+		// const utcDate = utcToZonedTime(ndate, "UTC");
 
-		// console.log(
-		// 	utcDate instanceof Date,
-		// 	utcDate,
-		// 	`this checks if it is a date `
-		// );
+		// console.log(utcDate instanceof Date, `this checks if it is a date `);
 
 		props.purchaseBooking(
 			bookingId,
 			consultantId,
 			consultantName,
-			eventType,
-			utcDate
+			eventType
+			// utcDate
 		);
 	};
 

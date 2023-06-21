@@ -15,7 +15,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import PayIcon from "./PayIcon";
 import { format, parseISO } from "date-fns";
-import { utcToZonedTime } from "date-fns-tz";
 
 function ViewPurchaseInfo(props) {
 	const { t } = useTranslation();
@@ -69,7 +68,7 @@ function ViewPurchaseInfo(props) {
 
 	useEffect(() => {}, [props.bookingsInfo]);
 
-	const pay = (e, bookingId, consultantId, consultantName, eventType, date) => {
+	const pay = (e, bookingId, consultantId, consultantName, eventType) => {
 		e.preventDefault();
 
 		// console.log(
@@ -80,24 +79,7 @@ function ViewPurchaseInfo(props) {
 		// 	`this is from the north side`
 		// );
 
-		const ndate = parseISO(date);
-
-		// Convert to UTC
-		const utcDate = utcToZonedTime(ndate, "UTC");
-
-		// console.log(
-		// 	utcDate instanceof Date,
-		// 	utcDate,
-		// 	`this checks if it is a date `
-		// );
-
-		props.purchaseBooking(
-			bookingId,
-			consultantId,
-			consultantName,
-			eventType,
-			utcDate
-		);
+		props.purchaseBooking(bookingId, consultantId, consultantName, eventType);
 	};
 
 	return (
@@ -244,8 +226,7 @@ function ViewPurchaseInfo(props) {
 													bookingId,
 													consultantId,
 													consultantName,
-													eventType,
-													booking.event.start
+													eventType
 												)
 											}
 										>
@@ -297,16 +278,14 @@ const mapDispatchToProps = (dispatch) => {
 			bookingPurchaseId,
 			consultantId,
 			consultantName,
-			eventType,
-			date
+			eventType
 		) =>
 			dispatch(
 				changePurchaseStatus(
 					bookingPurchaseId,
 					consultantId,
 					consultantName,
-					eventType,
-					date
+					eventType
 				)
 			),
 	};

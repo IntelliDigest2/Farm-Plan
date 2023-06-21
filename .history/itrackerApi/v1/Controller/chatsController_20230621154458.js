@@ -1,6 +1,5 @@
 import Chat from "../Models/chatModel.js";
 import { catchAsync } from "../utils/utils.js";
-import schedule from "node-schedule";
 
 export const getUserChats = catchAsync(async (req, res, next) => {
 	const { userId } = req.body;
@@ -33,16 +32,7 @@ export const createChat = catchAsync(async (req, res, next) => {
 			message: "users were not specified in the request",
 		});
 	}
-	const { user1, user2, userName, consultantName, eventDate } = req.body;
-
-	// const job = schedule.scheduleJob('*/5 * * * * *', async () => {
-	// 	try {
-	// 	  const result = await performTask();
-	// 	  console.log(result);
-	// 	} catch (error) {
-	// 	  console.error(error);
-	// 	}
-	//   });
+	const { user1, user2, userName, consultantName } = req.body;
 
 	const newChat = await Chat.create({
 		chatId: `${user1}_${user2}`,
@@ -50,7 +40,6 @@ export const createChat = catchAsync(async (req, res, next) => {
 		isActive: true,
 		consultantName: consultantName,
 		userName: userName,
-		eventDate: eventDate,
 	});
 
 	res.status(201).json({

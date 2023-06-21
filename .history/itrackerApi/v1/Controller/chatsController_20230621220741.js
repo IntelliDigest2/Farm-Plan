@@ -33,7 +33,7 @@ export const createChat = catchAsync(async (req, res, next) => {
 			message: "users were not specified in the request",
 		});
 	}
-	const { user1, user2, userName, consultantName, eventDate } = req.body;
+	const { user1, user2, userName, consultantName } = req.body;
 
 	// const job = schedule.scheduleJob('*/5 * * * * *', async () => {
 	// 	try {
@@ -50,7 +50,6 @@ export const createChat = catchAsync(async (req, res, next) => {
 		isActive: true,
 		consultantName: consultantName,
 		userName: userName,
-		eventDate: eventDate,
 	});
 
 	res.status(201).json({

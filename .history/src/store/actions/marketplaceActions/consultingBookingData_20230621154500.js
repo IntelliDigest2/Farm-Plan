@@ -1,7 +1,7 @@
 import axios from "axios";
 import { generateId } from "../../../components/Pages/Account/Consultant/utils/utils";
 
-function createChat(uid, userName, consultantId, consultantName, eventDate) {
+function createChat(uid, userName, consultantId, consultantName) {
 	// console.log(
 	// 	uid,
 	// 	userName,
@@ -11,15 +11,14 @@ function createChat(uid, userName, consultantId, consultantName, eventDate) {
 	// );
 	try {
 		axios.post(
-			// "https://itracker-development.nw.r.appspot.com/api/chats/newChat",
-			"http://localhost:3001/api/chats/newChat",
+			"https://itracker-development.nw.r.appspot.com/api/chats/newChat",
+			// "http://localhost:3001/api/chats/newChat",
 
 			{
 				user1: uid,
 				user2: consultantId,
 				userName: userName,
 				consultantName: consultantName,
-				eventDate: eventDate,
 			}
 		);
 	} catch (err) {
@@ -35,18 +34,15 @@ export const changePurchaseStatus = (
 	bookingId,
 	consultantId,
 	consultantName,
-	eventType,
-	date
+	eventType
 ) => {
 	// console.log(`i have been clicked o`);
-	console.log(
-		date,
-		`this is the date value of the function in consultingBookingData`
-	);
+	// console.log(bookingId, consultantId, consultantName, eventType);
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
+
 		var uid;
 		switch (profile.type) {
 			case "business_admin":
@@ -73,9 +69,12 @@ export const changePurchaseStatus = (
 		}
 		dispatch({ type: "CHANGE_PURCHASE_STATUS_LOADING" });
 		// console.log(bookingId, consultantId, consultantName, eventType);
+
 		//i didnt use a batch write her because it does not allow a merge operation
+
 		if (eventType === "Video call" || eventType === "Phone call") {
 			const channelId = generateVideoCallId();
+
 			getFirestore()
 				.collection("marketplace")
 				.doc(uid)
@@ -90,6 +89,7 @@ export const changePurchaseStatus = (
 					// 	.collection("consultant")
 					// 	.doc(uid)
 					// 	.set({ channelId: channelId })
+
 					getFirestore()
 						.collection("consultants")
 						.doc(consultantId)
@@ -107,13 +107,13 @@ export const changePurchaseStatus = (
 				.set({ status: "completed" }, { merge: true })
 				.then((result) => {
 					dispatch({ type: "CHANGE_PURCHASE_STATUS_SUCCESS", payload: result });
+
 					if (eventType === "Chat") {
 						createChat(
 							uid,
 							`${profile.firstName} ${profile.lastName}`,
 							consultantId,
-							consultantName,
-							date
+							consultantName
 						);
 					}
 				})

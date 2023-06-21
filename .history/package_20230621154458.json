@@ -34,7 +34,6 @@
 		"chart.js": "^3.9.1",
 		"chartjs-adapter-moment": "^1.0.1",
 		"date-fns": "^2.29.3",
-		"date-fns-tz": "^2.0.0",
 		"dotenv": "^16.0.3",
 		"emailjs-com": "^2.6.4",
 		"faker": "^6.6.6",
@@ -90,7 +89,7 @@
 		"yarn": "^1.22.15"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "react-scripts --openssl-legacy-provider start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
