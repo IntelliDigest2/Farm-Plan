@@ -43,12 +43,6 @@ export const changePurchaseStatus = (
 		date,
 		`this is the date value of the function in consultingBookingData`
 	);
-
-	if (date instanceof Date) {
-		console.log("myDate is an instance of Date");
-	} else {
-		console.log("myDate is not an instance of Date");
-	}
 	// if (eventType === "Chat") {
 	createChat(
 		// uid,

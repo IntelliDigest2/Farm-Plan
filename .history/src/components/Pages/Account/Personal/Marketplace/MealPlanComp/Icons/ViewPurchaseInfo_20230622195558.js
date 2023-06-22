@@ -80,19 +80,19 @@ function ViewPurchaseInfo(props) {
 		// 	`this is from the north side`
 		// );
 
-		// const ndate = parseISO(date);
+		const ndate = parseISO(date);
 
-		// // Convert to UTC
-		// const utcDate = utcToZonedTime(ndate, "UTC");
+		// Convert to UTC
+		const utcDate = utcToZonedTime(ndate, "UTC");
 
-		// console.log(utcDate instanceof Date, utcDate, `this is the utc date `);
+		console.log(utcDate instanceof Date, utcDate, `this is the utc date `);
 
 		props.purchaseBooking(
 			bookingId,
 			consultantId,
 			consultantName,
 			eventType,
-			date
+			utcDate
 		);
 	};
 

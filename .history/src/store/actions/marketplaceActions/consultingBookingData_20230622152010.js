@@ -43,24 +43,18 @@ export const changePurchaseStatus = (
 		date,
 		`this is the date value of the function in consultingBookingData`
 	);
+	if (eventType === "Chat") {
+		createChat(
+			// uid,
 
-	if (date instanceof Date) {
-		console.log("myDate is an instance of Date");
-	} else {
-		console.log("myDate is not an instance of Date");
+			"aTtcVJiN6bR5cWZGgrl0nQdZDVn1",
+			`Queen aboy`,
+			// `${profile.firstName} ${profile.lastName}`,
+			consultantId,
+			consultantName,
+			date
+		);
 	}
-	// if (eventType === "Chat") {
-	createChat(
-		// uid,
-
-		"aTtcVJiN6bR5cWZGgrl0nQdZDVn1",
-		`Queen aboy`,
-		// `${profile.firstName} ${profile.lastName}`,
-		consultantId,
-		consultantName,
-		date
-	);
-	// }
 	// return (dispatch, getState, { getFirestore }) => {
 	// 	//make async call to database
 	// 	const profile = getState().firebase.profile;

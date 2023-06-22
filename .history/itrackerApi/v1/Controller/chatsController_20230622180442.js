@@ -42,13 +42,14 @@ export const createChat = catchAsync(async (req, res, next) => {
 		console.log("myDate is not an instance of Date");
 	}
 
-	// const date = parseISO(eventDate);
-	// const isoString = formatISO(eventDate);
+	const date = parse(
+		eventDate,
+		"EEE MMM dd yyyy HH:mm:ss 'GMT'xxxx '(West Africa Standard Time)'",
+		new Date()
+	);
+	const isoString = formatISO(eventDate);
 
-	// const scheduleDate = new Date(date);
-
-	// const isoString = '2023-06-22T11:00:00.000Z';
-	const ndate = new Date("2023-06-22T10:03:00.000Z");
+	const scheduleDate = new Date(date);
 
 	const asyncProcess = async () => {
 		// Simulate an async process with a setTimeout
@@ -60,24 +61,17 @@ export const createChat = catchAsync(async (req, res, next) => {
 		});
 	};
 
-	// const next10Minutes = new Date(Date.now() + 3 * 60 * 1000);
+	const next10Minutes = new Date(Date.now() + 10 * 60 * 1000);
 
 	// Schedule the task using node-schedule
-	const job = schedule.scheduleJob(ndate, async () => {
+	const job = schedule.scheduleJob(next10Minutes, async () => {
 		console.log("Task started.");
 
 		try {
-			// console.log(`task has entered`);
+			console.log(`task has entered`);
 			// Call the asyncProcess within the scheduled task
-			await Chat.create({
-				chatId: `${user1}_${user2}`,
-				users: [user1, user2],
-				isActive: true,
-				consultantName: consultantName,
-				userName: userName,
-				eventDate: eventDate,
-			});
-			console.log("Task completed.", new Date());
+			await asyncProcess();
+			console.log("Task completed.");
 		} catch (error) {
 			console.error("Error occurred:", error);
 		}

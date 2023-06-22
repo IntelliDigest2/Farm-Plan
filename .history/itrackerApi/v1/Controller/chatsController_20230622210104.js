@@ -48,7 +48,7 @@ export const createChat = catchAsync(async (req, res, next) => {
 	// const scheduleDate = new Date(date);
 
 	// const isoString = '2023-06-22T11:00:00.000Z';
-	const ndate = new Date("2023-06-22T10:03:00.000Z");
+	const ndate = new Date("2023-06-22T09:03:00.000Z");
 
 	const asyncProcess = async () => {
 		// Simulate an async process with a setTimeout
