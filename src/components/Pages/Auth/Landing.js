@@ -10,7 +10,7 @@ import logo from "../../../images/WFTLogo.png";
 
 function LandingPage(props) {
   return (
-    <div>
+    <div className="white-background">
       <img
         className="landing"
         src={peppers}

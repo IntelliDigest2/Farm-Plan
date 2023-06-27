@@ -23,9 +23,12 @@
   flex-direction: column;
   justify-content: center;
 
-  background-color: white;
+  background-color: #A5B828;
   border-radius: 25px;
   padding: 1rem;
+
+  /* background-image: url("../../images/background.png"); */
+  
 }
 .mobile-style a {
   color: #32797e;
@@ -98,7 +101,7 @@
 /* Large Laptop/Desktop */
 @media screen and (min-width: 1200px) {
   .mobile-style {
-    max-width: 50%;
+    max-width: 80%;
   }
   .logo {
     max-width: 50%;
