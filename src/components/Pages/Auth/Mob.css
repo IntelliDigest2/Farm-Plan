@@ -2,7 +2,18 @@
   position: relative;
   text-align: center;
   justify-content: center;
-  float: center;
+  display: flex; /* Add flex display */
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+.signup-center .row {
+  display: flex;
+  justify-content: center;
+}
+
+.signup-center .row Button {
+  margin: 0 10px; /* Add margin to create a gap between buttons */
 }
 
 /*only in case of bottom bar*/
@@ -31,10 +42,20 @@
 }
 
 .subtitles {
-  font-weight: 700;
-  color: #0c0847;
-  font-size: 1.5rem;
   margin-top: 0%;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.017em;
+  justify-content: center;
+  display: flex; /* Add flex display */
+  align-items: center; /* Align items vertically */
+  color: #FFFFFF;
+
 }
 
 .signup-btn {
@@ -63,16 +84,26 @@
   border-color: white;
 }
 
+.signup {
+  padding: 30px;
+}
 .signup-confirm {
-  margin: auto;
-  margin-top: 2%;
+  /* margin-top: 2%;
   margin-bottom: 2%;
   font-size: 1rem;
   border-radius: 8px;
-
   background-color: #0c0847;
   border-color: #02001a;
-  color: white;
+  color: white; */
+/* 
+  width: 185px;
+  height: 81px;
+  top: 757px; */
+
+  background: #2E2687;
+  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+  border-radius: 50px;
+
 }
 .signup-confirm:hover {
   background-color: #02001a;
@@ -143,3 +174,39 @@
   font-weight: 600;
   margin: auto;
 }
+
+.page-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1; /* Ensure the wrapper is behind other elements */
+}
+
+.signup-input {
+  width: 383px;
+  height: 63px;
+  left: 528px;
+  top: 387px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+}
+
+.placeholder-input::placeholder {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 38px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.017em;
+
+  color: #2E2687;
+
+}
+

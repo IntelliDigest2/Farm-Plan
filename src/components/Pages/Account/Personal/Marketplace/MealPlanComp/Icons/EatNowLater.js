@@ -17,14 +17,14 @@ export default function EatNowLater({ value }) {
 
   //control barcode scanner
   const [scan, setScan] = useState(false);
-  const [expand, setExpand] = useState("+ scan from barcode");
+  const [expand, setExpand] = useState(<span className="scan-text">+ scan from barcode</span>);
   //scanning items will add item as a meal in meal plan including nutrition info and ingrs if information available
   const handleSetScan = () => {
     setScan(!scan);
     if (scan) {
-      setExpand("+ scan from barcode");
+      <span className="scan-text">+ scan from barcode</span>
     } else {
-      setExpand("- input manually");
+      <span className="scan-text">- input manually</span>
     }
   };
 

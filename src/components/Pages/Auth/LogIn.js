@@ -35,32 +35,33 @@ function Login(props) {
   }
 
   return (
-    <Title subtitle='Log In'>
+    <div className='login-background'>
+      <Title subtitle='Log In' className="login-background">
       <Form>
-        <Form.Group className='mb-3'>
-          <Form.Label>Email address</Form.Label>
+        <Form.Group>
           <Form.Control
             type='email'
             placeholder='Enter email'
             required
             onChange={(e) => setEmail(e.target.value)}
+            className='signup-input placeholder-input'
           />
         </Form.Group>
 
-        <Form.Group className='mb-3'>
-          <Form.Label>Password</Form.Label>
+        <Form.Group>
           <Form.Control
             type='password'
             placeholder='Password'
             required
             onChange={(e) => setPassword(e.target.value)}
+            className='signup-input placeholder-input'
           />
         </Form.Group>
         <div className='signup-center subtitles row'>
           <p>Don't have an account? </p>
-          <Link style={{ color: '#AFBA15' }} to='/signup'>
+          <Link style={{ color: '#1C1569' }} to='/signup'>
             {'  '}
-            Sign up
+            SIGN UP
           </Link>
         </div>
         <div className='signup-center subtitles row'>
@@ -70,6 +71,7 @@ function Login(props) {
         </div>
       </Form>
       <div className='auth-error'>{authError ? <p> {authError}</p> : null}</div>
+      <div className='signup-center'>
       <Button
         style={{ fontWeight: '700' }}
         variant='default'
@@ -81,7 +83,10 @@ function Login(props) {
       >
         Confirm
       </Button>
+      </div>
+      
     </Title>
+    </div>
   );
 }
 

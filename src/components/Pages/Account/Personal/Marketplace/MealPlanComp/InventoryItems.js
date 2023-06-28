@@ -11,6 +11,11 @@ import RefreshIcon from "./Icons/RefreshIcon";
 import RemoveFoodWasteIcon from "./Icons/RemoveFoodWasteIcon";
 import GiftFoodIcon from "./Icons/GiftFoodIcon";
 import PurchaseIcon from "./Icons/PurchaseIcon";
+import ScaleIcon from '@mui/icons-material/Scale';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import WarehouseIcon from '@mui/icons-material/Warehouse';
+import EventIcon from '@mui/icons-material/Event';
 import Edit from "./Icons/EditIconInventory.jsx"
 import moment from "moment";
 import { Button } from "react-bootstrap";
@@ -140,12 +145,16 @@ function InventoryItems(props) {
                 style={{ alignItems: "flex-end" }}
               >
                 <div>
-                  <p>{item.item + " " + item.quantity + " " + item.measure}</p>
-                  <p><b >Weight/Vol: </b>{item.updatedQty} {item.updatedMeasure}</p>
-                  <p><b >Expiry Date: </b>{item.expiry}</p>
-                  <p><b >Item expires: </b>{item.daysUntil}</p>
-                  <p><b >Place of purchase: </b>{item.purchase}</p>
-                  <p><b >Storage:</b>{item.storage}</p>
+                  <p style={{ padding: "14px 0 9px 25px", fontWeight: "bolder", fontSize: "25px" }}>{item.item + " " + item.quantity + " " + item.measure}</p>
+                  <p><ScaleIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}>Weight/Vol: </b>{item.updatedQty} {item.updatedMeasure}</p>
+
+                  <p><CalendarTodayIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}>Expiry Date: </b>{item.expiry}</p>
+
+                  <p><EventIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}>Item expires: </b>{item.daysUntil}</p>
+
+                  <p><LocationOnIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}>Place of purchase: </b>{item.purchase}</p>
+
+                  <p><WarehouseIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}>Storage:</b>{item.storage}</p>
                  
                     <>
                       {/* <SubButtonInventory
