@@ -152,6 +152,15 @@
   box-shadow: none !important;
 }
 
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+}
+
+.custom-link {
+  color: rgb(255, 255, 255); /* Change the color to your desired value */
+}
+
 
 
 /*=============================================

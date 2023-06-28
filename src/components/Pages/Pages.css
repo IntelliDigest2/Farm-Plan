@@ -439,18 +439,22 @@ body {
 
 }
 
+
+
 .signup-confirm {
+  margin: auto;
   margin-top: 9%;
   margin-bottom: 2%;
   font-size: 1rem;
   border-radius: 8px;
 
   background-color: #0c0847;
-  border-width: 1px;
+  border-color: #02001a;
   color: white;
 
   width: 135px;
   height: 51px;
+  left: 627px;
   top: 757px;
 
   background: #2E2687;
@@ -493,6 +497,34 @@ body {
 .name-container {
   margin-right: 250px; /* Adjust the margin as needed */
 }
+
+/* .tabs {
+  display: inline-block;
+}
+
+.tabs .MuiTabList-root {
+  display: flex !important;
+  align-items: center !important;
+  padding: 24px;
+}
+
+.tabs .MuiTab-root {
+  flex: 1 !important;
+} */
+
+.tabs .MuiTabPanel-root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+
+
+
+/* .tabs .MuiTabPanel-root {
+  flex: 1;
+} */
 
 
 

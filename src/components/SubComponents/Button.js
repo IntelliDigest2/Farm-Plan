@@ -107,41 +107,41 @@ export function IconButton(props) {
 		switch (props.icon) {
 			default:
 			case "waste":
-				return <DeleteIconOutlined sx={{ fontSize: 90 }} />;
+				return <DeleteIconOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "chart":
-				return <BarChartOutlined sx={{ fontSize: 90 }} />;
+				return <BarChartOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "gift":
-				return <CardGiftcardOutlined sx={{ fontSize: 90 }} />;
+				return <CardGiftcardOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "food":
-				return <RestaurantOutlined sx={{ fontSize: 90 }} />;
+				return <RestaurantOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "surplus":
-				return <CalendarTodayIcon sx={{ fontSize: 90 }} />;
+				return <CalendarTodayIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "buy":
-				return <ShoppingBasketOutlined sx={{ fontSize: 90 }} />;
+				return <ShoppingBasketOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "info":
-				return <InfoOutlined sx={{ fontSize: 90 }} />;
+				return <InfoOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "world":
-				return <PublicOutlined sx={{ fontSize: 90 }} />;
+				return <PublicOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "book":
-				return <MenuBookOutlined sx={{ fontSize: 90 }} />;
+				return <MenuBookOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "plant":
-				return <SpaOutlined sx={{ fontSize: 90 }} />;
+				return <SpaOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "kitchen":
-				return <KitchenOutlined sx={{ fontSize: 90 }} />;
+				return <KitchenOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "product":
-				return <ShoppingBagOutlined sx={{ fontSize: 90 }} />;
+				return <ShoppingBagOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "my-products":
-				return <CategoryIcon sx={{ fontSize: 90 }} />;
+				return <CategoryIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "notes":
-				return <DescriptionOutlined sx={{ fontSize: 90 }} />;
+				return <DescriptionOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "consult":
-				return <ForumSharpIcon sx={{ fontSize: 90 }} />;
+				return <ForumSharpIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "consultant":
-				return <PermContactCalendarSharpIcon sx={{ fontSize: 90 }} />;
+				return <PermContactCalendarSharpIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "sessions":
-				return <PeopleIcon sx={{ fontSize: 90 }} />;
+				return <PeopleIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
 			case "requests":
-				return <CalendarTodayIcon sx={{ fontSize: 90 }} />;
+				return <CalendarTodayIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
 			// case "calendar":
 			// 	return <CalendarMonthSharpIcon sx={{ fontSize: 90 }} />;
 		}
@@ -163,7 +163,7 @@ export function IconButton(props) {
 							" "
 						)}
 					>
-						<Link to={props.goTo} disabled={props.disabled}>
+						<Link to={props.goTo} disabled={props.disabled} className="custom-link">
 							<div>
 								<IconType />
 								{props.label}
@@ -175,7 +175,7 @@ export function IconButton(props) {
 				<div className={["icon-btn", `${props.color}-btn`].join(" ")}>
 					<Link
 						// variant="default"
-
+						className="custom-link"
 						to={props.goTo}
 						// href={props.goTo}
 						target={target}

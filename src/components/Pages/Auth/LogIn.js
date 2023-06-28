@@ -71,6 +71,7 @@ function Login(props) {
         </div>
       </Form>
       <div className='auth-error'>{authError ? <p> {authError}</p> : null}</div>
+      <div className='signup-center'>
       <Button
         style={{ fontWeight: '700' }}
         variant='default'
@@ -82,6 +83,8 @@ function Login(props) {
       >
         Confirm
       </Button>
+      </div>
+      
     </Title>
     </div>
   );
