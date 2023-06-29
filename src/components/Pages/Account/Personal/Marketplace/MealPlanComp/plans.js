@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+import "./MealsBox.css"
 import MealsBox from "./MealsBoxPlan";
 
 import { connect } from "react-redux";
@@ -135,8 +136,8 @@ function MyPlans(props) {
   return (
     <>
       {meals.length ? (
-        <div>
-          <MealsBox
+        <div className="meal-item">
+        <MealsBox
             forceUpdate={forceUpdate}
             meals={meals}
             saved={false}

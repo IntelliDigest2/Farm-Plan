@@ -65,7 +65,9 @@ export const Calendar = ({ value, onChange }) => {
       </div>
       <div className="plan-box">
         <div className="header">{chosenDay()}</div>
-        <MyMeals value={value} show={show} />
+        <div className="meals">
+          <MyMeals value={value} show={show} />
+        </div>
       </div>
     </>
   );

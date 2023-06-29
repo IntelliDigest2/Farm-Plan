@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { useTranslation, Trans } from 'react-i18next';
 
+import "./MealsBox.css"
 
 import MealsBoxRecipe from "./MealsBox";
 import { connect } from "react-redux";
@@ -129,7 +130,7 @@ const SavedMeals = (props) => {
         <div className="col-8 basic-title-left mb-3">{t('description.my_saved_meals')}</div>
         <div className="col-4" style={{textAlign: "right"}}><AddMealModalRecipe show={show} setShow={setShow} /></div>
       </div>
-      <div className="saved-meals">
+      <div className="meal-item">
         <MealsBoxRecipe
           forceUpdate={forceUpdate}
           onChange={props.onChange}

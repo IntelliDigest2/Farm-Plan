@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import MealsBox from "./MealsBox";
-
+import "./MealsBox.css"
 import { connect } from "react-redux";
 import { getMealData, getMealDiary } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { getMealPlannerData, getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
@@ -173,16 +173,16 @@ function MyMeals(props) {
     <>
     <Refresh />
       {weeklyMeals.length ? (
-        <div>
+        <div className="meals">
           <MealsBox
-            forceUpdate={forceUpdate}
-            meals={meals}
-            weeklyMeals={weeklyMeals}
-            saved={false}
-            value={props.value}
-            isMealPlan={true}
+          forceUpdate={forceUpdate}
+          meals={meals}
+          weeklyMeals={weeklyMeals}
+          saved={false}
+          value={props.value}
+          isMealPlan={true}
           />
-        </div>
+        </div> 
       ) : (
         <div className="empty basic-title-left">
           <p> No meal yet 🙂 use the add button </p>
