@@ -18,16 +18,16 @@ export function Profile(props) {
       <div className="web-center">
         <div className="avatar-name-container">
           <Avatar initials={props.profile.initials} />
-          <div className="name-container">
+          <div>
             <h4>{props.profile.firstName + ' ' + props.profile.lastName}</h4>
             <p>{props.profile.email}</p>
           </div>
         </div>
-        <div className="building-function-container">
-          <p>{props.profile.buildingFunction} Account</p>
+        <div className=" avatar-name-container">
+          <p style={{ fontWeight: 'bold', whiteSpace: 'nowrap' }}>{props.profile.buildingFunction} Account</p>
         </div>        
         <Tooltip title="Settings">
-          <IconButton href="/settings" component="a" style={{ float: 'right' }}>
+          <IconButton href="/settings" component="a">
             <SettingsApplicationsIcon />
           </IconButton>
         </Tooltip>

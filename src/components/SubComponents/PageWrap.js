@@ -50,5 +50,6 @@ export const PageWrapTop = (props) => {
 };
 
 export const PageWrapMini = (props) => {
-  return <Container className="account-style">{props.children}</Container>;
+  return <Container className="account-style page-wrap-mini">{props.children}</Container>;
 };
+

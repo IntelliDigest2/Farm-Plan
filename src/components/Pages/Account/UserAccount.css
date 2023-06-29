@@ -11,12 +11,10 @@
   margin-bottom: 10px; /* Add margin bottom for spacing */
 }
 
-.name-container {
-  margin-left: 10px; /* Adjust the margin as needed */
-}
-
 .building-function-container p {
-  margin-left: 60px; /* Moves the container to the right */
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; 
   font-weight: bold;
   white-space: nowrap; /* Prevents text from wrapping to a new line */
 

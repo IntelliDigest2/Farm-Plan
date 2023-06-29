@@ -4,7 +4,7 @@ import '../Account/UserAccount.css';
 import './Mob.css';
 import { Title } from './MobComponents';
 
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -35,7 +35,9 @@ function Login(props) {
   }
 
   return (
-    <div className='login-background'>
+    <Container>
+
+<div className='login-background'>
       <Title subtitle='Log In' className="login-background">
       <Form>
         <Form.Group>
@@ -87,6 +89,8 @@ function Login(props) {
       
     </Title>
     </div>
+    </Container>
+    
   );
 }
 

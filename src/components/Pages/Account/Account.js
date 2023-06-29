@@ -16,6 +16,8 @@ import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { Tab } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
 
 import * as Households from "./Personal/PersonalTabs";
 import * as Farm from "./Farm/FarmTabs";
@@ -104,14 +106,17 @@ const NewAccount = (props) => {
       {chooseModal ? <PTSModal show={show} setShow={setShow} /> : null}
       <PageWrapMini>
         <Container className="web-center">
-          <div className="flex avatar-name-container">
+          <div className="avatar-name-container">
+          <div className="avatar-image">
             <img
               src={logo}
               alt="World Food Tracker, empowering global food sustainability"
               className="name-container img-fluid rounded fix-image mb-3"
-              style={{ maxWidth: "40%"}}
             />
+          </div>
+          <div className="profile-container">
             <Profile profile={props.profile} type={type} />
+          </div>
           </div>
 
           <div>
@@ -154,6 +159,16 @@ const NewAccount = (props) => {
 };
 
 const AccountType = (props) => {
+
+  const useStyles = makeStyles({
+    tabList: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+    },
+  });
+
+  const classes = useStyles(); // Add this line inside your component
 
   
 
@@ -401,16 +416,18 @@ const AccountType = (props) => {
       return (
         <>
         
-          <TabList
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: Colors.brandGreen,
-              },
-            }}
-            variant="fullWidth"
-            orientation="horizontal" // Update this line
-            onChange={props.handleChange}
-          >
+
+              <TabList
+                className={classes.tabList} // Add this line to apply the custom style
+                TabIndicatorProps={{
+                  style: {
+                    backgroundColor: Colors.brandGreen,
+                  },
+                }}
+                variant="standard"
+                onChange={props.handleChange}
+                centered
+              >
             <Tab disableRipple label={t('description.tab_food')} value="0" />
             <Tab disableRipple label={t('description.tab_health')} value="1" />
             <Tab disableRipple label={t('description.tab_environment')} value="2" />
