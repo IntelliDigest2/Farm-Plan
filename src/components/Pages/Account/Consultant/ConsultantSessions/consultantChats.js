@@ -41,8 +41,8 @@ function ConsultantChats(props) {
 
 	useEffect(() => {
 		let newSocket = io.connect(
-			// "https://itracker-development.nw.r.appspot.com"
-			"http://localhost:3001"
+			"https://itracker-development.nw.r.appspot.com"
+			// "http://localhost:3001"
 		);
 
 		newSocket.emit("setup", userId);

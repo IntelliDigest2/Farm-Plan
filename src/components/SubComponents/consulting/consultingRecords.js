@@ -17,14 +17,14 @@ function ConsultingRecords(props) {
 
 	const { completedBookings, auth, getCompletedBookings } = props;
 
-	console.log(auth, `this is the auth`);
+	// console.log(auth, `this is the auth`);
 	useEffect(() => {
 		getCompletedBookings(auth.uid);
 	}, []);
 
 	useEffect(() => {
 		setBookingsData(completedBookings);
-		console.log(completedBookings);
+		// console.log(completedBookings);
 	}, [completedBookings]);
 
 	let bookings = bookingsData?.map((booking) => {

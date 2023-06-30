@@ -11,8 +11,8 @@ function createChat(uid, userName, consultantId, consultantName, eventDate) {
 	// );
 	try {
 		axios.post(
-			// "https://itracker-development.nw.r.appspot.com/api/chats/newChat",
-			"http://localhost:3001/api/chats/newChat",
+			"https://itracker-development.nw.r.appspot.com/api/chats/newChat",
+			// "http://localhost:3001/api/chats/newChat",
 
 			{
 				user1: uid,
@@ -38,29 +38,18 @@ export const changePurchaseStatus = (
 	eventType,
 	date
 ) => {
-	// console.log(`i have been clicked o`);
-	console.log(
-		date,
-		`this is the date value of the function in consultingBookingData`
-	);
+	console.log(`i have been clicked o`);
+	// console.log(
+	// 	date,
+	// 	`this is the date value of the function in consultingBookingData`
+	// );
 
-	if (date instanceof Date) {
-		console.log("myDate is an instance of Date");
-	} else {
-		console.log("myDate is not an instance of Date");
-	}
-	// if (eventType === "Chat") {
-	createChat(
-		// uid,
-
-		"aTtcVJiN6bR5cWZGgrl0nQdZDVn1",
-		`Queen aboy`,
-		// `${profile.firstName} ${profile.lastName}`,
-		consultantId,
-		consultantName,
-		date
-	);
+	// if (date instanceof Date) {
+	// 	console.log("myDate is an instance of Date");
+	// } else {
+	// 	console.log("myDate is not an instance of Date");
 	// }
+
 	// return (dispatch, getState, { getFirestore }) => {
 	// 	//make async call to database
 	// 	const profile = getState().firebase.profile;

@@ -1,6 +1,5 @@
 const functions = require("firebase-functions");
-const algoliasearch = require('algoliasearch');
-
+const algoliasearch = require("algoliasearch");
 
 const express = require("express");
 const itrackerPaymentFunction = express();
@@ -11,106 +10,131 @@ var cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY1);
 
 const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
-
+console.log(useEmulator, `this is the useEmulator env`);
 if (useEmulator === "development") {
 	admin.initializeApp({
 		//projectId inserted here for local testing
 		projectId: "itracker-development",
+		//this is the host if you are using firebase emulator
+		host: "localhost",
+		port: 8080,
+		// Disable SSL when using the emulator
+		ssl: false,
 	});
+	console.log(`i am connected to the local`);
 } else {
 	admin.initializeApp();
+	// console.log(`====================`);
+	// console.log(`i am connected to the live firestore`);
+	// console.log(`--------------------------------------------------`);
 }
 
 const fireStoreDB = admin.firestore();
 
-
 // Set up Algolia.
 // The app id and API key are coming from the cloud functions environment
-const algoliaClient = algoliasearch(functions.config().algolia.appid, functions.config().algolia.apikey);
-// Since I'm using develop and production environments, I'm automatically defining 
-// the index name according to which environment is running. functions.config().projectId is a default 
-// property set by Cloud Functions.
-const collectionIndexName = functions.config().projectId === 'itracker-development' ? 'sales_dev' : 'sales_dev';
-const collectionIndex = algoliaClient.initIndex(collectionIndexName);
 
-// Create a HTTP request cloud function.
-exports.sendCollectionToAlgolia = functions.https.onRequest(async (req, res) => {
+// const algoliaClient = algoliasearch(
+// 	functions.config().algolia.appid,
+// 	functions.config().algolia.apikey
+// );
 
-	// This array will contain all records to be indexed in Algolia.
-	const algoliaRecords = [];
+// // Since I'm using develop and production environments, I'm automatically defining
+// // the index name according to which environment is running. functions.config().projectId is a default
+// // property set by Cloud Functions.
 
-	// Retrieve all documents from the SALES collection.
-	const querySnapshot = await fireStoreDB.collection('sales').get();
+// const collectionIndexName =
+// 	functions.config().projectId === "itracker-development"
+// 		? "sales_dev"
+// 		: "sales_dev";
+// const collectionIndex = algoliaClient.initIndex(collectionIndexName);
 
-	querySnapshot.docs.forEach(doc => {
-		const document = doc.data();
-        // Essentially, you want your records to contain any information that facilitates search, 
-        // display, filtering, or relevance. Otherwise, you can leave it out.
-        const record = {
-            objectID: doc.id,
-            productName: document.productName,
-			createdAt: document.createdAt,
-			productDescription: document.productDescription,
-			productPrice: document.productPrice,
-			companyName: document.companyName,
-			city: document.city,
-			region: document.region,
-        };
+// // Create a HTTP request cloud function.
+// exports.sendCollectionToAlgolia = functions.https.onRequest(
+// 	async (req, res) => {
+// 		// This array will contain all records to be indexed in Algolia.
+// 		const algoliaRecords = [];
 
-        algoliaRecords.push(record);
-    });
-	
-	// After all records are created, we save them to 
-	collectionIndex.saveObjects(algoliaRecords, (error, content) => {
-		if (error) {
-		  console.error(error);
-		  res.status(500).send("An error occurred while indexing COLLECTION to Algolia.");
-		} else {
-		  console.log("COLLECTION was indexed to Algolia successfully.");
-		  res.status(200).send("COLLECTION was indexed to Algolia successfully.");
-		}
-	  });
-})
+// 		// Retrieve all documents from the SALES collection.
+// 		const querySnapshot = await fireStoreDB.collection("sales").get();
 
-exports.collectionOnCreate = functions.firestore.document('sales/{uid}').onCreate(async (snapshot, context) => {
-    await saveDocumentInAlgolia(snapshot);
-});
+// 		querySnapshot.docs.forEach((doc) => {
+// 			const document = doc.data();
+// 			// Essentially, you want your records to contain any information that facilitates search,
+// 			// display, filtering, or relevance. Otherwise, you can leave it out.
+// 			const record = {
+// 				objectID: doc.id,
+// 				productName: document.productName,
+// 				createdAt: document.createdAt,
+// 				productDescription: document.productDescription,
+// 				productPrice: document.productPrice,
+// 				companyName: document.companyName,
+// 				city: document.city,
+// 				region: document.region,
+// 			};
 
-exports.collectionOnUpdate = functions.firestore.document('sales/{uid}').onUpdate(async (change, context) => {
-    await updateDocumentInAlgolia(change);
-});
+// 			algoliaRecords.push(record);
+// 		});
 
-exports.collectionOnDelete = functions.firestore.document('sales/{uid}').onDelete(async (snapshot, context) => {
-    await deleteDocumentFromAlgolia(snapshot);
-});
+// 		// After all records are created, we save them to
+// 		collectionIndex.saveObjects(algoliaRecords, (error, content) => {
+// 			if (error) {
+// 				console.error(error);
+// 				res
+// 					.status(500)
+// 					.send("An error occurred while indexing COLLECTION to Algolia.");
+// 			} else {
+// 				console.log("COLLECTION was indexed to Algolia successfully.");
+// 				res.status(200).send("COLLECTION was indexed to Algolia successfully.");
+// 			}
+// 		});
+// 	}
+// );
 
-async function saveDocumentInAlgolia(snapshot) {
-    if (snapshot.exists) {
-        const record = snapshot.data();
-        if (record) { // Removes the possibility of snapshot.data() being undefined.
-            record.objectID = snapshot.id;
-            
-            await collectionIndex.saveObject(record); // Adds or replaces a specific object.
-        }
-    }
-}
+// exports.collectionOnCreate = functions.firestore
+// 	.document("sales/{uid}")
+// 	.onCreate(async (snapshot, context) => {
+// 		await saveDocumentInAlgolia(snapshot);
+// 	});
 
-async function updateDocumentInAlgolia(change) {
-    const docBeforeChange = change.before.data();
-    const docAfterChange = change.after.data();
-    if (docBeforeChange && docAfterChange) {
-        await deleteDocumentFromAlgolia(change.before); // Deletes the document from Algolia.
-        await saveDocumentInAlgolia(change.after); // Indexes the updated document in Algolia.
-    }
-}
+// exports.collectionOnUpdate = functions.firestore
+// 	.document("sales/{uid}")
+// 	.onUpdate(async (change, context) => {
+// 		await updateDocumentInAlgolia(change);
+// 	});
 
+// exports.collectionOnDelete = functions.firestore
+// 	.document("sales/{uid}")
+// 	.onDelete(async (snapshot, context) => {
+// 		await deleteDocumentFromAlgolia(snapshot);
+// 	});
 
-async function deleteDocumentFromAlgolia(snapshot) {
-    if (snapshot.exists) {
-        const objectID = snapshot.id;
-        await collectionIndex.deleteObject(objectID);
-    }
-}
+// async function saveDocumentInAlgolia(snapshot) {
+// 	if (snapshot.exists) {
+// 		const record = snapshot.data();
+// 		if (record) {
+// 			// Removes the possibility of snapshot.data() being undefined.
+// 			record.objectID = snapshot.id;
+
+// 			await collectionIndex.saveObject(record); // Adds or replaces a specific object.
+// 		}
+// 	}
+// }
+
+// async function updateDocumentInAlgolia(change) {
+// 	const docBeforeChange = change.before.data();
+// 	const docAfterChange = change.after.data();
+// 	if (docBeforeChange && docAfterChange) {
+// 		await deleteDocumentFromAlgolia(change.before); // Deletes the document from Algolia.
+// 		await saveDocumentInAlgolia(change.after); // Indexes the updated document in Algolia.
+// 	}
+// }
+// async function deleteDocumentFromAlgolia(snapshot) {
+// 	if (snapshot.exists) {
+// 		const objectID = snapshot.id;
+// 		await collectionIndex.deleteObject(objectID);
+// 	}
+// }
 
 itrackerPaymentFunction.use(express.static("public"));
 itrackerPaymentFunction.use(express.json());
@@ -122,37 +146,67 @@ itrackerPaymentFunction.use(
 			//insert the link of the app link here
 			// -----------------------------------
 			// -----------------------------------
-			"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
-			// "http://worldfoodtracker.com/", //another example incase it has two links
+			"http://localhost:3000", //this is just a sample eg http://worldfoodtracker.com/
+			"http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
 		methods: ["GET", "PUT", "POST"],
+		allowedHeaders: ["Content-Type", "Authorization"],
 	})
 );
 
-const calculateOrderAmount = async (userId, orderId) => {
-	try {
-		let QuerySnapshot = await fireStoreDB
-			.collection("marketplace")
-			.doc(userId)
-			.collection("messages")
-			.doc(orderId)
-			.get();
+const calculateOrderAmount = async (userId, orderId, paymentType) => {
+	if (paymentType === "consultant") {
+		try {
+			let result = await fireStoreDB
+				.collection("marketplace")
+				.doc(userId)
+				.collection("bookings")
+				.doc(orderId)
+				.get();
 
-		let totalArray = [];
+			// if (result.exists) {
+			// 	// Access the document data
+			// 	const documentData = result.data();
+			// 	console.log(documentData);
+			// 	// res.send(documentData);
+			// } else {
+			// 	// res.status(404).send('Document not found');
+			// 	console.log("Document not found");
+			// }
+			// console.log(result.data(), `this is the result data`);
+			// console.log(result.data().event.price, `this is the price of the item`);
+			return result.data().event.price;
+		} catch (err) {
+			console.log(err);
+			return err;
+		}
+	} else if (paymentType === "supplier") {
+		try {
+			let QuerySnapshot = await fireStoreDB
+				.collection("marketplace")
+				.doc(userId)
+				.collection("messages")
+				.doc(orderId)
+				.get();
 
-		QuerySnapshot.data().cart.forEach((cartItem) => {
-			totalArray.push(cartItem.price * cartItem.quantity);
-		});
+			let totalArray = [];
 
-		// // // calculation of the order amount
-		return totalArray.reduce((total, num) => {
-			return total + num;
-		}, 0);
-	} catch (err) {
-		console.log(err);
-		return err;
+			QuerySnapshot.data().cart.forEach((cartItem) => {
+				totalArray.push(cartItem.price * cartItem.quantity);
+			});
+
+			// // // calculation of the order amount
+			return totalArray.reduce((total, num) => {
+				return total + num;
+			}, 0);
+		} catch (err) {
+			console.log(err);
+			return err;
+		}
 	}
+
+	// return result;
 
 	// const orderTotal = product.price * items.multiplier;
 	// Calculate the order total on the server to prevent
@@ -163,14 +217,19 @@ const calculateOrderAmount = async (userId, orderId) => {
 
 itrackerPaymentFunction.post("/create-payment-intent", async (req, res) => {
 	try {
-		const { userId, orderId } = req.body;
+		const { userId, orderId, paymentType } = req.body;
 
 		// Create a PaymentIntent with the order amount and currency
 		const paymentIntent = await stripe.paymentIntents.create({
-			amount: await calculateOrderAmount(userId, orderId),
+			amount: await calculateOrderAmount(userId, orderId, paymentType),
 			currency: "gbp",
 			automatic_payment_methods: { enabled: true },
 		});
+
+		// console.log(
+		// 	paymentIntent.client_secret,
+		// 	`this is the paymentIntent generated`
+		// );
 
 		res.send({
 			clientSecret: paymentIntent.client_secret,
@@ -197,8 +256,7 @@ const calculateOrderAmountRes = async (userId, orderId) => {
 			.doc(orderId)
 			.get();
 
-		return result.data().order.mealPrice
-
+		return result.data().order.mealPrice;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -213,7 +271,7 @@ const calculateOrderAmountRes = async (userId, orderId) => {
 
 itrackerPaymentFunction.post("/create-payment-intent-res", async (req, res) => {
 	try {
-		const { userId, orderId } = req.body;	
+		const { userId, orderId } = req.body;
 
 		// // Create a PaymentIntent with the order amount and currency
 		const paymentIntent = await stripe.paymentIntents.create({
@@ -235,7 +293,6 @@ itrackerPaymentFunction.post("/create-payment-intent-res", async (req, res) => {
 exports.itrackerPaymentFunction = functions.https.onRequest(
 	itrackerPaymentFunction
 );
-
 
 // function to get the farmers In Same Location
 const getFarmersInSameLocation = async (city) => {
@@ -309,7 +366,7 @@ getFarmersInLocationWithProducts.use(
 	cors({
 		origin: [
 			"http://localhost:3000/", //this is just a sample eg http://worldfoodtracker.com/
-			// "http://worldfoodtracker.com/", //another example incase it has two links
+			"http://worldfoodtracker.com/", //another example incase it has two links
 		],
 
 		methods: ["GET", "PUT", "POST"],
@@ -394,4 +451,3 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 exports.getFarmersInLocationWithProducts = functions.https.onRequest(
 	getFarmersInLocationWithProducts
 );
-

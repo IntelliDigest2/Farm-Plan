@@ -1,7 +1,7 @@
 import Chat from "../Models/chatModel.js";
 import { catchAsync } from "../utils/utils.js";
 import schedule from "node-schedule";
-import { formatISO, parse, parseISO } from "date-fns";
+import { formatISO, parse, parseISO, subMinutes } from "date-fns";
 
 export const getUserChats = catchAsync(async (req, res, next) => {
 	const { userId } = req.body;
@@ -36,35 +36,24 @@ export const createChat = catchAsync(async (req, res, next) => {
 	}
 	const { user1, user2, userName, consultantName, eventDate } = req.body;
 
-	if (eventDate instanceof Date) {
-		console.log("myDate is an instance of Date");
-	} else {
-		console.log("myDate is not an instance of Date");
-	}
+	// if (eventDate instanceof Date) {
+	// 	console.log("myDate is an instance of Date");
+	// } else {
+	// 	console.log("myDate is not an instance of Date");
+	// }
 
-	// const date = parseISO(eventDate);
-	// const isoString = formatISO(eventDate);
+	//subtract 5 minutes to create the chat 5 minutes before actual time
 
-	// const scheduleDate = new Date(date);
+	const date = parseISO(eventDate);
+	const subtractedDate = subMinutes(date, 5);
 
-	// const isoString = '2023-06-22T11:00:00.000Z';
-	const ndate = new Date("2023-06-22T10:03:00.000Z");
+	const formattedDate = formatISO(subtractedDate);
 
-	const asyncProcess = async () => {
-		// Simulate an async process with a setTimeout
-		await new Promise((resolve) => {
-			setTimeout(() => {
-				console.log("Async process completed.");
-				resolve();
-			}, 3000); // 3 seconds delay
-		});
-	};
-
-	// const next10Minutes = new Date(Date.now() + 3 * 60 * 1000);
+	const ndate = new Date(formattedDate);
 
 	// Schedule the task using node-schedule
 	const job = schedule.scheduleJob(ndate, async () => {
-		console.log("Task started.");
+		// console.log("Task started.");
 
 		try {
 			// console.log(`task has entered`);
@@ -77,7 +66,7 @@ export const createChat = catchAsync(async (req, res, next) => {
 				userName: userName,
 				eventDate: eventDate,
 			});
-			console.log("Task completed.", new Date());
+			// console.log("Task completed.", new Date());
 		} catch (error) {
 			console.error("Error occurred:", error);
 		}

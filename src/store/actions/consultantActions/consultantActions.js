@@ -199,8 +199,8 @@ export const getUserChatsData = (userId) => {
 	return (dispatch) => {
 		axios
 			.post(
-				// `https://itracker-development.nw.r.appspot.com/api/chats/getChats`,
-				"http://localhost:3001/api/chats/getChats",
+				`https://itracker-development.nw.r.appspot.com/api/chats/getChats`,
+				// "http://localhost:3001/api/chats/getChats",
 				{
 					userId: userId,
 				}
@@ -219,10 +219,10 @@ export const getUserChatsData = (userId) => {
 export const getChatMessages = (chatId) => {
 	return (dispatch) => {
 		axios
-			// .get(
-			// 	`https://itracker-development.nw.r.appspot.com/api/messages/${chatId}`
-			// )
-			.get(`http://localhost:3001/api/messages/${chatId}`)
+			.get(
+				`https://itracker-development.nw.r.appspot.com/api/messages/${chatId}`
+			)
+			// .get(`http://localhost:3001/api/messages/${chatId}`)
 
 			.then((result) => {
 				dispatch({
@@ -487,13 +487,14 @@ export const getAgoraToken = (duration, uid, channel, role) => {
 	// 	role
 	// );
 
-	return axios.post(`http://localhost:3001/api/rtctoken`, {
-		// return axios.post(
-		// 	`https://itracker-development.nw.r.appspot.com/api/rtctoken`,
-		// 	{
-		duration: duration,
-		uid: uid,
-		channel: channel,
-		role: role,
-	});
+	// return axios.post(`http://localhost:3001/api/rtctoken`, {
+	return axios.post(
+		`https://itracker-development.nw.r.appspot.com/api/rtctoken`,
+		{
+			duration: duration,
+			uid: uid,
+			channel: channel,
+			role: role,
+		}
+	);
 };

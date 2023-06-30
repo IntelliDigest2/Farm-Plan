@@ -10,6 +10,7 @@ import {
 	getConsultingBookingsForPurchase,
 	changePurchaseStatus,
 } from "../../../../../../../store/actions/marketplaceActions/consultingBookingData";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -21,6 +22,7 @@ function ViewPurchaseInfo(props) {
 	const { t } = useTranslation();
 	const [list, setList] = useState([]);
 	const [isLoading, setisLoading] = useState(false);
+	const [paymentType, setPaymentType] = useState("");
 
 	//this sends data request
 	useEffect(() => {
@@ -154,6 +156,7 @@ function ViewPurchaseInfo(props) {
 										/>
 										{item.status == "CONFIRMED" ? (
 											<PayIcon
+												paytype="supplier"
 												//value={props.value}
 												refID={item.refID}
 												id={item.id}
@@ -186,7 +189,6 @@ function ViewPurchaseInfo(props) {
 							let date = format(parseISO(booking.event.start), "yyyy-MM-dd");
 							let startTime = format(parseISO(booking.event.start), "hh:mm a");
 							let endTime = format(parseISO(booking.event.end), "hh:mm a");
-
 							return (
 								<ListItem
 									key={`item${index}`}
@@ -232,25 +234,44 @@ function ViewPurchaseInfo(props) {
 												
 												id={item.id}
 											/> */}
-										<Button
+										{/* <Button
 											disabled={booking.status === "completed"}
-											onClick={(e) =>
-												pay(
-													e,
-													bookingId,
-													consultantId,
-													consultantName,
-													eventType,
-													booking.event.start
-												)
-											}
+											// onClick={(e) =>
+											// 	pay(
+											// 		e,
+											// 		bookingId,
+											// 		consultantId,
+											// 		consultantName,
+											// 		eventType,
+											// 		booking.event.start
+											// 	)
+											// }
 										>
 											{isLoading
 												? "loading"
 												: booking.status === "completed"
 												? "payment made"
 												: "pay"}
-										</Button>
+										</Button> */}
+										{booking.status === "completed" ? (
+											"PAID"
+										) : (
+											<PayIcon
+												payType="consultant"
+												//value={props.value}
+												// refID={item.refID}
+												consultantPaymentInfo={[
+													bookingId,
+													consultantId,
+													consultantName,
+													eventType,
+													booking.event.start,
+												]}
+												id={bookingId}
+												uid={props.auth.uid}
+											/>
+										)}
+
 										{/* {item.status == "CONFIRMED" ? (
 												<PayIcon
 													//value={props.value}
