@@ -1,4 +1,32 @@
-.calendarDay{
-    width: 100%;
-    overflow: hidden;
+.calendarDay {
+  width: 100%;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.fc-daygrid-event {
+  background-color: #ff0000; /* Set the background color of the event */
+  color: #ffffff; /* Set the text color of the event */
+}
+
+.fc-daygrid-event:hover {
+  background-color: #00ff00; /* Set the background color on hover */
+}
+
+
+@media (max-width: 768px) {
+  .calendarDay .fc-content {
+    padding: 5px; /* Add padding to the button container */
+    display: flex;
+    justify-content: center;
+  }
+
+  .calendarDay .fc-content .fc-title {
+    margin: 0; /* Remove any default margin */
+  }
+
+  .calendarDay .fc-daygrid-event {
+    display: flex;
+    align-items: center;
+  }
 }
