@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./PageWrap.css";
+import "./PageWrapPayment.css";
 
 import { SubButton } from "./Button";
 import Divider from "@mui/material/Divider";
@@ -51,5 +51,5 @@ export const PageWrapTop = (props) => {
 };
 
 export const PageWrapMini = (props) => {
-	return <Container className="account-style">{props.children}</Container>;
+	return <Container className="account-style page-wrap-mini">{props.children}</Container>;
 };

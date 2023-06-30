@@ -1,4 +1,3 @@
-
 .page-wrap-mini {
   padding: 10px;
   margin-bottom: 20px;
@@ -43,10 +42,10 @@
   flex-direction: column;
   justify-content: center;
 
-  background-color: #A5B828;
+  background-color: #fdfdfd;
   border-radius: 25px;
   padding: 1rem;
-  width: 80%;
+  width: 100%;
 
   /* background-image: url("../../images/background.png"); */
   
@@ -82,7 +81,7 @@
 /* Phones */
 @media screen and (max-width: 600px) {
   .mobile-style {
-    min-width: 100%;
+    max-width: 100%;
   }
   .logo {
     max-width: 100%;
@@ -102,7 +101,7 @@
 /* Landscape Tablet */
 @media screen and (min-width: 768px) {
   .mobile-style {
-    max-width: 90%;
+    max-width: 100%;
   }
   .logo {
     max-width: 90%;
@@ -112,7 +111,7 @@
 /* Laptop/Desktop */
 @media screen and (min-width: 992px) {
   .mobile-style {
-    max-width: 70%;
+    max-width: 100%;
   }
   .logo {
     max-width: 70%;
@@ -122,7 +121,7 @@
 /* Large Laptop/Desktop */
 @media screen and (min-width: 1200px) {
   .mobile-style {
-    max-width: 80%;
+    max-width: 100%;
   }
   .logo {
     max-width: 50%;

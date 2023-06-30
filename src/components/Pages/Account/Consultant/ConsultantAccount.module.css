@@ -67,16 +67,6 @@
     cursor: pointer;
 }
 
-.settings_icon_contanier{
-    /* position: absolute; */
-    top: 50px;
-    right: 50px;
-    height:25px;
-    width:25px;
-    background-color:#afba15;
-    opacity:0.7;
-    cursor: pointer;
-}
 .settings_icon{
    color: white;
    text-align: center;
@@ -129,7 +119,7 @@
     /* display: flex;
     justify-content: center;
     align-items: center; */
-    width: ;
+    width: 100%;
     margin: 0 auto;
 }
 .defaultImg{
@@ -152,3 +142,19 @@
     }
     
 }
+
+@media screen and (max-width: 767px) {
+    .consultant_nav {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .feature_buttons > div {
+      margin: 15px 0;
+      width: 100%;
+      height: auto;
+    }
+  }
+  
+  

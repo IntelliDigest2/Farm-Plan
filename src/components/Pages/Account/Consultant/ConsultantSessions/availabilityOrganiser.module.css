@@ -1,0 +1,52 @@
+/* Modal dialog container */
+.modal-dialog {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Modal content container */
+  .modal-content {
+    border: none;
+    border-radius: 0;
+  }
+  
+  /* Modal body */
+  .modal-body {
+    padding: 20px;
+  }
+  
+  /* Modal form fields */
+  .modal-body .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Modal form labels */
+  .modal-body label {
+    font-weight: bold;
+  }
+  
+  /* Modal form input fields */
+  .modal-body input[type="time"],
+  .modal-body textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Modal form submit button */
+  .modal-body button[type="button"] {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Modal form submit button:hover */
+  .modal-body button[type="button"]:hover {
+    background-color: #0056b3;
+  }
+  
