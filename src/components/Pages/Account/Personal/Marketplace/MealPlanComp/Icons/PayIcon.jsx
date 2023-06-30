@@ -20,26 +20,31 @@ function PayIcon(props) {
   const [showModal, setShow] = useState(false);
 
   const handlePay = async () => {
-    // await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
-    await fetch('https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction/create-payment-intent', {
 
-       method: 'POST',
-       body: JSON.stringify({
-          userId: props.uid,
-          orderId: props.id,
-       }),
-       headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-       },
-    })
-       .then((response) => response.json())
-       .then((data) => {
-          console.log("payment done", data)
-          history.push('/payment-process',{params: `${data.clientSecret}`})
-       })
-       .catch((err) => {
-          console.log(err.message);
-       });
+    
+          //  await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
+      await fetch('https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction/create-payment-intent', {
+  
+         method: 'POST',
+         body: JSON.stringify({
+            userId: props.uid,
+            orderId: props.id,
+            paymentType: props.payType
+         }),
+         headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+         },
+      })
+         .then((response) => response.json())
+         .then((data) => {
+            console.log("this is the data returned", data)
+            history.push('/payment-process',{params: {sec: `${data.clientSecret}`,
+          consultInfo : [props.consultantPaymentInfo]}})
+         })
+         .catch((err) => {
+            console.log(err.message);
+         })
+  
  };
 
 

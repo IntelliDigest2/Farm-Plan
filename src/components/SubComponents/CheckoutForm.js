@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import swal from 'sweetalert2';
+import swal from "sweetalert2";
 //import withReactContent from 'sweetalert2-react-content'
 
 // import classes2 from "../modal.module.css";
 // import * as actions from "../../../store/actions/index";
-// import classes from "./checkoutForm.module.css";
+// import classes from "./checkoutForm.module.css";./
+import { changePurchaseStatus } from "./../../store/actions/marketplaceActions/consultingBookingData";
 
 import {
 	PaymentElement,
@@ -15,13 +16,11 @@ import {
 	useElements,
 } from "@stripe/react-stripe-js";
 
-		
- 
 const CheckoutForm = (props) => {
-
- 
 	const location = useLocation();
-   	const myparam = location.state.params;
+	const myparam = location.state.params.sec;
+	const consulInfo = location.state.params.consultInfo;
+	console.log(consulInfo, `this is the consulInfo`);
 	const stripe = useStripe();
 	const elements = useElements();
 
@@ -33,24 +32,20 @@ const CheckoutForm = (props) => {
 			return;
 		}
 
-		
-
-		const clientSecret = `${myparam}`
+		const clientSecret = `${myparam}`;
 
 		// const clientSecret = new URLSearchParams.get(
 		// 	"payment_intent_client_secret"
 		// );
 
-
-		console.log("client secret from checkout", clientSecret)
+		console.log("client secret from checkout", clientSecret);
 
 		if (!clientSecret) {
 			return;
 		}
 
 		stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-
-			console.log("payment status", paymentIntent)
+			console.log("payment status", paymentIntent);
 
 			switch (paymentIntent.status) {
 				case "succeeded":
@@ -93,8 +88,11 @@ const CheckoutForm = (props) => {
 				redirect: "if_required",
 			})
 			.then((result) => {
+				if (consulInfo && !result.error) {
+					changePurchaseStatus(...consulInfo);
+				}
 
-				console.log("payment rresult", result)
+				console.log("payment result", result);
 				setIsLoading(false);
 				if (result.error) {
 					if (
@@ -105,8 +103,7 @@ const CheckoutForm = (props) => {
 						new swal("Failed", result.error.message, "error", {
 							buttons: false,
 							timer: 2000,
-						  })
-						
+						});
 					} else {
 						setMessage("An unexpected error occurred.");
 					}
@@ -126,16 +123,19 @@ const CheckoutForm = (props) => {
 	return (
 		<form id="payment-form" onSubmit={handleSubmit}>
 			<PaymentElement />
-			<button disabled={!elements || isLoading || !stripe} id="submit"
-			style={{
-				height: "38px",
-				width: "243px",
-				borderRadius: "20px",
-				backgroundColor: "#00CB79",
-				fontSize: "16px",
-				color: "white",
-				marginTop: "15px"
-			  }}>
+			<button
+				disabled={!elements || isLoading || !stripe}
+				id="submit"
+				style={{
+					height: "38px",
+					width: "243px",
+					borderRadius: "20px",
+					backgroundColor: "#00CB79",
+					fontSize: "16px",
+					color: "white",
+					marginTop: "15px",
+				}}
+			>
 				<span id="button-text">
 					{isLoading ? <div>Loading...</div> : "Pay now"}
 				</span>
