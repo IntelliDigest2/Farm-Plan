@@ -14,14 +14,18 @@ export function AddMealModalRecipe({ show, setShow, value }) {
 
   //control barcode scanner
   const [scan, setScan] = useState(false);
-  const [expand, setExpand] = useState("+ scan from barcode");
+  const [expand, setExpand] = useState(<span className="scan-text">+ scan from barcode</span>);
   //scanning items will add item as a meal in meal plan including nutrition info and ingrs if information available
   const handleSetScan = () => {
     setScan(!scan);
     if (scan) {
-      setExpand("+ scan from barcode");
+      setExpand(
+        <span className="scan-text">+ scan from barcode</span>
+        );
     } else {
-      setExpand("- input manually");
+      setExpand(
+        <span className="scan-text">- input manually</span>
+        );
     }
   };
 
@@ -46,7 +50,7 @@ export function AddMealModalRecipe({ show, setShow, value }) {
         aria-labelledby="add meal"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header className="modal-header" closeButton>
           <Modal.Title id="add-meal" className="basic-title-left basic-lg">
             {t('description.add_save_meal')}
           </Modal.Title>

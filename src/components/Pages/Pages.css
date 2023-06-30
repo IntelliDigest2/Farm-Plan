@@ -4,11 +4,23 @@ html {
 
 body {
   background-color: whitesmoke;
+  width: 100%;
+  height: 100%;
+
 }
 
+/* html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+} */
+
+
 * {
-  font-family: "Source Sans Pro";
+  font-family: 'Poppins', sans-serif;
   letter-spacing: 0.06rem;
+  /* font-size: 20px; */
+  /* font-weight: 900; */
 }
 
 .warning {
@@ -221,8 +233,9 @@ body {
   /*600px in center of large page but varies when browser is smaller*/
   margin-top: 2rem;
   margin-bottom: 2rem;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
+
 
 /* map page */
 .map-data {
@@ -242,7 +255,7 @@ body {
 .popup-data {
   padding: 0px 2px 0px 2px;
   font-size: 15px;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .popup-name {
@@ -285,25 +298,32 @@ body {
   height: 100%;
 }
 
-body {
-  width: 100%;
-  height: 100%;
-}
-
 @media (max-width: 576px) {
   .card-design {
     width: 203px;
     height: 300px;
   }
+
+  .avatar-name-container {
+    flex-direction: column;
+  }
+
+  .avatar-image,
+  .profile-container {
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+  }
 }
 
 .card-design {
-  width: "261px";
-  height: "400px";
+  width: 261px;
+  height: 400px;
 }
 
+
 .basic-title {
-  font-family: "Source Sans Pro";
+  font-family: 'Poppins', sans-serif;
   font-weight: 550;
   font-size: 1rem;
   letter-spacing: 0.15rem;
@@ -311,25 +331,229 @@ body {
 }
 
 .basic-title-left {
-  font-family: "Source Sans Pro";
-  font-weight: 550;
-  font-size: 1rem;
   letter-spacing: 0.1rem;
   text-align: left;
+
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 530;
+  font-size: 18px;
+  line-height: 24px;
 }
 
 .basic-lg {
-  font-size: 1.5rem !important;
-  font-weight: 600 !important;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f4f4f4;
 }
 
 .basic-text {
-  font-family: "Source Sans Pro";
+  font-family: 'Poppins', sans-serif;
   font-weight: 550;
   font-size: 1rem;
   letter-spacing: 0.1rem;
   text-align: center;
 }
+
+.form_search {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+}
+
+.button_text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 530;
+  font-size: 10px;
+}
+
+.dropdown_text p {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 530;
+  font-size: 14px;
+  padding-top: 8px;
+}
+
+.modal-header {
+  font-family: 'Poppins', sans-serif;
+  background-color: #A5B828;
+  color: #1C1569;
+  align-items: center;
+}
+
+.scan-text {
+  font-family: 'Poppins', sans-serif;
+  color: #1C1569;
+  background-color: #A5B828;
+  padding: 10px;
+  border-radius: 19px;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  /* Optional hover effect */
+  &:hover {
+    background-color: #1C1569;
+    color: #eeeeee;
+  }
+}
+
+.custom-form {
+  width: 90%; /* Adjust the width to your desired value */
+  margin: 0 auto; /* Center the form horizontally if needed */
+}
+
+/* .signup-input {
+  background: #FFFFFF;
+  border-radius: 20px;
+} */
+
+.signup-input-meal-name {
+  background: #FFFFFF;
+  border-radius: 20px;
+  height: 51px;
+  display: inline-block;
+  /* vertical-align: middle; */
+  width: calc(50% - 10px); /* Adjust the width to your desired value */
+  margin-right: 10px; /* Adjust the margin to provide spacing between the inputs */
+}
+
+.signup-input-qty {
+  background: #FFFFFF;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  display: inline-block;
+  /* vertical-align: middle; */
+  width: calc(60% - 5px); /* Adjust the width to your desired value */
+  height: 51px;
+}
+
+.dropdown-input {
+  display: inline-block;
+  vertical-align: middle;
+  
+}
+
+.ingredient-list ul {
+  color: #1C1569;
+  align-self: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 550;
+  letter-spacing: 0.1rem;
+  text-align: center;
+  list-style-type: none;
+
+}
+
+
+
+.signup-confirm {
+  margin: auto;
+  margin-top: 9%;
+  margin-bottom: 2%;
+  font-size: 1rem;
+  border-radius: 8px;
+
+  background-color: #0c0847;
+  border-color: #02001a;
+  color: white;
+
+  width: 135px;
+  height: 51px;
+  left: 627px;
+  top: 757px;
+
+  background: #2E2687;
+  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+  border-radius: 50px;
+
+}
+.signup-confirm:hover {
+  background-color: #02001a;
+  border-color: white;
+  color: white;
+}
+.signup-confirm:focus {
+  background-color: #02001a;
+  border-color: white;
+}
+.signup-confirm:active {
+  background-color: #0c0847;
+  border-color: white;
+}
+
+.save-meal-check-box {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adjust the gap as needed */
+}
+
+.save-meal-check-box input[type="checkbox"] {
+  transform: scale(1.5); /* Increase the scale factor as needed */
+}
+
+.save-meal-check-box label {
+  font-size: 20px; /* Increase the font size as needed */
+}
+
+.avatar-name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-image {
+  width: 40%;
+  text-align: center;
+}
+
+.avatar-image img {
+  max-width: 100%;
+}
+
+.profile-container {
+  flex: 1;
+  margin-left: 10px; /* Adjust margin as needed */
+}
+
+
+.name-container {
+  margin-right: 250px; /* Adjust the margin as needed */
+}
+
+/* .tabs {
+  display: inline-block;
+}
+
+.tabs .MuiTabList-root {
+  display: flex !important;
+  align-items: center !important;
+  padding: 24px;
+}
+
+.tabs .MuiTab-root {
+  flex: 1 !important;
+} */
+
+.tabs .MuiTabPanel-root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+
+
+
+/* .tabs .MuiTabPanel-root {
+  flex: 1;
+} */
+
+
 
 
 /*=============================================

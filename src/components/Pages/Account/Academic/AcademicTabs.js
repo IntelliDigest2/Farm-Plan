@@ -168,3 +168,6 @@ export function FSSP() {
     </>
   );
 }
+
+export default { Food, Research, Environment, FSSP };
+

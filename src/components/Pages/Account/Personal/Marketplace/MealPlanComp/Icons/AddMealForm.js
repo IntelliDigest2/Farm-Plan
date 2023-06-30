@@ -4,6 +4,7 @@ import MealType from "../Search/mealType";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import FoodItemSearch from "./InputRecipe/FoodItemSearch";
 import "../../../../../../SubComponents/Button.css";
+import "../../../../../../Pages/Pages.css"
 
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -132,6 +133,7 @@ function AddMealForm(props) {
       <Form.Group>
         <Form.Label>{t('description.meal_name')}</Form.Label>
         <Form.Control
+          className="signup-input-meal-name"
           type="text"
           id="mealName"
           onChange={(e) => {
@@ -143,7 +145,7 @@ function AddMealForm(props) {
 
       <MealType setMealType={setMealType} ownRecipe={true} />
 
-      <div style={{ padding: "0 0 0 4%" }}>
+      <div className="ingredient-list">
         <ul>{ingredientsList}</ul>
       </div>
 
@@ -161,6 +163,7 @@ function AddMealForm(props) {
         <Form.Label>{t('description.weight_volume')}</Form.Label>
         <InputGroup>
           <Form.Control
+            className="signup-input-qty"
             id="quantity"
             type="number"
             min="0"
@@ -192,18 +195,20 @@ function AddMealForm(props) {
         </Button>
       </Form.Group>
 
-      <Form.Group>
+      <Form.Group className="save-meal-check-box">
         <Form.Check
           type="checkbox"
+          id="save-meal-checkbox"
           defaultChecked
-          label="Save meal"
           onClick={() => handleSave()}
         />
-      </Form.Group>
+        <Form.Check.Label htmlFor="save-meal-checkbox">Save meal</Form.Check.Label>
+    </Form.Group>
+
 
       <div style={{ alignItems: "center" }}>
-        <Button className="blue-btn shadow-none" type="submit">
-        {t('description.button_done')}
+      <Button className="signup-confirm blue-btn shadow-none" type="submit">
+          {t('description.button_done')}
         </Button>
       </div>
     </Form>

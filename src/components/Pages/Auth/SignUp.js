@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+ 
 import "../Account/UserAccount.css";
 import "./Mob.css";
 import { Select } from "../../SubComponents/Dropdown";
@@ -441,9 +441,9 @@ const SignUp = (props) => {
 					/>
 					<div className="signup-center subtitles row">
 						<p>Already have an account? </p>
-						<Link style={{ color: "#AFBA15" }} to="/login">
-							{"  "}
-							Log In
+						<Link style={{ color: '#1C1569' }} to='/login'>
+							{'  '}
+							LOG IN
 						</Link>
 					</div>
 				</Title>
@@ -512,11 +512,10 @@ const SignUp = (props) => {
 						<div className="auth-error">
 							{authError ? <p> {authError}</p> : null}
 						</div>
-						<div>
+						<div className="signup">
 							<Button
-								style={{ width: "30%" }}
 								variant="default"
-								className="signup-btn"
+								className='signup-confirm'
 								onClick={(e) => setStage(1)}
 							>
 								Change
@@ -704,39 +703,35 @@ const Stage1 = (props) => {
 					<Form.Row>
 						<Form.Group
 							className="mb-3"
-							style={{ backgroundColor: "white" }}
 							as={Col}
 						>
-							<Form.Label style={{ backgroundColor: "white" }}>Name</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="Enter name"
 								defaultValue={props.firstName}
 								required
 								onChange={(e) => props.setFirstName(e.target.value)}
+								className='signup-input placeholder-input'
 							/>
 						</Form.Group>
 						<Form.Group
 							className="mb-3"
-							style={{ backgroundColor: "white" }}
 							as={Col}
 						>
-							<Form.Label style={{ backgroundColor: "white" }}>
-								Surname
-							</Form.Label>
 							<Form.Control
 								type="text"
 								placeholder="Enter surname"
 								defaultValue={props.lastName}
 								required
 								onChange={(e) => props.setLastName(e.target.value)}
+								className='signup-input placeholder-input'
 							/>
 						</Form.Group>
 					</Form.Row>
 
-					<Form.Group className="mb-3" style={{ backgroundColor: "white" }}>
+					{/* <Form.Group className="mb-3" style={{ backgroundColor: "white" }}>
 						<PhoneInput value={props.mobile} onChange={props.setMobile} />
-					</Form.Group>
+					</Form.Group> */}
 
 					<Form.Group className="mb-3">
 						{/* <Form.Label>Email address</Form.Label> */}
@@ -746,6 +741,7 @@ const Stage1 = (props) => {
 							defaultValue={props.email}
 							required
 							onChange={(e) => props.setEmail(e.target.value)}
+							className='signup-input placeholder-input'
 						/>
 						<Form.Text className="text-muted">
 							We'll never share your email with anyone else.
@@ -753,21 +749,21 @@ const Stage1 = (props) => {
 					</Form.Group>
 
 					<Form.Group className="mb-3">
-						<Form.Label>Password</Form.Label>
 						<Form.Control
 							type="password"
 							placeholder="Password"
 							defaultValue={props.password}
 							required
 							onChange={(e) => props.setPassword(e.target.value)}
+							className='signup-input placeholder-input'
 						/>
 					</Form.Group>
 					{/*Confirm Password*/}
-					<div className="center">
+					<div className="signup-center">
 						<Button
 							type="submit"
 							variant="default"
-							className="signup-btn"
+							className="signup-confirm"
 							onClick={(e) => {
 								e.preventDefault();
 								//Next Stage
@@ -789,12 +785,12 @@ const Stage2 = (props) => {
 			<FormStyle>
 				<Form>
 					<Form.Group className="mb-3">
-						<Form.Label>Town</Form.Label>
 						<Form.Control
 							type="text"
 							placeholder="Town"
 							defaultValue={props.town}
 							required
+							className='signup-input placeholder-input'
 							onChange={(e) => {
 								props.setTown(e.target.value);
 							}}
@@ -802,20 +798,19 @@ const Stage2 = (props) => {
 					</Form.Group>
 
 					<Form.Group className="mb-3">
-						<Form.Label>Country</Form.Label>
 						<Select
-							id="country"
-							function={(e) => {
-								props.setCountry(e.target.value);
-							}}
-							value={props.country}
-							placeholder="Please Select a Country"
-							items={countryNames}
+						id="country"
+						className='signup-input placeholder-input'
+						function={(e) => {
+							props.setCountry(e.target.value);
+						}}
+						value={props.country}
+						placeholder="Please Select a Country"
+						items={countryNames}
 						/>
 					</Form.Group>
 
 					<Form.Group className="mb-3">
-						<Form.Label>Region</Form.Label>
 						<Select
 							id="region"
 							function={(e) => {
@@ -824,6 +819,7 @@ const Stage2 = (props) => {
 							value={props.region}
 							placeholder="Please Select a Region"
 							items={regionNames}
+							className='signup-input placeholder-input'
 						/>
 					</Form.Group>
 
@@ -861,7 +857,7 @@ const Stage2 = (props) => {
 				<div className="row">
 					<Button
 						variant="default"
-						className="signup-btn"
+						className='signup-confirm'
 						onClick={(e) => {
 							e.preventDefault();
 							//Previous Stage
@@ -873,7 +869,7 @@ const Stage2 = (props) => {
 
 					<Button
 						variant="default"
-						className="signup-btn"
+						className='signup-confirm'
 						onClick={(e) => {
 							e.preventDefault();
 							//Next Stage
@@ -915,12 +911,12 @@ const Stage4 = (props) => {
 			<FormStyle>
 				<Form>
 					<Form.Group className="mb-3">
-						<Form.Label>Restaurant name</Form.Label>
 						<Form.Control
 							type="text"
 							placeholder="Restaurant name"
 							defaultValue={props.restaurantName}
 							required
+							className='signup-input placeholder-input'
 							onChange={(e) => {
 								props.setRestaurantName(e.target.value);
 							}}
@@ -938,6 +934,7 @@ const Stage4 = (props) => {
 							placeholder="Regulatory body"
 							defaultValue={props.regulatoryBody}
 							required
+							className='signup-input placeholder-input'
 							onChange={(e) => {
 								props.setRegulatoryBody(e.target.value);
 							}}
@@ -953,6 +950,7 @@ const Stage4 = (props) => {
 							placeholder="ID"
 							defaultValue={props.regulatoryBodyID}
 							required
+							className='signup-input placeholder-input'
 							onChange={(e) => {
 								props.setRegulatoryBodyID(e.target.value);
 							}}
@@ -963,7 +961,7 @@ const Stage4 = (props) => {
 						<div className="row">
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Previous Stage
@@ -975,7 +973,7 @@ const Stage4 = (props) => {
 
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1137,7 +1135,7 @@ const Stage8 = (props) => {
 						<div className="row">
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Previous Stage
@@ -1149,7 +1147,7 @@ const Stage8 = (props) => {
 
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1241,7 +1239,7 @@ const Stage6 = (props) => {
 						<div className="row">
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Previous Stage
@@ -1253,7 +1251,7 @@ const Stage6 = (props) => {
 
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 
@@ -1307,6 +1305,7 @@ const Stage7 = (props) => {
 							placeholder="Company name"
 							defaultValue={props.companyName}
 							required
+							className='signup-input placeholder-input'
 							onChange={(e) => {
 								props.setCompanyName(e.target.value);
 							}}
@@ -1320,6 +1319,7 @@ const Stage7 = (props) => {
 							placeholder="Describe what you do"
 							defaultValue={props.companyDescription}
 							required
+							className='signup-input placeholder-input'
 							onChange={(e) => {
 								props.setCompanyDescription(e.target.value);
 							}}
@@ -1330,7 +1330,7 @@ const Stage7 = (props) => {
 						<div className="row">
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Previous Stage
@@ -1342,7 +1342,7 @@ const Stage7 = (props) => {
 
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1376,6 +1376,7 @@ const Stage5 = (props) => {
 							placeholder="Cuisine"
 							defaultValue={props.cuisine}
 							required
+							className='signup-input placeholder-input'
 							onChange={(e) => {
 								props.setCuisine(e.target.value);
 							}}
@@ -1392,6 +1393,7 @@ const Stage5 = (props) => {
 							placeholder="Description"
 							defaultValue={props.restaurantDescription}
 							required
+							className='signup-input placeholder-input'
 							onChange={(e) => {
 								props.setRestaurantDescription(e.target.value);
 							}}
@@ -1402,7 +1404,7 @@ const Stage5 = (props) => {
 						<div className="row">
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Previous Stage
@@ -1414,7 +1416,7 @@ const Stage5 = (props) => {
 
 							<Button
 								variant="default"
-								className="signup-btn"
+								className="signup-confirm"
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage

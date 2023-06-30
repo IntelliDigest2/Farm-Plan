@@ -4,6 +4,7 @@
   min-height: 8rem;
   position: relative;
   padding-bottom: 1.5rem;
+  background-color: greenyellow;
 }
 
 .inventory .button {

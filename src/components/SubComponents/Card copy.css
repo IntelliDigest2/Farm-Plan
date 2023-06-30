@@ -1,0 +1,37 @@
+.form-card {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.product {
+  margin: 3% 5% 3% 5%;
+  padding: 0 2% 0 2%;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.product-image {
+  width: 40%;
+  height: 100%;
+  margin: 1%;
+}
+
+.product-information {
+  padding: 2% 2% 0 2%;
+}
+.product-information h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.product-information h2 {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.product-information h6 {
+  margin-top: -4%;
+  font-size: 1rem;
+  color: rgb(128, 128, 128);
+}

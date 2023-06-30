@@ -7,10 +7,10 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../lib/Notifications";
-import { editMenuStatusOnSup, sendOrderToUser } from "../../../../../../store/actions/supplierActions/supplierData";
+import { editMenuStatusOnRes, sendOrderToUser } from "../../../../../../store/actions/marketplaceActions/restaurantData";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
-function ConfirmItemIconSup(props) {
+function ConfirmItemIconRes(props) {
 
   const { t } = useTranslation();
 
@@ -25,7 +25,7 @@ function ConfirmItemIconSup(props) {
       item: props.item,
       status: "CONFIRMED",
     };
-    props.editMenuStatusOnSup(data);
+    props.editMenuStatusOnRes(data);
     props.sendOrderToUser(data)
 
     submitNotification("Success", "User will be notified");
@@ -82,9 +82,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editMenuStatusOnSup: (data) => dispatch(editMenuStatusOnSup(data)),
+    editMenuStatusOnRes: (data) => dispatch(editMenuStatusOnRes(data)),
     sendOrderToUser: (data) => dispatch(sendOrderToUser(data))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmItemIconSup);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmItemIconRes);

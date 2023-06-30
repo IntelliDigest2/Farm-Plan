@@ -1,3 +1,22 @@
+.page-wrap-mini {
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 100%;
+}
+
+@media (max-width: 576px) {
+  .page-wrap-mini {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 0;
+  }
+}
+
+
 .top {
   display: flex;
   flex-direction: row;
@@ -23,9 +42,12 @@
   flex-direction: column;
   justify-content: center;
 
-  background-color: white;
+  background-color: #A5B828;
   border-radius: 25px;
   padding: 1rem;
+
+  /* background-image: url("../../images/background.png"); */
+  
 }
 .mobile-style a {
   color: #32797e;
@@ -98,9 +120,28 @@
 /* Large Laptop/Desktop */
 @media screen and (min-width: 1200px) {
   .mobile-style {
-    max-width: 50%;
+    max-width: 80%;
   }
   .logo {
     max-width: 50%;
   }
 }
+
+.PageWrapMini {
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 100%;
+}
+
+@media (max-width: 576px) {
+  .PageWrapMini {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 0;
+  }
+}
+

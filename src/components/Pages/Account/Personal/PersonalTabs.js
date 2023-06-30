@@ -4,7 +4,7 @@ import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
 import { useTranslation, Trans } from "react-i18next";
-
+ 
 // import Accordion from "@mui/material/Accordion";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import AccordionDetails from "@mui/material/AccordionDetails";
