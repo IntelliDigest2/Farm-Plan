@@ -20,6 +20,7 @@ function PayIcon(props) {
   const [showModal, setShow] = useState(false);
 
   const handlePay = async () => {
+    // console.log(props.payType, `this is the payment type`)
 
     
           //  await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
@@ -37,7 +38,7 @@ function PayIcon(props) {
       })
          .then((response) => response.json())
          .then((data) => {
-            console.log("this is the data returned", data)
+            // console.log("this is the data returned", data)
             history.push('/payment-process',{params: {sec: `${data.clientSecret}`,
           consultInfo : [props.consultantPaymentInfo]}})
          })
