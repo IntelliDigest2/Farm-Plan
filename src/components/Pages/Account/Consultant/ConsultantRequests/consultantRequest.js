@@ -3,7 +3,9 @@ import { format, parseISO, isValid } from "date-fns";
 
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
+// import { Button } from "react-bootstrap";
+import { Button, Modal, ListGroup, ListGroupItem } from "react-bootstrap";
+
 import {
 	acceptBookingRequest,
 	cancelBookingRequest,
@@ -12,6 +14,9 @@ import {
 export const ConsultantRequest = (props) => {
 	const [cancelLoading, setCancelLoading] = useState(false);
 	const [acceptLoading, setAcceptLoading] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+	const [actionType, setActionType] = useState();
+
 	const {
 		event,
 		acceptBooking,
@@ -25,6 +30,9 @@ export const ConsultantRequest = (props) => {
 		auth,
 	} = props;
 
+	const handleClose = () => setShowModal(false);
+	const handleShow = () => setShowModal(true);
+
 	let date = format(parseISO(event.start), "yyyy-MM-dd");
 	let startTime = format(parseISO(event.start), "hh:mm a");
 	let endTime = format(parseISO(event.end), "hh:mm a");
@@ -37,32 +45,55 @@ export const ConsultantRequest = (props) => {
 
 	let serviceCost = prices[event.eventType];
 	// console.log(profile, "this is the service cost");
+
+	const handleProceed = () => {
+		// console.log(`submitted`);
+
+		if (actionType === "accept") {
+			setAcceptLoading(true);
+
+			console.log(
+				event,
+				auth.uid,
+				`${profile.firstName} ${profile.lastName}`,
+				serviceCost,
+				`these are all the parameters needed`
+			);
+			acceptBookingRequest(
+				event,
+				auth.uid,
+				`${profile.firstName} ${profile.lastName}`,
+				serviceCost
+			)
+				.then((result) => {
+					// console.log(result);
+					setAcceptLoading(false);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		} else if (actionType === "reject") {
+			setCancelLoading(true);
+			cancelBookingRequest(auth.uid, event)
+				.then((result) => {
+					// console.log(result);
+					setCancelLoading(false);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	};
 	const acceptRequest = () => {
-		setAcceptLoading(true);
-		acceptBookingRequest(
-			event,
-			auth.uid,
-			`${profile.firstName} ${profile.lastName}`,
-			serviceCost
-		)
-			.then((result) => {
-				console.log(result);
-				setAcceptLoading(false);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		// setAcceptLoading(true);
+		// showDialog();
+		handleShow();
+		setActionType("accept");
 	};
 	const rejectRequest = () => {
-		setCancelLoading(true);
-		cancelBookingRequest(auth.uid, event)
-			.then((result) => {
-				console.log(result);
-				setCancelLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		handleShow();
+		setActionType("reject");
+
 		//showDialog
 		// setCancelLoading(true);
 	};
@@ -78,37 +109,64 @@ export const ConsultantRequest = (props) => {
 	// useE
 
 	return (
-		<div className={classes.cont}>
-			<div>request type: {event.eventType}</div>
-			<div>request date: {date}</div>
-			<div>start time: {startTime}</div>
-			<div>end time: {endTime}</div>
+		<div>
+			<div>
+				<Modal show={showModal} onHide={handleClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Request action</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						You are about to accept/reject a booking. You cannot cancel after
+						you click 'proceed'
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleClose}>
+							Cancel
+						</Button>
+						<Button variant="primary" onClick={handleProceed}>
+							{/* { acceptLoading === false || cancelLoading === false ?	Proceed :  } */}
+							{/* {cancelLoading ? "canceling Request..." : "Canceled"} */}
+							{/* {acceptLoading ? "accepting Request..." : "Accepted"} */}
 
-			<Button
-				disabled={
-					event.status.requestAccepted || event.status.requestId === null
-				}
-				onClick={(e) => rejectRequest(e)}
-				variant="danger"
-			>
-				{event.status.requestAccepted
-					? "Canceled"
-					: cancelLoading
-					? "canceling..."
-					: "cancel Request"}
-			</Button>
-			<Button
-				disabled={
-					event.status.requestAccepted || event.status.requestId === null
-				}
-				onClick={(e) => acceptRequest(e)}
-			>
-				{event.status.requestAccepted
-					? "Accepted"
-					: acceptLoading
-					? "accepting..."
-					: "accept Request"}
-			</Button>
+							{actionType === "accept"
+								? acceptLoading
+									? "accepting Request"
+									: event.status.requestAccepted
+									? "Accepted"
+									: "Proceed"
+								: cancelLoading
+								? "canceling Request"
+								: event.status.requestAccepted
+								? "Canceled"
+								: "Proceed"}
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
+			<div className={classes.cont}>
+				<div>request type: {event.eventType}</div>
+				<div>request date: {date}</div>
+				<div>start time: {startTime}</div>
+				<div>end time: {endTime}</div>
+
+				<Button
+					disabled={
+						event.status.requestAccepted || event.status.requestId === null
+					}
+					onClick={(e) => rejectRequest(e)}
+					variant="danger"
+				>
+					{event.status.requestAccepted ? "Canceled" : "Cancel request"}
+				</Button>
+				<Button
+					disabled={
+						event.status.requestAccepted || event.status.requestId === null
+					}
+					onClick={(e) => acceptRequest(e)}
+				>
+					{event.status.requestAccepted ? "Accepted" : "Accept request"}
+				</Button>
+			</div>
 		</div>
 	);
 };

@@ -17,14 +17,14 @@ function ConsultantRequestsPage(props) {
 		consultantData,
 		getConsultantInfo,
 	} = props;
-	const [show, setShow] = useState(false);
+	// const [show, setShow] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [requests, setRequests] = useState(null);
 
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	// const handleClose = () => setShow(false);
+	// const handleShow = () => setShow(true);
 
-	const handleProceed = () => {};
+	// const handleProceed = () => {};
 
 	useEffect(() => {
 		handleGetBookingRequest(auth.uid);
@@ -36,7 +36,7 @@ function ConsultantRequestsPage(props) {
 		setIsLoading(false);
 	}, [consultantRequests]);
 
-	console.log(requests, `this is the requests`);
+	// console.log(requests, `this is the requests`);
 
 	// let requests = consultantCalendarEvents.filter((event) => {
 	// 	console.log(event);
@@ -50,7 +50,7 @@ function ConsultantRequestsPage(props) {
 					return (
 						<ListGroupItem>
 							<ConsultantRequest
-								showDialog={handleShow}
+								// showDialog={handleShow}
 								key={`request-${index}`}
 								event={request}
 								consultantData={consultantData}
@@ -74,12 +74,12 @@ function ConsultantRequestsPage(props) {
 	return (
 		<PageWrapPayment goTo="/consultant" header="Requests">
 			<div>
-				<Modal show={show} onHide={handleClose}>
+				{/* <Modal show={show} onHide={handleClose}>
 					<Modal.Header closeButton>
-						<Modal.Title>Modal heading</Modal.Title>
+						<Modal.Title>Request action</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						You are about to accept a booking. You cannot cancel after you click
+						You are about to accept/reject a booking. You cannot cancel after you click
 						'proceed'
 					</Modal.Body>
 					<Modal.Footer>
@@ -90,7 +90,7 @@ function ConsultantRequestsPage(props) {
 							Proceed
 						</Button>
 					</Modal.Footer>
-				</Modal>
+				</Modal> */}
 				<div>
 					<li>{requestContent}</li>
 				</div>
@@ -109,6 +109,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
 	return {
+		// acceptBooking: (event) => dispatch(acceptBookingRequest(event)),
 		handleGetBookingRequest: (uid) => dispatch(getBookingRequest(uid)),
 		getConsultantInfo: (uid) => dispatch(fetchConsultantInfo(uid)),
 	};

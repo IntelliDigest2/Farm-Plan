@@ -39,7 +39,7 @@ const ConsultantAccountPage = (props) => {
 		setType(props.profile.type);
 	}, [props.profile.type]);
 
-	console.log(profile);
+	// console.log(profile);
 
 	// console.log(profile, `this is the profile`);
 
