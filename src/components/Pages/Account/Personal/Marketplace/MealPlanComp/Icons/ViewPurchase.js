@@ -2,6 +2,7 @@ import React from "react";
 import { useId } from "react";
 import { Modal } from "react-bootstrap";
 import ViewPurchaseInfo from "./ViewPurchaseInfo";
+import "./ViewPurchaseInfo.css"
 import { useTranslation, Trans } from 'react-i18next';
 
 export function ViewPurchase({
@@ -19,6 +20,8 @@ export function ViewPurchase({
       size="lg"
       aria-labelledby="edit meal"
       centered
+      dialogClassName="custom-modal"
+
     >
       <Modal.Header closeButton>
         <Modal.Title id="add-meal">{t('description.order')}</Modal.Title>

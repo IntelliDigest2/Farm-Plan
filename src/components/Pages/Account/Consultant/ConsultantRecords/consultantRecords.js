@@ -11,7 +11,7 @@ import {
 	ListGroupItem,
 } from "react-bootstrap";
 import { parseISO, format } from "date-fns";
-
+ 
 function ConsultantRecord(props) {
 	const [bookingsData, setBookingsData] = useState(null);
 	const { completedBookings, auth, getCompletedBookings } = props;
