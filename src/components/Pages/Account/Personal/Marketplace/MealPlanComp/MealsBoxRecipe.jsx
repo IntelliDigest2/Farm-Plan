@@ -92,9 +92,9 @@ export default function MealsBox(props) {
                   )}
                 </ListItem>
               ))}
-              <ListItem>
-                {newMeal.url ? <a href={newMeal.url}>{newMeal.url}</a> : null}
-              </ListItem>
+                <ListItem>
+                  {newMeal.url ? <a className="meal-url" href={newMeal.url} target="_blank" rel="noopener noreferrer">View Steps</a> : null}
+                </ListItem>
             </List>
           </div>
         </div>

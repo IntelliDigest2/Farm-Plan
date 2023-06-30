@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import "./MealsBox.css"
 import Form from 'react-bootstrap/Form';
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -46,7 +48,7 @@ export default function MealsBox(props) {
     </p>
 
       {filter.map((newMeal, index) => (
-        <div className="meal-box" key={`meal-box${index}`}>
+        <div className="meal-item" key={`meal-box${index}`}>
           <div className="ingredients">
             <List
               key={`ingrs${index}`}
@@ -121,9 +123,9 @@ export default function MealsBox(props) {
                   )}
                 </ListItem>
               ))}
-              <ListItem>
-                {newMeal.url ? <a href={newMeal.url}>{newMeal.url}</a> : null}
-              </ListItem>
+                <ListItem>
+                  {newMeal.url ? <a className="meal-url" href={newMeal.url} target="_blank" rel="noopener noreferrer">View Steps</a> : null}
+                </ListItem>
             </List>
           </div>
         </div>

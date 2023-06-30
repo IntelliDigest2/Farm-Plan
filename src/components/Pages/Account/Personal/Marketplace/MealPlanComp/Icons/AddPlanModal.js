@@ -25,7 +25,7 @@ export function AddPlanModal({ show, setShow, value }) {
   //control barcode scanner
   const [scan, setScan] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [expand, setExpand] = useState("+ scan from barcode");
+  const [expand, setExpand] = useState(<span className="scan-text">+ scan from barcode</span>);
 
 
   const handleClose = () => setShowS(false);
@@ -36,9 +36,9 @@ export function AddPlanModal({ show, setShow, value }) {
     setScan(!scan);
     setSaved(!saved)
     if (scan) {
-      setExpand("+ scan from barcode");
+      <span className="scan-text">+ scan from barcode</span>
     } else {
-      setExpand("- input manually");
+      <span className="scan-text">- input manually</span>
     }
   };
 

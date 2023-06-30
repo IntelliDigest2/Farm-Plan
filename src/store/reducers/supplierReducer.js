@@ -124,32 +124,6 @@ const initState = {
           authError: "get restaurant orders failed",
         };
 
-        case "SEND_ORDER_TO_USER":
-        console.log("sent order to user");
-        return {
-          ...state,
-          authError: null,
-        };
-      case "SEND_ORDER_TO_USER_ERROR":
-        console.log("error, couldn't send order to user", action.err);
-        return {
-          ...state,
-          authError: "send order to user failed",
-        };
-
-        case "EDIT_MENU_STATUS":
-          console.log("status updated", action.payload);
-          return {
-            ...state,
-            authError: null,
-          };
-        case "EDIT_MENU_STATUS_ERROR":
-          console.log("error, couldn't update status", action.err);
-          return {
-            ...state,
-            authError: "update status failed",
-          };
-
     //#endregion
 
 

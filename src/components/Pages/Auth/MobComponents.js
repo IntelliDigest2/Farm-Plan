@@ -5,10 +5,25 @@ import logo from "../../../images/WFTLogo.png";
 import { Container } from "react-bootstrap";
 
 export const Title = (props) => {
+
+  const containerStyle = {
+    backgroundColor: "#A5B828", // Set the desired background color
+    borderRadius: "25px",
+    padding: "1rem"
+  };
+
+  const logoStyle = {
+    height: "auto",
+    width: "100%",
+    maxWidth: "750px", // Adjust the width of the logo as needed
+    padding: "70px", // Add padding around the image
+
+  };
+
   return (
-    <Container className="mobile-style">
+    <Container className="mobile-style" style={containerStyle}>
       <div className="top">
-        <img className="logo" src={logo} alt="IntelliDigest" />
+        <img className="logo" src={logo} alt="IntelliDigest" style={logoStyle}/>
       </div>
       <div className="titles">
         {/*<Row className="center">

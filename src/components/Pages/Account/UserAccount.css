@@ -1,11 +1,23 @@
 .web-center {
-  display: block;
-  justify-content: center;
+  display: flex;
   align-items: center;
-  /*600px in center of large page but varies when browser is smaller*/
-  /* margin-top: 1rem;
-  margin-bottom: 2rem; */
+  justify-content: center;
   font-family: "Source Sans Pro", sans-serif;
+}
+
+.avatar-name-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Add margin bottom for spacing */
+}
+
+.building-function-container p {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; 
+  font-weight: bold;
+  white-space: nowrap; /* Prevents text from wrapping to a new line */
+
 }
 
 .user-account {

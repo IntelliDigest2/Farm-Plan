@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import MealsBox from "./MealsBox";
-
+import "./MealsBox.css"
 import { connect } from "react-redux";
 import { getMealData, getMealDiary } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { getMealPlannerData, getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
@@ -160,41 +160,6 @@ function MyMeals(props) {
     });
   };
 
-  // const updateMealPlans = async () => {
-  //   //clears the meals array before each update- IMPORTANT
-  //   setMeals([]);
-
-  //   //sets a new meal object in the array for every document with this date attached
-  //   props.mealPlanner.forEach((doc) => {
-  //     var mealName = doc.meal;
-  //     var ingredients = doc.ingredients;
-  //     var id = doc.id;
-  //     var mealType = doc.mealType;
-  //     var url = doc.url;
-  //     var totalNutrients = doc.totalNutrients;
-  //     var totalDaily = doc.totalDaily;
-  //     let nn;
-  //     if (doc.nonNativeData) {
-  //       nn = doc.nonNativeData;
-  //     } else {
-  //       nn = false;
-  //     }
-
-  //     setMeals((meals) => [
-  //       ...meals,
-  //       {
-  //         meal: mealName,
-  //         mealType: mealType,
-  //         ingredients: ingredients,
-  //         id: id,
-  //         nn: nn,
-  //         url: url,
-  //         totalNutrients: totalNutrients,
-  //         totalDaily: totalDaily,
-  //       },
-  //     ]);
-  //   });
-  // };
  
   useEffect(() => {
     updateMeals();
@@ -208,16 +173,16 @@ function MyMeals(props) {
     <>
     <Refresh />
       {weeklyMeals.length ? (
-        <div>
+        <div className="meals">
           <MealsBox
-            forceUpdate={forceUpdate}
-            meals={meals}
-            weeklyMeals={weeklyMeals}
-            saved={false}
-            value={props.value}
-            isMealPlan={true}
+          forceUpdate={forceUpdate}
+          meals={meals}
+          weeklyMeals={weeklyMeals}
+          saved={false}
+          value={props.value}
+          isMealPlan={true}
           />
-        </div>
+        </div> 
       ) : (
         <div className="empty basic-title-left">
           <p> No meal yet 🙂 use the add button </p>

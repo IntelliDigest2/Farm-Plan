@@ -19,7 +19,7 @@ const AddToInventoryForm = (props) => {
   const [quantity, setQuantity] = useState(0);
   const [measure, setMeasure] = useState("");
   const [scan, setScan] = useState(false);
-  const [expand, setExpand] = useState("+ scan from barcode");
+  const [expand, setExpand] = useState(<span className="scan-text">+ scan from barcode</span>);
   const [show, setShow] = useState(true);
   const [startDate, setStartDate] = useState(new Date());
 
@@ -82,9 +82,9 @@ const AddToInventoryForm = (props) => {
   const handleSetScan = () => {
     setScan(!scan);
     if (scan) {
-      setExpand("+ scan from barcode");
+      <span className="scan-text">+ scan from barcode</span>
     } else {
-      setExpand("- input manually");
+      <span className="scan-text">- input manually</span>
     }
   };
 
@@ -104,6 +104,7 @@ const AddToInventoryForm = (props) => {
         <ScannerInventory handleFormClose={handleFormClose}/>
       ) : (
         <Form
+          className="custom-form"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
@@ -114,9 +115,13 @@ const AddToInventoryForm = (props) => {
           
         <FoodItemSearch handleFoodSearch={handleFoodSearch} />
         <Form.Group>
+        
+      </Form.Group>
+      <Form.Group>
         <Form.Label>{t('description.amount')}</Form.Label>
         <InputGroup>
           <Form.Control
+            className="signup-input-qty"
             id="quantity"
             type="number"
             min="0"
@@ -134,10 +139,9 @@ const AddToInventoryForm = (props) => {
             }}
           />
         </InputGroup>
-      </Form.Group>
-      <Form.Group>
         <Form.Label>{t('description.expiry_date')}</Form.Label>
-        <DatePicker 
+        <DatePicker
+          className="signup-input-meal-name" 
           selected={startDate} 
           onChange={(date) => setStartDate(date)} 
           dateFormat="dd/mm/yyyy"  
