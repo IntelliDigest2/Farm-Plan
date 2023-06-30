@@ -1,5 +1,8 @@
 import React from "react";
 
+import "./MealsBox.css"
+
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 // import ListItemIcon from "@mui/material/ListItemIcon";
@@ -18,7 +21,7 @@ export default function MealsBox(props) {
   return (
     <>
       {props.meals.map((newMeal, index) => (
-        <div className="meal-box" key={`meal-box${index}`}>
+        <div className="meal-item" key={`meal-box${index}`}>
           <div className="ingredients">
              <List
               key={`ingrs${index}`}

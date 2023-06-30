@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
+import "../MealsBox.css"
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -14,7 +15,7 @@ export default function RecipeList(props) {
     <>
       {props.query &&
         props.recipes.map((item, i) => (
-          <div className="meal-box-recipe" key={i}>
+          <div className="meal-item" key={i}>
             <Row>
               <Col className="image">
                 <img src={item.recipe.image} alt={`${item.recipe.label}`} />
@@ -57,7 +58,7 @@ export default function RecipeList(props) {
                         {ingredient.text}
                       </ListItem>
                     ))}
-                  <a href={item.recipe.url}>{item.recipe.url}</a>
+                  <a className="meal-url" href={item.recipe.url} target="_blank" rel="noopener noreferrer">View Steps</a>
                 </List>
               </Col>
             </Row>

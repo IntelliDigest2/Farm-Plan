@@ -132,12 +132,14 @@ export default function RecipeSearch(props) {
           </Grid>
         </Box>
       </Form>
+      <div className="meals">
       <RecipeList
         recipes={recipes}
         query={query}
         value={props.value}
         onChange={props.onChange}
       />
+      </div>
       {links ? (
         <NextBack
           links={links}
