@@ -1,0 +1,18 @@
+.custom-modal .modal-body {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto; /* Add vertical scroll if content overflows */
+  }
+  
+  .custom-modal .modal-body td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Adjust text size for mobile screens */
+  @media (max-width: 767px) {
+    .custom-modal .modal-body td {
+      font-size: 12px;
+    }
+  }
+  

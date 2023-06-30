@@ -2,6 +2,8 @@ import React from "react";
 import { useId } from "react";
 import { Modal } from "react-bootstrap";
 import ViewOrderInfo from "./ViewOrderInfo";
+import "./ViewOrderInfo.css"
+
 import { useTranslation, Trans } from 'react-i18next';
 
 export function ViewOrder({
