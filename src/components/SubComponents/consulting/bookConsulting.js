@@ -169,7 +169,7 @@ function BookConsulting(props) {
 
 	return (
 		<div>
-			<h1>Search for consultant</h1>
+			<h3>Search for consultant</h3>
 			<div>
 				<p>select consultant specialty and date</p>
 			</div>
