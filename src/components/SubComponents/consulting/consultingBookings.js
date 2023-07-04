@@ -416,42 +416,52 @@ export const ConsultingBookings = (props) => {
 	}, []);
 
 	useEffect(() => {
-		// console.log(otherBookings);
+		console.log(otherBookings, `this is the other bookings`);
 	}, [otherBookings]);
 
 	// console.log(profile);
 
-	let events = (
-		<ListGroup>
-			{otherBookings?.map((booking) => {
-				let value;
+	let events =
+		!otherBookings || otherBookings.length === 0 ? (
+			"You dont have any bookings"
+		) : (
+			<ListGroup>
+				{otherBookings?.map((booking) => {
+					let value;
 
-				switch (booking.event.eventType) {
-					case "Video call":
-					case "Phone call":
-						value = <Call booking={booking} auth={auth} />;
-						break;
+					switch (booking.event.eventType) {
+						case "Video call":
+						case "Phone call":
+							value = <Call booking={booking} auth={auth} />;
+							break;
 
-					case "Consultant visitation":
-						value = <ConsultantIsVisiting booking={booking} auth={auth} />;
-						break;
-					case "Visit to consultant":
-						value = <VisitConsultant booking={booking} auth={auth} />;
-						break;
-					case "Written feedback":
-						value = <WrittenFeedback booking={booking} auth={auth} />;
-						break;
+						case "Consultant visitation":
+							value = <ConsultantIsVisiting booking={booking} auth={auth} />;
+							break;
+						case "Visit to consultant":
+							value = <VisitConsultant booking={booking} auth={auth} />;
+							break;
+						case "Written feedback":
+							value = <WrittenFeedback booking={booking} auth={auth} />;
+							break;
 
-					default:
-						break;
-				}
+						default:
+							break;
+					}
 
-				return value;
-			})}
-		</ListGroup>
+					return value;
+				})}
+			</ListGroup>
+		);
+
+	return (
+		<div style={{ overflowY: "scroll" }}>
+			<div>
+				<h2>Bookings</h2>
+				{events}
+			</div>
+		</div>
 	);
-
-	return <div style={{ overflowY: "scroll", height: "730px" }}>{events}</div>;
 };
 
 const mapStateToProps = (state) => ({

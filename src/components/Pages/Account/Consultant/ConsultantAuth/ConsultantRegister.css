@@ -162,7 +162,30 @@ border-radius: 20px;
 /* END OF STAGE 2 */
 
 
+/* Phones */
+@media screen and (max-width: 600px) {
+    
+}
 
+/* Portrait Tablet and Large Phones */
+@media screen and (min-width: 600px) {
+  
+}
+
+/* Landscape Tablet */
+@media screen and (min-width: 768px) {
+ 
+}
+
+/* Laptop/Desktop */
+@media screen and (min-width: 992px) {
+ 
+}
+
+/* Large Laptop/Desktop */
+@media screen and (min-width: 1200px) {
+  
+}
 
     
 /* MEDIA QUERIES */

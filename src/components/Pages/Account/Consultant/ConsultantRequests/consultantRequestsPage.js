@@ -7,6 +7,7 @@ import {
 	getBookingRequest,
 } from "../../../../../store/actions/consultantActions/consultantActions";
 import { PageWrapPayment } from "./../../../../SubComponents/PageWrapPayment";
+import classes from "./consultantRequest.module.css";
 
 function ConsultantRequestsPage(props) {
 	const {
@@ -73,7 +74,8 @@ function ConsultantRequestsPage(props) {
 
 	return (
 		<PageWrapPayment goTo="/consultant" header="Requests">
-			<div>
+			<div className={classes.cont}>
+				<h2>Consultant Requests</h2>
 				{/* <Modal show={show} onHide={handleClose}>
 					<Modal.Header closeButton>
 						<Modal.Title>Request action</Modal.Title>

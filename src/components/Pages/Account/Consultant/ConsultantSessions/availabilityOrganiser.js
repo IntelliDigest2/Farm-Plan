@@ -353,7 +353,12 @@ function AvailabilityOrganiser(props) {
 		// add(newEvent.start, { weeks: multiplier });
 	}
 
-	return <div className={classes.session_organiser}>{mainContent}</div>;
+	return (
+		<div className={classes.session_organiser}>
+			<h2>Calendar</h2>
+			{mainContent}
+		</div>
+	);
 }
 
 const mapStateToProps = (state) => {

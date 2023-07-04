@@ -1,0 +1,35 @@
+.cont{
+    
+    margin: 0 auto;
+    max-width: 100%;
+    /* margin-top: 5rem; */
+    width: 700px;
+    padding: 10px;
+    min-height: 70vh;
+  
+}
+
+/* Phones */
+@media screen and (max-width: 600px) {
+    
+  }
+  
+  /* Portrait Tablet and Large Phones */
+  @media screen and (min-width: 600px) {
+    
+  }
+  
+  /* Landscape Tablet */
+  @media screen and (min-width: 768px) {
+   
+  }
+  
+  /* Laptop/Desktop */
+  @media screen and (min-width: 992px) {
+   
+  }
+  
+  /* Large Laptop/Desktop */
+  @media screen and (min-width: 1200px) {
+    
+  }

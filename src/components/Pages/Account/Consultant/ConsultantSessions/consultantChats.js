@@ -57,7 +57,7 @@ function ConsultantChats(props) {
 
 		return () => {
 			newSocket.on("disconnect", () => {
-				console.log("disconnected");
+				// console.log("disconnected");
 			});
 		};
 	}, []);
@@ -152,7 +152,7 @@ function ConsultantChats(props) {
 		<Router>
 			<div className={classes.chatsCont}>
 				<div>
-					<h1>Chats</h1>
+					<h2>Chats</h2>
 				</div>
 				<div className={classes.chats_cont}>{chatContent}</div>
 			</div>

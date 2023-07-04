@@ -32,6 +32,7 @@
     background-color: #fff;
     border-top: 1px solid #dee2e6;
     margin: 0 auto;
+    min-height: 70vh;
   }
   
   .nav .link:hover,

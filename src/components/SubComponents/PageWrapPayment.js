@@ -2,7 +2,7 @@ import React from "react";
 
 import "./PageWrapPayment.css";
 
-import { SubButton } from "./Button";
+import { SubButtonM } from "./Button";
 import Divider from "@mui/material/Divider";
 import { Container } from "react-bootstrap";
 
@@ -13,7 +13,7 @@ export const PageWrapPayment = (props) => {
 				<div className="top">
 					<div style={{ width: "50%", paddingLeft: "1rem" }}>
 						{props.goTo ? (
-							<SubButton styling="green" goTo={props.goTo} text="Back" />
+							<SubButtonM styling="green" goTo={props.goTo} text="Back" />
 						) : (
 							""
 						)}
@@ -40,7 +40,7 @@ export const PageWrapTop = (props) => {
 		<div>
 			<div className="top">
 				<div style={{ width: "50%", paddingLeft: "1rem" }}>
-					<SubButton styling="green" goTo={props.goTo} text="Back" />
+					<SubButtonM styling="green" goTo={props.goTo} text="Back" />
 				</div>
 				<div className="basic-title basic-lg">{props.header}</div>
 			</div>
@@ -51,5 +51,9 @@ export const PageWrapTop = (props) => {
 };
 
 export const PageWrapMini = (props) => {
-	return <Container className="account-style page-wrap-mini">{props.children}</Container>;
+	return (
+		<Container className="account-style page-wrap-mini">
+			{props.children}
+		</Container>
+	);
 };
