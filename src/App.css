@@ -11,16 +11,16 @@ body {
   min-height: 100vh;
 }
 
-#root {
+/* #root {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* background-image: url("./images/background.png"); */
-  background-size: cover;
+  background-image: url("./images/background.png"); 
+  /* background-size: cover;
   background-position: center;
   min-height: 100vh; 
-}
+} */
 
 /* html, body {
   height: 100%;

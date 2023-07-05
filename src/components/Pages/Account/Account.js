@@ -101,57 +101,57 @@ const NewAccount = (props) => {
 			) : null}
 
 			{chooseModal ? <PTSModal show={show} setShow={setShow} /> : null}
-			<PageWrapMini>
-				<Container className="web-center">
-					<div className="avatar-name-container">
-						<div className="avatar-image">
-							<img
-								src={logo}
-								alt="World Food Tracker, empowering global food sustainability"
-								className="name-container img-fluid rounded fix-image mb-3"
-							/>
-						</div>
-						<div className="profile-container">
-							<Profile profile={props.profile} type={type} />
-						</div>
+			{/* <PageWrapMini> */}
+			<Container className="web-center">
+				<div className="avatar-name-container">
+					<div className="avatar-image">
+						<img
+							src={logo}
+							alt="World Food Tracker, empowering global food sustainability"
+							className="name-container img-fluid rounded fix-image mb-3"
+						/>
 					</div>
+					<div className="profile-container">
+						<Profile profile={props.profile} type={type} />
+					</div>
+				</div>
 
-					<div>
-						<>
-							{/* <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal', padding: '10px' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+				<div>
+					<>
+						{/* <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal', padding: '10px' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
                 {lngs[lng].nativeName}
               </button> */}
 
-							<DropdownButton
-								id="dropdown-basic-button"
-								title="Language"
-								variant="success"
-							>
-								{Object.keys(lngs).map((lng) => (
-									<Dropdown.Item onSelect={() => i18n.changeLanguage(lng)}>
-										{lngs[lng].nativeName}
-									</Dropdown.Item>
-								))}
-							</DropdownButton>
-						</>
-					</div>
+						<DropdownButton
+							id="dropdown-basic-button"
+							title="Language"
+							variant="success"
+						>
+							{Object.keys(lngs).map((lng) => (
+								<Dropdown.Item onSelect={() => i18n.changeLanguage(lng)}>
+									{lngs[lng].nativeName}
+								</Dropdown.Item>
+							))}
+						</DropdownButton>
+					</>
+				</div>
 
-					<div className="tabs">
-						<TabContext value={value}>
-							<AccountType
-								profile={props.profile}
-								type={type}
-								value={value}
-								theme={theme}
-								handleChange={handleChange}
-								handleChangeIndex={handleChangeIndex}
-								setShow={setShow}
-								setChooseModal={setChooseModal}
-							/>
-						</TabContext>
-					</div>
-				</Container>
-			</PageWrapMini>
+				<div className="tabs">
+					<TabContext value={value}>
+						<AccountType
+							profile={props.profile}
+							type={type}
+							value={value}
+							theme={theme}
+							handleChange={handleChange}
+							handleChangeIndex={handleChangeIndex}
+							setShow={setShow}
+							setChooseModal={setChooseModal}
+						/>
+					</TabContext>
+				</div>
+			</Container>
+			{/* </PageWrapMini> */}
 		</>
 	);
 };
