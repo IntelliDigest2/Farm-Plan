@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Alert, Modal, Button } from "react-bootstrap";
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import moment from 'moment';
+import DayOfWeek from "../../Search/DayOfWeek";
+import { AddButton } from "../../../../../../../SubComponents/Button";
 
-
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 import "./calendarStyle.css"
+import "../../../../../../../SubComponents/Button.css"
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -20,6 +24,8 @@ import { generateNewPlan } from "../../../../../../../../store/actions/marketpla
 import { submitNotificationPlan } from "../../../../../../../lib/Notifications"
 import { addToShoppingList } from "../../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { getAllItems } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData"
+import RecipeSearchPlan from "../../Search/RecipeSearchPlan";
+import { addOtherMeals, getOtherMeals } from "../../../../../../../../store/actions/dataActions";
 
 
 function FullCalendarApp(props) {
@@ -30,12 +36,16 @@ function FullCalendarApp(props) {
   const [breakfast, setBreakfast] = useState([]);
   const [lunch, setLunch] = useState([]);
   const [mealTitle, setMealTitle] = useState(false);
-  const [ingredients, setIngredients] = useState([""]);
-
+  const [otherMeals, setOtherMeals] = useState([]);
 
   const [dateRange, setDateRange] = useState([])
   const [showModal, setShow] = useState(false);
+  const [showModalAdd, setShowAdd] = useState(false);
+
   const [disabled, setDisabled] = useState(false);
+
+  const [dayOfWeek, setDayOfWeek] = useState("");
+  const [restaurantName, setRestaurantName] = useState("");
 
 
 
@@ -162,7 +172,7 @@ function FullCalendarApp(props) {
       }, [breakfast, lunch]);
   
 
-  console.log("breakfast:", breakfast)
+  //console.log("breakfast:", breakfast)
   //console.log("lunch:", lunch)
   
 
@@ -219,6 +229,7 @@ function FullCalendarApp(props) {
       e['totalDaily'] = allMeals[count].totalDaily;
       e['totalNutrients'] = allMeals[count].totalNutrients;
       e['recipeYield'] = allMeals[count].recipeYield;
+      e['mealType'] = allMeals[count].mealType[0];
       e['nn'] = allMeals[count].nn;
       e['url'] = allMeals[count].url;
 
@@ -245,33 +256,47 @@ function FullCalendarApp(props) {
 
   }
 
-  const generatePlan = async ()  => {
+  const generatePlan = async () => {
     allItems.forEach((item) => {
+
+      if (!item) {
+        // Skip the iteration if the item is undefined
+        return;
+      }
+      const mealType = item.mealType
+      const dayOfWeek = moment(item.start).format("dddd");
+      const matchingRecipe = otherMeals.find((recipe) => recipe.dayOfWeek === dayOfWeek && recipe.mealType == mealType);
+      
+      //console.log("matching recipe", otherMeals)
+
       const data = {
         year: moment(item.start).format("yyyy"),
         week: moment(item.start).format("w"),
-        
+        dayOfWeek: dayOfWeek,
         upload: {
-          meal: item.title,
-          ingredients: item.ingredients,
-          totalDaily: item.totalDaily,
-          totalNutrients: item.totalNutrients,
-          recipeYield: item.recipeYield,
-          nn: item.nn,
-          url: item.url,
+          meal: matchingRecipe ? matchingRecipe.mealName : item.title,
+          ingredients: matchingRecipe ? matchingRecipe.ingredients : item.ingredients,
+          totalDaily: matchingRecipe ? matchingRecipe.totalDaily : item.totalDaily,
+          totalNutrients: matchingRecipe ? matchingRecipe.totalNutrients : item.totalNutrients,
+          recipeYield: matchingRecipe ? matchingRecipe.recipeYield : item.recipeYield,
+          mealType: matchingRecipe ? matchingRecipe.mealType : item.mealType,
+          // nn: matchingRecipe ? matchingRecipe.recipe.nn : item.nn,
+          // url: matchingRecipe ? matchingRecipe.recipe.url : item.url,
           start: item.start,
           end: item.end,
           day: moment(item.start).format("DD-MM-yyyy"),
-        }        
+          dayOfWeek: dayOfWeek
+        }
       };
+  
+      props.generateNewPlan(data);
 
-      //console.log("tired:", data)
-
-       props.generateNewPlan(data);
-    })
-    submitNotificationPlan("Saving..", "refresh when notification disappears!");
-
+      //console.log("upload", data.upload)
+    });
+  
+    submitNotificationPlan("Saving,..", "Please wait, Refresh when notification disappears!");
   };
+  
 
 
     const getPlan = async () => {
@@ -286,6 +311,7 @@ function FullCalendarApp(props) {
         var totalDaily = doc.totalDaily;
         var totalNutrients = doc.totalNutrients;
         var recipeYield = doc.recipeYield;
+        var mealType = doc.mealType[0]
         var nn = doc.nn;
         //var url = doc.url;
         var start = doc.start;
@@ -300,6 +326,7 @@ function FullCalendarApp(props) {
           totalDaily: totalDaily,
           totalNutrients: totalNutrients,
           recipeYield: recipeYield,
+          mealType: mealType,
           nn: nn,
           //url: url,
           start: start,
@@ -320,9 +347,87 @@ function FullCalendarApp(props) {
       getPlan();
     }, [props.allPlan]);
 
+
+    const handleAdd = async ()  => {
+        const data = {
+          upload: {
+            dayOfWeek: dayOfWeek,
+            restaurantName: restaurantName,
+            recipe: props.SelectedRecipe,
+          }        
+        };
+  
+        //console.log("tired:", data)
+  
+      props.addOtherMeals(data);
+      submitNotificationPlan("Success", "Your meal has been saved!");
+  
+    };
+
+  //trigger this when updating items
+ const [update, setUpdate] = useState(0);
+ 
+ const forceUpdate = () => {
+   setUpdate(update + 1);
+ };
+  
+    //this sends data request
+  useEffect(() => {
+    props.getOtherMeals();
+  }, [props.value, props.allItems]);
+
+  useEffect(() => {
+    forceUpdate()
+  }, [props.otherMeals]);
+
+  const getOtherMeals = async () => {
+    // Array of days in the desired order starting from Monday
+    const daysOfWeekOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  
+    // Clear the items array before each update - IMPORTANT
+    setOtherMeals([]);
+  
+    // Sort the otherMeals array based on the desired order
+    const sortedMeals = props.otherMeals.sort((a, b) => {
+      return daysOfWeekOrder.indexOf(a.dayOfWeek) - daysOfWeekOrder.indexOf(b.dayOfWeek);
+    });
+  
+    // Set the sorted meals in the state
+    sortedMeals.forEach((doc) => {
+      const dayOfWeek = doc.dayOfWeek;
+      const mealName = doc.recipe.label;
+      const ingredients = doc.recipe.ingredients;
+      const totalDaily = doc.recipe.totalDaily;
+      const totalNutrients = doc.recipe.totalNutrients;
+      const recipeYield = doc.recipe.yield;
+      const mealType = doc.recipe.mealType[0];
+      // const nn = nn;
+  
+      setOtherMeals((meals) => [
+        ...meals,
+        {
+          dayOfWeek: dayOfWeek,
+          mealName: mealName,
+          ingredients: ingredients,
+          totalDaily: totalDaily,
+          totalNutrients: totalNutrients,
+          recipeYield: recipeYield,
+          mealType: mealType
+          // nn: nn
+        },
+      ]);
+    });
+  };
+  
+  useEffect(() => {
+    getOtherMeals();
+    forceUpdate()
+  }, [props.otherMeals]);
    
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleCloseAdd = () => setShowAdd(false);
+  const handleShowAdd = () => setShowAdd(true);
   const handleButton = () => setDisabled(true);
 
   return (
@@ -376,10 +481,78 @@ function FullCalendarApp(props) {
 ) : (
   <div>
     <div className="empty basic-title-center">
-          <p>You have not generated a new meal plan yet.. 🙂</p>
+      <p>You have not generated a new meal plan yet.. 🙂</p>
+    </div>
+
+    <div className="info-text">
+    <Alert variant="info" className="info-text">
+    Do you eat out at work? You can choose the day(s) and meal, and it will be added to your plan.
+  </Alert>    
+  </div>
+
+    <div>
+    <Box sx={{ flexGrow: 1 }}>
+  <Grid container spacing={2}>
+    <Grid item xs={12} md={3}>
+      <div>
+        <DayOfWeek setDayOfWeek={setDayOfWeek} />
+      </div>
+    </Grid>
+
+    <Grid item xs={12} md={7}>
+      <div>
+        <input
+          type="text"
+          value={restaurantName}
+          onChange={(e) => setRestaurantName(e.target.value)}
+          className="inputField"
+          placeholder="Enter name of restaurant"
+        />
+      </div>
+    </Grid>
+
+    <Grid item xs={12} md={2}>
+      <div className="button">
+        <AddButton onClick={handleShowAdd} />
+      </div>
+      <Modal show={showModalAdd} onHide={handleCloseAdd}>
+        <Modal.Header closeButton>
+          <Modal.Title>Choose meal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* <p>Do you want to generate a new plan?</p> */}
+          <RecipeSearchPlan />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className="blue-btn shadow-none"
+            onClick={() => {
+              handleAdd();
+              handleClose();
+            }}
+          >
+            Save
+          </Button>
+          {/* <Button variant="secondary" onClick={handleClose}>
+            No
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
+    </Grid>
+  </Grid>
+</Box>
+
+    </div>
+    <div>
+      {otherMeals.map((meal) => (
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <p style={{ marginRight: '10px', fontWeight: 'bold' }}>{meal.dayOfWeek}</p>
+          <p>{meal.mealName}</p>
         </div>
+      ))}
+    </div>
       <p>
-          <Button variant="secondary" onClick={handleShow}>
+          <Button className="blue-btn shadow-none" onClick={handleShow}>
             Generate Plan
           </Button>
       </p>
@@ -388,7 +561,8 @@ function FullCalendarApp(props) {
           <Modal.Title>Generate Plan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <p>Do you want to generate a new plan? </p>
+            <p>Do you want to generate new plan? </p>
+            {/* <RecipeSearchPlan /> */}
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary" disabled={disabled}  onClick={() => {
@@ -416,6 +590,8 @@ const mapStateToProps = (state) => {
       data: state.mealPlanner.plans,
       allPlan: state.mealPlanner.newPlans,
       allItems: state.mealPlanner.allItems,
+      SelectedRecipe: state.data.SelectedRecipe,
+      otherMeals: state.data.otherMeals
     };
   };
   
@@ -424,10 +600,9 @@ const mapStateToProps = (state) => {
         getMealPlannerData: (meal) => dispatch(getMealPlannerData(meal)),
         getPlanData: (plan) => dispatch(getPlanData(plan)),
         generateNewPlan: (plan) => dispatch(generateNewPlan(plan)),
-        //removeAllMealPlan: (plan) => dispatch(removeAllMealPlan(plan)),
-        //addToShoppingList: (data) => dispatch(addToShoppingList(data))
-        getAllItems: (plan) => dispatch(getAllItems(plan))
-
+        getAllItems: (plan) => dispatch(getAllItems(plan)),
+        addOtherMeals: (meal) => dispatch(addOtherMeals(meal)),
+        getOtherMeals: (meals) => dispatch(getOtherMeals(meals)),
     };
   };
 
