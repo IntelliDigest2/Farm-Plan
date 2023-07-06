@@ -71,6 +71,23 @@ export function SubButton(props) {
 		</BootstrapButton>
 	);
 }
+export function SubButtonM(props) {
+	return (
+		<BootstrapButton
+			variant="default"
+			className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+			// href={props.goTo}
+			// onClick={props.onClick}
+			// disabled={props.disabled}
+		>
+			<Link to={props.goTo}>
+				<div className="basic-title" style={{ color: "white" }}>
+					{props.text}
+				</div>
+			</Link>
+		</BootstrapButton>
+	);
+}
 
 export function SubButtonInventory(props) {
 	return (
@@ -107,41 +124,47 @@ export function IconButton(props) {
 		switch (props.icon) {
 			default:
 			case "waste":
-				return <DeleteIconOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <DeleteIconOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "chart":
-				return <BarChartOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <BarChartOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "gift":
-				return <CardGiftcardOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <CardGiftcardOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "food":
-				return <RestaurantOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <RestaurantOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "surplus":
-				return <CalendarTodayIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "buy":
-				return <ShoppingBasketOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return (
+					<ShoppingBasketOutlined sx={{ fontSize: 90, color: "#ffffff" }} />
+				);
 			case "info":
-				return <InfoOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <InfoOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "world":
-				return <PublicOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <PublicOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "book":
-				return <MenuBookOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <MenuBookOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "plant":
-				return <SpaOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <SpaOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "kitchen":
-				return <KitchenOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <KitchenOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "product":
-				return <ShoppingBagOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <ShoppingBagOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "my-products":
-				return <CategoryIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <CategoryIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "notes":
-				return <DescriptionOutlined sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <DescriptionOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "consult":
-				return <ForumSharpIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <ForumSharpIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "consultant":
-				return <PermContactCalendarSharpIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return (
+					<PermContactCalendarSharpIcon
+						sx={{ fontSize: 90, color: "#ffffff" }}
+					/>
+				);
 			case "sessions":
-				return <PeopleIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <PeopleIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "requests":
-				return <CalendarTodayIcon sx={{ fontSize: 90, color: '#ffffff' }} />;
+				return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			// case "calendar":
 			// 	return <CalendarMonthSharpIcon sx={{ fontSize: 90 }} />;
 		}
@@ -163,7 +186,11 @@ export function IconButton(props) {
 							" "
 						)}
 					>
-						<Link to={props.goTo} disabled={props.disabled} className="custom-link">
+						<Link
+							to={props.goTo}
+							disabled={props.disabled}
+							className="custom-link"
+						>
 							<div>
 								<IconType />
 								{props.label}

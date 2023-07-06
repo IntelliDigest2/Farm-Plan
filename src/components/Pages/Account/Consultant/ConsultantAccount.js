@@ -113,12 +113,15 @@ const ConsultantAccountPage = (props) => {
 				<header className={classes.consultant_header}>
 					{/* <div>Intelli Logo</div> */}
 					<div className="flex">
-						<img
-							src={logo}
-							alt="World Food Tracker, empowering global food sustainability"
-							className="img-fluid rounded fix-image mb-3"
-							style={{ maxWidth: "40%" }}
-						/>
+						<Link to={"/account"}>
+							<img
+								src={logo}
+								alt="World Food Tracker, empowering global food sustainability"
+								className="img-fluid rounded fix-image mb-3"
+								style={{ maxWidth: "40%" }}
+							/>
+						</Link>
+
 						<Profile profile={props.profile} type={type} />
 					</div>
 					{/* <div className={classes.consultant_profile}>

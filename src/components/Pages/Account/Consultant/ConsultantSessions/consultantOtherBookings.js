@@ -362,50 +362,61 @@ export const ConsultantOtherBookings = (props) => {
 
 	// console.log(profile.consultant);
 
-	let events = (
-		<ListGroup>
-			{otherBookings?.map((booking, index) => {
-				let startTime = format(parseISO(booking.start), "hh:mm a");
-				let endTime = format(parseISO(booking.end), "hh:mm a");
-				let value;
+	let events =
+		!otherBookings || otherBookings.length === 0 ? (
+			"you do not have any bookings"
+		) : (
+			<ListGroup>
+				{otherBookings?.map((booking, index) => {
+					let startTime = format(parseISO(booking.start), "hh:mm a");
+					let endTime = format(parseISO(booking.end), "hh:mm a");
+					let value;
 
-				let randomLink;
+					let randomLink;
 
-				switch (booking.eventType) {
-					case "Video call":
-					case "Phone call":
-						value = <Call key={`booking-${index}`} booking={booking} />;
-						break;
+					switch (booking.eventType) {
+						case "Video call":
+						case "Phone call":
+							value = <Call key={`booking-${index}`} booking={booking} />;
+							break;
 
-					case "Consultant visitation":
-						value = (
-							<ConsultantVisitation
-								key={`booking-${index}`}
-								booking={booking}
-							/>
-						);
-						break;
-					case "Visit to consultant":
-						value = (
-							<VisitConsulltant key={`booking-${index}`} booking={booking} />
-						);
-						break;
-					case "Written feedback":
-						value = (
-							<WrittenFeedback key={`booking-${index}`} booking={booking} />
-						);
-						break;
+						case "Consultant visitation":
+							value = (
+								<ConsultantVisitation
+									key={`booking-${index}`}
+									booking={booking}
+								/>
+							);
+							break;
+						case "Visit to consultant":
+							value = (
+								<VisitConsulltant key={`booking-${index}`} booking={booking} />
+							);
+							break;
+						case "Written feedback":
+							value = (
+								<WrittenFeedback key={`booking-${index}`} booking={booking} />
+							);
+							break;
 
-					default:
-						break;
-				}
+						default:
+							break;
+					}
 
-				return value;
-			})}
-		</ListGroup>
+					return value;
+				})}
+			</ListGroup>
+		);
+
+	return (
+		<div style={{ overflowY: "scroll" }}>
+			<div>
+				<h2>Bookings</h2>
+			</div>
+
+			{events}
+		</div>
 	);
-
-	return <div style={{ overflowY: "scroll", height: "730px" }}>{events}</div>;
 };
 
 const mapStateToProps = (state) => ({

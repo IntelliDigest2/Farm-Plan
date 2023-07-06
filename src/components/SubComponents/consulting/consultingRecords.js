@@ -24,41 +24,47 @@ function ConsultingRecords(props) {
 
 	useEffect(() => {
 		setBookingsData(completedBookings);
-		// console.log(completedBookings);
+		console.log(completedBookings, `this is the completedbookings`);
 	}, [completedBookings]);
 
-	let bookings = bookingsData?.map((booking) => {
-		let startTime = format(parseISO(booking.event.start), "hh:mm a");
-		let endTime = format(parseISO(booking.event.end), "hh:mm a");
+	let bookings =
+		!completedBookings || completedBookings.length === 0
+			? "You do not have any Records"
+			: bookingsData?.map((booking) => {
+					let startTime = format(parseISO(booking.event.start), "hh:mm a");
+					let endTime = format(parseISO(booking.event.end), "hh:mm a");
 
-		let date = booking.event.start.split("T")[0];
-		return (
-			<ListGroupItem>
-				<Col>Booking info:</Col>
-				Booking Id: {booking.id}
-				<Row>
-					<Col>
-						<div>Event date: {date}</div>
-					</Col>
-					<Col>
-						<div>Event type: {booking.event.eventType}</div>
-					</Col>
-				</Row>
-				<Row>
-					<Col>
-						<div>Start time: {startTime}</div>
-					</Col>
-					<Col>
-						<div>End time: {endTime}</div>
-					</Col>
-				</Row>
-			</ListGroupItem>
-		);
-	});
+					let date = booking.event.start.split("T")[0];
+					return (
+						<ListGroup>
+							<ListGroupItem>
+								<Col>Booking info:</Col>
+								Booking Id: {booking.id}
+								<Row>
+									<Col>
+										<div>Event date: {date}</div>
+									</Col>
+									<Col>
+										<div>Event type: {booking.event.eventType}</div>
+									</Col>
+								</Row>
+								<Row>
+									<Col>
+										<div>Start time: {startTime}</div>
+									</Col>
+									<Col>
+										<div>End time: {endTime}</div>
+									</Col>
+								</Row>
+							</ListGroupItem>
+						</ListGroup>
+					);
+			  });
 
 	return (
 		<div>
-			<ListGroup>{bookings}</ListGroup>
+			<h2>Bookings Records</h2>
+			{bookings}
 		</div>
 	);
 }
