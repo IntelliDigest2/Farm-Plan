@@ -280,6 +280,7 @@ function FullCalendarApp(props) {
           totalNutrients: matchingRecipe ? matchingRecipe.totalNutrients : item.totalNutrients,
           recipeYield: matchingRecipe ? matchingRecipe.recipeYield : item.recipeYield,
           mealType: matchingRecipe ? matchingRecipe.mealType : item.mealType,
+          isEatOut: matchingRecipe ? matchingRecipe.isEatOut : false,
           // nn: matchingRecipe ? matchingRecipe.recipe.nn : item.nn,
           // url: matchingRecipe ? matchingRecipe.recipe.url : item.url,
           start: item.start,
@@ -401,6 +402,12 @@ function FullCalendarApp(props) {
       const totalNutrients = doc.recipe.totalNutrients;
       const recipeYield = doc.recipe.yield;
       const mealType = doc.recipe.mealType[0];
+      const isEatOut = true
+      // let mealType; 
+
+      // if (doc.recipe.mealType && doc.recipe.mealType[0]) {
+      //   mealType = doc.recipe.mealType[0]; // Assign mealType only if it exists
+      // }
       // const nn = nn;
   
       setOtherMeals((meals) => [
@@ -412,7 +419,8 @@ function FullCalendarApp(props) {
           totalDaily: totalDaily,
           totalNutrients: totalNutrients,
           recipeYield: recipeYield,
-          mealType: mealType
+          mealType: mealType,
+          isEatOut: isEatOut
           // nn: nn
         },
       ]);

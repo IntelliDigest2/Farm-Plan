@@ -190,7 +190,7 @@ export const getPlanData = () => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("newPlan")
+      .collection("newPlan").where('isEatOut', '==', false)
       .get()
       .then((snapshot) => {
         const data = [];
