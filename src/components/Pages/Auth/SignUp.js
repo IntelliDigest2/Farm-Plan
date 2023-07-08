@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
- 
+
 import "../Account/UserAccount.css";
 import "./Mob.css";
 import { Select } from "../../SubComponents/Dropdown";
@@ -441,8 +441,8 @@ const SignUp = (props) => {
 					/>
 					<div className="signup-center subtitles row">
 						<p>Already have an account? </p>
-						<Link style={{ color: '#1C1569' }} to='/login'>
-							{'  '}
+						<Link style={{ color: "#1C1569" }} to="/login">
+							{"  "}
 							LOG IN
 						</Link>
 					</div>
@@ -515,7 +515,7 @@ const SignUp = (props) => {
 						<div className="signup">
 							<Button
 								variant="default"
-								className='signup-confirm'
+								className="signup-confirm"
 								onClick={(e) => setStage(1)}
 							>
 								Change
@@ -701,30 +701,24 @@ const Stage1 = (props) => {
 			<FormStyle>
 				<Form>
 					<Form.Row>
-						<Form.Group
-							className="mb-3"
-							as={Col}
-						>
+						<Form.Group className="mb-3" as={Col}>
 							<Form.Control
 								type="text"
 								placeholder="Enter name"
 								defaultValue={props.firstName}
 								required
 								onChange={(e) => props.setFirstName(e.target.value)}
-								className='signup-input placeholder-input'
+								className="signup-input placeholder-input"
 							/>
 						</Form.Group>
-						<Form.Group
-							className="mb-3"
-							as={Col}
-						>
+						<Form.Group className="mb-3" as={Col}>
 							<Form.Control
 								type="text"
 								placeholder="Enter surname"
 								defaultValue={props.lastName}
 								required
 								onChange={(e) => props.setLastName(e.target.value)}
-								className='signup-input placeholder-input'
+								className="signup-input placeholder-input"
 							/>
 						</Form.Group>
 					</Form.Row>
@@ -741,7 +735,7 @@ const Stage1 = (props) => {
 							defaultValue={props.email}
 							required
 							onChange={(e) => props.setEmail(e.target.value)}
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 						/>
 						<Form.Text className="text-muted">
 							We'll never share your email with anyone else.
@@ -755,7 +749,7 @@ const Stage1 = (props) => {
 							defaultValue={props.password}
 							required
 							onChange={(e) => props.setPassword(e.target.value)}
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 						/>
 					</Form.Group>
 					{/*Confirm Password*/}
@@ -790,7 +784,7 @@ const Stage2 = (props) => {
 							placeholder="Town"
 							defaultValue={props.town}
 							required
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 							onChange={(e) => {
 								props.setTown(e.target.value);
 							}}
@@ -799,14 +793,14 @@ const Stage2 = (props) => {
 
 					<Form.Group className="mb-3">
 						<Select
-						id="country"
-						className='signup-input placeholder-input'
-						function={(e) => {
-							props.setCountry(e.target.value);
-						}}
-						value={props.country}
-						placeholder="Please Select a Country"
-						items={countryNames}
+							id="country"
+							className="signup-input placeholder-input"
+							function={(e) => {
+								props.setCountry(e.target.value);
+							}}
+							value={props.country}
+							placeholder="Please Select a Country"
+							items={countryNames}
 						/>
 					</Form.Group>
 
@@ -819,7 +813,7 @@ const Stage2 = (props) => {
 							value={props.region}
 							placeholder="Please Select a Region"
 							items={regionNames}
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 						/>
 					</Form.Group>
 
@@ -857,7 +851,7 @@ const Stage2 = (props) => {
 				<div className="row">
 					<Button
 						variant="default"
-						className='signup-confirm'
+						className="signup-confirm"
 						onClick={(e) => {
 							e.preventDefault();
 							//Previous Stage
@@ -869,7 +863,7 @@ const Stage2 = (props) => {
 
 					<Button
 						variant="default"
-						className='signup-confirm'
+						className="signup-confirm"
 						onClick={(e) => {
 							e.preventDefault();
 							//Next Stage
@@ -916,7 +910,7 @@ const Stage4 = (props) => {
 							placeholder="Restaurant name"
 							defaultValue={props.restaurantName}
 							required
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 							onChange={(e) => {
 								props.setRestaurantName(e.target.value);
 							}}
@@ -934,7 +928,7 @@ const Stage4 = (props) => {
 							placeholder="Regulatory body"
 							defaultValue={props.regulatoryBody}
 							required
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 							onChange={(e) => {
 								props.setRegulatoryBody(e.target.value);
 							}}
@@ -950,7 +944,7 @@ const Stage4 = (props) => {
 							placeholder="ID"
 							defaultValue={props.regulatoryBodyID}
 							required
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 							onChange={(e) => {
 								props.setRegulatoryBodyID(e.target.value);
 							}}
@@ -1102,6 +1096,7 @@ const Stage8 = (props) => {
 						</Form.Label>
 						<Row className="mb-3">
 							<Col>
+								Certificate
 								<Form.Control
 									id="img1"
 									onChange={props.handleSelectedImage}
@@ -1110,6 +1105,7 @@ const Stage8 = (props) => {
 								/>
 							</Col>
 							<Col>
+								Identification
 								<Form.Control
 									id="img2"
 									onChange={props.handleSelectedImage}
@@ -1305,7 +1301,7 @@ const Stage7 = (props) => {
 							placeholder="Company name"
 							defaultValue={props.companyName}
 							required
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 							onChange={(e) => {
 								props.setCompanyName(e.target.value);
 							}}
@@ -1319,7 +1315,7 @@ const Stage7 = (props) => {
 							placeholder="Describe what you do"
 							defaultValue={props.companyDescription}
 							required
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 							onChange={(e) => {
 								props.setCompanyDescription(e.target.value);
 							}}
@@ -1376,7 +1372,7 @@ const Stage5 = (props) => {
 							placeholder="Cuisine"
 							defaultValue={props.cuisine}
 							required
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 							onChange={(e) => {
 								props.setCuisine(e.target.value);
 							}}
@@ -1393,7 +1389,7 @@ const Stage5 = (props) => {
 							placeholder="Description"
 							defaultValue={props.restaurantDescription}
 							required
-							className='signup-input placeholder-input'
+							className="signup-input placeholder-input"
 							onChange={(e) => {
 								props.setRestaurantDescription(e.target.value);
 							}}

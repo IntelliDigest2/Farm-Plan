@@ -10,7 +10,7 @@ const initState = {
 	consultantCalendar: null,
 	consultantCalendarError: null,
 	consultantDataError: null,
-	userChats: [],
+	userChats: null,
 	chatMessages: [],
 	consultantRequests: null,
 	consultantRequestsError: "",

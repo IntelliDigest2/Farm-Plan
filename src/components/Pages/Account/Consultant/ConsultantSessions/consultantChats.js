@@ -18,7 +18,7 @@ function ConsultantChats(props) {
 
 	const [notifications, setNotification] = useState([]);
 	const { userChats, getChats, auth, user } = props;
-	const [chats, setChats] = useState("");
+	const [chats, setChats] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [chatId, setChatId] = useState("");
 	const [socket, setSocket] = useState(null);
@@ -99,7 +99,7 @@ function ConsultantChats(props) {
 	// useEffect(() => {}, [chats]);
 
 	let chatCards;
-	if (chats.length > 0) {
+	if (chats && chats.length > 0) {
 		chatCards = chats.map((chat, index) => {
 			return (
 				<li key={`chat-${index}`}>
@@ -114,39 +114,44 @@ function ConsultantChats(props) {
 			);
 		});
 	}
+	// console.log(chats, `this is the chat value`);
 
-	let chatContent = isLoading ? (
-		"loading..."
-	) : chats.length === 0 ? (
-		"you dont have any chats"
-	) : (
-		<>
-			<div className={classes.chat_cards}>
-				<div className={classes.chat_left}>
-					<ul>{chatCards}</ul>
+	let chatContent =
+		chats === null ? (
+			"loading..."
+		) : // let chatContent =
+		chats && chats.length === 0 ? (
+			"you dont have any chats"
+		) : (
+			<>
+				<div className={classes.chat_cards}>
+					<div className={classes.chat_left}>
+						<ul>{chatCards}</ul>
+					</div>
 				</div>
-			</div>
-			<div className={classes.chat_cont}>
-				<Switch>
-					<Route exact path={`${url}/`}>
-						<div>Click on a chat and your conversations would appear here</div>
-					</Route>
-					<Route path={`${url}/:chatIdn`}>
-						<Chat
-							uid={userId}
-							// uid={auth.uid}
-							notification={notifications}
-							onNotification={notificationHandler}
-							socketConnected={socketConnected}
-							socket={socket}
-							chatIds={chatId}
-							user={user}
-						/>
-					</Route>
-				</Switch>
-			</div>
-		</>
-	);
+				<div className={classes.chat_cont}>
+					<Switch>
+						<Route exact path={`${url}/`}>
+							<div>
+								Click on a chat and your conversations would appear here
+							</div>
+						</Route>
+						<Route path={`${url}/:chatIdn`}>
+							<Chat
+								uid={userId}
+								// uid={auth.uid}
+								notification={notifications}
+								onNotification={notificationHandler}
+								socketConnected={socketConnected}
+								socket={socket}
+								chatIds={chatId}
+								user={user}
+							/>
+						</Route>
+					</Switch>
+				</div>
+			</>
+		);
 
 	return (
 		<Router>

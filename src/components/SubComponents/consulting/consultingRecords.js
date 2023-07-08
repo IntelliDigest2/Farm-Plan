@@ -28,7 +28,9 @@ function ConsultingRecords(props) {
 	}, [completedBookings]);
 
 	let bookings =
-		completedBookings && completedBookings.length === 0
+		completedBookings === null
+			? "...loading"
+			: completedBookings && completedBookings.length === 0
 			? "You do not have any Records"
 			: bookingsData?.map((booking) => {
 					let startTime = format(parseISO(booking.event.start), "hh:mm a");

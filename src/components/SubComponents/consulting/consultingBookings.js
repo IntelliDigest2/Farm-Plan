@@ -422,7 +422,9 @@ export const ConsultingBookings = (props) => {
 	// console.log(profile);
 
 	let events =
-		!otherBookings || otherBookings.length === 0 ? (
+		otherBookings === null ? (
+			"...loading"
+		) : otherBookings && otherBookings.length === 0 ? (
 			"You dont have any bookings"
 		) : (
 			<ListGroup>
