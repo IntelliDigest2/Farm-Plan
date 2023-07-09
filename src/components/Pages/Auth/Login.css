@@ -13,4 +13,14 @@
     padding: 20px;
   }
   
-  
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .login-page {
+    min-height: 100%;
+  }
+
+  .login-content {
+    width: 98vw;
+    padding: 10px;
+  }
+}
