@@ -28,6 +28,13 @@ body {
   padding: 0;
 } */
 
+.login-page {
+  background-image: url("./images/background.png");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
 
 .app-background {
   width: 100%;
