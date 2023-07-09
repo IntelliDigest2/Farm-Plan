@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
- 
+import "./SignUp.css"
 import "../Account/UserAccount.css";
 import "./Mob.css";
 import { Select } from "../../SubComponents/Dropdown";
@@ -422,61 +422,73 @@ const SignUp = (props) => {
 		default:
 		case 1:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage1
+								setFirstName={setFirstName}
+								firstName={firstName}
+								setLastName={setLastName}
+								lastName={lastName}
+								setMobile={setMobile}
+								mobile={mobile}
+								setEmail={setEmail}
+								email={email}
+								setPassword={setPassword}
+								password={password}
+								setStage={setStage}
+							/>
+							<div className="signup-center subtitles row">
+								<p>Already have an account? </p>
+								<Link style={{ color: '#1C1569' }} to='/login'>
+									{'  '}
+									LOG IN
+								</Link>
+							</div>
+						</Title>
 					</div>
-					<Stage1
-						setFirstName={setFirstName}
-						firstName={firstName}
-						setLastName={setLastName}
-						lastName={lastName}
-						setMobile={setMobile}
-						mobile={mobile}
-						setEmail={setEmail}
-						email={email}
-						setPassword={setPassword}
-						password={password}
-						setStage={setStage}
-					/>
-					<div className="signup-center subtitles row">
-						<p>Already have an account? </p>
-						<Link style={{ color: '#1C1569' }} to='/login'>
-							{'  '}
-							LOG IN
-						</Link>
-					</div>
-				</Title>
+				</div>
+				
 			);
 		case 2:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
+				<div className="signup-page">
+					<div className="signup-content"> 
+						<Title subtitle="Sign Up">
+						<div className="signup-center subtitles">
+							<p>First, create your account.</p>
+						</div>
+						<Stage2
+							setIDType={setIDType}
+							IDType={IDType}
+							setIDNumber={setIDNumber}
+							IDNumber={IDNumber}
+							IDUrl={IDUrl}
+							setUrl={setUrl}
+							setTown={setTown}
+							town={town}
+							setCountry={setCountry}
+							country={country}
+							setRegion={setRegion}
+							region={region}
+							setBuildingFunction={setBuildingFunction}
+							buildingFunction={buildingFunction}
+							setStage={setStage}
+							countries={countryNames}
+						/>
+						</Title>
 					</div>
-					<Stage2
-						setIDType={setIDType}
-						IDType={IDType}
-						setIDNumber={setIDNumber}
-						IDNumber={IDNumber}
-						IDUrl={IDUrl}
-						setUrl={setUrl}
-						setTown={setTown}
-						town={town}
-						setCountry={setCountry}
-						country={country}
-						setRegion={setRegion}
-						region={region}
-						setBuildingFunction={setBuildingFunction}
-						buildingFunction={buildingFunction}
-						setStage={setStage}
-						countries={countryNames}
-					/>
-				</Title>
+				</div>
+				
 			);
 		case 3:
 			return (
-				<Title subtitle="Sign Up">
+				<div className="signup-page">
+					<div className="signup-content">
+					<Title subtitle="Sign Up">
 					<div className="signup-center subtitles">
 						<h5>Confirmation</h5>
 					</div>
@@ -535,12 +547,17 @@ const SignUp = (props) => {
 							</Button>
 						</div>
 					</div>
-				</Title>
+					</Title>
+					</div>
+				</div>
+				
 			);
 		//Restaurant-specific
 		case 4:
 			return (
-				<Title subtitle="Sign Up">
+				<div className="signup-page">
+					<div className="signup-content">
+					<Title subtitle="Sign Up">
 					<div className="signup-center subtitles">
 						<p>First, create your account.</p>
 					</div>
@@ -569,11 +586,16 @@ const SignUp = (props) => {
 						regulatoryBodyID={regulatoryBodyID}
 					/>
 				</Title>
+					</div>
+				</div>
+				
 			);
 
 		case 5:
 			return (
-				<Title subtitle="Sign Up">
+				<div className="signup-page">
+					<div className="signup-content">
+					<Title subtitle="Sign Up">
 					<div className="signup-center subtitles">
 						<p>First, create your account.</p>
 					</div>
@@ -603,11 +625,16 @@ const SignUp = (props) => {
 						restaurantDescription={restaurantDescription}
 					/>
 				</Title>
+					</div>
+				</div>
+				
 			);
 		// Admin specific signup
 		case 6:
 			return (
-				<Title subtitle="Sign Up">
+				<div className="signup-page">
+					<div className="signup-content">
+					<Title subtitle="Sign Up">
 					<div className="signup-center subtitles">
 						<p>First, create your account.</p>
 					</div>
@@ -639,11 +666,16 @@ const SignUp = (props) => {
 						restaurantDescription={restaurantDescription}
 					/>
 				</Title>
+					</div>
+				</div>
+				
 			);
 		// supplier/ machinery specific signup
 		case 7:
 			return (
-				<Title subtitle="Sign Up">
+				<div className="signup-page">
+					<div className="signup-content">
+					<Title subtitle="Sign Up">
 					<div className="signup-center subtitles">
 						<p>First, create your account.</p>
 					</div>
@@ -664,10 +696,15 @@ const SignUp = (props) => {
 						companyDescription={companyDescription}
 					/>
 				</Title>
+					</div>
+				</div>
+				
 			);
 		case 8:
 			return (
-				<Title subtitle="Sign Up">
+				<div className="signup-page">
+					<div className="signup-content">
+					<Title subtitle="Sign Up">
 					<div className="signup-center subtitles">
 						<p>First, create your account.</p>
 					</div>
@@ -691,6 +728,9 @@ const SignUp = (props) => {
 						countries={countryNames}
 					/>
 				</Title>
+					</div>
+				</div>
+				
 			);
 	}
 };

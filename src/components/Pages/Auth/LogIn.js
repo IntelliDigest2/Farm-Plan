@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import './Login.css'
 import '../Account/UserAccount.css';
 import './Mob.css';
 import { Title } from './MobComponents';
@@ -35,9 +35,9 @@ function Login(props) {
   }
 
   return (
-    <Container>
+    <div className='login-page'>
 
-<div className='login-background'>
+    <div className="login-content">
       <Title subtitle='Log In' className="login-background">
       <Form>
         <Form.Group>
@@ -89,7 +89,7 @@ function Login(props) {
       
     </Title>
     </div>
-    </Container>
+    </div>
     
   );
 }

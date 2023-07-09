@@ -202,8 +202,8 @@ export const getPlanData = () => {
       .catch((err) => {
         dispatch({ type: "GET_NEW_PLANS_ERROR", err });
       });
-  };
-};
+  }; 
+}; 
 
 export const getSingleMealPlan = (data) => {
   return (dispatch, getState, { getFirebase }) => {
