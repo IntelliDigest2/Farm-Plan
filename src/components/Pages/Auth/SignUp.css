@@ -13,4 +13,16 @@
     padding: 20px;
   }
   
+
+  /* Mobile Styles */
+@media (max-width: 768px) {
+  .signup-page {
+    min-height: 100%;
+  }
+
+  .signup-content {
+    width: 98vw;
+    padding: 10px;
+  }
+}
   
