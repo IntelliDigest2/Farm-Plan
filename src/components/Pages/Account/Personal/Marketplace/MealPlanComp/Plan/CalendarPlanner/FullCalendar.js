@@ -41,6 +41,8 @@ function FullCalendarApp(props) {
   const [dateRange, setDateRange] = useState([])
   const [showModal, setShow] = useState(false);
   const [showModalAdd, setShowAdd] = useState(false);
+  const [showModalDel, setShowDel] = useState(false);
+
 
   const [disabled, setDisabled] = useState(false);
 
@@ -431,11 +433,21 @@ function FullCalendarApp(props) {
     getOtherMeals();
     forceUpdate()
   }, [props.otherMeals]);
+
+
+  const handleDelete = async ()  => {
+
+  props.removeAllMealPlan();
+  submitNotificationPlan("please wait..", "Deleting your plan");
+
+};
    
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleCloseAdd = () => setShowAdd(false);
   const handleShowAdd = () => setShowAdd(true);
+  const handleCloseDel = () => setShowDel(false);
+  const handleShowDel = () => setShowDel(true);
   const handleButton = () => setDisabled(true);
 
   return (
@@ -462,7 +474,9 @@ function FullCalendarApp(props) {
         // }}
       />
       <div>
-      <p>
+        {/* this is temporary and should be rstored after 3 months to allow 
+        users regenerate a plan instead of delete with addittional cost*/}
+      {/* <p>
           <Button variant="secondary" onClick={handleShow}>
             Generate Plan
           </Button>
@@ -480,6 +494,33 @@ function FullCalendarApp(props) {
             Yes
           </Button>
           <Button variant="secondary" onClick={handleClose}>
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal> */}
+       <p>
+          <Button className="red-btn shadow-none" onClick={handleShowDel}>
+            Remove
+          </Button>
+      </p>
+      <Modal show={showModalDel} onHide={handleCloseDel}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Plan</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Do you want to delete your meal plan?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              handleDelete();
+              handleCloseDel();
+            }}
+          >
+            Yes
+          </Button>
+          <Button variant="secondary" onClick={handleCloseDel}>
             No
           </Button>
         </Modal.Footer>
@@ -611,6 +652,7 @@ const mapStateToProps = (state) => {
         getAllItems: (plan) => dispatch(getAllItems(plan)),
         addOtherMeals: (meal) => dispatch(addOtherMeals(meal)),
         getOtherMeals: (meals) => dispatch(getOtherMeals(meals)),
+        removeAllMealPlan: (meals) => dispatch(removeAllMealPlan(meals))
     };
   };
 
