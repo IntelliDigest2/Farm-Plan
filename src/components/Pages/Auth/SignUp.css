@@ -1,0 +1,28 @@
+.signup-page {
+    background-image: url("../../../images/background.png");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    width: 100vw;
+
+  }
+  
+  .signup-content {
+    width: 50vw; /* Adjust the value as per your requirement */
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+
+  /* Mobile Styles */
+@media (max-width: 768px) {
+  .signup-page {
+    min-height: 100%;
+  }
+
+  .signup-content {
+    width: 98vw;
+    padding: 10px;
+  }
+}
+  

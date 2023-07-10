@@ -22,7 +22,7 @@ const submitNotificationPlan = (title, message) => {
     colorTop: "black", //optional, font color of top container.
     colorBottom: "black",
     closeButton: "X",
-    duration: 30000,
+    duration: 60000,
   });
 };
 

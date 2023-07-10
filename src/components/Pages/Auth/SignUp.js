@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "./SignUp.css";
 import "../Account/UserAccount.css";
 import "./Mob.css";
 import { Select } from "../../SubComponents/Dropdown";
@@ -447,250 +447,308 @@ const SignUp = (props) => {
 						</Link>
 					</div>
 				</Title>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage1
+								setFirstName={setFirstName}
+								firstName={firstName}
+								setLastName={setLastName}
+								lastName={lastName}
+								setMobile={setMobile}
+								mobile={mobile}
+								setEmail={setEmail}
+								email={email}
+								setPassword={setPassword}
+								password={password}
+								setStage={setStage}
+							/>
+							<div className="signup-center subtitles row">
+								<p>Already have an account? </p>
+								<Link style={{ color: '#1C1569' }} to='/login'>
+									{'  '}
+									LOG IN
+								</Link>
+							</div>
+						</Title>
+					</div>
+				</div>
+				
 			);
 		case 2:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage2
+								setIDType={setIDType}
+								IDType={IDType}
+								setIDNumber={setIDNumber}
+								IDNumber={IDNumber}
+								IDUrl={IDUrl}
+								setUrl={setUrl}
+								setTown={setTown}
+								town={town}
+								setCountry={setCountry}
+								country={country}
+								setRegion={setRegion}
+								region={region}
+								setBuildingFunction={setBuildingFunction}
+								buildingFunction={buildingFunction}
+								setStage={setStage}
+								countries={countryNames}
+							/>
+						</Title>
 					</div>
-					<Stage2
-						setIDType={setIDType}
-						IDType={IDType}
-						setIDNumber={setIDNumber}
-						IDNumber={IDNumber}
-						IDUrl={IDUrl}
-						setUrl={setUrl}
-						setTown={setTown}
-						town={town}
-						setCountry={setCountry}
-						country={country}
-						setRegion={setRegion}
-						region={region}
-						setBuildingFunction={setBuildingFunction}
-						buildingFunction={buildingFunction}
-						setStage={setStage}
-						countries={countryNames}
-					/>
-				</Title>
+				</div>
 			);
 		case 3:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<h5>Confirmation</h5>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<h5>Confirmation</h5>
+							</div>
+							<Stage3
+								setIDType={setIDType}
+								IDType={IDType}
+								setIDNumber={setIDNumber}
+								IDNumber={IDNumber}
+								IDUrl={IDUrl}
+								setUrl={setUrl}
+								setStage={setStage}
+								firstName={firstName}
+								lastName={lastName}
+								mobile={mobile}
+								email={email}
+								town={town}
+								region={region}
+								country={country}
+								buildingFunction={buildingFunction}
+								setRestaurantName={setRestaurantName}
+								restaurantName={restaurantName}
+								companyName={companyName}
+								setCuisine={setCuisine}
+								cuisine={cuisine}
+								setRegulatoryBody={setRegulatoryBody}
+								regulatoryBody={regulatoryBody}
+								setRegulatoryBodyID={setRegulatoryBodyID}
+								regulatoryBodyID={regulatoryBodyID}
+								setRestaurantDescription={setRestaurantDescription}
+								restaurantDescription={restaurantDescription}
+							/>
+							<div className="signup-center">
+								<div className="auth-error">
+									{authError ? <p> {authError}</p> : null}
+								</div>
+								<div className="signup">
+									<Button
+										variant="default"
+										className="signup-confirm"
+										onClick={(e) => setStage(1)}
+									>
+										Change
+									</Button>
+								</div>
+								<div className="row">
+									<Button
+										style={{ fontWeight: "700" }}
+										variant="default"
+										className="signup-confirm"
+										onClick={(e) => {
+											e.preventDefault();
+											handleSubmit();
+										}}
+									>
+										Confirm
+									</Button>
+								</div>
+							</div>
+						</Title>
 					</div>
-					<Stage3
-						setIDType={setIDType}
-						IDType={IDType}
-						setIDNumber={setIDNumber}
-						IDNumber={IDNumber}
-						IDUrl={IDUrl}
-						setUrl={setUrl}
-						setStage={setStage}
-						firstName={firstName}
-						lastName={lastName}
-						mobile={mobile}
-						email={email}
-						town={town}
-						region={region}
-						country={country}
-						buildingFunction={buildingFunction}
-						setRestaurantName={setRestaurantName}
-						restaurantName={restaurantName}
-						companyName={companyName}
-						setCuisine={setCuisine}
-						cuisine={cuisine}
-						setRegulatoryBody={setRegulatoryBody}
-						regulatoryBody={regulatoryBody}
-						setRegulatoryBodyID={setRegulatoryBodyID}
-						regulatoryBodyID={regulatoryBodyID}
-						setRestaurantDescription={setRestaurantDescription}
-						restaurantDescription={restaurantDescription}
-					/>
-					<div className="signup-center">
-						<div className="auth-error">
-							{authError ? <p> {authError}</p> : null}
-						</div>
-						<div className="signup">
-							<Button
-								variant="default"
-								className="signup-confirm"
-								onClick={(e) => setStage(1)}
-							>
-								Change
-							</Button>
-						</div>
-						<div className="row">
-							<Button
-								style={{ fontWeight: "700" }}
-								variant="default"
-								className="signup-confirm"
-								onClick={(e) => {
-									e.preventDefault();
-									handleSubmit();
-								}}
-							>
-								Confirm
-							</Button>
-						</div>
-					</div>
-				</Title>
+				</div>
 			);
 		//Restaurant-specific
 		case 4:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage4
+								setIDType={setIDType}
+								IDType={IDType}
+								setIDNumber={setIDNumber}
+								IDNumber={IDNumber}
+								IDUrl={IDUrl}
+								setUrl={setUrl}
+								setTown={setTown}
+								town={town}
+								setCountry={setCountry}
+								country={country}
+								setRegion={setRegion}
+								region={region}
+								setBuildingFunction={setBuildingFunction}
+								buildingFunction={buildingFunction}
+								setStage={setStage}
+								countries={countryNames}
+								setRestaurantName={setRestaurantName}
+								restaurantName={restaurantName}
+								setRegulatoryBody={setRegulatoryBody}
+								regulatoryBody={regulatoryBody}
+								setRegulatoryBodyID={setRegulatoryBodyID}
+								regulatoryBodyID={regulatoryBodyID}
+							/>
+						</Title>
 					</div>
-					<Stage4
-						setIDType={setIDType}
-						IDType={IDType}
-						setIDNumber={setIDNumber}
-						IDNumber={IDNumber}
-						IDUrl={IDUrl}
-						setUrl={setUrl}
-						setTown={setTown}
-						town={town}
-						setCountry={setCountry}
-						country={country}
-						setRegion={setRegion}
-						region={region}
-						setBuildingFunction={setBuildingFunction}
-						buildingFunction={buildingFunction}
-						setStage={setStage}
-						countries={countryNames}
-						setRestaurantName={setRestaurantName}
-						restaurantName={restaurantName}
-						setRegulatoryBody={setRegulatoryBody}
-						regulatoryBody={regulatoryBody}
-						setRegulatoryBodyID={setRegulatoryBodyID}
-						regulatoryBodyID={regulatoryBodyID}
-					/>
-				</Title>
+				</div>
 			);
 
 		case 5:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage5
+								setIDType={setIDType}
+								IDType={IDType}
+								setIDNumber={setIDNumber}
+								IDNumber={IDNumber}
+								IDUrl={IDUrl}
+								setUrl={setUrl}
+								setTown={setTown}
+								town={town}
+								setCountry={setCountry}
+								country={country}
+								setRegion={setRegion}
+								region={region}
+								setBuildingFunction={setBuildingFunction}
+								buildingFunction={buildingFunction}
+								setStage={setStage}
+								countries={countryNames}
+								restaurantName={restaurantName}
+								regulatoryBody={regulatoryBody}
+								regulatoryBodyID={regulatoryBodyID}
+								setCuisine={setCuisine}
+								cuisine={cuisine}
+								setRestaurantDescription={setRestaurantDescription}
+								restaurantDescription={restaurantDescription}
+							/>
+						</Title>
 					</div>
-					<Stage5
-						setIDType={setIDType}
-						IDType={IDType}
-						setIDNumber={setIDNumber}
-						IDNumber={IDNumber}
-						IDUrl={IDUrl}
-						setUrl={setUrl}
-						setTown={setTown}
-						town={town}
-						setCountry={setCountry}
-						country={country}
-						setRegion={setRegion}
-						region={region}
-						setBuildingFunction={setBuildingFunction}
-						buildingFunction={buildingFunction}
-						setStage={setStage}
-						countries={countryNames}
-						restaurantName={restaurantName}
-						regulatoryBody={regulatoryBody}
-						regulatoryBodyID={regulatoryBodyID}
-						setCuisine={setCuisine}
-						cuisine={cuisine}
-						setRestaurantDescription={setRestaurantDescription}
-						restaurantDescription={restaurantDescription}
-					/>
-				</Title>
+				</div>
 			);
 		// Admin specific signup
 		case 6:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage6
+								setIDType={setIDType}
+								IDType={IDType}
+								setIDNumber={setIDNumber}
+								IDNumber={IDNumber}
+								IDUrl={IDUrl}
+								setUrl={setUrl}
+								image={image}
+								setImage={setImage}
+								setTown={setTown}
+								town={town}
+								setCountry={setCountry}
+								country={country}
+								setRegion={setRegion}
+								region={region}
+								setBuildingFunction={setBuildingFunction}
+								buildingFunction={buildingFunction}
+								setStage={setStage}
+								countries={countryNames}
+								restaurantName={restaurantName}
+								regulatoryBody={regulatoryBody}
+								regulatoryBodyID={regulatoryBodyID}
+								setCuisine={setCuisine}
+								cuisine={cuisine}
+								setRestaurantDescription={setRestaurantDescription}
+								restaurantDescription={restaurantDescription}
+							/>
+						</Title>
 					</div>
-					<Stage6
-						setIDType={setIDType}
-						IDType={IDType}
-						setIDNumber={setIDNumber}
-						IDNumber={IDNumber}
-						IDUrl={IDUrl}
-						setUrl={setUrl}
-						image={image}
-						setImage={setImage}
-						setTown={setTown}
-						town={town}
-						setCountry={setCountry}
-						country={country}
-						setRegion={setRegion}
-						region={region}
-						setBuildingFunction={setBuildingFunction}
-						buildingFunction={buildingFunction}
-						setStage={setStage}
-						countries={countryNames}
-						restaurantName={restaurantName}
-						regulatoryBody={regulatoryBody}
-						regulatoryBodyID={regulatoryBodyID}
-						setCuisine={setCuisine}
-						cuisine={cuisine}
-						setRestaurantDescription={setRestaurantDescription}
-						restaurantDescription={restaurantDescription}
-					/>
-				</Title>
+				</div>
 			);
 		// supplier/ machinery specific signup
 		case 7:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage7
+								setTown={setTown}
+								town={town}
+								setCountry={setCountry}
+								country={country}
+								setRegion={setRegion}
+								region={region}
+								setBuildingFunction={setBuildingFunction}
+								buildingFunction={buildingFunction}
+								setStage={setStage}
+								countries={countryNames}
+								companyName={companyName}
+								setCompanyName={setCompanyName}
+								setCompanyDescription={setCompanyDescription}
+								companyDescription={companyDescription}
+							/>
+						</Title>
 					</div>
-					<Stage7
-						setTown={setTown}
-						town={town}
-						setCountry={setCountry}
-						country={country}
-						setRegion={setRegion}
-						region={region}
-						setBuildingFunction={setBuildingFunction}
-						buildingFunction={buildingFunction}
-						setStage={setStage}
-						countries={countryNames}
-						companyName={companyName}
-						setCompanyName={setCompanyName}
-						setCompanyDescription={setCompanyDescription}
-						companyDescription={companyDescription}
-					/>
-				</Title>
+				</div>
 			);
 		case 8:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage8
+								setConsultant={setConsultant}
+								consultant={consultant}
+								addNewServiceBtn={addNewServiceBtn}
+								handleSelectedImage={handleSelectedImage}
+								IDImg1={IDImg1}
+								certificateImg1={certificateImg1}
+								servicesInput={servicesInput}
+								setTown={setTown}
+								town={town}
+								setCountry={setCountry}
+								country={country}
+								setRegion={setRegion}
+								region={region}
+								setBuildingFunction={setBuildingFunction}
+								buildingFunction={buildingFunction}
+								setStage={setStage}
+								countries={countryNames}
+							/>
+						</Title>
 					</div>
-					<Stage8
-						setConsultant={setConsultant}
-						consultant={consultant}
-						addNewServiceBtn={addNewServiceBtn}
-						handleSelectedImage={handleSelectedImage}
-						IDImg1={IDImg1}
-						certificateImg1={certificateImg1}
-						servicesInput={servicesInput}
-						setTown={setTown}
-						town={town}
-						setCountry={setCountry}
-						country={country}
-						setRegion={setRegion}
-						region={region}
-						setBuildingFunction={setBuildingFunction}
-						buildingFunction={buildingFunction}
-						setStage={setStage}
-						countries={countryNames}
-					/>
-				</Title>
+				</div>
 			);
 	}
 };

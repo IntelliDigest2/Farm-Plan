@@ -190,7 +190,7 @@ export const getPlanData = () => {
       .firestore()
       .collection("marketplace")
       .doc(uid)
-      .collection("newPlan")
+      .collection("newPlan").where('isEatOut', '==', false)
       .get()
       .then((snapshot) => {
         const data = [];
@@ -202,8 +202,8 @@ export const getPlanData = () => {
       .catch((err) => {
         dispatch({ type: "GET_NEW_PLANS_ERROR", err });
       });
-  };
-};
+  }; 
+}; 
 
 export const getSingleMealPlan = (data) => {
   return (dispatch, getState, { getFirebase }) => {

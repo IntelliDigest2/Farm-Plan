@@ -5,6 +5,8 @@ const initState = {
   purchaseDataRes: [],
   salesData: [],
   rentData: [],
+  SelectedRecipe: [],
+  otherMeals: [],
 };
 
 const dataReducer = (state = initState, action) => {
@@ -151,6 +153,48 @@ const dataReducer = (state = initState, action) => {
         ...state,
         authError: null,
       };
+
+      case "SET_SELECTED_RECIPE_ERROR":
+        console.log("selected recipe error " + action.err.message);
+        return {
+          ...state,
+          authError: "set failed",
+        };
+      case "SET_SELECTED_RECIPE":
+        console.log("set recipe success", action.payload);
+        return {
+          ...state,
+          SelectedRecipe: action.payload,
+          authError: null,
+        };
+
+        case "ADD_OTHER_MEALS_ERROR":
+        console.log("add other meals error " + action.err.message);
+        return {
+          ...state,
+          authError: "set failed",
+        };
+      case "ADD_OTHER_MEALS":
+        console.log("add other meals success", action.payload);
+        return {
+          ...state,
+          authError: null,
+        };
+
+        case "GET_OTHER_MEALS_ERROR":
+          console.log("fetch other meals error " + action.err.message);
+          return {
+            ...state,
+            authError: "fetch other meals failed",
+          };
+        case "GET_OTHER_MEALS":
+          console.log("fetch other meals in plan success", action.payload);
+          return {
+            ...state,
+            otherMeals: action.payload,
+            authError: null,
+          };
+
     default:
       return state;
   }
