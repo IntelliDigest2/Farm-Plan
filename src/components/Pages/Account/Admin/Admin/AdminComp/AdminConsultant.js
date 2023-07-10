@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, Row, Col, Accordion, Button } from "react-bootstrap";
 import { getConsultantImages, activateConsultant } from "./../../AdminData";
+import { submitNotification } from "./../../../../../lib/Notifications";
 
 export const AdminConsultant = (props) => {
 	const [userId, setUserId] = useState("");
@@ -31,17 +32,22 @@ export const AdminConsultant = (props) => {
 		console.log(images);
 	}, [images]);
 
+	useEffect(() => {}, [loadingActiveConsultant]);
+
 	const submitConsultantActivation = (e) => {
 		e.preventDefault();
+		console.log(`this has been clicked`, userId);
 		setLoadingActiveConsultant(true);
 		activateConsultant(userId)
-			.then(
-				setLoadingActiveConsultant(false)
-
-				//Notification
-			)
-			.catch((err) => {
+			.then(() => {
 				setLoadingActiveConsultant(false);
+				//Notification
+				submitNotification("Success", "Consultant status changed to active");
+			})
+			.catch((err) => {
+				console.log(err);
+				setLoadingActiveConsultant(false);
+				submitNotification("Error", "Something went wrong");
 			});
 	};
 
