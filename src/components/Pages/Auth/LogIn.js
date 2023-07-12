@@ -67,8 +67,8 @@ function Login(props) {
           </Link>
         </div>
         <div className='signup-center subtitles row'>
-          <Link to='/forgot-password' style={{ color: '#AFBA15' }}>
-            Forgot your password?
+          <Link to='/forgot-password' style={{ color: 'whitesmoke' }}>
+            reset password
           </Link>
         </div>
       </Form>
