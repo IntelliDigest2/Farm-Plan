@@ -363,7 +363,7 @@ export const ConsultantOtherBookings = (props) => {
 	// console.log(profile.consultant);
 
 	let events =
-		!otherBookings || otherBookings.length === 0 ? (
+		otherBookings && otherBookings.length === 0 ? (
 			"you do not have any bookings"
 		) : (
 			<ListGroup>

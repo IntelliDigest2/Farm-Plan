@@ -341,10 +341,11 @@ export const signUp = (newUser) => {
 							services: newUser.consultantInfo.services,
 							summary: newUser.consultantInfo.summary,
 							isActive: true,
-							imgsLinks: [
-								{ certificateImg: urls[0] },
-								{ identificationImg: urls[1] },
-							],
+							imgsLinks: {
+								certificateImg: urls[0],
+								identificationImg: urls[1],
+							},
+
 							// calendarEvents: [],
 							// eventDaysArray: [],
 						});

@@ -13,6 +13,7 @@
     margin-top: 2%;
     border-radius: 25px;
     /* margin-bottom: 20px; */
+    max-width: 100vw;
 }
 
 .consultant_cont{

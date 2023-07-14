@@ -73,6 +73,7 @@ import RestaurantMealPlan from "./components/Pages/Account/Business/Restaurant/R
 import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan";
 
 import NewAccount from "./components/Pages/Account/Account";
+import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
 
 // import Example from "./components/Pages/Account/Example";
 
@@ -184,8 +185,8 @@ const App = (props) => {
 					<Switch>
 						{/* <Route path="/example" exact component={Example} /> */}
 						<Route path="/login" exact component={Login} />
-						<Route path="/admin" exact component={AdminTab}  />
-						<Route path="/supply" exact component={CommerceTab}  />
+						<Route path="/admin" exact component={AdminTab} />
+						<Route path="/supply" exact component={CommerceTab} />
 						<Route path="/landing" exact component={LandingPage} />
 						<Route path="/about-us" exact component={AboutUs} />
 						<Route path="/signup" exact component={SignUp} />
@@ -194,6 +195,12 @@ const App = (props) => {
 						<Route path="/contact" exact component={Contact} />
 						<Route path="/forgot-password" exact component={ForgotPassword} />
 						<Route path="/payment-process" exact component={Payment} />
+
+						<Route
+							path="/adminconsulttest"
+							exact
+							component={ConsultAdminTest}
+						/>
 
 						{/* <Route exact path="/consultant" component={Homepage} /> */}
 						{/* <Route path="/consultant/register" component={ConsultantRegister} /> */}
@@ -284,10 +291,7 @@ const App = (props) => {
 							path="/restaurant-meal-plan"
 							component={RestaurantMealPlan}
 						/>
-						<Route
-							path="/supply-plan"
-							component={SupplyPlan}
-						/>
+						<Route path="/supply-plan" component={SupplyPlan} />
 
 						<Route component={NotFound} />
 					</Switch>

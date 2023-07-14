@@ -82,7 +82,7 @@ export function SubButtonM(props) {
 		>
 			<Link to={props.goTo}>
 				<div className="basic-title" style={{ color: "white" }}>
-					{props.text}
+					<div>{props.text}</div>
 				</div>
 			</Link>
 		</BootstrapButton>
@@ -193,7 +193,7 @@ export function IconButton(props) {
 						>
 							<div>
 								<IconType />
-								{props.label}
+								<div>{props.label}</div>
 							</div>
 						</Link>
 					</div>
@@ -210,7 +210,7 @@ export function IconButton(props) {
 					>
 						<div>
 							<IconType />
-							{props.label}
+							<div>{props.label}</div>
 						</div>
 					</Link>
 				</div>
