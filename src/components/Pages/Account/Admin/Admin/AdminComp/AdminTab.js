@@ -6,6 +6,7 @@ import { PageWrapAdmin } from "../../../../../SubComponents/PageWrapAdmin";
 import LoadingScreen from "../../../../../SubComponents/Loading/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 import { useTranslation, Trans } from "react-i18next";
+import { connect } from "react-redux";
 
 import Admin from "./Admin";
 import moment from "moment";
@@ -13,7 +14,7 @@ import ChartProduce from "../../../Charts/ChartProduce";
 import AdminRes from "./AdminRes";
 import AdminConsultant from "./AdminConsultant";
 
-export default function AdminTab() {
+const AdminTab = (props) => {
 	const { i18n } = useTranslation();
 
 	const { t } = useTranslation();
@@ -26,14 +27,51 @@ export default function AdminTab() {
 		zh: { nativeName: "Chinese" },
 		ru: { nativeName: "Russian" },
 	};
+	const [value, setValue] = useState(moment());
 
 	const [loading, setLoading] = useState(true);
+
+	let shownTab = props.profile.isLoaded ? (
+		props.profile.role === "superAdmin" ? (
+			<Tabs
+				defaultActiveKey="calendar"
+				id="meal-plan-tabs"
+				className="mb-3 mealtabs basic-title"
+				fill
+			>
+				<Tab
+					eventKey="User Verification"
+					title="User verification"
+					className="mealtab"
+				>
+					<AdminConsultant />
+				</Tab>
+			</Tabs>
+		) : (
+			<Tabs
+				defaultActiveKey="calendar"
+				id="meal-plan-tabs"
+				className="mb-3 mealtabs basic-title"
+				fill
+			>
+				<Tab eventKey="calendar" title="Users" className="mealtab">
+					<Admin value={value} onChange={setValue} />
+				</Tab>
+				<Tab eventKey="recipes" title="Restaurant" className="mealtab">
+					<AdminRes />
+				</Tab>
+				{/* <Tab eventKey="consultant" title="Consultant" className="mealtab">
+					<AdminConsultant />
+				</Tab> */}
+			</Tabs>
+		)
+	) : (
+		""
+	);
 
 	useEffect(() => {
 		setTimeout(() => setLoading(false), 1500);
 	});
-
-	const [value, setValue] = useState(moment());
 
 	if (loading) {
 		return <LoadingScreen />;
@@ -61,26 +99,19 @@ export default function AdminTab() {
 					</DropdownButton>
 				</>
 			</div>
-
-			<Tabs
-				defaultActiveKey="calendar"
-				id="meal-plan-tabs"
-				className="mb-3 mealtabs basic-title"
-				fill
-			>
-				<Tab eventKey="calendar" title="Users" className="mealtab">
-					<Admin value={value} onChange={setValue} />
-				</Tab>
-				<Tab eventKey="recipes" title="Restaurant" className="mealtab">
-					<AdminRes />
-				</Tab>
-				<Tab eventKey="consultant" title="Consultant" className="mealtab">
-					<AdminConsultant />
-				</Tab>
-			</Tabs>
+			{shownTab}
 
 			{/* input available locations for picking up */}
 			{/* shopping list */}
 		</PageWrapAdmin>
 	);
-}
+};
+
+const mapStateToProps = (state) => {
+	return {
+		auth: state.firebase.auth,
+		profile: state.firebase.profile,
+	};
+};
+
+export default connect(mapStateToProps, null)(AdminTab);

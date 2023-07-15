@@ -7,7 +7,7 @@ export function Food({ setShow, setChooseModal, profile }) {
 
 	useEffect(() => {
 		if (profile.isLoaded) {
-			if (profile.consultant === "active" || profile.consultant === "pending") {
+			if (profile.buildingFunction === "Consultant") {
 				setConsultantService(true);
 			} else {
 				setConsultantService(false);

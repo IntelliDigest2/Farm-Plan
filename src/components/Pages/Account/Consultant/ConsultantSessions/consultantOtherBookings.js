@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import { generateId } from "../utils/utils";
 
-const VisitConsulltant = (props) => {
+const VisitConsultant = (props) => {
 	const [showUserInfo, setShowUserInfo] = useState(false);
 
 	const [userInfo, setUserInfo] = useState(null);
@@ -390,7 +390,7 @@ export const ConsultantOtherBookings = (props) => {
 							break;
 						case "Visit to consultant":
 							value = (
-								<VisitConsulltant key={`booking-${index}`} booking={booking} />
+								<VisitConsultant key={`booking-${index}`} booking={booking} />
 							);
 							break;
 						case "Written feedback":

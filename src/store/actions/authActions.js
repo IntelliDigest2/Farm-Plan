@@ -273,7 +273,7 @@ export const signUp = (newUser) => {
 				};
 
 				if (newUser.consultantInfo) {
-					val.consultant = "pending";
+					val.verification = "pending";
 				}
 				firestore.collection("users").doc(resp.user.uid).set(val);
 

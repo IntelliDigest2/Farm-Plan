@@ -422,31 +422,31 @@ const SignUp = (props) => {
 		default:
 		case 1:
 			return (
-				<Title subtitle="Sign Up">
-					<div className="signup-center subtitles">
-						<p>First, create your account.</p>
-					</div>
-					<Stage1
-						setFirstName={setFirstName}
-						firstName={firstName}
-						setLastName={setLastName}
-						lastName={lastName}
-						setMobile={setMobile}
-						mobile={mobile}
-						setEmail={setEmail}
-						email={email}
-						setPassword={setPassword}
-						password={password}
-						setStage={setStage}
-					/>
-					<div className="signup-center subtitles row">
-						<p>Already have an account? </p>
-						<Link style={{ color: "#1C1569" }} to="/login">
-							{"  "}
-							LOG IN
-						</Link>
-					</div>
-				</Title>
+				// <Title subtitle="Sign Up">
+				// 	<div className="signup-center subtitles">
+				// 		<p>First, create your account.</p>
+				// 	</div>
+				// 	<Stage1
+				// 		setFirstName={setFirstName}
+				// 		firstName={firstName}
+				// 		setLastName={setLastName}
+				// 		lastName={lastName}
+				// 		setMobile={setMobile}
+				// 		mobile={mobile}
+				// 		setEmail={setEmail}
+				// 		email={email}
+				// 		setPassword={setPassword}
+				// 		password={password}
+				// 		setStage={setStage}
+				// 	/>
+				// 	<div className="signup-center subtitles row">
+				// 		<p>Already have an account? </p>
+				// 		<Link style={{ color: "#1C1569" }} to="/login">
+				// 			{"  "}
+				// 			LOG IN
+				// 		</Link>
+				// 	</div>
+				// </Title>
 				<div className="signup-page">
 					<div className="signup-content">
 						<Title subtitle="Sign Up">
@@ -468,15 +468,14 @@ const SignUp = (props) => {
 							/>
 							<div className="signup-center subtitles row">
 								<p>Already have an account? </p>
-								<Link style={{ color: '#1C1569' }} to='/login'>
-									{'  '}
+								<Link style={{ color: "#1C1569" }} to="/login">
+									{"  "}
 									LOG IN
 								</Link>
 							</div>
 						</Title>
 					</div>
 				</div>
-				
 			);
 		case 2:
 			return (

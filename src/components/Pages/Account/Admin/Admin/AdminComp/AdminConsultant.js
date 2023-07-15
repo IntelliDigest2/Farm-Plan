@@ -7,18 +7,22 @@ import { submitNotification } from "./../../../../../lib/Notifications";
 export const AdminConsultant = (props) => {
 	const [userId, setUserId] = useState("");
 	const [images, setImages] = useState(null);
+	const [activeState, setActiveState] = useState("");
 	const [loadingGetImage, setloadingGetImage] = useState(false);
 	const [loadingActiveConsultant, setLoadingActiveConsultant] = useState(false);
+	const [accountType, setAccountType] = useState("");
 
 	function SearchConsultantImages(e) {
 		e.preventDefault();
 		if (userId.trim() !== "") {
 			setloadingGetImage(true);
-			getConsultantImages(userId)
+			getConsultantImages(userId, accountType)
 				.then((result) => {
+					console.log(result);
 					setloadingGetImage(false);
+					setActiveState(result.verificationStatus);
 
-					setImages(result);
+					setImages(result.images);
 				})
 				.catch((err) => {
 					setloadingGetImage(false);
@@ -29,10 +33,12 @@ export const AdminConsultant = (props) => {
 	}
 
 	useEffect(() => {
-		console.log(images);
+		console.log(images, `images changed`);
 	}, [images]);
 
 	useEffect(() => {}, [loadingActiveConsultant]);
+
+	useEffect(() => {}, [activeState]);
 
 	const submitConsultantActivation = (e) => {
 		e.preventDefault();
@@ -43,6 +49,7 @@ export const AdminConsultant = (props) => {
 				setLoadingActiveConsultant(false);
 				//Notification
 				submitNotification("Success", "Consultant status changed to active");
+				setActiveState("verified");
 			})
 			.catch((err) => {
 				console.log(err);
@@ -51,6 +58,33 @@ export const AdminConsultant = (props) => {
 			});
 	};
 
+	let userVerificationState =
+		activeState === "verified" ? (
+			<div
+				style={{
+					width: "180px",
+					backgroundColor: "green",
+					color: "white",
+					margin: "5px 0",
+					borderRadius: "5px",
+				}}
+			>
+				User is Verfied
+			</div>
+		) : (
+			<div
+				style={{
+					width: "180px",
+					backgroundColor: "red",
+					color: "white",
+					margin: "5px 0",
+					borderRadius: "5px",
+				}}
+			>
+				user is not verified
+			</div>
+		);
+
 	let content =
 		images === null ? (
 			"Consultant certifications images will appear here"
@@ -58,6 +92,9 @@ export const AdminConsultant = (props) => {
 			"theres isnt any image with this user information"
 		) : (
 			<>
+				<Row>
+					<Col>{userVerificationState}</Col>
+				</Row>
 				<Row style={{ alignItems: "baseline" }}>
 					<Col>
 						<div>
@@ -87,35 +124,50 @@ export const AdminConsultant = (props) => {
 			</>
 		);
 
-	let activationButton = !images ? (
-		""
-	) : (
-		<Button
-			style={{ float: "right" }}
-			type="button"
-			onClick={(e) => submitConsultantActivation(e)}
-		>
-			{loadingActiveConsultant ? "...loading" : "Activate consultant account"}
-		</Button>
-	);
+	let activationButton =
+		!images || activeState === "verified" ? (
+			""
+		) : (
+			<Button
+				style={{ float: "right" }}
+				type="button"
+				onClick={(e) => submitConsultantActivation(e)}
+			>
+				{loadingActiveConsultant ? "...loading" : "Verify user account"}
+			</Button>
+		);
 
 	return (
 		<div>
 			<Row style={{ alignItems: "baseline" }}>
 				<Col>
 					<Form.Group className="form-group">
-						<Form.Label className="form-label">Type userId string</Form.Label>
+						<Form.Label className="form-label">Select account type</Form.Label>
 						<Form.Control
-							id=""
-							name="publicId"
-							type="text"
-							onChange={(e) => {
-								setUserId(e.target.value);
-							}}
-							placeholder="userId"
-						/>
+							as="select"
+							className="form-control"
+							onChange={(e) => setAccountType(e.target.value)}
+							required
+						>
+							<option>Select</option>
+							<option value={"restaurant_users"}>restaurant</option>
+							<option value={"consultants"}>consultant</option>
+							<option value={"farm_users"}>farmer</option>
+						</Form.Control>
 					</Form.Group>
 				</Col>
+				<Form.Group className="form-group">
+					<Form.Label className="form-label">Type userId string</Form.Label>
+					<Form.Control
+						id=""
+						name="publicId"
+						type="text"
+						onChange={(e) => {
+							setUserId(e.target.value);
+						}}
+						placeholder="userId"
+					/>
+				</Form.Group>
 
 				<Col>
 					<Button type="button" onClick={(e) => SearchConsultantImages(e)}>

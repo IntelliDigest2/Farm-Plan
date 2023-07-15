@@ -9,7 +9,7 @@ export function Food({ isSeller, profile }) {
 	// console.log(profile);
 	useEffect(() => {
 		if (profile.isloaded) {
-			if (profile.consultant === "active") {
+			if (profile.buildingFunction === "Consultant") {
 				setConsultantService(true);
 			} else {
 				setConsultantService(false);
