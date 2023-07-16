@@ -15,6 +15,7 @@ import {
 	ListGroupItem,
 } from "react-bootstrap";
 import { generateId } from "../utils/utils";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const VisitConsultant = (props) => {
 	const [showUserInfo, setShowUserInfo] = useState(false);
@@ -191,6 +192,15 @@ function genereateRandomLink(booking) {
 
 	return `${part1}-${callDuration}-${callType}${part2}`;
 }
+
+function copyText(e, value) {
+	e.preventDefault();
+	// copyText.select();
+	//   copyText.setSelectionRange(0, 99999); // For mobile devices
+
+	// Copy the text inside the text field
+	navigator.clipboard.writeText(value);
+}
 const Call = (props) => {
 	const { booking } = props;
 	let randomLink = genereateRandomLink(booking);
@@ -220,7 +230,12 @@ const Call = (props) => {
 				</Col>
 			</Row>
 
-			<div>Channel id for call: {booking.callId}</div>
+			<div>
+				Channel id for call: {booking.callId}
+				<span>
+					<ContentCopyIcon onClick={(e) => copyText(e, booking.callId)} />
+				</span>
+			</div>
 			<Link
 				to={`/call/${randomLink}`}
 				target="_blank"

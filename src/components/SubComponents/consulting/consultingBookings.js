@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { fetchOtherConsultingBookings } from "../../../store/actions/consultingActions";
 
@@ -16,25 +16,61 @@ import {
 } from "react-bootstrap";
 import { generateId } from "../../Pages/Account/Consultant/utils/utils";
 import { markEventAsComplete } from "./../../../store/actions/consultingActions";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Modal } from "react-bootstrap";
+import { submitNotification } from "./../../lib/Notifications";
+
+const FormCheck = (props) => {
+	const [isChecked, setIsChecked] = useState(false);
+	const { handleShow, bookingInfo, dataRef, checkedRef, tickCheckBox } = props;
+
+	useEffect(() => {
+		if (isChecked === true) {
+			dataRef.current = bookingInfo;
+			handleShow();
+		}
+	}, [isChecked]);
+
+	useEffect(() => {
+		if (tickCheckBox) {
+			setIsChecked(false);
+		}
+	}, [tickCheckBox]);
+
+	console.log(tickCheckBox, `this checks the tickedCheckbox status`);
+
+	return (
+		<Form.Check
+			checked={isChecked}
+			onChange={(e) => {
+				setIsChecked(!isChecked);
+			}}
+			ref={checkedRef}
+			type="checkbox"
+			label="Mark as complete"
+		/>
+	);
+};
 
 const handleCheckboxChange = (e, userId, consultantId, eventId) => {
 	if (e.target.checked) {
-		markEventAsComplete(userId, consultantId, eventId)
-			.then((result) => {
-				// console.log("completed");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		// markEventAsComplete(userId, consultantId, eventId)
+		// 	.then((result) => {
+		// 		// console.log("completed");
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 	});
 	}
-	// console.log(
-	// 	e.target.checked,
-	// 	// isChecked,
-	// 	userId,
-	// 	consultantId,
-	// 	eventId,
-	// 	`this is the event value`
-	// );
+	console.log(
+		e.target.checked,
+		// isChecked,
+		userId,
+		consultantId,
+		eventId,
+		`this is the event value`
+	);
+	console.log(`clicked`);
 };
 const VisitConsultant = (props) => {
 	const [showUserInfo, setShowUserInfo] = useState(false);
@@ -45,7 +81,7 @@ const VisitConsultant = (props) => {
 	const [locationLoading, setLocationLoading] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const { booking, profile, auth } = props;
+	const { booking, profile, auth, openConfirmationModal } = props;
 
 	function revealInformation(e, booking) {
 		e.preventDefault();
@@ -81,6 +117,15 @@ const VisitConsultant = (props) => {
 				<div>
 					Consultant Name : {`${userInfo.firstName} ${userInfo.lastName}`}{" "}
 				</div>
+				{/* <Form.Check
+					checked={isChecked}
+					onChange={(e) => {
+						setIsChecked(!isChecked);
+						// handleShow();
+					}}
+					type="checkbox"
+					label="Mark as complete"
+				/> */}
 				<div>Consultant Address : {userInfo.address}</div>
 				`bulabah`
 			</div>
@@ -98,21 +143,7 @@ const VisitConsultant = (props) => {
 				<Col>Booking info:</Col>
 				<Col>
 					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					<Form.Check
-						checked={isChecked}
-						onChange={(e) => {
-							setIsChecked(!isChecked);
-							handleCheckboxChange(
-								e,
-								auth.uid,
 
-								booking.consultant.consultantId,
-								booking.id
-							);
-						}}
-						type="checkbox"
-						label="Mark as complete"
-					/>
 					{/* </Form.Group> */}
 				</Col>
 			</Row>
@@ -148,7 +179,7 @@ const ConsultantIsVisiting = (props) => {
 
 	const [userInfo, setUserInfo] = useState(null);
 
-	const { booking, auth } = props;
+	const { booking, auth, openConfirmationModal } = props;
 
 	function revealInformation(e, booking) {
 		e.preventDefault();
@@ -204,7 +235,7 @@ const ConsultantIsVisiting = (props) => {
 				<Col>Booking info:</Col>
 				<Col>
 					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					<Form.Check
+					{/* <Form.Check
 						checked={isChecked}
 						onChange={(e) => {
 							setIsChecked(!isChecked);
@@ -218,7 +249,7 @@ const ConsultantIsVisiting = (props) => {
 						}}
 						type="checkbox"
 						label="Mark as complete"
-					/>
+					/> */}
 					{/* </Form.Group> */}
 				</Col>
 			</Row>
@@ -265,13 +296,27 @@ function genereateRandomLink(booking) {
 	return `${part1}-${callDuration}-${callType}${part2}`;
 }
 const Call = (props) => {
-	const { booking, auth } = props;
+	const {
+		booking,
+		auth,
+		openConfirmationModal,
+		dataRef,
+		checkedRef,
+		tickCheckBox,
+	} = props;
 	let randomLink = genereateRandomLink(booking);
 	const [isChecked, setIsChecked] = useState(false);
 
 	let startTime = format(parseISO(booking.event.start), "hh:mm a");
 	let endTime = format(parseISO(booking.event.end), "hh:mm a");
 	let date = booking.event.start.split("T")[0];
+
+	function copyText(e, value) {
+		e.preventDefault();
+
+		navigator.clipboard.writeText(value);
+		submitNotification("Success", "Text copied");
+	}
 
 	// console.log(booking, `this is the booking values`);
 	return (
@@ -280,7 +325,7 @@ const Call = (props) => {
 				<Col>Booking info:</Col>
 				<Col>
 					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					<Form.Check
+					{/* <Form.Check
 						checked={isChecked}
 						onChange={(e) => {
 							setIsChecked(!isChecked);
@@ -294,8 +339,18 @@ const Call = (props) => {
 						}}
 						type="checkbox"
 						label="Mark as complete"
-					/>
+					/> */}
 					{/* </Form.Group> */}
+					<FormCheck
+						bookingInfo={{
+							consultantId: booking.consultant.consultantId,
+							bookingId: booking.id,
+						}}
+						tickCheckBox={tickCheckBox}
+						handleShow={openConfirmationModal}
+						dataRef={dataRef}
+						checkedRef={checkedRef}
+					/>
 				</Col>
 			</Row>
 			<Row>
@@ -318,7 +373,19 @@ const Call = (props) => {
 				</Col>
 			</Row>
 
-			<div>Channel id for call: {booking.event.callId}</div>
+			<div>
+				Channel id for call: {booking.event.callId}
+				<span>
+					<ContentCopyIcon
+						titleAccess="copy"
+						style={{ cursor: "pointer", marginLeft: "5px" }}
+						onClick={(e) => copyText(e, booking.event.callId)}
+					/>
+				</span>
+			</div>
+			<div style={{ fontSize: "11px", color: "#95a000" }}>
+				* channel id is required to make the call
+			</div>
 			<Link
 				to={`/call/${randomLink}`}
 				target="_blank"
@@ -337,7 +404,7 @@ const submitRequest = (e) => {
 };
 
 const WrittenFeedback = (props) => {
-	const { booking, auth } = props;
+	const { booking, auth, openConfirmationModal } = props;
 	const [isChecked, setIsChecked] = useState(false);
 
 	let startTime = format(parseISO(booking.event.start), "hh:mm a");
@@ -351,7 +418,7 @@ const WrittenFeedback = (props) => {
 				<Col>Booking info:</Col>
 				<Col>
 					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					<Form.Check
+					{/* <Form.Check
 						checked={isChecked}
 						onChange={(e) => {
 							setIsChecked(!isChecked);
@@ -365,7 +432,7 @@ const WrittenFeedback = (props) => {
 						}}
 						type="checkbox"
 						label="Mark as complete"
-					/>
+					/> */}
 					{/* </Form.Group> */}
 				</Col>
 			</Row>
@@ -410,13 +477,41 @@ export const ConsultingBookings = (props) => {
 	// const [locationLoading, setLocationLoading] = useState(false);
 	// const [userInfo, setUserInfo] = useState(null);
 	// const [loading, setLoading] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+	const [checkboxClickedStatus, setcheckboxClickedStatus] = useState(false);
+	const [tickCheckBox, setTickCheckbox] = useState(false);
 
 	useEffect(() => {
 		getOtherBookings(auth.uid);
 	}, []);
 
+	function openConfirmationModal() {
+		setShowModal(true);
+	}
+
+	const dataRef = useRef(null);
+	const checkedRef = useRef(false);
+
+	// console.log(dataRef, `the first dataRef`);
+	// useEffect(() => {
+	// 	console.log(dataRef.current, `the seconde dataRef`);
+	// }, [dataRef.current]);
+
+	useEffect(() => {}, [checkboxClickedStatus]);
+	// console.log(checkedRef.current.checked, `this i sthe checkbox`);
+
+	const handleClose = () => {
+		setShowModal(false);
+		setTickCheckbox(false);
+		// checkedRef.current.
+	};
+	// const handleShow = () => {
+	// 	setShowModal(false);
+	// 	setCloseCheckbox(false);
+	// };
+
 	useEffect(() => {
-		console.log(otherBookings, `this is the other bookings`);
+		// console.log(otherBookings, `this is the other bookings`);
 	}, [otherBookings]);
 
 	// console.log(profile);
@@ -434,17 +529,44 @@ export const ConsultingBookings = (props) => {
 					switch (booking.event.eventType) {
 						case "Video call":
 						case "Phone call":
-							value = <Call booking={booking} auth={auth} />;
+							value = (
+								<Call
+									dataRef={dataRef}
+									openConfirmationModal={() => openConfirmationModal()}
+									booking={booking}
+									auth={auth}
+									checkedRef={checkedRef}
+									tickCheckBox={tickCheckBox}
+								/>
+							);
 							break;
 
 						case "Consultant visitation":
-							value = <ConsultantIsVisiting booking={booking} auth={auth} />;
+							value = (
+								<ConsultantIsVisiting
+									modalControl={() => openConfirmationModal()}
+									booking={booking}
+									auth={auth}
+								/>
+							);
 							break;
 						case "Visit to consultant":
-							value = <VisitConsultant booking={booking} auth={auth} />;
+							value = (
+								<VisitConsultant
+									modalControl={() => openConfirmationModal()}
+									booking={booking}
+									auth={auth}
+								/>
+							);
 							break;
 						case "Written feedback":
-							value = <WrittenFeedback booking={booking} auth={auth} />;
+							value = (
+								<WrittenFeedback
+									modalControl={() => openConfirmationModal()}
+									booking={booking}
+									auth={auth}
+								/>
+							);
 							break;
 
 						default:
@@ -457,12 +579,61 @@ export const ConsultingBookings = (props) => {
 		);
 
 	return (
-		<div style={{ overflowY: "scroll" }}>
+		<>
 			<div>
-				<h2>Bookings</h2>
-				{events}
+				<Modal show={showModal} onHide={handleClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Confirm action</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						You are about to mark a booking as complete. You cannot cancel after
+						you click 'proceed'
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleClose}>
+							Cancel
+						</Button>
+						<Button
+							variant="primary"
+							onClick={(e) =>
+								handleCheckboxChange(
+									e,
+									auth.uid,
+									dataRef.current.consultantId,
+									dataRef.current.bookingId
+
+									// booking.consultant.consultantId,
+									// booking.id
+								)
+							}
+						>
+							{/* { acceptLoading === false || cancelLoading === false ?	Proceed :  } */}
+							{/* {cancelLoading ? "canceling Request..." : "Canceled"} */}
+							{/* {acceptLoading ? "accepting Request..." : "Accepted"} */}
+							{/* {actionType === "accept"
+								? acceptLoading
+									? "accepting Request"
+									: event.status.requestAccepted
+									? "Accepted"
+									: "Proceed"
+								: cancelLoading
+								? "canceling Request"
+								: event.status.requestAccepted
+								? "Canceled"
+								: "Proceed"
+								}  */}
+							Proceed
+						</Button>
+					</Modal.Footer>
+				</Modal>
 			</div>
-		</div>
+			<div style={{ overflowY: "scroll" }}>
+				<div>
+					<h2>Bookings</h2>
+					{events}
+				</div>
+			</div>
+		</>
 	);
 };
 
