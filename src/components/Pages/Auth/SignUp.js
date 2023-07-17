@@ -1159,6 +1159,7 @@ const Stage8 = (props) => {
 									onChange={props.handleSelectedImage}
 									label="upload certificate"
 									type="file"
+									required
 								/>
 							</Col>
 							<Col>
@@ -1169,6 +1170,7 @@ const Stage8 = (props) => {
 									className="mb-3"
 									label="upload Identification document"
 									type="file"
+									required
 								/>
 							</Col>
 						</Row>
