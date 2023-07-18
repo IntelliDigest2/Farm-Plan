@@ -24,6 +24,7 @@ import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Academic/AcademicTabs";
 import * as Restaurant from "./Business/Restaurant/RestaurantTabs";
 import * as Supply from "./Business/Suppliers/SupplyTabs";
+import * as Shops from "./Shop/ShopTabs"
 
 import * as Admin from "./Admin/Admin/AdminTabs";
 
@@ -405,6 +406,43 @@ const AccountType = (props) => {
 					</SwipeableViews>
 				</>
 			);
+
+			case "shop_admin":
+			case "shop_sub":
+				return (
+					<>
+						<TabList
+							className={classes.tabList} // Add this line to apply the custom style
+							TabIndicatorProps={{
+								style: {
+									backgroundColor: Colors.brandGreen,
+								},
+							}}
+							variant="standard"
+							onChange={props.handleChange}
+							centered
+						>
+							<Tab disableRipple label="Items" value="0" />
+							<Tab disableRipple label="FSSP" value="1"/>
+						</TabList>
+						<SwipeableViews
+							axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
+							index={parseInt(props.value)}
+							onChangeIndex={props.handleChangeIndex}
+						>
+							<TabPanel value={props.value} index={0} dir={props.theme.direction}>
+								<Shops.Item
+									setShow={props.setShow}
+									setChooseModal={props.setChooseModal}
+									profile={props.profile}
+								/>
+							</TabPanel>
+							<TabPanel value={props.value} index={2} dir={props.theme.direction}>
+								<Shops.FSSP />
+							</TabPanel>
+						</SwipeableViews>
+					</>
+				);
 		case "household_admin":
 		case "household_sub":
 		default:

@@ -1,0 +1,326 @@
+/* mealplan.js */
+.mealtabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.mealtabs a {
+  color: #2E2687;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  /* Optional hover effect */
+  &:hover {
+    background-color: #8b9b23;
+    color: #eeeeee;
+  }
+}
+.mealtab {
+  flex: 1;
+  text-align: center;
+}
+
+.empty {
+  padding: 1rem;
+  color: #545270;
+  font-weight: 500;
+}
+
+/* calendar */
+.plan-box {
+  margin: 0 2% 2% 0;
+  width: 100%;
+  min-height: 8rem;
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.plan-box-planner {
+  display:flex; 
+  flex-direction:row;
+  clear: both;
+}
+
+.plan-box-planner .plan-box-add {
+  margin-left: 600px;
+  max-width: 100px;
+}
+
+.plan-box .header {
+  background-color: #bac85a;
+  padding-left: 1%;
+  min-height: 2rem;
+  line-height: 2rem;
+  color: white;
+}
+
+.plan-box .button {
+  position: absolute;
+  bottom: 0.5%;
+  right: 2%;
+}
+
+.calendar {
+  box-sizing: border-box;
+  font-size: 1rem;
+  width: 100%;
+  margin: 0 2% 2% 0;
+}
+
+.header {
+  background-color: #bac85a;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  min-height: 2rem;
+  line-height: 2rem;
+  color: white;
+  display: flex;
+}
+
+.table-header {
+  background-color: #32797e;
+  text-align: center; 
+  font-family: 'Poppins', sans-serif;
+  color: antiquewhite;
+  /* font-weight: 300;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  color: white;
+  display: flex; */
+} 
+
+.calendar .day-names {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.calendar .body {
+  border: 1px solid #32797e;
+}
+
+.calendar .header .previous {
+  flex: 1;
+  text-align: left;
+  margin-left: 1rem;
+}
+
+.calendar .header .next {
+  flex: 1;
+  text-align: right;
+  margin-right: 1rem;
+}
+
+.calendar .week {
+  background-color: white;
+  width: calc(100% / 7);
+  height: calc(100% / 6);
+  line-height: 2.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: black;
+  font-weight: 400;
+}
+.calendar .week div {
+  width: 100%;
+}
+
+.calendar .day {
+  position: relative;
+  width: calc(100% / 7);
+  height: calc(100% / 6);
+  display: inline-block;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  z-index: 1;
+  text-align: center;
+}
+.calendar .day:hover {
+  background-color: #d9dd99 !important;
+}
+
+.calendar .day div {
+  width: 100%;
+  height: calc(100% / 6);
+  position: relative;
+  color: black;
+  z-index: 100;
+  line-height: 44px;
+}
+
+.calendar .day .before {
+  color: lightgray;
+}
+
+.calendar .day .selected {
+  background-color: #A5B828;
+  color: white;
+  font-weight: bold;
+}
+
+.calendar .day .today {
+  background-color: lightgray;
+}
+
+.saved-meals {
+  max-height: 25rem;
+  overflow-y: scroll;
+  margin-bottom: 2rem;
+}
+
+.form:nth-child(odd) {
+  background-color: #b3b785;
+  border-radius: 25px;
+  padding: 2%;
+}
+
+.meal-box {
+  margin: 0.5rem 0 0.5rem 0;
+  border: solid #95a11f;
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 12px;
+}
+.meal-box .image {
+  min-width: 15rem;
+  max-width: 18rem;
+  padding-left: 2rem;
+  padding-top: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+.meal-box img {
+  width: 100%;
+}
+.meal-box a {
+  color: #32797e;
+  font-style: italic;
+  align-items: center;
+}
+.meal-box .ingredients {
+    min-width: 10rem;
+    color: #302d53;
+    margin-top: 20px;
+}
+
+.meal-box-recipe {
+  margin: 0.5rem 0 0.5rem 0;
+  border: solid #32797e;
+  border-radius: 10px;
+}
+.meal-box-recipe .image {
+  min-width: 15rem;
+  max-width: 18rem;
+  padding-left: 3rem;
+  padding-top: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+.meal-box-recipe img {
+  min-width: 100%;
+  min-height: 250px;
+  max-height: 150px;
+
+}
+.meal-box-recipe a {
+  color: #afba15;
+  font-style: italic;
+}
+.meal-box-recipe .ingredients {
+  min-width: 20rem;
+  color: #A5B828;
+  padding-left: 2rem;
+
+}
+
+.heading {
+  display: flex;
+  line-height: 1.5rem !important;
+  align-items: center;
+  border-radius: 10px;
+  padding: 6px 0 6px 0;
+}
+
+.heading .meal-name {
+  flex: 2;
+  text-align: left;
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.icons {
+  flex: 2;
+  text-align: right;
+}
+
+.meal-box .meal-type {
+  border-radius: 10px;
+  background-color: #f8d287;
+  color: #000005;
+  font-size: 12px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  width: fit-content;
+  height: fit-content;
+}
+
+.qrcode-btn {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+/* search */
+.edamam {
+  /* width: 10rem;
+  height: auto; */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  float: right;
+}
+
+.refine-search {
+  width: 50%;
+  display: flex;
+}
+.refine-search p {
+  flex: 1;
+  text-align: left;
+}
+.refine-search div {
+  flex: 3;
+}
+
+.list {
+  display: flex; /* Add display flex to enable flexbox layout */
+  align-items: center; /* Align items vertically in the center */
+  margin: 10px 0;
+  line-height: 0.8;
+  border-radius: 15px;
+  text-align: center;
+  background-color: #A5B828;
+
+}
+.heading .list {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.list:nth-child(odd) {
+  background-color: #ffffff;
+  border-color: #95a11f;
+  border-style: solid;
+  /* text-align: center; */
+}
+
+.info-text{
+  font-family: 'Poppins', sans-serif;
+}
+
