@@ -91,13 +91,6 @@ export function FSSP() {
 	return (
 		<>  
 			<IconButton
-				title="Find out about our Agrifood TechPreneur program."
-				icon="plant"
-				label="Agrifood Technpreneur"
-				color="turquoise"
-				goTo="https://intellidigest.com/services/food-system-sustainability/agrifood-techpreneur-club/"
-			/>
-			<IconButton
 				title="Buff up the sustainability of your business with our online masterclasses."
 				icon="book"
 				label="Masterclasses"
