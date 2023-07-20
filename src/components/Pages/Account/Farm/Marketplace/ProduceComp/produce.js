@@ -10,7 +10,6 @@ import { getProduceData } from "../../../../../../store/actions/marketplaceActio
 
 function ProduceItems(props) {
 
-    console.log(">>>>>>", props)
   const [produce, setProduce] = useState([]);
 
   //trigger this when editing/deleting items

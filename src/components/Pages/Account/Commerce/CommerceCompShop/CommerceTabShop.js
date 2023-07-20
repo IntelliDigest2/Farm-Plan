@@ -40,7 +40,7 @@ export default function CommerceTab() {
   }
 
   return (
-    <PageWrapSupply goTo="/account" header="Supply ">
+    <PageWrapSupply goTo="/account" header="Shop/Supermarket ">
       {/* <WaveLoader /> */}
       <div>          
               <>

@@ -38,7 +38,7 @@ import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 import AdminTab from "./components/Pages/Account/Admin/Admin/AdminComp/AdminTab";
 import CommerceTab from "./components/Pages/Account/Commerce/CommerceComp/CommerceTab";
-
+import CommerceTabShop from "./components/Pages/Account/Commerce/CommerceCompShop/CommerceTabShop"
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
 
@@ -196,6 +196,7 @@ const App = (props) => {
 						<Route path="/contact" exact component={Contact} />
 						<Route path="/forgot-password" exact component={ForgotPassword} />
 						<Route path="/payment-process" exact component={Payment} />
+						<Route path="/search-shop" exact component={CommerceTabShop} />
 
 						<Route
 							path="/adminconsulttest"

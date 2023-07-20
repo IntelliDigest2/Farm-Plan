@@ -100,9 +100,9 @@ exports.sendCollectionToAlgolia = functions.https.onRequest(
 
 exports.sendShopCollectionToAlgolia = functions.https.onRequest(
 	async (req, res) => {
-	  const algoliaRecords = [];
+	  const algoliaRecordsShop = [];
   
-	  // Retrieve all documents from the new collection. Replace "other_collection" with the actual collection name.
+	  // Retrieve all documents from the new collection.
 	  const querySnapshot = await fireStoreDB.collection("shopItems").get();
   
 	  querySnapshot.docs.forEach((doc) => {
@@ -110,17 +110,18 @@ exports.sendShopCollectionToAlgolia = functions.https.onRequest(
 		const record = {
 			objectID: doc.id,
 			item: document.item,
+			imageURL: document.imageURL,
 			createdAt: document.createdAt,
 			price: document.price,
 			quantity: document.quantity,
 		  // ...
 		};
   
-		algoliaRecords.push(record);
+		algoliaRecordsShop.push(record);
 	  });
   
 	  // Save the records to the Algolia index for the new collection
-	  shopCollectionIndex.saveObjects(algoliaRecords, (error, content) => {
+	  shopCollectionIndex.saveObjects(algoliaRecordsShop, (error, content) => {
 		if (error) {
 		  console.error(error);
 		  res
@@ -134,7 +135,8 @@ exports.sendShopCollectionToAlgolia = functions.https.onRequest(
 		}
 	  });
 	}
-  );
+);
+
   
 
 exports.collectionOnCreate = functions.firestore
@@ -202,15 +204,16 @@ async function deleteDocumentFromAlgolia(snapshot) {
 
 async function saveDocumentInAlgoliaForShopCollection(snapshot) {
 	if (snapshot.exists) {
-		const record = snapshot.data();
-		if (record) {
-			// Removes the possibility of snapshot.data() being undefined.
-			record.objectID = snapshot.id;
-
-			await collectionIndex.saveObject(record); // Adds or replaces a specific object.
-		}
+	  const record = snapshot.data();
+	  if (record) {
+		// Removes the possibility of snapshot.data() being undefined.
+		record.objectID = snapshot.id;
+  
+		await shopCollectionIndex.saveObject(record); // Adds or replaces a specific object in the shop collection index.
+	  }
 	}
   }
+  
   
   async function updateDocumentInAlgoliaForCollection(change) {
 	const docBeforeChange = change.before.data();
