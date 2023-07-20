@@ -170,6 +170,13 @@ export function IconButton(props) {
 		}
 	}
 
+	// var target;
+	// if (String(props.goTo).startsWith("/")) {
+	// 	target = "_self";
+	// } else {
+	// 	target = "_blank";
+	// }
+
 	var target;
 	if (String(props.goTo).startsWith("/")) {
 		target = "_self";
@@ -179,42 +186,43 @@ export function IconButton(props) {
 
 	return (
 		<>
-			{props.title ? (
-				<Tooltip placement="bottom" arrow title={props.title}>
-					<div
-						className={["icon-btn", `${props.color}-btn`, "shadow-none"].join(
-							" "
-						)}
-					>
-						<Link
-							to={props.goTo}
-							disabled={props.disabled}
-							className="custom-link"
-						>
-							<div>
-								<IconType />
-								<div>{props.label}</div>
-							</div>
-						</Link>
-					</div>
-				</Tooltip>
-			) : (
-				<div className={["icon-btn", `${props.color}-btn`].join(" ")}>
-					<Link
-						// variant="default"
-						className="custom-link"
-						to={props.goTo}
-						// href={props.goTo}
-						target={target}
-						disabled={props.disabled}
-					>
-						<div>
-							<IconType />
-							<div>{props.label}</div>
-						</div>
-					</Link>
-				</div>
-			)}
-		</>
+      {props.title ? (
+        <Tooltip placement="bottom" arrow title={props.title}>
+          <div
+            className={[
+              "icon-btn",
+              `${props.color}-btn`,
+              "shadow-none"
+            ].join(" ")}
+          >
+            <a
+              href={props.goTo}
+              target={target}
+              className="custom-link"
+              rel={target === "_blank" ? "noopener noreferrer" : ""}
+            >
+              <div>
+                <IconType />
+                <div>{props.label}</div>
+              </div>
+            </a>
+          </div>
+        </Tooltip>
+      ) : (
+        <div className={["icon-btn", `${props.color}-btn`].join(" ")}>
+          <a
+            href={props.goTo}
+            target={target}
+            className="custom-link"
+            rel={target === "_blank" ? "noopener noreferrer" : ""}
+          >
+            <div>
+              <IconType />
+              <div>{props.label}</div>
+            </div>
+          </a>
+        </div>
+      )}
+    </>
 	);
 }

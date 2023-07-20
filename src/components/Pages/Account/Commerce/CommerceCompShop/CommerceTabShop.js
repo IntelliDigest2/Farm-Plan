@@ -9,7 +9,6 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import Buy from "./Buy.js";
 import moment from "moment";
-import Rent from "./Rent.js";
 
 export default function CommerceTab() {
 
