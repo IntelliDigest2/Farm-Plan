@@ -40,7 +40,7 @@ export default function CommerceTab() {
   }
 
   return (
-    <PageWrapSupply goTo="/account" header="Supply ">
+    <PageWrapSupply goTo="/account" header="Shop/Supermarket ">
       {/* <WaveLoader /> */}
       <div>          
               <>
@@ -67,9 +67,6 @@ export default function CommerceTab() {
       >
         <Tab eventKey="buy" title="Buy Item" className="mealtab">
           <Buy />
-        </Tab>
-        <Tab eventKey="sell" title="Rent Item" className="mealtab">
-          {/* <AdminRes /> */}
         </Tab>
       </Tabs> 
  

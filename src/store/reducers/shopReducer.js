@@ -58,7 +58,19 @@ const initState = {
             ...state,
             authError: "fetch purchase info failed",
           };
-  
+
+          case "ADD_SHOP_PURCHASE_ITEM":
+            console.log("sales item added", action.data);
+            return { 
+              ...state,
+              authError: null,
+            };
+          case "ADD_SHOP_PURCHASE_ITEM_ERROR":
+          console.log("error, sales item not saved", action.err);
+          return {
+            ...state,
+            authError: "add sales failed",
+          };
 
         case "DELETE_SHOP_ITEM":
           console.log("successfully deleted item");

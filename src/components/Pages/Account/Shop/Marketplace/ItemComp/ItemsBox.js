@@ -10,6 +10,7 @@ import Delete from "./Icons/DeleteIcon";
 import Edit from "./Icons/EditIcon";
 import ScaleIcon from '@mui/icons-material/Scale';
 import PaidIcon from '@mui/icons-material/Paid';
+import Image from "../../../../../SubComponents/Image"
 
 export default function ItemsBox(props) {
 
@@ -45,6 +46,7 @@ export default function ItemsBox(props) {
                   style={{ alignItems: "flex-end" }}
                 >
                     <div>
+                    <Image imageUrl={newItem.imageURL} />
                     <p style={{ padding: "14px 0 9px 25px", fontWeight: "bolder", fontSize: "20px" }}>{newItem.item}</p>
                     <p><ScaleIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}></b>{newItem.quantity} {newItem.measure}</p>
                     <p><PaidIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}></b>{newItem.currency} {newItem.price} </p>

@@ -49,6 +49,13 @@ const collectionIndexName =
 		: "sales_dev";
 const collectionIndex = algoliaClient.initIndex(collectionIndexName);
 
+//shop/supermarket index
+const shopCollectionIndexName =
+  functions.config().projectId === "itracker-development"
+    ? "shop_items"
+    : "shop_items"; // Set the appropriate index name for the new collection
+const shopCollectionIndex = algoliaClient.initIndex(shopCollectionIndexName);
+
 // Create a HTTP request cloud function.
 exports.sendCollectionToAlgolia = functions.https.onRequest(
 	async (req, res) => {
@@ -91,16 +98,69 @@ exports.sendCollectionToAlgolia = functions.https.onRequest(
 	}
 );
 
+exports.sendShopCollectionToAlgolia = functions.https.onRequest(
+	async (req, res) => {
+	  const algoliaRecordsShop = [];
+  
+	  // Retrieve all documents from the new collection.
+	  const querySnapshot = await fireStoreDB.collection("shopItems").get();
+  
+	  querySnapshot.docs.forEach((doc) => {
+		const document = doc.data();
+		const record = {
+			objectID: doc.id,
+			item: document.item,
+			imageURL: document.imageURL,
+			createdAt: document.createdAt,
+			price: document.price,
+			quantity: document.quantity,
+		  // ...
+		};
+  
+		algoliaRecordsShop.push(record);
+	  });
+  
+	  // Save the records to the Algolia index for the new collection
+	  shopCollectionIndex.saveObjects(algoliaRecordsShop, (error, content) => {
+		if (error) {
+		  console.error(error);
+		  res
+			.status(500)
+			.send("An error occurred while indexing SHOP_COLLECTION to Algolia.");
+		} else {
+		  console.log("SHOP_COLLECTION was indexed to Algolia successfully.");
+		  res
+			.status(200)
+			.send("SHOP_COLLECTION was indexed to Algolia successfully.");
+		}
+	  });
+	}
+);
+
+  
+
 exports.collectionOnCreate = functions.firestore
 	.document("sales/{uid}")
 	.onCreate(async (snapshot, context) => {
 		await saveDocumentInAlgolia(snapshot);
 	});
 
+	exports.shopCollectionOnCreate = functions.firestore
+  .document("shopItems/{uid}")
+  .onCreate(async (snapshot, context) => {
+    await saveDocumentInAlgoliaForShopCollection(snapshot);
+  });
+
 exports.collectionOnUpdate = functions.firestore
 	.document("sales/{uid}")
 	.onUpdate(async (change, context) => {
 		await updateDocumentInAlgolia(change);
+	});
+	
+	exports.shopCollectionOnUpdate = functions.firestore
+	.document("shopItems/{uid}")
+	.onUpdate(async (change, context) => {
+	  await updateDocumentInAlgoliaForCollection(change);
 	});
 
 exports.collectionOnDelete = functions.firestore
@@ -108,6 +168,12 @@ exports.collectionOnDelete = functions.firestore
 	.onDelete(async (snapshot, context) => {
 		await deleteDocumentFromAlgolia(snapshot);
 	});
+
+	exports.shopCollectionOnDelete = functions.firestore
+  .document("shopItems/{uid}")
+  .onDelete(async (snapshot, context) => {
+    await deleteDocumentFromAlgoliaForShopCollection(snapshot);
+  });
 
 async function saveDocumentInAlgolia(snapshot) {
 	if (snapshot.exists) {
@@ -136,12 +202,42 @@ async function deleteDocumentFromAlgolia(snapshot) {
 	}
 }
 
+async function saveDocumentInAlgoliaForShopCollection(snapshot) {
+	if (snapshot.exists) {
+	  const record = snapshot.data();
+	  if (record) {
+		// Removes the possibility of snapshot.data() being undefined.
+		record.objectID = snapshot.id;
+  
+		await shopCollectionIndex.saveObject(record); // Adds or replaces a specific object in the shop collection index.
+	  }
+	}
+  }
+  
+  
+  async function updateDocumentInAlgoliaForCollection(change) {
+	const docBeforeChange = change.before.data();
+	const docAfterChange = change.after.data();
+	if (docBeforeChange && docAfterChange) {
+		await deleteDocumentFromAlgoliaForShopCollection(change.before); // Deletes the document from Algolia.
+		await saveDocumentInAlgoliaForShopCollection(change.after); // Indexes the updated document in Algolia.
+	}
+  }
+  
+  async function deleteDocumentFromAlgoliaForShopCollection(snapshot) {
+	// Similar to deleteDocumentFromAlgolia function, but for the new collection
+	if (snapshot.exists) {
+		const objectID = snapshot.id;
+		await collectionIndex.deleteObject(objectID);
+	}
+  }
+
 itrackerPaymentFunction.use(express.static("public"));
 itrackerPaymentFunction.use(express.json());
 
 itrackerPaymentFunction.options("*", cors());
 itrackerPaymentFunction.use(
-	cors({
+	cors({								
 		origin: [
 			//insert the link of the app link here
 			// -----------------------------------
