@@ -68,9 +68,6 @@ export default function CommerceTab() {
         <Tab eventKey="buy" title="Buy Item" className="mealtab">
           <Buy />
         </Tab>
-        <Tab eventKey="sell" title="Rent Item" className="mealtab">
-          {/* <AdminRes /> */}
-        </Tab>
       </Tabs> 
  
       {/* input available locations for picking up */}
