@@ -89,7 +89,7 @@ export function Item({ isSeller, profile }) {
 
 export function FSSP() {
 	return (
-		<>
+		<>  
 			<IconButton
 				title="Find out about our Agrifood TechPreneur program."
 				icon="plant"
