@@ -245,6 +245,7 @@ export const signUp = (newUser) => {
 			.createUserWithEmailAndPassword(newUser.email, newUser.password)
 			.then((resp) => {
 				newUserId = resp.user.uid;
+
 				let val = {
 					// ...newUser,
 					firstName: newUser.firstName,
@@ -273,6 +274,10 @@ export const signUp = (newUser) => {
 				};
 
 				if (newUser.consultantInfo) {
+					val.verification = "pending";
+				}
+				if (newUser.function === "Admin") {
+					val.adminType = newUser.adminType;
 					val.verification = "pending";
 				}
 				firestore.collection("users").doc(resp.user.uid).set(val);

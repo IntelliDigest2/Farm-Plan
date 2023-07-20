@@ -32,7 +32,7 @@ const AdminTab = (props) => {
 	const [loading, setLoading] = useState(true);
 
 	let shownTab = props.profile.isLoaded ? (
-		props.profile.role === "superAdmin" ? (
+		props.profile.adminType === "superAdmin" ? (
 			<Tabs
 				defaultActiveKey="calendar"
 				id="meal-plan-tabs"

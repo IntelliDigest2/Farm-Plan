@@ -11,6 +11,8 @@ export const AdminConsultant = (props) => {
 	const [loadingGetImage, setloadingGetImage] = useState(false);
 	const [loadingActiveConsultant, setLoadingActiveConsultant] = useState(false);
 	const [accountType, setAccountType] = useState("");
+	const [accountResultType, setAccountResultType] = useState("");
+	const [idType, setIdType] = useState("");
 
 	function SearchConsultantImages(e) {
 		e.preventDefault();
@@ -21,8 +23,12 @@ export const AdminConsultant = (props) => {
 					console.log(result);
 					setloadingGetImage(false);
 					setActiveState(result.verificationStatus);
+					setAccountResultType(result.accountType);
 
 					setImages(result.images);
+					setIdType(result.idType);
+
+					console.log(result, `these are the results`);
 				})
 				.catch((err) => {
 					setloadingGetImage(false);
@@ -32,6 +38,8 @@ export const AdminConsultant = (props) => {
 		}
 	}
 
+	console.log(images);
+
 	useEffect(() => {
 		console.log(images, `images changed`);
 	}, [images]);
@@ -39,6 +47,9 @@ export const AdminConsultant = (props) => {
 	useEffect(() => {}, [loadingActiveConsultant]);
 
 	useEffect(() => {}, [activeState]);
+	useEffect(() => {
+		console.log(accountResultType);
+	}, [accountResultType]);
 
 	const submitConsultantActivation = (e) => {
 		e.preventDefault();
@@ -85,6 +96,47 @@ export const AdminConsultant = (props) => {
 			</div>
 		);
 
+	let display =
+		accountResultType === "admin" ? (
+			<>
+				<Col>
+					<div>
+						<h3>{idType}</h3>
+						<div style={{ maxWidth: "400px" }}>
+							<img alt={`${idType}`} src={images?.[idType]} width={"400px"} />
+						</div>
+					</div>
+				</Col>
+			</>
+		) : (
+			<>
+				<Col>
+					<div>
+						<h3>Certification Image</h3>
+						<div style={{ maxWidth: "400px" }}>
+							<img
+								alt={`certification for consultant`}
+								src={images?.certificateImg}
+								width={"400px"}
+							/>
+						</div>
+					</div>
+				</Col>
+				<Col>
+					<div>
+						<h3>Identification Image</h3>
+						<div style={{ maxWidth: "400px" }}>
+							<img
+								alt={`identificatin for consultant`}
+								src={images?.identificationImg}
+								width={"400px"}
+							/>
+						</div>
+					</div>
+				</Col>
+			</>
+		);
+
 	let content =
 		images === null ? (
 			"Consultant certifications images will appear here"
@@ -95,32 +147,7 @@ export const AdminConsultant = (props) => {
 				<Row>
 					<Col>{userVerificationState}</Col>
 				</Row>
-				<Row style={{ alignItems: "baseline" }}>
-					<Col>
-						<div>
-							<h3>Certification Image</h3>
-							<div style={{ maxWidth: "400px" }}>
-								<img
-									alt={`certification for consultant`}
-									src={images.certificateImg}
-									width={"400px"}
-								/>
-							</div>
-						</div>
-					</Col>
-					<Col>
-						<div>
-							<h3>Identification Image</h3>
-							<div style={{ maxWidth: "400px" }}>
-								<img
-									alt={`identificatin for consultant`}
-									src={images.identificationImg}
-									width={"400px"}
-								/>
-							</div>
-						</div>
-					</Col>
-				</Row>
+				<Row style={{ alignItems: "baseline" }}>{display}</Row>
 			</>
 		);
 
@@ -153,6 +180,8 @@ export const AdminConsultant = (props) => {
 							<option value={"restaurant_users"}>restaurant</option>
 							<option value={"consultants"}>consultant</option>
 							<option value={"farm_users"}>farmer</option>
+							<option value={"User Admin"}>User Admin</option>
+							<option value={"Restaurant Admin"}>Restaurant Admin</option>
 						</Form.Control>
 					</Form.Group>
 				</Col>

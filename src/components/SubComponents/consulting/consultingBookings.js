@@ -15,81 +15,26 @@ import {
 	ListGroupItem,
 } from "react-bootstrap";
 import { generateId } from "../../Pages/Account/Consultant/utils/utils";
-import { markEventAsComplete } from "./../../../store/actions/consultingActions";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Modal } from "react-bootstrap";
 import { submitNotification } from "./../../lib/Notifications";
+import FormCheck from "./formCheck";
 
-const FormCheck = (props) => {
-	const [isChecked, setIsChecked] = useState(false);
-	const { handleShow, bookingInfo, dataRef, checkedRef, tickCheckBox } = props;
-
-	useEffect(() => {
-		if (isChecked === true) {
-			dataRef.current = bookingInfo;
-			handleShow();
-		}
-	}, [isChecked]);
-
-	useEffect(() => {
-		if (tickCheckBox) {
-			setIsChecked(false);
-		}
-	}, [tickCheckBox]);
-
-	console.log(tickCheckBox, `this checks the tickedCheckbox status`);
-
-	return (
-		<Form.Check
-			checked={isChecked}
-			onChange={(e) => {
-				setIsChecked(!isChecked);
-			}}
-			ref={checkedRef}
-			type="checkbox"
-			label="Mark as complete"
-		/>
-	);
-};
-
-const handleCheckboxChange = (e, userId, consultantId, eventId) => {
-	if (e.target.checked) {
-		// markEventAsComplete(userId, consultantId, eventId)
-		// 	.then((result) => {
-		// 		// console.log("completed");
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 	});
-	}
-	console.log(
-		e.target.checked,
-		// isChecked,
-		userId,
-		consultantId,
-		eventId,
-		`this is the event value`
-	);
-	console.log(`clicked`);
-};
 const VisitConsultant = (props) => {
 	const [showUserInfo, setShowUserInfo] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
 
 	const [userInfo, setUserInfo] = useState(null);
 
 	const [locationLoading, setLocationLoading] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const { booking, profile, auth, openConfirmationModal } = props;
+	const { booking, profile, auth } = props;
 
 	function revealInformation(e, booking) {
 		e.preventDefault();
 		setLocationLoading(true);
-		// console.log(booking, `this is the booking`);
 		fetchUserInfo(booking.consultant.consultantId)
 			.then((result) => {
-				// console.log(result.data());
 				setUserInfo(result.data());
 				setLocationLoading(false);
 				setShowUserInfo(true);
@@ -142,9 +87,13 @@ const VisitConsultant = (props) => {
 			<Row>
 				<Col>Booking info:</Col>
 				<Col>
-					{/* <Form.Group controlId="formBasicCheckbox"> */}
-
-					{/* </Form.Group> */}
+					<FormCheck
+						bookingInfo={{
+							consultantId: booking.consultant.consultantId,
+							bookingId: booking.id,
+						}}
+						auth={auth}
+					/>
 				</Col>
 			</Row>
 			<Row>
@@ -179,7 +128,7 @@ const ConsultantIsVisiting = (props) => {
 
 	const [userInfo, setUserInfo] = useState(null);
 
-	const { booking, auth, openConfirmationModal } = props;
+	const { booking, auth } = props;
 
 	function revealInformation(e, booking) {
 		e.preventDefault();
@@ -234,23 +183,13 @@ const ConsultantIsVisiting = (props) => {
 			<Row>
 				<Col>Booking info:</Col>
 				<Col>
-					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					{/* <Form.Check
-						checked={isChecked}
-						onChange={(e) => {
-							setIsChecked(!isChecked);
-							handleCheckboxChange(
-								e,
-								auth.uid,
-
-								booking.consultant.consultantId,
-								booking.id
-							);
+					<FormCheck
+						bookingInfo={{
+							consultantId: booking.consultant.consultantId,
+							bookingId: booking.id,
 						}}
-						type="checkbox"
-						label="Mark as complete"
-					/> */}
-					{/* </Form.Group> */}
+						auth={auth}
+					/>
 				</Col>
 			</Row>
 
@@ -299,13 +238,10 @@ const Call = (props) => {
 	const {
 		booking,
 		auth,
-		openConfirmationModal,
-		dataRef,
-		checkedRef,
+
 		tickCheckBox,
 	} = props;
 	let randomLink = genereateRandomLink(booking);
-	const [isChecked, setIsChecked] = useState(false);
 
 	let startTime = format(parseISO(booking.event.start), "hh:mm a");
 	let endTime = format(parseISO(booking.event.end), "hh:mm a");
@@ -318,38 +254,18 @@ const Call = (props) => {
 		submitNotification("Success", "Text copied");
 	}
 
-	// console.log(booking, `this is the booking values`);
 	return (
 		<ListGroupItem>
 			<Row>
 				<Col>Booking info:</Col>
 				<Col>
-					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					{/* <Form.Check
-						checked={isChecked}
-						onChange={(e) => {
-							setIsChecked(!isChecked);
-							handleCheckboxChange(
-								e,
-								auth.uid,
-
-								booking.consultant.consultantId,
-								booking.id
-							);
-						}}
-						type="checkbox"
-						label="Mark as complete"
-					/> */}
-					{/* </Form.Group> */}
 					<FormCheck
 						bookingInfo={{
 							consultantId: booking.consultant.consultantId,
 							bookingId: booking.id,
 						}}
 						tickCheckBox={tickCheckBox}
-						handleShow={openConfirmationModal}
-						dataRef={dataRef}
-						checkedRef={checkedRef}
+						auth={auth}
 					/>
 				</Col>
 			</Row>
@@ -417,23 +333,13 @@ const WrittenFeedback = (props) => {
 			<Row>
 				<Col>Booking info:</Col>
 				<Col>
-					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					{/* <Form.Check
-						checked={isChecked}
-						onChange={(e) => {
-							setIsChecked(!isChecked);
-							handleCheckboxChange(
-								e,
-								auth.uid,
-
-								booking.consultant.consultantId,
-								booking.id
-							);
+					<FormCheck
+						bookingInfo={{
+							consultantId: booking.consultant.consultantId,
+							bookingId: booking.id,
 						}}
-						type="checkbox"
-						label="Mark as complete"
-					/> */}
-					{/* </Form.Group> */}
+						auth={auth}
+					/>
 				</Col>
 			</Row>
 			<Row>
@@ -473,48 +379,13 @@ const WrittenFeedback = (props) => {
 export const ConsultingBookings = (props) => {
 	const { auth, getOtherBookings, otherBookings, profile } = props;
 
-	// const [showUserInfo, setShowUserInfo] = useState(false);
-	// const [locationLoading, setLocationLoading] = useState(false);
-	// const [userInfo, setUserInfo] = useState(null);
-	// const [loading, setLoading] = useState(false);
-	const [showModal, setShowModal] = useState(false);
-	const [checkboxClickedStatus, setcheckboxClickedStatus] = useState(false);
-	const [tickCheckBox, setTickCheckbox] = useState(false);
-
 	useEffect(() => {
 		getOtherBookings(auth.uid);
 	}, []);
 
-	function openConfirmationModal() {
-		setShowModal(true);
-	}
-
-	const dataRef = useRef(null);
-	const checkedRef = useRef(false);
-
-	// console.log(dataRef, `the first dataRef`);
-	// useEffect(() => {
-	// 	console.log(dataRef.current, `the seconde dataRef`);
-	// }, [dataRef.current]);
-
-	useEffect(() => {}, [checkboxClickedStatus]);
-	// console.log(checkedRef.current.checked, `this i sthe checkbox`);
-
-	const handleClose = () => {
-		setShowModal(false);
-		setTickCheckbox(false);
-		// checkedRef.current.
-	};
-	// const handleShow = () => {
-	// 	setShowModal(false);
-	// 	setCloseCheckbox(false);
-	// };
-
 	useEffect(() => {
 		// console.log(otherBookings, `this is the other bookings`);
 	}, [otherBookings]);
-
-	// console.log(profile);
 
 	let events =
 		otherBookings === null ? (
@@ -523,28 +394,21 @@ export const ConsultingBookings = (props) => {
 			"You dont have any bookings"
 		) : (
 			<ListGroup>
-				{otherBookings?.map((booking) => {
+				{otherBookings?.map((booking, index) => {
 					let value;
 
 					switch (booking.event.eventType) {
 						case "Video call":
 						case "Phone call":
 							value = (
-								<Call
-									dataRef={dataRef}
-									openConfirmationModal={() => openConfirmationModal()}
-									booking={booking}
-									auth={auth}
-									checkedRef={checkedRef}
-									tickCheckBox={tickCheckBox}
-								/>
+								<Call key={`booking-${index}`} booking={booking} auth={auth} />
 							);
 							break;
 
 						case "Consultant visitation":
 							value = (
 								<ConsultantIsVisiting
-									modalControl={() => openConfirmationModal()}
+									key={`booking-${index}`}
 									booking={booking}
 									auth={auth}
 								/>
@@ -553,7 +417,7 @@ export const ConsultingBookings = (props) => {
 						case "Visit to consultant":
 							value = (
 								<VisitConsultant
-									modalControl={() => openConfirmationModal()}
+									key={`booking-${index}`}
 									booking={booking}
 									auth={auth}
 								/>
@@ -562,7 +426,7 @@ export const ConsultingBookings = (props) => {
 						case "Written feedback":
 							value = (
 								<WrittenFeedback
-									modalControl={() => openConfirmationModal()}
+									key={`booking-${index}`}
 									booking={booking}
 									auth={auth}
 								/>
@@ -580,53 +444,6 @@ export const ConsultingBookings = (props) => {
 
 	return (
 		<>
-			<div>
-				<Modal show={showModal} onHide={handleClose}>
-					<Modal.Header closeButton>
-						<Modal.Title>Confirm action</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						You are about to mark a booking as complete. You cannot cancel after
-						you click 'proceed'
-					</Modal.Body>
-					<Modal.Footer>
-						<Button variant="secondary" onClick={handleClose}>
-							Cancel
-						</Button>
-						<Button
-							variant="primary"
-							onClick={(e) =>
-								handleCheckboxChange(
-									e,
-									auth.uid,
-									dataRef.current.consultantId,
-									dataRef.current.bookingId
-
-									// booking.consultant.consultantId,
-									// booking.id
-								)
-							}
-						>
-							{/* { acceptLoading === false || cancelLoading === false ?	Proceed :  } */}
-							{/* {cancelLoading ? "canceling Request..." : "Canceled"} */}
-							{/* {acceptLoading ? "accepting Request..." : "Accepted"} */}
-							{/* {actionType === "accept"
-								? acceptLoading
-									? "accepting Request"
-									: event.status.requestAccepted
-									? "Accepted"
-									: "Proceed"
-								: cancelLoading
-								? "canceling Request"
-								: event.status.requestAccepted
-								? "Canceled"
-								: "Proceed"
-								}  */}
-							Proceed
-						</Button>
-					</Modal.Footer>
-				</Modal>
-			</div>
 			<div style={{ overflowY: "scroll" }}>
 				<div>
 					<h2>Bookings</h2>

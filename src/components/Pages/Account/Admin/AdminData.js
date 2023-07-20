@@ -5,27 +5,40 @@ const db = firebase.firestore();
 export const getConsultantImages = async (userId, accountType) => {
 	console.log(userId, `this is the userId`);
 	console.log(accountType, `this is the accountType`);
+	if (accountType === "Restaurant Admin" || accountType === "User Admin") {
+		let result = (await db.collection(`users`).doc(userId).get()).data();
 
-	let result = (await db.collection(`${accountType}`).doc(userId).get()).data()
-		.imgsLinks;
+		console.log(result);
 
-	let ver;
-	let ref = db.collection("users").doc(userId);
-	// let result2 = ref.onSnapshot((res) => {
-	// 	res.data();
+		return {
+			accountType: "admin",
+			images: { [result.IDType]: result.IDUrl },
+			verficationStatus: result.verification,
+			idType: result.IDType,
+		};
+	} else {
+		let result = (
+			await db.collection(`${accountType}`).doc(userId).get()
+		).data().imgsLinks;
 
-	// 	ver = res.data().verfication;
-	// 	console.log(res.data().verification, `verfication result`);
+		let ver;
+		let ref = db.collection("users").doc(userId);
+		// let result2 = ref.onSnapshot((res) => {
+		// 	res.data();
 
-	// 	return res.data().verification;
-	// });
-	let result2 = (await db.collection("users").doc(userId).get()).data()
-		.verification;
+		// 	ver = res.data().verfication;
+		// 	console.log(res.data().verification, `verfication result`);
 
-	return {
-		images: result,
-		verificationStatus: result2,
-	};
+		// 	return res.data().verification;
+		// });
+		let result2 = (await db.collection("users").doc(userId).get()).data()
+			.verification;
+
+		return {
+			images: result,
+			verificationStatus: result2,
+		};
+	}
 
 	// Code to handle the snapshot changes
 	// console.log("Document ID:", result2.id);
