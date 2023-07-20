@@ -79,7 +79,7 @@ export function Item({ isSeller, profile }) {
 				icon="notes"
 				label="Turnover"
 				color="turquoise"
-				goTo="/"
+				goTo="/account"
 				disabled
 			/>
 			{consultingService}

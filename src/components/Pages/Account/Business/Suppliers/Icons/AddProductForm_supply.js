@@ -66,11 +66,6 @@ function AddProductForm_supply(props) {
   //fired when click "done"
   const handleSubmit = () => {
     const data = {
-      // month and day are used for the MealPlan db, year and week for the shopping list.
-      // year: props.value.format("YYYY"),
-      // month: props.value.format("YYYYMM"),
-      // week: props.value.format("w"),
-      // day: props.value.format("DD"),
       upload: {
         productName: productName,
         productDescription: productDescription,
@@ -178,7 +173,7 @@ function AddProductForm_supply(props) {
             data={productMeasure}
             items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
             function={(e) => {
-              setProductMeasure(e);
+              setProductMeasure(e.target.value);
             }}
           />
         </InputGroup>

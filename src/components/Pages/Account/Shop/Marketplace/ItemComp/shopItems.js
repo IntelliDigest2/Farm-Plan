@@ -52,6 +52,7 @@ function ShopItems(props) {
     props.shopItems.forEach((doc) => {
       var item = doc.item;
       var id = doc.id;
+      var imageURL = doc.imageURL
       var measure = doc.measure;
       var quantity = doc.quantity;
       var price = doc.price;
@@ -62,6 +63,7 @@ function ShopItems(props) {
         {
           item: item,  
           id: id,
+          imageURL: imageURL,
           measure: measure,
           quantity: quantity,
           price: price,
