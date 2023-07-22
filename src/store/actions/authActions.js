@@ -195,12 +195,35 @@ function uploadImgs(files, userId) {
 	return uploaders;
 }
 
-export const signUp = (newUser) => {
-	console.log(newUser, `this is the new user`);
+const uploadIdImage = (image) => {
+	const randomId = generateId(20);
+	const data = new FormData();
+	data.append("file", image);
+	data.append("upload_preset", "wft-app");
+	data.append("cloud_name", "dghm4xm7k");
+	// data.append("folder", "restaurant_id");
+	data.append("public_id", `${randomId}`);
 
-	console.log(newUser.consultantInfo, `thes are the consultantInfo`);
+	let result = axios.post(
+		"https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",
+		data
+	);
+
+	return result;
+	console.log(result.data.secure_url);
+};
+
+export const signUp = (newUser, image) => {
+	// console.log(newUser, `this is the new user`);
+	// console.log(image, `this is the image i want to upload`);
+
+	// console.log(newUser.consultantInfo, `thes are the consultantInfo`);
 	return (dispatch, getState, { getFirebase }) => {
-		//Determine account type
+		// let result = uploadIdImage(image).then((resp) => {
+		// 	console.log(resp.data.secure_url);
+		// 	console.log(resp.data.url);
+		// });
+		// 	//Determine account type
 		var type;
 		switch (newUser.function) {
 			case "Hospitals":
@@ -239,13 +262,20 @@ export const signUp = (newUser) => {
 		const firestore = getFirebase().firestore();
 		const firebase = getFirebase();
 		let newUserId;
+		// let imageUrl = "";
 
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(newUser.email, newUser.password)
 			.then((resp) => {
 				newUserId = resp.user.uid;
-
+				if (image) {
+					return uploadIdImage(image);
+				}
+			})
+			.then((resp) => {
+				console.log(resp);
+				// resp
 				let val = {
 					// ...newUser,
 					firstName: newUser.firstName,
@@ -257,14 +287,14 @@ export const signUp = (newUser) => {
 					city: newUser.city,
 					country: newUser.country,
 					region: newUser.region,
-					uid: resp.user.uid,
+					uid: newUserId,
 					//restaurant-specific user data:
 					restaurantName: newUser.restaurantName,
 					companyName: newUser.companyName,
 					companyDescription: newUser.companyDescription,
 					regulatoryBody: newUser.regulatoryBody,
 					regulatoryBodyID: newUser.regulatoryBodyID,
-					IDUrl: newUser.IDUrl,
+					IDUrl: resp.data.secure_url,
 					IDNumber: newUser.IDNumber,
 					IDType: newUser.IDType,
 					cuisine: newUser.cuisine,
@@ -280,7 +310,7 @@ export const signUp = (newUser) => {
 					val.adminType = newUser.adminType;
 					val.verification = "pending";
 				}
-				firestore.collection("users").doc(resp.user.uid).set(val);
+				firestore.collection("users").doc(newUserId).set(val);
 
 				//Setup Admin account in relevent users collection
 				var adminCollection;
@@ -301,7 +331,7 @@ export const signUp = (newUser) => {
 				if (adminCollection !== "user") {
 					firestore
 						.collection(adminCollection)
-						.doc(resp.user.uid)
+						.doc(newUserId)
 						.set({
 							name: newUser.firstName + " " + newUser.lastName,
 							email: newUser.email,
@@ -313,7 +343,7 @@ export const signUp = (newUser) => {
 			.then((resp) => {
 				// console.log(resp, `this is the response`);
 				if (newUser.consultantInfo) {
-					let userSubString = resp.user.uid.substring(0, 7);
+					let userSubString = newUserId.substring(0, 7);
 
 					return Promise.all(
 						uploadImgs(newUser.consultantInfo.images, userSubString)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, forwardRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Form,
 	Col,
@@ -13,12 +13,8 @@ import { markEventAsComplete } from "./../../../store/actions/consultingActions"
 const FormCheck = (props) => {
 	const [isChecked, setIsChecked] = useState(false);
 	const {
-		handleShow,
 		bookingInfo,
-		dataRef,
-		checkedRef,
-		tickCheckBoxi,
-		// ref,
+
 		auth,
 		index,
 	} = props;

@@ -3,17 +3,18 @@ import firebase from "firebase";
 const db = firebase.firestore();
 
 export const getConsultantImages = async (userId, accountType) => {
-	console.log(userId, `this is the userId`);
-	console.log(accountType, `this is the accountType`);
+	// console.log(userId, `this is the userId`);
+	// console.log(accountType, `this is the accountType`);
 	if (accountType === "Restaurant Admin" || accountType === "User Admin") {
 		let result = (await db.collection(`users`).doc(userId).get()).data();
+		// console.log(result);
 
-		console.log(result);
+		// let data = result.data();
 
 		return {
 			accountType: "admin",
-			images: { [result.IDType]: result.IDUrl },
-			verficationStatus: result.verification,
+			images: { [`${result.IDType}`]: result.IDUrl },
+			verificationStatus: result.verification,
 			idType: result.IDType,
 		};
 	} else {
@@ -46,11 +47,11 @@ export const getConsultantImages = async (userId, accountType) => {
 };
 
 export const activateConsultant = async (userId) => {
-	console.log(userId, `this is the userId`);
+	// console.log(userId, `this is the userId`);
 	let result = await db.collection("users").doc(userId).update({
 		verification: "verified",
 	});
 
-	console.log(result);
+	// console.log(result);
 	return result;
 };

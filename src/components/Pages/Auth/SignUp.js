@@ -164,7 +164,8 @@ const SignUp = (props) => {
 		}
 		if (validation()) {
 			// console.log("signup");
-			props.signUp(data);
+			console.log(image, `this is the image on the frontend side`);
+			props.signUp(data, image);
 		} else {
 			console.log("error");
 		}
@@ -1331,14 +1332,14 @@ const Stage6 = (props) => {
 								onClick={(e) => {
 									e.preventDefault();
 
-									uploadImage();
+									// uploadImage();
 									//Next Stage
 
-									// if (props.buildingFunction == "Admin") {
-									// 	props.setStage(3); //confimation page
-									// } else {
-									// 	props.setStage(2);
-									// }
+									if (props.buildingFunction == "Admin") {
+										props.setStage(3); //confimation page
+									} else {
+										props.setStage(2);
+									}
 								}}
 							>
 								Next
@@ -1762,7 +1763,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		signUp: (newUser) => dispatch(signUp(newUser)), //r: cmd+click on signUp takes you to where the signUp event's props are defined
+		signUp: (newUser, image) => dispatch(signUp(newUser, image)), //r: cmd+click on signUp takes you to where the signUp event's props are defined
 		createMapData: (mapdata) => dispatch(createMapData(mapdata)),
 	};
 };

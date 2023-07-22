@@ -13,6 +13,7 @@ export const AdminConsultant = (props) => {
 	const [accountType, setAccountType] = useState("");
 	const [accountResultType, setAccountResultType] = useState("");
 	const [idType, setIdType] = useState("");
+	const [result, setResult] = useState("");
 
 	function SearchConsultantImages(e) {
 		e.preventDefault();
@@ -20,15 +21,17 @@ export const AdminConsultant = (props) => {
 			setloadingGetImage(true);
 			getConsultantImages(userId, accountType)
 				.then((result) => {
-					console.log(result);
+					setResult(result);
+					// console.log(result);
 					setloadingGetImage(false);
+					setResult();
 					setActiveState(result.verificationStatus);
 					setAccountResultType(result.accountType);
 
 					setImages(result.images);
 					setIdType(result.idType);
 
-					console.log(result, `these are the results`);
+					// console.log(result, `these are the results`);
 				})
 				.catch((err) => {
 					setloadingGetImage(false);
@@ -38,22 +41,24 @@ export const AdminConsultant = (props) => {
 		}
 	}
 
-	console.log(images);
+	// console.log(images);
 
-	useEffect(() => {
-		console.log(images, `images changed`);
-	}, [images]);
+	// useEffect(() => {
+	// 	// console.log(images, `images changed`);
+	// }, [images]);
+
+	useEffect(() => {}, [result]);
 
 	useEffect(() => {}, [loadingActiveConsultant]);
 
 	useEffect(() => {}, [activeState]);
-	useEffect(() => {
-		console.log(accountResultType);
-	}, [accountResultType]);
+	// useEffect(() => {
+	// 	console.log(accountResultType);
+	// }, [accountResultType]);
 
 	const submitConsultantActivation = (e) => {
 		e.preventDefault();
-		console.log(`this has been clicked`, userId);
+		// console.log(`this has been clicked`, userId);
 		setLoadingActiveConsultant(true);
 		activateConsultant(userId)
 			.then(() => {
