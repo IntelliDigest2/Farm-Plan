@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { fetchOtherConsultingBookings } from "../../../store/actions/consultingActions";
 
@@ -15,30 +15,13 @@ import {
 	ListGroupItem,
 } from "react-bootstrap";
 import { generateId } from "../../Pages/Account/Consultant/utils/utils";
-import { markEventAsComplete } from "./../../../store/actions/consultingActions";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Modal } from "react-bootstrap";
+import { submitNotification } from "./../../lib/Notifications";
+import FormCheck from "./formCheck";
 
-const handleCheckboxChange = (e, userId, consultantId, eventId) => {
-	if (e.target.checked) {
-		markEventAsComplete(userId, consultantId, eventId)
-			.then((result) => {
-				// console.log("completed");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
-	// console.log(
-	// 	e.target.checked,
-	// 	// isChecked,
-	// 	userId,
-	// 	consultantId,
-	// 	eventId,
-	// 	`this is the event value`
-	// );
-};
 const VisitConsultant = (props) => {
 	const [showUserInfo, setShowUserInfo] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
 
 	const [userInfo, setUserInfo] = useState(null);
 
@@ -50,10 +33,8 @@ const VisitConsultant = (props) => {
 	function revealInformation(e, booking) {
 		e.preventDefault();
 		setLocationLoading(true);
-		// console.log(booking, `this is the booking`);
 		fetchUserInfo(booking.consultant.consultantId)
 			.then((result) => {
-				// console.log(result.data());
 				setUserInfo(result.data());
 				setLocationLoading(false);
 				setShowUserInfo(true);
@@ -81,6 +62,15 @@ const VisitConsultant = (props) => {
 				<div>
 					Consultant Name : {`${userInfo.firstName} ${userInfo.lastName}`}{" "}
 				</div>
+				{/* <Form.Check
+					checked={isChecked}
+					onChange={(e) => {
+						setIsChecked(!isChecked);
+						// handleShow();
+					}}
+					type="checkbox"
+					label="Mark as complete"
+				/> */}
 				<div>Consultant Address : {userInfo.address}</div>
 				`bulabah`
 			</div>
@@ -97,23 +87,13 @@ const VisitConsultant = (props) => {
 			<Row>
 				<Col>Booking info:</Col>
 				<Col>
-					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					<Form.Check
-						checked={isChecked}
-						onChange={(e) => {
-							setIsChecked(!isChecked);
-							handleCheckboxChange(
-								e,
-								auth.uid,
-
-								booking.consultant.consultantId,
-								booking.id
-							);
+					<FormCheck
+						bookingInfo={{
+							consultantId: booking.consultant.consultantId,
+							bookingId: booking.id,
 						}}
-						type="checkbox"
-						label="Mark as complete"
+						auth={auth}
 					/>
-					{/* </Form.Group> */}
 				</Col>
 			</Row>
 			<Row>
@@ -203,23 +183,13 @@ const ConsultantIsVisiting = (props) => {
 			<Row>
 				<Col>Booking info:</Col>
 				<Col>
-					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					<Form.Check
-						checked={isChecked}
-						onChange={(e) => {
-							setIsChecked(!isChecked);
-							handleCheckboxChange(
-								e,
-								auth.uid,
-
-								booking.consultant.consultantId,
-								booking.id
-							);
+					<FormCheck
+						bookingInfo={{
+							consultantId: booking.consultant.consultantId,
+							bookingId: booking.id,
 						}}
-						type="checkbox"
-						label="Mark as complete"
+						auth={auth}
 					/>
-					{/* </Form.Group> */}
 				</Col>
 			</Row>
 
@@ -265,37 +235,38 @@ function genereateRandomLink(booking) {
 	return `${part1}-${callDuration}-${callType}${part2}`;
 }
 const Call = (props) => {
-	const { booking, auth } = props;
+	const {
+		booking,
+		auth,
+
+		tickCheckBox,
+	} = props;
 	let randomLink = genereateRandomLink(booking);
-	const [isChecked, setIsChecked] = useState(false);
 
 	let startTime = format(parseISO(booking.event.start), "hh:mm a");
 	let endTime = format(parseISO(booking.event.end), "hh:mm a");
 	let date = booking.event.start.split("T")[0];
 
-	// console.log(booking, `this is the booking values`);
+	function copyText(e, value) {
+		e.preventDefault();
+
+		navigator.clipboard.writeText(value);
+		submitNotification("Success", "Text copied");
+	}
+
 	return (
 		<ListGroupItem>
 			<Row>
 				<Col>Booking info:</Col>
 				<Col>
-					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					<Form.Check
-						checked={isChecked}
-						onChange={(e) => {
-							setIsChecked(!isChecked);
-							handleCheckboxChange(
-								e,
-								auth.uid,
-
-								booking.consultant.consultantId,
-								booking.id
-							);
+					<FormCheck
+						bookingInfo={{
+							consultantId: booking.consultant.consultantId,
+							bookingId: booking.id,
 						}}
-						type="checkbox"
-						label="Mark as complete"
+						tickCheckBox={tickCheckBox}
+						auth={auth}
 					/>
-					{/* </Form.Group> */}
 				</Col>
 			</Row>
 			<Row>
@@ -318,7 +289,19 @@ const Call = (props) => {
 				</Col>
 			</Row>
 
-			<div>Channel id for call: {booking.event.callId}</div>
+			<div>
+				Channel id for call: {booking.event.callId}
+				<span>
+					<ContentCopyIcon
+						titleAccess="copy"
+						style={{ cursor: "pointer", marginLeft: "5px" }}
+						onClick={(e) => copyText(e, booking.event.callId)}
+					/>
+				</span>
+			</div>
+			<div style={{ fontSize: "11px", color: "#95a000" }}>
+				* channel id is required to make the call
+			</div>
 			<Link
 				to={`/call/${randomLink}`}
 				target="_blank"
@@ -337,7 +320,7 @@ const submitRequest = (e) => {
 };
 
 const WrittenFeedback = (props) => {
-	const { booking, auth } = props;
+	const { booking, auth, openConfirmationModal } = props;
 	const [isChecked, setIsChecked] = useState(false);
 
 	let startTime = format(parseISO(booking.event.start), "hh:mm a");
@@ -350,23 +333,13 @@ const WrittenFeedback = (props) => {
 			<Row>
 				<Col>Booking info:</Col>
 				<Col>
-					{/* <Form.Group controlId="formBasicCheckbox"> */}
-					<Form.Check
-						checked={isChecked}
-						onChange={(e) => {
-							setIsChecked(!isChecked);
-							handleCheckboxChange(
-								e,
-								auth.uid,
-
-								booking.consultant.consultantId,
-								booking.id
-							);
+					<FormCheck
+						bookingInfo={{
+							consultantId: booking.consultant.consultantId,
+							bookingId: booking.id,
 						}}
-						type="checkbox"
-						label="Mark as complete"
+						auth={auth}
 					/>
-					{/* </Form.Group> */}
 				</Col>
 			</Row>
 			<Row>
@@ -406,20 +379,13 @@ const WrittenFeedback = (props) => {
 export const ConsultingBookings = (props) => {
 	const { auth, getOtherBookings, otherBookings, profile } = props;
 
-	// const [showUserInfo, setShowUserInfo] = useState(false);
-	// const [locationLoading, setLocationLoading] = useState(false);
-	// const [userInfo, setUserInfo] = useState(null);
-	// const [loading, setLoading] = useState(false);
-
 	useEffect(() => {
 		getOtherBookings(auth.uid);
 	}, []);
 
 	useEffect(() => {
-		console.log(otherBookings, `this is the other bookings`);
+		// console.log(otherBookings, `this is the other bookings`);
 	}, [otherBookings]);
-
-	// console.log(profile);
 
 	let events =
 		otherBookings === null ? (
@@ -428,23 +394,43 @@ export const ConsultingBookings = (props) => {
 			"You dont have any bookings"
 		) : (
 			<ListGroup>
-				{otherBookings?.map((booking) => {
+				{otherBookings?.map((booking, index) => {
 					let value;
 
 					switch (booking.event.eventType) {
 						case "Video call":
 						case "Phone call":
-							value = <Call booking={booking} auth={auth} />;
+							value = (
+								<Call key={`booking-${index}`} booking={booking} auth={auth} />
+							);
 							break;
 
 						case "Consultant visitation":
-							value = <ConsultantIsVisiting booking={booking} auth={auth} />;
+							value = (
+								<ConsultantIsVisiting
+									key={`booking-${index}`}
+									booking={booking}
+									auth={auth}
+								/>
+							);
 							break;
 						case "Visit to consultant":
-							value = <VisitConsultant booking={booking} auth={auth} />;
+							value = (
+								<VisitConsultant
+									key={`booking-${index}`}
+									booking={booking}
+									auth={auth}
+								/>
+							);
 							break;
 						case "Written feedback":
-							value = <WrittenFeedback booking={booking} auth={auth} />;
+							value = (
+								<WrittenFeedback
+									key={`booking-${index}`}
+									booking={booking}
+									auth={auth}
+								/>
+							);
 							break;
 
 						default:
@@ -457,12 +443,14 @@ export const ConsultingBookings = (props) => {
 		);
 
 	return (
-		<div style={{ overflowY: "scroll" }}>
-			<div>
-				<h2>Bookings</h2>
-				{events}
+		<>
+			<div style={{ overflowY: "scroll" }}>
+				<div>
+					<h2>Bookings</h2>
+					{events}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

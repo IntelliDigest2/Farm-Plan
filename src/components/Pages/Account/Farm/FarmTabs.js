@@ -9,7 +9,7 @@ export function Food({ isSeller, profile }) {
 	// console.log(profile);
 	useEffect(() => {
 		if (profile.isloaded) {
-			if (profile.consultant === "active") {
+			if (profile.buildingFunction === "Consultant") {
 				setConsultantService(true);
 			} else {
 				setConsultantService(false);
@@ -68,19 +68,25 @@ export function Food({ isSeller, profile }) {
         color="turquoise"
         goTo="/view-products"
       /> */}
-			<IconButton
+			{/* <IconButton
 				icon="my-products"
 				label="Food Returned"
 				color="turquoise"
 				goTo="/view-products"
 				disabled
-			/>
+			/> */}
 			<IconButton
 				icon="chart"
 				label="Produce Chart"
 				color="yellow"
 				goTo="/produce"
 			/>
+			{/* <IconButton
+				icon="chart"
+				label="expense"
+				color="yellow"
+				goTo="/expense"
+			/> */}
 			<IconButton
 				icon="notes"
 				label="Turnover"
@@ -88,13 +94,13 @@ export function Food({ isSeller, profile }) {
 				goTo="/"
 				disabled
 			/>
-			<IconButton
+			{/* <IconButton
 				icon="notes"
 				label="Profit"
 				color="turquoise"
 				goTo="/"
 				disabled
-			/>
+			/> */}
 			<IconButton
 				icon="notes"
 				label="Rent/Buy Item"
@@ -124,7 +130,7 @@ export function Environment() {
 				goTo="/chart"
 			/>
 			<IconButton
-				title="Useful tips on how to reduce food waste in your home."
+				title="Useful tips on how to reduce food loss in your home."
 				icon="info"
 				label="Food Loss Reduction Tips"
 				color="green"

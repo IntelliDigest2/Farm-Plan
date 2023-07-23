@@ -4,7 +4,7 @@ import "../UserAccount.css";
 import { Colors } from "../../../lib/Colors";
 
 import { useTranslation, Trans } from "react-i18next";
- 
+
 // import Accordion from "@mui/material/Accordion";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import AccordionDetails from "@mui/material/AccordionDetails";
@@ -17,16 +17,16 @@ export function Food({ setShow, setChooseModal, profile }) {
 	useEffect(() => {
 		// if (profile.isloaded) {
 		console.log(
-			profile.consultant === "pending",
+			profile.verification === "pending",
 			`this shows that the account is pending`
 		);
-		if (profile.consultant === "active" || profile.consultant === "pending") {
+		if (profile.buildingFunction === "Consultant") {
 			setConsultantService(true);
 		} else {
 			setConsultantService(false);
 		}
 		// }
-	}, [profile.consultant]);
+	}, [profile.buildingFunction]);
 
 	let consultingService = consultantService ? (
 		<IconButton

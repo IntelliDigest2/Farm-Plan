@@ -245,13 +245,13 @@ function ConsultantVideo(props) {
 								type="text"
 								ref={channelRef}
 								id="channel"
-								placeholder="Enter Channel name"
+								placeholder="Enter Channel Id"
 							>
-								Enter Channel name
+								Enter Channel Id
 							</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="channel Name"
+								placeholder="channel Id"
 								id="name"
 								// name="name"
 								onChange={(e) => setChannelName(e.target.value)}

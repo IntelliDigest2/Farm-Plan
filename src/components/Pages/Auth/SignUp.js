@@ -60,6 +60,7 @@ const SignUp = (props) => {
 	const [IDNumber, setIDNumber] = useState("");
 	const [image, setImage] = useState("");
 	const [IDUrl, setUrl] = useState("");
+	const [adminType, setAdminType] = useState("");
 
 	//Stage5
 	const [cuisine, setCuisine] = useState("");
@@ -155,6 +156,7 @@ const SignUp = (props) => {
 			cuisine: cuisine,
 			restaurantDescription: restaurantDescription,
 			type: "user",
+			adminType: adminType,
 		};
 
 		if (data.function === "Consultant") {
@@ -162,7 +164,8 @@ const SignUp = (props) => {
 		}
 		if (validation()) {
 			// console.log("signup");
-			props.signUp(data);
+			console.log(image, `this is the image on the frontend side`);
+			props.signUp(data, image);
 		} else {
 			console.log("error");
 		}
@@ -421,7 +424,7 @@ const SignUp = (props) => {
 	switch (stage) {
 		default:
 		case 1:
-			return (				
+			return (
 				<div className="signup-page">
 					<div className="signup-content">
 						<Title subtitle="Sign Up">
@@ -443,8 +446,8 @@ const SignUp = (props) => {
 							/>
 							<div className="signup-center subtitles row">
 								<p>Already have an account? </p>
-								<Link style={{ color: '#1C1569' }} to='/login'>
-									{'  '}
+								<Link style={{ color: "#1C1569" }} to="/login">
+									{"  "}
 									LOG IN
 								</Link>
 							</div>
@@ -635,6 +638,7 @@ const SignUp = (props) => {
 							</div>
 							<Stage6
 								setIDType={setIDType}
+								setAdminType={setAdminType}
 								IDType={IDType}
 								setIDNumber={setIDNumber}
 								IDNumber={IDNumber}
@@ -1134,6 +1138,7 @@ const Stage8 = (props) => {
 									onChange={props.handleSelectedImage}
 									label="upload certificate"
 									type="file"
+									required
 								/>
 							</Col>
 							<Col>
@@ -1144,6 +1149,7 @@ const Stage8 = (props) => {
 									className="mb-3"
 									label="upload Identification document"
 									type="file"
+									required
 								/>
 							</Col>
 						</Row>
@@ -1200,27 +1206,45 @@ const Stage8 = (props) => {
 //If account type == admin, this routes
 const Stage6 = (props) => {
 	//upload immage to cloudinary
-	const uploadImage = async () => {
-		const data = new FormData();
-		data.append("file", props.image);
-		data.append("upload_preset", "wft-app");
-		data.append("cloud_name", "dghm4xm7k");
-		data.append("folder", "restaurant_id");
-		await fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload", {
-			method: "post",
-			body: data,
-		})
-			.then((resp) => resp.json())
-			.then((data) => {
-				props.setUrl(data.url);
-			})
-			.catch((err) => console.log(err));
-	};
+	// const uploadImage = () => {
+	// 	const data = new FormData();
+	// 	data.append("file", props.image);
+	// 	data.append("upload_preset", "wft-app");
+	// 	data.append("cloud_name", "dghm4xm7k");
+	// 	data.append("folder", "restaurant_id");
+	// 	fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload", {
+	// 		method: "post",
+	// 		body: data,
+	// 	}).then((result) => {
+	// 		console.log(result);
+	// 		// props.setUrl(result.data.url);
+	// 	});
+	// 	// .then(() => {
+	// 	// 	if (props.buildingFunction == "Admin") {
+	// 	// 		props.setStage(3); //confimation page
+	// 	// 	} else {
+	// 	// 		props.setStage(2);
+	// 	// 	}
+	// 	// })
+	// 	// .catch((err) => console.log(err));
+	// };
 
 	return (
 		<div>
 			<FormStyle>
 				<Form>
+					<Form.Group className="mb-3">
+						<Form.Label>Admin Type</Form.Label>
+						<Select
+							id="buildingFunction"
+							function={(e) => {
+								props.setAdminType(e.target.value);
+							}}
+							value={props.adminType}
+							placeholder="select admin type"
+							items={["Restaurant", "User"]}
+						/>
+					</Form.Group>
 					<Form.Group className="mb-3">
 						<Form.Label>Identification</Form.Label>
 						<Select
@@ -1283,7 +1307,7 @@ const Stage6 = (props) => {
 								onClick={(e) => {
 									e.preventDefault();
 
-									uploadImage();
+									// uploadImage();
 									//Next Stage
 
 									if (props.buildingFunction == "Admin") {
@@ -1714,7 +1738,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		signUp: (newUser) => dispatch(signUp(newUser)), //r: cmd+click on signUp takes you to where the signUp event's props are defined
+		signUp: (newUser, image) => dispatch(signUp(newUser, image)), //r: cmd+click on signUp takes you to where the signUp event's props are defined
 		createMapData: (mapdata) => dispatch(createMapData(mapdata)),
 	};
 };

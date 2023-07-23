@@ -54,7 +54,7 @@ const ConsultantAccountPage = (props) => {
 	let consultantContent =
 		profile.isLoaded === false ? (
 			"loading..."
-		) : auth.uid && profile?.consultant === "active" ? (
+		) : auth.uid && profile?.verification === "verified" ? (
 			<>
 				{/* <main className={classes.consultant_main}> */}
 				<section className={classes.consultant_nav}>
