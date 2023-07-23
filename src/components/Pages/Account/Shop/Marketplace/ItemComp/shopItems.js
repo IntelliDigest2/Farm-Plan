@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-import ProduceBox from "./ProduceBox";
+import ItemsBox from "./ItemsBox";
 
 import { connect } from "react-redux";
 import SyncIcon from '@mui/icons-material/Sync';
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
-import { getProduceData } from "../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { getItemsData } from "../../../../../../store/actions/shopActions/shopPlanData";
 
-function ProduceItems(props) {
+function ShopItems(props) {
 
-  const [produce, setProduce] = useState([]);
+  const [items, setItems] = useState([]);
 
   //trigger this when editing/deleting items
   const [update, setUpdate] = useState(0);
@@ -40,53 +40,51 @@ function ProduceItems(props) {
   
   //this sends data request
   useEffect(() => {
-    props.getProduceData();
+    props.getItemsData();
   }, [props.value, update]);
 
   
-  const updateProduce = async () => {
+  const updateItems = async () => {
     //clears the meals array before each update- IMPORTANT
-    setProduce([]);
-
+    setItems([]);
+ 
     //sets a new meal object in the array for every document with this date attached
-    props.produce.forEach((doc) => {
+    props.shopItems.forEach((doc) => {
       var item = doc.item;
       var id = doc.id;
-      var farmType = doc.farmType;
+      var imageURL = doc.imageURL
       var measure = doc.measure;
       var quantity = doc.quantity;
       var price = doc.price;
       var currency = doc. currency;
-      var date = doc.date;
 
-      setProduce((produce) => [
-        ...produce,
+      setItems((items) => [
+        ...items,
         {
-          item: item,
-          farmType: farmType,
+          item: item,  
           id: id,
+          imageURL: imageURL,
           measure: measure,
           quantity: quantity,
           price: price,
           currency: currency,
-          date: date,
         },
       ]);
     });
   };
  
   useEffect(() => {
-    updateProduce();
-  }, [props.produce, props.update]);
+    updateItems();
+  }, [props.shopItems, props.update]);
 
   return (
     <>
     <Refresh />
-      {produce.length ? (
+      {items.length ? (
         <div>
-          <ProduceBox
+          <ItemsBox
             forceUpdate={forceUpdate}
-            produce={produce}
+            shopItems={items}
           />
         </div>
       ) : (
@@ -100,14 +98,14 @@ function ProduceItems(props) {
 
 const mapStateToProps = (state) => {
   return {
-    produce: state.farmData.produce,
+    shopItems: state.shopData.shopItems,
   }; 
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProduceData: (data) => dispatch(getProduceData(data)),
+    getItemsData: (data) => dispatch(getItemsData(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProduceItems);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopItems);

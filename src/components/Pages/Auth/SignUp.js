@@ -425,31 +425,6 @@ const SignUp = (props) => {
 		default:
 		case 1:
 			return (
-				// <Title subtitle="Sign Up">
-				// 	<div className="signup-center subtitles">
-				// 		<p>First, create your account.</p>
-				// 	</div>
-				// 	<Stage1
-				// 		setFirstName={setFirstName}
-				// 		firstName={firstName}
-				// 		setLastName={setLastName}
-				// 		lastName={lastName}
-				// 		setMobile={setMobile}
-				// 		mobile={mobile}
-				// 		setEmail={setEmail}
-				// 		email={email}
-				// 		setPassword={setPassword}
-				// 		password={password}
-				// 		setStage={setStage}
-				// 	/>
-				// 	<div className="signup-center subtitles row">
-				// 		<p>Already have an account? </p>
-				// 		<Link style={{ color: "#1C1569" }} to="/login">
-				// 			{"  "}
-				// 			LOG IN
-				// 		</Link>
-				// 	</div>
-				// </Title>
 				<div className="signup-page">
 					<div className="signup-content">
 						<Title subtitle="Sign Up">
@@ -1231,28 +1206,28 @@ const Stage8 = (props) => {
 //If account type == admin, this routes
 const Stage6 = (props) => {
 	//upload immage to cloudinary
-	const uploadImage = () => {
-		const data = new FormData();
-		data.append("file", props.image);
-		data.append("upload_preset", "wft-app");
-		data.append("cloud_name", "dghm4xm7k");
-		data.append("folder", "restaurant_id");
-		fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload", {
-			method: "post",
-			body: data,
-		}).then((result) => {
-			console.log(result);
-			// props.setUrl(result.data.url);
-		});
-		// .then(() => {
-		// 	if (props.buildingFunction == "Admin") {
-		// 		props.setStage(3); //confimation page
-		// 	} else {
-		// 		props.setStage(2);
-		// 	}
-		// })
-		// .catch((err) => console.log(err));
-	};
+	// const uploadImage = () => {
+	// 	const data = new FormData();
+	// 	data.append("file", props.image);
+	// 	data.append("upload_preset", "wft-app");
+	// 	data.append("cloud_name", "dghm4xm7k");
+	// 	data.append("folder", "restaurant_id");
+	// 	fetch("https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload", {
+	// 		method: "post",
+	// 		body: data,
+	// 	}).then((result) => {
+	// 		console.log(result);
+	// 		// props.setUrl(result.data.url);
+	// 	});
+	// 	// .then(() => {
+	// 	// 	if (props.buildingFunction == "Admin") {
+	// 	// 		props.setStage(3); //confimation page
+	// 	// 	} else {
+	// 	// 		props.setStage(2);
+	// 	// 	}
+	// 	// })
+	// 	// .catch((err) => console.log(err));
+	// };
 
 	return (
 		<div>

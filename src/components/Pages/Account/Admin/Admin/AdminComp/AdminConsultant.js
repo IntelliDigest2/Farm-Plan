@@ -182,9 +182,9 @@ export const AdminConsultant = (props) => {
 							required
 						>
 							<option>Select</option>
-							<option value={"restaurant_users"}>restaurant</option>
+							{/* <option value={"restaurant_users"}>restaurant</option> */}
 							<option value={"consultants"}>consultant</option>
-							<option value={"farm_users"}>farmer</option>
+							{/* <option value={"farm_users"}>farmer</option> */}
 							<option value={"User Admin"}>User Admin</option>
 							<option value={"Restaurant Admin"}>Restaurant Admin</option>
 						</Form.Control>

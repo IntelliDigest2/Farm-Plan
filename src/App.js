@@ -38,7 +38,7 @@ import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 import AdminTab from "./components/Pages/Account/Admin/Admin/AdminComp/AdminTab";
 import CommerceTab from "./components/Pages/Account/Commerce/CommerceComp/CommerceTab";
-
+import CommerceTabShop from "./components/Pages/Account/Commerce/CommerceCompShop/CommerceTabShop"
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
 
@@ -59,6 +59,7 @@ import FarmerAuth from "./components/Pages/Account/Farm/Marketplace/Auth/Farmer-
 import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
 import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan";
 import ProduceTab from "./components/Pages/Account/Farm/Marketplace/ProduceComp/ProduceTab";
+import ItemTab from "./components/Pages/Account/Shop/Marketplace/ItemComp/ItemTab";
 import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 
@@ -195,6 +196,7 @@ const App = (props) => {
 						<Route path="/contact" exact component={Contact} />
 						<Route path="/forgot-password" exact component={ForgotPassword} />
 						<Route path="/payment-process" exact component={Payment} />
+						<Route path="/search-shop" exact component={CommerceTabShop} />
 
 						<Route
 							path="/adminconsulttest"
@@ -264,10 +266,10 @@ const App = (props) => {
 						</Route>
 						<Route path="/cons-auth" component={ConsumerAuth} />
 						<Route path="/meal-plan" component={MealPlan} />
-						<Route path="/produce" component={ProduceTab} />
+						<Route path="/items" component={ItemTab} />
 						<Route path="/nutrient-gap" component={NutrientGap} />
 						<Route path="/view-products" component={ViewProducts} />
-
+ 
 						<Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
 						<Route path="/food-intakeAcademic" component={FoodIntakeAcademic} />
 						<Route

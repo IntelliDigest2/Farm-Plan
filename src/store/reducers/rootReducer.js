@@ -7,6 +7,7 @@ import dataReducer from "./dataReducer";
 import mealPlanReducer from "./mealPlanReducer";
 import mealPlannerReducer from "./mealPlannerReducer";
 import farmReducer from "./farmReducer";
+import shopData from "./shopReducer";
 import restaurantReducer from "./restaurantReducer";
 import supplierReducer from "./supplierReducer";
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
 	mealPlan: mealPlanReducer,
 	mealPlanner: mealPlannerReducer,
 	farmData: farmReducer,
+	shopData: shopData,
 	restaurant: restaurantReducer,
 	supplier: supplierReducer,
 	firebase: firebaseReducer,

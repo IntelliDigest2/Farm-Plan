@@ -57,6 +57,14 @@ export function Food({ setShow, setChooseModal, profile }) {
 			/>
 
 			<IconButton
+				title="Plan your meals with us, search a range of delicious recipes."
+				icon="notes"
+				label="Search"
+				color="turquoise"
+				goTo="/search-shop"
+			/>
+
+			<IconButton
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="food"
 				label={t("description.icon_save")}

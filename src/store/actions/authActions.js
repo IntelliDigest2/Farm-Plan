@@ -230,6 +230,8 @@ export const signUp = (newUser, image) => {
 			case "Hotels":
 			case "Offices":
 			case "Shop/Supermarket":
+				type = "shop_admin";
+				break;
 			case "Recreational Centers":
 			case "Consultant":
 			case "Business":
@@ -324,6 +326,8 @@ export const signUp = (newUser, image) => {
 					adminCollection = "household_users";
 				} else if (type === "supply_admin") {
 					adminCollection = "supply_users";
+				} else if (type === "shop_admin") {
+					adminCollection = "shop_users";
 				} else {
 					adminCollection = "user";
 				}

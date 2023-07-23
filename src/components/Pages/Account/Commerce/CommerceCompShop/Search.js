@@ -16,7 +16,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { submitNotification } from "../../../../lib/Notifications";
 import {Button, Modal } from "react-bootstrap";
 import Stack from '@mui/material/Stack';
-import { addToSupplyItems } from '../../../../../store/actions/supplierActions/supplierData';
+import { addToShopItems } from '../../../../../store/actions/shopActions/shopPlanData';
 
 const searchClient = algoliasearch(
     process.env.REACT_APP_ALGOLIA_APP_ID,
@@ -42,36 +42,35 @@ const Search = (props) => {
   function notify(item){
 		submitNotification(`${item}` + " added to cart");
 	   }
-  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
 
-  const cartItems = cart.map((item, index) => (
-    <List>
-      <ListItem
-          key={`item${index}`}
-          className="list"
-          style={{ alignItems: "flex-end" }}
-        >      
-        <b>{`${item.productName}: `}  </b> &nbsp; {`${item.productCurrency} ${item.productPrice}`} &nbsp;
-        {/* <input type="text" value={ingr.data} /> */}
-        {/* <input type="submit" value="remove" onClick={() => removeFromCart(ingr)} /> */}
-        <Tooltip title="Remove">
-                    <IconButton
-                      aria-label="Remove"
-                      sx={{ ml: 2 }}
-                      onClick={() => {
-                        removeFromCart(item)
-                      }}
-                    >
-                      <HighlightOffIcon fontSize="50"/>
-                    </IconButton>
-                  </Tooltip>
-      </ListItem>
-    </List>
-    ));
+  // const cartItems = cart.map((item, index) => (
+  //   <List>
+  //     <ListItem
+  //         key={`item${index}`}
+  //         className="list"
+  //         style={{ alignItems: "flex-end" }}
+  //       >      
+  //       <b>{`${item.item}: `}  </b> &nbsp; {`${item.currency} ${item.price}`} &nbsp;
+  //       {/* <input type="text" value={ingr.data} /> */}
+  //       {/* <input type="submit" value="remove" onClick={() => removeFromCart(ingr)} /> */}
+  //       <Tooltip title="Remove">
+  //                   <IconButton
+  //                     aria-label="Remove"
+  //                     sx={{ ml: 2 }}
+  //                     onClick={() => {
+  //                       removeFromCart(item)
+  //                     }}
+  //                   >
+  //                     <HighlightOffIcon fontSize="50"/>
+  //                   </IconButton>
+  //                 </Tooltip>
+  //     </ListItem>
+  //   </List>
+  //   ));
 
     const PurchaseItem = () => {
 
@@ -84,7 +83,7 @@ const Search = (props) => {
           upload: {
            cartList,
             profile: props.profile,
-            companyID: item.companyID,
+            shopID: item.shopID,
             // FirstName: props.profile.firstName, 
             // LastName: props.profile.lastName,
             // Country: props.profile.country,
@@ -101,13 +100,13 @@ const Search = (props) => {
 
       })
 
-      submitNotification("Thanks for placing your order with us", "We will contact local sustainable farmers and grocery shops and get back to you shortly with prices and delivery time");
+      submitNotification("Thanks for placing your order with us", "We will contact the supermarket/Shop and get back to you shortly with prices and delivery time");
 
     }
 
 
   return (
-    <InstantSearch indexName="sales_dev" searchClient={searchClient}>
+    <InstantSearch indexName="shop_items" searchClient={searchClient}>
       <SearchBox onChange={(event) => setQuery(event.currentTarget.value)} />
       <InfiniteHits 
         hitComponent={(props) => <Hit {...props} cart={cart} setCart={setCart} addToCart={addToCart} notify={notify} profile={props.profile} PurchaseItem={PurchaseItem}/>}  hitsPerPage={10} 
@@ -136,7 +135,7 @@ const Hit = ({ hit, cart, setCart, addToCart, notify, PurchaseItem}) => {
           className="list"
           style={{ alignItems: "flex-end" }}
         >      
-        <b>{`${item.productName}: `}  </b> &nbsp; {`${item.productCurrency} ${item.productPrice}`} &nbsp;
+        <b>{`${item.item}: `}  </b> &nbsp; {`${item.currency} ${item.price}`} &nbsp;
         {/* <input type="text" value={ingr.data} /> */}
         {/* <input type="submit" value="remove" onClick={() => removeFromCart(ingr)} /> */}
         <Tooltip title="Remove">
@@ -156,11 +155,10 @@ const Hit = ({ hit, cart, setCart, addToCart, notify, PurchaseItem}) => {
 
     function handleAddToCart() {
       addToCart(hit);
-      notify(hit.productName);
-      console.log(cart)
+      // console.log("hit", cart)
+      notify(hit.item);
+      console.log("cart list", cart)
     }
-
-   
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -171,7 +169,7 @@ const Hit = ({ hit, cart, setCart, addToCart, notify, PurchaseItem}) => {
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey="0">
                 <p>{hit.dateCreated}</p>
-                {hit.productName}
+                {hit.item}
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
             <Card.Body>
@@ -181,7 +179,7 @@ const Hit = ({ hit, cart, setCart, addToCart, notify, PurchaseItem}) => {
                     styles={{ paddingTop: 0, paddingBottom: 0, margin: 0, listStyle: "none" }}
                     >
                         <ListSubheader className="heading">
-                            <div className="meal-name">{hit.productName}</div>
+                            <div className="meal-name">{hit.item}</div>
                             <div className="icons">
 
                             <Tooltip title="Add to cart">
@@ -206,18 +204,13 @@ const Hit = ({ hit, cart, setCart, addToCart, notify, PurchaseItem}) => {
                         <div>
                             <Image imageUrl={hit.imageURL} />
                             <p>
-                            {hit.productDescription}
-                            </p>
-                            <p>
-                            </p>
-                            <p>
-                            {hit.productCurrency} {hit.productPrice} 
+                            {hit.currency} {hit.price} 
                             </p>
                         </div>
                     </ListItem>
                     </List>
 
-                    <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Cart Items </Modal.Title>
         </Modal.Header>
@@ -266,7 +259,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToSupplyItems: (data) => dispatch(addToSupplyItems(data)),
+    addToShopItems: (data) => dispatch(addToShopItems(data)),
   };
 };
 
