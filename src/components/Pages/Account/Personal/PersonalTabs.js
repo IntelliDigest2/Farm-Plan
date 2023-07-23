@@ -180,7 +180,7 @@ export function Environment() {
 			<IconButton
 				title="Useful tips on how to reduce food waste in your home."
 				icon="info"
-				label="Waste Tips"
+				label="Food Loss Tips"
 				color="green"
 				goTo="/food-reduction"
 			/>
