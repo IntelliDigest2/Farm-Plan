@@ -70,7 +70,7 @@
 				]
 			},
 			{
-				"family": "Deer",
+				"family": "Deer Family",
 				"pests": [
 					"barley yellow dwarf",
 					"bird cherry-oat aphid",
@@ -94,7 +94,7 @@
 					"wireworms"
 				]
 			},
-            {
+			{
 				"family": "Goats",
 				"pests": [
 					"barley yellow dwarf",
@@ -119,7 +119,7 @@
 					"wireworms"
 				]
 			},
-            {
+			{
 				"family": "Antelope ",
 				"pests": [
 					"barley yellow dwarf",
@@ -144,7 +144,7 @@
 					"wireworms"
 				]
 			},
-            {
+			{
 				"family": "Antelope ",
 				"pests": [
 					"barley yellow dwarf",
@@ -169,7 +169,7 @@
 					"wireworms"
 				]
 			},
-            {
+			{
 				"family": "Bison ",
 				"pests": [
 					"barley yellow dwarf",
@@ -194,7 +194,7 @@
 					"wireworms"
 				]
 			},
-            {
+			{
 				"family": "Water buffalo ",
 				"pests": [
 					"barley yellow dwarf",
@@ -219,58 +219,8 @@
 					"wireworms"
 				]
 			},
-            {
-				"family": "Yaks ",
-				"pests": [
-					"barley yellow dwarf",
-					"bird cherry-oat aphid",
-					"cereal leaf aphid",
-					"click beetles",
-					"corn leaf aphid",
-					"fescue aphid (subspecies)",
-					"field slug",
-					"frit fly",
-					"garden slugs",
-					"grain aphid",
-					"hare, brown",
-					"keeled slugs",
-					"rabbit",
-					"rat, brown",
-					"rose-grain aphid",
-					"slugs",
-					"smut",
-					"stalk rot",
-					"white-soled slugs",
-					"wireworms"
-				]
-			}
-            {
-				"family": "Muskoxen ",
-				"pests": [
-					"barley yellow dwarf",
-					"bird cherry-oat aphid",
-					"cereal leaf aphid",
-					"click beetles",
-					"corn leaf aphid",
-					"fescue aphid (subspecies)",
-					"field slug",
-					"frit fly",
-					"garden slugs",
-					"grain aphid",
-					"hare, brown",
-					"keeled slugs",
-					"rabbit",
-					"rat, brown",
-					"rose-grain aphid",
-					"slugs",
-					"smut",
-					"stalk rot",
-					"white-soled slugs",
-					"wireworms"
-				]
-			}
-            {
-				"family": "Yaks ",
+			{
+				"family": "Pronghorns ",
 				"pests": [
 					"barley yellow dwarf",
 					"bird cherry-oat aphid",
@@ -294,7 +244,7 @@
 					"wireworms"
 				]
 			},
-            {
+			{
 				"family": "Muskoxen ",
 				"pests": [
 					"barley yellow dwarf",
@@ -319,7 +269,57 @@
 					"wireworms"
 				]
 			},
-            {
+			{
+				"family": "Yaks ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			},
+			{
+				"family": "Muskoxen ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			},
+			{
 				"family": "Camels ",
 				"pests": [
 					"barley yellow dwarf",
@@ -343,8 +343,8 @@
 					"white-soled slugs",
 					"wireworms"
 				]
-			}
-            {
+			},
+			{
 				"family": "Llamas ",
 				"pests": [
 					"barley yellow dwarf",
@@ -368,8 +368,8 @@
 					"white-soled slugs",
 					"wireworms"
 				]
-			}
-            {
+			},
+			{
 				"family": "Alpacas ",
 				"pests": [
 					"barley yellow dwarf",
@@ -393,8 +393,8 @@
 					"white-soled slugs",
 					"wireworms"
 				]
-			}
-            {
+			},
+			{
 				"family": "Vicuñas ",
 				"pests": [
 					"barley yellow dwarf",
@@ -418,8 +418,8 @@
 					"white-soled slugs",
 					"wireworms"
 				]
-			}
-            {
+			},
+			{
 				"family": "Guanacos ",
 				"pests": [
 					"barley yellow dwarf",
@@ -443,8 +443,8 @@
 					"white-soled slugs",
 					"wireworms"
 				]
-			}
-            {
+			},
+			{
 				"family": "Kangaroos  ",
 				"pests": [
 					"barley yellow dwarf",
@@ -469,8 +469,183 @@
 					"wireworms"
 				]
 			}
-		
 		],
-		"Non-Rumninat": []
+		"Non-Rumninat": [
+			{
+				"family": "Pig  ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			},
+			{
+				"family": "Rabbit  ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			},
+			{
+				"family": "Horses  ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			},
+			{
+				"family": "Bees  ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			},
+			{
+				"family": "Silkworm  ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			},
+			{
+				"family": "Kangaroos  ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			},
+			{
+				"family": "Snail  ",
+				"pests": [
+					"barley yellow dwarf",
+					"bird cherry-oat aphid",
+					"cereal leaf aphid",
+					"click beetles",
+					"corn leaf aphid",
+					"fescue aphid (subspecies)",
+					"field slug",
+					"frit fly",
+					"garden slugs",
+					"grain aphid",
+					"hare, brown",
+					"keeled slugs",
+					"rabbit",
+					"rat, brown",
+					"rose-grain aphid",
+					"slugs",
+					"smut",
+					"stalk rot",
+					"white-soled slugs",
+					"wireworms"
+				]
+			}
+		]
 	}
 }
