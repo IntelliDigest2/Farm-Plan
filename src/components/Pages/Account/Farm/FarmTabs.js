@@ -81,18 +81,12 @@ export function Food({ isSeller, profile }) {
 				color="yellow"
 				goTo="/produce"
 			/>
-			{/* <IconButton
-				icon="chart"
-				label="expense"
-				color="yellow"
-				goTo="/expense"
-			/> */}
+			<IconButton icon="chart" label="Expense" color="yellow" goTo="/expense" />
 			<IconButton
 				icon="notes"
-				label="Turnover"
+				label="Turnover/Profit"
 				color="turquoise"
-				goTo="/"
-				disabled
+				goTo="/turnover"
 			/>
 			{/* <IconButton
 				icon="notes"

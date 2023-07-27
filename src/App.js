@@ -98,6 +98,8 @@ import GiftFoodChart from "./components/Pages/Account/Charts/GiftFoodChart";
 
 import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 import Payment from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Payment";
+import TurnOverPage from "./components/Pages/Account/Farm/Marketplace/Turnover/TurnOverPage";
+import ExpensePage from "./components/Pages/Account/Farm/Marketplace/Expense.js/ExpensePage";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -295,6 +297,8 @@ const App = (props) => {
 						/>
 						<Route path="/supply-plan" component={SupplyPlan} />
 						<Route path="/produce" component={ProduceTab} />
+						<Route path="/turnover" component={TurnOverPage} />
+						<Route path="/expense" component={ExpensePage} />
 
 						<Route component={NotFound} />
 					</Switch>
