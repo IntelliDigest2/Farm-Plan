@@ -78,7 +78,7 @@ export function Item({ isSeller, profile }) {
 			<IconButton
 				icon="notes"
 				label="Turnover"
-				color="turquoise"
+				color="green"
 				goTo="/account"
 				disabled
 			/>
