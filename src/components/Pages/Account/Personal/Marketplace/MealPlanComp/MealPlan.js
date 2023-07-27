@@ -6,7 +6,6 @@ import LoadingScreen from "../../../../../SubComponents/Loading/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "./Calendar";
-import { CalendarShop } from "./CalendarShop";
 import { CalendarPlan } from "./CalendarPlan";
 import CalendarPlanner from "./Plan/CalendarPlanner/CalendarPlanner";
 
@@ -64,13 +63,7 @@ export default function MealPlan() {
 				{/* <Tab eventKey="shopping-list" title="SHOPPING LIST" className="mealtab">
           <ShoppingList value={value} />
         </Tab> */}
-				<Tab
-					eventKey="shopscan"
-					title={t("description.shopping_list")}
-					className="mealtab"
-				>
-					<CalendarShop value={value} onChange={setValue} getItems={getItems} />
-				</Tab>
+				
 				<Tab
 					eventKey="inventory"
 					title={t("description.inventory")}

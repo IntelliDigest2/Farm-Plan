@@ -57,10 +57,10 @@ export function Food({ setShow, setChooseModal, profile }) {
 			/>
 
 			<IconButton
-				title="Plan your meals with us, search a range of delicious recipes."
+				title="Generate a shopping list and buy from vendors."
 				icon="notes"
-				label="Search"
-				color="turquoise"
+				label="Shop"
+				color="green"
 				goTo="/search-shop"
 			/>
 
@@ -68,7 +68,7 @@ export function Food({ setShow, setChooseModal, profile }) {
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="food"
 				label={t("description.icon_save")}
-				color="yellow"
+				color="turquoise"
 				onClick={() => {
 					setShow(true);
 					setChooseModal(true);
@@ -159,14 +159,14 @@ export function Environment() {
 			<IconButton
 				title="Gift a Food Item."
 				icon="gift"
-				label="Gifted Items Chart"
-				color="turquoise"
+				label="Gift Item"
+				color="pink"
 				goTo="/gift-food"
 			/>
 			<IconButton
 				title="View your gifted food data."
 				icon="chart"
-				label="Gifted Item Chart"
+				label="Gifted Items Chart"
 				color="yellow"
 				goTo="/gift-chart"
 			/>

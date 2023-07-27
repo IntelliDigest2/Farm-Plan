@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Dropdown, DropdownButton } from "react-bootstrap";
-
+import { CalendarShop } from "../../Personal/Marketplace/MealPlanComp/CalendarShop"
 import "./CommerceTab.css";
 import { PageWrapSupply } from "../../../../SubComponents/PageWrapSupply";
 import LoadingScreen from "../../../../SubComponents/Loading/LoadingScreen";
@@ -27,10 +27,11 @@ export default function CommerceTab() {
   };
 
   const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1500);
-  });
+	const [getItems, setGetItems] = useState([]);
+
+	useEffect(() => {
+		setTimeout(() => setLoading(false), 1500);
+	});
 
   const [value, setValue] = useState(moment());
 
@@ -59,11 +60,20 @@ export default function CommerceTab() {
           </div>
 
       <Tabs
-        defaultActiveKey="buy"
+        defaultActiveKey="shopscan"
         id="meal-plan-tabs"
         className="mb-3 mealtabs basic-title"
         fill
       >
+
+        <Tab
+					eventKey="shopscan"
+					title={t("description.shopping_list")}
+					className="mealtab"
+				>
+					<CalendarShop value={value} onChange={setValue} getItems={getItems} />
+				</Tab>
+
         <Tab eventKey="buy" title="Buy Item" className="mealtab">
           <Buy />
         </Tab>
