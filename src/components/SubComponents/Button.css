@@ -175,6 +175,84 @@
   box-shadow: none !important;
 }
 
+.orange-btn {
+  background-color: #e36b07;
+  border-color: #a84d04;
+  color: white;
+  transition: transform 0.5s;
+}
+.orange-btn:hover {
+  background-color: #a84d04;
+  color: white;
+}
+.orange-btn:focus {
+  background-color: #a84d04;
+  border-color: white;
+}
+.orange-btn:active {
+  background-color: #e36b07;
+  border-color: white;
+}
+
+.pink-btn {
+  background-color: #d81b60;
+  border-color: #8f0e3f;
+  color: white;
+  transition: transform 0.5s;
+}
+.pink-btn:hover {
+  background-color: #8f0e3f;
+  color: white;
+}
+.pink-btn:focus {
+  background-color: #8f0e3f;
+  border-color: white;
+}
+.pink-btn:active {
+  background-color: #d81b60;
+  border-color: white;
+}
+
+.cyan-btn {
+  background-color: #00a7a7;
+  border-color: #007d7d;
+  color: white;
+  transition: transform 0.5s;
+}
+.cyan-btn:hover {
+  background-color: #007d7d;
+  color: white;
+}
+.cyan-btn:focus {
+  background-color: #007d7d;
+  border-color: white;
+}
+.cyan-btn:active {
+  background-color: #00a7a7;
+  border-color: white;
+}
+
+
+.purple-btn {
+  background-color: #7d50a3;
+  border-color: #4c2c69;
+  color: white;
+  transition: transform 0.5s;
+}
+.purple-btn:hover {
+  background-color: #4c2c69;
+  color: white;
+}
+.purple-btn:focus {
+  background-color: #4c2c69;
+  border-color: white;
+}
+.purple-btn:active {
+  background-color: #7d50a3;
+  border-color: white;
+}
+
+
 .icon-button {
   display: inline-flex;
   align-items: center;

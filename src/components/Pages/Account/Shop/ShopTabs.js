@@ -78,7 +78,7 @@ export function Item({ isSeller, profile }) {
 			<IconButton
 				icon="notes"
 				label="Turnover"
-				color="turquoise"
+				color="green"
 				goTo="/account"
 				disabled
 			/>
@@ -90,6 +90,7 @@ export function Item({ isSeller, profile }) {
 export function FSSP() {
 	return (
 		<>  
+
 			<IconButton
 				title="Buff up the sustainability of your business with our online masterclasses."
 				icon="book"
