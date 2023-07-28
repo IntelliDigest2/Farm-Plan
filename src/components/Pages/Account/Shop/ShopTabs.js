@@ -79,7 +79,7 @@ export function Item({ isSeller, profile }) {
 				icon="notes"
 				label="Turnover"
 				color="green"
-				goTo="/account"
+				goTo="/in-progress"
 				disabled
 			/>
 			{consultingService}
@@ -97,6 +97,13 @@ export function FSSP() {
 				label="Masterclasses"
 				color="turquoise"
 				goTo="https://intellidigest.com/masterclasses-overview/"
+			/>
+			<IconButton
+				title="Buff up the sustainability of your business with our online masterclasses."
+				icon="mind"
+				label="Mastermind"
+				color="blue"
+				goTo="https://intellidigest.com/mastermind-sessions/"
 			/>
 			<IconButton
 				title="Calculate the Food Industry Sustainability Index (FISI) of your business."

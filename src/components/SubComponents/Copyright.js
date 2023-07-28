@@ -4,7 +4,7 @@ import "./Copyright.css";
 export function Copyright() {
   return (
     <div>
-      <i className="fa fa-copyright copy"> Copyright - IntelliDigest 2021</i>
+      <i className="fa fa-copyright copy"> Copyright - IntelliDigest 2023</i>
       <a
         href="https://www.linkedin.com/company/intellidigest-limited/?viewAsMember=true"
         target="_blank"
