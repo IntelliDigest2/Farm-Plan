@@ -3,7 +3,7 @@ import "./Pages.css"
 import styled from "styled-components";
 import { Row, Col, Card } from "react-bootstrap";
 
-function NotFound() {
+function InProgress() {
     return (
         <React.Fragment>
         <Row className="mr-0 ml-0 mt-0 pt-0 mt-lg-5 pt-lg-5 justify-content-center align-items-center d-flex not-found">
@@ -16,8 +16,9 @@ function NotFound() {
                   <Card>
                 <Card.Body>
                    <Card.Text className="text-center">
-                   <h1 className="page-not-found">404 - Page Not Found &#128532; </h1>
-                 <h1 className="not-found-message">The page you were looking for does not exist.</h1>
+                   <h1 className="page-not-found">Feature in Progress.. &#128522; </h1>
+                 <h1 className="not-found-message">We're hard at work building an amazing new feature to enhance your experience. Our development team is putting the finishing touches on it, and we can't wait to unveil it to you.</h1>
+                 <h1 className="not-found-message">Keep an eye out on this page and feel free to use the rest of the application!</h1>
                    </Card.Text>
                   </Card.Body>
               </Card>
@@ -44,10 +45,10 @@ function NotFound() {
       }
       
       .card-body{
-          height:200px;
+          height:300px;
       }
 
       `
       
 
-export default NotFound;
+export default InProgress;
