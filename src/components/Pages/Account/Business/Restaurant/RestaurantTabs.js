@@ -16,7 +16,7 @@ export function Food({ setShow, setChooseModal }) {
       <IconButton
         icon="notes" 
         label="Restaurant details"
-        color="turquoise"
+        color="yellow"
         goTo="/restaurant-meal-plan"
         />
         
@@ -45,14 +45,14 @@ export function Food({ setShow, setChooseModal }) {
       <IconButton
         icon="my-products"
         label="Meal Sold" 
-        color="turquoise"
+        color="purple"
         goTo="/"
         disabled/>
 
       <IconButton
         icon="my-products"
         label="Meal Returned"
-        color="turquoise"
+        color="blue"
         goTo="/"
         disabled
       />
@@ -73,7 +73,7 @@ export function Food({ setShow, setChooseModal }) {
       <IconButton
         icon="notes"
         label="Profit"
-        color="turquoise"
+        color="blue"
         goTo="/"
         disabled
       />
@@ -81,7 +81,7 @@ export function Food({ setShow, setChooseModal }) {
         title="Find out more about the Plan to Save campaign, and what you can do to help."
         icon="kitchen"
         label="Plan to Save"
-        color="turquoise"
+        color="green"
         onClick={() => {
           setShow(true);
           setChooseModal(true);
@@ -119,7 +119,7 @@ export function Environment({ setShow, setChooseModal }) {
         title="View the world map of WFT users!"
         icon="world"
         label="Users Map"
-        color="yellow"
+        color="purple"
         goTo="/view-map"
       />
       <IconButton
@@ -147,10 +147,17 @@ export function FSSP() {
         goTo="https://intellidigest.com/services/food-system-sustainability/agrifood-techpreneur-club/"
       />
       <IconButton
+				title="Buff up the sustainability of your business with our online masterclasses."
+				icon="mind"
+				label="Mastermind"
+				color="purple"
+				goTo="https://intellidigest.com/mastermind-sessions/"
+			/>
+      <IconButton
         title="Buff up the sustainability of your business with our online masterclasses."
         icon="book"
         label="Masterclasses"
-        color="turquoise"
+        color="blue"
         goTo="https://intellidigest.com/masterclasses-overview/"
       />
       <IconButton

@@ -16,7 +16,7 @@ export function Dashboard({ setShow, setChooseModal}) {
       <IconButton
         icon="notes" 
         label="Buy"
-        color="turquoise"
+        color="Blue"
         goTo="/buy"
         />
     </>

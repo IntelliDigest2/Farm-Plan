@@ -35,10 +35,10 @@ export default function ItemTab() {
         <Tab eventKey="calendar" title="ITEM LIST" className="mealtab">
           <ItemPlan value={value} onChange={setValue} />
         </Tab>
-        <Tab eventKey="recipes" title="ITEM CHART" className="mealtab">
+        {/* <Tab eventKey="recipes" title="ITEM CHART" className="mealtab">
           <ChartProduce />
           <h2>Items Summary</h2>
-        </Tab>
+        </Tab> */}
       </Tabs> 
 
       {/* input available locations for picking up */}
