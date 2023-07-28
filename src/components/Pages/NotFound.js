@@ -42,10 +42,6 @@ function NotFound() {
         border-radius:5px;
         padding:70px 0 50px 0;
       }
-      
-      .card-body{
-          height:200px;
-      }
 
       `
       
