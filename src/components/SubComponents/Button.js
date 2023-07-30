@@ -19,11 +19,13 @@ import CategoryIcon from "@mui/icons-material/Category";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
 import CardGiftcardOutlined from "@mui/icons-material/CardGiftcardOutlined";
+import PsychologyIcon from '@mui/icons-material/Psychology';
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
 import ForumSharpIcon from "@mui/icons-material/ForumSharp";
 import PermContactCalendarSharpIcon from "@mui/icons-material/PermContactCalendarSharp";
 import PeopleIcon from "@mui/icons-material/People";
+import { Psychology } from "@mui/icons-material";
 // import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 // import CalendarMonthSharpIcon from "@mui/icons-material/CalendarMonthSharp";
 
@@ -143,6 +145,8 @@ export function IconButton(props) {
 				return <PublicOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "book":
 				return <MenuBookOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "mind":
+				return <PsychologyIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "plant":
 				return <SpaOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "kitchen":

@@ -32,6 +32,7 @@ import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
 import Questionnaire from "./components/Pages/Auth/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
+import InProgress from "./components/Pages/InProgress";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
@@ -300,6 +301,7 @@ const App = (props) => {
 						<Route path="/turnover" component={TurnOverPage} />
 						<Route path="/expense" component={ExpensePage} />
 
+						<Route path="/in-progress" component={InProgress} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>

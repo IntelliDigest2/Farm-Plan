@@ -16,7 +16,7 @@ export function Items({ setShow, setChooseModal }) {
       <IconButton
         icon="chart" 
         label="Revenue"
-        color="turquoise"
+        color="yellow"
         goTo="/supply-plan"
         disabled
         />
@@ -76,14 +76,14 @@ export function Revenue({ setShow, setChooseModal }) {
         title="View the world map of WFT users!"
         icon="world"
         label="Users Map"
-        color="yellow"
+        color="blue"
         goTo="/view-map"
       />
       <IconButton
         title="Find out more about the Plan to Save campaign, and what you can do to help."
         icon="kitchen"
         label="Plan to Save"
-        color="turquoise"
+        color="purple"
         onClick={() => {
           setShow(true);
           setChooseModal(true);

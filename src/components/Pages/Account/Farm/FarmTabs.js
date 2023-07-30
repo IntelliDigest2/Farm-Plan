@@ -58,7 +58,7 @@ export function Food({ isSeller, profile }) {
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="food"
 				label="Plan to Save"
-				color="yellow"
+				color="purple"
 				goTo="/pts"
 			/>
 
@@ -78,15 +78,24 @@ export function Food({ isSeller, profile }) {
 			<IconButton
 				icon="chart"
 				label="Produce Chart"
-				color="yellow"
-				goTo="/produce"
+				color="green"
+				goTo="/in-progress"
 			/>
 			<IconButton icon="chart" label="Expense" color="yellow" goTo="/expense" />
+			{/* <IconButton icon="chart" label="Expense" color="yellow" goTo="/in-progress" /> */}
+			{/* <IconButton
+				icon="notes"
+				label="Turnover/Profit"
+				color="green"
+				goTo="/in-progress"
+				disabled
+			/> */}
 			<IconButton
 				icon="notes"
 				label="Turnover/Profit"
-				color="turquoise"
+				color="green"
 				goTo="/turnover"
+				disabled
 			/>
 			{/* <IconButton
 				icon="notes"
@@ -98,7 +107,7 @@ export function Food({ isSeller, profile }) {
 			<IconButton
 				icon="notes"
 				label="Rent/Buy Item"
-				color="turquoise"
+				color="blue"
 				goTo="/supply"
 			/>
 			{consultingService}
@@ -134,14 +143,14 @@ export function Environment() {
 				title="View the world map of WFT users!"
 				icon="world"
 				label="Users Map"
-				color="yellow"
+				color="blue"
 				goTo="/view-map"
 			/>
 			<IconButton
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="food"
 				label="Plan to Save"
-				color="yellow"
+				color="purple"
 				goTo="/pts"
 			/>
 		</>
@@ -162,9 +171,17 @@ export function FSSP() {
 				title="Buff up the sustainability of your business with our online masterclasses."
 				icon="book"
 				label="Masterclasses"
-				color="turquoise"
+				color="purple"
 				goTo="https://intellidigest.com/masterclasses-overview/"
 			/>
+			<IconButton
+				title="Buff up the sustainability of your business with our online masterclasses."
+				icon="mind"
+				label="Mastermind"
+				color="blue"
+				goTo="https://intellidigest.com/mastermind-sessions/"
+			/>
+
 			<IconButton
 				title="Calculate the Food Industry Sustainability Index (FISI) of your business."
 				icon="info"
