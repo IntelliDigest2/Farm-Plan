@@ -56,7 +56,11 @@ export default function ProduceBox(props) {
 										{newProduce.price}
 									</p>
 									<p>
-										<b>Date of Yield: </b>
+										<b>Selling price</b> {newProduce.currency}{" "}
+										{newProduce.sellingPrice}
+									</p>
+									<p>
+										<b>Date of Harvest: </b>
 										{newProduce.date}
 									</p>
 								</div>

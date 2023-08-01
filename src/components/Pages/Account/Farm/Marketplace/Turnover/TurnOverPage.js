@@ -34,13 +34,17 @@ function TurnOverPage() {
 					>
 						<YieldData />
 					</Tab> */}
-					<Tab eventKey="Profit Data" title={"Profit Data"} className="mealtab">
+					<Tab
+						eventKey="Profit/Turnover Data"
+						title={"Profit/Turnover  Data"}
+						className="mealtab"
+					>
 						<ProfitData />
 					</Tab>
 
 					<Tab
-						eventKey="Profit Chart"
-						title={"Profit Chart"}
+						eventKey="Profit/Turnover  Chart"
+						title={"Profit/Turnover  Chart"}
 						className="mealtab"
 					>
 						<ProfitChart />
