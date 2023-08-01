@@ -25,12 +25,14 @@ const Horticulture = (props) => {
 	const [land, setLand] = useState(0);
 	const [unit, setUnit] = useState(landUnits[0]);
 
-	const [farmPlan, setFarmPlan] = useState([]);
+	const [farmPlan, setFarmPlan] = useState("");
+	const [farmCycle, setFarmCycle] = useState("");
+	const [cycleUnit, setCycleUnit] = useState("months");
 
 	const [rows, setRows] = useState(6);
 	const [totalUsed, setTotalUsed] = useState(100);
 	const [totals, setTotals] = useState([]);
-	const [comment, setComment] = useState(false);
+	const [comment, setComment] = useState("");
 
 	const [open, setOpen] = useState(false);
 	const [msg, setMsg] = useState("");
@@ -93,6 +95,7 @@ const Horticulture = (props) => {
 
 	return (
 		<>
+			<h2>Farm Plan</h2>
 			<Form onSubmit={handleSubmit}>
 				<p>
 					We recommend that you plant a range of different crops within your
@@ -113,30 +116,63 @@ const Horticulture = (props) => {
               </Row>
             </div>
           )} */}
-				<div>Farm Location: {profile.city}</div>
-				<Form.Group className="mb-3 land">
-					<Form.Label>Land Size</Form.Label>
-					<InputGroup>
-						<Form.Control
-							type="number"
-							id="land-size"
-							onChange={(e) => setLand(e.target.value)}
-							value={land}
-							min={1}
-							max={10000}
-							required
-						/>
-						<Dropdown
-							id="land-unit"
-							styling="green dropdown-input-right"
-							data={unit}
-							function={(e) => {
-								setUnit(e);
-							}}
-							items={landUnits}
-						/>
-					</InputGroup>
-				</Form.Group>
+
+				<div>
+					Farm Location: <b>{profile.city}</b>
+				</div>
+				<Row>
+					<Col md={6}>
+						<Form.Group className="mb-3 land">
+							<Form.Label>Land Size</Form.Label>
+							<InputGroup>
+								<Form.Control
+									type="number"
+									id="land-size"
+									onChange={(e) => setLand(e.target.value)}
+									value={land}
+									min={1}
+									max={10000}
+									required
+								/>
+								<Dropdown
+									id="land-unit"
+									styling="green dropdown-input-right"
+									data={unit}
+									function={(e) => {
+										setUnit(e);
+									}}
+									items={landUnits}
+								/>
+							</InputGroup>
+						</Form.Group>
+					</Col>
+
+					<Col md={6}>
+						<Form.Group className="mb-3 land">
+							<Form.Label>Farm Cycle</Form.Label>
+							<InputGroup>
+								<Form.Control
+									type="number"
+									id="farmCycle"
+									onChange={(e) => setFarmCycle(e.target.value)}
+									value={land}
+									min={1}
+									max={20}
+									required
+								/>
+								<Dropdown
+									id="cycleUnit"
+									styling="green dropdown-input-right"
+									data={cycleUnit}
+									function={(e) => {
+										setCycleUnit(e);
+									}}
+									items={["months", "years"]}
+								/>
+							</InputGroup>
+						</Form.Group>
+					</Col>
+				</Row>
 
 				<Container className="p-0 text-center ">
 					<Row className="mb-2 farm-row farm-header d-none d-sm-flex">

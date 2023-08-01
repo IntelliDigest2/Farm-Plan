@@ -79,7 +79,7 @@ export function Food({ isSeller, profile }) {
 				icon="chart"
 				label="Produce Chart"
 				color="green"
-				goTo="/in-progress"
+				goTo="/produce"
 			/>
 			<IconButton icon="chart" label="Expense" color="yellow" goTo="/expense" />
 			{/* <IconButton icon="chart" label="Expense" color="yellow" goTo="/in-progress" /> */}

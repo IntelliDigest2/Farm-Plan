@@ -36,18 +36,18 @@ export default function ProduceTab() {
 				<Tab eventKey="calendar" title="PRODUCE LIST" className="mealtab">
 					<ProducePlan value={value} onChange={setValue} />
 				</Tab>
-				{/* <Tab eventKey="recipes" title="PRODUCE CHART" className="mealtab">
+				<Tab eventKey="recipes" title="PRODUCE CHART" className="mealtab">
 					<ChartProduce />
 					<h2>Produce Summary</h2>
-				</Tab> */}
-				{/* <Tab eventKey="sales" title="SALES" className="mealtab">
+				</Tab>
+				<Tab eventKey="sales" title="SALES" className="mealtab">
 					<Sales />
 					<h2>sale Summary</h2>
 				</Tab>
 				<Tab eventKey="sale chart" title="SALES CHART" className="mealtab">
 					<SalesChart />
 					<h2>sales chart</h2>
-				</Tab> */}
+				</Tab>
 			</Tabs>
 
 			{/* input available locations for picking up */}

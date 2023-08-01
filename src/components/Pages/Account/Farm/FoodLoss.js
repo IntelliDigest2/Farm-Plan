@@ -310,7 +310,7 @@ const FoodLoss = (props) => {
 		upload.wasteSource === "other" ? (
 			<FormGroup className="mb-3">
 				<Form.Label style={{ backgroundColor: "white" }}>
-					please type other waste source here
+					please type name of "other" waste source here
 				</Form.Label>
 				<Form.Control
 					type="text"

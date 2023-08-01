@@ -1,7 +1,18 @@
+// function TurnOverData() {
+// 	return <div>TurnOverData</div>;
+// }
+
+// export default TurnOverData;
+
 import React from "react";
+import { connect } from "react-redux";
 
-function TurnOverData() {
+export const TurnOverData = (props) => {
 	return <div>TurnOverData</div>;
-}
+};
 
-export default TurnOverData;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TurnOverData);
