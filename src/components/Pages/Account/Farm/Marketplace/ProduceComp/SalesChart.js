@@ -27,7 +27,11 @@ export const SalesChart = (props) => {
 	);
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => {
+	return {
+		produce: state.farmData.produce,
+	};
+};
 
 const mapDispatchToProps = {};
 

@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export const getFarmerData = () => {
 	return (dispatch, getState, { getFirebase }) => {
 		const profile = getState().firebase.profile;
@@ -28,6 +30,42 @@ export const getFarmerData = () => {
 	};
 };
 
+export const getFarmProductsForDuration = (duration) => {
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		console.log(duration);
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+		// var docRef = getFirestore.collection("marketplace").doc(authUID);
+
+		// docRef
+		// 	.collection("produce")
+		// 	.where("date", "==", `${duration}`)
+		// 	.onSnapshot((querySnapshot) => {
+		// 		querySnapshot.forEach(
+		// 			(doc) => {
+		// 				dispatch({
+		// 					type: "SET_FETCHING",
+		// 					payload: true,
+		// 				});
+		// 				let sales = [];
+		// 				doc.forEach((doc) => {
+		// 					sales.push({ ...doc.data(), salesId: doc.id });
+		// 					// console.log(doc.id, " => ", doc.data());
+		// 				});
+		// 				// console.log("Current data: ", consultants);
+		// 				dispatch({
+		// 					type: "FETCH_SAlES_SUCCESS",
+		// 					payload: sales,
+		// 				});
+		// 			},
+		// 			(err) => {
+		// 				console.log(err);
+		// 				dispatch({ type: "FETCH_CONSULTING_DATA_ERROR", payload: err });
+		// 			}
+		// 		);
+		// 	});
+	};
+};
 const getFarmPlanData = () => {
 	return (dispatch, getState, { getFirebase }) => {
 		const profile = getState().firebase.profile;
@@ -62,7 +100,7 @@ const getFarmPlanData = () => {
 };
 
 export const addProduceData = (data) => {
-	return (dispatch, getState, { getFirestore }) => {
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
 
@@ -76,11 +114,15 @@ export const addProduceData = (data) => {
 				uid = profile.admin;
 		}
 
+		data.date = getFirebase().firestore.Timestamp.fromDate(data.date);
+
+		dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: true });
+
 		getFirestore()
 			.collection("marketplace")
 			.doc(uid)
 			.collection("produce")
-			.add(data.upload)
+			.add(data)
 			.then((docRef) => {
 				// make the docId easily accessible so that we can delete it later if we want.
 				getFirestore()
@@ -90,9 +132,11 @@ export const addProduceData = (data) => {
 					.doc(docRef.id)
 					.set({ id: docRef.id }, { merge: true });
 				dispatch({ type: "CREATE_PRODUCE_ITEM", payload: data });
+				dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
 			})
 			.catch((err) => {
 				dispatch({ type: "CREATE_PRODUCE_ITEM_ERROR", err });
+				dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
 			});
 	};
 };
@@ -260,6 +304,51 @@ export const getProduceData = () => {
 			.catch((err) => {
 				dispatch({ type: "GET_PRODUCE_ITEM_ERROR", err });
 			});
+	};
+};
+export const getProduceData2 = () => {
+	return (dispatch, getState, { getFirestore }) => {
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			default:
+			case "farm_admin":
+				uid = authUID;
+				break;
+			case "farm_sub":
+				uid = profile.admin;
+		}
+
+		getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("produce")
+			.orderBy("date", "desc")
+			.onSnapshot(
+				(docs) => {
+					//   if (doc.exists) {
+					// Document data is available in the doc object
+
+					const items = [];
+					docs.forEach((doc) => {
+						let document = doc.data();
+
+						items.push(document);
+					});
+					dispatch({ type: "GET_PRODUCE_ITEM", payload: items });
+
+					//   } else {
+					// Document doesn't exist
+
+					//   }
+				},
+				(error) => {
+					// Handle errors gracefully
+					dispatch({ type: "GET_PRODUCE_ITEM_ERROR", error });
+				}
+			);
 	};
 };
 

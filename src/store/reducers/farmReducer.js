@@ -1,10 +1,12 @@
 const initState = {
 	authError: null,
-	produce: [],
+	produce: null,
+	addProduceError: null,
 	purchaseInfoFarm: [],
 	farmPlan: null,
 	farmPlanError: null,
 	farmerData: null,
+	addProduceLoader: null,
 };
 
 const farmReducer = (state = initState, action) => {
@@ -38,13 +40,19 @@ const farmReducer = (state = initState, action) => {
 			console.log("produce added", action.payload);
 			return {
 				...state,
-				authError: null,
+				addProduceError: null,
 			};
 		case "CREATE_PRODUCE_ITEM_ERROR":
 			console.log("error, produce not added", action.err);
 			return {
 				...state,
-				authError: "Create produce failed",
+				addProduceError: "Something went wrong try again",
+			};
+		case "CREATE_PRODUCE_ITEM_LOADER":
+			console.log("error, produce not added", action);
+			return {
+				...state,
+				addProduceLoader: action.payload,
 			};
 
 		case "GET_PRODUCE_ITEM":
