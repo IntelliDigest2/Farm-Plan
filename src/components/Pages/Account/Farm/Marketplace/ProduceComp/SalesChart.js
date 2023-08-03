@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { MDBContainer } from "mdbreact";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import "chartjs-adapter-moment"; // or another adapter to avoid moment
 Chart.register(...registerables);
 
-const ChartProduce = () => {
-	// Sample data
+export const SalesChart = (props) => {
+	useEffect(() => {}, []);
+
 	const data = {
 		labels: ["Horticulture", "Aquaculture", "Livestock"],
 		datasets: [
 			{
 				label: "Produce Summary",
-				data: [2, 5, 6],
+				data: [[10, 20, 30], 5, 6],
 				backgroundColor: ["blue", "green", "orange"],
 			},
 		],
@@ -25,4 +27,8 @@ const ChartProduce = () => {
 	);
 };
 
-export default ChartProduce;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SalesChart);

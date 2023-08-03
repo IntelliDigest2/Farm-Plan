@@ -779,6 +779,14 @@ const Stage1 = (props) => {
 							type="submit"
 							variant="default"
 							className="signup-confirm"
+							disabled={
+								props.firstName.trim() === "" ||
+								props.lastName.trim() === "" ||
+								props.email.trim() === "" ||
+								props.password.trim() === ""
+									? true
+									: false
+							}
 							onClick={(e) => {
 								e.preventDefault();
 								//Next Stage
@@ -885,6 +893,14 @@ const Stage2 = (props) => {
 					<Button
 						variant="default"
 						className="signup-confirm"
+						disabled={
+							props.town.trim() === "" ||
+							props.country.trim() === "" ||
+							props.region.trim() === "" ||
+							props.buildingFunction.trim() === ""
+								? true
+								: false
+						}
 						onClick={(e) => {
 							e.preventDefault();
 							//Next Stage
@@ -989,6 +1005,13 @@ const Stage4 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.restaurantName.trim() === "" ||
+									props.regulatoryBody.trim() === "" ||
+									props.regulatoryBodyID.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1010,6 +1033,7 @@ const Stage4 = (props) => {
 	);
 };
 
+// !!!TODO
 const Stage8 = (props) => {
 	return (
 		<div>
@@ -1167,6 +1191,18 @@ const Stage8 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.consultant.urlLink.trim() === "" ||
+									props.consultant.expertise.trim() === "" ||
+									props.consultant.summary.trim() === "" ||
+									props.consultant.images[0].certificateImg === null ||
+									props.consultant.images[1].identificationImg === null ||
+									props.consultant.services[0].service.trim() === "" ||
+									props.consultant.services[0].price.trim() === "" ||
+									props.buildingFunction.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1289,6 +1325,14 @@ const Stage6 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.adminType.trim() === "" ||
+									props.IDType.trim() === "" ||
+									props.setIDNumber.trim() === "" ||
+									props.image.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 
@@ -1380,6 +1424,12 @@ const Stage7 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.companyName.trim() === "" ||
+									props.companyDescription.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1454,6 +1504,12 @@ const Stage5 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.cuisine.trim() === "" ||
+									props.restaurantDescription.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1636,18 +1692,7 @@ const Stage3 = (props) => {
 					</List>
 				</div>
 			);
-		case "Households":
-		case "Personal":
-		case "Hospitals":
-		case "Schools":
-		case "Hotels":
-		case "Offices":
-		case "Shop/Supermarket":
-		case "Farm":
-		case "Recreational Centers":
-		case "Restaurants":
-		case "Consultant":
-		case "Other":
+		default:
 			return (
 				<div>
 					<List>

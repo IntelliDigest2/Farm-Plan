@@ -34,7 +34,7 @@ const AdminTab = (props) => {
 	let shownTab = props.profile.isLoaded ? (
 		props.profile.adminType === "superAdmin" ? (
 			<Tabs
-				defaultActiveKey="calendar"
+				defaultActiveKey="AdminConsultant"
 				id="meal-plan-tabs"
 				className="mb-3 mealtabs basic-title"
 				fill

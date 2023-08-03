@@ -77,8 +77,6 @@ import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan
 import NewAccount from "./components/Pages/Account/Account";
 import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
 
-
-
 // import Example from "./components/Pages/Account/Example";
 
 import { Notifications } from "react-push-notification";
@@ -101,6 +99,8 @@ import GiftFoodChart from "./components/Pages/Account/Charts/GiftFoodChart";
 
 import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 import Payment from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Payment";
+import TurnOverPage from "./components/Pages/Account/Farm/Marketplace/Turnover/TurnOverPage";
+import ExpensePage from "./components/Pages/Account/Farm/Marketplace/Expense.js/ExpensePage";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -298,6 +298,10 @@ const App = (props) => {
 						/>
 						<Route path="/supply-plan" component={SupplyPlan} />
 						<Route path="/produce" component={ProduceTab} />
+						<Route path="/turnover" component={TurnOverPage} />
+						<Route path="/expense" component={ExpensePage} />
+
+						<Route path="/in-progress" component={InProgress} />
 
 						<Route component={NotFound} />
 					</Switch>
