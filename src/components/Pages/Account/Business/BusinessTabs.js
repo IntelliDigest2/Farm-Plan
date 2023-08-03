@@ -80,7 +80,7 @@ export function Food({ setShow, setChooseModal, profile }) {
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="kitchen"
 				label="Plan to Save"
-				color="turquoise"
+				color="purple"
 				onClick={() => {
 					setShow(true);
 					setChooseModal(true);
@@ -105,28 +105,28 @@ export function Environment({ setShow, setChooseModal }) {
 				title="View your food waste data."
 				icon="chart"
 				label="Waste Chart"
-				color="yellow"
+				color="green"
 				goTo="/chart"
 			/>
 			<IconButton
 				title="Useful tips on how to reduce food waste in your home."
 				icon="info"
 				label="Food Waste Reduction Tips"
-				color="green"
+				color="yellow"
 				goTo="/food-reduction"
 			/>
 			<IconButton
 				title="View the world map of WFT users!"
 				icon="world"
 				label="Users Map"
-				color="yellow"
+				color="purple"
 				goTo="/view-map"
 			/>
 			<IconButton
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="kitchen"
 				label="Plan to Save"
-				color="turquoise"
+				color="blue"
 				onClick={() => {
 					setShow(true);
 					setChooseModal(true);
@@ -148,9 +148,16 @@ export function FSSP() {
 			/>
 			<IconButton
 				title="Buff up the sustainability of your business with our online masterclasses."
+				icon="mind"
+				label="Mastermind"
+				color="purple"
+				goTo="https://intellidigest.com/mastermind-sessions/"
+			/>
+			<IconButton
+				title="Buff up the sustainability of your business with our online masterclasses."
 				icon="book"
 				label="Masterclasses"
-				color="turquoise"
+				color="blue"
 				goTo="https://intellidigest.com/masterclasses-overview/"
 			/>
 			<IconButton

@@ -32,6 +32,7 @@ import SignUp from "./components/Pages/Auth/SignUp";
 import Settings from "./components/Pages/Auth/Settings";
 import Questionnaire from "./components/Pages/Auth/Questionnaire";
 import NotFound from "./components/Pages/NotFound";
+import InProgress from "./components/Pages/InProgress";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import PlanToSave from "./components/Pages/Account/PlanToSave/PlanToSave";
 import ChangePassword from "./components/Pages/Account/ChangePassword";
@@ -75,6 +76,8 @@ import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan
 
 import NewAccount from "./components/Pages/Account/Account";
 import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
+
+
 
 // import Example from "./components/Pages/Account/Example";
 

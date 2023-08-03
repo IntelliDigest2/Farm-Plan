@@ -16,7 +16,7 @@ function NotFound() {
                   <Card>
                 <Card.Body>
                    <Card.Text className="text-center">
-                   <h1 className="page-not-found">404 - Page Not Found</h1>
+                   <h1 className="page-not-found">404 - Page Not Found &#128532; </h1>
                  <h1 className="not-found-message">The page you were looking for does not exist.</h1>
                    </Card.Text>
                   </Card.Body>
@@ -41,10 +41,6 @@ function NotFound() {
         border: none;
         border-radius:5px;
         padding:70px 0 50px 0;
-      }
-      
-      .card-body{
-          height:200px;
       }
 
       `

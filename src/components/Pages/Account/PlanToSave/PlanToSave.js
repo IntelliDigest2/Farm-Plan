@@ -71,7 +71,7 @@ function PlanToSave(props) {
             ensuring the supply of nutritious food all year round.
           </p>
         </div>
-        {props.profile.buildingFunction === "Households" || "Personal" ? (
+        {props.profile.buildingFunction === "Households" || props.profile.buildingFunction === "Personal" ? (
           <div className="center">
             <SubButton
               text="Start your plan now!"
@@ -79,7 +79,16 @@ function PlanToSave(props) {
               styling="green"
             />
           </div>
+        ) : props.profile.buildingFunction === "Farm" ? (
+          <div className="center">
+            <SubButton
+              text="Start your plan now!"
+              goTo="/farm-plan"
+              styling="green"
+            />
+          </div>
         ) : null}
+
         <a href="https://intellidigest.com/services/food-system-sustainability/food-waste-tracker/plan-to-save/">
           <img
             className="large-img"
