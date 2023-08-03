@@ -302,6 +302,7 @@ const App = (props) => {
 						<Route path="/expense" component={ExpensePage} />
 
 						<Route path="/in-progress" component={InProgress} />
+
 						<Route component={NotFound} />
 					</Switch>
 				</div>

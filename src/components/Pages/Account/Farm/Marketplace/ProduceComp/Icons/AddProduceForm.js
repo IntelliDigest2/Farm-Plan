@@ -26,6 +26,7 @@ const AddProduceForm = (props) => {
 	const [produceDate, setProduceDate] = useState(new Date());
 	const [inputGroups, setInputGroups] = useState([
 		{ id: 1, nutrientName: "", nutrientQuantity: "", nutrientUnit: "%" },
+
 	]);
 
 	const defaultLocal = {
@@ -34,6 +35,7 @@ const AddProduceForm = (props) => {
 		measure: "units",
 		price: "",
 		sellingPrice: "",
+
 		currency: "$",
 		// nutrients: inputGroups,
 	};
@@ -135,6 +137,7 @@ const AddProduceForm = (props) => {
 							// data={local.measure}
 							required
 							items={["%"]}
+
 							function={(e) => handleNutrientUnit(index, e)}
 						/>
 					</Col>
@@ -219,6 +222,7 @@ const AddProduceForm = (props) => {
 
 						<Form.Group>
 							<Form.Label>Estimated Production Price Per Unit</Form.Label>
+
 							<InputGroup>
 								<Form.Control
 									id="price"
@@ -261,6 +265,7 @@ const AddProduceForm = (props) => {
 								/>
 							</InputGroup>
 						</Form.Group>
+
 
 						<Form.Group>
 							<Form.Label>Harvest Date</Form.Label>
@@ -310,6 +315,7 @@ const AddProduceForm = (props) => {
 
 						<Form.Group>
 							<Form.Label>Estimated Production Price Per Unit</Form.Label>
+
 							<InputGroup>
 								<Form.Control
 									id="price"
@@ -355,6 +361,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
+
 							<Form.Label>Yield Date</Form.Label>
 							<DatePicker
 								selected={produceDate}
@@ -402,6 +409,7 @@ const AddProduceForm = (props) => {
 
 						<Form.Group>
 							<Form.Label>Estimated Production Price per Unit</Form.Label>
+
 							<InputGroup>
 								<Form.Control
 									id="price"
@@ -445,6 +453,7 @@ const AddProduceForm = (props) => {
 							</InputGroup>
 						</Form.Group>
 
+
 						<Form.Group>
 							<Form.Label>Yield Date</Form.Label>
 							<DatePicker
@@ -480,6 +489,7 @@ const AddProduceForm = (props) => {
 				quantity: local.quantity,
 				price: local.price,
 				sellingPrice: local.sellingPrice,
+
 				currency: local.currency,
 				//quantity: local.quantity
 				date: moment(produceDate).format("DD/MM/yyyy"),
@@ -495,6 +505,7 @@ const AddProduceForm = (props) => {
 		submitNotification("Success", "Item has been added");
 
 		forceUpdate();
+
 	};
 
 	return (
