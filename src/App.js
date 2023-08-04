@@ -77,7 +77,7 @@ import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan
 import NewAccount from "./components/Pages/Account/Account";
 import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
 
-import RevolutPay from "./components/SubComponents/payment/RevolutPay"
+
 
 // import Example from "./components/Pages/Account/Example";
 
@@ -299,6 +299,7 @@ const App = (props) => {
 							component={RestaurantMealPlan}
 						/>
 						<Route path="/supply-plan" component={SupplyPlan} />
+						<Route path="/produce" component={ProduceTab} />
 						<Route path="/produce" component={ProduceTab} />
 						<Route path="/turnover" component={TurnOverPage} />
 						<Route path="/expense" component={ExpensePage} />
