@@ -76,7 +76,11 @@ function Admin(props) {
 		<>
 			<div>
 				<main>
-				{list.map((item, index) => (
+
+				{list.length === 0 ? (
+				<p>There is no purchase request from your location.</p>
+				) : (
+				list.map((item, index) => (
 					<Accordion key={`item${index}`}>
 						<Card>
 							<Accordion.Toggle as={Card.Header} eventKey="0">
@@ -140,14 +144,11 @@ function Admin(props) {
 							</Accordion.Collapse>
 						</Card>
 					</Accordion>
-				))}	
+				)))}	
 				<div className="admin_paginator">
 					<Paginator />
 				</div>
 				</main>
-				{/* <div className="admin_right_section">
-					<div className="admin_calendar_mock"></div>
-				</div> */}
 		</div>
 		</>
 		

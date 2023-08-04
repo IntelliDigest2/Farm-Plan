@@ -38,6 +38,9 @@ const CardStyle = styled.div`
     border: none;
     border-radius: 5px;
     padding: 30px 15px; /* Adjust padding for better spacing */
+    width: 100%; /* Set the width to 80% of the screen */
+    max-width: 500px; /* You can set a maximum width if desired */
+    margin: 0 auto; /* Center the card horizontally */
   }
 `;
 

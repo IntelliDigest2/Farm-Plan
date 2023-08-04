@@ -77,6 +77,7 @@ import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan
 import NewAccount from "./components/Pages/Account/Account";
 import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
 
+import RevolutPay from "./components/SubComponents/payment/RevolutPay"
 
 
 // import Example from "./components/Pages/Account/Example";
@@ -298,6 +299,9 @@ const App = (props) => {
 						/>
 						<Route path="/supply-plan" component={SupplyPlan} />
 						<Route path="/in-progress" component={InProgress} />
+
+						<Route path="/pay-voucher" component={RevolutPay} />
+
 						<Route component={NotFound} />
 					</Switch>
 				</div>
