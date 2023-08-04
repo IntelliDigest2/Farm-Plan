@@ -300,13 +300,11 @@ const App = (props) => {
 						/>
 						<Route path="/supply-plan" component={SupplyPlan} />
 						<Route path="/produce" component={ProduceTab} />
-						<Route path="/produce" component={ProduceTab} />
 						<Route path="/turnover" component={TurnOverPage} />
 						<Route path="/expense" component={ExpensePage} />
 
 						<Route path="/in-progress" component={InProgress} />
 
-						<Route path="/pay-voucher" component={RevolutPay} />
 
 						<Route component={NotFound} />
 					</Switch>
