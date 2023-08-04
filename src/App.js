@@ -39,7 +39,7 @@ import ChangePassword from "./components/Pages/Account/ChangePassword";
 import Map from "./components/Pages/Account/Map";
 import AdminTab from "./components/Pages/Account/Admin/Admin/AdminComp/AdminTab";
 import CommerceTab from "./components/Pages/Account/Commerce/CommerceComp/CommerceTab";
-import CommerceTabShop from "./components/Pages/Account/Commerce/CommerceCompShop/CommerceTabShop"
+import CommerceTabShop from "./components/Pages/Account/Commerce/CommerceCompShop/CommerceTabShop";
 import FoodWaste from "./components/Pages/Account/Personal/FoodWaste";
 import FoodWasteEdible from "./components/Pages/Account/Personal/FoodWasteEdible";
 
@@ -79,7 +79,6 @@ import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/A
 
 import RevolutPay from "./components/SubComponents/payment/RevolutPay"
 
-
 // import Example from "./components/Pages/Account/Example";
 
 import { Notifications } from "react-push-notification";
@@ -102,6 +101,8 @@ import GiftFoodChart from "./components/Pages/Account/Charts/GiftFoodChart";
 
 import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 import Payment from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Payment";
+import TurnOverPage from "./components/Pages/Account/Farm/Marketplace/Turnover/TurnOverPage";
+import ExpensePage from "./components/Pages/Account/Farm/Marketplace/Expense.js/ExpensePage";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -273,7 +274,7 @@ const App = (props) => {
 						<Route path="/items" component={ItemTab} />
 						<Route path="/nutrient-gap" component={NutrientGap} />
 						<Route path="/view-products" component={ViewProducts} />
- 
+
 						<Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
 						<Route path="/food-intakeAcademic" component={FoodIntakeAcademic} />
 						<Route
@@ -298,6 +299,10 @@ const App = (props) => {
 							component={RestaurantMealPlan}
 						/>
 						<Route path="/supply-plan" component={SupplyPlan} />
+						<Route path="/produce" component={ProduceTab} />
+						<Route path="/turnover" component={TurnOverPage} />
+						<Route path="/expense" component={ExpensePage} />
+
 						<Route path="/in-progress" component={InProgress} />
 
 						<Route path="/pay-voucher" component={RevolutPay} />

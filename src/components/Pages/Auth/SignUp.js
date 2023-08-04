@@ -29,6 +29,7 @@ import { countryNames, regionNames } from "../../lib/Countries";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { submitNotification } from "../../lib/Notifications";
 import { AddButton } from "../../SubComponents/Button";
+import ClearIcon from "@mui/icons-material/Clear";
 
 //import TermsAndCons from "../../SubComponents/TermsAndConditions";
 
@@ -79,7 +80,7 @@ const SignUp = (props) => {
 		urlLink: "",
 		experience: "",
 		expertise: "",
-		services: [{ service: "", price: "0" }],
+		services: [{ service: "", price: "" }],
 		summary: "",
 		isActive: true,
 		images: [{ certificateImg: null }, { identificationImg: null }],
@@ -178,7 +179,7 @@ const SignUp = (props) => {
 		// );
 	}, [consultant.services]);
 
-	let servicesInput = consultant.services.map((value, index) => {
+	let servicesInput = consultant.services.map((service, index) => {
 		// console.log(value, `valuecheck`);
 		return (
 			<div key={`userService-${index}`}>
@@ -188,8 +189,12 @@ const SignUp = (props) => {
 							as="select"
 							className="form-control"
 							type="select"
-							onChange={(e) => updateService(e, index)}
+							// onChange={(e) => updateService(e, index)}
+							onChange={(e) =>
+								handleServiceChange(index, "service", e.target.value)
+							}
 							required
+							value={service.service}
 							aria-label="Default select example"
 							// id={`service-${index}`}
 						>
@@ -212,11 +217,15 @@ const SignUp = (props) => {
 								type="number"
 								aria-label="Amount (to the nearest dollar)"
 								placeholder="price"
-								onChange={(e) => updateService(e, index)}
+								required
+								onChange={(e) =>
+									handleServiceChange(index, "price", e.target.value)
+								}
+								value={service.price}
 							/>
 						</div>
 					</Col>
-					<Col>{showDeleteBtn(index)}</Col>
+					<Col md={1}>{showDeleteBtn(index)}</Col>
 				</Row>
 			</div>
 		);
@@ -234,7 +243,7 @@ const SignUp = (props) => {
 			let newArray = consultant.services.slice();
 			newArray.splice(consultant.services.length, 0, {
 				service: "",
-				price: 0,
+				price: "",
 			});
 
 			setConsultant({ ...consultant, services: newArray });
@@ -256,6 +265,7 @@ const SignUp = (props) => {
 		// console.log(newArray, `remaining arrays`);
 		setConsultant({
 			...consultant,
+			...consultant.services,
 			services: newArray,
 		});
 	}
@@ -264,45 +274,20 @@ const SignUp = (props) => {
 		if (index > 0) {
 			return (
 				<button type="button" onClick={(e) => deleteService(e, index)}>
-					D
+					<ClearIcon />
 				</button>
 			);
 		}
 		return "";
 	}
 
-	function updateService(e, i) {
-		let newArray = consultant.services.slice();
-
-		if (e.target.type === "number") {
-			let newValue = newArray.map((value, index) => {
-				let newVal;
-				if (index === i) {
-					newVal = { ...value, price: e.target.value };
-					return newVal;
-				}
-				return newVal;
-			});
-			newArray.splice(i, 1, newValue[i]);
-
-			setConsultant({ ...consultant, services: newArray });
-		} else {
-			let newValue = newArray.map((value, index) => {
-				let newVal;
-				if (index === i) {
-					newVal = { ...value, service: e.target.value };
-					return newVal;
-				}
-				return newVal;
-			});
-			newArray.splice(i, 1, newValue[i]);
-
-			setConsultant({ ...consultant, services: newArray });
-		}
-	}
-
-	const editConsultant = (e, editedVar) => {
-		setConsultant({ ...consultant, expertise: e.target.value });
+	const handleServiceChange = (index, property, value) => {
+		setConsultant((prevConsultant) => {
+			const updatedServices = prevConsultant.services.map((service, i) =>
+				i === index ? { ...service, [property]: value } : service
+			);
+			return { ...prevConsultant, services: updatedServices };
+		});
 	};
 
 	//If error, send notification
@@ -794,6 +779,14 @@ const Stage1 = (props) => {
 							type="submit"
 							variant="default"
 							className="signup-confirm"
+							disabled={
+								props.firstName.trim() === "" ||
+								props.lastName.trim() === "" ||
+								props.email.trim() === "" ||
+								props.password.trim() === ""
+									? true
+									: false
+							}
 							onClick={(e) => {
 								e.preventDefault();
 								//Next Stage
@@ -900,6 +893,14 @@ const Stage2 = (props) => {
 					<Button
 						variant="default"
 						className="signup-confirm"
+						disabled={
+							props.town.trim() === "" ||
+							props.country.trim() === "" ||
+							props.region.trim() === "" ||
+							props.buildingFunction.trim() === ""
+								? true
+								: false
+						}
 						onClick={(e) => {
 							e.preventDefault();
 							//Next Stage
@@ -1004,6 +1005,13 @@ const Stage4 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.restaurantName.trim() === "" ||
+									props.regulatoryBody.trim() === "" ||
+									props.regulatoryBodyID.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1025,6 +1033,7 @@ const Stage4 = (props) => {
 	);
 };
 
+// !!!TODO
 const Stage8 = (props) => {
 	return (
 		<div>
@@ -1182,6 +1191,18 @@ const Stage8 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.consultant.urlLink.trim() === "" ||
+									props.consultant.expertise.trim() === "" ||
+									props.consultant.summary.trim() === "" ||
+									props.consultant.images[0].certificateImg === null ||
+									props.consultant.images[1].identificationImg === null ||
+									props.consultant.services[0].service.trim() === "" ||
+									props.consultant.services[0].price.trim() === "" ||
+									props.buildingFunction.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1304,6 +1325,14 @@ const Stage6 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.adminType.trim() === "" ||
+									props.IDType.trim() === "" ||
+									props.setIDNumber.trim() === "" ||
+									props.image.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 
@@ -1395,6 +1424,12 @@ const Stage7 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.companyName.trim() === "" ||
+									props.companyDescription.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1469,6 +1504,12 @@ const Stage5 = (props) => {
 							<Button
 								variant="default"
 								className="signup-confirm"
+								disabled={
+									props.cuisine.trim() === "" ||
+									props.restaurantDescription.trim() === ""
+										? true
+										: false
+								}
 								onClick={(e) => {
 									e.preventDefault();
 									//Next Stage
@@ -1651,18 +1692,7 @@ const Stage3 = (props) => {
 					</List>
 				</div>
 			);
-		case "Households":
-		case "Personal":
-		case "Hospitals":
-		case "Schools":
-		case "Hotels":
-		case "Offices":
-		case "Shop/Supermarket":
-		case "Farm":
-		case "Recreational Centers":
-		case "Restaurants":
-		case "Consultant":
-		case "Other":
+		default:
 			return (
 				<div>
 					<List>
