@@ -12,62 +12,12 @@ import { submitNotification } from "../../../../../../lib/Notifications.js";
 // import { addToInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 
 const AddItemForm = (props) => {
+ 
   const [item, setItem] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [measure, setMeasure] = useState("g");
   const [price, setPrice] = useState(0);
   const [currency, setCurrency] = useState("$");
-
-  const [show, setShow] = useState(true);
-  const [image, setImage ] = useState("");
-  const [ Url, setUrl ] = useState("");
-
-  useEffect(() => {
-    if (Url !== "") {
-      handleSubmit();
-      props.handleFormClose();
-
-      // console.log("image", Url)
-
-    }
-  }, [Url]);
-
-  //upload immage to cloudinary
-  const uploadImage = async () => {
-    const formData = new FormData();
-    formData.append("file", image);
-    formData.append("upload_preset", "product_upload");
-    formData.append("cloud_name", "dghm4xm7k");
-    formData.append("resize", "fill");
-    formData.append("width", "500");
-    formData.append("height", "500");
-    try {
-      const response = await fetch(
-        "https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const responseData = await response.json();
-      setUrl(responseData.url);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  
-  //control modal
-  const handleForm = () => setShow(true);
-  const handleFormClose = () => {
-    setShow(false);
-  }
-
-  //trigger this when editing/deleting items
-  const [update, setUpdate] = useState(0);
-  const forceUpdate = () => {
-    setUpdate(update + 1);
-  };
 
   //fired when click "done"
   const handleSubmit = () => {
@@ -85,22 +35,15 @@ const AddItemForm = (props) => {
       },
     }; 
 
-    props.addItemData(data);
+    props.addItemDataSample(data);
     submitNotification("Success","Item has been added");
     forceUpdate();
   };
 
-
+  
   return (
     <div>
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            uploadImage(); // Call uploadImage
-            // handleSubmit();
-          }}
-        >
-
+        <Form>
           <div>
             <Form.Group>
               <Form.Label>Item name</Form.Label>
@@ -164,19 +107,6 @@ const AddItemForm = (props) => {
             </InputGroup>
             </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="file"
-                placeholder="Upload Image"
-                defaultValue={""}
-                required
-                onChange={(e) => {
-                  setImage(e.target.files[0]);
-                }}
-              />
-            </Form.Group>
-
-
         </div>
           <div style={{ alignItems: "center" }}>
             <Button className="blue-btn shadow-none mt-3" type="submit">
@@ -188,16 +118,12 @@ const AddItemForm = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    shopItems: state.shopData.shopItems,
-  };
-};
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    addItemData: (data) => dispatch(addItemData(data)),
+    addItemDataSample: (data) => dispatch(addItemDataSample(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddItemForm);
+export default connect(null, mapDispatchToProps)(AddItemForm);
 

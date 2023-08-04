@@ -186,12 +186,13 @@ const addToCart = (ingr) => {
 
       const firstList = allList
       const secondList = newList 
+
+      const combinedList = [...firstList, ...secondList]; 
   
       const data = {
   
         upload: {
-          firstList,
-          secondList,
+          cartList: combinedList,
           profile: props.profile,
           // FirstName: props.profile.firstName, 
           // LastName: props.profile.lastName,
