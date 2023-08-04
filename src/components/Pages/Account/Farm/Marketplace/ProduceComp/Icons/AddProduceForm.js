@@ -25,8 +25,7 @@ const AddProduceForm = (props) => {
 	const [show, setShow] = useState(true);
 	const [produceDate, setProduceDate] = useState(new Date());
 	const [inputGroups, setInputGroups] = useState([
-		{ id: 1, nutrientName: "", nutrientQuantity: "", nutrientUnit: "%" },
-
+		{ id: 1, nutrientName: "", nutrientQuantity: "", nutrientUnit: "units" },
 	]);
 
 	const defaultLocal = {
@@ -34,8 +33,6 @@ const AddProduceForm = (props) => {
 		quantity: 0,
 		measure: "units",
 		price: "",
-		sellingPrice: "",
-
 		currency: "$",
 		// nutrients: inputGroups,
 	};
@@ -136,8 +133,7 @@ const AddProduceForm = (props) => {
 							data={group.nutrientUnit}
 							// data={local.measure}
 							required
-							items={["%"]}
-
+							items={["g", "kg", "/", "mL", "L"]}
 							function={(e) => handleNutrientUnit(index, e)}
 						/>
 					</Col>
@@ -221,8 +217,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Estimated Production Price Per Unit</Form.Label>
-
+							<Form.Label>Estimated Price Per Unit</Form.Label>
 							<InputGroup>
 								<Form.Control
 									id="price"
@@ -243,29 +238,6 @@ const AddProduceForm = (props) => {
 								/>
 							</InputGroup>
 						</Form.Group>
-						<Form.Group>
-							<Form.Label>Selling Price Per Unit</Form.Label>
-							<InputGroup>
-								<Form.Control
-									id="sellingPrice"
-									type="number"
-									min="0"
-									step="1"
-									onChange={(e) => handleLocal(e)}
-									value={local.sellingPrice}
-								/>
-								<Dropdown
-									id="currency"
-									styling="grey dropdown-input"
-									data={local.currency}
-									items={["$", "€", "£"]}
-									function={(e) => {
-										setLocal({ ...local, currency: e });
-									}}
-								/>
-							</InputGroup>
-						</Form.Group>
-
 
 						<Form.Group>
 							<Form.Label>Harvest Date</Form.Label>
@@ -314,8 +286,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Estimated Production Price Per Unit</Form.Label>
-
+							<Form.Label>Estimated Price Per Unit</Form.Label>
 							<InputGroup>
 								<Form.Control
 									id="price"
@@ -338,30 +309,6 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Selling Price Per Unit</Form.Label>
-							<InputGroup>
-								<Form.Control
-									id="price"
-									type="number"
-									min="0"
-									step="1"
-									onChange={(e) => handleLocal(e)}
-									value={local.sellingPrice}
-								/>
-								<Dropdown
-									id="currency"
-									styling="grey dropdown-input"
-									data={local.currency}
-									items={["$", "€", "£"]}
-									function={(e) => {
-										setLocal({ ...local, currency: e });
-									}}
-								/>
-							</InputGroup>
-						</Form.Group>
-
-						<Form.Group>
-
 							<Form.Label>Yield Date</Form.Label>
 							<DatePicker
 								selected={produceDate}
@@ -408,8 +355,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Estimated Production Price per Unit</Form.Label>
-
+							<Form.Label>Estimated Price per Unit</Form.Label>
 							<InputGroup>
 								<Form.Control
 									id="price"
@@ -430,29 +376,6 @@ const AddProduceForm = (props) => {
 								/>
 							</InputGroup>
 						</Form.Group>
-						<Form.Group>
-							<Form.Label>Selling Price Per Unit</Form.Label>
-							<InputGroup>
-								<Form.Control
-									id="price"
-									type="number"
-									min="0"
-									step="1"
-									onChange={(e) => handleLocal(e)}
-									value={local.sellingPrice}
-								/>
-								<Dropdown
-									id="currency"
-									styling="grey dropdown-input"
-									data={local.currency}
-									items={["$", "€", "£"]}
-									function={(e) => {
-										setLocal({ ...local, currency: e });
-									}}
-								/>
-							</InputGroup>
-						</Form.Group>
-
 
 						<Form.Group>
 							<Form.Label>Yield Date</Form.Label>
@@ -488,8 +411,6 @@ const AddProduceForm = (props) => {
 				measure: local.measure,
 				quantity: local.quantity,
 				price: local.price,
-				sellingPrice: local.sellingPrice,
-
 				currency: local.currency,
 				//quantity: local.quantity
 				date: moment(produceDate).format("DD/MM/yyyy"),
@@ -501,11 +422,10 @@ const AddProduceForm = (props) => {
 		}
 		console.log(data, `this is the data of the form`);
 
-		props.addProduceData(data);
-		submitNotification("Success", "Item has been added");
+		// props.addProduceData(data);
+		// submitNotification("Success", "Item has been added");
 
-		forceUpdate();
-
+		// forceUpdate();
 	};
 
 	return (
