@@ -30,40 +30,149 @@ export const getFarmerData = () => {
 	};
 };
 
-export const getFarmProductsForDuration = (duration) => {
+export const getFarmProductsForDuration = (duration, period) => {
+	let startOfWeek, endOfWeek;
+	let day;
+
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
+
 	return (dispatch, getState, { getFirestore, getFirebase }) => {
-		console.log(duration);
+		console.log(duration, `this is the duration`);
+		console.log(period, `this is the period`);
+
+		if (duration === "Week") {
+			const currentDate = new Date();
+			const firstDayOfMonth = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				1
+			);
+			const weekOfMonth = period;
+
+			console.log(`week ${weekOfMonth} of month`);
+
+			// console.log(firstDayOfMonth, `first day of month`);
+
+			// Calculate the start and end timestamps for the week of the month
+			startOfWeek = new Date();
+			startOfWeek.setDate((weekOfMonth - 1) * 7 + 1);
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			endOfWeek = new Date();
+			endOfWeek.setDate(weekOfMonth * 7);
+			endOfWeek.setHours(23, 59, 59, 999);
+
+			console.log(startOfWeek, `this is the start of the week`);
+			console.log(endOfWeek, `this is the end of the week`);
+		} else if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(year, period - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(year, period, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+			const weekOfMonth = period;
+
+			console.log(startOfMonth, `this is the start of the month`);
+			console.log(endOfMonth, `this is the end of the month`);
+		} else if (duration === "Year") {
+			const currentDate = new Date();
+			const year = period;
+
+			console.log(year, `year`);
+
+			const startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			const endOfYear = new Date(year + 1, 0, 1);
+
+			console.log(startOfYear, `this is the start of the year`);
+			console.log(endOfYear, `this is the end of the year`);
+		} else {
+			day = period;
+			day.setHours(0, 0, 0, 0);
+
+			console.log(day, `this is the day`);
+			console.log(day.getTime());
+		}
+
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
-		// var docRef = getFirestore.collection("marketplace").doc(authUID);
+		var collectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("produce");
 
-		// docRef
-		// 	.collection("produce")
-		// 	.where("date", "==", `${duration}`)
-		// 	.onSnapshot((querySnapshot) => {
-		// 		querySnapshot.forEach(
-		// 			(doc) => {
-		// 				dispatch({
-		// 					type: "SET_FETCHING",
-		// 					payload: true,
-		// 				});
-		// 				let sales = [];
-		// 				doc.forEach((doc) => {
-		// 					sales.push({ ...doc.data(), salesId: doc.id });
-		// 					// console.log(doc.id, " => ", doc.data());
-		// 				});
-		// 				// console.log("Current data: ", consultants);
-		// 				dispatch({
-		// 					type: "FETCH_SAlES_SUCCESS",
-		// 					payload: sales,
-		// 				});
-		// 			},
-		// 			(err) => {
-		// 				console.log(err);
-		// 				dispatch({ type: "FETCH_CONSULTING_DATA_ERROR", payload: err });
-		// 			}
-		// 		);
-		// 	});
+		let query;
+
+		switch (duration) {
+			case "day":
+				query = collectionRef
+					.where("date", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<", new Date(day.getTime() + 86400000));
+
+				break;
+
+			case "Week":
+				query = collectionRef
+					.where("date", ">=", startOfWeek)
+					.where("date", "<=", endOfWeek);
+				break;
+
+			case "Month":
+				console.log(
+					startOfMonth,
+					`this is the start of month before the query`
+				);
+				console.log(endOfMonth, `this is the start of month before the query`);
+				query = collectionRef
+					.where("date", ">=", startOfMonth)
+					.where("date", "<=", endOfMonth);
+				break;
+			// // break;
+			// case "year":
+			// 	query = collectionRef
+			// 		.where("date", ">=", startOfYear)
+			// 		.where("date", "<=", endOfYear);
+			// 	break;
+
+			default:
+				// return collectionRef.where("date", "==", start);
+
+				break;
+		}
+		query.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "SET_PRODUCE_FETCHING",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				// Do something with the values array, e.g., update the UI
+				console.log(products);
+				dispatch({
+					type: "FETCH_PRODUCE_SUCCESS",
+					payload: products,
+				});
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				// dispatch({
+				// 	type: "FETCH_SAlES_SUCCESS",
+				// 	payload: sales,
+				// });
+			}
+		);
 	};
 };
 const getFarmPlanData = () => {
@@ -187,6 +296,28 @@ export const getAllProductsFarmerSold = () => {
 				);
 			});
 	};
+};
+
+const filterDB = (duration, collectionRef, start, end) => {
+	switch (duration) {
+		// case "day":
+
+		// break;
+		case "week":
+			return collectionRef.where("date", ">=", start).where("date", "<=", end);
+
+		// break;
+		case "month":
+			return collectionRef.where("date", ">=", start).where("date", "<=", end);
+		// break;
+		case "year":
+			break;
+
+		default:
+			return collectionRef.where("date", "==", start);
+
+		// break;
+	}
 };
 
 const getProductsFarmerSoldForDuration = (duration, date) => {

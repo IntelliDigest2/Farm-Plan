@@ -13,9 +13,10 @@ import { getFarmProductsForDuration } from "./../../../../store/actions/marketpl
 Chart.register(...registerables);
 
 const ChartProduce = (props) => {
+	let defaultPeriod = {};
 	const currentYear = new Date().getFullYear();
 	const currentDate = new Date();
-	const currentMonth = format(currentDate, "MMMM");
+	const currentMonth = format(currentDate, "MMMM").substring(0, 3);
 	const [day, setDay] = useState(new Date());
 	const [filter, setFilter] = useState("day");
 	const [month, setMonth] = useState(currentMonth);
@@ -23,9 +24,63 @@ const ChartProduce = (props) => {
 	const [year, setYear] = useState(currentYear);
 	// Sample data
 
+	let months = [
+		"Jan",
+		"Feb",
+		"Mar",
+		"Apr",
+		"May",
+		"Jun",
+		"Jul",
+		"Aug",
+		"Sep",
+		"Oct",
+		"Nov",
+		"Dec",
+	];
+
 	useEffect(() => {
-		props.getData(filter);
+		let period;
+		if (filter === "Week") {
+			console.log(`filter changed to week`);
+			period = week;
+		} else if (filter === "Month") {
+			console.log(`filter changed to month `);
+			let monthNumber = months.indexOf(month) + 1;
+
+			period = monthNumber;
+		} else if (filter === "Year") {
+			console.log(`filter changed to year `);
+
+			period = year;
+		} else {
+			period = day;
+		}
+
+		props.getData(filter, period);
 	}, [filter]);
+
+	useEffect(() => {
+		if (filter === "Week") {
+			console.log(`Week change`);
+			props.getData(filter, week);
+		}
+	}, [week]);
+	useEffect(() => {
+		if (filter === "Month") {
+			console.log(`month change`);
+			let monthNumber = months.indexOf(month) + 1;
+
+			props.getData(filter, monthNumber);
+		}
+	}, [month]);
+	useEffect(() => {
+		if (filter === "Year") {
+			console.log(`year change`);
+
+			props.getData(filter, year);
+		}
+	}, [year]);
 
 	const endYear = 2050;
 	const years = [];
@@ -55,20 +110,7 @@ const ChartProduce = (props) => {
 				data={month}
 				// data={local.measure}
 				required
-				items={[
-					"Jan",
-					"Feb",
-					"Mar",
-					"Apr",
-					"May",
-					"Jun",
-					"Jul",
-					"Aug",
-					"Sep",
-					"Oct",
-					"Nov",
-					"Dec",
-				]}
+				items={months}
 				function={(e) => setMonth(e)}
 			/>
 		) : filter === "Year" ? (
@@ -82,6 +124,30 @@ const ChartProduce = (props) => {
 				function={(e) => setYear(e)}
 			/>
 		) : (
+			//  filter === "Farm Cycle"?():
+			// <Form.Group className="mb-3 land">
+			// 					<Form.Label>Farm Cycle</Form.Label>
+			// 					<InputGroup>
+			// 						<Form.Control
+			// 							type="number"
+			// 							id="farmCycle"
+			// 							onChange={(e) => setFarmCycle(e.target.value)}
+			// 							value={land}
+			// 							min={1}
+			// 							max={20}
+			// 							required
+			// 						/>
+			// 						<Dropdown
+			// 							id="cycleUnit"
+			// 							styling="green dropdown-input-right"
+			// 							data={cycleUnit}
+			// 							function={(e) => {
+			// 								setCycleUnit(e);
+			// 							}}
+			// 							items={["months", "years"]}
+			// 						/>
+			// 					</InputGroup>
+			// 				</Form.Group>
 			<div style={{ display: "flex" }}>
 				<span>pick date</span>
 				<span>
@@ -136,8 +202,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getData: (duration) => {
-			dispatch(getFarmProductsForDuration(duration));
+		getData: (duration, period) => {
+			dispatch(getFarmProductsForDuration(duration, period));
 		},
 	};
 };
