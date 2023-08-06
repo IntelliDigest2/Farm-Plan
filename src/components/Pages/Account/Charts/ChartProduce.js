@@ -22,6 +22,8 @@ const ChartProduce = (props) => {
 	const [month, setMonth] = useState(currentMonth);
 	const [week, setWeek] = useState("1");
 	const [year, setYear] = useState(currentYear);
+	const [farmTypesData, setFarmTypesData] = useState(null);
+	// const [doughnutData, setDoughnutData] = useState(null)
 	// Sample data
 
 	let months = [
@@ -81,6 +83,68 @@ const ChartProduce = (props) => {
 			props.getData(filter, year);
 		}
 	}, [year]);
+
+	useEffect(() => {
+		console.log(props.produce, `this is the produce returned`);
+	}, [props.produce]);
+
+	let farmTypesSet = new Set();
+
+	let farmTypeCounts = [];
+
+	const calcDataInfo = () => {
+		props.produce.forEach((produce) => {
+			farmTypesSet.add(produce.farmType);
+			// Array.from(farmTypesSet);
+			if (!farmTypeCounts[produce.farmType]) {
+				farmTypeCounts[produce.farmType] = 1;
+			} else {
+				// If the farmType is already encountered, increment its count by 1
+				farmTypeCounts[produce.farmType]++;
+			}
+		});
+
+		let farmTypeArray = Array.from(farmTypesSet);
+
+		// let productInfo= []
+		let productInfo = farmTypeArray.map((farmType) => {
+			return farmTypeCounts[farmType];
+		});
+
+		console.log(farmTypesSet, `this is the farmTypes set`);
+
+		let data = {
+			labels: farmTypeArray,
+			//  [
+			//
+			// "Horticulture", "Aquaculture", "Livestock"
+			// ]
+			datasets: [
+				{
+					label: "Produce Summary",
+					data: productInfo,
+					backgroundColor: ["blue", "green", "orange"],
+				},
+			],
+		};
+		return (
+			<>
+				<Doughnut data={data} />
+			</>
+		);
+	};
+
+	let content =
+		props.produce?.length > 0 ? (
+			calcDataInfo()
+		) : (
+			<div>
+				<p>You don't have any produce for this duration</p>
+			</div>
+		);
+
+	console.log(farmTypesSet);
+	console.log(farmTypeCounts, "thi si the farmType count");
 
 	const endYear = 2050;
 	const years = [];
@@ -159,16 +223,8 @@ const ChartProduce = (props) => {
 				</span>
 			</div>
 		);
-	const data = {
-		labels: ["Horticulture", "Aquaculture", "Livestock"],
-		datasets: [
-			{
-				label: "Produce Summary",
-				data: [2, 5, 6],
-				backgroundColor: ["blue", "green", "orange"],
-			},
-		],
-	};
+
+	// let dataDisplay = ? :
 
 	return (
 		<MDBContainer>
@@ -189,14 +245,14 @@ const ChartProduce = (props) => {
 					{componentToRender}
 				</Col>
 			</Row>
-			<Doughnut data={data} />
+			{content}
 		</MDBContainer>
 	);
 };
 
 const mapStateToProps = (state) => {
 	return {
-		produce: state.farmData.produce,
+		produce: state.farmData.produceForChart,
 	};
 };
 

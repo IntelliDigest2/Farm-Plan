@@ -38,8 +38,8 @@ export const getFarmProductsForDuration = (duration, period) => {
 	let startOfYear, endOfYear;
 
 	return (dispatch, getState, { getFirestore, getFirebase }) => {
-		console.log(duration, `this is the duration`);
-		console.log(period, `this is the period`);
+		// console.log(duration, `this is the duration`);
+		// console.log(period, `this is the period`);
 
 		if (duration === "Week") {
 			const currentDate = new Date();
@@ -77,8 +77,8 @@ export const getFarmProductsForDuration = (duration, period) => {
 			endOfMonth.setHours(23, 59, 59, 999);
 			const weekOfMonth = period;
 
-			console.log(startOfMonth, `this is the start of the month`);
-			console.log(endOfMonth, `this is the end of the month`);
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
 		} else if (duration === "Year") {
 			const currentDate = new Date();
 			const year = period;
@@ -96,8 +96,9 @@ export const getFarmProductsForDuration = (duration, period) => {
 			day = period;
 			day.setHours(0, 0, 0, 0);
 
-			console.log(day, `this is the day`);
-			console.log(day.getTime());
+			// console.log(day, `this is the day`);
+			// console.log(day.getTime());
+			// console.log(duration, `this is the duration `);
 		}
 
 		const profile = getState().firebase.profile;
@@ -110,13 +111,13 @@ export const getFarmProductsForDuration = (duration, period) => {
 		let query;
 
 		switch (duration) {
-			case "day":
-				query = collectionRef
-					.where("date", ">=", day)
-					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
-					.where("date", "<", new Date(day.getTime() + 86400000));
+			// case "day":
+			// 	query = collectionRef
+			// 		.where("date", ">=", day)
+			// 		//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+			// 		.where("date", "<", new Date(day.getTime() + 86400000));
 
-				break;
+			// 	break;
 
 			case "Week":
 				query = collectionRef
@@ -125,11 +126,11 @@ export const getFarmProductsForDuration = (duration, period) => {
 				break;
 
 			case "Month":
-				console.log(
-					startOfMonth,
-					`this is the start of month before the query`
-				);
-				console.log(endOfMonth, `this is the start of month before the query`);
+				// console.log(
+				// 	startOfMonth,
+				// 	`this is the start of month before the query`
+				// );
+				// console.log(endOfMonth, `this is the start of month before the query`);
 				query = collectionRef
 					.where("date", ">=", startOfMonth)
 					.where("date", "<=", endOfMonth);
@@ -142,7 +143,10 @@ export const getFarmProductsForDuration = (duration, period) => {
 			// 	break;
 
 			default:
-				// return collectionRef.where("date", "==", start);
+				query = collectionRef
+					.where("date", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<", new Date(day.getTime() + 86400000));
 
 				break;
 		}
@@ -150,7 +154,7 @@ export const getFarmProductsForDuration = (duration, period) => {
 			(snapshot) => {
 				const products = [];
 				dispatch({
-					type: "SET_PRODUCE_FETCHING",
+					type: "FETCH_PRODUCE_FOR_CHART_LOADER",
 					payload: true,
 				});
 				snapshot.forEach((doc) => {
@@ -159,18 +163,18 @@ export const getFarmProductsForDuration = (duration, period) => {
 					products.push({ ...doc.data(), salesId: doc.id });
 				});
 				// Do something with the values array, e.g., update the UI
-				console.log(products);
+				// console.log(products);
 				dispatch({
-					type: "FETCH_PRODUCE_SUCCESS",
+					type: "FETCH_PRODUCE_FOR_CHART_SUCCESS",
 					payload: products,
 				});
 			},
 			(error) => {
 				console.error("Error getting real-time updates:", error);
-				// dispatch({
-				// 	type: "FETCH_SAlES_SUCCESS",
-				// 	payload: sales,
-				// });
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_CHART_ERROR",
+					payload: error,
+				});
 			}
 		);
 	};

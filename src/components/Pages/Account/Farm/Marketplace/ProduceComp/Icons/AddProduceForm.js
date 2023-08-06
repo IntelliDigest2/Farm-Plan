@@ -306,7 +306,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Number of specie</Form.Label>
+							<Form.Label>Quantity/amount</Form.Label>
 							<InputGroup>
 								<Form.Control
 									id="quantity"
@@ -351,12 +351,11 @@ const AddProduceForm = (props) => {
 								/>
 							</InputGroup>
 						</Form.Group>
-
 						<Form.Group>
 							<Form.Label>Selling Price Per Unit</Form.Label>
 							<InputGroup>
 								<Form.Control
-									id="price"
+									id="sellingPrice"
 									type="number"
 									min="0"
 									step="1"
@@ -380,7 +379,7 @@ const AddProduceForm = (props) => {
 							<DatePicker
 								selected={produceDate}
 								onChange={(date) => setProduceDate(date)}
-								dateFormat="dd/mm/yyyy"
+								dateFormat="dd/MM/yyyy"
 							/>
 						</Form.Group>
 					</div>
@@ -422,7 +421,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Estimated Production Price per Unit</Form.Label>
+							<Form.Label>Estimated Production Price Per Unit</Form.Label>
 
 							<InputGroup>
 								<Form.Control
@@ -448,7 +447,7 @@ const AddProduceForm = (props) => {
 							<Form.Label>Selling Price Per Unit</Form.Label>
 							<InputGroup>
 								<Form.Control
-									id="price"
+									id="sellingPrice"
 									type="number"
 									min="0"
 									step="1"
@@ -471,10 +470,8 @@ const AddProduceForm = (props) => {
 							<Form.Label>Yield Date</Form.Label>
 							<DatePicker
 								selected={produceDate}
-								onChange={(date) => {
-									setProduceDate(date);
-								}}
-								dateFormat="dd/mm/yyyy"
+								onChange={(date) => setProduceDate(date)}
+								dateFormat="dd/MM/yyyy"
 							/>
 						</Form.Group>
 					</div>
