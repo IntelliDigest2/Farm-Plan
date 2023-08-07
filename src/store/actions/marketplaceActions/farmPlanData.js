@@ -50,7 +50,7 @@ export const getFarmProductsForDuration = (duration, period) => {
 			);
 			const weekOfMonth = period;
 
-			console.log(`week ${weekOfMonth} of month`);
+			// console.log(`week ${weekOfMonth} of month`);
 
 			// console.log(firstDayOfMonth, `first day of month`);
 
@@ -63,8 +63,8 @@ export const getFarmProductsForDuration = (duration, period) => {
 			endOfWeek.setDate(weekOfMonth * 7);
 			endOfWeek.setHours(23, 59, 59, 999);
 
-			console.log(startOfWeek, `this is the start of the week`);
-			console.log(endOfWeek, `this is the end of the week`);
+			// console.log(startOfWeek, `this is the start of the week`);
+			// console.log(endOfWeek, `this is the end of the week`);
 		} else if (duration === "Month") {
 			const currentDate = new Date();
 			let year = currentDate.getFullYear();
@@ -83,27 +83,22 @@ export const getFarmProductsForDuration = (duration, period) => {
 			const currentDate = new Date();
 			const year = period;
 
-			console.log(year, `year`);
-
-			const startOfYear = new Date(year, 0, 1);
+			startOfYear = new Date(year, 0, 1);
 			startOfYear.setHours(0, 0, 0, 0);
 
-			const endOfYear = new Date(year + 1, 0, 1);
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
 
-			console.log(startOfYear, `this is the start of the year`);
-			console.log(endOfYear, `this is the end of the year`);
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
 		} else {
 			day = period;
 			day.setHours(0, 0, 0, 0);
-
-			// console.log(day, `this is the day`);
-			// console.log(day.getTime());
-			// console.log(duration, `this is the duration `);
 		}
 
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
-		var collectionRef = getFirestore()
+		let collectionRef = getFirestore()
 			.collection("marketplace")
 			.doc(authUID)
 			.collection("produce");
@@ -111,14 +106,6 @@ export const getFarmProductsForDuration = (duration, period) => {
 		let query;
 
 		switch (duration) {
-			// case "day":
-			// 	query = collectionRef
-			// 		.where("date", ">=", day)
-			// 		//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
-			// 		.where("date", "<", new Date(day.getTime() + 86400000));
-
-			// 	break;
-
 			case "Week":
 				query = collectionRef
 					.where("date", ">=", startOfWeek)
@@ -126,21 +113,16 @@ export const getFarmProductsForDuration = (duration, period) => {
 				break;
 
 			case "Month":
-				// console.log(
-				// 	startOfMonth,
-				// 	`this is the start of month before the query`
-				// );
-				// console.log(endOfMonth, `this is the start of month before the query`);
 				query = collectionRef
 					.where("date", ">=", startOfMonth)
 					.where("date", "<=", endOfMonth);
 				break;
-			// // break;
-			// case "year":
-			// 	query = collectionRef
-			// 		.where("date", ">=", startOfYear)
-			// 		.where("date", "<=", endOfYear);
-			// 	break;
+
+			case "Year":
+				query = collectionRef
+					.where("date", ">=", startOfYear)
+					.where("date", "<=", endOfYear);
+				break;
 
 			default:
 				query = collectionRef
@@ -150,6 +132,7 @@ export const getFarmProductsForDuration = (duration, period) => {
 
 				break;
 		}
+
 		query.onSnapshot(
 			(snapshot) => {
 				const products = [];
@@ -338,8 +321,8 @@ const getProductsFarmerSoldForDuration = (duration, date) => {
 			(currentDate.getDate() + firstDayOfMonth.getDay()) / 7
 		);
 
-		console.log(weekOfMonth, `week of month`);
-		console.log(firstDayOfMonth, `first day of month`);
+		// console.log(weekOfMonth, `week of month`);
+		// console.log(firstDayOfMonth, `first day of month`);
 
 		// Calculate the start and end timestamps for the week of the month
 		startOfWeek = new Date(currentDate);

@@ -13,7 +13,6 @@ import { getFarmProductsForDuration } from "./../../../../store/actions/marketpl
 Chart.register(...registerables);
 
 const ChartProduce = (props) => {
-	let defaultPeriod = {};
 	const currentYear = new Date().getFullYear();
 	const currentDate = new Date();
 	const currentMonth = format(currentDate, "MMMM").substring(0, 3);
@@ -22,9 +21,6 @@ const ChartProduce = (props) => {
 	const [month, setMonth] = useState(currentMonth);
 	const [week, setWeek] = useState("1");
 	const [year, setYear] = useState(currentYear);
-	const [farmTypesData, setFarmTypesData] = useState(null);
-	// const [doughnutData, setDoughnutData] = useState(null)
-	// Sample data
 
 	let months = [
 		"Jan",
@@ -92,45 +88,48 @@ const ChartProduce = (props) => {
 
 	let farmTypeCounts = [];
 
+	let colorArray = ["blue", "green", "orange", "pink"];
+
 	const calcDataInfo = () => {
+		let index = 0;
 		props.produce.forEach((produce) => {
 			farmTypesSet.add(produce.farmType);
-			// Array.from(farmTypesSet);
+
 			if (!farmTypeCounts[produce.farmType]) {
-				farmTypeCounts[produce.farmType] = 1;
+				farmTypeCounts[produce.farmType] = {};
+				farmTypeCounts[produce.farmType].number = 1;
+				farmTypeCounts[produce.farmType]["color"] = colorArray[index];
+				index++;
 			} else {
 				// If the farmType is already encountered, increment its count by 1
-				farmTypeCounts[produce.farmType]++;
+				farmTypeCounts[produce.farmType].number++;
 			}
 		});
 
 		let farmTypeArray = Array.from(farmTypesSet);
 
-		// let productInfo= []
 		let productInfo = farmTypeArray.map((farmType) => {
-			return farmTypeCounts[farmType];
+			return farmTypeCounts[farmType].number;
 		});
 
-		console.log(farmTypesSet, `this is the farmTypes set`);
-
+		let dataColor = farmTypeArray.map((farmType) => {
+			return farmTypeCounts[farmType].color;
+		});
 		let data = {
 			labels: farmTypeArray,
-			//  [
-			//
-			// "Horticulture", "Aquaculture", "Livestock"
-			// ]
+
 			datasets: [
 				{
 					label: "Produce Summary",
 					data: productInfo,
-					backgroundColor: ["blue", "green", "orange"],
+					backgroundColor: dataColor,
 				},
 			],
 		};
 		return (
-			<>
+			<div style={{ width: "70%", margin: "30px auto" }}>
 				<Doughnut data={data} />
-			</>
+			</div>
 		);
 	};
 
@@ -139,7 +138,7 @@ const ChartProduce = (props) => {
 			calcDataInfo()
 		) : (
 			<div>
-				<p>You don't have any produce for this duration</p>
+				<p>You don't have any produce for this period</p>
 			</div>
 		);
 
