@@ -29,8 +29,6 @@ const AddProduceForm = (props) => {
 		quantity: "",
 		measure: "units",
 		price: "",
-		sellingPrice: "",
-
 		currency: "$",
 		// nutrients: inputGroups,
 	};
@@ -237,8 +235,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Estimated Production Price Per Unit</Form.Label>
-
+							<Form.Label>Estimated Price Per Unit</Form.Label>
 							<InputGroup>
 								<Form.Control
 									id="price"
@@ -329,8 +326,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Estimated Production Price Per Unit</Form.Label>
-
+							<Form.Label>Estimated Price Per Unit</Form.Label>
 							<InputGroup>
 								<Form.Control
 									id="price"
