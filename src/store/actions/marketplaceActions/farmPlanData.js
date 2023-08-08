@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export const getFarmerData = () => {
 	return (dispatch, getState, { getFirebase }) => {
 		const profile = getState().firebase.profile;
@@ -28,6 +30,138 @@ export const getFarmerData = () => {
 	};
 };
 
+export const getFarmProductsForDuration = (duration, period) => {
+	let startOfWeek, endOfWeek;
+	let day;
+
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
+
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		// console.log(duration, `this is the duration`);
+		// console.log(period, `this is the period`);
+
+		if (duration === "Week") {
+			const currentDate = new Date();
+			const firstDayOfMonth = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				1
+			);
+			const weekOfMonth = period;
+
+			// console.log(`week ${weekOfMonth} of month`);
+
+			// console.log(firstDayOfMonth, `first day of month`);
+
+			// Calculate the start and end timestamps for the week of the month
+			startOfWeek = new Date();
+			startOfWeek.setDate((weekOfMonth - 1) * 7 + 1);
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			endOfWeek = new Date();
+			endOfWeek.setDate(weekOfMonth * 7);
+			endOfWeek.setHours(23, 59, 59, 999);
+
+			// console.log(startOfWeek, `this is the start of the week`);
+			// console.log(endOfWeek, `this is the end of the week`);
+		} else if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(year, period - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(year, period, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+			const weekOfMonth = period;
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else if (duration === "Year") {
+			const currentDate = new Date();
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
+		} else {
+			day = period;
+			day.setHours(0, 0, 0, 0);
+		}
+
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+		let collectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("produce");
+
+		let query;
+
+		switch (duration) {
+			case "Week":
+				query = collectionRef
+					.where("date", ">=", startOfWeek)
+					.where("date", "<=", endOfWeek);
+				break;
+
+			case "Month":
+				query = collectionRef
+					.where("date", ">=", startOfMonth)
+					.where("date", "<=", endOfMonth);
+				break;
+
+			case "Year":
+				query = collectionRef
+					.where("date", ">=", startOfYear)
+					.where("date", "<=", endOfYear);
+				break;
+
+			default:
+				query = collectionRef
+					.where("date", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<", new Date(day.getTime() + 86400000));
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_CHART_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_CHART_SUCCESS",
+					payload: products,
+				});
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_CHART_ERROR",
+					payload: error,
+				});
+			}
+		);
+	};
+};
 const getFarmPlanData = () => {
 	return (dispatch, getState, { getFirebase }) => {
 		const profile = getState().firebase.profile;
@@ -62,7 +196,7 @@ const getFarmPlanData = () => {
 };
 
 export const addProduceData = (data) => {
-	return (dispatch, getState, { getFirestore }) => {
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
 
@@ -76,11 +210,15 @@ export const addProduceData = (data) => {
 				uid = profile.admin;
 		}
 
+		data.date = getFirebase().firestore.Timestamp.fromDate(data.date);
+
+		dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: true });
+
 		getFirestore()
 			.collection("marketplace")
 			.doc(uid)
 			.collection("produce")
-			.add(data.upload)
+			.add(data)
 			.then((docRef) => {
 				// make the docId easily accessible so that we can delete it later if we want.
 				getFirestore()
@@ -90,9 +228,11 @@ export const addProduceData = (data) => {
 					.doc(docRef.id)
 					.set({ id: docRef.id }, { merge: true });
 				dispatch({ type: "CREATE_PRODUCE_ITEM", payload: data });
+				dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
 			})
 			.catch((err) => {
 				dispatch({ type: "CREATE_PRODUCE_ITEM_ERROR", err });
+				dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
 			});
 	};
 };
@@ -145,6 +285,28 @@ export const getAllProductsFarmerSold = () => {
 	};
 };
 
+const filterDB = (duration, collectionRef, start, end) => {
+	switch (duration) {
+		// case "day":
+
+		// break;
+		case "week":
+			return collectionRef.where("date", ">=", start).where("date", "<=", end);
+
+		// break;
+		case "month":
+			return collectionRef.where("date", ">=", start).where("date", "<=", end);
+		// break;
+		case "year":
+			break;
+
+		default:
+			return collectionRef.where("date", "==", start);
+
+		// break;
+	}
+};
+
 const getProductsFarmerSoldForDuration = (duration, date) => {
 	let startOfWeek, endOfWeek;
 
@@ -159,8 +321,8 @@ const getProductsFarmerSoldForDuration = (duration, date) => {
 			(currentDate.getDate() + firstDayOfMonth.getDay()) / 7
 		);
 
-		console.log(weekOfMonth, `week of month`);
-		console.log(firstDayOfMonth, `first day of month`);
+		// console.log(weekOfMonth, `week of month`);
+		// console.log(firstDayOfMonth, `first day of month`);
 
 		// Calculate the start and end timestamps for the week of the month
 		startOfWeek = new Date(currentDate);
@@ -260,6 +422,51 @@ export const getProduceData = () => {
 			.catch((err) => {
 				dispatch({ type: "GET_PRODUCE_ITEM_ERROR", err });
 			});
+	};
+};
+export const getProduceData2 = () => {
+	return (dispatch, getState, { getFirestore }) => {
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			default:
+			case "farm_admin":
+				uid = authUID;
+				break;
+			case "farm_sub":
+				uid = profile.admin;
+		}
+
+		getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("produce")
+			.orderBy("date", "desc")
+			.onSnapshot(
+				(docs) => {
+					//   if (doc.exists) {
+					// Document data is available in the doc object
+
+					const items = [];
+					docs.forEach((doc) => {
+						let document = doc.data();
+
+						items.push(document);
+					});
+					dispatch({ type: "GET_PRODUCE_ITEM", payload: items });
+
+					//   } else {
+					// Document doesn't exist
+
+					//   }
+				},
+				(error) => {
+					// Handle errors gracefully
+					dispatch({ type: "GET_PRODUCE_ITEM_ERROR", error });
+				}
+			);
 	};
 };
 

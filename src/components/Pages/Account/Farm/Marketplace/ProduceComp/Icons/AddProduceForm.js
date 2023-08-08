@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Form, InputGroup, Button, Row, Col } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.js";
 import { Dropdown } from "../../../../../../SubComponents/Dropdown";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { addProduceData } from "../../../../../../../store/actions/marketplaceActions/farmPlanData.js";
 import { submitNotification } from "../../../../../../lib/Notifications.js";
 
@@ -15,29 +15,50 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Margin } from "@mui/icons-material";
 
 const AddProduceForm = (props) => {
-	const [produceName, setProduceName] = useState("");
+	// const [produceName, setProduceName] = useState("");
+
 	const [farmType, setFarmType] = useState("Horticulture");
-	const [quantity, setQuantity] = useState(0);
-	const [measure, setMeasure] = useState("");
-	const [price, setPrice] = useState("");
-	const [currency, setCurrency] = useState("");
-
-	const [show, setShow] = useState(true);
-	const [produceDate, setProduceDate] = useState(new Date());
-	const [inputGroups, setInputGroups] = useState([
-		{ id: 1, nutrientName: "", nutrientQuantity: "", nutrientUnit: "units" },
-	]);
-
+	// const [quantity, setQuantity] = useState(0);
+	// const [measure, setMeasure] = useState("");
+	// const [price, setPrice] = useState("");
+	// const [currency, setCurrency] = useState("");
+	const [submitError, setSubmitError] = useState(null);
+	// const [submitLoader, setSubmitLoader] = useState(false);
 	const defaultLocal = {
 		item: "",
-		quantity: 0,
+		quantity: "",
 		measure: "units",
 		price: "",
 		currency: "$",
 		// nutrients: inputGroups,
 	};
 
+	const [show, setShow] = useState(true);
+	const [produceDate, setProduceDate] = useState(new Date());
+	const [inputGroups, setInputGroups] = useState([
+		{ id: 1, nutrientName: "", nutrientQuantity: "", nutrientUnit: "%" },
+	]);
 	const [local, setLocal] = useState(defaultLocal);
+	const formRef = useRef(null);
+
+	useEffect(() => {}, [inputGroups]);
+
+	console.log(produceDate, `this is the produceDate`);
+
+	useEffect(() => {
+		if (props.submitError !== null) setSubmitError(props.submitError);
+	}, [props.submitError]);
+
+	console.log(props.addProduceLoader, `initial stat of submitLoader`);
+
+	useEffect(() => {
+		console.log(props.addProduceLoader, `it has changed`);
+		if (props.addProduceLoader === false) {
+			submitNotification("Success", "Produce added to inventory");
+			formRef.current.reset();
+		}
+	}, [props.produce]);
+
 	const handleLocal = (e) => {
 		if (e.target.textContent) {
 			setLocal({ ...local, [e.target.id]: e.target.textContent });
@@ -45,8 +66,6 @@ const AddProduceForm = (props) => {
 			setLocal({ ...local, [e.target.id]: e.target.value });
 		}
 	};
-
-	// console.log(inputGroups);
 
 	const handleNutrientQuantityChange = (index, value) => {
 		const updatedInputGroups = inputGroups.map((group, i) =>
@@ -91,8 +110,6 @@ const AddProduceForm = (props) => {
 		setInputGroups(updatedInputGroups);
 	};
 
-	useEffect(() => {}, [inputGroups]);
-
 	let nutrientGroup = inputGroups.map((group, index) => {
 		return (
 			<>
@@ -116,10 +133,10 @@ const AddProduceForm = (props) => {
 							min="0"
 							required
 							// step=".5"
-							function={(e) =>
+							onChange={(e) =>
 								handleNutrientQuantityChange(index, e.target.value)
 							}
-							data={group.nutrientQuantity}
+							value={group.nutrientQuantity}
 							// function={(e) => {
 							//   setLocal({ ...local, measure: e });
 							// }}
@@ -133,7 +150,7 @@ const AddProduceForm = (props) => {
 							data={group.nutrientUnit}
 							// data={local.measure}
 							required
-							items={["g", "kg", "/", "mL", "L"]}
+							items={["%"]}
 							function={(e) => handleNutrientUnit(index, e)}
 						/>
 					</Col>
@@ -175,6 +192,7 @@ const AddProduceForm = (props) => {
 									id="quantity"
 									type="number"
 									min="0"
+									placeholder="0"
 									step=".5"
 									onChange={(e) => handleLocal(e)}
 									value={local.quantity}
@@ -238,6 +256,28 @@ const AddProduceForm = (props) => {
 								/>
 							</InputGroup>
 						</Form.Group>
+						<Form.Group>
+							<Form.Label>Selling Price Per Unit</Form.Label>
+							<InputGroup>
+								<Form.Control
+									id="sellingPrice"
+									type="number"
+									min="0"
+									step="1"
+									onChange={(e) => handleLocal(e)}
+									value={local.sellingPrice}
+								/>
+								<Dropdown
+									id="currency"
+									styling="grey dropdown-input"
+									data={local.currency}
+									items={["$", "€", "£"]}
+									function={(e) => {
+										setLocal({ ...local, currency: e });
+									}}
+								/>
+							</InputGroup>
+						</Form.Group>
 
 						<Form.Group>
 							<Form.Label>Harvest Date</Form.Label>
@@ -263,7 +303,7 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Number of specie</Form.Label>
+							<Form.Label>Quantity/amount</Form.Label>
 							<InputGroup>
 								<Form.Control
 									id="quantity"
@@ -307,13 +347,35 @@ const AddProduceForm = (props) => {
 								/>
 							</InputGroup>
 						</Form.Group>
+						<Form.Group>
+							<Form.Label>Selling Price Per Unit</Form.Label>
+							<InputGroup>
+								<Form.Control
+									id="sellingPrice"
+									type="number"
+									min="0"
+									step="1"
+									onChange={(e) => handleLocal(e)}
+									value={local.sellingPrice}
+								/>
+								<Dropdown
+									id="currency"
+									styling="grey dropdown-input"
+									data={local.currency}
+									items={["$", "€", "£"]}
+									function={(e) => {
+										setLocal({ ...local, currency: e });
+									}}
+								/>
+							</InputGroup>
+						</Form.Group>
 
 						<Form.Group>
 							<Form.Label>Yield Date</Form.Label>
 							<DatePicker
 								selected={produceDate}
 								onChange={(date) => setProduceDate(date)}
-								dateFormat="dd/mm/yyyy"
+								dateFormat="dd/MM/yyyy"
 							/>
 						</Form.Group>
 					</div>
@@ -355,7 +417,8 @@ const AddProduceForm = (props) => {
 						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Estimated Price per Unit</Form.Label>
+							<Form.Label>Estimated Production Price Per Unit</Form.Label>
+
 							<InputGroup>
 								<Form.Control
 									id="price"
@@ -376,13 +439,35 @@ const AddProduceForm = (props) => {
 								/>
 							</InputGroup>
 						</Form.Group>
+						<Form.Group>
+							<Form.Label>Selling Price Per Unit</Form.Label>
+							<InputGroup>
+								<Form.Control
+									id="sellingPrice"
+									type="number"
+									min="0"
+									step="1"
+									onChange={(e) => handleLocal(e)}
+									value={local.sellingPrice}
+								/>
+								<Dropdown
+									id="currency"
+									styling="grey dropdown-input"
+									data={local.currency}
+									items={["$", "€", "£"]}
+									function={(e) => {
+										setLocal({ ...local, currency: e });
+									}}
+								/>
+							</InputGroup>
+						</Form.Group>
 
 						<Form.Group>
 							<Form.Label>Yield Date</Form.Label>
 							<DatePicker
 								selected={produceDate}
 								onChange={(date) => setProduceDate(date)}
-								dateFormat="dd/mm/yyyy"
+								dateFormat="dd/MM/yyyy"
 							/>
 						</Form.Group>
 					</div>
@@ -405,39 +490,31 @@ const AddProduceForm = (props) => {
 	//fired when click "done"
 	const handleSubmit = (e) => {
 		const data = {
-			upload: {
-				farmType: farmType,
-				item: local.item,
-				measure: local.measure,
-				quantity: local.quantity,
-				price: local.price,
-				currency: local.currency,
-				//quantity: local.quantity
-				date: moment(produceDate).format("DD/MM/yyyy"),
-			},
+			farmType: farmType,
+			item: local.item,
+			measure: local.measure,
+			quantity: local.quantity,
+			price: local.price,
+			sellingPrice: local.sellingPrice,
+
+			currency: local.currency,
+			//quantity: local.quantity
+			date: produceDate,
 		};
 
-		if (data.upload.farmType === "horticulture") {
-			data.upload.nutrients = inputGroups;
+		if (data.farmType === "Horticulture") {
+			console.log(inputGroups, `this is the input groups that is shown`);
+			data.nutrients = inputGroups;
 		}
-		console.log(data, `this is the data of the form`);
 
-		// props.addProduceData(data);
-		// submitNotification("Success", "Item has been added");
+		props.addProduceData(data);
 
-		// forceUpdate();
+		forceUpdate();
 	};
 
 	return (
 		<div>
-			<Form
-				onSubmit={(e) => {
-					e.preventDefault();
-					handleSubmit();
-					// props.setUpdate(props.update + 1);
-					props.handleFormClose();
-				}}
-			>
+			<Form ref={formRef}>
 				<Form.Group>
 					<Form.Label>Farming Type</Form.Label>
 					<InputGroup>
@@ -456,9 +533,21 @@ const AddProduceForm = (props) => {
 				{ChooseFarmType()}
 
 				<div style={{ alignItems: "center" }}>
-					<Button className="blue-btn shadow-none mt-3" type="submit">
-						Done
+					<Button
+						onClick={(e) => {
+							e.preventDefault();
+							handleSubmit();
+							// props.setUpdate(props.update + 1);
+							// props.handleFormClose();
+						}}
+						className="blue-btn shadow-none mt-3"
+						type="submit"
+					>
+						{props.addProduceLoader === false || props.addProduceLoader === null
+							? "Submit"
+							: "...Loading"}
 					</Button>
+					{submitError === null ? "" : "Something went wrong try again"}
 				</div>
 			</Form>
 		</div>
@@ -468,6 +557,8 @@ const AddProduceForm = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		produce: state.farmData.produce,
+		submitError: state.farmData.addProduceError,
+		addProduceLoader: state.farmData.addProduceLoader,
 	};
 };
 const mapDispatchToProps = (dispatch) => {
