@@ -21,10 +21,7 @@ export const PageWrap = (props) => {
 					
 					<NotificationIcon />
 					<NotificationOrderIcon />
-					<div style={{ display: "flex", alignItems: "center", marginLeft: "5rem" }}>
-						{/* <h1 style={{ margin: 0, marginRight: "0.1rem" }}><b>$500</b></h1> */}
-						<WalletIcon />
-					</div>
+
 				</div>
 				<Divider />
 			</div>
