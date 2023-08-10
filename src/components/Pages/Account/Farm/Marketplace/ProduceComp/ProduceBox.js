@@ -8,6 +8,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 
 import Delete from "./Icons/DeleteIcon";
 import Edit from "./Icons/EditIcon";
+import { format } from "date-fns";
 
 export default function ProduceBox(props) {
 	console.log("lets fetch all produce ==> ", props.produce);
@@ -61,7 +62,7 @@ export default function ProduceBox(props) {
 									</p>
 									<p>
 										<b>Date of Harvest: </b>
-										{newProduce.date}
+										{format(newProduce.date.toDate(), "MMMM d, yyyy")}
 									</p>
 								</div>
 							</ListItem>

@@ -38,7 +38,7 @@ export default function ProduceTab() {
 				</Tab>
 				<Tab eventKey="recipes" title="PRODUCE CHART" className="mealtab">
 					<ChartProduce />
-					<h2>Produce Summary</h2>
+					{/* <h2>Produce Summary</h2> */}
 				</Tab>
 				<Tab eventKey="sales" title="SALES" className="mealtab">
 					<Sales />

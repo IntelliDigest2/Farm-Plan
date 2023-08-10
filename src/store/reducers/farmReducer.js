@@ -1,10 +1,15 @@
 const initState = {
 	authError: null,
-	produce: [],
+	produce: null,
+	addProduceError: null,
 	purchaseInfoFarm: [],
 	farmPlan: null,
 	farmPlanError: null,
 	farmerData: null,
+	addProduceLoader: null,
+	produceForChart: null,
+	produceForChartLoader: false,
+	produceForChartError: null,
 };
 
 const farmReducer = (state = initState, action) => {
@@ -38,13 +43,40 @@ const farmReducer = (state = initState, action) => {
 			console.log("produce added", action.payload);
 			return {
 				...state,
-				authError: null,
+				addProduceError: null,
 			};
 		case "CREATE_PRODUCE_ITEM_ERROR":
 			console.log("error, produce not added", action.err);
 			return {
 				...state,
-				authError: "Create produce failed",
+				addProduceError: "Something went wrong try again",
+			};
+		case "CREATE_PRODUCE_ITEM_LOADER":
+			console.log("error, produce not added", action);
+			return {
+				...state,
+				addProduceLoader: action.payload,
+			};
+		case "FETCH_PRODUCE_FOR_CHART_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				produceForChart: action.payload,
+				produceForChartError: null,
+				produceForChartLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_CHART_ERROR":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+				produceForChartError: action.payload,
+				produceForChartLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_CHART_LOADER":
+			// console.log("error, produce chart loading", action);
+			return {
+				...state,
+				produceForChartLoader: true,
 			};
 
 		case "GET_PRODUCE_ITEM":
