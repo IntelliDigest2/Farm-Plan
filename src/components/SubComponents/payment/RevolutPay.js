@@ -1,12 +1,51 @@
 import { useRef, useEffect, useState } from "react";
 import RevolutCheckout from "@revolut/checkout";
 import fetch from "isomorphic-fetch";
+import { useHistory } from "react-router-dom";
+import { getData } from "country-list";
 
-function RevolutPay({ order }) {
+
+function CheckoutPage() {
+  const history = useHistory();
   const rcRef = useRef(null);
   const cardElementRef = useRef(null);
   const [cardErrors, setCardErrors] = useState([]);
+  const [order, setOrder] = useState(null);
+  const [amount, setAmount] = useState('100')
 
+
+//create order function
+  useEffect(() => {
+    async function fetchData() {
+      const baseUrl = "http://localhost:5000";
+    
+      let response;
+      try {
+
+          response = await fetch(`${baseUrl}/v1/transaction/create-order`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ amount: 500 })
+          });
+        
+      
+        const orderData = response.ok ? await response.json() : null;
+    
+        setOrder(orderData);
+    
+      }
+      catch (error) {
+        console.error("Error fetching order:", error);
+      }
+       
+    }
+    
+    //execute function
+    fetchData();
+  }, []);
+
+
+// complete payment function
   useEffect(() => {
     if (!order) return;
 
@@ -29,13 +68,13 @@ function RevolutPay({ order }) {
           setCardErrors(errors);
         },
         onSuccess() {
-          finishOrder(order.id);
+          finishOrder(order.id, history);
         },
         onError(error) {
-          // history.push(`/failed?order=${order.id}&reason=${error.message}`);
+          history.push(`/failed?order=${order.id}&reason=${error.message}`);
         },
         onCancel() {
-          renewOrder(order.id);
+          renewOrder(order.id, history);
         }
       });
     });
@@ -56,10 +95,6 @@ function RevolutPay({ order }) {
       billingAddress: {
         countryCode: data.get("countryCode"),
         region: data.get("region"),
-        city: data.get("city"),
-        streetLine1: data.get("streetLine1"),
-        streetLine2: data.get("streetLine2"),
-        postcode: data.get("postcode")
       }
     });
   }
@@ -73,16 +108,16 @@ function RevolutPay({ order }) {
     );
   }
 
-  const sum = (order.total.amount / 100).toLocaleString("en", {
+  const sum = (50000 / 100).toLocaleString("en", {
     style: "currency",
-    currency: order.total.currency
+    currency: "USD"
   });
 
   return (
     <>
       <h2>Checkout ({sum})</h2>
       <form onSubmit={handleFormSubmit}>
-        <fieldset className="form-fieldset">
+      <fieldset className="form-fieldset">
           <legend>Contact</legend>
           <label>
             <div>Name</div>
@@ -116,7 +151,7 @@ function RevolutPay({ order }) {
               )}
             </p>
           </label>
-          {/* <label>
+          <label>
             <div>Country</div>
             <select
               className="form-field"
@@ -130,8 +165,8 @@ function RevolutPay({ order }) {
                 </option>
               ))}
             </select>
-          </label> */}
-          {/* <label>
+          </label>
+          <label>
             <div>Region</div>
             <input
               className="form-field"
@@ -149,7 +184,7 @@ function RevolutPay({ order }) {
               placeholder="City"
               required
             />
-          </label> */}
+          </label>
           <label>
             <div>Address line 1</div>
             <input
@@ -250,48 +285,25 @@ function RevolutPay({ order }) {
   );
 }
 
-async function finishOrder(id) {
+
+async function finishOrder(id, history) {
   const response = await fetch(`/api/orders/${id}/finish`, { method: "POST" });
   const order = await response.json();
 
   if (order.isCompleted) {
-    // history.push("/success");
+    history.push("/success");
   } else if (order.isFailed) {
-    await renewOrder(order.id);
+    await renewOrder(order.id, history);
   } else {
-    // history.push(`/pending?order=${order.id}`);
+    history.push(`/pending?order=${order.id}`);
   }
 }
 
-async function renewOrder(id) {
+async function renewOrder(id, history) {
   const response = await fetch(`/api/orders/${id}/renew`, { method: "POST" });
   const order = await response.json();
 
-  // history.push(`/?order=${order.id}`);
+  history.push(`/?order=${order.id}`);
 }
 
-export async function getServerSideProps({ query, req }) {
-  const baseUrl = `http://${req.headers.host}`;
-
-  let response;
-
-  if (query.order) {
-    response = await fetch(`${baseUrl}/api/orders/${query.order}`);
-  } else {
-    response = await fetch(`${baseUrl}/api/orders`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cart: ["001", "002", "004"] })
-    });
-  }
-
-  const order = response.ok ? await response.json() : null;
-
-  return {
-    props: {
-      order
-    }
-  };
-}
-
-export default RevolutPay;
+export default CheckoutPage;
