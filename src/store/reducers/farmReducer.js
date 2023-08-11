@@ -10,6 +10,9 @@ const initState = {
 	produceForChart: null,
 	produceForChartLoader: false,
 	produceForChartError: null,
+	produceForProfit: null,
+	produceForProfitLoader: false,
+	produceForProfitError: null,
 };
 
 const farmReducer = (state = initState, action) => {
@@ -72,11 +75,27 @@ const farmReducer = (state = initState, action) => {
 				produceForChartError: action.payload,
 				produceForChartLoader: false,
 			};
-		case "FETCH_PRODUCE_FOR_CHART_LOADER":
+
+		case "FETCH_PRODUCE_FOR_PROFIT_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				produceForProfit: action.payload,
+				produceForProfitError: null,
+				produceForProfitLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_PROFIT_ERROR":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+				produceForProfitError: action.payload,
+				produceForProfitLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_PROFIT_LOADER":
 			// console.log("error, produce chart loading", action);
 			return {
 				...state,
-				produceForChartLoader: true,
+				produceForProfitLoader: true,
 			};
 
 		case "GET_PRODUCE_ITEM":

@@ -30,6 +30,93 @@ export const getFarmerData = () => {
 	};
 };
 
+export const getFarmTurnOverFunction = (duration, period) => {
+	// if (duration === 'Month'){
+	// 	{month,year} = period
+	// }else{
+	// 	{startMonth,endMonth,startYear,endYear}= period
+	// }
+	let startMonth, endMonth;
+	let cycleStart, cycleEnd;
+
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		const authUID = getState().firebase.auth.uid;
+
+		if (duration === "Month") {
+			let month = period.month;
+			let year = period.year;
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startMonth = new Date(year, month - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+
+			endMonth = new Date(year, month, 0);
+			startMonth.setHours(0, 0, 0, 0);
+			endMonth.setHours(23, 59, 59, 999);
+			console.log(startMonth, `this  is the start month`);
+			console.log(endMonth, `this  is the end month`);
+			console.log(year, `this  is the start year`);
+		} else {
+			cycleStart = new Date(period.startYear, period.startMonth - 1, 1);
+			cycleStart.setHours(0, 0, 0, 0);
+			cycleEnd = new Date(period.endYear, period.endMonth - 1, 1);
+			cycleEnd.setHours(23, 59, 59, 999);
+		}
+
+		let collectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("produce");
+
+		let query;
+
+		switch (duration) {
+			case "Month":
+				query = collectionRef
+					.where("date", ">=", startMonth)
+					.where("date", "<=", endMonth);
+				break;
+
+			default:
+				query = collectionRef
+					.where("date", ">=", cycleStart)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<=", cycleEnd);
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFIT_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				console.log(products, `these are the products returned`);
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFIT_SUCCESS",
+					payload: products,
+				});
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFIT_ERROR",
+					payload: error,
+				});
+			}
+		);
+	};
+};
+
 export const getFarmProductsForDuration = (duration, period) => {
 	let startOfWeek, endOfWeek;
 	let day;

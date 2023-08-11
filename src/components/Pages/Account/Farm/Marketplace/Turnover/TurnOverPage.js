@@ -21,7 +21,7 @@ function TurnOverPage() {
 					<div>Projected Profit</div>
 				</div>
 				<Tabs
-					defaultActiveKey="Turnover Data"
+					defaultActiveKey="Profit/Turnover Data"
 					id="meal-plan-tabs"
 					className="mb-3 mealtabs basic-title"
 					fill
