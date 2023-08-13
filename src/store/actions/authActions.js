@@ -304,7 +304,7 @@ export const signUp = (newUser, image) => {
 					type: type,
 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};
-				if (resp.data) {
+				if (resp) {
 					val.IDUrl = resp.data.secure_url;
 				} else {
 					val.IDUrl = newUser.IDUrl;
