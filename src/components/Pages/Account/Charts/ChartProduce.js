@@ -9,6 +9,7 @@ import { Dropdown } from "./../../../SubComponents/Dropdown";
 import DatePicker from "react-datepicker";
 import { connect } from "react-redux";
 import { getFarmProductsForDuration } from "./../../../../store/actions/marketplaceActions/farmPlanData";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 Chart.register(...registerables);
 
@@ -58,6 +59,8 @@ const ChartProduce = (props) => {
 		props.getData(filter, period);
 	}, [filter]);
 
+	console.log(props.produce, `this is how the produce data looks like`);
+
 	useEffect(() => {
 		if (filter === "Week") {
 			console.log(`Week change`);
@@ -88,62 +91,200 @@ const ChartProduce = (props) => {
 
 	let farmTypeCounts = [];
 
-	let colorArray = ["blue", "green", "orange", "pink"];
+	// let colorArray = ["blue", "green", "orange", "pink"];
 
-	const calcDataInfo = () => {
-		let index = 0;
-		props.produce.forEach((produce) => {
-			farmTypesSet.add(produce.farmType);
+	let farmProduceTypeObjects = {};
 
-			if (!farmTypeCounts[produce.farmType]) {
-				farmTypeCounts[produce.farmType] = {};
-				farmTypeCounts[produce.farmType].number = 1;
-				farmTypeCounts[produce.farmType]["color"] = colorArray[index];
-				index++;
+	props.produce?.forEach((produce) => {
+		farmTypesSet.add(produce.farmType);
+
+		if (!farmProduceTypeObjects[produce.farmType]) {
+			farmProduceTypeObjects[produce.farmType] = {};
+			farmProduceTypeObjects[produce.farmType].produces = [];
+		}
+		farmProduceTypeObjects[produce.farmType].produces.push(produce);
+	});
+
+	// const calcDataInfo = () => {
+	// 	let index = 0;
+	// 	props.produce.forEach((produce) => {
+	// 		farmTypesSet.add(produce.farmType);
+
+	// 		if (!farmTypeCounts[produce.farmType]) {
+	// 			farmTypeCounts[produce.farmType] = {};
+	// 			farmTypeCounts[produce.farmType].number = 1;
+	// 			farmTypeCounts[produce.farmType]["color"] = colorArray[index];
+	// 			index++;
+	// 		} else {
+	// 			// If the farmType is already encountered, increment its count by 1
+	// 			farmTypeCounts[produce.farmType].number++;
+	// 		}
+	// 	});
+
+	// 	let farmTypeArray = Array.from(farmTypesSet);
+
+	// 	let productInfo = farmTypeArray.map((farmType) => {
+	// 		return farmTypeCounts[farmType].number;
+	// 	});
+
+	// 	let dataColor = farmTypeArray.map((farmType) => {
+	// 		return farmTypeCounts[farmType].color;
+	// 	});
+	// 	let data = {
+	// 		labels: farmTypeArray,
+
+	// 		datasets: [
+	// 			{
+	// 				label: "Produce Summary",
+	// 				data: productInfo,
+	// 				backgroundColor: dataColor,
+	// 			},
+	// 		],
+	// 	};
+	// 	return (
+	// 		<div style={{ width: "70%", margin: "30px auto" }}>
+	// 			<Doughnut data={data} />
+	// 		</div>
+	// 	);
+	// };
+
+	const calcDataInfo2 = (key) => {
+		let products = farmProduceTypeObjects[key].produces;
+
+		const resultMap = new Map();
+
+		//this helps to add mutliple products of the same name and give a total quantity
+		products.forEach((product) => {
+			// console.log(product, `this is the item inthe first loop`);
+			if (resultMap.has(product.item)) {
+				let newQuantity =
+					parseInt(resultMap.get(product.item).quantity) +
+					parseInt(product.quantity);
+
+				resultMap.get(product.item).quantity = `${newQuantity}`;
 			} else {
-				// If the farmType is already encountered, increment its count by 1
-				farmTypeCounts[produce.farmType].number++;
+				resultMap.set(product.item, { ...product });
 			}
 		});
 
-		let farmTypeArray = Array.from(farmTypesSet);
+		let colorArray = [
+			"#1f77b4",
+			"#ff7f0e",
+			"#2ca02c",
+			"#d62728",
+			"#9467bd",
+			"#8c564b",
+			"#e377c2",
+			"#7f7f7f",
+			"#bcbd22",
+			"#17becf",
+			"#aec7e8",
+			"#ffbb78",
+			"#98df8a",
+			"#ff9896",
+			"#c5b0d5",
+			"#c49c94",
+			"#f7b6d2",
+			"#c7c7c7",
+			"#dbdb8d",
+			"#9edae5",
+		];
 
-		let productInfo = farmTypeArray.map((farmType) => {
-			return farmTypeCounts[farmType].number;
+		// console.log(resultMap, `this is the result map`);
+
+		let resultArray = Array.from(resultMap.values());
+
+		let productColor = [];
+		let farmProductQuantityArray = [];
+		console.log(resultArray, `thii s ithe result array`);
+
+		resultArray.forEach((produce, index) => {
+			farmProductQuantityArray.push({
+				name: produce.item,
+				quantity: produce.quantity,
+				measure: produce.measure,
+			});
+			productColor.push(colorArray[index]);
+			index++;
 		});
 
-		let dataColor = farmTypeArray.map((farmType) => {
-			return farmTypeCounts[farmType].color;
+		console.log(farmProductQuantityArray, `this is the product quantity array`);
+
+		let productsData = farmProductQuantityArray.map((product) => {
+			return (
+				<div style={{ margin: "0 4px" }}>
+					{product.name.toUpperCase()}
+					<span style={{ color: "blue" }}>
+						{product.quantity}
+						{product.measure}
+					</span>
+				</div>
+			);
 		});
+
+		let productsLabel = resultArray.map((product) => {
+			return product.item;
+		});
+
+		let productInfo = resultArray.map((product) => {
+			return product.quantity;
+		});
+
 		let data = {
-			labels: farmTypeArray,
+			labels: productsLabel,
 
 			datasets: [
 				{
 					label: "Produce Summary",
 					data: productInfo,
-					backgroundColor: dataColor,
+					backgroundColor: productColor,
 				},
 			],
 		};
 		return (
 			<div style={{ width: "70%", margin: "30px auto" }}>
 				<Doughnut data={data} />
+				<div style={{ display: "flex", flexWrap: "wrap" }}>{productsData}</div>
 			</div>
 		);
 	};
 
-	let content =
-		props.produce?.length > 0 ? (
-			calcDataInfo()
+	let content2 = (key) => {
+		return props.produce?.length > 0 ? (
+			calcDataInfo2(key)
 		) : (
 			<div>
 				<p>You don't have any produce for this period</p>
 			</div>
 		);
+	};
 
-	console.log(farmTypesSet);
-	console.log(farmTypeCounts, "thi si the farmType count");
+	// let content =
+	// 	props.produce?.length > 0 ? (
+	// 		calcDataInfo()
+	// 	) : (
+	// 		<div>
+	// 			<p>You don't have any produce for this period</p>
+	// 		</div>
+	// 	);
+
+	let content =
+		Object.keys(farmProduceTypeObjects).length > 0 ? (
+			Object.keys(farmProduceTypeObjects).map((key) => {
+				return (
+					<ListGroupItem style={{ textAlign: "left" }}>
+						<h5>Farm Practice: {key}</h5>
+
+						{/* <ListGroup className="list-group-flush">{listItems(key)}</ListGroup> */}
+						{content2(key)}
+					</ListGroupItem>
+				);
+			})
+		) : (
+			<div style={{ marginTop: "20px" }}>
+				<p>You don't have any produce for this period</p>
+			</div>
+		);
 
 	const endYear = 2050;
 	const years = [];

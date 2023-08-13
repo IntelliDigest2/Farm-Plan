@@ -20,7 +20,7 @@ function ExpensePage() {
 						fill
 					>
 						<Tab
-							eventKey="Daily "
+							eventKey="Daily"
 							// title={t("description.meal_diary")}
 							title={"Daily"}
 							className="mealtab"
@@ -28,7 +28,7 @@ function ExpensePage() {
 							<DailyExpense />
 						</Tab>
 						<Tab
-							eventKey="Weekly "
+							eventKey="Weekly"
 							// title={t("description.meal_diary")}
 							title={"Weekly"}
 							className="mealtab"

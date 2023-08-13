@@ -135,6 +135,7 @@ export const ProfitData = (props) => {
 					<p>Quantity Sold: </p>
 					{/* quantity sold * selling price */}
 					<p>Turnover: </p>
+					<p>Profit: </p>
 					{/* <p></p> */}
 				</ListGroupItem>
 			);
