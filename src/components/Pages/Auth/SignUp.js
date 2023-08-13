@@ -59,7 +59,7 @@ const SignUp = (props) => {
 	//Stage6
 	const [IDType, setIDType] = useState("");
 	const [IDNumber, setIDNumber] = useState("");
-	const [image, setImage] = useState("");
+	const [image, setImage] = useState(null);
 	const [IDUrl, setUrl] = useState("");
 	const [adminType, setAdminType] = useState("");
 
@@ -624,6 +624,7 @@ const SignUp = (props) => {
 							<Stage6
 								setIDType={setIDType}
 								setAdminType={setAdminType}
+								adminType={adminType}
 								IDType={IDType}
 								setIDNumber={setIDNumber}
 								IDNumber={IDNumber}
@@ -1328,8 +1329,8 @@ const Stage6 = (props) => {
 								disabled={
 									props.adminType.trim() === "" ||
 									props.IDType.trim() === "" ||
-									props.setIDNumber.trim() === "" ||
-									props.image.trim() === ""
+									props.IDNumber.trim() === "" ||
+									props.image === null
 										? true
 										: false
 								}
