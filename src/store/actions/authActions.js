@@ -296,7 +296,7 @@ export const signUp = (newUser, image) => {
 					companyDescription: newUser.companyDescription,
 					regulatoryBody: newUser.regulatoryBody,
 					regulatoryBodyID: newUser.regulatoryBodyID,
-					IDUrl: resp.data.secure_url,
+					// IDUrl: resp.data.secure_url,
 					IDNumber: newUser.IDNumber,
 					IDType: newUser.IDType,
 					cuisine: newUser.cuisine,
@@ -304,6 +304,11 @@ export const signUp = (newUser, image) => {
 					type: type,
 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};
+				if (resp.data) {
+					val.IDUrl = resp.data.secure_url;
+				} else {
+					val.IDUrl = newUser.IDUrl;
+				}
 
 				if (newUser.consultantInfo) {
 					val.verification = "pending";
