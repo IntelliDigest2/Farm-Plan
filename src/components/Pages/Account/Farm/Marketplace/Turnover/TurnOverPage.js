@@ -16,10 +16,7 @@ function TurnOverPage() {
 		<div>
 			<PageWrap goTo="/account" header={t("description.my_plan_to_save")}>
 				{/* <WaveLoader /> */}
-				<div>
-					<div>Projected Turnover</div>
-					<div>Projected Profit</div>
-				</div>
+
 				<Tabs
 					defaultActiveKey="Profit/Turnover Data"
 					id="meal-plan-tabs"

@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { getMonth, getYear } from "date-fns";
 import { Dropdown } from "./../../../../../SubComponents/Dropdown";
 import { getFarmTurnOverFunction } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 export const ProfitData = (props) => {
 	const yearList = [];
@@ -19,9 +20,7 @@ export const ProfitData = (props) => {
 	const [farmCycleStartMonth, setFarmCycleStartMonth] = useState("jan");
 	const [farmCycleEndMonth, setFarmCycleEndMonth] = useState("jun");
 	const [farmCycleStartYear, setFarmCycleStartYear] = useState(currentYear);
-	const [farmCycleEndYear, setFarmCycleEndYear] = useState(
-		parseInt(currentYear + 1)
-	);
+	const [farmCycleEndYear, setFarmCycleEndYear] = useState(currentYear);
 
 	let months = [
 		"Jan",
@@ -38,22 +37,29 @@ export const ProfitData = (props) => {
 		"Dec",
 	];
 
-	// useEffect(() => {
-	// 	let period;
-	// 	if (filter === "Month") {
-	// 		console.log(`filter changed to month `);
-	// 		let monthNumber = months.indexOf(month) + 1;
+	useEffect(() => {
+		let period;
+		if (filter === "Month") {
+			// console.log(`filter changed to month `);
+			let monthNumber = months.indexOf(month) + 1;
 
-	// 		period = monthNumber;
-	// 	}
-	// 	// (filter === "Year")
-	// 	else {
-	// 		console.log(`filter changed to Cycle `);
+			period = monthNumber;
+			props.getData("Month", { month: monthNumber, year });
+		}
+		// (filter === "Year")
+		else {
+			// console.log(`filter changed to Cycle `);
 
-	// 		period = year;
-	// 	}
+			period = year;
 
-	// }, [filter]);
+			props.getData("farmCycle", {
+				startMonth: months.indexOf(farmCycleStartMonth) + 1,
+				endMonth: months.indexOf(farmCycleEndMonth),
+				startYear: farmCycleStartYear,
+				endYear: farmCycleEndYear,
+			});
+		}
+	}, [filter]);
 
 	useEffect(() => {}, [props.produceData]);
 
@@ -95,32 +101,53 @@ export const ProfitData = (props) => {
 		// produce.farmType === farmTypes[farmTypes.indexOf(produce.farmType)];
 	});
 
-	console.log(farmProduceTypeObjects);
+	// console.log(farmProduceTypeObjects);
 
 	let farmTypes = Array.from(farmTypesSet);
+	let productTypeTurnOver = {};
 
 	const listItems = (key) => {
-		return farmProduceTypeObjects[key].produces.map((value) => {
-			console.log(value, `value`);
+		let productTypes = farmProduceTypeObjects[key];
+
+		const resultMap = new Map();
+
+		productTypes.produces.forEach((item) => {
+			// console.log(item, `this is the item inthe first loop`);
+			if (resultMap.has(item.item)) {
+				let newQuantity =
+					parseInt(resultMap.get(item.item).quantity) + parseInt(item.quantity);
+
+				resultMap.get(item.item).quantity = `${newQuantity}`;
+			} else {
+				resultMap.set(item.item, { ...item });
+			}
+		});
+
+		let resultArray = Array.from(resultMap.values());
+		// console.log(resultArray, `this is the result array`);
+
+		return resultArray.map((value) => {
 			return (
-				<>
-					<div>Product name: {value.item}</div>
-					<div>quantity: {value.quantity}</div>
-				</>
+				<ListGroupItem>
+					<p>Product name: {value.item.toUpperCase()}</p>
+					<p>Projected Output :</p>
+					<p>Quantity Harvested: {value.quantity}</p>
+					<p>Quantity Sold: </p>
+					{/* quantity sold * selling price */}
+					<p>Turnover: </p>
+					{/* <p></p> */}
+				</ListGroupItem>
 			);
 		});
 	};
 
 	let content = Object.keys(farmProduceTypeObjects).map((key) => {
 		return (
-			<>
-				<p>Result for {filter} </p>
-				{filter === "Month"
-					? month
-					: `${farmCycleStartMonth}-${farmCycleStartYear} to ${farmCycleEndMonth}-${farmCycleEndYear}`}
-				<div>Farm Practice: {key}</div>
-				{listItems(key)}
-			</>
+			<ListGroupItem style={{ textAlign: "left" }}>
+				<h5>Farm Practice: {key}</h5>
+
+				<ListGroup className="list-group-flush">{listItems(key)}</ListGroup>
+			</ListGroupItem>
 		);
 	});
 
@@ -284,16 +311,37 @@ export const ProfitData = (props) => {
 		props.produceData === null ? (
 			<>search for produce</>
 		) : (
-			<div>
-				<p>Product Harvest quantity : {harvestQuantity}</p>
+			<div style={{ marginTop: "15px" }}>
+				<div style={{ textAlign: "left" }}>
+					<Row>
+						<Col>Projected Turnover For Farm Cycle {farmCycleStartYear}</Col>
+						<Col>Projected Profit For Farm Cycle {farmCycleEndYear}</Col>
+					</Row>
+					<Row>
+						<Col>Actual Turnover For Farm Cycle {farmCycleEndYear}</Col>
+						<Col>Actual Profit For Farm Cycle {farmCycleEndYear}</Col>
+					</Row>
+				</div>
+				<h3>
+					Result for {filter}:{" "}
+					<span>
+						{filter === "Month"
+							? `${month}-${year}`
+							: `${farmCycleStartMonth}-${farmCycleStartYear} to ${farmCycleEndMonth}-${farmCycleEndYear}`}
+					</span>
+				</h3>
+				<h4>Number of products : {harvestQuantity}</h4>
+
+				{/* <ListGroup className="list-group-flush"> */}
 				{content}
+				{/* </ListGroup> */}
 			</div>
 		);
 	return (
 		<div>
-			<Row style={{ alignItems: "center" }}>
-				<Col md={2}>Filter By :</Col>
-				<Col md={2}>
+			<Row style={{ alignItems: "center", margin: "0 auto" }}>
+				<Col md={1.5}>Filter By :</Col>
+				<Col md={1.5}>
 					{" "}
 					<>
 						<Dropdown
@@ -307,7 +355,7 @@ export const ProfitData = (props) => {
 						/>
 					</>
 				</Col>
-				<Col md={8}>
+				<Col md={9}>
 					<div style={{ display: "flex", flexWrap: "wrap" }}>
 						{filterComponent}
 						<div style={{ display: "flex", marginRight: "auto" }}>

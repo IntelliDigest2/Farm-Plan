@@ -226,7 +226,7 @@ const ChartProduce = (props) => {
 	// let dataDisplay = ? :
 
 	return (
-		<MDBContainer>
+		<div>
 			<Row style={{ alignItems: "center" }}>
 				<Col md={2}>Filter by</Col>
 				<Col md={4}>
@@ -245,7 +245,7 @@ const ChartProduce = (props) => {
 				</Col>
 			</Row>
 			{content}
-		</MDBContainer>
+		</div>
 	);
 };
 
