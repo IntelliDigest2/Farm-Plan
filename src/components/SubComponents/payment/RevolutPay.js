@@ -1,55 +1,58 @@
 import { useRef, useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import RevolutCheckout from "@revolut/checkout";
 import fetch from "isomorphic-fetch";
 import { useHistory } from "react-router-dom";
 import { getData } from "country-list";
 
+import "../Button.css"
 
-function CheckoutPage() {
+
+function CheckoutPage(props) {
   const history = useHistory();
   const rcRef = useRef(null);
   const cardElementRef = useRef(null);
   const [cardErrors, setCardErrors] = useState([]);
   const [order, setOrder] = useState(null);
   const [amount, setAmount] = useState('100')
+  const [userId, setUserId] = useState('2gb31dySKuVSzigcCDN1o8i8qc43')
 
 
 //create order function
-  useEffect(() => {
-    async function fetchData() {
-      const baseUrl = "http://localhost:5000";
+useEffect(() => {
+  async function fetchData() {
+    const baseUrl = "http://localhost:5000";
     
-      let response;
-      try {
-
-          response = await fetch(`${baseUrl}/v1/transaction/create-order`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ amount: 500 })
-          });
-        
+    try {
+      const response = await fetch(`${baseUrl}/v1/transaction/create-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: props.amount })
+      });
       
-        const orderData = response.ok ? await response.json() : null;
-    
-        setOrder(orderData);
-    
+      if (response.ok) {
+        const orderData = await response.json();
+        setOrder(orderData.responseData); // Set the order state with the received data
+        console.log("Order data:", orderData);
+      } else {
+        console.error("Error fetching order:", response.status);
       }
-      catch (error) {
-        console.error("Error fetching order:", error);
-      }
-       
+    } catch (error) {
+      console.error("Error fetching order:", error);
     }
-    
-    //execute function
-    fetchData();
-  }, []);
+  }
+  
+  // Execute the function
+  fetchData();
+}, []); // Empty dependency array ensures the effect runs once
+
 
 
 // complete payment function
   useEffect(() => {
     if (!order) return;
 
-    RevolutCheckout(order.token, "sandbox").then(RC => {
+    RevolutCheckout(order.public_id, "prod").then(RC => {
       rcRef.current = RC.createCardField({
         target: cardElementRef.current,
         hidePostcodeField: true,
@@ -68,7 +71,7 @@ function CheckoutPage() {
           setCardErrors(errors);
         },
         onSuccess() {
-          finishOrder(order.id, history);
+          finishOrder(order.id, userId, history);
         },
         onError(error) {
           history.push(`/failed?order=${order.id}&reason=${error.message}`);
@@ -95,6 +98,10 @@ function CheckoutPage() {
       billingAddress: {
         countryCode: data.get("countryCode"),
         region: data.get("region"),
+        city: data.get("city"),
+        streetLine1: data.get("streetLine1"),
+        streetLine2: data.get("streetLine2"),
+        postcode: data.get("postcode")
       }
     });
   }
@@ -103,12 +110,12 @@ function CheckoutPage() {
     return (
       <>
         <h2>Checkout</h2>
-        <h3>Order not found</h3>
+        <h3>Redirecting you to payment gateway...</h3>
       </>
     );
   }
 
-  const sum = (50000 / 100).toLocaleString("en", {
+  const sum = (props.amount / 100).toLocaleString("en", {
     style: "currency",
     currency: "USD"
   });
@@ -215,9 +222,9 @@ function CheckoutPage() {
             />
           </div>
         </fieldset>
-        <button style={{ display: "block", margin: "1rem auto" }}>
+        <Button className="blue-btn shadow-none mt-3" type="submit">
           Pay {sum}
-        </button>
+        </Button>
       </form>
       <style jsx>{`
         .form-fieldset {
@@ -286,8 +293,13 @@ function CheckoutPage() {
 }
 
 
-async function finishOrder(id, history) {
-  const response = await fetch(`/api/orders/${id}/finish`, { method: "POST" });
+async function finishOrder(id, userId, history) {
+  const baseUrl = "http://localhost:5000";
+
+  const response = await fetch(`${baseUrl}/v1/tansaction/deposit`, { 
+    method: "POST",
+    body: JSON.stringify({ id: id, user_id: userId, history: history })
+  });
   const order = await response.json();
 
   if (order.isCompleted) {

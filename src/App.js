@@ -78,7 +78,7 @@ import NewAccount from "./components/Pages/Account/Account";
 import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
 
 import RevolutPay from "./components/SubComponents/payment/RevolutPay"
-
+import FailedDeposit from "./components/SubComponents/payment/Failed"
 // import Example from "./components/Pages/Account/Example";
 
 import { Notifications } from "react-push-notification";
@@ -103,6 +103,8 @@ import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 import Payment from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Payment";
 import TurnOverPage from "./components/Pages/Account/Farm/Marketplace/Turnover/TurnOverPage";
 import ExpensePage from "./components/Pages/Account/Farm/Marketplace/Expense.js/ExpensePage";
+import Wallet from "./components/SubComponents/payment/Wallet";
+import Transactions from "./components/SubComponents/payment/Transactions";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -306,8 +308,21 @@ const App = (props) => {
 						<Route path="/in-progress" component={InProgress} />
 
 						<Route path="/payment" component={RevolutPay} />
+						<Route path="/wallet" component={Wallet} />
+						<Route path="/transactions" component={Transactions} />
 
+						<Route
+							path="/failed"
+							render={(props) => {
+								// Extract the query parameters from the location.search
+								const searchParams = new URLSearchParams(props.location.search);
+								const order = searchParams.get("order");
+								const reason = searchParams.get("reason");
 
+								// Pass the extracted parameters to the FailedDeposit component
+								return <FailedDeposit orderId={order} reason={reason} />;
+							}}
+						/>
 
 						<Route component={NotFound} />
 					</Switch>

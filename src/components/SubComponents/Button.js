@@ -25,6 +25,8 @@ import Tooltip from "@mui/material/Tooltip";
 import ForumSharpIcon from "@mui/icons-material/ForumSharp";
 import PermContactCalendarSharpIcon from "@mui/icons-material/PermContactCalendarSharp";
 import PeopleIcon from "@mui/icons-material/People";
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 import { Psychology } from "@mui/icons-material";
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import PaymentIcon from '@mui/icons-material/Payment';// import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -170,10 +172,17 @@ export function IconButton(props) {
 				return <PeopleIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "requests":
 				return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+<<<<<<< Updated upstream
 			case "transactions":
 				return <ReceiptLongIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "wallet":
 				return <PaymentIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+=======
+			case "wallet":
+				return <CreditCardIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "transactions":
+				return <ReceiptLongIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+>>>>>>> Stashed changes
 			// case "calendar":
 			// 	return <CalendarMonthSharpIcon sx={{ fontSize: 90 }} />;
 		}

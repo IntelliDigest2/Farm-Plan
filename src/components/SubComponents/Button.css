@@ -142,6 +142,27 @@
   border-color: white;
 }
 
+.grey-btn {
+  background-color: #787879;
+  /* border-color: #02001a; */
+  color: white;
+  transition: transform 0.5s;
+  border-radius: 15px;
+}
+.grey-btn:hover {
+  background-color: #02001a;
+  color: white;
+}
+.grey-btn:focus {
+  background-color: #02001a;
+  border-color: white;
+}
+.grey-btn:active {
+  /* background-color: #0c0847; */
+  border-color: white;
+}
+
+
 .red-btn {
   background-color: #840406;
   border-color: #02001a;

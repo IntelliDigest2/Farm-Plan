@@ -269,14 +269,14 @@ export const signUp = (newUser, image) => {
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(newUser.email, newUser.password)
+			// .then((resp) => {
+			// 	if (image) {
+			// 		return uploadIdImage(image);
+			// 	}
+			// })
 			.then((resp) => {
 				newUserId = resp.user.uid;
-				if (image) {
-					return uploadIdImage(image);
-				}
-			})
-			.then((resp) => {
-				console.log(resp);
+				console.log("createUserWithEmailAndPassword", newUserId);
 				// resp
 				let val = {
 					// ...newUser,

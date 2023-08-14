@@ -8,7 +8,6 @@ import { Container } from "react-bootstrap";
 import NotificationIcon from "../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/NotificationIcon";
 import NotificationOrderIcon from "../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/NotificationOrderIcon";
 import WalletIcon from "../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/WalletIcon"
-
 export const PageWrap = (props) => {
 	return (
 		<>
@@ -21,7 +20,6 @@ export const PageWrap = (props) => {
 					
 					<NotificationIcon />
 					<NotificationOrderIcon />
-
 				</div>
 				<Divider />
 			</div>
