@@ -187,6 +187,27 @@ export function Environment() {
 		</>
 	);
 }
+
+export function Funds() {
+	return (
+		<>
+			<IconButton
+				title="Transfer voucher or deposit funds."
+				icon="wallet"
+				label="Wallet"
+				color="turquoise"
+				goTo="/wallet"
+			/>
+			<IconButton
+				title="View your transaction history."
+				icon="transactions"
+				label="Transactions"
+				color="yellow"
+				goTo="/transactions"
+			/>
+		</>
+	);
+}
 // export function Consulting() {
 // 	return (
 // 		<>

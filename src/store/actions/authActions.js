@@ -290,6 +290,7 @@ export const signUp = (newUser, image) => {
 					country: newUser.country,
 					region: newUser.region,
 					uid: newUserId,
+					balance: 0,
 					//restaurant-specific user data:
 					restaurantName: newUser.restaurantName,
 					companyName: newUser.companyName,
@@ -304,7 +305,7 @@ export const signUp = (newUser, image) => {
 					type: type,
 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};
-				if (resp.data) {
+				if (resp) {
 					val.IDUrl = resp.data.secure_url;
 				} else {
 					val.IDUrl = newUser.IDUrl;

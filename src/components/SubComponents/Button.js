@@ -26,7 +26,8 @@ import ForumSharpIcon from "@mui/icons-material/ForumSharp";
 import PermContactCalendarSharpIcon from "@mui/icons-material/PermContactCalendarSharp";
 import PeopleIcon from "@mui/icons-material/People";
 import { Psychology } from "@mui/icons-material";
-// import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import PaymentIcon from '@mui/icons-material/Payment';// import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 // import CalendarMonthSharpIcon from "@mui/icons-material/CalendarMonthSharp";
 
 //when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (styles are in Button.css)
@@ -169,6 +170,10 @@ export function IconButton(props) {
 				return <PeopleIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "requests":
 				return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "transactions":
+				return <ReceiptLongIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "wallet":
+				return <PaymentIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			// case "calendar":
 			// 	return <CalendarMonthSharpIcon sx={{ fontSize: 90 }} />;
 		}

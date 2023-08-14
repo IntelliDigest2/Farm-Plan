@@ -466,6 +466,8 @@ const AccountType = (props) => {
 							label={t("description.tab_environment")}
 							value="2"
 						/>
+						<Tab disableRipple label="Funds" value="3" />
+
 					</TabList>
 					<SwipeableViews
 						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -487,6 +489,9 @@ const AccountType = (props) => {
 						</TabPanel>
 						<TabPanel value={props.value} index={2} dir={props.theme.direction}>
 							<Households.Environment />
+						</TabPanel>
+						<TabPanel value={props.value} index={3} dir={props.theme.direction}>
+							<Households.Funds />
 						</TabPanel>
 					</SwipeableViews>
 				</>
