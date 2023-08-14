@@ -188,50 +188,26 @@ export function Environment() {
 	);
 }
 
-<<<<<<< Updated upstream
 export function Funds() {
 	return (
 		<>
 			<IconButton
 				title="Transfer voucher or deposit funds."
-=======
-export function Funds({ setShow, setChooseModal }) {
-	return (
-		<>
-			<IconButton
->>>>>>> Stashed changes
 				icon="wallet"
 				label="Wallet"
 				color="turquoise"
 				goTo="/wallet"
-<<<<<<< Updated upstream
 			/>
 			<IconButton
 				title="View your transaction history."
-=======
-				// disabled="true"
-			/>
-
-			<IconButton
->>>>>>> Stashed changes
 				icon="transactions"
 				label="Transactions"
 				color="yellow"
 				goTo="/transactions"
-<<<<<<< Updated upstream
 			/>
 		</>
 	);
 }
-=======
-				// disabled="true"
-			/>
-			
-		</>
-	);
-}
-
->>>>>>> Stashed changes
 // export function Consulting() {
 // 	return (
 // 		<>

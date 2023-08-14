@@ -172,17 +172,10 @@ export function IconButton(props) {
 				return <PeopleIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "requests":
 				return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-<<<<<<< Updated upstream
 			case "transactions":
 				return <ReceiptLongIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "wallet":
 				return <PaymentIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-=======
-			case "wallet":
-				return <CreditCardIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "transactions":
-				return <ReceiptLongIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
->>>>>>> Stashed changes
 			// case "calendar":
 			// 	return <CalendarMonthSharpIcon sx={{ fontSize: 90 }} />;
 		}
