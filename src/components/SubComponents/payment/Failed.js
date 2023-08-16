@@ -1,6 +1,10 @@
-import Link from "next/link";
+import React from "react";
+import {
+	BrowserRouter as Router,
+	Link,
+} from "react-router-dom";
 
-function FailedPage({ orderId, reason }) {
+function FailedDeposit({ orderId, reason }) {
   return (
     <>
       <h2>
@@ -11,7 +15,7 @@ function FailedPage({ orderId, reason }) {
         Confirmation
       </h2>
       <h3>
-        {reason || "Payment was declined"} -{" "}
+      {reason || "Payment was declined"} -{" "}
         <Link href={`/?order=${orderId}`}>
           <a>please try again</a>
         </Link>
@@ -20,13 +24,4 @@ function FailedPage({ orderId, reason }) {
   );
 }
 
-export async function getServerSideProps({ query }) {
-  return {
-    props: {
-      orderId: query.order,
-      reason: query.reason
-    }
-  };
-}
-
-export default FailedPage;
+export default FailedDeposit;

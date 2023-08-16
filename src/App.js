@@ -5,6 +5,7 @@ import {
 	Route,
 	Redirect,
 } from "react-router-dom";
+import firebase, { auth, fs } from "./config/fbConfig"; 
 import "./App.css";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,7 +15,6 @@ import Login from "./components/Pages/Auth/LogIn";
 import LandingPage from "./components/Pages/Auth/Landing";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
-
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
 import ConsultantRegister from "./components/Pages/Account/Consultant/ConsultantAuth/ConsultantRegister";
 import ConsultantVideo from "./components/Pages/Account/Consultant/ConsultantSessions/consultantVideo";
@@ -78,7 +78,7 @@ import NewAccount from "./components/Pages/Account/Account";
 import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
 
 import RevolutPay from "./components/SubComponents/payment/RevolutPay"
-
+import FailedDeposit from "./components/SubComponents/payment/Failed"
 // import Example from "./components/Pages/Account/Example";
 
 import { Notifications } from "react-push-notification";
@@ -103,6 +103,8 @@ import Nutrients from "./components/Pages/Account/Farm/Marketplace/Nutrients";
 import Payment from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Payment";
 import TurnOverPage from "./components/Pages/Account/Farm/Marketplace/Turnover/TurnOverPage";
 import ExpensePage from "./components/Pages/Account/Farm/Marketplace/Expense.js/ExpensePage";
+import Wallet from "./components/SubComponents/payment/Wallet";
+import Transactions from "./components/SubComponents/payment/Transactions";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -135,6 +137,32 @@ const App = (props) => {
 		})
 		.catch((err) => console.log("failed: ", err));
 
+		const updateFirestore = async () => {
+			const collectionRef = fs.collection("users");
+		  
+			try {
+			  const snapshot = await collectionRef.get();
+		  
+			  const batch = fs.batch();
+		  
+			  snapshot.forEach((doc) => {
+				const documentRef = collectionRef.doc(doc.id);
+				const updatedData = {
+				  ...doc.data(),
+				  uid: doc.id.toString(), // Convert document ID to string
+				};
+				batch.update(documentRef, updatedData);
+			  });
+		  
+			  await batch.commit();
+			  console.log("xxxxxxxxxxxx> Update successful");
+			} catch (error) {
+			  console.error("Error updating documents:", error);
+			}
+		  };
+		  
+		  
+		  
 	return (
 		<React.Fragment>
 			<Notifications position="top-right" />
@@ -306,8 +334,27 @@ const App = (props) => {
 						<Route path="/in-progress" component={InProgress} />
 
 						<Route path="/payment" component={RevolutPay} />
+						<Route path="/wallet" component={Wallet} />
+						<Route path="/transactions" component={Transactions} />
+						<Route
+							path="/db"
+							render={() => {
+								updateFirestore();
+								return <Redirect to="/" />;
+							}}
+						/>
+						<Route
+							path="/failed"
+							render={(props) => {
+								// Extract the query parameters from the location.search
+								const searchParams = new URLSearchParams(props.location.search);
+								const order = searchParams.get("order");
+								const reason = searchParams.get("reason");
 
-
+								// Pass the extracted parameters to the FailedDeposit component
+								return <FailedDeposit orderId={order} reason={reason} />;
+							}}
+						/>
 
 						<Route component={NotFound} />
 					</Switch>

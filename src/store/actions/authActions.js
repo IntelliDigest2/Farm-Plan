@@ -269,14 +269,14 @@ export const signUp = (newUser, image) => {
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(newUser.email, newUser.password)
+			// .then((resp) => {
+			// 	if (image) {
+			// 		return uploadIdImage(image);
+			// 	}
+			// })
 			.then((resp) => {
 				newUserId = resp.user.uid;
-				if (image) {
-					return uploadIdImage(image);
-				}
-			})
-			.then((resp) => {
-				console.log(resp);
+				console.log("createUserWithEmailAndPassword", newUserId);
 				// resp
 				let val = {
 					// ...newUser,
@@ -290,6 +290,7 @@ export const signUp = (newUser, image) => {
 					country: newUser.country,
 					region: newUser.region,
 					uid: newUserId,
+					balance: 0,
 					//restaurant-specific user data:
 					restaurantName: newUser.restaurantName,
 					companyName: newUser.companyName,
