@@ -16,10 +16,10 @@ export function Food({ setShow, setChooseModal, profile }) {
 	console.log(profile);
 	useEffect(() => {
 		// if (profile.isloaded) {
-		console.log(
-			profile.verification === "pending",
-			`this shows that the account is pending`
-		);
+		// console.log(
+		// 	profile.verification === "pending",
+		// 	`this shows that the account is pending`
+		// );
 		if (profile.buildingFunction === "Consultant") {
 			setConsultantService(true);
 		} else {
