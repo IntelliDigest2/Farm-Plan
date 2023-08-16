@@ -42,11 +42,11 @@ export default function ProduceTab() {
 				</Tab>
 				<Tab eventKey="sales" title="SALES" className="mealtab">
 					<Sales />
-					<h2>sale Summary</h2>
+					{/* <h2>sale Summary</h2> */}
 				</Tab>
 				<Tab eventKey="sale chart" title="SALES CHART" className="mealtab">
 					<SalesChart />
-					<h2>sales chart</h2>
+					{/* <h2>sales chart</h2> */}
 				</Tab>
 			</Tabs>
 

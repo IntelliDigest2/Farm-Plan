@@ -18,7 +18,7 @@ const ChartProduce = (props) => {
 	const currentDate = new Date();
 	const currentMonth = format(currentDate, "MMMM").substring(0, 3);
 	const [day, setDay] = useState(new Date());
-	const [filter, setFilter] = useState("day");
+	const [filter, setFilter] = useState("Day");
 	const [month, setMonth] = useState(currentMonth);
 	const [week, setWeek] = useState("1");
 	const [year, setYear] = useState(currentYear);
@@ -59,7 +59,7 @@ const ChartProduce = (props) => {
 		props.getData(filter, period);
 	}, [filter]);
 
-	console.log(props.produce, `this is how the produce data looks like`);
+	// console.log(props.produce, `this is how the produce data looks like`);
 
 	useEffect(() => {
 		if (filter === "Week") {
@@ -82,6 +82,12 @@ const ChartProduce = (props) => {
 			props.getData(filter, year);
 		}
 	}, [year]);
+	useEffect(() => {
+		if (filter === "Day") {
+			console.log(`day change`);
+			props.getData(filter, day);
+		}
+	}, [day]);
 
 	useEffect(() => {
 		console.log(props.produce, `this is the produce returned`);
@@ -104,49 +110,6 @@ const ChartProduce = (props) => {
 		}
 		farmProduceTypeObjects[produce.farmType].produces.push(produce);
 	});
-
-	// const calcDataInfo = () => {
-	// 	let index = 0;
-	// 	props.produce.forEach((produce) => {
-	// 		farmTypesSet.add(produce.farmType);
-
-	// 		if (!farmTypeCounts[produce.farmType]) {
-	// 			farmTypeCounts[produce.farmType] = {};
-	// 			farmTypeCounts[produce.farmType].number = 1;
-	// 			farmTypeCounts[produce.farmType]["color"] = colorArray[index];
-	// 			index++;
-	// 		} else {
-	// 			// If the farmType is already encountered, increment its count by 1
-	// 			farmTypeCounts[produce.farmType].number++;
-	// 		}
-	// 	});
-
-	// 	let farmTypeArray = Array.from(farmTypesSet);
-
-	// 	let productInfo = farmTypeArray.map((farmType) => {
-	// 		return farmTypeCounts[farmType].number;
-	// 	});
-
-	// 	let dataColor = farmTypeArray.map((farmType) => {
-	// 		return farmTypeCounts[farmType].color;
-	// 	});
-	// 	let data = {
-	// 		labels: farmTypeArray,
-
-	// 		datasets: [
-	// 			{
-	// 				label: "Produce Summary",
-	// 				data: productInfo,
-	// 				backgroundColor: dataColor,
-	// 			},
-	// 		],
-	// 	};
-	// 	return (
-	// 		<div style={{ width: "70%", margin: "30px auto" }}>
-	// 			<Doughnut data={data} />
-	// 		</div>
-	// 	);
-	// };
 
 	const calcDataInfo2 = (key) => {
 		let products = farmProduceTypeObjects[key].produces;
@@ -258,15 +221,6 @@ const ChartProduce = (props) => {
 			</div>
 		);
 	};
-
-	// let content =
-	// 	props.produce?.length > 0 ? (
-	// 		calcDataInfo()
-	// 	) : (
-	// 		<div>
-	// 			<p>You don't have any produce for this period</p>
-	// 		</div>
-	// 	);
 
 	let content =
 		Object.keys(farmProduceTypeObjects).length > 0 ? (

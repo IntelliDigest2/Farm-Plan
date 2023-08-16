@@ -202,10 +202,10 @@ export const ProfitChart = (props) => {
 		// produce.farmType === farmTypes[farmTypes.indexOf(produce.farmType)];
 	});
 
-	console.log(farmProduceTypeObjects, `thi si before the loop`);
+	// console.log(farmProduceTypeObjects, `thi si before the loop`);
 
 	const calcDataInfo = (key) => {
-		console.log(key, `thi si the key`);
+		// console.log(key, `thi si the key`);
 		let products = farmProduceTypeObjects[key].produces;
 		// console.log(props.)
 
@@ -254,7 +254,7 @@ export const ProfitChart = (props) => {
 		let resultArray = Array.from(resultMap.values());
 
 		let productColor = [];
-		console.log(resultArray, `thii s ithe result array`);
+		// console.log(resultArray, `thii s ithe result array`);
 
 		let index = 0;
 		resultArray.forEach((produce, index) => {

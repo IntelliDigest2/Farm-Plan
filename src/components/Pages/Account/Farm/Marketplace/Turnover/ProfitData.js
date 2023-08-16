@@ -82,6 +82,11 @@ export const ProfitData = (props) => {
 		<>'..loading'</>
 	);
 
+	console.log(
+		props.salesData,
+		`this is the sales data here for teh profitData`
+	);
+
 	let harvestQuantity = props.produceData?.length;
 
 	let farmTypesSet = new Set();
@@ -101,6 +106,20 @@ export const ProfitData = (props) => {
 		// produce.farmType === farmTypes[farmTypes.indexOf(produce.farmType)];
 	});
 
+	// let saleTypeObjects = {};
+
+	// props.salesData?.forEach((sale)=>{
+	// 	farmTypesSet.add(sale.productType);
+	// 	// console.log(sale, `this is sale number x`);
+
+	// 	if (!saleTypeObjects[sale.productType]) {
+	// 		saleTypeObjects[sale.productType] = {};
+	// 		saleTypeObjects[sale.productType].sales = [];
+	// 	}
+	// 	saleTypeObjects[sale.productType].sales.push(sale);
+
+	// })
+
 	// console.log(farmProduceTypeObjects);
 
 	let farmTypes = Array.from(farmTypesSet);
@@ -108,8 +127,13 @@ export const ProfitData = (props) => {
 
 	const listItems = (key) => {
 		let productTypes = farmProduceTypeObjects[key];
+		let salesForKey = props.salesData?.filter((saleProduct) => {
+			return key === saleProduct.productType;
+		});
+		console.log(salesForKey, `thes are the sales for ${key}`);
 
 		const resultMap = new Map();
+		const salesMap = new Map();
 
 		productTypes.produces.forEach((item) => {
 			// console.log(item, `this is the item inthe first loop`);
@@ -123,19 +147,61 @@ export const ProfitData = (props) => {
 			}
 		});
 
-		let resultArray = Array.from(resultMap.values());
-		// console.log(resultArray, `this is the result array`);
+		salesForKey?.forEach((product) => {
+			// console.log(product, `this is the item inthe first loop`);
+			if (salesMap.has(product.productName)) {
+				console.log(`this shows there is repetition`);
+				let newQuantity =
+					parseInt(salesMap.get(product.productName).quantity) +
+					parseInt(product.quantity);
 
-		return resultArray.map((value) => {
+				salesMap.get(product.productName).quantity = `${newQuantity}`;
+			} else {
+				salesMap.set(product.productName, { ...product });
+			}
+		});
+
+		let resultArray = Array.from(resultMap.values());
+		let salesArray = Array.from(salesMap.values());
+		console.log(salesArray, `this is the result array`);
+
+		return resultArray.map((value, index) => {
+			console.log(value.item, `thsi is the value of zzzzz`);
+
+			let saleProduce = salesArray.filter((obj) => {
+				return value.item === obj.productName;
+			});
+			let profit =
+				saleProduce[0]?.quantity * saleProduce[0]?.price.amount -
+				saleProduce[0]?.price.amount * value.quantity;
+
+			console.log(saleProduce[0]?.quantity, `this is the saleProduce`);
 			return (
 				<ListGroupItem>
 					<p>Product name: {value.item.toUpperCase()}</p>
 					<p>Projected Output :</p>
 					<p>Quantity Harvested: {value.quantity}</p>
-					<p>Quantity Sold: </p>
+					<p>
+						Quantity Sold:{" "}
+						{saleProduce[0] ? saleProduce[0]?.quantity : "No sale yet"}{" "}
+					</p>
+					{/*  */}
+
 					{/* quantity sold * selling price */}
-					<p>Turnover: </p>
-					<p>Profit: </p>
+					<p>
+						Turnover:{" "}
+						{saleProduce[0]
+							? saleProduce[0]?.quantity * saleProduce[0]?.price.amount +
+							  saleProduce[0]?.price.currency
+							: "pending"}
+					</p>
+
+					<p>
+						Profit/Loss:{" "}
+						<span style={{ color: profit > 0 ? "blue" : "red" }}>
+							{saleProduce[0] ? profit : null}{" "}
+						</span>
+					</p>
 					{/* <p></p> */}
 				</ListGroupItem>
 			);
@@ -384,6 +450,9 @@ const mapStateToProps = (state) => {
 		produceData: state.farmData.produceForProfit,
 		profitDataLoader: state.farmData.produceForProfitLoader,
 		profitDataError: state.farmData.produceForProfitError,
+		salesData: state.farmData.salesInfoForProfit,
+		salesDataLoader: state.farmData.salesForProfitLoader,
+		salesDataError: state.farmData.salesForProfitError,
 	};
 };
 
