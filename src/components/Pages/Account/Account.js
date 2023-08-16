@@ -468,8 +468,6 @@ const AccountType = (props) => {
 						/>
 						<Tab disableRipple label="Funds" value="3" />
 
-						<Tab disableRipple label="Funds" value="3" />
-
 					</TabList>
 					<SwipeableViews
 						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}

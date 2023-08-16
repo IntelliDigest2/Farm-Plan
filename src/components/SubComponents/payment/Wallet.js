@@ -30,7 +30,7 @@ const WalletComponent = (props) => {
   useEffect(() => {
     console.log("xxxxxxxxxxxxx=>",props.profile.uid)
 
-    const baseUrl = "http://localhost:5000";
+    const baseUrl = "http://34.135.91.10:5000";
 
     fetch(`${baseUrl}/v1/transaction/balance`, {
       method: 'POST',
@@ -51,7 +51,7 @@ const WalletComponent = (props) => {
   // Function to handle the transfer
   const handleTransfer = () => {
       
-    const baseUrl = "http://localhost:5000";
+    const baseUrl = "http://34.135.91.10:5000";
 
     const transferData = {
       user: props.profile.uid,

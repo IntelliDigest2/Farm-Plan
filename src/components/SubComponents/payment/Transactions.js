@@ -23,7 +23,7 @@ const Transaction = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    const baseUrl = "http://localhost:5000";
+    const baseUrl = "http://34.135.91.10:5000";
 
     fetch(`${baseUrl}/v1/transaction/transactions`, {
       method: 'POST',

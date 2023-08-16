@@ -5,6 +5,7 @@ import {
 	Route,
 	Redirect,
 } from "react-router-dom";
+import firebase, { auth, fs } from "./config/fbConfig"; 
 import "./App.css";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,7 +15,6 @@ import Login from "./components/Pages/Auth/LogIn";
 import LandingPage from "./components/Pages/Auth/Landing";
 import AboutUs from "./components/Pages/AboutUs";
 import Contact from "./components/Pages/Contact";
-
 import Homepage from "./components/Pages/Account/Consultant/Homepage/Homepage";
 import ConsultantRegister from "./components/Pages/Account/Consultant/ConsultantAuth/ConsultantRegister";
 import ConsultantVideo from "./components/Pages/Account/Consultant/ConsultantSessions/consultantVideo";
@@ -137,6 +137,32 @@ const App = (props) => {
 		})
 		.catch((err) => console.log("failed: ", err));
 
+		const updateFirestore = async () => {
+			const collectionRef = fs.collection("users");
+		  
+			try {
+			  const snapshot = await collectionRef.get();
+		  
+			  const batch = fs.batch();
+		  
+			  snapshot.forEach((doc) => {
+				const documentRef = collectionRef.doc(doc.id);
+				const updatedData = {
+				  ...doc.data(),
+				  uid: doc.id.toString(), // Convert document ID to string
+				};
+				batch.update(documentRef, updatedData);
+			  });
+		  
+			  await batch.commit();
+			  console.log("xxxxxxxxxxxx> Update successful");
+			} catch (error) {
+			  console.error("Error updating documents:", error);
+			}
+		  };
+		  
+		  
+		  
 	return (
 		<React.Fragment>
 			<Notifications position="top-right" />
@@ -310,7 +336,13 @@ const App = (props) => {
 						<Route path="/payment" component={RevolutPay} />
 						<Route path="/wallet" component={Wallet} />
 						<Route path="/transactions" component={Transactions} />
-
+						<Route
+							path="/db"
+							render={() => {
+								updateFirestore();
+								return <Redirect to="/" />;
+							}}
+						/>
 						<Route
 							path="/failed"
 							render={(props) => {

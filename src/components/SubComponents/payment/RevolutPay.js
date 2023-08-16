@@ -21,7 +21,7 @@ function CheckoutPage(props) {
 //create order function
 useEffect(() => {
   async function fetchData() {
-    const baseUrl = "http://localhost:5000";
+    const baseUrl = "http://34.135.91.10:5000";
     
     try {
       const response = await fetch(`${baseUrl}/v1/transaction/create-order`, {
@@ -294,7 +294,7 @@ useEffect(() => {
 
 
 async function finishOrder(id, userId, history) {
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = "http://34.135.91.10:5000";
 
   const response = await fetch(`${baseUrl}/v1/tansaction/deposit`, { 
     method: "POST",
