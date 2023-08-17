@@ -20,12 +20,13 @@ const Transaction = (props) => {
 
   console.log("profile", props.profile)
 
+  const baseUrlDev="http://localhost:5000"
+  const baseUrlProd="http://34.135.91.10:5000"
+
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    const baseUrl = "http://34.135.91.10:5000";
-
-    fetch(`${baseUrl}/v1/transaction/transactions`, {
+    fetch(`${baseUrlProd}/v1/transaction/transactions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

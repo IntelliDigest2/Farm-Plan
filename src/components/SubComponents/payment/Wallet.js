@@ -26,13 +26,16 @@ const WalletComponent = (props) => {
   const [showModalTransfer, setShowModalTransfer] = useState(false);
   const [isLoadingBalance, setIsLoadingBalance] = useState(true); 
 
+  const baseUrlDev="http://localhost:5000"
+  const baseUrlProd="http://34.135.91.10:5000"
+
+
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
-    console.log("xxxxxxxxxxxxx=>",props.profile.uid)
 
-    const baseUrl = "http://34.135.91.10:5000";
+    // const baseUrl = process.env.REACT_APP_BASE_URL_TEST;
 
-    fetch(`${baseUrl}/v1/transaction/balance`, {
+    fetch(`${baseUrlProd}/v1/transaction/balance`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,8 +54,6 @@ const WalletComponent = (props) => {
   // Function to handle the transfer
   const handleTransfer = () => {
       
-    const baseUrl = "http://34.135.91.10:5000";
-
     const transferData = {
       user: props.profile.uid,
       amount: parseFloat(amountTransfer),
@@ -60,7 +61,7 @@ const WalletComponent = (props) => {
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrl}/v1/transaction/transfer`, {
+    fetch(`${baseUrlProd}/v1/transaction/transfer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -136,7 +137,7 @@ const WalletComponent = (props) => {
                       type="number"
                       placeholder='Enter Amount'
                       min="0"
-                      step=".1"
+                      step="1"
                       onChange={(e) => setAmountTransfer(e.target.value)}
                       value={amountTransfer}
                     />
@@ -204,7 +205,7 @@ const WalletComponent = (props) => {
                       type="number"
                       placeholder='Enter Amount'
                       min="0"
-                      step=".1"
+                      step="1"
                       onChange={(e) => setAmountDeposit(e.target.value)}
                       value={amountDeposit}
                     />
