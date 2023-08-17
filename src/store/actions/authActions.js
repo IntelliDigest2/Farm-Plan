@@ -269,14 +269,15 @@ export const signUp = (newUser, image) => {
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(newUser.email, newUser.password)
-			// .then((resp) => {
-			// 	if (image) {
-			// 		return uploadIdImage(image);
-			// 	}
-			// })
 			.then((resp) => {
 				newUserId = resp.user.uid;
-				console.log("createUserWithEmailAndPassword", newUserId);
+				if (image) {
+					return uploadIdImage(image);
+				}
+			})
+			.then((resp) => {
+				// newUserId = resp.user.uid;
+				// console.log("createUserWithEmailAndPassword", newUserId);
 				// resp
 				let val = {
 					// ...newUser,
@@ -310,6 +311,7 @@ export const signUp = (newUser, image) => {
 				// } else {
 				// 	val.IDUrl = newUser.IDUrl;
 				// }
+
 
 				if (newUser.consultantInfo) {
 					val.verification = "pending";
