@@ -11,6 +11,7 @@ import "../Button.css"
 
 
 function CheckoutPage(props) {
+
   const history = useHistory();
   const rcRef = useRef(null);
   const cardElementRef = useRef(null);
@@ -18,6 +19,8 @@ function CheckoutPage(props) {
   const [order, setOrder] = useState(null);
   const [userId, setUserId] = useState('')
   
+  const baseUrlDev="http://localhost:5000"
+  const baseUrlProd="http://34.123.239.70:5000"
   
   useEffect(() => {
     // Check if the profile object and uid exist before accessing
@@ -29,10 +32,9 @@ function CheckoutPage(props) {
 //create order function
 useEffect(() => {
   async function fetchData() {
-    const baseUrl = "http://34.135.91.10:5000";
     
     try {
-      const response = await fetch(`${baseUrl}/v1/transaction/create-order`, {
+      const response = await fetch(`${baseUrlProd}/v1/transaction/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: props.amount })
@@ -302,9 +304,10 @@ useEffect(() => {
 
 
 async function finishOrder(id, userId, history) {
-  const baseUrl = "http://34.135.91.10:5000";
+  const baseUrlDev="http://localhost:5000"
+  const baseUrlProd="http://34.123.239.70:5000"
 
-  const response = await fetch(`${baseUrl}/v1/tansaction/deposit`, { 
+  const response = await fetch(`${baseUrlProd}/v1/tansaction/deposit`, { 
     method: "POST",
     body: JSON.stringify({ id: id, user_id: userId, history: history })
   });
