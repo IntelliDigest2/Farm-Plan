@@ -306,12 +306,12 @@ export const signUp = (newUser, image) => {
 					type: type,
 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};
-				if (image) {
-					// console.log(resp);
-					val.IDUrl = resp.data.secure_url;
-				} else {
-					val.IDUrl = newUser.IDUrl;
-				}
+				// if (resp) {
+				// 	val.IDUrl = resp.data.secure_url;
+				// } else {
+				// 	val.IDUrl = newUser.IDUrl;
+				// }
+
 
 				if (newUser.consultantInfo) {
 					val.verification = "pending";

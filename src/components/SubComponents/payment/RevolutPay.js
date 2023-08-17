@@ -4,6 +4,8 @@ import RevolutCheckout from "@revolut/checkout";
 import fetch from "isomorphic-fetch";
 import { useHistory } from "react-router-dom";
 import { getData } from "country-list";
+import { connect } from "react-redux";
+
 
 import "../Button.css"
 
@@ -14,9 +16,15 @@ function CheckoutPage(props) {
   const cardElementRef = useRef(null);
   const [cardErrors, setCardErrors] = useState([]);
   const [order, setOrder] = useState(null);
-  const [amount, setAmount] = useState('100')
-  const [userId, setUserId] = useState('2gb31dySKuVSzigcCDN1o8i8qc43')
-
+  const [userId, setUserId] = useState('')
+  
+  
+  useEffect(() => {
+    // Check if the profile object and uid exist before accessing
+    if (props.profile && props.profile.uid) {
+      setUserId(props.profile.uid);
+    }
+  }, [props.profile.uid]); 
 
 //create order function
 useEffect(() => {
@@ -318,4 +326,10 @@ async function renewOrder(id, history) {
   history.push(`/?order=${order.id}`);
 }
 
-export default CheckoutPage;
+const mapStateToProps = (state) => {
+  return {
+    profile: state.firebase.profile,
+  };
+};
+
+export default connect(mapStateToProps, null)(CheckoutPage);
