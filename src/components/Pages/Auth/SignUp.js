@@ -165,7 +165,7 @@ const SignUp = (props) => {
 		}
 		if (validation()) {
 			// console.log("signup");
-			console.log(image, `this is the image on the frontend side`);
+			// console.log(image, `this is the image on the frontend side`);
 			props.signUp(data, image);
 		} else {
 			console.log("error");
@@ -1327,8 +1327,8 @@ const Stage6 = (props) => {
 								variant="default"
 								className="signup-confirm"
 								disabled={
-									props.adminType.trim() === "" ||
-									props.IDType.trim() === "" ||
+									props.adminType === "" ||
+									props.IDType === "" ||
 									props.IDNumber.trim() === "" ||
 									props.image === null
 										? true

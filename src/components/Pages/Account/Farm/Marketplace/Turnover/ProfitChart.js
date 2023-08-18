@@ -8,7 +8,7 @@ import { Form, Row, Col, Accordion, Button } from "react-bootstrap";
 import { Dropdown } from "./../../../../../SubComponents/Dropdown";
 import { format } from "date-fns";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
-import { getFarmTurnOverFunction } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { getTurnOverChartFunction } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
 
 export const ProfitChart = (props) => {
 	const yearList = [];
@@ -169,13 +169,21 @@ export const ProfitChart = (props) => {
 			</div>
 		);
 
-	const searchTurnOver = () => {
+	useEffect(() => {
+		let period;
 		if (filter === "Month") {
-			console.log(`month clicked`);
-			let monthNum = months.indexOf(month) + 1;
-			props.getData("Month", { month: monthNum, year });
-		} else {
-			console.log(`cycle clicked`);
+			// console.log(`filter changed to month `);
+			let monthNumber = months.indexOf(month) + 1;
+
+			period = monthNumber;
+			props.getData("Month", { month: monthNumber, year });
+		}
+		// (filter === "Year")
+		else {
+			// console.log(`filter changed to Cycle `);
+
+			period = year;
+
 			props.getData("farmCycle", {
 				startMonth: months.indexOf(farmCycleStartMonth) + 1,
 				endMonth: months.indexOf(farmCycleEndMonth),
@@ -183,37 +191,73 @@ export const ProfitChart = (props) => {
 				endYear: farmCycleEndYear,
 			});
 		}
-	};
+	}, [filter]);
+
+	// const searchTurnOver = () => {
+	// 	if (filter === "Month") {
+	// 		console.log(`month clicked`);
+	// 		let monthNum = months.indexOf(month) + 1;
+	// 		props.getData("Month", { month: monthNum, year });
+	// 	} else {
+	// 		console.log(`cycle clicked`);
+	// 		props.getData("farmCycle", {
+	// 			startMonth: months.indexOf(farmCycleStartMonth) + 1,
+	// 			endMonth: months.indexOf(farmCycleEndMonth),
+	// 			startYear: farmCycleStartYear,
+	// 			endYear: farmCycleEndYear,
+	// 		});
+	// 	}
+	// };
 
 	let farmTypesSet = new Set();
 
 	let farmProduceTypeObjects = {};
 
-	props.produceData?.forEach((produce) => {
+	props.salesData?.forEach((produce) => {
 		farmTypesSet.add(produce.farmType);
 
-		if (!farmProduceTypeObjects[produce.farmType]) {
-			farmProduceTypeObjects[produce.farmType] = {};
-			farmProduceTypeObjects[produce.farmType].produces = [];
+		if (!farmProduceTypeObjects[produce.productType]) {
+			farmProduceTypeObjects[produce.productType] = {};
+			farmProduceTypeObjects[produce.productType].produces = [];
 		}
 		// If the farmType is already encountered, increment its count by 1
-		farmProduceTypeObjects[produce.farmType].produces.push(produce);
-
-		// produce.farmType === farmTypes[farmTypes.indexOf(produce.farmType)];
+		farmProduceTypeObjects[produce.productType].produces.push(produce);
 	});
 
-	// console.log(farmProduceTypeObjects, `thi si before the loop`);
-
 	const calcDataInfo = (key) => {
-		// console.log(key, `thi si the key`);
-		let products = farmProduceTypeObjects[key].produces;
-		// console.log(props.)
+		let salesProducts = farmProduceTypeObjects[key].produces;
+		// let productTypes = farmProduceTypeObjects[key];
+		let producesForKey = props.produceData?.filter((produces) => {
+			return key === produces.farmType;
+		});
 
-		// console.log(products, `these are the products`);
+		// console.log(producesForKey, `these are the produces for key`);
 
 		const resultMap = new Map();
+		const salesMap = new Map();
 
-		products.forEach((product) => {
+		//reduce repetitive sales produces and accummulate their quantity
+		salesProducts?.forEach((product) => {
+			// console.log(product, `this is the item inthe first loop`);
+			if (salesMap.has(product.productName)) {
+				// console.log(`this shows there is repetition`);
+				let newQuantity =
+					parseInt(salesMap.get(product.productName).quantity) +
+					parseInt(product.quantity);
+
+				salesMap.get(product.productName).quantity = `${newQuantity}`;
+			} else {
+				salesMap.set(product.productName, { ...product });
+			}
+		});
+
+		let salesArray = Array.from(salesMap.values());
+
+		//reduce repetitive produces and accummulate their quantity
+
+		console.log(producesForKey, `produces for key`);
+
+		producesForKey.forEach((product) => {
 			// console.log(product, `this is the item inthe first loop`);
 			if (resultMap.has(product.item)) {
 				let newQuantity =
@@ -249,41 +293,34 @@ export const ProfitChart = (props) => {
 			"#9edae5",
 		];
 
-		// console.log(resultMap, `this is the result map`);
-
-		let resultArray = Array.from(resultMap.values());
+		let productsArray = Array.from(resultMap.values());
 
 		let productColor = [];
-		// console.log(resultArray, `thii s ithe result array`);
+		let produceArray;
 
-		let index = 0;
-		resultArray.forEach((produce, index) => {
-			// console.log(produce.item);
-			// farmTypesSet.add(produce.item);
-
-			// if (!productCount[produce.item]) {
+		salesArray.forEach((value, index) => {
+			produceArray = productsArray.filter((obj) => {
+				return value.productName === obj.item;
+			});
 
 			productColor.push(colorArray[index]);
 			index++;
-			// } else {
-			// 	// If the farmType is already encountered, increment its count by 1
-			// 	farmTypeCounts[produce.farmType].number++;
-			// }
 		});
 
-		// let farmTypeArray = Array.from(farmTypesSet);
-		// console.log(productCount, `thi sis the array my boy`);
-		let productsLabel = resultArray.map((product) => {
-			return product.item;
+		console.log(produceArray, `these are the produces`);
+		console.log(salesArray, `these are the sales array`);
+		let productsLabel = salesArray.map((product) => {
+			return product.productName;
 		});
 
-		let productInfo = resultArray.map((product) => {
-			return product.quantity;
+		let productInfo = salesArray.map((salesProd, index) => {
+			const percProfit =
+				(salesProd.price.amount * salesProd.quantity) /
+				(produceArray[index].quantity * produceArray[index].price);
+			return `${percProfit}`;
 		});
 
-		// let dataColor = productCount.map((product) => {
-		// 	return resultArray.color;
-		// });
+		console.log(productInfo, `this is the color`);
 		let data = {
 			labels: productsLabel,
 
@@ -380,14 +417,14 @@ export const ProfitChart = (props) => {
 				<Col md={9}>
 					<div style={{ display: "flex", flexWrap: "wrap" }}>
 						{filterComponent}
-						<div style={{ display: "flex", marginRight: "auto" }}>
+						{/* <div style={{ display: "flex", marginRight: "auto" }}>
 							<Button
 								onClick={searchTurnOver}
 								className="green-btn shadow-none"
 							>
 								Search
 							</Button>
-						</div>
+						</div> */}
 					</div>
 				</Col>
 			</Row>
@@ -398,16 +435,19 @@ export const ProfitChart = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		produceData: state.farmData.produceForProfit,
-		profitDataLoader: state.farmData.produceForProfitLoader,
-		profitDataError: state.farmData.produceForProfitError,
+		produceData: state.farmData.produceInfoForProfitchart,
+		profitDataLoader: state.farmData.produceForProfitchartLoader,
+		profitDataError: state.farmData.produceForProfitchartError,
+		salesData: state.farmData.salesInfoForProfitchart,
+		salesDataLoader: state.farmData.salesForProfitchartLoader,
+		salesDataError: state.farmData.salesForProfitchartError,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getData: (duration, period) =>
-			dispatch(getFarmTurnOverFunction(duration, period)),
+			dispatch(getTurnOverChartFunction(duration, period)),
 	};
 };
 

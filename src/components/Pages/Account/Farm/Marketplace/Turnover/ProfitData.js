@@ -65,6 +65,10 @@ export const ProfitData = (props) => {
 
 	useEffect(() => {}, [year]);
 
+	// useEffect(() => {
+
+	// }, [])
+
 	// Generate the list of years from now to 2050
 	for (let year = currentYear; year <= 2050; year++) {
 		yearList.push(year);
@@ -80,11 +84,6 @@ export const ProfitData = (props) => {
 		)
 	) : (
 		<>'..loading'</>
-	);
-
-	console.log(
-		props.salesData,
-		`this is the sales data here for teh profitData`
 	);
 
 	let harvestQuantity = props.produceData?.length;
@@ -121,6 +120,7 @@ export const ProfitData = (props) => {
 	// })
 
 	// console.log(farmProduceTypeObjects);
+	// console.log(props.produceData);
 
 	let farmTypes = Array.from(farmTypesSet);
 	let productTypeTurnOver = {};
@@ -130,7 +130,7 @@ export const ProfitData = (props) => {
 		let salesForKey = props.salesData?.filter((saleProduct) => {
 			return key === saleProduct.productType;
 		});
-		console.log(salesForKey, `thes are the sales for ${key}`);
+		// console.log(salesForKey, `thes are the sales for ${key}`);
 
 		const resultMap = new Map();
 		const salesMap = new Map();
@@ -150,7 +150,7 @@ export const ProfitData = (props) => {
 		salesForKey?.forEach((product) => {
 			// console.log(product, `this is the item inthe first loop`);
 			if (salesMap.has(product.productName)) {
-				console.log(`this shows there is repetition`);
+				// console.log(`this shows there is repetition`);
 				let newQuantity =
 					parseInt(salesMap.get(product.productName).quantity) +
 					parseInt(product.quantity);
@@ -163,11 +163,9 @@ export const ProfitData = (props) => {
 
 		let resultArray = Array.from(resultMap.values());
 		let salesArray = Array.from(salesMap.values());
-		console.log(salesArray, `this is the result array`);
+		// console.log(salesArray, `this is the result array`);
 
 		return resultArray.map((value, index) => {
-			console.log(value.item, `thsi is the value of zzzzz`);
-
 			let saleProduce = salesArray.filter((obj) => {
 				return value.item === obj.productName;
 			});
@@ -175,7 +173,11 @@ export const ProfitData = (props) => {
 				saleProduce[0]?.quantity * saleProduce[0]?.price.amount -
 				saleProduce[0]?.price.amount * value.quantity;
 
-			console.log(saleProduce[0]?.quantity, `this is the saleProduce`);
+			let turnOver =
+				saleProduce[0]?.quantity * saleProduce[0]?.price.amount +
+				saleProduce[0]?.price.currency;
+
+			// console.log(saleProduce[0]?.quantity, `this is the saleProduce`);
 			return (
 				<ListGroupItem>
 					<p>Product name: {value.item.toUpperCase()}</p>
@@ -188,18 +190,18 @@ export const ProfitData = (props) => {
 					{/*  */}
 
 					{/* quantity sold * selling price */}
-					<p>
-						Turnover:{" "}
-						{saleProduce[0]
-							? saleProduce[0]?.quantity * saleProduce[0]?.price.amount +
-							  saleProduce[0]?.price.currency
-							: "pending"}
-					</p>
+					<p>Turnover: {saleProduce[0] ? turnOver : "Pending"}</p>
 
 					<p>
 						Profit/Loss:{" "}
-						<span style={{ color: profit > 0 ? "blue" : "red" }}>
-							{saleProduce[0] ? profit : null}{" "}
+						<span
+							style={{
+								color: saleProduce[0] ? (profit > 0 ? "blue" : "red") : "grey",
+							}}
+						>
+							{saleProduce[0]
+								? `${profit} ${saleProduce[0]?.price.currency}`
+								: "No sale yet"}{" "}
 						</span>
 					</p>
 					{/* <p></p> */}
@@ -376,7 +378,7 @@ export const ProfitData = (props) => {
 
 	let origin =
 		props.produceData === null ? (
-			<>search for produce</>
+			<>...loading</>
 		) : (
 			<div style={{ marginTop: "15px" }}>
 				<div style={{ textAlign: "left" }}>
@@ -425,14 +427,14 @@ export const ProfitData = (props) => {
 				<Col md={9}>
 					<div style={{ display: "flex", flexWrap: "wrap" }}>
 						{filterComponent}
-						<div style={{ display: "flex", marginRight: "auto" }}>
+						{/* <div style={{ display: "flex", marginRight: "auto" }}>
 							<Button
 								onClick={searchTurnOver}
 								className="green-btn shadow-none"
 							>
 								Search
 							</Button>
-						</div>
+						</div> */}
 					</div>
 				</Col>
 			</Row>

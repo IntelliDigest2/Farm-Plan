@@ -1,0 +1,59 @@
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 80vh;
+  padding: 20px; 
+}
+
+.list-container {
+  width: 100%; 
+}
+
+.list-separator {
+  margin-top: 10px; 
+  border-top: 1px solid #ddd; 
+  padding-top: 10px; 
+}
+
+.item-operation {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 15px;
+  background-color: hsl(146, 64%, 38%);
+  color: white; 
+  margin-right: 10px;
+}
+
+.item-amount {
+  font-weight: bold;
+  font-size: 1.4em; 
+}
+
+.date {
+  margin-top: 10px; 
+}
+
+.transaction-id {
+  font-size: 1.2em; 
+}
+
+.debit {
+  background-color: red; 
+}
+
+.credit {
+  background-color: green;
+}
+
+.transaction-id-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.operation {
+  font-size: 0.8em; 
+  font-weight: bold;
+  color: cadetblue;
+}

@@ -276,7 +276,8 @@ export const signUp = (newUser, image) => {
 				}
 			})
 			.then((resp) => {
-				console.log(resp);
+				// newUserId = resp.user.uid;
+				// console.log("createUserWithEmailAndPassword", newUserId);
 				// resp
 				let val = {
 					// ...newUser,
@@ -290,13 +291,14 @@ export const signUp = (newUser, image) => {
 					country: newUser.country,
 					region: newUser.region,
 					uid: newUserId,
+					balance: 0,
 					//restaurant-specific user data:
 					restaurantName: newUser.restaurantName,
 					companyName: newUser.companyName,
 					companyDescription: newUser.companyDescription,
 					regulatoryBody: newUser.regulatoryBody,
 					regulatoryBodyID: newUser.regulatoryBodyID,
-
+					// IDUrl: resp.data.secure_url,
 					IDNumber: newUser.IDNumber,
 					IDType: newUser.IDType,
 					cuisine: newUser.cuisine,
@@ -304,6 +306,11 @@ export const signUp = (newUser, image) => {
 					type: type,
 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};
+				// if (resp) {
+				// 	val.IDUrl = resp.data.secure_url;
+				// } else {
+				// 	val.IDUrl = newUser.IDUrl;
+				// }
 
 				if (resp) {
 					val.IDUrl = resp.data.secure_url;

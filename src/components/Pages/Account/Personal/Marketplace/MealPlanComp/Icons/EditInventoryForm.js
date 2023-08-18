@@ -42,6 +42,7 @@ function EditInventoryForm(props) {
       }, 
     };
     console.log("checking ingredients props ==>", data)
+    props.editInventoryData(data);
     // if (props.saved) {
     //   props.editSavedMeal(data);
     //   props.forceUpdate();

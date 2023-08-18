@@ -22,6 +22,12 @@ const initState = {
 	salesChartInfo: null,
 	salesChartInfoError: false,
 	salesChartInfoLoader: false,
+	salesInfoForProfitchart: null,
+	salesForProfitchartError: false,
+	salesForProfitchartLoader: false,
+	produceInfoForProfitchart: null,
+	produceForProfitchartError: false,
+	produceForProfitchartLoader: false,
 };
 
 const farmReducer = (state = initState, action) => {
@@ -183,12 +189,56 @@ const farmReducer = (state = initState, action) => {
 				salesForProfitError: action.payload,
 				salesForProfitLoader: false,
 			};
-		case "FETCH_SALES_FOR_PROFIT_LOADER":
+
+		case "FETCH_PRODUCE_FOR_PROFITCHART_LOADER":
 			// console.log("error, produce chart loading", action);
 			return {
 				...state,
-				salesForProfitLoader: true,
+				produceForProfitchartLoader: true,
 			};
+
+		case "FETCH_PRODUCE_FOR_PROFITCHART_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				produceInfoForProfitchart: action.payload,
+				produceForProfitchartError: null,
+				produceForProfitchartLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_PROFITCHART_ERROR":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+				produceForProfitError: action.payload,
+				produceForProfitchartLoader: false,
+			};
+		case "FETCH_SALES_FOR_PROFITCHART_LOADER":
+			// console.log("error, produce chart loading", action);
+			return {
+				...state,
+				salesForProfitchartLoader: true,
+			};
+		case "FETCH_SALES_FOR_PROFITCHART_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				salesInfoForProfitchart: action.payload,
+				salesForProfitchartError: null,
+				salesForProfitchartLoader: false,
+			};
+		case "FETCH_SALES_FOR_PROFITCHART_ERROR":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+				salesForProfitError: action.payload,
+				salesForProfitchartLoader: false,
+			};
+		// case "FETCH_SALES_FOR_PROFITCHART_LOADER":
+		// 	// console.log("error, produce chart loading", action);
+		// 	return {
+		// 		...state,
+		// 		salesForProfitchartLoader: true,
+		// 	};
 
 		case "GET_PRODUCE_ITEM":
 			console.log("get produce items success", action.payload);

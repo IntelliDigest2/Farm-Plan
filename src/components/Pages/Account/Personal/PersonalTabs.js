@@ -16,10 +16,10 @@ export function Food({ setShow, setChooseModal, profile }) {
 	console.log(profile);
 	useEffect(() => {
 		// if (profile.isloaded) {
-		console.log(
-			profile.verification === "pending",
-			`this shows that the account is pending`
-		);
+		// console.log(
+		// 	profile.verification === "pending",
+		// 	`this shows that the account is pending`
+		// );
 		if (profile.buildingFunction === "Consultant") {
 			setConsultantService(true);
 		} else {
@@ -183,6 +183,27 @@ export function Environment() {
 				label="Food Loss Tips"
 				color="green"
 				goTo="/food-reduction"
+			/>
+		</>
+	);
+}
+
+export function Funds() {
+	return (
+		<>
+			<IconButton
+				title="Transfer voucher or deposit funds."
+				icon="wallet"
+				label="Wallet"
+				color="turquoise"
+				goTo="/wallet"
+			/>
+			<IconButton
+				title="View your transaction history."
+				icon="transactions"
+				label="Transactions"
+				color="yellow"
+				goTo="/transactions"
 			/>
 		</>
 	);
