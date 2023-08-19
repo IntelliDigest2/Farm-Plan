@@ -21,7 +21,7 @@ const Transaction = (props) => {
   console.log("profile", props.profile)
 
   const baseUrlDev="http://localhost:5000"
-  const baseUrlProd="http://34.123.239.70:5000"
+  const baseUrlProd="https://34.123.239.70:5000"
 
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
