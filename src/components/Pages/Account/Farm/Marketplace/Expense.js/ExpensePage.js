@@ -1,7 +1,7 @@
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { PageWrap } from "./../../../../../SubComponents/PageWrap";
-import DailyExpense from "./DailyExpense";
+import Expense from "./Expense";
 import MonthlyExpense from "./MonthlyExpense";
 import WeeklyExpense from "./WeeklyExpense";
 import YearlyExpense from "./YearlyExpense";
@@ -14,20 +14,20 @@ function ExpensePage() {
 					{/* <WaveLoader /> */}
 
 					<Tabs
-						defaultActiveKey="Daily"
+						defaultActiveKey="Expense"
 						id="meal-plan-tabs"
 						className="mb-3 mealtabs basic-title"
 						fill
 					>
 						<Tab
-							eventKey="Daily"
+							eventKey="Expense"
 							// title={t("description.meal_diary")}
-							title={"Daily"}
+							title={"Expense"}
 							className="mealtab"
 						>
-							<DailyExpense />
+							<Expense />
 						</Tab>
-						<Tab
+						{/* <Tab
 							eventKey="Weekly"
 							// title={t("description.meal_diary")}
 							title={"Weekly"}
@@ -41,7 +41,7 @@ function ExpensePage() {
 
 						<Tab eventKey="Yearly" title={"Yearly"} className="mealtab">
 							<YearlyExpense />
-						</Tab>
+						</Tab> */}
 					</Tabs>
 
 					{/* input available locations for picking up */}

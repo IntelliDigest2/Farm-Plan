@@ -28,6 +28,9 @@ const initState = {
 	produceInfoForProfitchart: null,
 	produceForProfitchartError: false,
 	produceForProfitchartLoader: false,
+	expenseInfo: null,
+	expenseError: false,
+	expenseLoader: false,
 };
 
 const farmReducer = (state = initState, action) => {
@@ -130,6 +133,27 @@ const farmReducer = (state = initState, action) => {
 				...state,
 
 				salesChartInfoLoader: true,
+			};
+		case "FETCH_EXPENSE_SUCCESS":
+			// console.log("sale fetch success ", action.payload);
+			return {
+				...state,
+				expenseInfo: action.payload,
+				expenseError: false,
+				expenseLoader: false,
+			};
+		case "FETCH_EXPENSE_ERROR":
+			return {
+				...state,
+				expenseError: action.payload,
+				expenseLoader: false,
+			};
+		case "FETCH_EXPENSE_LOADER":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+
+				expenseLoader: true,
 			};
 		case "FETCH_PRODUCE_FOR_SALESCHART_SUCCESS":
 			// console.log("produce chart success ", action.payload);
