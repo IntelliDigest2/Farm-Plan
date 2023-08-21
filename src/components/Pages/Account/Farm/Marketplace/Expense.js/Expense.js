@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getSoldProducts } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { Form, Row, Col } from "react-bootstrap";
+import { format } from "date-fns";
+import DatePicker from "react-datepicker";
+import { getExpenseForDuration } from "../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { Dropdown } from "../../../../../SubComponents/Dropdown";
 import {
-	Form,
-	Row,
-	Col,
 	Accordion,
-	Button,
+	Card,
+	Table,
 	ListGroup,
 	ListGroupItem,
 } from "react-bootstrap";
+// import { format } from "date-fns";
 
-import DatePicker from "react-datepicker";
-import { format } from "date-fns";
-import { getMonth } from "date-fns";
-import { Dropdown } from "./../../../../../SubComponents/Dropdown";
-import List from "@mui/material/List";
-// import { ListItem, ListGroupItem } from "@mui/material/ListItem";
-import { getSalesForDuration } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
-
-export const Sales = (props) => {
+export const Expense = (props) => {
 	const currentYear = new Date().getFullYear();
 	const currentDate = new Date();
 	const currentMonth = format(currentDate, "MMMM").substring(0, 3);
@@ -48,7 +43,9 @@ export const Sales = (props) => {
 	// 	props.getSalesData("Month", 8);
 	// }, []);
 
-	useEffect(() => {}, [props.salesData]);
+	useEffect(() => {}, [props.expenseData]);
+
+	console.log(props.expenseData, `thi si shte data for the expense`);
 
 	//changes the period value
 	useEffect(() => {
@@ -71,20 +68,20 @@ export const Sales = (props) => {
 
 		console.log(filter, period);
 
-		props.getSalesData(filter, period);
+		props.getExpenseData(filter, period);
 	}, [filter]);
 
 	useEffect(() => {
 		if (filter === "Week") {
 			console.log(`Week change`);
-			props.getSalesData(filter, week);
+			props.getExpenseData(filter, week);
 		}
 	}, [week]);
 
 	useEffect(() => {
 		if (filter === "Day") {
 			console.log(`day changed to ${day}`);
-			props.getSalesData(filter, day);
+			props.getExpenseData(filter, day);
 		}
 	}, [day]);
 
@@ -93,7 +90,7 @@ export const Sales = (props) => {
 			console.log(`month change`);
 			let monthNumber = months.indexOf(month) + 1;
 
-			props.getSalesData(filter, monthNumber);
+			props.getExpenseData(filter, monthNumber);
 		}
 	}, [month]);
 
@@ -101,11 +98,9 @@ export const Sales = (props) => {
 		if (filter === "Year") {
 			console.log(`year change`);
 
-			props.getSalesData(filter, year);
+			props.getExpenseData(filter, year);
 		}
 	}, [year]);
-
-	console.log(props.salesData, `this is the sales data`);
 
 	const endYear = 2050;
 	const years = [];
@@ -174,44 +169,70 @@ export const Sales = (props) => {
 			</div>
 		);
 
+	let groupedData = props.expenseData?.reduce((result, item) => {
+		const { date, ...rest } = item;
+		const formattedDate = format(date.toDate(), "M/d/yyyy");
+		console.log(formattedDate);
+		if (!result[formattedDate]) {
+			result[formattedDate] = [];
+		}
+		result[formattedDate].push(rest);
+		return result;
+	}, {});
+
+	console.log(groupedData, `this is the grouped Data`);
+
+	let table;
+	if (props.expenseData) {
+		table = Object.keys(groupedData).map(
+			(date, index) => {
+				// console.log(expense,);
+
+				return (
+					<tbody>
+						<tr key={`${index}`}>
+							<td>{date}</td>
+							<td>{groupedData[date][index].category}</td>
+							<td>
+								{groupedData[date][index].cost.amount}
+								{groupedData[date][index].cost.currency}
+							</td>
+							<td>{groupedData[date][index].supplier.name}</td>
+						</tr>
+					</tbody>
+				);
+			}
+
+			// 	// {/* {actualDay.toUpperCase()} */}
+		);
+	}
+
 	let content =
-		props.salesData === null ? (
+		props.expenseData === null ? (
 			"...loading"
-		) : props.salesData.length > 0 ? (
-			props.salesData.map((sale, index) => (
-				<div
-					key={`sale-${index}`}
-					style={{
-						padding: "10px",
-						textAlign: "left",
+		) : props.expenseData.length > 0 ? (
+			Object.keys(groupedData).map((date, index) => {
+				return (
+					<div>
+						<div style={{ textAlign: "left" }}>Date: {date}</div>
 
-						margin: "5px",
-						border: "1px solid grey",
-						borderRadius: "5px",
-						// height: "100px",
-					}}
-				>
-					<p>Date: {format(sale.date.toDate(), "MMMM d, yyyy")}</p>
+						<Table striped bordered hover>
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Expense Type</th>
+									<th>Cost</th>
 
-					<p style={{ backgroundColor: "#D3D3D3" }}>
-						Sale Id number: {sale.salesId}
-					</p>
-					<p>Product: {sale.productName}</p>
-					<p style={{ backgroundColor: "#D3D3D3" }}>
-						Customer Name: {sale.customerInfo.customerName}
-					</p>
-					<p>
-						Price:<span>{sale.price.currency}</span>
-						{sale.price.amount}
-					</p>
-					<p style={{ backgroundColor: "#D3D3D3" }}>
-						Quantity: {sale.quantity}
-						{sale.units}
-					</p>
-				</div>
-			))
+									<th>Supplier</th>
+								</tr>
+							</thead>
+							{table}
+						</Table>
+					</div>
+				);
+			})
 		) : (
-			<div>You have not made any sales for this period</div>
+			<div>You have not made any expense for this period</div>
 		);
 
 	return (
@@ -249,18 +270,18 @@ export const Sales = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		salesData: state.farmData.salesInfo,
-		salesDataLoader: state.farmData.salesInfoLoader,
-		salesDataError: state.farmData.salesInfoError,
+		expenseData: state.farmData.expenseInfo,
+		expenseLoader: state.farmData.expenseLoader,
+		expenseError: state.farmData.expenseError,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getSalesData: (duration, period) => {
-			dispatch(getSalesForDuration(duration, period));
+		getExpenseData: (duration, period) => {
+			dispatch(getExpenseForDuration(duration, period));
 		},
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sales);
+export default connect(mapStateToProps, mapDispatchToProps)(Expense);

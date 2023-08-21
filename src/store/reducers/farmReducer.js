@@ -10,6 +10,27 @@ const initState = {
 	produceForChart: null,
 	produceForChartLoader: false,
 	produceForChartError: null,
+	produceForProfit: null,
+	produceForProfitLoader: false,
+	produceForProfitError: null,
+	salesInfoForProfit: null,
+	salesForProfitError: false,
+	salesForProfitLoader: false,
+	salesInfo: null,
+	salesInfoError: false,
+	salesInfoLoader: false,
+	salesChartInfo: null,
+	salesChartInfoError: false,
+	salesChartInfoLoader: false,
+	salesInfoForProfitchart: null,
+	salesForProfitchartError: false,
+	salesForProfitchartLoader: false,
+	produceInfoForProfitchart: null,
+	produceForProfitchartError: false,
+	produceForProfitchartLoader: false,
+	expenseInfo: null,
+	expenseError: false,
+	expenseLoader: false,
 };
 
 const farmReducer = (state = initState, action) => {
@@ -66,18 +87,182 @@ const farmReducer = (state = initState, action) => {
 				produceForChartLoader: false,
 			};
 		case "FETCH_PRODUCE_FOR_CHART_ERROR":
-			// console.log("error, produce not added", action.err);
 			return {
 				...state,
 				produceForChartError: action.payload,
 				produceForChartLoader: false,
 			};
-		case "FETCH_PRODUCE_FOR_CHART_LOADER":
+		case "FETCH_SALES_SUCCESS":
+			console.log("sale fetch success ", action.payload);
+			return {
+				...state,
+				salesInfo: action.payload,
+				salesInfoError: false,
+				salesInfoLoader: false,
+			};
+		case "FETCH_SALES_ERROR":
+			return {
+				...state,
+				salesInfoError: action.payload,
+				salesInfoLoader: false,
+			};
+		case "FETCH_SALES_LOADER":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+
+				salesLoader: true,
+			};
+		case "FETCH_SALESCHART_SUCCESS":
+			// console.log("sale fetch success ", action.payload);
+			return {
+				...state,
+				salesChartInfo: action.payload,
+				salesChartInfoError: false,
+				salesChartInfoLoader: false,
+			};
+		case "FETCH_SALESCHART_ERROR":
+			return {
+				...state,
+				salesChartInfoError: action.payload,
+				salesChartInfoLoader: false,
+			};
+		case "FETCH_SALESCHART_LOADER":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+
+				salesChartInfoLoader: true,
+			};
+		case "FETCH_EXPENSE_SUCCESS":
+			// console.log("sale fetch success ", action.payload);
+			return {
+				...state,
+				expenseInfo: action.payload,
+				expenseError: false,
+				expenseLoader: false,
+			};
+		case "FETCH_EXPENSE_ERROR":
+			return {
+				...state,
+				expenseError: action.payload,
+				expenseLoader: false,
+			};
+		case "FETCH_EXPENSE_LOADER":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+
+				expenseLoader: true,
+			};
+		case "FETCH_PRODUCE_FOR_SALESCHART_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				produceForSales: action.payload,
+				produceForSalesError: null,
+				produceForSalesLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_SALESCHART_ERROR":
+			return {
+				...state,
+				produceForSalesError: action.payload,
+				produceForSalesLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_SALESCHART_LOADER":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+
+				produceForSalesLoader: true,
+			};
+
+		case "FETCH_PRODUCE_FOR_PROFIT_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				produceForProfit: action.payload,
+				produceForProfitError: null,
+				produceForProfitLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_PROFIT_ERROR":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+				produceForProfitError: action.payload,
+				produceForProfitLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_PROFIT_LOADER":
 			// console.log("error, produce chart loading", action);
 			return {
 				...state,
-				produceForChartLoader: true,
+				produceForProfitLoader: true,
 			};
+		case "FETCH_SALES_FOR_PROFIT_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				salesInfoForProfit: action.payload,
+				salesForProfitError: null,
+				salesForProfitLoader: false,
+			};
+		case "FETCH_SALES_FOR_PROFIT_ERROR":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+				salesForProfitError: action.payload,
+				salesForProfitLoader: false,
+			};
+
+		case "FETCH_PRODUCE_FOR_PROFITCHART_LOADER":
+			// console.log("error, produce chart loading", action);
+			return {
+				...state,
+				produceForProfitchartLoader: true,
+			};
+
+		case "FETCH_PRODUCE_FOR_PROFITCHART_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				produceInfoForProfitchart: action.payload,
+				produceForProfitchartError: null,
+				produceForProfitchartLoader: false,
+			};
+		case "FETCH_PRODUCE_FOR_PROFITCHART_ERROR":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+				produceForProfitError: action.payload,
+				produceForProfitchartLoader: false,
+			};
+		case "FETCH_SALES_FOR_PROFITCHART_LOADER":
+			// console.log("error, produce chart loading", action);
+			return {
+				...state,
+				salesForProfitchartLoader: true,
+			};
+		case "FETCH_SALES_FOR_PROFITCHART_SUCCESS":
+			// console.log("produce chart success ", action.payload);
+			return {
+				...state,
+				salesInfoForProfitchart: action.payload,
+				salesForProfitchartError: null,
+				salesForProfitchartLoader: false,
+			};
+		case "FETCH_SALES_FOR_PROFITCHART_ERROR":
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+				salesForProfitError: action.payload,
+				salesForProfitchartLoader: false,
+			};
+		// case "FETCH_SALES_FOR_PROFITCHART_LOADER":
+		// 	// console.log("error, produce chart loading", action);
+		// 	return {
+		// 		...state,
+		// 		salesForProfitchartLoader: true,
+		// 	};
 
 		case "GET_PRODUCE_ITEM":
 			console.log("get produce items success", action.payload);

@@ -312,6 +312,11 @@ export const signUp = (newUser, image) => {
 					val.IDUrl = newUser.IDUrl;
 				}
 
+				if (resp) {
+					val.IDUrl = resp.data.secure_url;
+				} else {
+					val.IDUrl = newUser.IDUrl;
+				}
 
 				if (newUser.consultantInfo) {
 					val.verification = "pending";

@@ -30,6 +30,266 @@ export const getFarmerData = () => {
 	};
 };
 
+export const getFarmTurnOverFunction = (duration, period) => {
+	// if (duration === 'Month'){
+	// 	{month,year} = period
+	// }else{
+	// 	{startMonth,endMonth,startYear,endYear}= period
+	// }
+	let startMonth, endMonth;
+	let cycleStart, cycleEnd;
+
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		const authUID = getState().firebase.auth.uid;
+
+		if (duration === "Month") {
+			let month = period.month;
+			let year = period.year;
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startMonth = new Date(year, month - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+
+			endMonth = new Date(year, month, 0);
+			startMonth.setHours(0, 0, 0, 0);
+			endMonth.setHours(23, 59, 59, 999);
+			console.log(startMonth, `this  is the start month`);
+			console.log(endMonth, `this  is the end month`);
+			console.log(year, `this  is the start year`);
+		} else {
+			cycleStart = new Date(period.startYear, period.startMonth - 1, 1);
+			cycleStart.setHours(0, 0, 0, 0);
+			cycleEnd = new Date(period.endYear, period.endMonth - 1, 1);
+			cycleEnd.setHours(23, 59, 59, 999);
+		}
+
+		let collectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("produce");
+
+		let collectionRef2 = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("sales");
+
+		let query, salesQuery;
+
+		switch (duration) {
+			case "Month":
+				query = collectionRef
+					.where("date", ">=", startMonth)
+					.where("date", "<=", endMonth);
+				salesQuery = collectionRef2
+					.where("date", ">=", startMonth)
+					.where("date", "<=", endMonth);
+				break;
+
+			default:
+				query = collectionRef
+					.where("date", ">=", cycleStart)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<=", cycleEnd);
+				salesQuery = collectionRef2
+					.where("date", ">=", cycleStart)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<=", cycleEnd);
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFIT_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				console.log(
+					products,
+					`these are the products returned for the products`
+				);
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFIT_SUCCESS",
+					payload: products,
+				});
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFIT_ERROR",
+					payload: error,
+				});
+			}
+		);
+		salesQuery.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_SALES_FOR_PROFIT_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				console.log(products, `these are the products returned`);
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_SALES_FOR_PROFIT_SUCCESS",
+					payload: products,
+				});
+				// console.log(`this is the products for the sales profit fetch`);
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_SALES_FOR_PROFIT_ERROR",
+					payload: error,
+				});
+			}
+		);
+	};
+};
+
+export const getTurnOverChartFunction = (duration, period) => {
+	let startMonth, endMonth;
+	let cycleStart, cycleEnd;
+	console.log(`i am here guys`);
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		const authUID = getState().firebase.auth.uid;
+
+		if (duration === "Month") {
+			let month = period.month;
+			let year = period.year;
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startMonth = new Date(year, month - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+
+			endMonth = new Date(year, month, 0);
+			startMonth.setHours(0, 0, 0, 0);
+			endMonth.setHours(23, 59, 59, 999);
+			// console.log(startMonth, `this  is the start month`);
+			// console.log(endMonth, `this  is the end month`);
+			// console.log(year, `this  is the start year`);
+		} else {
+			cycleStart = new Date(period.startYear, period.startMonth - 1, 1);
+			cycleStart.setHours(0, 0, 0, 0);
+			cycleEnd = new Date(period.endYear, period.endMonth - 1, 1);
+			cycleEnd.setHours(23, 59, 59, 999);
+		}
+
+		let collectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("produce");
+
+		let collectionRef2 = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("sales");
+
+		let query, salesQuery;
+
+		switch (duration) {
+			case "Month":
+				query = collectionRef
+					.where("date", ">=", startMonth)
+					.where("date", "<=", endMonth);
+				salesQuery = collectionRef2
+					.where("date", ">=", startMonth)
+					.where("date", "<=", endMonth);
+				break;
+
+			default:
+				query = collectionRef
+					.where("date", ">=", cycleStart)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<=", cycleEnd);
+				salesQuery = collectionRef2
+					.where("date", ">=", cycleStart)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<=", cycleEnd);
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFITCHART_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				console.log(
+					products,
+					`these are the products returned for the products`
+				);
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFITCHART_SUCCESS",
+					payload: products,
+				});
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_PROFITCHART_ERROR",
+					payload: error,
+				});
+			}
+		);
+		salesQuery.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_SALES_FOR_PROFITCHART_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_SALES_FOR_PROFITCHART_SUCCESS",
+					payload: products,
+				});
+				console.log(
+					products,
+					`these are the SALES FOR THE PROFIT CHART returned`
+				);
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_SALES_FOR_PROFITCHART_ERROR",
+					payload: error,
+				});
+			}
+		);
+	};
+};
+
 export const getFarmProductsForDuration = (duration, period) => {
 	let startOfWeek, endOfWeek;
 	let day;
@@ -162,6 +422,412 @@ export const getFarmProductsForDuration = (duration, period) => {
 		);
 	};
 };
+
+export const getSalesForDuration = (duration, period) => {
+	let startOfWeek, endOfWeek;
+	let day;
+
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
+
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		console.log(duration, `this is the duration for the sales`);
+		console.log(period, `this is the period for the sales`);
+
+		if (duration === "Week") {
+			const currentDate = new Date();
+			const firstDayOfMonth = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				1
+			);
+			const weekOfMonth = period;
+
+			// console.log(`week ${weekOfMonth} of month`);
+
+			// console.log(firstDayOfMonth, `first day of month`);
+
+			// Calculate the start and end timestamps for the week of the month
+			startOfWeek = new Date();
+			startOfWeek.setDate((weekOfMonth - 1) * 7 + 1);
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			endOfWeek = new Date();
+			endOfWeek.setDate(weekOfMonth * 7);
+			endOfWeek.setHours(23, 59, 59, 999);
+
+			// console.log(startOfWeek, `this is the start of the week`);
+			// console.log(endOfWeek, `this is the end of the week`);
+		} else if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(year, period - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(year, period, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+			const weekOfMonth = period;
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else if (duration === "Year") {
+			const currentDate = new Date();
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
+		} else {
+			day = period;
+			day.setHours(0, 0, 0, 0);
+		}
+
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+		let collectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("sales");
+
+		let query;
+
+		switch (duration) {
+			case "Week":
+				query = collectionRef
+					.where("date", ">=", startOfWeek)
+					.where("date", "<=", endOfWeek);
+				break;
+
+			case "Month":
+				query = collectionRef
+					.where("date", ">=", startOfMonth)
+					.where("date", "<=", endOfMonth);
+				break;
+
+			case "Year":
+				query = collectionRef
+					.where("date", ">=", startOfYear)
+					.where("date", "<=", endOfYear);
+				break;
+
+			default:
+				query = collectionRef
+					.where("date", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<", new Date(day.getTime() + 86400000));
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_SALES_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_SALES_SUCCESS",
+					payload: products,
+				});
+
+				console.log(products, `these are the sales products`);
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_SALES_ERROR",
+					payload: error,
+				});
+			}
+		);
+	};
+};
+
+export const getSalesChartForDuration = (duration, period) => {
+	let startOfWeek, endOfWeek;
+	let day;
+
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
+
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		// console.log(duration, `this is the duration for the sales`);
+		// console.log(period, `this is the period for the sales`);
+
+		if (duration === "Week") {
+			const currentDate = new Date();
+			const firstDayOfMonth = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				1
+			);
+			const weekOfMonth = period;
+
+			// console.log(`week ${weekOfMonth} of month`);
+
+			// console.log(firstDayOfMonth, `first day of month`);
+
+			// Calculate the start and end timestamps for the week of the month
+			startOfWeek = new Date();
+			startOfWeek.setDate((weekOfMonth - 1) * 7 + 1);
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			endOfWeek = new Date();
+			endOfWeek.setDate(weekOfMonth * 7);
+			endOfWeek.setHours(23, 59, 59, 999);
+
+			// console.log(startOfWeek, `this is the start of the week`);
+			// console.log(endOfWeek, `this is the end of the week`);
+		} else if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(year, period - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(year, period, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+			const weekOfMonth = period;
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else if (duration === "Year") {
+			const currentDate = new Date();
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
+		} else {
+			day = period;
+			day.setHours(0, 0, 0, 0);
+		}
+
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+		let collectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("sales");
+
+		let query;
+
+		switch (duration) {
+			case "Week":
+				query = collectionRef
+					.where("date", ">=", startOfWeek)
+					.where("date", "<=", endOfWeek);
+				break;
+
+			case "Month":
+				query = collectionRef
+					.where("date", ">=", startOfMonth)
+					.where("date", "<=", endOfMonth);
+				break;
+
+			case "Year":
+				query = collectionRef
+					.where("date", ">=", startOfYear)
+					.where("date", "<=", endOfYear);
+				break;
+
+			default:
+				query = collectionRef
+					.where("date", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<", new Date(day.getTime() + 86400000));
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_SALESCHART_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_SALESCHART_SUCCESS",
+					payload: products,
+				});
+
+				// console.log(products, `these are the sales products`);
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_SALESCHART_ERROR",
+					payload: error,
+				});
+			}
+		);
+	};
+};
+
+export const getExpenseForDuration = (duration, period) => {
+	let startOfWeek, endOfWeek;
+	let day;
+
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
+
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		// console.log(duration, `this is the duration for the sales`);
+		// console.log(period, `this is the period for the sales`);
+
+		if (duration === "Week") {
+			const currentDate = new Date();
+			const firstDayOfMonth = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				1
+			);
+			const weekOfMonth = period;
+
+			// console.log(`week ${weekOfMonth} of month`);
+
+			// console.log(firstDayOfMonth, `first day of month`);
+
+			// Calculate the start and end timestamps for the week of the month
+			startOfWeek = new Date();
+			startOfWeek.setDate((weekOfMonth - 1) * 7 + 1);
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			endOfWeek = new Date();
+			endOfWeek.setDate(weekOfMonth * 7);
+			endOfWeek.setHours(23, 59, 59, 999);
+
+			// console.log(startOfWeek, `this is the start of the week`);
+			// console.log(endOfWeek, `this is the end of the week`);
+		} else if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(year, period - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(year, period, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+			const weekOfMonth = period;
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else if (duration === "Year") {
+			const currentDate = new Date();
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
+		} else {
+			day = period;
+			day.setHours(0, 0, 0, 0);
+		}
+
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+		let collectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(authUID)
+			.collection("expense");
+
+		let query;
+
+		switch (duration) {
+			case "Week":
+				query = collectionRef
+					.where("date", ">=", startOfWeek)
+					.where("date", "<=", endOfWeek);
+				break;
+
+			case "Month":
+				query = collectionRef
+					.where("date", ">=", startOfMonth)
+					.where("date", "<=", endOfMonth);
+				break;
+
+			case "Year":
+				query = collectionRef
+					.where("date", ">=", startOfYear)
+					.where("date", "<=", endOfYear);
+				break;
+
+			default:
+				query = collectionRef
+					.where("date", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("date", "<", new Date(day.getTime() + 86400000));
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const products = [];
+				dispatch({
+					type: "FETCH_EXPENSE_LOADER",
+					payload: true,
+				});
+				snapshot.forEach((doc) => {
+					const data = doc.data();
+
+					products.push({ ...doc.data(), salesId: doc.id });
+				});
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({
+					type: "FETCH_EXPENSE_SUCCESS",
+					payload: products,
+				});
+
+				console.log(products, `these are the expense results`);
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+				dispatch({
+					type: "FETCH_EXPENSE_ERROR",
+					payload: error,
+				});
+			}
+		);
+	};
+};
+
 const getFarmPlanData = () => {
 	return (dispatch, getState, { getFirebase }) => {
 		const profile = getState().firebase.profile;
