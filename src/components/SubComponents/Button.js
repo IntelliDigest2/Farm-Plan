@@ -27,7 +27,11 @@ import PermContactCalendarSharpIcon from "@mui/icons-material/PermContactCalenda
 import PeopleIcon from "@mui/icons-material/People";
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { Psychology } from "@mui/icons-material";
-import PaymentIcon from '@mui/icons-material/Payment';// import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import PaymentIcon from '@mui/icons-material/Payment';
+import MoneyIcon from '@mui/icons-material/Money';
+import RedeemIcon from '@mui/icons-material/Redeem';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+// import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 // import CalendarMonthSharpIcon from "@mui/icons-material/CalendarMonthSharp";
 
 //when using component, styling="[colour]" colour choices are turquoise, green, yellow and blue. (styles are in Button.css)
@@ -174,6 +178,12 @@ export function IconButton(props) {
 				return <ReceiptLongIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "wallet":
 				return <PaymentIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "coupon":
+				return <MoneyIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "redeem":
+				return <RedeemIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "list":
+				return <FormatListNumberedIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			// case "calendar":
 			// 	return <CalendarMonthSharpIcon sx={{ fontSize: 90 }} />;
 		}

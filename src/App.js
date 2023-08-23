@@ -78,6 +78,7 @@ import NewAccount from "./components/Pages/Account/Account";
 import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
 
 import RevolutPay from "./components/SubComponents/payment/RevolutPay"
+
 import FailedDeposit from "./components/SubComponents/payment/Failed"
 // import Example from "./components/Pages/Account/Example";
 
@@ -104,7 +105,11 @@ import Payment from "./components/Pages/Account/Personal/Marketplace/MealPlanCom
 import TurnOverPage from "./components/Pages/Account/Farm/Marketplace/Turnover/TurnOverPage";
 import ExpensePage from "./components/Pages/Account/Farm/Marketplace/Expense.js/ExpensePage";
 import Wallet from "./components/SubComponents/payment/Wallet";
+import Coupon from "./components/SubComponents/payment/Coupon";
+
 import Transactions from "./components/SubComponents/payment/Transactions";
+import CouponTransactions from "./components/SubComponents/payment/CouponTransactions";
+import RedeemCoupon from "./components/SubComponents/payment/RedeemCoupon";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -330,12 +335,15 @@ const App = (props) => {
 						<Route path="/produce" component={ProduceTab} />
 						<Route path="/turnover" component={TurnOverPage} />
 						<Route path="/expense" component={ExpensePage} />
-
 						<Route path="/in-progress" component={InProgress} />
 
 						<Route path="/payment" component={RevolutPay} />
 						<Route path="/wallet" component={Wallet} />
+						<Route path="/create-coupon" component={Coupon} />
+						<Route path="/redeem-coupon" component={RedeemCoupon} />
 						<Route path="/transactions" component={Transactions} />
+						<Route path="/coupon-transactions" component={CouponTransactions} />
+
 						<Route
 							path="/db"
 							render={() => {
