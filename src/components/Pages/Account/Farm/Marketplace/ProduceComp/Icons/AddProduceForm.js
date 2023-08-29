@@ -24,7 +24,7 @@ const AddProduceForm = (props) => {
 	// const [currency, setCurrency] = useState("");
 	const [submitLoading, setSubmitLoading] = useState(false);
 
-	const [submitError, setSubmitError] = useState(null);
+	const [submitError, setSubmitError] = useState(false);
 	// const [submitLoader, setSubmitLoader] = useState(false);
 	const defaultLocal = {
 		item: "",
@@ -35,23 +35,25 @@ const AddProduceForm = (props) => {
 		// nutrients: inputGroups,
 	};
 
+	const defaultNutrient = [
+		{ id: 1, nutrientName: "", nutrientQuantity: "", nutrientUnit: "%" },
+	];
+
 	const [show, setShow] = useState(true);
 	const [produceDate, setProduceDate] = useState(new Date());
-	const [inputGroups, setInputGroups] = useState([
-		{ id: 1, nutrientName: "", nutrientQuantity: "", nutrientUnit: "%" },
-	]);
+	const [inputGroups, setInputGroups] = useState(defaultNutrient);
 	const [local, setLocal] = useState(defaultLocal);
 	const formRef = useRef(null);
 
 	useEffect(() => {}, [inputGroups]);
 
-	console.log(produceDate, `this is the produceDate`);
+	// console.log(produceDate, `this is the produceDate`);
 
-	useEffect(() => {
-		if (props.submitError !== null) setSubmitError(props.submitError);
-	}, [props.submitError]);
+	// useEffect(() => {
+	// 	if (props.submitError !== null) setSubmitError(props.submitError);
+	// }, [props.submitError]);
 
-	console.log(props.addProduceLoader, `initial stat of submitLoader`);
+	// console.log(props.addProduceLoader, `initial stat of submitLoader`);
 
 	// useEffect(() => {
 	// 	console.log(props.addProduceLoader, `it has changed`);
@@ -76,7 +78,7 @@ const AddProduceForm = (props) => {
 		setInputGroups(updatedInputGroups);
 	};
 	const handleNutrientUnit = (index, value) => {
-		console.log(value);
+		// console.log(value);
 		const updatedInputGroups = inputGroups.map((group, i) =>
 			i === index ? { ...group, nutrientUnit: value } : group
 		);
@@ -170,6 +172,38 @@ const AddProduceForm = (props) => {
 		);
 	});
 
+	let criteria;
+	let btnCriteria = () => {
+		switch (farmType) {
+			default:
+			case "Horticulture":
+				criteria =
+					local.item.trim() === "" ||
+					local.quantity.trim() === "" ||
+					local.price === "" ||
+					local.sellingPrice === "" ||
+					inputGroups[0].nutrientName.trim() === "" ||
+					inputGroups[0].nutrientQuantity.trim() === "";
+			case "Aquaculture":
+				criteria =
+					local.item.trim() === "" ||
+					local.quantity.trim() === "" ||
+					local.price === "" ||
+					local.sellingPrice === "" ||
+					inputGroups[0].nutrientName.trim() === "" ||
+					inputGroups[0].nutrientQuantity.trim() === "";
+			case "Livestock":
+				criteria =
+					local.item.trim() === "" ||
+					local.quantity.trim() === "" ||
+					local.price === "" ||
+					local.sellingPrice === "" ||
+					inputGroups[0].nutrientName.trim() === "" ||
+					inputGroups[0].nutrientQuantity.trim() === "";
+		}
+	};
+	btnCriteria();
+
 	const ChooseFarmType = () => {
 		switch (farmType) {
 			default:
@@ -177,7 +211,22 @@ const AddProduceForm = (props) => {
 				return (
 					<div>
 						<Form.Group>
+							{/* <div style={{ display: "block" }}> */}
 							<Form.Label>Crop name</Form.Label>
+							{/* </div> */}
+
+							<div
+								style={{
+									color: "grey",
+									display: "inline-block",
+									fontSize: "12px",
+								}}
+							>
+								* Products having unique decriptions that differentiate them
+								should be named as such eg 'green apple', 'red apple' to allow
+								for easy grouping.
+							</div>
+
 							<Form.Control
 								type="text"
 								id="item"
@@ -296,6 +345,17 @@ const AddProduceForm = (props) => {
 					<div>
 						<Form.Group>
 							<Form.Label>Name of Specie</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									display: "inline-block",
+									fontSize: "12px",
+								}}
+							>
+								* Products having unique decriptions that differentiate them
+								should be named as such eg 'green apple', 'red apple' to allow
+								for easy grouping.
+							</div>
 							<Form.Control
 								type="text"
 								id="item"
@@ -387,6 +447,17 @@ const AddProduceForm = (props) => {
 					<div>
 						<Form.Group>
 							<Form.Label>Name of Specie</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									display: "inline-block",
+									fontSize: "12px",
+								}}
+							>
+								* Products having unique decriptions that differentiate them
+								should be named as such eg 'green apple', 'red apple' to allow
+								for easy grouping.
+							</div>
 							<Form.Control
 								type="text"
 								id="item"
@@ -505,22 +576,26 @@ const AddProduceForm = (props) => {
 		};
 
 		if (data.farmType === "Horticulture") {
-			console.log(inputGroups, `this is the input groups that is shown`);
+			// console.log(inputGroups, `this is the input groups that is shown`);
 			data.nutrients = inputGroups;
 		}
+
+		setSubmitLoading(true);
 
 		props
 			.addProduceData(data)
 			.then((resp) => {
-				console.log(resp.id, `this is the id of the newly added sale`);
+				// console.log(resp.id, `this is the id of the newly added sale`);
 				setSubmitLoading(false);
-				formRef.current.reset();
-				submitNotification("Success", "Produce added to sales");
+				setLocal(defaultLocal);
+				setInputGroups(defaultNutrient);
+				submitNotification("Success", "Produce added to product Inventory");
 			})
 			.catch((err) => {
-				console.log(err, `an error occurred`);
+				// console.log(err, `an error occurred`);
 				submitNotification("Error", "Something went wrong try again");
 				setSubmitLoading(false);
+				setSubmitError(true);
 			});
 
 		// forceUpdate();
@@ -556,12 +631,20 @@ const AddProduceForm = (props) => {
 						}}
 						className="blue-btn shadow-none mt-3"
 						type="submit"
+						disabled={
+							(farmType === "Horticulture"
+								? inputGroups[0].nutrientName.trim() === "" ||
+								  inputGroups[0].nutrientQuantity.trim() === ""
+								: "") ||
+							local.item.trim() === "" ||
+							local.quantity.trim() === "" ||
+							local.price === "" ||
+							local.sellingPrice === ""
+						}
 					>
-						{props.addProduceLoader === false || props.addProduceLoader === null
-							? "Submit"
-							: "...Loading"}
+						{submitLoading === false ? "Submit" : "...Loading"}
 					</Button>
-					{submitError === null ? "" : "Something went wrong try again"}
+					{submitError === false ? "" : "Something went wrong try again"}
 				</div>
 			</Form>
 		</div>
@@ -571,8 +654,8 @@ const AddProduceForm = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		produce: state.farmData.produce,
-		submitError: state.farmData.addProduceError,
-		addProduceLoader: state.farmData.addProduceLoader,
+		// submitError: state.farmData.addProduceError,
+		// addProduceLoader: state.farmData.addProduceLoader,
 	};
 };
 const mapDispatchToProps = (dispatch) => {

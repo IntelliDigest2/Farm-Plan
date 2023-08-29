@@ -27,9 +27,9 @@ const AddExpenseForm = (props) => {
 	const [local, setLocal] = useState(defaultLocal);
 	const formRef = useRef(null);
 
-	useEffect(() => {
-		if (props.submitError !== null) setSubmitError(props.submitError);
-	}, [props.submitError]);
+	// useEffect(() => {
+	// 	if (props.submitError !== null) setSubmitError(props.submitError);
+	// }, [props.submitError]);
 
 	// useEffect(() => {
 	// 	console.log(props.addExpenseLoader, `it has changed`);
@@ -67,19 +67,20 @@ const AddExpenseForm = (props) => {
 		props
 			.addExpenseData(data)
 			.then((resp) => {
-				console.log(resp.id, `this is the id of the newly added sale`);
+				// console.log(resp.id, `this is the id of the newly added sale`);
 				setSubmitLoading(false);
-				formRef.current.reset();
-				submitNotification("Success", "Produce added to sales");
+				submitNotification("Success", "Expense added to expense list");
+				setLocal(defaultLocal);
 			})
 			.catch((err) => {
-				console.log(err, `an error occurred`);
+				// console.log(err, `an error occurred`);
 				submitNotification("Error", "Something went wrong try again");
 				setSubmitLoading(false);
+				setSubmitError(true);
 			});
 	};
 
-	console.log(props.addExpenseLoader, `this is the add Expense loader`);
+	// console.log(props.addExpenseLoader, `this is the add Expense loader`);
 
 	return (
 		<div>
@@ -113,7 +114,7 @@ const AddExpenseForm = (props) => {
 							type="text"
 							id="supplier"
 							onChange={(e) => handleLocal(e)}
-							value={local.item}
+							value={local.supplier}
 							required
 						/>
 					</Form.Group>
@@ -178,6 +179,11 @@ const AddExpenseForm = (props) => {
 						}}
 						className="blue-btn shadow-none mt-3"
 						type="submit"
+						disabled={
+							local.supplier.trim() === "" ||
+							local.cost.trim() === "" ||
+							local.description === ""
+						}
 					>
 						{submitLoading === false ? "Submit" : "...Loading"}
 					</Button>
@@ -191,8 +197,8 @@ const AddExpenseForm = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		// produce: state.farmData.produce,
-		submitError: state.farmData.addExpenseError,
-		addExpenseLoader: state.farmData.addExpenseLoader,
+		// submitError: state.farmData.addExpenseError,
+		// addExpenseLoader: state.farmData.addExpenseLoader,
 	};
 };
 const mapDispatchToProps = (dispatch) => {
