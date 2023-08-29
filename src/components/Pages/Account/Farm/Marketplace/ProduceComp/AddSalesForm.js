@@ -30,9 +30,9 @@ const AddSalesForm = (props) => {
 	const [productType, setProductType] = useState("Horticulture");
 	const formRef = useRef(null);
 
-	useEffect(() => {
-		if (props.submitError !== null) setSubmitError(props.submitError);
-	}, [props.submitError]);
+	// useEffect(() => {
+	// 	if (props.submitError !== null) setSubmitError(props.submitError);
+	// }, [props.submitError]);
 
 	// useEffect(() => {
 	// 	console.log(props.addExpenseLoader, `it has changed`);
@@ -65,25 +65,26 @@ const AddSalesForm = (props) => {
 			customerInfo: { customerName: local.customerName, customerId: null },
 		};
 
-		console.log(data, `this is the data returned`);
-		setSubmitLoading(true);
+		// console.log(data, `this is the data returned`);
+		// setSubmitLoading(true);
 
 		props
 			.addSaleData(data)
 			.then((resp) => {
-				console.log(resp.id, `this is the id of the newly added sale`);
+				// console.log(resp.id, `this is the id of the newly added sale`);
 				setSubmitLoading(false);
-				formRef.current.reset();
+				setLocal(defaultLocal);
 				submitNotification("Success", "Produce added to sales");
 			})
 			.catch((err) => {
-				console.log(err, `an error occurred`);
+				// console.log(err, `an error occurred`);
 				submitNotification("Error", "Something went wrong try again");
 				setSubmitLoading(false);
+				setSubmitError(true);
 			});
 	};
 
-	console.log(props.addSaleLoader, `this is the add Expense loader`);
+	// console.log(props.addSaleLoader, `this is the add Expense loader`);
 
 	return (
 		<div>
@@ -207,10 +208,15 @@ const AddSalesForm = (props) => {
 						}}
 						className="blue-btn shadow-none mt-3"
 						type="submit"
+						disabled={
+							local.quantity.trim() === "" ||
+							local.productName.trim() === "" ||
+							local.productId.trim() === "" ||
+							local.amount.trim() === "" ||
+							local.customerName.trim() === ""
+						}
 					>
-						{props.addSaleLoader === false || props.SaleLoader === null
-							? "Submit"
-							: "...Loading"}
+						{submitLoading === false ? "Submit" : "...Loading"}
 					</Button>
 					{submitError === false ? "" : "Something went wrong try again"}
 				</div>
@@ -222,8 +228,8 @@ const AddSalesForm = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		// produce: state.farmData.produce,
-		submitError: state.farmData.addSaleError,
-		addSaleLoader: state.farmData.addSaleLoader,
+		// submitError: state.farmData.addSaleError,
+		// addSaleLoader: state.farmData.addSaleLoader,
 	};
 };
 const mapDispatchToProps = (dispatch) => {

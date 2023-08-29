@@ -48,22 +48,7 @@ export const Expense = (props) => {
 
 	let groupedData;
 
-	useEffect(() => {
-		if (filter === "Week") {
-			groupedData = props.expenseData?.reduce((result, item) => {
-				const { date, ...rest } = item;
-				const formattedDate = format(date.toDate(), "M/d/yyyy");
-				console.log(formattedDate);
-				if (!result[formattedDate]) {
-					result[formattedDate] = [];
-				}
-				result[formattedDate].push(rest);
-				return result;
-			}, {});
-		}
-	}, [props.expenseData]);
-
-	console.log(props.expenseData, `thi si shte data for the expense`);
+	// console.log(props.expenseData, `thi si shte data for the expense`);
 
 	//changes the period value
 	useEffect(() => {
@@ -201,8 +186,8 @@ export const Expense = (props) => {
 		// 	return result;
 		// }, {});
 
-		console.log(groupedData, `this is the grouped Data`);
-		console.log(data, `this is the grouped Data`);
+		// console.log(groupedData, `this is the grouped Data`);
+		// console.log(data, `this is the grouped Data`);
 
 		const generateRows = (input) => {
 			console.log(data, `this is the data passed to the row`);
@@ -289,33 +274,39 @@ export const Expense = (props) => {
 			"...loading"
 		) : props.expenseData.length > 0 ? (
 			filter === "Month" || filter === "Year" || filter === "Day" ? (
-				<Table striped bordered hover>
-					<thead>
-						<tr>
-							<th>Date</th>
-							<th>Expense</th>
-							<th>Cost</th>
-							<th>Supplier</th>
-							<th>Description</th>
-							<th>Medium</th>
-						</tr>
-					</thead>
-					{generateTable2()}
-				</Table>
+				<div>
+					<h4>Expense for {filter}</h4>
+					<Table striped bordered hover>
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Expense</th>
+								<th>Cost</th>
+								<th>Supplier</th>
+								<th>Description</th>
+								<th>Medium</th>
+							</tr>
+						</thead>
+						{generateTable2()}
+					</Table>
+				</div>
 			) : (
-				<Table striped bordered hover>
-					<thead>
-						<tr>
-							<th>Date</th>
-							<th>Expense</th>
-							<th>Cost</th>
-							<th>Supplier</th>
-							<th>Description</th>
-							<th>Medium</th>
-						</tr>
-					</thead>
-					{generateTable2()}
-				</Table>
+				<div>
+					<h4>Expense for {filter}</h4>
+					<Table striped bordered hover>
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Expense</th>
+								<th>Cost</th>
+								<th>Supplier</th>
+								<th>Description</th>
+								<th>Medium</th>
+							</tr>
+						</thead>
+						{generateTable2()}
+					</Table>
+				</div>
 				// generateTable(props.expenseData)
 			)
 		) : (

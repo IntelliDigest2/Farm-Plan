@@ -9,6 +9,7 @@ import {
 	Button,
 	ListGroup,
 	ListGroupItem,
+	Table,
 } from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
@@ -107,7 +108,7 @@ export const Sales = (props) => {
 		}
 	}, [year]);
 
-	console.log(props.salesData, `this is the sales data`);
+	// console.log(props.salesData, `this is the sales data`);
 
 	const endYear = 2050;
 	const years = [];
@@ -115,6 +116,34 @@ export const Sales = (props) => {
 	for (let year = currentYear; year <= endYear; year++) {
 		years.push(year);
 	}
+
+	const generatesalesTable = () => {
+		return props.salesData.map((sale, index) => {
+			let formattedDate = format(sale.date.toDate(), "MMMM d, yyyy");
+			return (
+				<tbody>
+					<tr key={`${index}`}>
+						<td>{formattedDate}</td>
+						<td>{sale.salesId}</td>
+						<td>{sale.productName}</td>
+						<td>{sale.customerInfo.customerName}</td>
+						<td>{`${sale.price.currency}
+						${sale.price.amount}`}</td>
+						<td>
+							{sale.quantity}
+							{sale.units}
+						</td>
+						<td>
+							{sale.medium}
+							{sale.units}
+						</td>
+					</tr>
+				</tbody>
+
+				// 	// {/* {actualDay.toUpperCase()} */}
+			);
+		});
+	};
 
 	let componentToRender =
 		filter === "Week" ? (
@@ -180,42 +209,24 @@ export const Sales = (props) => {
 		props.salesData === null ? (
 			"...loading"
 		) : props.salesData.length > 0 ? (
-			props.salesData.map((sale, index) => (
-				<div
-					key={`sale-${index}`}
-					style={{
-						padding: "10px",
-						textAlign: "left",
+			<div>
+				<h4>Sale for {filter}</h4>
 
-						margin: "5px",
-						border: "1px solid grey",
-						borderRadius: "5px",
-						// height: "100px",
-					}}
-				>
-					<p>Date: {format(sale.date.toDate(), "MMMM d, yyyy")}</p>
-
-					<p style={{ backgroundColor: "#D3D3D3" }}>
-						Sale Id number: {sale.salesId}
-					</p>
-					<p>Product: {sale.productName}</p>
-					<p style={{ backgroundColor: "#D3D3D3" }}>
-						Customer Name: {sale.customerInfo.customerName}
-					</p>
-					<p>
-						Price:<span>{sale.price.currency}</span>
-						{sale.price.amount}
-					</p>
-					<p style={{ backgroundColor: "#D3D3D3" }}>
-						Quantity: {sale.quantity}
-						{sale.units}
-					</p>
-					<p>
-						Medium: {sale.medium}
-						{sale.units}
-					</p>
-				</div>
-			))
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Sale Id number</th>
+							<th>Product</th>
+							<th>Customer Name</th>
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Medium</th>
+						</tr>
+					</thead>
+					{generatesalesTable()}
+				</Table>
+			</div>
 		) : (
 			<div>You have not made any sales for this period</div>
 		);
