@@ -60,6 +60,8 @@ const WalletComponent = (props) => {
       email: recipientEmail,
     };
 
+    console.log("transferrData", transferData)
+
     // Make a POST request to the backend to initiate the transfer
     fetch(`${baseUrlProd}/v1/transaction/transfer`, {
       method: 'POST',

@@ -292,6 +292,7 @@ export const signUp = (newUser, image) => {
 					region: newUser.region,
 					uid: newUserId,
 					balance: 0,
+					voucherBalance: 0,
 					//restaurant-specific user data:
 					restaurantName: newUser.restaurantName,
 					companyName: newUser.companyName,
