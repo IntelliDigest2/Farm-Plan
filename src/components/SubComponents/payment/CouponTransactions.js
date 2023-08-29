@@ -21,12 +21,12 @@ const CouponTransaction = (props) => {
   console.log("profile", props.profile)
 
   const baseUrlDev="http://localhost:5000"
-  const baseUrlProd="https://34.123.239.70:5000"
+  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlDev}/v1/coupon/coupon-transactions`, {
+    fetch(`${baseUrlProd}/v1/coupon/coupon-transactions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

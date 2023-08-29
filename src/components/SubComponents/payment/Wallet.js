@@ -27,7 +27,7 @@ const WalletComponent = (props) => {
   const [isLoadingBalance, setIsLoadingBalance] = useState(true); 
 
   const baseUrlDev="http://localhost:5000"
-  const baseUrlProd="http://34.123.239.70:5000"
+  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
 
   // Fetch the user's wallet balance from the backend

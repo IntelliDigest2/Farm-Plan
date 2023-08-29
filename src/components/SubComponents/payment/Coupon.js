@@ -27,7 +27,7 @@ const CouponComponent = (props) => {
   const [isLoadingBalance, setIsLoadingBalance] = useState(true); 
 
   const baseUrlDev="http://localhost:5000"
-  const baseUrlProd="http://34.123.239.70:5000"
+  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
 
   // Fetch the user's wallet balance from the backend
@@ -35,7 +35,7 @@ const CouponComponent = (props) => {
 
     // const baseUrl = process.env.REACT_APP_BASE_URL_TEST;
 
-    fetch(`${baseUrlDev}/v1/transaction/balance`, {
+    fetch(`${baseUrlProd}/v1/transaction/balance`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const CouponComponent = (props) => {
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlDev}/v1/coupon/create-coupon`, {
+    fetch(`${baseUrlProd}/v1/coupon/create-coupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const CouponComponent = (props) => {
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlDev}/v1/coupon/redeem-coupon`, {
+    fetch(`${baseUrlProd}/v1/coupon/redeem-coupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ function CheckoutPage(props) {
   const [userId, setUserId] = useState('')
   
   const baseUrlDev="http://localhost:5000"
-  const baseUrlProd="https://34.123.239.70:5000"
+  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
   
   useEffect(() => {
     // Check if the profile object and uid exist before accessing
@@ -305,7 +305,7 @@ useEffect(() => {
 
 async function finishOrder(id, userId, history) {
   const baseUrlDev="http://localhost:5000"
-  const baseUrlProd="https://34.123.239.70:5000"
+  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
   const response = await fetch(`${baseUrlProd}/v1/tansaction/deposit`, { 
     method: "POST",
