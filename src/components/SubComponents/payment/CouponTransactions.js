@@ -15,7 +15,7 @@ const SpinnerComponent = () => {
   );
 };
 
-const Transaction = (props) => {
+const CouponTransaction = (props) => {
   const [transactions, setTransactions] = useState([]);
 
   console.log("profile", props.profile)
@@ -26,12 +26,12 @@ const Transaction = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlProd}/v1/transaction/transactions`, {
+    fetch(`${baseUrlProd}/v1/coupon/coupon-transactions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ uid: props.profile.uid }),
+      body: JSON.stringify({ userID: props.profile.uid }),
     })
       .then(response => response.json())
       .then(data => {
@@ -61,11 +61,15 @@ const Transaction = (props) => {
                   <div className="ms-2 me-auto">
                   <div className="fw-bold">
                     <div className="d-flex align-items-center">
-                      <span className={`item-operation ${item.type === "Debit" ? "debit" : "credit"}`}>
+                      {/* <span className={`item-operation ${item.type === "Debit" ? "debit" : "credit"}`}>
                         {item.type}
-                      </span>
-                      <span className="item-amount">£{item.amount}</span>
+                      </span> */}
+                      <span className="item-amount">{item.code}</span>
+                      
                     </div>
+                    <div style={{ display: "block", color: "green" }}>
+                        <span className="item-amount">£{item.amount}</span>
+                      </div>
                     <div className="date">
                       {moment(item.createdAt).format("D MMM YYYY [at] HH:mm")}
                     </div>
@@ -73,8 +77,8 @@ const Transaction = (props) => {
                   </div>
                   <Badge bg="primary" pill className="transaction-id">
                     <div className="transaction-id-content">
-                      <span className="operation">{item.operation}</span>
-                      <span className="transaction-id">{item.transactionID}</span>
+                      <span className="operation">{item.totalRedemptions}</span>
+                      {/* <span className="transaction-id">{item.transactionID}</span> */}
                     </div>
                   </Badge>
                 </ListGroup.Item>
@@ -95,4 +99,4 @@ const mapStateToProps = (state) => {
     };
   };
  
-export default connect(mapStateToProps)(Transaction);
+export default connect(mapStateToProps)(CouponTransaction);
