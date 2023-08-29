@@ -17,13 +17,13 @@ const SpinnerComponent = () => {
   );
 };
 
-const WalletComponent = (props) => {
+const CouponComponent = (props) => {
   const [balance, setBalance] = useState(0);
-  const [amountTransfer, setAmountTransfer] = useState('');
-  const [amountDeposit, setAmountDeposit] = useState('');
-  const [recipientEmail, setRecipientEmail] = useState('');
+  const [amount, setAmount] = useState('');
+  const [recipient, setRecipient] = useState('');
+  const [couponCode, setCouponCode] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [showModalTransfer, setShowModalTransfer] = useState(false);
+  const [showModalRedeem, setShowModalRedeem] = useState(false);
   const [isLoadingBalance, setIsLoadingBalance] = useState(true); 
 
   const baseUrlDev="http://localhost:5000"
@@ -52,16 +52,16 @@ const WalletComponent = (props) => {
   }, [props.profile, balance]);  // Empty dependency array ensures this effect runs only once
 
   // Function to handle the transfer
-  const handleTransfer = () => {
+  const handleCreateCoupon = () => {
       
     const transferData = {
-      user: props.profile.uid,
-      amount: parseFloat(amountTransfer),
-      email: recipientEmail,
+      amount: parseFloat(amount),
+      numberOfRecipients: recipient,
+      userID: props.profile.uid,
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlProd}/v1/transaction/transfer`, {
+    fetch(`${baseUrlProd}/v1/coupon/create-coupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -71,10 +71,10 @@ const WalletComponent = (props) => {
       .then(response => response.json())
       .then(data => {
         // Update the balance after successful transfer
-        setBalance(data.newBalance);
+        //setBalance(data.newBalance);
         // Reset the form fields
-        setAmountTransfer('');
-        setRecipientEmail('');
+        setAmount('');
+        setRecipient('');
       })
       .catch(error => {
         console.error('Error transferring funds:', error);
@@ -84,6 +84,36 @@ const WalletComponent = (props) => {
       });
   };
 
+  // Function to handle the transfer
+  const handleRedeemCoupon = () => {
+      
+    const transferData = {
+      code: couponCode,
+      userID: props.profile.uid,
+    };
+
+    // Make a POST request to the backend to initiate the transfer
+    fetch(`${baseUrlProd}/v1/coupon/redeem-coupon`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(transferData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Reset the form fields
+        setCouponCode('');
+      })
+      .catch(error => {
+        console.error('Error transferring funds:', error);
+      })
+      .finally(() => {
+        setIsLoadingBalance(false); // Mark balance loading as complete, regardless of success or error
+      });
+  };
+
+
   const handleModalOpen = () => {
     setShowModal(true);
   };
@@ -92,15 +122,13 @@ const WalletComponent = (props) => {
     setShowModal(false);
   };
 
-  const handleModalTransferOpen = () => {
-    setShowModalTransfer(true);
+  const handleModalRedeemOpen = () => {
+    setShowModalRedeem(true);
   };
 
-  const handleModalTransferClose = () => {
-    setShowModalTransfer(false);
+  const handleModalRedeemClose = () => {
+    setShowModalRedeem(false);
   };
-
-
 
   return (
     <PageWrap goTo="/account" header="Wallet">
@@ -118,15 +146,15 @@ const WalletComponent = (props) => {
         </Card>
 
         {/* First Card */}
-        <div className="d-flex">
-          <Card className="mr-3">
+        <div className="d-flex flex-column flex-md-row">
+        <Card className="flex-grow-1 mb-3 mb-md-0">
             <Card.Body>
-              <h5>Share Voucher</h5>
+              <h5>Create Voucher</h5>
               <Form
                 className="custom-form"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  handleModalTransferOpen(); 
+                  handleModalOpen(); 
                 }}
               >
                 <Form.Group>
@@ -138,8 +166,8 @@ const WalletComponent = (props) => {
                       placeholder='Enter Amount'
                       min="0"
                       step="1"
-                      onChange={(e) => setAmountTransfer(e.target.value)}
-                      value={amountTransfer}
+                      onChange={(e) => setAmount(e.target.value)}
+                      value={amount}
                     />
                   </InputGroup>
                 </Form.Group>
@@ -148,11 +176,13 @@ const WalletComponent = (props) => {
                   <InputGroup>
                     <Form.Control
                       className="signup-input-meal-name"
-                      placeholder='Enter Reciever Email'
                       id="quantity"
-                      type="text"
-                      onChange={(e) => setRecipientEmail(e.target.value)}
-                      value={recipientEmail}
+                      type="number"
+                      placeholder='Enter Number of recipient'
+                      min="0"
+                      step="1"
+                      onChange={(e) => setRecipient(e.target.value)}
+                      value={recipient}
                     />
                   </InputGroup>
                 </Form.Group>
@@ -166,74 +196,27 @@ const WalletComponent = (props) => {
           </Card>
 
           {/* Modal for the first card */}
-          <Modal show={showModalTransfer} onHide={handleModalTransferClose}>
+          <Modal show={showModal} onHide={handleModalClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Confirm Transfer</Modal.Title>
+              <Modal.Title>Create</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p>Are you sure you want to transfer £{amountTransfer} to {recipientEmail}?</p>
+              <p>Are you sure you want to create coupon worth £{amount} for {recipient} person?</p>
+              <p>A service fee of 15% would be deducted from your account</p>
             </Modal.Body>
             <Modal.Footer>
-              <Button className="grey-btn" onClick={handleModalTransferClose}>
+              <Button className="grey-btn" onClick={handleModalClose}>
                 Cancel
               </Button>
               <Button className="blue-btn" onClick={() => {
-                handleTransfer();
-                handleModalTransferClose();
+                handleCreateCoupon();
+                handleModalClose();
               }}>
                 Yes
               </Button>
             </Modal.Footer>
           </Modal>
 
-          {/* Second Card */}
-          <Card>
-            <Card.Body>
-            <h5>Deposit Funds</h5>
-            <Form
-                    className="custom-form"
-                    onSubmit={(e) => {
-                    e.preventDefault();
-                    handleTransfer();
-                    }}
-                >
-                <Form.Group>
-                  <InputGroup>
-                    <Form.Control
-                      className="signup-input-meal-name"
-                      id="quantity"
-                      type="number"
-                      placeholder='Enter Amount'
-                      min="0"
-                      step="1"
-                      onChange={(e) => setAmountDeposit(e.target.value)}
-                      value={amountDeposit}
-                    />
-                  </InputGroup>
-                </Form.Group>
-                <div style={{ alignItems: "center" }}>
-                  <Button 
-                  className="blue-btn shadow-none mt-3" 
-                  onClick={handleModalOpen} // Open the modal
-                  >
-                    Deposit
-                  </Button>
-                </div>
-                        
-                </Form>
-
-              {/* Modal for the second form */}
-              <Modal show={showModal} onHide={handleModalClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Deposit</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <RevolutPay amount={amountDeposit} />
-                </Modal.Body>
-              </Modal>
-
-            </Card.Body>
-          </Card>
         </div>
         {/* Powered by Logo */}
           <div className="powered-by-logo">
@@ -258,4 +241,4 @@ const mapStateToProps = (state) => {
     };
   };
  
-export default connect(mapStateToProps)(WalletComponent);
+export default connect(mapStateToProps)(CouponComponent);
