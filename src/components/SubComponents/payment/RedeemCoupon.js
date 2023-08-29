@@ -27,7 +27,7 @@ const CouponComponent = (props) => {
   const [isLoadingBalance, setIsLoadingBalance] = useState(true); 
 
   const baseUrlDev="http://localhost:5000"
-  const baseUrlProd="http://34.123.239.70:5000"
+  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
 
   // Fetch the user's wallet balance from the backend
@@ -100,7 +100,7 @@ const CouponComponent = (props) => {
         <div className="card-overlay"></div>
           <Card.Body>
             <h2 className='wallet-balance'>£{balance}</h2>
-            <h5>Current Balance</h5>
+            <h5>Coupon Balance</h5>
           </Card.Body>
         </Card>
 
@@ -163,7 +163,7 @@ const CouponComponent = (props) => {
 
         </div>
         {/* Powered by Logo */}
-          <div className="powered-by-logo">
+          {/* <div className="powered-by-logo">
             <img
               src={logo}
               alt="Powered by Logo"
@@ -171,7 +171,7 @@ const CouponComponent = (props) => {
             />
             <p>Powered by</p>
 
-          </div>   
+          </div>    */}
       </div>
     </div>
 		</PageWrap>

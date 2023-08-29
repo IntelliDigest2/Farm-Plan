@@ -154,7 +154,8 @@ const App = (props) => {
 				const documentRef = collectionRef.doc(doc.id);
 				const updatedData = {
 				  ...doc.data(),
-				  uid: doc.id.toString(), // Convert document ID to string
+				//   uid: doc.id.toString(),
+				  voucherBalance: 0,
 				};
 				batch.update(documentRef, updatedData);
 			  });
@@ -165,8 +166,6 @@ const App = (props) => {
 			  console.error("Error updating documents:", error);
 			}
 		  };
-		  
-		  
 		  
 	return (
 		<React.Fragment>

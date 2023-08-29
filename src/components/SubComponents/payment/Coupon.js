@@ -219,7 +219,7 @@ const CouponComponent = (props) => {
 
         </div>
         {/* Powered by Logo */}
-          <div className="powered-by-logo">
+          {/* <div className="powered-by-logo">
             <img
               src={logo}
               alt="Powered by Logo"
@@ -227,7 +227,7 @@ const CouponComponent = (props) => {
             />
             <p>Powered by</p>
 
-          </div>   
+          </div>    */}
       </div>
     </div>
 		</PageWrap>
