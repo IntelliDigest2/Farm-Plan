@@ -858,7 +858,7 @@ const Stage2 = (props) => {
 							placeholder="Please Select an Account Type"
 							items={[
 								"Households",
-								"Admin",
+								"Purchase Admin",
 								"Personal",
 								"Hospitals",
 								"Schools",
