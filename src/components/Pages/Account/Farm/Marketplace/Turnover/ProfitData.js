@@ -61,6 +61,31 @@ export const ProfitData = (props) => {
 		}
 	}, [filter]);
 
+	useEffect(() => {
+		if (filter === "Month") {
+			console.log(`month change`);
+			let monthNumber = months.indexOf(month) + 1;
+
+			props.getData(filter, { month: monthNumber, year });
+		}
+	}, [month]);
+
+	useEffect(() => {
+		if (filter === "Month") {
+			console.log(`month change`);
+			let monthNumber = months.indexOf(month) + 1;
+
+			props.getData(filter, { month: monthNumber, year });
+		}
+	}, [year]);
+	// useEffect(() => {
+	// 	if (filter !== "Month") {
+	// 		console.log(`year change`);
+
+	// 		props.getData(filter, year);
+	// 	}
+	// }, [year]);
+
 	useEffect(() => {}, [props.produceData]);
 
 	useEffect(() => {}, [year]);
@@ -166,41 +191,47 @@ export const ProfitData = (props) => {
 		// console.log(salesArray, `this is the result array`);
 
 		return resultArray.map((value, index) => {
-			let saleProduce = salesArray.filter((obj) => {
-				return value.item === obj.productName;
+			let saleProduce;
+			salesArray.forEach((obj) => {
+				if (
+					value.item.toLowerCase() === obj.productName.toLowerCase() ||
+					value.id === obj.productId
+				) {
+					saleProduce = obj;
+				}
 			});
+
 			let profit =
-				saleProduce[0]?.quantity * saleProduce[0]?.price.amount -
-				saleProduce[0]?.price.amount * value.quantity;
+				saleProduce?.quantity * saleProduce?.price.amount -
+				value.price * value.quantity;
 
 			let turnOver =
-				saleProduce[0]?.quantity * saleProduce[0]?.price.amount +
-				saleProduce[0]?.price.currency;
+				saleProduce?.quantity * saleProduce?.price.amount +
+				saleProduce?.price.currency;
 
-			// console.log(saleProduce[0]?.quantity, `this is the saleProduce`);
+			console.log(saleProduce, `this is the saleProduce`);
 			return (
 				<ListGroupItem>
 					<p>Product name: {value.item.toUpperCase()}</p>
 					<p>Projected Output :</p>
 					<p>Quantity Harvested: {value.quantity}</p>
 					<p>
-						Quantity Sold:{" "}
-						{saleProduce[0] ? saleProduce[0]?.quantity : "No sale yet"}{" "}
+						Quantity Sold: {saleProduce ? saleProduce?.quantity : "No sale yet"}{" "}
 					</p>
 					{/*  */}
 
 					{/* quantity sold * selling price */}
-					<p>Turnover: {saleProduce[0] ? turnOver : "Pending"}</p>
+					<p>Turnover: {saleProduce ? turnOver : "Pending"}</p>
 
 					<p>
 						Profit/Loss:{" "}
 						<span
 							style={{
-								color: saleProduce[0] ? (profit > 0 ? "blue" : "red") : "grey",
+								color: saleProduce ? (profit > 0 ? "blue" : "red") : "grey",
 							}}
 						>
-							{saleProduce[0]
-								? `${profit} ${saleProduce[0]?.price.currency}`
+							{saleProduce
+								? `${profit} ${saleProduce?.price.currency}`
 								: "No sale yet"}{" "}
 						</span>
 					</p>

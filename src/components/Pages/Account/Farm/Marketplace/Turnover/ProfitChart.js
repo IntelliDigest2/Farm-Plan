@@ -38,6 +38,11 @@ export const ProfitChart = (props) => {
 		"Dec",
 	];
 
+	// Generate the list of years from now to 2050
+	for (let year = currentYear; year <= 2050; year++) {
+		yearList.push(year);
+	}
+
 	let filterComponent =
 		filter === "Month" ? (
 			<div style={{ display: "flex" }}>
@@ -193,6 +198,32 @@ export const ProfitChart = (props) => {
 		}
 	}, [filter]);
 
+	useEffect(() => {
+		if (filter === "Month") {
+			console.log(`month change`);
+			let monthNumber = months.indexOf(month) + 1;
+			console.log(monthNumber);
+
+			props.getData(filter, { month: monthNumber, year });
+		}
+	}, [month]);
+
+	useEffect(() => {
+		if (filter === "Month") {
+			console.log(`month change`);
+			let monthNumber = months.indexOf(month) + 1;
+
+			props.getData(filter, { month: monthNumber, year });
+		}
+	}, [year]);
+	// useEffect(() => {
+	// 	if (filter !== "Month") {
+	// 		console.log(`year change`);
+
+	// 		props.getData(filter, year);
+	// 	}
+	// }, [year]);
+
 	// const searchTurnOver = () => {
 	// 	if (filter === "Month") {
 	// 		console.log(`month clicked`);
@@ -255,7 +286,7 @@ export const ProfitChart = (props) => {
 
 		//reduce repetitive produces and accummulate their quantity
 
-		console.log(producesForKey, `produces for key`);
+		// console.log(producesForKey, `produces for key`);
 
 		producesForKey.forEach((product) => {
 			// console.log(product, `this is the item inthe first loop`);
@@ -296,11 +327,17 @@ export const ProfitChart = (props) => {
 		let productsArray = Array.from(resultMap.values());
 
 		let productColor = [];
-		let produceArray;
+
+		let produceArray = [];
 
 		salesArray.forEach((value, index) => {
-			produceArray = productsArray.filter((obj) => {
-				return value.productName === obj.item;
+			productsArray.forEach((obj) => {
+				if (
+					value.productId === obj.id ||
+					value.productName.toLowerCase() === obj.item.toLowerCase()
+				) {
+					produceArray.push(obj);
+				}
 			});
 
 			productColor.push(colorArray[index]);
@@ -320,13 +357,12 @@ export const ProfitChart = (props) => {
 			return `${percProfit}`;
 		});
 
-		console.log(productInfo, `this is the color`);
 		let data = {
 			labels: productsLabel,
 
 			datasets: [
 				{
-					label: "Produce Summary",
+					label: "Percentage profit",
 					data: productInfo,
 					backgroundColor: productColor,
 				},
@@ -339,27 +375,27 @@ export const ProfitChart = (props) => {
 		);
 	};
 
-	let content2 = (key) => {
-		return props.produceData?.length > 0 ? (
-			calcDataInfo(key)
-		) : (
-			// <div>me</div>
-			<div>
-				<p>You don't have any produce for this period</p>
-			</div>
-		);
+	let chartContent = (key) => {
+		return calcDataInfo(key);
 	};
 
-	let content = Object.keys(farmProduceTypeObjects).map((key) => {
-		return (
-			<ListGroupItem style={{ textAlign: "left" }}>
-				<h5>Farm Practice: {key}</h5>
+	let content =
+		props.produceData?.length > 0 ? (
+			Object.keys(farmProduceTypeObjects).map((key) => {
+				return (
+					<ListGroupItem style={{ textAlign: "left" }}>
+						<h5>Farm Practice: {key}</h5>
 
-				{/* <ListGroup className="list-group-flush">{listItems(key)}</ListGroup> */}
-				{content2(key)}
-			</ListGroupItem>
+						{/* <ListGroup className="list-group-flush">{listItems(key)}</ListGroup> */}
+						{chartContent(key)}
+					</ListGroupItem>
+				);
+			})
+		) : (
+			<div>
+				<p>You don't have any sale for this period</p>
+			</div>
 		);
-	});
 
 	// const listItems = (key) => {
 	// 	let productTypes = farmProduceTypeObjects[key];

@@ -164,7 +164,6 @@ export const getFarmTurnOverFunction = (duration, period) => {
 export const getTurnOverChartFunction = (duration, period) => {
 	let startMonth, endMonth;
 	let cycleStart, cycleEnd;
-	console.log(`i am here guys`);
 	return (dispatch, getState, { getFirestore, getFirebase }) => {
 		const authUID = getState().firebase.auth.uid;
 
@@ -236,10 +235,10 @@ export const getTurnOverChartFunction = (duration, period) => {
 
 					products.push({ ...doc.data(), salesId: doc.id });
 				});
-				console.log(
-					products,
-					`these are the products returned for the products`
-				);
+				// console.log(
+				// 	products,
+				// 	`these are the products returned for the products`
+				// );
 				// Do something with the values array, e.g., update the UI
 				// console.log(products);
 				dispatch({
@@ -274,10 +273,10 @@ export const getTurnOverChartFunction = (duration, period) => {
 					type: "FETCH_SALES_FOR_PROFITCHART_SUCCESS",
 					payload: products,
 				});
-				console.log(
-					products,
-					`these are the SALES FOR THE PROFIT CHART returned`
-				);
+				// console.log(
+				// 	products,
+				// 	`these are the SALES FOR THE PROFIT CHART returned`
+				// );
 			},
 			(error) => {
 				console.error("Error getting real-time updates:", error);
@@ -880,7 +879,7 @@ export const addProduceData = (data) => {
 
 		dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: true });
 
-		getFirestore()
+		return getFirestore()
 			.collection("marketplace")
 			.doc(uid)
 			.collection("produce")
@@ -893,13 +892,80 @@ export const addProduceData = (data) => {
 					.collection("produce")
 					.doc(docRef.id)
 					.set({ id: docRef.id }, { merge: true });
-				dispatch({ type: "CREATE_PRODUCE_ITEM", payload: data });
-				dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
-			})
-			.catch((err) => {
-				dispatch({ type: "CREATE_PRODUCE_ITEM_ERROR", err });
-				dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
+				// dispatch({ type: "CREATE_PRODUCE_ITEM", payload: data });
+				// dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
 			});
+		// .catch((err) => {
+		// 	dispatch({ type: "CREATE_PRODUCE_ITEM_ERROR", err });
+		// 	dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
+		// });
+	};
+};
+export const addExpenseData = (data) => {
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			default:
+			case "farm_admin":
+				uid = authUID;
+				break;
+			case "farm_sub":
+				uid = profile.admin;
+		}
+
+		data.date = getFirebase().firestore.Timestamp.fromDate(data.date);
+
+		// dispatch({ type: "ADD_EXPENSE_LOADER", payload: true });
+
+		return getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("expense")
+			.add(data);
+		// .then((resp) => {
+		// 	console.log(resp, `this is the response`);
+		// 	// dispatch({ type: "ADD_EXPENSE_SUCCESS", payload:  });
+		// 	dispatch({ type: "ADD_EXPENSE_LOADER", payload: false });
+		// })
+		// .catch((err) => {
+		// 	console.log(err, `an error occurred`);
+		// 	dispatch({ type: "ADD_EXPENSE_ERROR", err });
+		// 	dispatch({ type: "ADD_EXPENSE_LOADER", payload: false });
+		// });
+	};
+};
+export const addSaleData = (data) => {
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			default:
+			case "farm_admin":
+				uid = authUID;
+				break;
+			case "farm_sub":
+				uid = profile.admin;
+		}
+
+		data.date = getFirebase().firestore.Timestamp.fromDate(data.date);
+
+		// dispatch({ type: "ADD_SALES_LOADER", payload: true });
+
+		return getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("sales")
+			.add(data);
+		// .then((resp) => {
+		// 	console.log(resp, `this is the response`);
+		// 	// dispatch({ type: "ADD_EXPENSE_SUCCESS", payload:  });
+		// 	// dispatch({ type: "ADD_SALES_LOADER", payload: false });
+		// })
 	};
 };
 

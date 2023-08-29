@@ -2,9 +2,9 @@ import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { PageWrap } from "./../../../../../SubComponents/PageWrap";
 import Expense from "./Expense";
-import MonthlyExpense from "./MonthlyExpense";
-import WeeklyExpense from "./WeeklyExpense";
-import YearlyExpense from "./YearlyExpense";
+// import MonthlyExpense from "./MonthlyExpense";
+// import WeeklyExpense from "./WeeklyExpense";
+// import YearlyExpense from "./YearlyExpense";
 
 function ExpensePage() {
 	return (

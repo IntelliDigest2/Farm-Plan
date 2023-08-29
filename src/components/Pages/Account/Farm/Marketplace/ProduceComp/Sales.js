@@ -18,6 +18,7 @@ import { Dropdown } from "./../../../../../SubComponents/Dropdown";
 import List from "@mui/material/List";
 // import { ListItem, ListGroupItem } from "@mui/material/ListItem";
 import { getSalesForDuration } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { AddSalesModal } from "./AddSalesModal";
 
 export const Sales = (props) => {
 	const currentYear = new Date().getFullYear();
@@ -28,6 +29,7 @@ export const Sales = (props) => {
 	const [month, setMonth] = useState(currentMonth);
 	const [week, setWeek] = useState("1");
 	const [year, setYear] = useState(currentYear);
+	const [show, setShow] = useState(false);
 
 	let months = [
 		"Jan",
@@ -208,6 +210,10 @@ export const Sales = (props) => {
 						Quantity: {sale.quantity}
 						{sale.units}
 					</p>
+					<p>
+						Medium: {sale.medium}
+						{sale.units}
+					</p>
 				</div>
 			))
 		) : (
@@ -231,6 +237,9 @@ export const Sales = (props) => {
 				</Col>
 				<Col style={{ display: "flex", alignItems: "center" }} md={4}>
 					{componentToRender}
+				</Col>
+				<Col style={{ display: "flex", alignItems: "center" }} md={2}>
+					<AddSalesModal show={show} setShow={setShow} />
 				</Col>
 			</Row>
 
