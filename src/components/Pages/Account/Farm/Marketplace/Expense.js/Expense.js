@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, Row, Col } from "react-bootstrap";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import DatePicker from "react-datepicker";
 import { getExpenseForDuration } from "../../../../../../store/actions/marketplaceActions/farmPlanData";
 import { Dropdown } from "../../../../../SubComponents/Dropdown";
+
 import {
 	Accordion,
 	Card,
@@ -13,6 +14,7 @@ import {
 	ListGroupItem,
 } from "react-bootstrap";
 // import { format } from "date-fns";
+import { AddExpenseModal } from "./AddExpenseModal";
 
 export const Expense = (props) => {
 	const currentYear = new Date().getFullYear();
@@ -23,6 +25,7 @@ export const Expense = (props) => {
 	const [month, setMonth] = useState(currentMonth);
 	const [week, setWeek] = useState("1");
 	const [year, setYear] = useState(currentYear);
+	const [show, setShow] = useState(false);
 
 	let months = [
 		"Jan",
@@ -43,7 +46,22 @@ export const Expense = (props) => {
 	// 	props.getSalesData("Month", 8);
 	// }, []);
 
-	useEffect(() => {}, [props.expenseData]);
+	let groupedData;
+
+	useEffect(() => {
+		if (filter === "Week") {
+			groupedData = props.expenseData?.reduce((result, item) => {
+				const { date, ...rest } = item;
+				const formattedDate = format(date.toDate(), "M/d/yyyy");
+				console.log(formattedDate);
+				if (!result[formattedDate]) {
+					result[formattedDate] = [];
+				}
+				result[formattedDate].push(rest);
+				return result;
+			}, {});
+		}
+	}, [props.expenseData]);
 
 	console.log(props.expenseData, `thi si shte data for the expense`);
 
@@ -169,69 +187,140 @@ export const Expense = (props) => {
 			</div>
 		);
 
-	let groupedData = props.expenseData?.reduce((result, item) => {
-		const { date, ...rest } = item;
-		const formattedDate = format(date.toDate(), "M/d/yyyy");
-		console.log(formattedDate);
-		if (!result[formattedDate]) {
-			result[formattedDate] = [];
-		}
-		result[formattedDate].push(rest);
-		return result;
-	}, {});
-
-	console.log(groupedData, `this is the grouped Data`);
-
 	let table;
-	if (props.expenseData) {
-		table = Object.keys(groupedData).map(
-			(date, index) => {
-				// console.log(expense,);
+	const generateTable = (data) => {
+		// console.log(data, `data from the table function`);
+		// let groupedData = props.expenseData?.reduce((result, item) => {
+		// 	const { date, ...rest } = item;
+		// 	const formattedDate = format(date.toDate(), "M/d/yyyy");
+		// 	console.log(formattedDate);
+		// 	if (!result[formattedDate]) {
+		// 		result[formattedDate] = [];
+		// 	}
+		// 	result[formattedDate].push(rest);
+		// 	return result;
+		// }, {});
 
-				return (
-					<tbody>
-						<tr key={`${index}`}>
-							<td>{date}</td>
-							<td>{groupedData[date][index].category}</td>
-							<td>
-								{groupedData[date][index].cost.amount}
-								{groupedData[date][index].cost.currency}
-							</td>
-							<td>{groupedData[date][index].supplier.name}</td>
-						</tr>
-					</tbody>
-				);
-			}
+		console.log(groupedData, `this is the grouped Data`);
+		console.log(data, `this is the grouped Data`);
 
-			// 	// {/* {actualDay.toUpperCase()} */}
-		);
-	}
+		const generateRows = (input) => {
+			console.log(data, `this is the data passed to the row`);
+			return input.map(
+				(date, index) => {
+					// console.log(expense,);
+
+					return (
+						<tbody>
+							<tr key={`${index}`}>
+								{/* <td>{date}</td> */}
+								{/* <td>{date.medium}</td> */}
+								<td>{date.expenseType}</td>
+								<td>
+									{date.cost.currency}
+									{date.cost.amount}
+								</td>
+								<td>{date.supplier.name}</td>
+								<td>{date.description}</td>
+								<td>{date.medium}</td>
+							</tr>
+						</tbody>
+					);
+				}
+
+				// 	// {/* {actualDay.toUpperCase()} */}
+			);
+		};
+
+		return Object.keys(groupedData).map((date, index) => {
+			console.log(groupedData, `this is the date of the new table`);
+			const parsedDate = parse(date, "M/d/yyyy", new Date());
+			const formattedDate = format(parsedDate, "EEEE, MMMM d");
+			return (
+				<div>
+					<div style={{ textAlign: "left" }}>Date: {formattedDate}</div>
+
+					<Table striped bordered hover>
+						<thead>
+							<tr>
+								{/* <th>Date</th> */}
+								<th>Expense</th>
+								<th>Cost</th>
+								<th>Supplier</th>
+								<th>Description</th>
+								<th>Medium</th>
+							</tr>
+						</thead>
+						{generateRows(groupedData[date])}
+					</Table>
+				</div>
+			);
+		});
+	};
+
+	let table2;
+
+	const generateTable2 = (_, index) => {
+		// console.log(data, `this is the data for the month or year`);
+		return props.expenseData.map((data) => {
+			let formattedDate = format(data.date.toDate(), "M/d/yyyy");
+			return (
+				<tbody>
+					<tr key={`${index}`}>
+						<td>{formattedDate}</td>
+						<td>{data.expenseType}</td>
+						<td>
+							{data.cost.amount}
+							{data.cost.currency}
+						</td>
+						<td>{data.supplier.name}</td>
+						<td>{data.description}</td>
+						<td>{data.medium}</td>
+					</tr>
+				</tbody>
+
+				// 	// {/* {actualDay.toUpperCase()} */}
+			);
+		});
+	};
 
 	let content =
 		props.expenseData === null ? (
 			"...loading"
 		) : props.expenseData.length > 0 ? (
-			Object.keys(groupedData).map((date, index) => {
-				return (
-					<div>
-						<div style={{ textAlign: "left" }}>Date: {date}</div>
-
-						<Table striped bordered hover>
-							<thead>
-								<tr>
-									<th>Date</th>
-									<th>Expense Type</th>
-									<th>Cost</th>
-
-									<th>Supplier</th>
-								</tr>
-							</thead>
-							{table}
-						</Table>
-					</div>
-				);
-			})
+			filter === "Month" || filter === "Year" || filter === "Day" ? (
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Expense</th>
+							<th>Cost</th>
+							<th>Supplier</th>
+							<th>Description</th>
+							<th>Medium</th>
+						</tr>
+					</thead>
+					{generateTable2()}
+				</Table>
+			) : (
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Expense</th>
+							<th>Cost</th>
+							<th>Supplier</th>
+							<th>Description</th>
+							<th>Medium</th>
+						</tr>
+					</thead>
+					{generateTable2()}
+				</Table>
+				// generateTable(props.expenseData)
+			)
 		) : (
+			// if(filter === 'week' || filter === 'day){}
+
 			<div>You have not made any expense for this period</div>
 		);
 
@@ -252,6 +341,9 @@ export const Expense = (props) => {
 				</Col>
 				<Col style={{ display: "flex", alignItems: "center" }} md={4}>
 					{componentToRender}
+				</Col>
+				<Col style={{ display: "flex", alignItems: "center" }} md={2}>
+					<AddExpenseModal show={show} setShow={setShow} />
 				</Col>
 			</Row>
 

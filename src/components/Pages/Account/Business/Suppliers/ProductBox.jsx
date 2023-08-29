@@ -90,20 +90,26 @@ export default function ProductBox(props) {
                 className="list"
                 style={{ alignItems: "baseline" }}
               >
-                  <div>
-                    <Image imageUrl={newProduct.imageURL} />
+                  <div >
+                    <Image  imageUrl={newProduct.imageURL} />
+                    <div>
                     <p>
-                      {newProduct.productName}
+                     Product Name:  {newProduct.productName}
                     </p>
                     <p>
-                      {newProduct.productDescription}
+                     Product Name:  {newProduct.productId}
                     </p>
                     <p>
-                      {newProduct.productQty} {newProduct.productMeasure}
+                      Description: <span>{newProduct.productDescription}</span> 
                     </p>
                     <p>
-                    {newProduct.productCurrency} {newProduct.productPrice} 
+                     Qauntity: <span>{newProduct.productQty} {newProduct.productMeasure}</span> 
                     </p>
+                    <p>
+                    Price: <span>{newProduct.productCurrency} {newProduct.productPrice}</span>  
+                    </p>
+                    </div>
+                   
                   </div>
               </ListItem>
             </List>

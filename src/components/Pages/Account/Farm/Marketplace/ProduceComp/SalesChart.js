@@ -174,15 +174,16 @@ export const SalesChart = (props) => {
 
 		let productsData = salesQuantityArray.map((product) => {
 			return (
-				<div style={{ margin: "0 4px" }}>
+				<div style={{ margin: "0 4px", fontSize: "13px" }}>
 					{`${product.name.toUpperCase()} `}
 					<span style={{ color: "blue" }}>
 						{product.quantity}
 						{product.unit}
 					</span>
 					{` at `}
+					{product.price.currency}
 					{product.price.amount}
-					{product.price.currency} {` each`}
+					{` each`}
 				</div>
 			);
 		});
@@ -211,7 +212,16 @@ export const SalesChart = (props) => {
 		return (
 			<div style={{ width: "70%", margin: "30px auto" }}>
 				<Doughnut data={data} />
-				<div style={{ display: "flex", flexWrap: "wrap" }}>{productsData}</div>
+				<div
+					style={{
+						display: "flex",
+						flexWrap: "wrap",
+						marginTop: "14px",
+						justifyContent: "center",
+					}}
+				>
+					{productsData}
+				</div>
 			</div>
 		);
 	};

@@ -1,12 +1,12 @@
 const initState = {
 	authError: null,
 	produce: null,
-	addProduceError: null,
+	// addProduceError: null,
 	purchaseInfoFarm: [],
 	farmPlan: null,
 	farmPlanError: null,
 	farmerData: null,
-	addProduceLoader: null,
+	// addProduceLoader: null,
 	produceForChart: null,
 	produceForChartLoader: false,
 	produceForChartError: null,
@@ -60,24 +60,24 @@ const farmReducer = (state = initState, action) => {
 				...state,
 				farmPlanError: action.payload,
 			};
-		case "CREATE_PRODUCE_ITEM":
-			console.log("produce added", action.payload);
-			return {
-				...state,
-				addProduceError: null,
-			};
-		case "CREATE_PRODUCE_ITEM_ERROR":
-			console.log("error, produce not added", action.err);
-			return {
-				...state,
-				addProduceError: "Something went wrong try again",
-			};
-		case "CREATE_PRODUCE_ITEM_LOADER":
-			console.log("error, produce not added", action);
-			return {
-				...state,
-				addProduceLoader: action.payload,
-			};
+		// case "CREATE_PRODUCE_ITEM":
+		// 	console.log("produce added", action.payload);
+		// 	return {
+		// 		...state,
+		// 		addProduceError: null,
+		// 	};
+		// case "CREATE_PRODUCE_ITEM_ERROR":
+		// 	console.log("error, produce not added", action.err);
+		// 	return {
+		// 		...state,
+		// 		addProduceError: "Something went wrong try again",
+		// 	};
+		// case "CREATE_PRODUCE_ITEM_LOADER":
+		// console.log("error, produce not added", action);
+		// return {
+		// 	...state,
+		// 	addProduceLoader: action.payload,
+		// };
 		case "FETCH_PRODUCE_FOR_CHART_SUCCESS":
 			// console.log("produce chart success ", action.payload);
 			return {
@@ -154,6 +154,20 @@ const farmReducer = (state = initState, action) => {
 				...state,
 
 				expenseLoader: true,
+			};
+
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+
+				addExpenseLoader: true,
+			};
+
+			// console.log("error, produce not added", action.err);
+			return {
+				...state,
+
+				addSaleLoader: true,
 			};
 		case "FETCH_PRODUCE_FOR_SALESCHART_SUCCESS":
 			// console.log("produce chart success ", action.payload);

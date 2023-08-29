@@ -22,6 +22,8 @@ const AddProduceForm = (props) => {
 	// const [measure, setMeasure] = useState("");
 	// const [price, setPrice] = useState("");
 	// const [currency, setCurrency] = useState("");
+	const [submitLoading, setSubmitLoading] = useState(false);
+
 	const [submitError, setSubmitError] = useState(null);
 	// const [submitLoader, setSubmitLoader] = useState(false);
 	const defaultLocal = {
@@ -51,13 +53,13 @@ const AddProduceForm = (props) => {
 
 	console.log(props.addProduceLoader, `initial stat of submitLoader`);
 
-	useEffect(() => {
-		console.log(props.addProduceLoader, `it has changed`);
-		if (props.addProduceLoader === false) {
-			submitNotification("Success", "Produce added to inventory");
-			formRef.current.reset();
-		}
-	}, [props.produce]);
+	// useEffect(() => {
+	// 	console.log(props.addProduceLoader, `it has changed`);
+	// 	if (props.addProduceLoader === false) {
+	// 		submitNotification("Success", "Produce added to inventory");
+	// 		formRef.current.reset();
+	// 	}
+	// }, [props.produce]);
 
 	const handleLocal = (e) => {
 		if (e.target.textContent) {
@@ -507,9 +509,21 @@ const AddProduceForm = (props) => {
 			data.nutrients = inputGroups;
 		}
 
-		props.addProduceData(data);
+		props
+			.addProduceData(data)
+			.then((resp) => {
+				console.log(resp.id, `this is the id of the newly added sale`);
+				setSubmitLoading(false);
+				formRef.current.reset();
+				submitNotification("Success", "Produce added to sales");
+			})
+			.catch((err) => {
+				console.log(err, `an error occurred`);
+				submitNotification("Error", "Something went wrong try again");
+				setSubmitLoading(false);
+			});
 
-		forceUpdate();
+		// forceUpdate();
 	};
 
 	return (

@@ -47,6 +47,9 @@ export default function ProduceBox(props) {
 									<p>
 										<b>Product Name</b> {newProduce.item.toUpperCase()}
 									</p>
+									<p>
+										<b>ProductId</b> {newProduce.id}
+									</p>
 
 									<p>
 										<b>Quantity</b> {newProduce.quantity} {newProduce.measure}
