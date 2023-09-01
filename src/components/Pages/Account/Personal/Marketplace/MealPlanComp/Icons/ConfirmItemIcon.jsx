@@ -19,12 +19,12 @@ function ConfirmItemIcon(props) {
     const data = {
       //need to send shopping list data to be bough the previous week from the day it is made
       refID: props.refID,
-      id: props.id,
+      // id: props.id,
       status: "CONFIRMED",
     };
-    props.editPurchaseStatusFromUser(data);
+    // props.editPurchaseStatusFromUser(data);
     props.editPurchaseStatusOnUser(data);
-    console.log("what id", data.id)
+    // console.log("what id", data.id)
 
     submitNotification("Success", "You will be contacted shortly");
   };
@@ -41,7 +41,7 @@ function ConfirmItemIcon(props) {
           sx={{ ml: 2 }}
           onClick={handleShow}
         >
-            <ThumbUpAltIcon fontSize="inherit" />
+            Confirm <ThumbUpAltIcon sx={{ fontSize: 32 }} />
         </IconButton>
       </Tooltip>
 
@@ -80,7 +80,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editPurchaseStatusFromUser: (data) => dispatch(editPurchaseStatusFromUser(data)),
+    // editPurchaseStatusFromUser: (data) => dispatch(editPurchaseStatusFromUser(data)),
     editPurchaseStatusOnUser: (data) => dispatch(editPurchaseStatusOnUser(data)),
 
   };

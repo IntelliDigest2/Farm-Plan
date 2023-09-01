@@ -7,6 +7,7 @@ import { useTranslation, Trans } from 'react-i18next';
 export function FarmersList({
   list,
   cart,
+  receiversID,
   show,
   setShow,
   forceUpdate,
@@ -30,6 +31,7 @@ export function FarmersList({
           list={list}
           cart={cart}
           forceUpdate={forceUpdate}
+          receiversID={receiversID}
           handleFormClose={handleFormClose}
         />
       </Modal.Body>

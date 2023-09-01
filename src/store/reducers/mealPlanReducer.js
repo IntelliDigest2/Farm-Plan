@@ -217,7 +217,7 @@ const mealPlanReducer = (state = initState, action) => {
         return {
           ...state,
           authError: null,
-        };
+        }; 
       case "SEND_TO_USER_ERROR":
         console.log("error, couldn't send to user collection", action.err);
         return {

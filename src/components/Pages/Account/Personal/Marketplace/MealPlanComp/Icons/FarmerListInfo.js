@@ -54,6 +54,7 @@ function FarmerListInfo(props) {
 								farmerId={item.farmerId}
 								uid={item.uid}
 								cart={props.cart}
+                receiversID={props.receiversID}
 								/>
               </Card>
              

@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import Tooltip from "@mui/material/Tooltip";
 import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
-import CreditScoreIcon from '@mui/icons-material/CreditScore';import { editPurchaseStatusFromUser, editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import { editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
@@ -10,41 +11,56 @@ import { useTranslation, Trans } from 'react-i18next';
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
-function PayIcon(props) {
+function PayIconWallet(props) {
+
   const { t } = useTranslation();
 
   let history = useHistory();
 
-  console.log("check userId and orderId  ", props.uid, props.id)
-
   const [showModal, setShow] = useState(false);
 
+  const baseUrlDev="http://localhost:5000"
+  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
+
   const handlePay = async () => {
-    // console.log(props.payType, `this is the payment type`)
+
+    const transferData = {
+      user: props.uid,
+      order: props.order,
+    };
+
+    console.log("transfer data ===>", transferData)
 
     
-          //  await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
-      await fetch('https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction/create-payment-intent', {
+    await fetch(`${baseUrlDev}/v1/payment/initiate-payment`, {
+
+      method: 'POST', 
+      body: JSON.stringify(transferData),
+      headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+    .then((response) => response.json())
+    .then((res) => {
+      console.log("reservation ===>", res)
+      const data = {
+        refID: props.refID,
+        status: "COMPLETED",
+      };
+      props.editPurchaseStatusOnUser(data);
+      // history.push('/payment-success')
+
+      const newPage = window.open('/payment-success', '_blank');
   
-         method: 'POST',
-         body: JSON.stringify({
-            userId: props.uid,
-            orderId: props.refID,
-            paymentType: props.payType
-         }),
-         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-         },
-      })
-         .then((response) => response.json())
-         .then((data) => {
-            // console.log("this is the data returned", data)
-            history.push('/payment-process',{params: {sec: `${data.clientSecret}`,
-          consultInfo : [props.consultantPaymentInfo]}})
-         })
-         .catch((err) => {
-            console.log(err.message);
-         })
+      // Optionally, you can focus on the new window/tab
+      if (newPage) {
+        newPage.focus();
+      }
+      handleClose()
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
   
  };
 
@@ -55,13 +71,13 @@ function PayIcon(props) {
 
   return (
     <>
-      <Tooltip title="Pay">
+      <Tooltip title="pay with wallet">
         <IconButton
           aria-label="Pay"
           sx={{ ml: 2 }}
           onClick={handleShow}
         >
-            <CreditScoreIcon fontSize="inherit" />
+            Pay <CreditScoreIcon sx={{ fontSize: 32 }} />
         </IconButton>
       </Tooltip>
 
@@ -100,10 +116,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editPurchaseStatusFromUser: (data) => dispatch(editPurchaseStatusFromUser(data)),
     editPurchaseStatusOnUser: (data) => dispatch(editPurchaseStatusOnUser(data)),
 
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PayIcon);
+export default connect(mapStateToProps, mapDispatchToProps)(PayIconWallet);

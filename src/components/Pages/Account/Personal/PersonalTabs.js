@@ -57,6 +57,14 @@ export function Food({ setShow, setChooseModal, profile }) {
 			/>
 
 			<IconButton
+				title="Check the status of your deliveries."
+				icon="delivery"
+				label="Check Deliveries"
+				color="purple"
+				goTo="/track-reservations"
+			/>
+
+			<IconButton
 				title="Generate a shopping list and buy from vendors."
 				icon="notes"
 				label="Shop"
@@ -68,7 +76,7 @@ export function Food({ setShow, setChooseModal, profile }) {
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="food"
 				label={t("description.icon_save")}
-				color="turquoise"
+				color="cyan"
 				onClick={() => {
 					setShow(true);
 					setChooseModal(true);

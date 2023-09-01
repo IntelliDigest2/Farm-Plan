@@ -14,11 +14,9 @@ function SendToFarmerIcon(props) {
   const handleSelect = async () => {
     const data = {
       farmerId: props.farmerId,
+      receiversID: props.receiversID,
       status: "IN PROGRESS",
-      upload: {
-        cart: props.cart,
-        status: "IN PROGRESS"
-      },
+      cart: props.cart,
     };
     props.sendToFarmer(data);
     //props.editPurchaseStatus(data)

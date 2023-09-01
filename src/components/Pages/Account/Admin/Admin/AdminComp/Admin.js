@@ -131,6 +131,7 @@ function Admin(props) {
 								<FarmerListIcon 
 								id={item.id}
 								uid={item.uid}
+								receiversID={item.profile.uid}
 								cart={item.cartList}
 								city={item.profile.city}
 								/>

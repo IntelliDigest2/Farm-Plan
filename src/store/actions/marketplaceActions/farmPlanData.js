@@ -1291,7 +1291,7 @@ export const deleteProduceData = (data) => {
 			});
 	};
 };
-
+ 
 export const getPurchaseInfoFarm = (info) => {
 	return (dispatch, getState, { getFirebase }) => {
 		//make async call to database
@@ -1332,7 +1332,10 @@ export const getPurchaseInfoFarm = (info) => {
 			.then((snapshot) => {
 				const orderInfo = [];
 				snapshot.forEach((doc) => {
-					orderInfo.push(doc.data());
+					const data = doc.data();
+					if (!(data.status === "COMPLETED" || data.status === "ACCEPTED")) {
+					  orderInfo.push(data);
+					}
 				});
 				dispatch({ type: "GET_PURCHASE_INFO_FARM", payload: orderInfo });
 			})
@@ -1380,7 +1383,14 @@ export const editPurchaseStatusOnFarmer = (data) => {
 			.doc(uid)
 			.collection("messages")
 			.doc(data.id)
-			.set({ status: data.status, date: date }, { merge: true })
+			.set({ 
+				cart: data.item, 
+				// farmerID: data.farmerID,
+				// receiversID: data.receiversID, 
+				status: data.status,
+				deliveryDueDate: data.deliveryDueDate, 
+				date: date 
+			}, { merge: true })
 			.then(() => dispatch({ type: "EDIT_PURCHASE_STATUS", payload: data }))
 			.catch((err) => {
 				dispatch({ type: "EDIT_PURCHASE_STATUS_ERROR", err });
