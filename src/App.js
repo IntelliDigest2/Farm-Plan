@@ -110,6 +110,9 @@ import Coupon from "./components/SubComponents/payment/Coupon";
 import Transactions from "./components/SubComponents/payment/Transactions";
 import CouponTransactions from "./components/SubComponents/payment/CouponTransactions";
 import RedeemCoupon from "./components/SubComponents/payment/RedeemCoupon";
+import Reservations from "./components/SubComponents/payment/Reservations";
+import ReservationsOther from "./components/SubComponents/payment/ReservationsOther";
+import PaymentSuccess from "./components/Pages/PaymentSuccess";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -335,6 +338,7 @@ const App = (props) => {
 						<Route path="/turnover" component={TurnOverPage} />
 						<Route path="/expense" component={ExpensePage} />
 						<Route path="/in-progress" component={InProgress} />
+						<Route path="/payment-success" component={PaymentSuccess} />
 
 						<Route path="/payment" component={RevolutPay} />
 						<Route path="/wallet" component={Wallet} />
@@ -342,6 +346,8 @@ const App = (props) => {
 						<Route path="/redeem-coupon" component={RedeemCoupon} />
 						<Route path="/transactions" component={Transactions} />
 						<Route path="/coupon-transactions" component={CouponTransactions} />
+						<Route path="/track-reservations" component={Reservations} />
+						<Route path="/track-reservations-other" component={ReservationsOther} />
 
 						<Route
 							path="/db"

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getFarmerData } from "../../../../../store/actions/marketplaceActions/farmPlanData";
 import { connect } from "react-redux";
 import LoadingScreen from "../../../../SubComponents/Loading/LoadingScreen";
-import { PageWrap } from "../../../../SubComponents/PageWrap";
+import { PageWrapFarm } from "../../../../SubComponents/PageWrapFarm";
 import Aquaculture from "./FarmCategories/Aquaculture";
 import Forestry from "./FarmCategories/Forestry";
 import Insect from "./FarmCategories/Insect";
@@ -43,9 +43,9 @@ function FarmPlan(props) {
 	return (
 		<>
 			{!loading ? (
-				<PageWrap header="My Farm Plan" goTo="/account">
+				<PageWrapFarm header="My Farm Plan" goTo="/account">
 					<Control />
-				</PageWrap>
+				</PageWrapFarm>
 			) : (
 				<LoadingScreen />
 			)}

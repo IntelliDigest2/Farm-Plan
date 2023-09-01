@@ -30,6 +30,7 @@ import { Psychology } from "@mui/icons-material";
 import PaymentIcon from '@mui/icons-material/Payment';
 import MoneyIcon from '@mui/icons-material/Money';
 import RedeemIcon from '@mui/icons-material/Redeem';
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 // import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 // import CalendarMonthSharpIcon from "@mui/icons-material/CalendarMonthSharp";
@@ -182,6 +183,8 @@ export function IconButton(props) {
 				return <MoneyIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "redeem":
 				return <RedeemIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "delivery":
+			return <DeliveryDiningIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "list":
 				return <FormatListNumberedIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			// case "calendar":

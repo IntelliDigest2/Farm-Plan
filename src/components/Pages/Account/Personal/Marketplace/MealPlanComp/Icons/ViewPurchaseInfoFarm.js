@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table } from 'react-bootstrap';
-import { Form, InputGroup, Button } from "react-bootstrap";
+import { Table,Form, InputGroup, Button } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
 import { getPurchaseInfoFarm } from "../../../../../../../store/actions/marketplaceActions/farmPlanData";
@@ -14,13 +13,15 @@ function ViewPurchaseInfoFarm(props) {
   const { t } = useTranslation();
 
   const [list, setList] = useState([]);
+  const [isDateEntered, setIsDateEntered] = useState(false);
+
 
   
 //this sends data request
 useEffect(() => {
   props.getPurchaseInfoFarm();
   //console.log("getting inv ==>", props.data)
-}, [props.infoFarm]);
+}, []);
 
 const getPurchaseInfoList = async () => {
   //clears the items array before each update- IMPORTANT
@@ -30,16 +31,28 @@ const getPurchaseInfoList = async () => {
   props.infoFarm.forEach((doc) => {
     // id is the docref for deletion
     var id = doc.id;
-    var cart = doc.cart;
+    // var cart = doc.cart;
     var status = doc.status;
+    var receiversID = doc.receiversID;
+    var farmerID = doc.farmerId
+
+    var cartWithPrices = doc.cart.map((cartItem) => {
+      return {
+        ...cartItem,
+        price: 0,
+        currency: "$"
+      };
+    });
 
 
     setList((list) => [
       ...list,
       {
-        cart: cart,
+        cart: cartWithPrices,
         id: id,
         status: status,
+        farmerID: farmerID,
+        receiversID: receiversID,
       },
     ]);
   });
@@ -48,6 +61,7 @@ const getPurchaseInfoList = async () => {
 //this sends data request
 useEffect(() => {
   getPurchaseInfoList();
+  // console.log("list data", list)
   //console.log("getting inv ==>", props.data)
 }, [props.infoFarm]);
 
@@ -80,23 +94,72 @@ useEffect(() => {
 									</tr>
 								</thead>
 								<tbody>
-									{item.cart.map((cart) => (
-										<tr key={`cart${index}`}>
-										<td>{cart.data}</td>
-										<td>{cart.quantity}</td>
-										<td>{cart.measure}</td>
-									</tr>
-									))}
-									
-								</tbody>
-                <div className="table-header">
-                      <ConfirmItemIconFarm
-                        //value={props.value}
-                        id={item.id}
+                  {item.cart.map((cartItem, cartIndex) => (
+                    <tr key={`cart${cartIndex}`}>
+                      <td>{cartItem.data}</td>
+                      <td>{cartItem.quantity}</td>
+                      <td>{cartItem.measure}</td>
+                      <td>
+                        <InputGroup>
+                          <InputGroup.Text>$</InputGroup.Text>
+                          <Form.Control
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={cartItem.price}
+                            onChange={(e) => {
+                              const newPrice = parseFloat(e.target.value);
+                              const updatedCart = [...item.cart];
+                              updatedCart[cartIndex].price = newPrice;
+                              const updatedList = list.map((listItem) =>
+                                listItem.id === item.id
+                                  ? { ...listItem, cart: updatedCart }
+                                  : listItem
+                              );
+                              setList(updatedList);
+                            }}
+                          />
+                        </InputGroup>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+
+
+                <tfoot>
+                  <tr>
+                    <td colSpan="2">
+                      {/* Conditionally render the ConfirmItemIconFarm button */}
+                      {item.status !== "ACCEPTED" && isDateEntered &&  (
+                        <ConfirmItemIconFarm 
+                          id={item.id}
+                          item={item.cart}
+                          farmerID={item.farmerID}
+                          farmerRef={item.id}
+                          receiversID={item.receiversID}
+                          deliveryDueDate={item.deliveryDueDate}
+                        />
+                      )}
+                    </td>
+
+                    <td colSpan="3">
+                    <h5>Add Delivery Date</h5>
+                      <Form.Control
+                        type="date"
+                        value={list[0].deliveryDueDate || ""}
+                        onChange={(e) => {
+                          const newDueDate = e.target.value;
+                          const updatedList = list.map((listItem) => ({
+                            ...listItem,
+                            deliveryDueDate: newDueDate,
+                          }));
+                          setList(updatedList);
+                          setIsDateEntered(newDueDate !== "");
+                        }}
                       />
-                  </div>
-								
-								
+                    </td>
+                  </tr>
+                </tfoot>
 							</Table>
               </ListItem>
             ))}

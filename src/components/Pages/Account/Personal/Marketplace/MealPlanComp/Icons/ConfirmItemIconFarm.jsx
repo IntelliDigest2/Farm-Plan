@@ -4,7 +4,10 @@ import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { editPurchaseStatusOnFarmer } from "../../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { sendToUser } from "../../../../../../../store/actions/dataActions";
+
 import { useTranslation, Trans } from 'react-i18next';
+import '../../../../../../SubComponents/Button.css'
 
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
@@ -22,10 +25,16 @@ function ConfirmItemIconFarm(props) {
     const data = {
       //need to send shopping list data to be bough the previous week from the day it is made
       id: props.id,
-      status: "CONFIRMED",
+      farmerRef: props.farmerRef,
+      status: "ACCEPTED",
+      item: props.item,
+      farmerID: props.farmerID,
+      receiversID: props.receiversID,
+      deliveryDueDate: props.deliveryDueDate
     };
     props.editPurchaseStatusOnFarmer(data);
-
+    props.sendToUser(data);
+    // console.log("show items", data)
     submitNotification("Success", "You will be contacted shortly");
   };
 
@@ -40,7 +49,7 @@ function ConfirmItemIconFarm(props) {
           aria-label="Bought Item"
           sx={{ ml: 2 }}
         >
-          <Button variant="outlined" color="success" onClick={handleShow}>
+          <Button className="blue-btn shadow-none mt-3" onClick={handleShow}>
           {t('description.button_confirm')}
           </Button> 
         </IconButton>
@@ -82,7 +91,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editPurchaseStatusOnFarmer: (data) => dispatch(editPurchaseStatusOnFarmer(data)),
-
+    sendToUser: (data) => dispatch(sendToUser(data)),
   };
 };
 

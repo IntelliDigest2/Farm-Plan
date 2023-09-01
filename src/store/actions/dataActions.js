@@ -627,16 +627,18 @@ export const sendToUser = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 
+		console.log("db call here", data)
+
 		getFirestore()
 			.collection("marketplace")
-			.doc(data.uid)
+			.doc(data.receiversID)
 			.collection("messages")
-			.add(data.upload)
+			.add(data)
 			.then((docRef) => {
 				// make the docId easily accessible so that we can delete it later if we want.
 				getFirestore()
 					.collection("marketplace")
-					.doc(data.uid)
+					.doc(data.receiversID)
 					.collection("messages")
 					.doc(docRef.id)
 					.set({ id: docRef.id }, { merge: true });
@@ -683,7 +685,7 @@ export const sendToFarmer = (data) => {
 			.collection("farm_users")
 			.doc(data.farmerId)
 			.collection("messages")
-			.add(data.upload)
+			.add(data)
 			.then((docRef) => {
 				// make the docId easily accessible so that we can delete it later if we want.
 				getFirestore()
