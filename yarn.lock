@@ -14189,6 +14189,11 @@ react-overlays@^5.1.0, react-overlays@^5.1.1:
     uncontrollable "^7.2.1"
     warning "^4.0.3"
 
+react-paystack@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.npmjs.org/react-paystack/-/react-paystack-4.0.3.tgz"
+  integrity sha512-ruu94Qrvi7QHK1axrHRShUebka68G3UyGIndVFPCjs3rddBOkLiorF6GJ98FW9lq4ov5M4adh4g03F6aOuJmRA==
+
 react-phone-input-2@^2.15.1:
   version "2.15.1"
   resolved "https://registry.npmjs.org/react-phone-input-2/-/react-phone-input-2-2.15.1.tgz"
