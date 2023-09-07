@@ -7,6 +7,7 @@ import "./Wallet.css"
 import logo from "../../../images/Revolut-logo-1.gif"
 
 import RevolutPay from "./RevolutPay"
+import Pay from './stripe/Pay';
 
 import { connect } from "react-redux";
 
@@ -230,7 +231,7 @@ const WalletComponent = (props) => {
                   <Modal.Title>Deposit</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <RevolutPay amount={amountDeposit} />
+                  <Pay amount={amountDeposit} userID={props.profile.uid}/>
                 </Modal.Body>
               </Modal>
 
@@ -238,7 +239,7 @@ const WalletComponent = (props) => {
           </Card>
         </div>
         {/* Powered by Logo */}
-          <div className="powered-by-logo">
+          {/* <div className="powered-by-logo">
             <img
               src={logo}
               alt="Powered by Logo"
@@ -246,7 +247,7 @@ const WalletComponent = (props) => {
             />
             <p>Powered by</p>
 
-          </div>   
+          </div>    */}
       </div>
     </div>
 		</PageWrap>
