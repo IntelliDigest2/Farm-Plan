@@ -8,6 +8,7 @@ import { getMonth, getYear } from "date-fns";
 import { Dropdown } from "./../../../../../SubComponents/Dropdown";
 import { getFarmTurnOverFunction } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
+import CycleFilterComponent from "./../cycleFilterComponent";
 
 export const ProfitData = (props) => {
 	const yearList = [];
@@ -86,7 +87,11 @@ export const ProfitData = (props) => {
 	// 	}
 	// }, [year]);
 
-	useEffect(() => {}, [props.produceData]);
+	useEffect(() => {
+		if (props.produceData === undefined) {
+			console.log(`FARM CYCLE NOT FOUND`);
+		}
+	}, [props.produceData]);
 
 	useEffect(() => {}, [year]);
 
@@ -150,6 +155,12 @@ export const ProfitData = (props) => {
 	let farmTypes = Array.from(farmTypesSet);
 	let productTypeTurnOver = {};
 
+	const handleFetchData = (duration, period) => {
+		console.log(duration, `this is the current durations`);
+		console.log(period, `this is the current period`);
+		props.getData(duration, period);
+	};
+
 	const listItems = (key) => {
 		let productTypes = farmProduceTypeObjects[key];
 		let salesForKey = props.salesData?.filter((saleProduct) => {
@@ -209,7 +220,7 @@ export const ProfitData = (props) => {
 				saleProduce?.quantity * saleProduce?.price.amount +
 				saleProduce?.price.currency;
 
-			console.log(saleProduce, `this is the saleProduce`);
+			// console.log(saleProduce, `this is the saleProduce`);
 			return (
 				<ListGroupItem>
 					<p>Product name: {value.item.toUpperCase()}</p>
@@ -276,141 +287,13 @@ export const ProfitData = (props) => {
 		}
 	};
 
-	let filterComponent =
-		filter === "Month" ? (
-			<div style={{ display: "flex" }}>
-				<div>
-					<Dropdown
-						id="month"
-						styling="grey dropdown-input"
-						data={month}
-						// data={local.measure}
-						required
-						items={[
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep",
-							"Oct",
-							"Nov",
-							"Dec",
-						]}
-						function={(e) => setMonth(e)}
-					/>
-				</div>
-				<div>
-					<Dropdown
-						id="year"
-						styling="grey dropdown-input"
-						data={year}
-						// data={local.measure}
-						required
-						items={yearList}
-						function={(e) => setYear(e)}
-					/>
-				</div>
-			</div>
-		) : (
-			<div style={{ display: "flex" }}>
-				{/* <Col> */}
-				<div
-					style={{
-						display: "flex",
-						alignItems: "baseline",
-						marginLeft: "2rem",
-					}}
-				>
-					Start Month
-					<Dropdown
-						id="farmCycleStartMonth"
-						styling="grey dropdown-input"
-						data={farmCycleStartMonth}
-						// data={local.measure}
-						required
-						items={[
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep",
-							"Oct",
-							"Nov",
-							"Dec",
-						]}
-						function={(e) => setFarmCycleStartMonth(e)}
-					/>
-					Start Year
-					<Dropdown
-						id="farmCycleStartYear"
-						styling="grey dropdown-input"
-						data={farmCycleStartYear}
-						// data={local.measure}
-						required
-						items={yearList}
-						function={(e) => {
-							setFarmCycleStartYear(e);
-						}}
-					/>
-				</div>
-
-				<div
-					style={{
-						display: "flex",
-						alignItems: "baseline",
-						// border: ".5px solid lightgrey",
-						marginLeft: "auto",
-					}}
-				>
-					End Month
-					<Dropdown
-						id="farmCycleEndMonth"
-						styling="grey dropdown-input"
-						data={farmCycleEndMonth}
-						// data={local.measure}
-						required
-						items={[
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep",
-							"Oct",
-							"Nov",
-							"Dec",
-						]}
-						function={(e) => setFarmCycleEndMonth(e)}
-					/>
-					End Year
-					<Dropdown
-						id="farmCycleEndYear"
-						styling="grey dropdown-input"
-						data={farmCycleEndYear}
-						// data={local.measure}
-						required
-						items={yearList}
-						function={(e) => setFarmCycleEndYear(e)}
-					/>
-				</div>
-			</div>
-		);
-
 	let origin =
 		props.produceData === null ? (
 			<>...loading</>
 		) : (
+			// : props.produceData === undefined ? (
+			// 	<div>'You do not have a farmCycle for the duration specified '</div>
+			// )
 			<div style={{ marginTop: "15px" }}>
 				<div style={{ textAlign: "left" }}>
 					<Row>
@@ -439,36 +322,8 @@ export const ProfitData = (props) => {
 		);
 	return (
 		<div>
-			<Row style={{ alignItems: "center", margin: "0 auto" }}>
-				<Col md={1.5}>Filter By :</Col>
-				<Col md={1.5}>
-					{" "}
-					<>
-						<Dropdown
-							id="filter"
-							styling="grey dropdown-input"
-							data={filter}
-							// data={local.measure}
-							required
-							items={["Month", "FarmCycle"]}
-							function={(e) => setFilter(e)}
-						/>
-					</>
-				</Col>
-				<Col md={9}>
-					<div style={{ display: "flex", flexWrap: "wrap" }}>
-						{filterComponent}
-						{/* <div style={{ display: "flex", marginRight: "auto" }}>
-							<Button
-								onClick={searchTurnOver}
-								className="green-btn shadow-none"
-							>
-								Search
-							</Button>
-						</div> */}
-					</div>
-				</Col>
-			</Row>
+			<CycleFilterComponent fetchData={handleFetchData} />
+
 			{origin}
 			{/* <div>
 				<p>Product Harvest quantity : {harvestQuantity}</p>

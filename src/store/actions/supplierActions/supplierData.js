@@ -48,13 +48,74 @@ export const createProduct = (data) => {
 	};
 };
 
-export const getProducts = (products) => {
+export const getProducts = (duration, period) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
+
+		let startOfWeek, endOfWeek;
+		let day;
+
+		let startOfMonth, endOfMonth;
+		let startOfYear, endOfYear;
+
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
 
 		var uid;
+
+		if (duration === "Week") {
+			const currentDate = new Date();
+			const firstDayOfMonth = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth()
+			);
+			const weekOfMonth = period;
+
+			// console.log(`week ${weekOfMonth} of month`);
+
+			// console.log(firstDayOfMonth, `first day of month`);
+
+			// Calculate the start and end timestamps for the week of the month
+			startOfWeek = new Date();
+			startOfWeek.setDate((weekOfMonth - 1) * 7 + 1);
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			endOfWeek = new Date();
+			endOfWeek.setDate(weekOfMonth * 7);
+			endOfWeek.setHours(23, 59, 59, 999);
+
+			// console.log(startOfWeek, `this is the start of the week`);
+			// console.log(endOfWeek, `this is the end of the week`);
+		} else if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(period.monthYear, period.monthNumber - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(period.monthYear, period.monthNumber, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+			const weekOfMonth = period;
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else if (duration === "Year") {
+			const currentDate = new Date();
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
+		} else {
+			day = period;
+			day.setHours(0, 0, 0, 0);
+		}
 		switch (profile.type) {
 			case "business_admin":
 				uid = authUID;
@@ -79,28 +140,58 @@ export const getProducts = (products) => {
 				break;
 		}
 
-		getFirestore()
+		let collectionRef = getFirestore()
 			.collection("products")
 			.where("companyID", "==", uid)
-			.onSnapshot(
-				(snapshot) => {
-					let supplierProducts = [];
+			.orderBy("createdAt", "desc");
 
-					snapshot.forEach((doc) => {
-						const data = doc.data();
+		let query;
 
-						supplierProducts.push({ ...doc.data(), salesId: doc.id });
-					});
+		switch (duration) {
+			case "Week":
+				query = collectionRef
+					.where("createdAt", ">=", startOfWeek)
+					.where("createdAt", "<=", endOfWeek);
+				break;
 
-					// Do something with the values array, e.g., update the UI
-					// console.log(products);
-					dispatch({ type: "GET_PRODUCTS", payload: supplierProducts });
-				},
-				(err) => {
-					// console.error("Error getting real-time updates:", err);
-					dispatch({ type: "GET_PRODUCTS_ERROR", err });
-				}
-			);
+			case "Month":
+				query = collectionRef
+					.where("createdAt", ">=", startOfMonth)
+					.where("createdAt", "<=", endOfMonth);
+				break;
+
+			case "Year":
+				query = collectionRef
+					.where("createdAt", ">=", startOfYear)
+					.where("createdAt", "<=", endOfYear);
+				break;
+
+			default:
+				query = collectionRef
+					.where("createdAt", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("createdAt", "<", new Date(day.getTime() + 86400000));
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				let supplierProducts = [];
+
+				snapshot.forEach((doc) => {
+					supplierProducts.push({ ...doc.data(), salesId: doc.id });
+				});
+
+				// Do something with the values array, e.g., update the UI
+				console.log(supplierProducts, `this is what is returned for the stock`);
+				dispatch({ type: "GET_PRODUCTS", payload: supplierProducts });
+			},
+			(err) => {
+				console.error("Error getting real-time updates:", err);
+				dispatch({ type: "GET_PRODUCTS_ERROR", err });
+			}
+		);
 		// .then((snapshot) => {
 		//   const data = [];
 		//   snapshot.forEach((doc) => {
@@ -206,13 +297,73 @@ export const addToRent = (data) => {
 	};
 };
 
-export const getSales = (sales) => {
+export const getSales = (duration, period) => {
+	let startOfWeek, endOfWeek;
+	let day;
+
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
 
 		var uid;
+
+		if (duration === "Week") {
+			const currentDate = new Date();
+			const firstDayOfMonth = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth()
+			);
+			const weekOfMonth = period;
+
+			// console.log(`week ${weekOfMonth} of month`);
+
+			// console.log(firstDayOfMonth, `first day of month`);
+
+			// Calculate the start and end timestamps for the week of the month
+			startOfWeek = new Date();
+			startOfWeek.setDate((weekOfMonth - 1) * 7 + 1);
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			endOfWeek = new Date();
+			endOfWeek.setDate(weekOfMonth * 7);
+			endOfWeek.setHours(23, 59, 59, 999);
+
+			// console.log(startOfWeek, `this is the start of the week`);
+			// console.log(endOfWeek, `this is the end of the week`);
+		} else if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(period.monthYear, period.monthNumber - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(period.monthYear, period.monthNumber, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+			const weekOfMonth = period;
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else if (duration === "Year") {
+			const currentDate = new Date();
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
+		} else {
+			day = period;
+			day.setHours(0, 0, 0, 0);
+		}
+
 		switch (profile.type) {
 			case "business_admin":
 				uid = authUID;
@@ -237,30 +388,127 @@ export const getSales = (sales) => {
 				break;
 		}
 
-		getFirestore()
+		let collectionRef = getFirestore()
 			.collection("sales")
-			.where("companyID", "==", uid)
-			.get()
-			.then((snapshot) => {
+			.where("companyID", "==", uid);
+
+		let query;
+
+		switch (duration) {
+			case "Week":
+				query = collectionRef
+					.where("createdAt", ">=", startOfWeek)
+					.where("createdAt", "<=", endOfWeek);
+				break;
+
+			case "Month":
+				query = collectionRef
+					.where("createdAt", ">=", startOfMonth)
+					.where("createdAt", "<=", endOfMonth);
+				break;
+
+			case "Year":
+				query = collectionRef
+					.where("createdAt", ">=", startOfYear)
+					.where("createdAt", "<=", endOfYear);
+				break;
+
+			default:
+				query = collectionRef
+					.where("createdAt", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("createdAt", "<", new Date(day.getTime() + 86400000));
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
 				const data = [];
+
 				snapshot.forEach((doc) => {
-					data.push(doc.data());
+					data.push({ ...doc.data(), salesId: doc.id });
 				});
+				console.log(data, `this is the data rerurned for the sales`);
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
 				dispatch({ type: "GET_SALES", payload: data });
-			})
-			.catch((err) => {
-				dispatch({ type: "GET_SALES_ERROR", err });
-			});
+			},
+			(error) => {
+				console.error("Error getting real-time updates:", error);
+
+				dispatch({ type: "GET_SALES_ERROR", error });
+			}
+		);
 	};
 };
+export const getRent = (duration, period) => {
+	let startOfWeek, endOfWeek;
+	let day;
 
-export const getRent = (rent) => {
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
 
 		var uid;
+
+		if (duration === "Week") {
+			const currentDate = new Date();
+			const firstDayOfMonth = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth()
+			);
+			const weekOfMonth = period;
+
+			// console.log(`week ${weekOfMonth} of month`);
+
+			// console.log(firstDayOfMonth, `first day of month`);
+
+			// Calculate the start and end timestamps for the week of the month
+			startOfWeek = new Date();
+			startOfWeek.setDate((weekOfMonth - 1) * 7 + 1);
+			startOfWeek.setHours(0, 0, 0, 0);
+
+			endOfWeek = new Date();
+			endOfWeek.setDate(weekOfMonth * 7);
+			endOfWeek.setHours(23, 59, 59, 999);
+
+			// console.log(startOfWeek, `this is the start of the week`);
+			// console.log(endOfWeek, `this is the end of the week`);
+		} else if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(period.monthYear, period.monthNumber - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(period.monthYear, period.monthNumber, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+			const weekOfMonth = period;
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else if (duration === "Year") {
+			const currentDate = new Date();
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
+		} else {
+			day = period;
+			day.setHours(0, 0, 0, 0);
+		}
+
 		switch (profile.type) {
 			case "business_admin":
 				uid = authUID;
@@ -285,22 +533,108 @@ export const getRent = (rent) => {
 				break;
 		}
 
-		getFirestore()
+		let collectionRef = getFirestore()
 			.collection("rent")
-			.where("companyID", "==", uid)
-			.get()
-			.then((snapshot) => {
+			.where("companyID", "==", uid);
+
+		let query;
+
+		switch (duration) {
+			case "Week":
+				query = collectionRef
+					.where("createdAt", ">=", startOfWeek)
+					.where("createdAt", "<=", endOfWeek);
+				break;
+
+			case "Month":
+				query = collectionRef
+					.where("createdAt", ">=", startOfMonth)
+					.where("createdAt", "<=", endOfMonth);
+				break;
+
+			case "Year":
+				query = collectionRef
+					.where("createdAt", ">=", startOfYear)
+					.where("createdAt", "<=", endOfYear);
+				break;
+
+			default:
+				query = collectionRef
+					.where("createdAt", ">=", day)
+					//this calculate the beginning of the day to when the day ends i.e added 864000000milliseconds which is 24 hours
+					.where("createdAt", "<", new Date(day.getTime() + 86400000));
+
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
 				const data = [];
+
 				snapshot.forEach((doc) => {
-					data.push(doc.data());
+					data.push({ ...doc.data(), salesId: doc.id });
 				});
+				console.log(data, `this is the data rerurned for the rent`);
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
 				dispatch({ type: "GET_RENT", payload: data });
-			})
-			.catch((err) => {
-				dispatch({ type: "GET_RENT_ERROR", err });
-			});
+			},
+			(error) => {
+				console.error("Error getting real-time rent updates:", error);
+
+				dispatch({ type: "GET_RENT_ERROR", error });
+			}
+		);
 	};
 };
+
+// export const getRent = (rent) => {
+// 	return (dispatch, getState, { getFirestore }) => {
+// 		//make async call to database
+// 		const profile = getState().firebase.profile;
+// 		const authUID = getState().firebase.auth.uid;
+
+// 		var uid;
+// 		switch (profile.type) {
+// 			case "business_admin":
+// 				uid = authUID;
+// 				break;
+// 			case "business_sub":
+// 				uid = profile.admin;
+// 				break;
+// 			case "academic_admin":
+// 				uid = authUID;
+// 				break;
+// 			case "academic_sub":
+// 				uid = profile.admin;
+// 				break;
+// 			case "household_admin":
+// 				uid = authUID;
+// 				break;
+// 			case "household_sub":
+// 				uid = profile.admin;
+// 				break;
+// 			default:
+// 				uid = authUID;
+// 				break;
+// 		}
+
+// 		getFirestore()
+// 			.collection("rent")
+// 			.where("companyID", "==", uid)
+// 			.get()
+// 			.then((snapshot) => {
+// 				const data = [];
+// 				snapshot.forEach((doc) => {
+// 					data.push(doc.data());
+// 				});
+// 				dispatch({ type: "GET_RENT", payload: data });
+// 			})
+// 			.catch((err) => {
+// 				dispatch({ type: "GET_RENT_ERROR", err });
+// 			});
+// 	};
+// };
 
 export const addToSupplyItems = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
@@ -445,14 +779,14 @@ export const getExpenseForDuration = (duration, period) => {
 
 			// Calculate the start and end timestamps for the week of the month
 
-			startOfMonth = new Date(year, period - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
-			endOfMonth = new Date(year, period, 0);
+			startOfMonth = new Date(period.monthYear, period.monthNumber - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(period.monthYear, period.monthNumber, 0);
 			startOfMonth.setHours(0, 0, 0, 0);
 			endOfMonth.setHours(23, 59, 59, 999);
 			const weekOfMonth = period;
 
-			// console.log(startOfMonth, `this is the start of the month`);
-			// console.log(endOfMonth, `this is the end of the month`);
+			console.log(startOfMonth, `this is the start of the month`);
+			console.log(endOfMonth, `this is the end of the month`);
 		} else if (duration === "Year") {
 			const currentDate = new Date();
 			const year = period;

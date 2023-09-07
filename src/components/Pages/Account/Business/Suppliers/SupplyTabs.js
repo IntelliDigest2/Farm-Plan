@@ -16,7 +16,7 @@ export function Items({ setShow, setChooseModal }) {
 				icon="chart"
 				label="Revenue"
 				color="yellow"
-				goTo="/supply-plan"
+				goTo="/supply-revenue"
 				disabled
 			/>
 			{/* <IconButton icon="chart" label="Expense" color="yellow" goTo="/expense" /> */}

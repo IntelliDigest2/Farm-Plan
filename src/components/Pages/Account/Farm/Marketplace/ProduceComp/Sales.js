@@ -20,93 +20,98 @@ import List from "@mui/material/List";
 // import { ListItem, ListGroupItem } from "@mui/material/ListItem";
 import { getSalesForDuration } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
 import { AddSalesModal } from "./AddSalesModal";
+import FilterComponent from "./../filterComponent";
 
 export const Sales = (props) => {
 	const currentYear = new Date().getFullYear();
-	const currentDate = new Date();
-	const currentMonth = format(currentDate, "MMMM").substring(0, 3);
-	const [day, setDay] = useState(currentDate);
+	// const currentDate = new Date();
+	// const currentMonth = format(currentDate, "MMMM").substring(0, 3);
+	// const [day, setDay] = useState(currentDate);
 	const [filter, setFilter] = useState("Day");
-	const [month, setMonth] = useState(currentMonth);
-	const [week, setWeek] = useState("1");
-	const [year, setYear] = useState(currentYear);
+	// const [month, setMonth] = useState(currentMonth);
+	// const [week, setWeek] = useState("1");
+	// const [year, setYear] = useState(currentYear);
 	const [show, setShow] = useState(false);
+	const [currentDuration, setcurrentDuration] = useState("Day");
 
-	let months = [
-		"Jan",
-		"Feb",
-		"Mar",
-		"Apr",
-		"May",
-		"Jun",
-		"Jul",
-		"Aug",
-		"Sep",
-		"Oct",
-		"Nov",
-		"Dec",
-	];
+	// let months = [
+	// 	"Jan",
+	// 	"Feb",
+	// 	"Mar",
+	// 	"Apr",
+	// 	"May",
+	// 	"Jun",
+	// 	"Jul",
+	// 	"Aug",
+	// 	"Sep",
+	// 	"Oct",
+	// 	"Nov",
+	// 	"Dec",
+	// ];
+
+	useEffect(() => {
+		setFilter(currentDuration);
+	}, [props.salesData]);
+
+	const handleFetchData = (duration, period) => {
+		setcurrentDuration(duration);
+
+		props.getSalesData(duration, period);
+	};
 
 	// useEffect(() => {
-	// 	props.getSalesData("Month", 8);
-	// }, []);
+	// 	let period;
+	// 	if (filter === "Week") {
+	// 		console.log(`filter changed to week`);
+	// 		period = week;
+	// 	} else if (filter === "Month") {
+	// 		console.log(`filter changed to month `);
+	// 		let monthNumber = months.indexOf(month) + 1;
 
-	useEffect(() => {}, [props.salesData]);
+	// 		period = monthNumber;
+	// 	} else if (filter === "Year") {
+	// 		console.log(`filter changed to year `);
 
-	//changes the period value
-	useEffect(() => {
-		let period;
-		if (filter === "Week") {
-			console.log(`filter changed to week`);
-			period = week;
-		} else if (filter === "Month") {
-			console.log(`filter changed to month `);
-			let monthNumber = months.indexOf(month) + 1;
+	// 		period = year;
+	// 	} else {
+	// 		period = day;
+	// 	}
 
-			period = monthNumber;
-		} else if (filter === "Year") {
-			console.log(`filter changed to year `);
+	// 	console.log(filter, period);
 
-			period = year;
-		} else {
-			period = day;
-		}
+	// 	props.getSalesData(filter, period);
+	// }, [filter]);
 
-		console.log(filter, period);
+	// useEffect(() => {
+	// 	if (filter === "Week") {
+	// 		console.log(`Week change`);
+	// 		props.getSalesData(filter, week);
+	// 	}
+	// }, [week]);
 
-		props.getSalesData(filter, period);
-	}, [filter]);
+	// useEffect(() => {
+	// 	if (filter === "Day") {
+	// 		console.log(`day changed to ${day}`);
+	// 		props.getSalesData(filter, day);
+	// 	}
+	// }, [day]);
 
-	useEffect(() => {
-		if (filter === "Week") {
-			console.log(`Week change`);
-			props.getSalesData(filter, week);
-		}
-	}, [week]);
+	// useEffect(() => {
+	// 	if (filter === "Month") {
+	// 		console.log(`month change`);
+	// 		let monthNumber = months.indexOf(month) + 1;
 
-	useEffect(() => {
-		if (filter === "Day") {
-			console.log(`day changed to ${day}`);
-			props.getSalesData(filter, day);
-		}
-	}, [day]);
+	// 		props.getSalesData(filter, monthNumber);
+	// 	}
+	// }, [month]);
 
-	useEffect(() => {
-		if (filter === "Month") {
-			console.log(`month change`);
-			let monthNumber = months.indexOf(month) + 1;
+	// useEffect(() => {
+	// 	if (filter === "Year") {
+	// 		console.log(`year change`);
 
-			props.getSalesData(filter, monthNumber);
-		}
-	}, [month]);
-
-	useEffect(() => {
-		if (filter === "Year") {
-			console.log(`year change`);
-
-			props.getSalesData(filter, year);
-		}
-	}, [year]);
+	// 		props.getSalesData(filter, year);
+	// 	}
+	// }, [year]);
 
 	// console.log(props.salesData, `this is the sales data`);
 
@@ -145,65 +150,65 @@ export const Sales = (props) => {
 		});
 	};
 
-	let componentToRender =
-		filter === "Week" ? (
-			<>
-				<Dropdown
-					id="week"
-					styling="grey dropdown-input"
-					data={week}
-					// data={local.measure}
-					required
-					items={["1", "2", "3", "4"]}
-					function={(e) => setWeek(e)}
-				/>
-				<span style={{ marginLeft: "5px" }}> of {currentMonth}</span>
-			</>
-		) : filter === "Month" ? (
-			<Dropdown
-				id="month"
-				styling="grey dropdown-input"
-				data={month}
-				// data={local.measure}
-				required
-				items={[
-					"Jan",
-					"Feb",
-					"Mar",
-					"Apr",
-					"May",
-					"Jun",
-					"Jul",
-					"Aug",
-					"Sep",
-					"Oct",
-					"Nov",
-					"Dec",
-				]}
-				function={(e) => setMonth(e)}
-			/>
-		) : filter === "Year" ? (
-			<Dropdown
-				id="year"
-				styling="grey dropdown-input"
-				data={year}
-				// data={local.measure}
-				required
-				items={years}
-				function={(e) => setYear(e)}
-			/>
-		) : (
-			<div style={{ display: "flex" }}>
-				<span>pick date</span>
-				<span>
-					<DatePicker
-						selected={day}
-						onChange={(date) => setDay(date)}
-						// dateFormat="dd/m/yyyy"
-					/>
-				</span>
-			</div>
-		);
+	// let componentToRender =
+	// 	filter === "Week" ? (
+	// 		<>
+	// 			<Dropdown
+	// 				id="week"
+	// 				styling="grey dropdown-input"
+	// 				data={week}
+	// 				// data={local.measure}
+	// 				required
+	// 				items={["1", "2", "3", "4"]}
+	// 				function={(e) => setWeek(e)}
+	// 			/>
+	// 			<span style={{ marginLeft: "5px" }}> of {currentMonth}</span>
+	// 		</>
+	// 	) : filter === "Month" ? (
+	// 		<Dropdown
+	// 			id="month"
+	// 			styling="grey dropdown-input"
+	// 			data={month}
+	// 			// data={local.measure}
+	// 			required
+	// 			items={[
+	// 				"Jan",
+	// 				"Feb",
+	// 				"Mar",
+	// 				"Apr",
+	// 				"May",
+	// 				"Jun",
+	// 				"Jul",
+	// 				"Aug",
+	// 				"Sep",
+	// 				"Oct",
+	// 				"Nov",
+	// 				"Dec",
+	// 			]}
+	// 			function={(e) => setMonth(e)}
+	// 		/>
+	// 	) : filter === "Year" ? (
+	// 		<Dropdown
+	// 			id="year"
+	// 			styling="grey dropdown-input"
+	// 			data={year}
+	// 			// data={local.measure}
+	// 			required
+	// 			items={years}
+	// 			function={(e) => setYear(e)}
+	// 		/>
+	// 	) : (
+	// 		<div style={{ display: "flex" }}>
+	// 			<span>pick date</span>
+	// 			<span>
+	// 				<DatePicker
+	// 					selected={day}
+	// 					onChange={(date) => setDay(date)}
+	// 					// dateFormat="dd/m/yyyy"
+	// 				/>
+	// 			</span>
+	// 		</div>
+	// 	);
 
 	let content =
 		props.salesData === null ? (
@@ -233,22 +238,8 @@ export const Sales = (props) => {
 
 	return (
 		<div>
-			<Row style={{ alignItems: "center" }}>
-				<Col md={2}>Filter by</Col>
-				<Col md={4}>
-					<Dropdown
-						// id="nutrientUnit"
-						styling="grey dropdown-input"
-						data={filter}
-						// data={local.measure}
-						required
-						items={["Day", "Week", "Month", "Year"]}
-						function={(e) => setFilter(e)}
-					/>
-				</Col>
-				<Col style={{ display: "flex", alignItems: "center" }} md={4}>
-					{componentToRender}
-				</Col>
+			<Row style={{ alignItems: "baseline" }}>
+				<FilterComponent fetchData={handleFetchData} />
 				<Col style={{ display: "flex", alignItems: "center" }} md={2}>
 					<AddSalesModal show={show} setShow={setShow} />
 				</Col>

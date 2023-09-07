@@ -15,6 +15,7 @@ import {
 } from "react-bootstrap";
 // import { format } from "date-fns";
 import { AddExpenseModal } from "./AddExpenseModal";
+import FilterComponent from "./../filterComponent";
 
 export const Expense = (props) => {
 	const currentYear = new Date().getFullYear();
@@ -48,62 +49,11 @@ export const Expense = (props) => {
 
 	let groupedData;
 
+	const handleFetchData = (duration, period) => {
+		props.getExpenseData(duration, period);
+	};
+
 	// console.log(props.expenseData, `thi si shte data for the expense`);
-
-	//changes the period value
-	useEffect(() => {
-		let period;
-		if (filter === "Week") {
-			console.log(`filter changed to week`);
-			period = week;
-		} else if (filter === "Month") {
-			console.log(`filter changed to month `);
-			let monthNumber = months.indexOf(month) + 1;
-
-			period = monthNumber;
-		} else if (filter === "Year") {
-			console.log(`filter changed to year `);
-
-			period = year;
-		} else {
-			period = day;
-		}
-
-		console.log(filter, period);
-
-		props.getExpenseData(filter, period);
-	}, [filter]);
-
-	useEffect(() => {
-		if (filter === "Week") {
-			console.log(`Week change`);
-			props.getExpenseData(filter, week);
-		}
-	}, [week]);
-
-	useEffect(() => {
-		if (filter === "Day") {
-			console.log(`day changed to ${day}`);
-			props.getExpenseData(filter, day);
-		}
-	}, [day]);
-
-	useEffect(() => {
-		if (filter === "Month") {
-			console.log(`month change`);
-			let monthNumber = months.indexOf(month) + 1;
-
-			props.getExpenseData(filter, monthNumber);
-		}
-	}, [month]);
-
-	useEffect(() => {
-		if (filter === "Year") {
-			console.log(`year change`);
-
-			props.getExpenseData(filter, year);
-		}
-	}, [year]);
 
 	const endYear = 2050;
 	const years = [];
@@ -111,66 +61,6 @@ export const Expense = (props) => {
 	for (let year = currentYear; year <= endYear; year++) {
 		years.push(year);
 	}
-
-	let componentToRender =
-		filter === "Week" ? (
-			<>
-				<Dropdown
-					id="week"
-					styling="grey dropdown-input"
-					data={week}
-					// data={local.measure}
-					required
-					items={["1", "2", "3", "4"]}
-					function={(e) => setWeek(e)}
-				/>
-				<span style={{ marginLeft: "5px" }}> of {currentMonth}</span>
-			</>
-		) : filter === "Month" ? (
-			<Dropdown
-				id="month"
-				styling="grey dropdown-input"
-				data={month}
-				// data={local.measure}
-				required
-				items={[
-					"Jan",
-					"Feb",
-					"Mar",
-					"Apr",
-					"May",
-					"Jun",
-					"Jul",
-					"Aug",
-					"Sep",
-					"Oct",
-					"Nov",
-					"Dec",
-				]}
-				function={(e) => setMonth(e)}
-			/>
-		) : filter === "Year" ? (
-			<Dropdown
-				id="year"
-				styling="grey dropdown-input"
-				data={year}
-				// data={local.measure}
-				required
-				items={years}
-				function={(e) => setYear(e)}
-			/>
-		) : (
-			<div style={{ display: "flex" }}>
-				<span>pick date</span>
-				<span>
-					<DatePicker
-						selected={day}
-						onChange={(date) => setDay(date)}
-						// dateFormat="dd/m/yyyy"
-					/>
-				</span>
-			</div>
-		);
 
 	let table;
 	const generateTable = (data) => {
@@ -318,21 +208,8 @@ export const Expense = (props) => {
 	return (
 		<div>
 			<Row style={{ alignItems: "center" }}>
-				<Col md={2}>Filter by</Col>
-				<Col md={4}>
-					<Dropdown
-						// id="nutrientUnit"
-						styling="grey dropdown-input"
-						data={filter}
-						// data={local.measure}
-						required
-						items={["Day", "Week", "Month", "Year"]}
-						function={(e) => setFilter(e)}
-					/>
-				</Col>
-				<Col style={{ display: "flex", alignItems: "center" }} md={4}>
-					{componentToRender}
-				</Col>
+				<FilterComponent fetchData={handleFetchData} />
+
 				<Col style={{ display: "flex", alignItems: "center" }} md={2}>
 					<AddExpenseModal show={show} setShow={setShow} />
 				</Col>

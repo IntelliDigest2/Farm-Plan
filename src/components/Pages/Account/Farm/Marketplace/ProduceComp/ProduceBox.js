@@ -52,7 +52,12 @@ export default function ProduceBox(props) {
 									</p>
 
 									<p>
-										<b>Quantity</b> {newProduce.quantity} {newProduce.measure}
+										<b>Initial Quantity</b> {newProduce.quantity}{" "}
+										{newProduce.measure}
+									</p>
+									<p>
+										<b>Current Quantity</b> {newProduce.quantity}{" "}
+										{newProduce.measure}
 									</p>
 
 									<p>

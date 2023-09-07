@@ -5,11 +5,11 @@ import DatePicker from "react-datepicker";
 
 import { connect, useSelector } from "react-redux";
 
-import { Dropdown } from "./../../../../../SubComponents/Dropdown";
-import { submitNotification } from "./../../../../../lib/Notifications";
-import { addSaleData } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { Dropdown } from "./../../../../SubComponents/Dropdown";
+import { submitNotification } from "./../../../../lib/Notifications";
+import { addToSales } from "./../../../../../store/actions/supplierActions/supplierData";
 
-const AddSalesForm = (props) => {
+const AddToSupplierSaleForm = (props) => {
 	const [submitError, setSubmitError] = useState(false);
 	const defaultLocal = {
 		unit: "bags",
@@ -30,18 +30,6 @@ const AddSalesForm = (props) => {
 	const [productType, setProductType] = useState("Horticulture");
 	const formRef = useRef(null);
 
-	// useEffect(() => {
-	// 	if (props.submitError !== null) setSubmitError(props.submitError);
-	// }, [props.submitError]);
-
-	// useEffect(() => {
-	// 	console.log(props.addExpenseLoader, `it has changed`);
-	// 	if (props.addLoader === false) {
-	// 		submitNotification("Success", "Produce added to inventory");
-	// 		formRef.current.reset();
-	// 	}
-	// }, [props.expense]);
-
 	const handleLocal = (e) => {
 		setLocal({ ...local, [e.target.id]: e.target.value });
 	};
@@ -55,21 +43,23 @@ const AddSalesForm = (props) => {
 	const handleSubmit = (e) => {
 		const data = {
 			medium: "ext",
-			unit: local.unit,
-			quantity: local.quantity,
-			price: { amount: local.amount, currency: local.currency },
-			currency: local.currency,
-			date: saleDate,
+
+			productQty: local.quantity,
+			productPrice: local.amount,
+			productCurrency: local.currency,
+			productMeasure: local.unit,
+
+			createdAt: saleDate,
+			batchNumber: local.batchNumber,
 			productName: local.productName,
-			productType: productType,
-			customerInfo: { customerName: local.customerName, customerId: null },
+			customerName: local.customerName,
 		};
 
 		// console.log(data, `this is the data returned`);
 		// setSubmitLoading(true);
 
 		props
-			.addSaleData(data)
+			.addSupplierSaleData(data)
 			.then((resp) => {
 				// console.log(resp.id, `this is the id of the newly added sale`);
 				setSubmitLoading(false);
@@ -84,37 +74,22 @@ const AddSalesForm = (props) => {
 			});
 	};
 
-	// console.log(props.addSaleLoader, `this is the add Expense loader`);
+	console.log(props.productInfo, `this is props`);
 
 	return (
 		<div>
 			<Form ref={formRef}>
-				<Form.Group>
-					<Form.Label>Product Type</Form.Label>
-					<InputGroup>
-						<Dropdown
-							id="productType"
-							styling="grey dropdown-input"
-							data={productType}
-							items={["Horticulture", "Aquaculture", "Livestock"]}
-							function={(e) => {
-								setProductType(e);
-							}}
-						/>
-					</InputGroup>
-				</Form.Group>
-
 				<div>
-					<Form.Group>
-						<Form.Label>Product name</Form.Label>
-						<Form.Control
-							type="text"
-							id="productName"
-							onChange={(e) => handleLocal(e)}
-							value={local.productName}
-							required
-						/>
-					</Form.Group>
+					<div>
+						<p>
+							Product Name: <span>{props.productInfo.productName}</span>
+						</p>
+					</div>
+					<div>
+						<p>
+							Brand Name: <span>{props.productInfo.brandName}</span>
+						</p>
+					</div>
 					<Form.Group>
 						<Form.Label>Batch Number</Form.Label>
 						<Form.Control
@@ -122,13 +97,23 @@ const AddSalesForm = (props) => {
 							id="batchNumber"
 							onChange={(e) => handleLocal(e)}
 							value={local.batchNumber}
+							placeholder="eg 5-10-2023-A"
 							required
 						/>
 						{/* TODO ADD SMALL TEXT THAT FECTHES THE PRODUCT ID FROM THE FARMPLAN WHEN THE PRODUCT NAME HAS BEEN TYPED IN THE INPUT */}
 					</Form.Group>
+					<div>
+						<p>
+							Unit price:{" "}
+							<span>
+								{props.productInfo.productPrice}
+								{props.productInfo.productCurrency}
+							</span>
+						</p>
+					</div>
 
 					<Form.Group>
-						<Form.Label>Unit price</Form.Label>
+						<Form.Label>Selling price</Form.Label>
 						<InputGroup>
 							<Form.Control
 								id="amount"
@@ -137,6 +122,7 @@ const AddSalesForm = (props) => {
 								step="1"
 								onChange={(e) => handleLocal(e)}
 								value={local.amount}
+								placeholder="0"
 								required
 							/>
 							<Dropdown
@@ -160,13 +146,25 @@ const AddSalesForm = (props) => {
 								step="1"
 								onChange={(e) => handleLocal(e)}
 								value={local.quantity}
+								placeholder="0"
 								required
 							/>
 							<Dropdown
 								id="unit"
 								styling="grey dropdown-input"
 								data={local.unit}
-								items={["kg", "bags", "g", "/", "oz", "lbs", "/", "l", "ml"]}
+								items={[
+									"kg",
+									"units",
+									"bags",
+									"g",
+									"/",
+									"oz",
+									"lbs",
+									"/",
+									"l",
+									"ml",
+								]}
 								function={(e) => {
 									setLocal({ ...local, unit: e });
 								}}
@@ -180,6 +178,7 @@ const AddSalesForm = (props) => {
 								type="text"
 								id="customerName"
 								required
+								placeholder="mr/mrs ..."
 								onChange={(e) => handleLocal(e)}
 								// style={{ maxHeight: "300px" }}
 								value={local.customerName}
@@ -235,8 +234,11 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addSaleData: (data) => dispatch(addSaleData(data)),
+		addSupplierSaleData: (data) => dispatch(addToSales(data)),
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSalesForm);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AddToSupplierSaleForm);

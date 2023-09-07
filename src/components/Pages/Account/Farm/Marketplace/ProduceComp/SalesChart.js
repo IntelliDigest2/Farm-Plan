@@ -10,6 +10,7 @@ import { Form, Row, Col, Accordion, Button } from "react-bootstrap";
 import { Dropdown } from "./../../../../../SubComponents/Dropdown";
 import DatePicker from "react-datepicker";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
+import FilterComponent from "./../filterComponent";
 
 Chart.register(...registerables);
 
@@ -17,76 +18,10 @@ export const SalesChart = (props) => {
 	const currentYear = new Date().getFullYear();
 	const currentDate = new Date();
 	const currentMonth = format(currentDate, "MMMM").substring(0, 3);
-	const [day, setDay] = useState(new Date());
-	const [filter, setFilter] = useState("Day");
-	const [month, setMonth] = useState(currentMonth);
-	const [week, setWeek] = useState("1");
-	const [year, setYear] = useState(currentYear);
 
-	let months = [
-		"Jan",
-		"Feb",
-		"Mar",
-		"Apr",
-		"May",
-		"Jun",
-		"Jul",
-		"Aug",
-		"Sep",
-		"Oct",
-		"Nov",
-		"Dec",
-	];
-
-	useEffect(() => {
-		let period;
-		if (filter === "Week") {
-			console.log(`filter changed to week`);
-			period = week;
-		} else if (filter === "Month") {
-			console.log(`filter changed to month `);
-			let monthNumber = months.indexOf(month) + 1;
-
-			period = monthNumber;
-		} else if (filter === "Year") {
-			console.log(`filter changed to year `);
-
-			period = year;
-		} else {
-			period = day;
-		}
-
-		props.getSalesData(filter, period);
-	}, [filter]);
-
-	useEffect(() => {
-		if (filter === "Week") {
-			console.log(`Week change`);
-			props.getSalesData(filter, week);
-		}
-	}, [week]);
-
-	useEffect(() => {
-		if (filter === "Month") {
-			console.log(`month change`);
-			let monthNumber = months.indexOf(month) + 1;
-
-			props.getSalesData(filter, monthNumber);
-		}
-	}, [month]);
-	useEffect(() => {
-		if (filter === "Year") {
-			console.log(`year change`);
-
-			props.getSalesData(filter, year);
-		}
-	}, [year]);
-	useEffect(() => {
-		if (filter === "Day") {
-			console.log(`day change`);
-			props.getSalesData(filter, day);
-		}
-	}, [day]);
+	const handleFetchData = (duration, period) => {
+		props.getSalesData(duration, period);
+	};
 
 	useEffect(() => {
 		// console.log(props.salesData, `this is the produce returned`);
@@ -261,97 +196,10 @@ export const SalesChart = (props) => {
 		years.push(year);
 	}
 
-	let componentToRender =
-		filter === "Week" ? (
-			<>
-				<Dropdown
-					id="week"
-					styling="grey dropdown-input"
-					data={week}
-					// data={local.measure}
-					required
-					items={["1", "2", "3", "4"]}
-					function={(e) => setWeek(e)}
-				/>
-				<span style={{ marginLeft: "5px" }}> of {currentMonth}</span>
-			</>
-		) : filter === "Month" ? (
-			<Dropdown
-				id="month"
-				styling="grey dropdown-input"
-				data={month}
-				// data={local.measure}
-				required
-				items={months}
-				function={(e) => setMonth(e)}
-			/>
-		) : filter === "Year" ? (
-			<Dropdown
-				id="year"
-				styling="grey dropdown-input"
-				data={year}
-				// data={local.measure}
-				required
-				items={years}
-				function={(e) => setYear(e)}
-			/>
-		) : (
-			//  filter === "Farm Cycle"?():
-			// <Form.Group className="mb-3 land">
-			// 					<Form.Label>Farm Cycle</Form.Label>
-			// 					<InputGroup>
-			// 						<Form.Control
-			// 							type="number"
-			// 							id="farmCycle"
-			// 							onChange={(e) => setFarmCycle(e.target.value)}
-			// 							value={land}
-			// 							min={1}
-			// 							max={20}
-			// 							required
-			// 						/>
-			// 						<Dropdown
-			// 							id="cycleUnit"
-			// 							styling="green dropdown-input-right"
-			// 							data={cycleUnit}
-			// 							function={(e) => {
-			// 								setCycleUnit(e);
-			// 							}}
-			// 							items={["months", "years"]}
-			// 						/>
-			// 					</InputGroup>
-			// 				</Form.Group>
-			<div style={{ display: "flex" }}>
-				<span>pick date</span>
-				<span>
-					<DatePicker
-						selected={day}
-						onChange={(date) => setDay(date)}
-						// dateFormat="dd/m/yyyy"
-					/>
-				</span>
-			</div>
-		);
-
-	// let dataDisplay = ? :
-
 	return (
 		<div>
 			<Row style={{ alignItems: "center" }}>
-				<Col md={2}>Filter by</Col>
-				<Col md={4}>
-					<Dropdown
-						// id="nutrientUnit"
-						styling="grey dropdown-input"
-						data={filter}
-						// data={local.measure}
-						required
-						items={["Day", "Week", "Month", "Year"]}
-						function={(e) => setFilter(e)}
-					/>
-				</Col>
-				<Col style={{ display: "flex", alignItems: "center" }} md={4}>
-					{componentToRender}
-				</Col>
+				<FilterComponent fetchData={handleFetchData} />
 			</Row>
 			{content}
 		</div>
