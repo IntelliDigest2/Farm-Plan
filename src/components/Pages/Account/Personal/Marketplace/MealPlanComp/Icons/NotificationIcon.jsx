@@ -25,7 +25,7 @@ function EditPurchaseIcon(props) {
         </IconButton>
       </Tooltip>
       <ViewPurchase
-        show={show}
+        show={show} 
         setShow={setShow}
         cart={props.cart}
         id={props.id}

@@ -60,6 +60,7 @@ function FarmerListIcon(props) {
         setShow={setShow}
         list={list}
         cart={props.cart}
+        receiversID={props.receiversID}
         forceUpdate={props.forceUpdate}
       />
     </>

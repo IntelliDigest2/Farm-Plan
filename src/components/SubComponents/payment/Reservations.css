@@ -32,18 +32,17 @@
 
 .date {
   margin-top: 10px; 
-  font-weight: bold;
 }
 
 .transaction-id {
   font-size: 1.2em; 
 }
 
-.debit {
-  background-color: red; 
+.pending {
+  background-color: rgb(230, 177, 61); 
 }
 
-.credit {
+.completed {
   background-color: green;
 }
 

@@ -97,6 +97,12 @@ export function Food({ isSeller, profile }) {
 				goTo="/turnover"
 				disabled
 			/>
+			<IconButton
+				icon="delivery"
+				label="Check Deliveries"
+				color="cyan"
+				goTo="/track-reservations-other"
+			/>
 			{/* <IconButton
 				icon="notes"
 				label="Profit"

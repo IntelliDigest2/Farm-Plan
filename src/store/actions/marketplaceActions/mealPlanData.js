@@ -508,7 +508,11 @@ export const getPurchaseInfo = (info) => {
       .then((snapshot) => {
         const orderInfo = [];
         snapshot.forEach((doc) => {
-          orderInfo.push(doc.data());
+          // orderInfo.push(doc.data());
+          const data = doc.data();
+					if (data.status !== "COMPLETED") {
+					  orderInfo.push(data);
+					}
         });
         dispatch({ type: "GET_PURCHASE_INFO", payload: orderInfo });
       })

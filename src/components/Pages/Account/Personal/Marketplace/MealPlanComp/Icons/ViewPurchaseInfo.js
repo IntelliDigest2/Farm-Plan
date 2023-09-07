@@ -14,6 +14,7 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import PayIconWallet from "./PayIconWallet";
 import PayIcon from "./PayIcon";
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
@@ -38,20 +39,24 @@ function ViewPurchaseInfo(props) {
 		//sets a new item object in the array for every document
 		props.info.forEach((doc) => {
 			// id is the docref for deletion
-			var id = doc.id;
-			var cart = doc.cart;
-			var refID = doc.refID;
-			var uid = doc.uid;
+			var refID = doc.id;
+			var item = doc.item;
+			var farmerID = doc.farmerID;
+			var farmerRef = doc.farmerRef;
+			var receiversID = doc.receiversID;
 			var status = doc.status;
+			var deliveryDueDate = doc.deliveryDueDate;
 
 			setList((list) => [
 				...list,
 				{
-					cart: cart,
-					id: id,
+					item: item,
 					refID: refID,
-					uid: uid,
+					farmerID: farmerID,
+					farmerRef: farmerRef,
+					receiversID: receiversID,
 					status: status,
+					deliveryDueDate: deliveryDueDate,
 				},
 			]);
 		});
@@ -103,7 +108,7 @@ function ViewPurchaseInfo(props) {
 			{list.length ? (
 				<>
 					<List>
-						{list.map((item, index) => (
+						{list.map((cart, index) => (
 							<ListItem
 								key={`item${index}`}
 								// className="list"
@@ -114,11 +119,11 @@ function ViewPurchaseInfo(props) {
 										<tr>
 											<h6>
 												<b>{t("description.order_id")} </b>
-												{item.refID}
+												{cart.refID}
 											</h6>
 											<h6>
 												<b>{t("description.order_status")} </b>
-												{item.status}
+												{cart.status}
 											</h6>
 										</tr>
 										<tr>
@@ -132,38 +137,43 @@ function ViewPurchaseInfo(props) {
 												{t("description.measure")}
 											</th>
 											<th className="table-header">{t("description.price")}</th>
-											<th className="table-header">
-												{t("description.supplier")}
-											</th>
+											
 										</tr>
 									</thead>
 									<tbody>
-										{item.cart.map((cart) => (
+										{cart.item.map((cartItems) => (
 											<tr key={`cart${index}`}>
-												<td>{cart.data}</td>
-												<td>{cart.quantity}</td>
-												<td>{cart.measure}</td>
-												{cart.price ? <td>{cart.price}</td> : <td>0</td>}
-												{cart.supplier ? <td>{cart.supplier}</td> : <td></td>}
+												<td>{cartItems.data}</td>
+												<td>{cartItems.quantity}</td>
+												<td>{cartItems.measure}</td>
+												{cartItems.price ? <td>{cartItems.currency}{cartItems.price}</td> : <td>0</td>}
+												{/* {cartItems.supplier ? <td>{cartItems.supplier}</td> : <td></td>} */}
 											</tr>
 										))}
 									</tbody>
 									<div className="">
-										<ConfirmItemIcon
-											//value={props.value}
-											refID={item.refID}
-											id={item.id}
-										/>
-										{item.status == "CONFIRMED" ? (
-											<PayIcon
+										{cart.status == "CONFIRMED" ? (
+											<>
+											<PayIconWallet
+												paytype="supplier"
+												uid={cart.receiversID}
+												order={cart}
+												refID={cart.refID}
+											/>
+											{/* <PayIcon
 												paytype="supplier"
 												//value={props.value}
-												refID={item.refID}
-												id={item.id}
-												uid={item.uid}
-											/>
+												refID={cart.refID}
+												// id={item.id}
+												// uid={item.uid}
+											/> */}
+											</>
 										) : (
-											""
+											<ConfirmItemIcon
+											//value={props.value}
+											refID={cart.refID}
+											// id={item.id}
+										/>
 										)}
 									</div>
 								</Table>
