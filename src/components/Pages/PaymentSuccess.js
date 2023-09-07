@@ -17,7 +17,7 @@ function PaymentSuccess() {
                 <Card.Body>
                    <Card.Text className="text-center">
                    <h1 className="page-not-found">Payment Success &#128522; </h1>
-                 <h1 className="not-found-message">Your payment is successful, you can close this page</h1>
+                 <h1 className="not-found-message">Your payment is successful, use the back button</h1>
                    </Card.Text>
                   </Card.Body>
               </Card>
