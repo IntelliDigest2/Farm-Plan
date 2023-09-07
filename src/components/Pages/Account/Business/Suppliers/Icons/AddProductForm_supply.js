@@ -17,6 +17,8 @@ import { submitNotification } from "../../../../../lib/Notifications";
 
 function AddProductForm_supply(props) {
 	const [productName, setProductName] = useState("");
+	const [brandName, setBrandName] = useState("");
+	const [batchNumber, setBatchNumber] = useState("");
 	const [productDescription, setProductDescription] = useState("");
 	const [productPrice, setProductPrice] = useState("");
 	const [productCurrency, setProductCurrency] = useState("$");
@@ -76,6 +78,7 @@ function AddProductForm_supply(props) {
 				productCurrency: productCurrency,
 				productQty: productQty,
 				imageURL: Url,
+				brandName: brandName,
 				// mealType: mealType,
 				productMeasure: productMeasure,
 				companyName: props.profile.companyName,
@@ -123,8 +126,29 @@ function AddProductForm_supply(props) {
 					}}
 					required
 				/>
+				<Form.Label>Brand name</Form.Label>
+				<Form.Control
+					type="text"
+					id="mealName"
+					onChange={(e) => {
+						setBrandName(e.target.value);
+					}}
+					required
+				/>
 
 				<Form.Label>Product description</Form.Label>
+				<div
+					style={{
+						color: "grey",
+						display: "inline-block",
+						fontSize: "12px",
+						textAlign: "left",
+					}}
+				>
+					* Add a good description of the product that describes its features or
+					characteristics eg 'This product is made of plastic','it is used for
+					watering plant','it is 10m long and 3m wide' etc .
+				</div>
 				<Form.Control
 					as="textarea"
 					id="mealDescription"
@@ -132,6 +156,15 @@ function AddProductForm_supply(props) {
 						setProductDescription(e.target.value);
 					}}
 					style={{ minHeight: "150px" }}
+				/>
+				<Form.Label>Batch Number</Form.Label>
+				<Form.Control
+					type="text"
+					id="batchNumber"
+					onChange={(e) => {
+						setBatchNumber(e.target.value);
+					}}
+					required
 				/>
 
 				<Form.Label>Product price</Form.Label>
@@ -166,6 +199,7 @@ function AddProductForm_supply(props) {
 						id="quantity"
 						type="number"
 						min="0"
+						placeholder="0"
 						step=".1"
 						onChange={(e) => {
 							setProductQty(e.target.value);
@@ -211,7 +245,7 @@ function AddProductForm_supply(props) {
 			<div style={{ alignItems: "center" }}>
 				<Button className="blue-btn shadow-none" type="submit">
 					{/* <Button className="blue-btn shadow-none" type="submit"> */}
-					Done
+					Submit
 				</Button>
 			</div>
 		</Form>

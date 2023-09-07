@@ -5,7 +5,7 @@ import { PageWrapFarm } from "../../../../../SubComponents/PageWrapFarm";
 import LoadingScreen from "../../../../../SubComponents/Loading/LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 
-import { ProducePlan } from "./ProducePlan";
+import ProducePlan from "./ProducePlan";
 import moment from "moment";
 import ChartProduce from "../../../Charts/ChartProduce";
 import Sales from "./Sales";
@@ -34,7 +34,8 @@ export default function ProduceTab() {
 				fill
 			>
 				<Tab eventKey="calendar" title="PRODUCE LIST" className="mealtab">
-					<ProducePlan value={value} onChange={setValue} />
+					{/* <ProducePlan value={value} onChange={setValue} /> */}
+					<ProducePlan />
 				</Tab>
 				<Tab eventKey="recipes" title="PRODUCE CHART" className="mealtab">
 					<ChartProduce />

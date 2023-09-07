@@ -32,6 +32,11 @@ const AddProduceForm = (props) => {
 		measure: "units",
 		price: "",
 		currency: "$",
+		cycleStartMonth: "Jan",
+		cycleStartYear: "2023",
+		cycleEndMonth: "Jun",
+		cycleEndYear: "2023",
+		batchNumber: "",
 		// nutrients: inputGroups,
 	};
 
@@ -39,11 +44,33 @@ const AddProduceForm = (props) => {
 		{ id: 1, nutrientName: "", nutrientQuantity: "", nutrientUnit: "%" },
 	];
 
+	const months = [
+		"Jan",
+		"Feb",
+		"Mar",
+		"Apr",
+		"May",
+		"Jun",
+		"Jul",
+		"Aug",
+		"Sep",
+		"Oct",
+		"Nov",
+		"Dec",
+	];
+
 	const [show, setShow] = useState(true);
 	const [produceDate, setProduceDate] = useState(new Date());
 	const [inputGroups, setInputGroups] = useState(defaultNutrient);
 	const [local, setLocal] = useState(defaultLocal);
 	const formRef = useRef(null);
+	const years = [];
+
+	const endYear = 2030;
+
+	for (let year = 2023; year <= endYear; year++) {
+		years.push(year);
+	}
 
 	useEffect(() => {}, [inputGroups]);
 
@@ -172,38 +199,6 @@ const AddProduceForm = (props) => {
 		);
 	});
 
-	let criteria;
-	let btnCriteria = () => {
-		switch (farmType) {
-			default:
-			case "Horticulture":
-				criteria =
-					local.item.trim() === "" ||
-					local.quantity.trim() === "" ||
-					local.price === "" ||
-					local.sellingPrice === "" ||
-					inputGroups[0].nutrientName.trim() === "" ||
-					inputGroups[0].nutrientQuantity.trim() === "";
-			case "Aquaculture":
-				criteria =
-					local.item.trim() === "" ||
-					local.quantity.trim() === "" ||
-					local.price === "" ||
-					local.sellingPrice === "" ||
-					inputGroups[0].nutrientName.trim() === "" ||
-					inputGroups[0].nutrientQuantity.trim() === "";
-			case "Livestock":
-				criteria =
-					local.item.trim() === "" ||
-					local.quantity.trim() === "" ||
-					local.price === "" ||
-					local.sellingPrice === "" ||
-					inputGroups[0].nutrientName.trim() === "" ||
-					inputGroups[0].nutrientQuantity.trim() === "";
-		}
-	};
-	btnCriteria();
-
 	const ChooseFarmType = () => {
 		switch (farmType) {
 			default:
@@ -222,7 +217,7 @@ const AddProduceForm = (props) => {
 									fontSize: "12px",
 								}}
 							>
-								* Products having unique decriptions that differentiate them
+								* Products having unique descriptions that differentiate them
 								should be named as such eg 'green apple', 'red apple' to allow
 								for easy grouping.
 							</div>
@@ -235,6 +230,75 @@ const AddProduceForm = (props) => {
 								required
 							/>
 						</Form.Group>
+
+						{/* <Form.Group>
+							<Form.Label style={{ display: "block" }}>
+								Crop farmCycle
+							</Form.Label>
+
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Add the farm cycle to which the yield belongs
+							</div>
+							<Row>
+								<Col md={6} style={{ display: "flex", alignItems: "baseline" }}>
+									<div>Start period</div>
+									<Dropdown
+										id="cycleStartMonth"
+										styling="grey dropdown-input"
+										data={local.cycleStartMonth}
+										// data={local.measure}
+										required
+										items={months}
+										// function={(e) => }
+										function={(e) => {
+											setLocal({ ...local, cycleStartMonth: e });
+										}}
+									/>
+									<Dropdown
+										id="cycleStartYear"
+										styling="grey dropdown-input"
+										data={local.cycleStartYear}
+										// data={local.measure}
+										required
+										items={years}
+										// function={(e) => }
+										function={(e) => {
+											setLocal({ ...local, cycleStartYear: e });
+										}}
+									/>
+								</Col>
+								<Col md={6} style={{ display: "flex", alignItems: "baseline" }}>
+									<div>End period</div>
+									<Dropdown
+										id="cycleEndMonth"
+										styling="grey dropdown-input"
+										data={local.cycleEndMonth}
+										// data={local.measure}
+										required
+										items={months}
+										function={(e) => {
+											setLocal({ ...local, cycleEndMonth: e });
+										}}
+									/>
+									<Dropdown
+										id="cycleStartYear"
+										styling="grey dropdown-input"
+										data={local.cycleEndYear}
+										// data={local.measure}
+										required
+										items={years}
+										function={(e) => {
+											setLocal({ ...local, cycleEndMonth: e });
+										}}
+									/>
+								</Col>
+							</Row>
+						</Form.Group> */}
 
 						<Form.Group>
 							<Form.Label>Quantity of crops</Form.Label>
@@ -352,7 +416,7 @@ const AddProduceForm = (props) => {
 									fontSize: "12px",
 								}}
 							>
-								* Products having unique decriptions that differentiate them
+								* Products having unique descriptions that differentiate them
 								should be named as such eg 'green apple', 'red apple' to allow
 								for easy grouping.
 							</div>
@@ -363,6 +427,74 @@ const AddProduceForm = (props) => {
 								value={local.item}
 							/>
 						</Form.Group>
+						{/* <Form.Group>
+							<Form.Label style={{ display: "block" }}>
+								Crop farmCycle
+							</Form.Label>
+
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Add the farm cycle to which the yield belongs
+							</div>
+							<Row>
+								<Col md={6} style={{ display: "flex", alignItems: "baseline" }}>
+									<div>Start period</div>
+									<Dropdown
+										id="cycleStartMonth"
+										styling="grey dropdown-input"
+										data={local.cycleStartMonth}
+										// data={local.measure}
+										required
+										items={months}
+										// function={(e) => }
+										function={(e) => {
+											setLocal({ ...local, cycleStartMonth: e });
+										}}
+									/>
+									<Dropdown
+										id="cycleStartYear"
+										styling="grey dropdown-input"
+										data={local.cycleStartYear}
+										// data={local.measure}
+										required
+										items={years}
+										// function={(e) => }
+										function={(e) => {
+											setLocal({ ...local, cycleStartYear: e });
+										}}
+									/>
+								</Col>
+								<Col md={6} style={{ display: "flex", alignItems: "baseline" }}>
+									<div>End period</div>
+									<Dropdown
+										id="cycleEndMonth"
+										styling="grey dropdown-input"
+										data={local.cycleEndMonth}
+										// data={local.measure}
+										required
+										items={months}
+										function={(e) => {
+											setLocal({ ...local, cycleEndMonth: e });
+										}}
+									/>
+									<Dropdown
+										id="cycleStartYear"
+										styling="grey dropdown-input"
+										data={local.cycleEndYear}
+										// data={local.measure}
+										required
+										items={years}
+										function={(e) => {
+											setLocal({ ...local, cycleEndMonth: e });
+										}}
+									/>
+								</Col>
+							</Row>
+						</Form.Group> */}
 
 						<Form.Group>
 							<Form.Label>Quantity/amount</Form.Label>
@@ -454,7 +586,7 @@ const AddProduceForm = (props) => {
 									fontSize: "12px",
 								}}
 							>
-								* Products having unique decriptions that differentiate them
+								* Products having unique descriptions that differentiate them
 								should be named as such eg 'green apple', 'red apple' to allow
 								for easy grouping.
 							</div>
@@ -465,9 +597,96 @@ const AddProduceForm = (props) => {
 								value={local.item}
 							/>
 						</Form.Group>
+						{/* <Form.Group>
+							<Form.Label style={{ display: "block" }}>
+								Crop farmCycle
+							</Form.Label>
+
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Add the farm cycle to which the yield belongs
+							</div>
+							<Row>
+								<Col md={6} style={{ display: "flex", alignItems: "baseline" }}>
+									<div>Start period</div>
+									<Dropdown
+										id="cycleStartMonth"
+										styling="grey dropdown-input"
+										data={local.cycleStartMonth}
+										// data={local.measure}
+										required
+										items={months}
+										// function={(e) => }
+										function={(e) => {
+											setLocal({ ...local, cycleStartMonth: e });
+										}}
+									/>
+									<Dropdown
+										id="cycleStartYear"
+										styling="grey dropdown-input"
+										data={local.cycleStartYear}
+										// data={local.measure}
+										required
+										items={years}
+										// function={(e) => }
+										function={(e) => {
+											setLocal({ ...local, cycleStartYear: e });
+										}}
+									/>
+								</Col>
+								<Col md={6} style={{ display: "flex", alignItems: "baseline" }}>
+									<div>End period</div>
+									<Dropdown
+										id="cycleEndMonth"
+										styling="grey dropdown-input"
+										data={local.cycleEndMonth}
+										// data={local.measure}
+										required
+										items={months}
+										function={(e) => {
+											setLocal({ ...local, cycleEndMonth: e });
+										}}
+									/>
+									<Dropdown
+										id="cycleStartYear"
+										styling="grey dropdown-input"
+										data={local.cycleEndYear}
+										// data={local.measure}
+										required
+										items={years}
+										function={(e) => {
+											setLocal({ ...local, cycleEndMonth: e });
+										}}
+									/>
+								</Col>
+							</Row>
+						</Form.Group> */}
+						<Form.Group>
+							<Form.Label>Batch Number</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Batch number should have the format Date-letter eg
+								"15-06-2024-A"
+							</div>
+							<Form.Control
+								type="text"
+								id="batchNumber"
+								onChange={(e) => handleLocal(e)}
+								value={local.batchNumber}
+								required
+							/>
+						</Form.Group>
 
 						<Form.Group>
-							<Form.Label>Number of Specie</Form.Label>
+							<Form.Label>Quantity</Form.Label>
 							<InputGroup>
 								<Form.Control
 									id="quantity"
@@ -638,6 +857,7 @@ const AddProduceForm = (props) => {
 								: "") ||
 							local.item.trim() === "" ||
 							local.quantity.trim() === "" ||
+							local.batchNumber.trim() === "" ||
 							local.price === "" ||
 							local.sellingPrice === ""
 						}

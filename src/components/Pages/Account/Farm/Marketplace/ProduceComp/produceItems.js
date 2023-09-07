@@ -44,7 +44,7 @@ function ProduceItems(props) {
 	// 	props.getProduceData();
 	// }, [props.value, update]);
 	useEffect(() => {
-		props.getProduceData2();
+		// props.getProduceData2();
 	}, []);
 
 	useEffect(() => {
@@ -98,19 +98,17 @@ function ProduceItems(props) {
 	// useEffect(() => {
 	// 	updateProduce();
 	// }, [props.produce, props.update]);
-	let content =
-		produce === null ? (
-			"...loading"
-		) : produce.length === 0 ? (
-			<div className="empty basic-title-left">
-				<p> No Item yet 🙂 use the add button </p>
-			</div>
-		) : (
-			<div>
-				<h2>Inventory</h2>
-				<ProduceBox forceUpdate={forceUpdate} produce={produce} />
-			</div>
-		);
+
+	// console.log(props.products, `this is the product we will loop after`);
+	let content = (
+		<div>
+			{/* <h2>Inventory</h2> */}
+			<ProduceBox
+				// forceUpdate={forceUpdate}
+				produce={props.products}
+			/>
+		</div>
+	);
 
 	return (
 		<>
@@ -132,17 +130,18 @@ function ProduceItems(props) {
 	);
 }
 
-const mapStateToProps = (state) => {
-	return {
-		produce: state.farmData.produce,
-	};
-};
+// const mapStateToProps = (state) => {
+// 	return {
+// 		produce: state.farmData.produce,
+// 	};
+// };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		// getProduceData: (data) => dispatch(getProduceData(data)),
-		getProduceData2: (data) => dispatch(getProduceData2(data)),
-	};
-};
+// const mapDispatchToProps = (dispatch) => {
+// 	return {
+// 		// getProduceData: (data) => dispatch(getProduceData(data)),
+// 		// getProduceData2: (data) => dispatch(getProduceData2(data)),
+// 	};
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProduceItems);
+// export default connect(mapStateToProps, mapDispatchToProps)(ProduceItems);
+export default ProduceItems;

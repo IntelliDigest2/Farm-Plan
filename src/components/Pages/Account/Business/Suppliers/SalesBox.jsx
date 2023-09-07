@@ -67,16 +67,16 @@ export default function ProductBox(props) {
                   <div>
                     <Image imageUrl={newProduct.imageURL} />
                     <p>
-                      {newProduct.productName}
+                     Product Name: {newProduct.productName}
                     </p>
                     <p>
-                      {newProduct.productDescription}
+                      Product Description: {newProduct.productDescription}
                     </p>
                     <p>
-                      {newProduct.productQty} {newProduct.productMeasure}
+                      Quantity : {newProduct.productQty} {newProduct.productMeasure}
                     </p>
                     <p>
-                    {newProduct.productCurrency} {newProduct.productPrice} 
+                    Price: {newProduct.productCurrency} {newProduct.productPrice} 
                     </p>
                   </div>
               </ListItem>

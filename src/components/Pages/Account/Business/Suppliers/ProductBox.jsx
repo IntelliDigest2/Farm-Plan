@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -12,6 +12,8 @@ import AddToSalesIcon from "./Icons/AddToSalesIcon";
 // import Edit from "./Icons/EditIcon";
 
 export default function ProductBox(props) {
+	const [show, setShow] = useState(false);
+
 
    //trigger this when editing/deleting items
 //  const [update, setUpdate] = useState(0);
@@ -35,6 +37,8 @@ export default function ProductBox(props) {
                 <div className="meal-name">{newProduct.productName}</div>
                 <div className="icons">
                 <AddToSalesIcon 
+                show={show} 
+                setShow={setShow}
                    value={props.value}
                    productName={newProduct.productName}
                    imageURL={newProduct.imageURL}
@@ -52,6 +56,8 @@ export default function ProductBox(props) {
                   //  update={update}
                   //  setUpdate={setUpdate}
                 /> 
+                
+
 
                 <AddToRentIcon 
                    value={props.value}
@@ -97,14 +103,23 @@ export default function ProductBox(props) {
                      Product Name:  {newProduct.productName}
                     </p>
                     <p>
-                     Product Name:  {newProduct.productId}
+                     Batch Number:  {newProduct.batchNumber}
+                    </p>
+                    <p>
+                     Brand Name:  {newProduct.brandName}
                     </p>
                     <p>
                       Description: <span>{newProduct.productDescription}</span> 
                     </p>
                     <p>
-                     Qauntity: <span>{newProduct.productQty} {newProduct.productMeasure}</span> 
+                      Initial quantity: <span>{newProduct.productQty}{newProduct.productMeasure}</span> 
                     </p>
+                    <p>
+                      Current quantity: <span>{newProduct.currentQuantity}</span> 
+                    </p>
+                    {/* <p>
+                     Quntity: <span>{newProduct.productQty} {newProduct.productMeasure}</span> 
+                    </p> */}
                     <p>
                     Price: <span>{newProduct.productCurrency} {newProduct.productPrice}</span>  
                     </p>

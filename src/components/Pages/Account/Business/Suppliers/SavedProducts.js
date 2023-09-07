@@ -5,21 +5,24 @@ import { useTranslation, Trans } from "react-i18next";
 import ProductBox from "./ProductBox";
 import { connect } from "react-redux";
 import { getProducts } from "../../../../../store/actions/supplierActions/supplierData";
+import FilterComponent from "./../../Farm/Marketplace/filterComponent";
+import { Row } from "react-bootstrap";
+
 const SavedProducts = (props) => {
 	const { t } = useTranslation();
 
 	const [sProducts, setSProducts] = useState([]);
 
 	//trigger this when editing/deleting items
-	const [update, setUpdate] = useState(0);
-	const forceUpdate = () => {
-		setUpdate(update + 1);
-	};
+	// const [update, setUpdate] = useState(0);
+	// const forceUpdate = () => {
+	// 	setUpdate(update + 1);
+	// };
 
 	//this sends data request
-	useEffect(() => {
-		props.getProducts();
-	}, [update]);
+	// useEffect(() => {
+	// 	props.getProducts();
+	// }, [update]);
 
 	const updateSProducts = async () => {
 		//clears the meals array before each update- IMPORTANT
@@ -62,17 +65,26 @@ const SavedProducts = (props) => {
 		});
 	};
 
-	useEffect(() => {
-		// const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-		updateSProducts();
-		console.log("Saved Meals", sProducts);
-		// .then(setSMeals(sorted));
-		// console.log(props.data);
-	}, [props.Products]);
+	// useEffect(() => {
+	// 	// const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
+	// 	updateSProducts();
+	// 	console.log("Saved Meals", sProducts);
+	// 	// .then(setSMeals(sorted));
+	// 	// console.log(props.data);
+	// }, [props.Products]);
+
+	console.log(props.Products);
+
+	const handleFetchData = (duration, period) => {
+		props.getProducts(duration, period);
+	};
 
 	return (
 		<>
-			{sProducts.length ? (
+			<Row style={{ alignItems: "baseline" }}>
+				<FilterComponent fetchData={handleFetchData} />
+			</Row>
+			{props.Products.length ? (
 				<>
 					<div className="row">
 						<div className="col-8 basic-title-left mb-3">
@@ -81,9 +93,9 @@ const SavedProducts = (props) => {
 					</div>
 					<div className="meals">
 						<ProductBox
-							forceUpdate={forceUpdate}
+							// forceUpdate={forceUpdate}
 							onChange={props.onChange}
-							products={sProducts}
+							products={props.Products}
 						/>
 					</div>
 				</>
@@ -104,7 +116,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getProducts: (saved) => dispatch(getProducts(saved)),
+		getProducts: (duration, period) => dispatch(getProducts(duration, period)),
 	};
 };
 

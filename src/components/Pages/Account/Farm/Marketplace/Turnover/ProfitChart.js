@@ -9,240 +9,26 @@ import { Dropdown } from "./../../../../../SubComponents/Dropdown";
 import { format } from "date-fns";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { getTurnOverChartFunction } from "./../../../../../../store/actions/marketplaceActions/farmPlanData";
+import CycleFilterComponent from "./../cycleFilterComponent";
 
 export const ProfitChart = (props) => {
 	const yearList = [];
 	const currentYear = new Date().getFullYear();
 	const currentDate = new Date();
 	const currentMonth = format(currentDate, "MMMM").substring(0, 3);
-	const [month, setMonth] = useState(currentMonth);
-	const [year, setYear] = useState(currentYear);
-	const [filter, setFilter] = useState("Month");
-	const [farmCycleStartMonth, setFarmCycleStartMonth] = useState("jan");
-	const [farmCycleEndMonth, setFarmCycleEndMonth] = useState("jun");
-	const [farmCycleStartYear, setFarmCycleStartYear] = useState(currentYear);
-	const [farmCycleEndYear, setFarmCycleEndYear] = useState(currentYear);
-
-	let months = [
-		"Jan",
-		"Feb",
-		"Mar",
-		"Apr",
-		"May",
-		"Jun",
-		"Jul",
-		"Aug",
-		"Sep",
-		"Oct",
-		"Nov",
-		"Dec",
-	];
 
 	// Generate the list of years from now to 2050
 	for (let year = currentYear; year <= 2050; year++) {
 		yearList.push(year);
 	}
 
-	let filterComponent =
-		filter === "Month" ? (
-			<div style={{ display: "flex" }}>
-				<div>
-					<Dropdown
-						id="month"
-						styling="grey dropdown-input"
-						data={month}
-						// data={local.measure}
-						required
-						items={[
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep",
-							"Oct",
-							"Nov",
-							"Dec",
-						]}
-						function={(e) => setMonth(e)}
-					/>
-				</div>
-				<div>
-					<Dropdown
-						id="year"
-						styling="grey dropdown-input"
-						data={year}
-						// data={local.measure}
-						required
-						items={yearList}
-						function={(e) => setYear(e)}
-					/>
-				</div>
-			</div>
-		) : (
-			<div style={{ display: "flex" }}>
-				{/* <Col> */}
-				<div
-					style={{
-						display: "flex",
-						alignItems: "baseline",
-						marginLeft: "2rem",
-					}}
-				>
-					Start Month
-					<Dropdown
-						id="farmCycleStartMonth"
-						styling="grey dropdown-input"
-						data={farmCycleStartMonth}
-						// data={local.measure}
-						required
-						items={[
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep",
-							"Oct",
-							"Nov",
-							"Dec",
-						]}
-						function={(e) => setFarmCycleStartMonth(e)}
-					/>
-					Start Year
-					<Dropdown
-						id="farmCycleStartYear"
-						styling="grey dropdown-input"
-						data={farmCycleStartYear}
-						// data={local.measure}
-						required
-						items={yearList}
-						function={(e) => {
-							setFarmCycleStartYear(e);
-						}}
-					/>
-				</div>
-
-				<div
-					style={{
-						display: "flex",
-						alignItems: "baseline",
-						// border: ".5px solid lightgrey",
-						marginLeft: "auto",
-					}}
-				>
-					End Month
-					<Dropdown
-						id="farmCycleEndMonth"
-						styling="grey dropdown-input"
-						data={farmCycleEndMonth}
-						// data={local.measure}
-						required
-						items={[
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep",
-							"Oct",
-							"Nov",
-							"Dec",
-						]}
-						function={(e) => setFarmCycleEndMonth(e)}
-					/>
-					End Year
-					<Dropdown
-						id="farmCycleEndYear"
-						styling="grey dropdown-input"
-						data={farmCycleEndYear}
-						// data={local.measure}
-						required
-						items={yearList}
-						function={(e) => setFarmCycleEndYear(e)}
-					/>
-				</div>
-			</div>
-		);
-
-	useEffect(() => {
-		let period;
-		if (filter === "Month") {
-			// console.log(`filter changed to month `);
-			let monthNumber = months.indexOf(month) + 1;
-
-			period = monthNumber;
-			props.getData("Month", { month: monthNumber, year });
-		}
-		// (filter === "Year")
-		else {
-			// console.log(`filter changed to Cycle `);
-
-			period = year;
-
-			props.getData("farmCycle", {
-				startMonth: months.indexOf(farmCycleStartMonth) + 1,
-				endMonth: months.indexOf(farmCycleEndMonth),
-				startYear: farmCycleStartYear,
-				endYear: farmCycleEndYear,
-			});
-		}
-	}, [filter]);
-
-	useEffect(() => {
-		if (filter === "Month") {
-			console.log(`month change`);
-			let monthNumber = months.indexOf(month) + 1;
-			console.log(monthNumber);
-
-			props.getData(filter, { month: monthNumber, year });
-		}
-	}, [month]);
-
-	useEffect(() => {
-		if (filter === "Month") {
-			console.log(`month change`);
-			let monthNumber = months.indexOf(month) + 1;
-
-			props.getData(filter, { month: monthNumber, year });
-		}
-	}, [year]);
-	// useEffect(() => {
-	// 	if (filter !== "Month") {
-	// 		console.log(`year change`);
-
-	// 		props.getData(filter, year);
-	// 	}
-	// }, [year]);
-
-	// const searchTurnOver = () => {
-	// 	if (filter === "Month") {
-	// 		console.log(`month clicked`);
-	// 		let monthNum = months.indexOf(month) + 1;
-	// 		props.getData("Month", { month: monthNum, year });
-	// 	} else {
-	// 		console.log(`cycle clicked`);
-	// 		props.getData("farmCycle", {
-	// 			startMonth: months.indexOf(farmCycleStartMonth) + 1,
-	// 			endMonth: months.indexOf(farmCycleEndMonth),
-	// 			startYear: farmCycleStartYear,
-	// 			endYear: farmCycleEndYear,
-	// 		});
-	// 	}
-	// };
-
 	let farmTypesSet = new Set();
 
 	let farmProduceTypeObjects = {};
+
+	const handleFetchData = (duration, period) => {
+		props.getData(duration, period);
+	};
 
 	props.salesData?.forEach((produce) => {
 		farmTypesSet.add(produce.farmType);
@@ -434,36 +220,11 @@ export const ProfitChart = (props) => {
 
 	return (
 		<div>
-			<Row style={{ alignItems: "center", margin: "0 auto" }}>
-				<Col md={1.5}>Filter By :</Col>
-				<Col md={1.5}>
-					{" "}
-					<>
-						<Dropdown
-							id="filter"
-							styling="grey dropdown-input"
-							data={filter}
-							// data={local.measure}
-							required
-							items={["Month", "FarmCycle"]}
-							function={(e) => setFilter(e)}
-						/>
-					</>
-				</Col>
-				<Col md={9}>
-					<div style={{ display: "flex", flexWrap: "wrap" }}>
-						{filterComponent}
-						{/* <div style={{ display: "flex", marginRight: "auto" }}>
-							<Button
-								onClick={searchTurnOver}
-								className="green-btn shadow-none"
-							>
-								Search
-							</Button>
-						</div> */}
-					</div>
-				</Col>
-			</Row>
+			<div>
+				{/* TODO THIS IS NOT SUPPOSED TO BE A DONUT CHART, A BETTER GRAPHICAL REPRESENTATION SHOULD BE USED */}
+				<CycleFilterComponent fetchData={handleFetchData} />
+			</div>
+
 			{content}
 		</div>
 	);
@@ -472,11 +233,8 @@ export const ProfitChart = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		produceData: state.farmData.produceInfoForProfitchart,
-		profitDataLoader: state.farmData.produceForProfitchartLoader,
-		profitDataError: state.farmData.produceForProfitchartError,
+
 		salesData: state.farmData.salesInfoForProfitchart,
-		salesDataLoader: state.farmData.salesForProfitchartLoader,
-		salesDataError: state.farmData.salesForProfitchartError,
 	};
 };
 
