@@ -16,6 +16,8 @@ export default function CheckoutForm( props ) {
 
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
+  const currentHost = window.location.origin;
+  const successUrl = `${currentHost}/payment-success`;
 
   useEffect(() => {
     if (!stripe) {
@@ -50,7 +52,7 @@ export default function CheckoutForm( props ) {
 
   const handleSuccess = async => {
     try {
-        const response = fetch(`${baseUrlDev}/v1/transaction/deposit`, {
+        const response = fetch(`${baseUrlProd}/v1/transaction/deposit`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -62,8 +64,11 @@ export default function CheckoutForm( props ) {
         if (response) {
           setMessage("Payment succeeded!");
   
+          const currentHost = window.location.origin;
+          const successUrl = `${currentHost}/payment-success`;
+  
           // Redirect to the return_url after the API call is successful
-          window.location.href = "http://localhost:3000/payment-success";
+          window.location.href = successUrl;
         } else {
           setMessage("Payment succeeded, but balance update failed.");
         }
@@ -87,7 +92,7 @@ export default function CheckoutForm( props ) {
         const { error, paymentIntent } = await stripe.confirmPayment({
           elements,
           confirmParams: {
-            return_url: "http://localhost:5000/payment-success",
+            return_url: successUrl,
           },
           redirect: "if_required",
         });

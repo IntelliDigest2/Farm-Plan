@@ -6,8 +6,20 @@
   }
   
   .wallet-balance {
-    font-size: 50px;
+    display: flex;
+    align-items: center; /* Vertically center the content */
   }
+  
+  .currency {
+    font-size: 24px;
+    margin-right: 5px; /* Add some spacing between "NGN" and the balance */
+  }
+  
+  .balance {
+    font-size: 32px;
+  }
+  
+  
   
   .custom-card {
     background-color: #160c67;
