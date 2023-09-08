@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap";
+import { PaystackButton } from "react-paystack"
+
 import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Wallet.css"
@@ -7,6 +9,7 @@ import "./Wallet.css"
 import logo from "../../../images/Revolut-logo-1.gif"
 
 import RevolutPay from "./RevolutPay"
+import Pay from './stripe/Pay';
 
 import { connect } from "react-redux";
 
@@ -25,9 +28,62 @@ const WalletComponent = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalTransfer, setShowModalTransfer] = useState(false);
   const [isLoadingBalance, setIsLoadingBalance] = useState(true); 
+  const [message, setMessage] = useState(null);
 
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
+
+  const publicKey = "pk_live_6ebca5ec3370c215ded414dc7b70d568416e4c1a"
+  const amount = amountDeposit * 100
+  const email = props.profile.email
+  const name = props.profile.firstName
+  const userID = props.profile.uid
+  console.log("amount ====>", amount)
+  console.log("user ID ====>", userID)
+
+
+  const handleSuccess = () => {
+    try {
+        const response = fetch(`${baseUrlProd}/v1/transaction/deposit-paystack`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount: amountDeposit, userID: userID}),
+        });
+  
+        // Handle the response from your backend
+        if (response) {
+          setMessage("Payment succeeded!");
+
+          const currentHost = window.location.origin;
+          const successUrl = `${currentHost}/payment-success`;
+  
+          // Redirect to the return_url after the API call is successful
+          window.location.href = successUrl;
+        } else {
+          setMessage("Payment succeeded, but balance update failed.");
+        }
+      } catch (err) {
+        setMessage("An error occurred while updating the balance.");
+      }
+  }
+
+  const componentProps = {
+    email,
+    amount,
+    metadata: {
+      name,
+    },
+    publicKey,
+    text: "Pay Now",
+    onSuccess: () => {
+      handleSuccess()
+    },
+    onClose: () => alert("Wait! Don't leave :("),
+  }
+
+
 
 
   // Fetch the user's wallet balance from the backend
@@ -114,8 +170,26 @@ const WalletComponent = (props) => {
         <Card className=" custom-card mb-3">
         <div className="card-overlay"></div>
           <Card.Body>
-            <h2 className='wallet-balance'>£{balance}</h2>
-            <h5>Current Balance</h5>
+          {props.profile.region === 'Africa' ? (
+                    <>
+                    <h2 className="wallet-balance">
+                      <span className="currency">NGN</span>
+                      <h3 className="balance">{balance}</h3>
+                    </h2>
+                    <h5>Current Balance</h5>
+
+                    </>
+                    
+                  ) : (
+                    <>
+                    <h2 className="wallet-balance">
+                      <span className="currency">GBP</span>
+                      <h3 className="balance">{balance}</h3>
+                    </h2>
+                    <h5>Current Balance</h5>
+                    </>
+                  )} 
+            
           </Card.Body>
         </Card>
 
@@ -230,7 +304,13 @@ const WalletComponent = (props) => {
                   <Modal.Title>Deposit</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <RevolutPay amount={amountDeposit} />
+                  {props.profile.region === 'Africa' ? (
+                    /* Render Paystack gateway here */
+                    <PaystackButton {...componentProps} />
+                  ) : (
+                    /* Render the <Pay /> component here */
+                    <Pay amount={amountDeposit} userID={props.profile.uid} />
+                  )}                
                 </Modal.Body>
               </Modal>
 
@@ -238,7 +318,7 @@ const WalletComponent = (props) => {
           </Card>
         </div>
         {/* Powered by Logo */}
-          <div className="powered-by-logo">
+          {/* <div className="powered-by-logo">
             <img
               src={logo}
               alt="Powered by Logo"
@@ -246,7 +326,7 @@ const WalletComponent = (props) => {
             />
             <p>Powered by</p>
 
-          </div>   
+          </div>    */}
       </div>
     </div>
 		</PageWrap>
