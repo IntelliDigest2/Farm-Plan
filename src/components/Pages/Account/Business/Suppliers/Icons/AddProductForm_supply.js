@@ -7,12 +7,14 @@ import FoodItemSearch from "../../../Personal/Marketplace/MealPlanComp/Icons/Inp
 import "../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
+import DatePicker from "react-datepicker";
+
 import {
 	foodIdAPI,
 	nutritionAPI,
 } from "../../../Personal/Marketplace/MealPlanComp/Icons/InputRecipe/NutritionApi";
 import SaveMealIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/SaveMealIcon";
-import { createProduct } from "../../../../../../store/actions/supplierActions/supplierData";
+import { AddSupplierProduct } from "../../../../../../store/actions/supplierActions/supplierData";
 import { submitNotification } from "../../../../../lib/Notifications";
 
 function AddProductForm_supply(props) {
@@ -23,15 +25,17 @@ function AddProductForm_supply(props) {
 	const [productPrice, setProductPrice] = useState("");
 	const [productCurrency, setProductCurrency] = useState("$");
 	const [productQty, setProductQty] = useState("");
-	const [productMeasure, setProductMeasure] = useState("g");
-	const [image, setImage] = useState("");
+	const [productMeasure, setProductMeasure] = useState("units");
+	const [image, setImage] = useState(null);
 	const [Url, setUrl] = useState("");
+	const [loadingSubmit, setLoadingSubmit] = useState(false);
+	const [date, setDate] = useState(new Date());
 
-	useEffect(() => {
-		if (Url !== "") {
-			handleSubmit();
-		}
-	}, [Url]);
+	// useEffect(() => {
+	// 	if (Url !== "") {
+	// 		handleSubmit();
+	// 	}
+	// }, [Url]);
 
 	//upload immage to cloudinary
 	const uploadImage = async () => {
@@ -51,7 +55,7 @@ function AddProductForm_supply(props) {
 				}
 			);
 			const responseData = await response.json();
-			setUrl(responseData.url);
+			return responseData.url;
 		} catch (error) {
 			console.log(error);
 		}
@@ -63,10 +67,10 @@ function AddProductForm_supply(props) {
 	const [err, setErr] = useState("");
 
 	//trigger this when editing/deleting items
-	const [update, setUpdate] = useState(0);
-	const forceUpdate = () => {
-		setUpdate(update + 1);
-	};
+	// const [update, setUpdate] = useState(0);
+	// const forceUpdate = () => {
+	// 	setUpdate(update + 1);
+	// };
 
 	//fired when click "done"
 	const handleSubmit = () => {
@@ -79,6 +83,8 @@ function AddProductForm_supply(props) {
 				productQty: productQty,
 				imageURL: Url,
 				brandName: brandName,
+				currentQuantity: productQty,
+				batchNumber: batchNumber,
 				// mealType: mealType,
 				productMeasure: productMeasure,
 				companyName: props.profile.companyName,
@@ -89,9 +95,33 @@ function AddProductForm_supply(props) {
 				createdAt: new Date(),
 			},
 		};
-		props.createProduct(data);
-		forceUpdate();
-		submitNotification("Success", `${productName}` + " has been added!");
+
+		setLoadingSubmit(true);
+		uploadImage()
+			.then((resp) => {
+				console.log(resp, `this is ithe image url response`);
+				data.upload.imageURL = resp;
+				return resp;
+				// props.createProduct(data);
+			})
+			.then((resp) => {
+				console.log(data.upload, `the data we want to upload`);
+				props.createProduct(data);
+			})
+			.then((resp) => {
+				submitNotification("Success", `${productName} has been added!`);
+				setLoadingSubmit(false);
+				formRef.current.reset();
+				setProductPrice("");
+				setProductQty("");
+			})
+			.catch((err) => {
+				console.log(err);
+				submitNotification("Error", `Something went wrong`);
+				setLoadingSubmit(false);
+			});
+
+		// forceUpdate();
 
 		// if (save) {
 		//   props.createMenu(data);
@@ -104,7 +134,7 @@ function AddProductForm_supply(props) {
 			ref={formRef}
 			onSubmit={(e) => {
 				e.preventDefault();
-				uploadImage(); // Call uploadImage
+				handleSubmit(); // Call uploadImage
 				// props.handleFormClose();
 			}}
 		>
@@ -118,25 +148,6 @@ function AddProductForm_supply(props) {
 
 			<Form.Group>
 				<Form.Label>Product name</Form.Label>
-				<Form.Control
-					type="text"
-					id="mealName"
-					onChange={(e) => {
-						setProductName(e.target.value);
-					}}
-					required
-				/>
-				<Form.Label>Brand name</Form.Label>
-				<Form.Control
-					type="text"
-					id="mealName"
-					onChange={(e) => {
-						setBrandName(e.target.value);
-					}}
-					required
-				/>
-
-				<Form.Label>Product description</Form.Label>
 				<div
 					style={{
 						color: "grey",
@@ -145,24 +156,15 @@ function AddProductForm_supply(props) {
 						textAlign: "left",
 					}}
 				>
-					* Add a good description of the product that describes its features or
-					characteristics eg 'This product is made of plastic','it is used for
-					watering plant','it is 10m long and 3m wide' etc .
+					* Products with distinct descriptions that set them apart should be
+					given names that reflect their differences, such as 'green apple' and
+					'red apple,' to facilitate efficient grouping.
 				</div>
 				<Form.Control
-					as="textarea"
-					id="mealDescription"
-					onChange={(e) => {
-						setProductDescription(e.target.value);
-					}}
-					style={{ minHeight: "150px" }}
-				/>
-				<Form.Label>Batch Number</Form.Label>
-				<Form.Control
 					type="text"
-					id="batchNumber"
+					id="mealName"
 					onChange={(e) => {
-						setBatchNumber(e.target.value);
+						setProductName(e.target.value);
 					}}
 					required
 				/>
@@ -190,6 +192,52 @@ function AddProductForm_supply(props) {
 						}}
 					/>
 				</InputGroup>
+				<Form.Label>Product description</Form.Label>
+				<div
+					style={{
+						color: "grey",
+						display: "inline-block",
+						fontSize: "12px",
+						textAlign: "left",
+					}}
+				>
+					* Provide a concise product description, highlighting its key features
+					and attributes. For example, mention materials used ('made of
+					plastic'), intended purpose ('for watering plants'), and dimensions
+					('10m x 3m').
+				</div>
+				<Form.Control
+					as="textarea"
+					id="mealDescription"
+					onChange={(e) => {
+						setProductDescription(e.target.value);
+					}}
+					style={{ minHeight: "150px" }}
+				/>
+			</Form.Group>
+			<Form.Group>
+				<Form.Label>Brand name</Form.Label>
+				<Form.Control
+					type="text"
+					id="mealName"
+					onChange={(e) => {
+						setBrandName(e.target.value);
+					}}
+					placeholder="product brand name"
+					required
+				/>
+			</Form.Group>
+			<Form.Group>
+				<Form.Label>Batch Number</Form.Label>
+				<Form.Control
+					type="text"
+					id="batchNumber"
+					placeholder="eg 24-9-2023-Q"
+					onChange={(e) => {
+						setBatchNumber(e.target.value);
+					}}
+					required
+				/>
 			</Form.Group>
 
 			<Form.Group>
@@ -211,8 +259,9 @@ function AddProductForm_supply(props) {
 						styling="grey dropdown-input"
 						data={productMeasure}
 						items={[
-							"g",
 							"units",
+							"pcs",
+							"g",
 							"kg",
 							"/",
 							"mL",
@@ -241,11 +290,33 @@ function AddProductForm_supply(props) {
 					}}
 				/>
 			</Form.Group>
+			<Form.Group style={{ textAlign: "left" }}>
+				<Form.Label>Date</Form.Label>
+				<DatePicker
+					selected={date}
+					onChange={(date) => setDate(date)}
+					dateFormat="dd/MM/yyyy"
+				/>
+			</Form.Group>
 
 			<div style={{ alignItems: "center" }}>
-				<Button className="blue-btn shadow-none" type="submit">
+				<Button
+					className="blue-btn shadow-none"
+					type="submit"
+					disabled={
+						productName.trim() === "" ||
+						productDescription.trim() === "" ||
+						productPrice <= "0" ||
+						productCurrency === "" ||
+						productQty <= "0" ||
+						brandName.trim() === "" ||
+						image === null ||
+						batchNumber.trim() === ""
+					}
+				>
 					{/* <Button className="blue-btn shadow-none" type="submit"> */}
-					Submit
+
+					{loadingSubmit ? "...Loading" : "Submit"}
 				</Button>
 			</div>
 		</Form>
@@ -260,7 +331,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		createProduct: (data) => dispatch(createProduct(data)),
+		createProduct: (data) => dispatch(AddSupplierProduct(data)),
 	};
 };
 

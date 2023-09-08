@@ -7,6 +7,11 @@ import ListSubheader from "@mui/material/ListSubheader";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import Image from "../../../../SubComponents/Image"
 import AddToSalesIcon from "./Icons/AddToSalesIcon";
+import {format} from 'date-fns'
+import {
+	
+	Table,
+} from "react-bootstrap";
 // import Edit from "./Icons/EditIcon";
 
 export default function ProductBox(props) {
@@ -18,44 +23,63 @@ export default function ProductBox(props) {
 //    setUpdate(update + 1);
 //  };
 
+const generatesalesTable = () => {
+  return props.sales.map((sale, index) => {
+    let formattedDate = format(sale.createdAt.toDate(), "M/d/yyyy");
+    return (
+      <tbody>
+        <tr key={`${index}`}>
+          <td>{formattedDate}</td>
+          <td>{sale.salesId}</td>
+          <td>{sale.productName}</td>
+          <td>{sale.batchNumber}</td>
+          <td>{sale.productCurrency} {sale.productPrice}</td>
+          <td>
+          {sale.productQty} {sale.productMeasure}
+          </td>
+          <td>{sale.customerName}</td>
+          <td>
+            {sale.medium}
+            
+          </td>
+        </tr>
+      </tbody>
+
+      // 	// {/* {actualDay.toUpperCase()} */}
+    );
+  });
+};
 
   //console.log("let fetch what weekly props is ==> ", props)
   return (
     <>
-      {props.sales.map((newProduct, index) => (
-        <div className="meal-box" key={`meal-box${index}`}>
+      {/* {props.sales.map((newProduct, index) => ( */}
+        <div className="meal-box" >
           <div className="ingredients">
-             <List
+          <Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Sale Id </th>
+							<th>Product Name</th>
+							<th>Batch Number</th>
+
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Customer Name</th>
+							<th>Medium</th>
+						</tr>
+					</thead>
+					{generatesalesTable()}
+				</Table>
+             {/* <List
               key={`product${index}`}
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
               <ListSubheader className="heading">
                 <div className="meal-name">{newProduct.productName}</div>
                 <div className="icons">
-                {/* <AddToSalesIcon 
-                   value={props.value}
-                   productName={newProduct.productName}
-                   imageURL={newProduct.imageURL}
-                   productDescription={newProduct.productDescription}
-                   productMeasure={newProduct.productMeasure}
-                   productQty={newProduct.productQty}
-                   productPrice={newProduct.productPrice}
-                   productCurrency={newProduct.productCurrency}
-                   companyID={newProduct.companyID}
-                   id={newProduct.id}
-                  //  update={update}
-                  //  setUpdate={setUpdate}
-                  />  */}
-                  {/* {newMeal.nonNativeData ? null : (
-                    <Edit
-                      value={props.value}
-                      meal={newMeal.meal}
-                      ingredients={newMeal.ingredients}
-                      id={newMeal.id}
-                      forceUpdate={props.forceUpdate}
-                      saved={props.saved}
-                    />
-                  )} */}
+               
                 </div>
               </ListSubheader>
 
@@ -70,6 +94,9 @@ export default function ProductBox(props) {
                      Product Name: {newProduct.productName}
                     </p>
                     <p>
+                     Batch Number: {newProduct.batchNumber}
+                    </p>
+                    <p>
                       Product Description: {newProduct.productDescription}
                     </p>
                     <p>
@@ -78,12 +105,16 @@ export default function ProductBox(props) {
                     <p>
                     Price: {newProduct.productCurrency} {newProduct.productPrice} 
                     </p>
+                    <p>
+                    Date: {format(newProduct.createdAt.toDate(),"MMMM d, yyyy")}
+                    </p>
                   </div>
               </ListItem>
-            </List>
+            </List> */
+}
           </div>
         </div>
-      ))}
+       {/* )) } */}
     </>
   );
 }

@@ -10,6 +10,7 @@ import { Row } from "react-bootstrap";
 
 const SavedSales = (props) => {
 	const { t } = useTranslation();
+	const [duration, setDuration] = useState("Day");
 
 	// const [sSales, setSSales] = useState([]);
 
@@ -25,6 +26,7 @@ const SavedSales = (props) => {
 	// }, [update]);
 
 	const handleFetchData = (duration, period) => {
+		setDuration(duration);
 		props.getSales(duration, period);
 	};
 
@@ -74,14 +76,12 @@ const SavedSales = (props) => {
 			<Row style={{ alignItems: "baseline" }}>
 				<FilterComponent fetchData={handleFetchData} />
 			</Row>
+			<div className="row">
+				<div className="col-8 basic-title-left mb-3">Sales for {duration}</div>
+			</div>
 
 			{props.Sales.length ? (
 				<>
-					<div className="row">
-						<div className="col-8 basic-title-left mb-3">
-							My available products listing
-						</div>
-					</div>
 					<div className="meals">
 						<SalesBox
 							// forceUpdate={forceUpdate}

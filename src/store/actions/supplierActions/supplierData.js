@@ -1,4 +1,4 @@
-export const createProduct = (data) => {
+export const AddSupplierProduct = (data) => {
 	return (dispatch, getState, { getFirebase }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
@@ -29,7 +29,7 @@ export const createProduct = (data) => {
 				break;
 		}
 
-		getFirebase()
+		return getFirebase()
 			.firestore()
 			.collection("products")
 			.add(data.upload)
@@ -40,11 +40,11 @@ export const createProduct = (data) => {
 					.collection("products")
 					.doc(docRef.id)
 					.set({ id: docRef.id, companyID: uid }, { merge: true });
-				dispatch({ type: "CREATE_PRODUCT", data });
-			})
-			.catch((err) => {
-				dispatch({ type: "CREATE_PRODUCT_ERROR", err });
+				// dispatch({ type: "CREATE_PRODUCT", data });
 			});
+		// .catch((err) => {
+		// 	dispatch({ type: "CREATE_PRODUCT_ERROR", err });
+		// });
 	};
 };
 
@@ -205,11 +205,16 @@ export const getProducts = (duration, period) => {
 	};
 };
 
-export const addToSales = (data) => {
+export const addToSales = (data, currentQuantity) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
+
+		const db = getFirestore();
+
+		const batch = db.batch();
+		console.log(batch);
 
 		var uid;
 		switch (profile.type) {
@@ -236,18 +241,37 @@ export const addToSales = (data) => {
 				break;
 		}
 
-		getFirestore()
-			.collection("sales")
-			.add(data.upload)
-			.then((docRef) => {
-				// make the docId easily accessible so that we can delete it later if we want.
-				getFirestore().collection("sales").doc(docRef.id);
-				// .set({ id: data.upload.id }, { merge: true });
-				dispatch({ type: "ADD_TO_SALES" });
-			})
-			.catch((err) => {
-				dispatch({ type: "ADD_TO_SALES_ERROR", err });
+		console.log(data, `this is the data that is sent to batch write`);
+		console.log(
+			currentQuantity,
+			`this is the current quantity that is sent to the batch write`
+		);
+
+		const productsCollectionRef = getFirestore().collection("products");
+
+		const productsCollectionQuery = getFirestore()
+			.collection("products")
+			.where("productName", "==", data.productName)
+			.where("brandName", "==", data.brandName)
+			.where("batchNumber", "==", data.batchNumber);
+		const newDocRef = db.collection("sales").doc(); // Firestore will generate a unique document ID
+
+		// // Set data for the new document in the batch
+		batch.set(newDocRef, { ...data, companyID: uid });
+		return productsCollectionQuery.get().then((snapshot) => {
+			snapshot.forEach((doc) => {
+				// You can access and update each document here
+				const documentRef = productsCollectionRef.doc(doc.id);
+
+				// Add the update operation to the batch
+				batch.update(documentRef, {
+					currentQuantity:
+						parseInt(currentQuantity) - parseInt(data.productQty),
+				});
 			});
+
+			return batch.commit();
+		});
 	};
 };
 
@@ -392,6 +416,7 @@ export const getSales = (duration, period) => {
 			.collection("sales")
 			.where("companyID", "==", uid);
 
+		console.log(uid, `this is the user id`);
 		let query;
 
 		switch (duration) {

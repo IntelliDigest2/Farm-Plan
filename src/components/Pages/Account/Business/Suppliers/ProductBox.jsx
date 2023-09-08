@@ -39,6 +39,7 @@ export default function ProductBox(props) {
                 <AddToSalesIcon 
                 show={show} 
                 setShow={setShow}
+                product={newProduct}
                    value={props.value}
                    productName={newProduct.productName}
                    imageURL={newProduct.imageURL}
@@ -49,6 +50,8 @@ export default function ProductBox(props) {
                    productCurrency={newProduct.productCurrency}
                    companyID={newProduct.companyID}
                    region={newProduct.region}
+                   batchNumber={newProduct.batchNumber}
+                   brandName={newProduct.brandName}
                    city={newProduct.city}
                    companyName={newProduct.companyName}
                    id={newProduct.id}
@@ -60,6 +63,7 @@ export default function ProductBox(props) {
 
 
                 <AddToRentIcon 
+                product={ newProduct}
                    value={props.value}
                    productName={newProduct.productName}
                    imageURL={newProduct.imageURL}
@@ -67,6 +71,7 @@ export default function ProductBox(props) {
                    productMeasure={newProduct.productMeasure}
                    productQty={newProduct.productQty}
                    productPrice={newProduct.productPrice}
+                   currentQuantity={newProduct.currentQuantity}
                    productCurrency={newProduct.productCurrency}
                    companyID={newProduct.companyID}
                    region={newProduct.region}
@@ -115,7 +120,7 @@ export default function ProductBox(props) {
                       Initial quantity: <span>{newProduct.productQty}{newProduct.productMeasure}</span> 
                     </p>
                     <p>
-                      Current quantity: <span>{newProduct.currentQuantity}</span> 
+                      Quantity available: <span>{newProduct.currentQuantity}{newProduct.productMeasure}</span> 
                     </p>
                     {/* <p>
                      Quntity: <span>{newProduct.productQty} {newProduct.productMeasure}</span> 

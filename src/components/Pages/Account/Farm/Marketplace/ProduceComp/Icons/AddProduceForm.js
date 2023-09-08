@@ -217,9 +217,9 @@ const AddProduceForm = (props) => {
 									fontSize: "12px",
 								}}
 							>
-								* Products having unique descriptions that differentiate them
-								should be named as such eg 'green apple', 'red apple' to allow
-								for easy grouping.
+								* Products with distinct descriptions that set them apart should
+								be given names that reflect their differences, such as 'green
+								apple' and 'red apple,' to facilitate straightforward grouping
 							</div>
 
 							<Form.Control
@@ -416,9 +416,9 @@ const AddProduceForm = (props) => {
 									fontSize: "12px",
 								}}
 							>
-								* Products having unique descriptions that differentiate them
-								should be named as such eg 'green apple', 'red apple' to allow
-								for easy grouping.
+								* Products with distinct descriptions that set them apart should
+								be given names that reflect their differences, such as 'green
+								apple' and 'red apple,' to facilitate straightforward grouping
 							</div>
 							<Form.Control
 								type="text"
@@ -586,9 +586,9 @@ const AddProduceForm = (props) => {
 									fontSize: "12px",
 								}}
 							>
-								* Products having unique descriptions that differentiate them
-								should be named as such eg 'green apple', 'red apple' to allow
-								for easy grouping.
+								* Products with distinct descriptions that set them apart should
+								be given names that reflect their differences, such as 'green
+								apple' and 'red apple,' to facilitate straightforward grouping
 							</div>
 							<Form.Control
 								type="text"
