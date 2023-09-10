@@ -24,6 +24,24 @@ export default function ProductBox(props) {
 
 
   //console.log("let fetch what weekly props is ==> ", props)
+
+  const iconToShow =(newProduct)=> {
+
+   return props.products?.stockType === 'Rent' ?  <AddToRentIcon 
+  product={newProduct}
+  show={show} 
+  setShow={setShow}
+     value={props.value}
+   
+  /> :  <AddToSalesIcon 
+  show={show} 
+  setShow={setShow}
+  product={newProduct}
+     value={props.value}
+  
+  /> }
+
+  
   return (
     <>
       {props.products.map((newProduct, index) => (
@@ -36,53 +54,12 @@ export default function ProductBox(props) {
               <ListSubheader className="heading">
                 <div className="meal-name">{newProduct.productName}</div>
                 <div className="icons">
-                <AddToSalesIcon 
-                show={show} 
-                setShow={setShow}
-                product={newProduct}
-                   value={props.value}
-                   productName={newProduct.productName}
-                   imageURL={newProduct.imageURL}
-                   productDescription={newProduct.productDescription}
-                   productMeasure={newProduct.productMeasure}
-                   productQty={newProduct.productQty}
-                   productPrice={newProduct.productPrice}
-                   productCurrency={newProduct.productCurrency}
-                   companyID={newProduct.companyID}
-                   region={newProduct.region}
-                   batchNumber={newProduct.batchNumber}
-                   brandName={newProduct.brandName}
-                   city={newProduct.city}
-                   companyName={newProduct.companyName}
-                   id={newProduct.id}
-                   createdAt={newProduct.createdAt}
-                  //  update={update}
-                  //  setUpdate={setUpdate}
-                /> 
+
+               {iconToShow(newProduct)}
                 
 
 
-                <AddToRentIcon 
-                product={ newProduct}
-                   value={props.value}
-                   productName={newProduct.productName}
-                   imageURL={newProduct.imageURL}
-                   productDescription={newProduct.productDescription}
-                   productMeasure={newProduct.productMeasure}
-                   productQty={newProduct.productQty}
-                   productPrice={newProduct.productPrice}
-                   currentQuantity={newProduct.currentQuantity}
-                   productCurrency={newProduct.productCurrency}
-                   companyID={newProduct.companyID}
-                   region={newProduct.region}
-                   city={newProduct.city}
-                   companyName={newProduct.companyName}
-                   id={newProduct.id}
-                   createdAt={newProduct.createdAt}
-
-                  //  update={update}
-                  //  setUpdate={setUpdate}
-                /> 
+                
                   {/* {newMeal.nonNativeData ? null : (
                     <Edit
                       value={props.value}
@@ -108,11 +85,12 @@ export default function ProductBox(props) {
                      Product Name:  {newProduct.productName}
                     </p>
                     <p>
-                     Batch Number:  {newProduct.batchNumber}
-                    </p>
-                    <p>
                      Brand Name:  {newProduct.brandName}
                     </p>
+                    <p>
+                     Batch Number:  {newProduct.batchNumber}
+                    </p>
+                   
                     <p>
                       Description: <span>{newProduct.productDescription}</span> 
                     </p>

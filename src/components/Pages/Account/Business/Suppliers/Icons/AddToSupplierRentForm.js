@@ -5,16 +5,17 @@ import DatePicker from "react-datepicker";
 
 import { connect, useSelector } from "react-redux";
 
-import { Dropdown } from "./../../../../SubComponents/Dropdown";
-import { submitNotification } from "./../../../../lib/Notifications";
+import { addToRent } from "./../../../../../../store/actions/supplierActions/supplierData";
+import { Dropdown } from "./../../../../../SubComponents/Dropdown";
+import { submitNotification } from "./../../../../../lib/Notifications";
 
-import { addToSales } from "./../../../../../store/actions/supplierActions/supplierData";
-
-const AddToSupplierSaleForm = (props) => {
+const AddToSupplierRentForm = (props) => {
 	const [submitError, setSubmitError] = useState(false);
 	const defaultLocal = {
 		unit: "bags",
 		quantity: "",
+		duration: "0",
+		period: "week",
 
 		amount: "",
 		currency: "$",
@@ -62,7 +63,7 @@ const AddToSupplierSaleForm = (props) => {
 		setSubmitLoading(true);
 
 		props
-			.addSupplierSaleData(data, currentQuantity)
+			.addSupplierRentData(data, currentQuantity)
 			.then((resp) => {
 				// console.log(resp.id, `this is the id of the newly added sale`);
 				setSubmitLoading(false);
@@ -108,7 +109,7 @@ const AddToSupplierSaleForm = (props) => {
 					</div>
 
 					<Form.Group>
-						<Form.Label>Selling price</Form.Label>
+						<Form.Label>Renting price</Form.Label>
 						<InputGroup>
 							<Form.Control
 								id="amount"
@@ -161,6 +162,31 @@ const AddToSupplierSaleForm = (props) => {
 									"l",
 									"ml",
 								]}
+								function={(e) => {
+									setLocal({ ...local, unit: e });
+								}}
+							/>
+						</InputGroup>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Duration</Form.Label>
+						<InputGroup>
+							<Form.Control
+								id="duration"
+								type="number"
+								min="0"
+								max={currentQuantity}
+								step="1"
+								onChange={(e) => handleLocal(e)}
+								value={local.duration}
+								placeholder="0"
+								required
+							/>
+							<Dropdown
+								id="period"
+								styling="grey dropdown-input"
+								data={local.period}
+								items={["day", "week", "month", "year"]}
 								function={(e) => {
 									setLocal({ ...local, unit: e });
 								}}
@@ -229,12 +255,12 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addSupplierSaleData: (data, currentQuantity) =>
-			dispatch(addToSales(data, currentQuantity)),
+		addSupplierRentData: (data, currentQuantity) =>
+			dispatch(addToRent(data, currentQuantity)),
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(AddToSupplierSaleForm);
+)(AddToSupplierRentForm);

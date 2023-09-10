@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { Dropdown } from "../../../../../SubComponents/Dropdown";
 import MenuSection from "../../../Personal/Marketplace/MealPlanComp/Search/menuSection";
 import MealType from "../../../Personal/Marketplace/MealPlanComp/Search/mealType";
-import { Form, InputGroup, Button } from "react-bootstrap";
+import { Form, InputGroup, Button, Col } from "react-bootstrap";
 import FoodItemSearch from "../../../Personal/Marketplace/MealPlanComp/Icons/InputRecipe/FoodItemSearch";
 import "../../../../../SubComponents/Button.css";
 
 import { connect } from "react-redux";
 import DatePicker from "react-datepicker";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import {
 	foodIdAPI,
@@ -16,11 +17,14 @@ import {
 import SaveMealIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/SaveMealIcon";
 import { AddSupplierProduct } from "../../../../../../store/actions/supplierActions/supplierData";
 import { submitNotification } from "../../../../../lib/Notifications";
+import { AddButton } from "./../../../../../SubComponents/Button";
 
 function AddProductForm_supply(props) {
 	const [productName, setProductName] = useState("");
 	const [brandName, setBrandName] = useState("");
 	const [batchNumber, setBatchNumber] = useState("");
+	const [stockType, setStockType] = useState("Sale");
+	const [currency, setCurrency] = useState("$");
 	const [productDescription, setProductDescription] = useState("");
 	const [productPrice, setProductPrice] = useState("");
 	const [productCurrency, setProductCurrency] = useState("$");
@@ -30,12 +34,125 @@ function AddProductForm_supply(props) {
 	const [Url, setUrl] = useState("");
 	const [loadingSubmit, setLoadingSubmit] = useState(false);
 	const [date, setDate] = useState(new Date());
+	const defaultRate = [{ id: 1, rateDuration: "", ratePeriod: "hour" }];
+
+	const [inputGroups, setInputGroups] = useState(defaultRate);
 
 	// useEffect(() => {
 	// 	if (Url !== "") {
 	// 		handleSubmit();
 	// 	}
 	// }, [Url]);
+
+	useEffect(() => {}, [inputGroups]);
+
+	const handleRatePeriodChange = (index, value) => {
+		const updatedInputGroups = inputGroups.map((group, i) =>
+			i === index ? { ...group, ratePeriod: value } : group
+		);
+		setInputGroups(updatedInputGroups);
+	};
+
+	const handleRateDurationChange = (index, value) => {
+		// console.log(value);
+		const updatedInputGroups = inputGroups.map((group, i) =>
+			i === index ? { ...group, rateDuration: value } : group
+		);
+		setInputGroups(updatedInputGroups);
+	};
+
+	function addRentageRateHandler() {
+		if (inputGroups.length <= 5) {
+			setInputGroups([
+				...inputGroups,
+				{
+					id: inputGroups.length + 1,
+					rateDuration: "",
+					ratePeriod: "hour",
+					// nutrientUnit: "units",
+				},
+			]);
+		}
+	}
+
+	function deleteNutrientHandler(index) {
+		const updatedInputGroups = inputGroups.filter((group, i) => i !== index);
+		setInputGroups(updatedInputGroups);
+	}
+
+	let nutrientGroup = inputGroups.map((group, index) => {
+		return (
+			<>
+				<InputGroup
+					key={`nut-${index}`}
+					style={{ margin: "5px 0", alignItems: "baseline" }}
+				>
+					<Col md={7}>
+						<Form.Control
+							// id="nutrientName"
+							type="text"
+							// min="0"
+							// step=".5"
+							required
+							onChange={(e) => handleRateDurationChange(index, e.target.value)}
+							value={group.rateDuration}
+							placeholder="amount"
+						/>
+					</Col>
+					<Col md={1}>
+						<Dropdown
+							// id="nutrientUnit"
+							styling="grey dropdown-input"
+							data={currency}
+							// data={local.measure}
+							required
+							items={["$", "€", "£"]}
+							function={(e) => setCurrency(e)}
+						/>
+					</Col>
+					{/* &#47; */}
+					per
+					{/* <Col md={2}>
+						<Form.Control
+							// id="nutrientQuantity"
+							type="number"
+							min="0"
+							required
+							// step=".5"
+							onChange={(e) =>
+								handleRatePeriodChange(index, e.target.value)
+							}
+							value={group.nutrientQuantity}
+							// function={(e) => {
+							//   setLocal({ ...local, measure: e });
+							// }}
+							placeholder="qty"
+						/>
+					</Col> */}
+					<Col md={2}>
+						<Dropdown
+							// id="nutrientUnit"
+							styling="grey dropdown-input"
+							data={group.ratePeriod}
+							// data={local.measure}
+							required
+							items={["hour", "day", "week", "month", "year"]}
+							function={(e) => handleRatePeriodChange(index, e)}
+						/>
+					</Col>
+					<Col md={1}>
+						{index >= 1 ? (
+							<ClearIcon
+								onClick={() => deleteNutrientHandler(index)}
+							></ClearIcon>
+						) : (
+							""
+						)}
+					</Col>
+				</InputGroup>
+			</>
+		);
+	});
 
 	//upload immage to cloudinary
 	const uploadImage = async () => {
@@ -73,13 +190,27 @@ function AddProductForm_supply(props) {
 	// };
 
 	//fired when click "done"
+
+	let rentageRate =
+		stockType === "Rentage" ? (
+			<div>
+				<div style={{ textAlign: "left" }}>
+					Add additional rate
+					<AddButton onClick={addRentageRateHandler} />
+				</div>
+
+				{nutrientGroup}
+			</div>
+		) : (
+			""
+		);
+
 	const handleSubmit = () => {
 		const data = {
 			upload: {
 				productName: productName,
 				productDescription: productDescription,
-				productPrice: productPrice,
-				productCurrency: productCurrency,
+
 				productQty: productQty,
 				imageURL: Url,
 				brandName: brandName,
@@ -93,33 +224,44 @@ function AddProductForm_supply(props) {
 				mobile: props.profile.mobile,
 				email: props.profile.email,
 				createdAt: new Date(),
+				currency: currency,
+				stockType: stockType,
 			},
 		};
 
-		setLoadingSubmit(true);
-		uploadImage()
-			.then((resp) => {
-				console.log(resp, `this is ithe image url response`);
-				data.upload.imageURL = resp;
-				return resp;
-				// props.createProduct(data);
-			})
-			.then((resp) => {
-				console.log(data.upload, `the data we want to upload`);
-				props.createProduct(data);
-			})
-			.then((resp) => {
-				submitNotification("Success", `${productName} has been added!`);
-				setLoadingSubmit(false);
-				formRef.current.reset();
-				setProductPrice("");
-				setProductQty("");
-			})
-			.catch((err) => {
-				console.log(err);
-				submitNotification("Error", `Something went wrong`);
-				setLoadingSubmit(false);
-			});
+		if (stockType === "Rentage") {
+			data.upload.rentRates = inputGroups;
+		}
+		if (stockType === "Sale") {
+			data.upload.productPrice = productPrice;
+			data.upload.productCurrency = productCurrency;
+		}
+		console.log(data.upload);
+
+		// setLoadingSubmit(true);
+		// uploadImage()
+		// 	.then((resp) => {
+		// 		console.log(resp, `this is ithe image url response`);
+		// 		data.upload.imageURL = resp;
+		// 		return resp;
+		// 		// props.createProduct(data);
+		// 	})
+		// 	.then((resp) => {
+		// 		console.log(data.upload, `the data we want to upload`);
+		// 		props.createProduct(data);
+		// 	})
+		// 	.then((resp) => {
+		// 		submitNotification("Success", `${productName} has been added!`);
+		// 		setLoadingSubmit(false);
+		// 		formRef.current.reset();
+		// 		setProductPrice("");
+		// 		setProductQty("");
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 		submitNotification("Error", `Something went wrong`);
+		// 		setLoadingSubmit(false);
+		// 	});
 
 		// forceUpdate();
 
@@ -128,6 +270,38 @@ function AddProductForm_supply(props) {
 		// }
 		// props.addToShoppingList(data);
 	};
+
+	const pricing =
+		stockType === "Sale" ? (
+			<Form.Group>
+				<Form.Label>Product price</Form.Label>
+				<InputGroup>
+					<Form.Control
+						id="mealPrice"
+						type="number"
+						min="0"
+						step="1"
+						placeholder="0"
+						onChange={(e) => {
+							setProductPrice(e.target.value);
+						}}
+						defaultValue={productPrice}
+					/>
+
+					<Dropdown
+						id="currency"
+						styling="grey dropdown-input"
+						data={productCurrency}
+						items={["$", "€", "£"]}
+						function={(e) => {
+							setProductCurrency(e);
+						}}
+					/>
+				</InputGroup>
+			</Form.Group>
+		) : (
+			""
+		);
 
 	return (
 		<Form
@@ -168,53 +342,46 @@ function AddProductForm_supply(props) {
 					}}
 					required
 				/>
-
-				<Form.Label>Product price</Form.Label>
-				<InputGroup>
-					<Form.Control
-						id="mealPrice"
-						type="number"
-						min="0"
-						step="1"
-						placeholder="0"
-						onChange={(e) => {
-							setProductPrice(e.target.value);
-						}}
-						defaultValue={productPrice}
-					/>
-					<Dropdown
-						id="currency"
-						styling="grey dropdown-input"
-						data={productCurrency}
-						items={["$", "€", "£"]}
-						function={(e) => {
-							setProductCurrency(e);
-						}}
-					/>
-				</InputGroup>
-				<Form.Label>Product description</Form.Label>
-				<div
-					style={{
-						color: "grey",
-						display: "inline-block",
-						fontSize: "12px",
-						textAlign: "left",
-					}}
-				>
-					* Provide a concise product description, highlighting its key features
-					and attributes. For example, mention materials used ('made of
-					plastic'), intended purpose ('for watering plants'), and dimensions
-					('10m x 3m').
-				</div>
-				<Form.Control
-					as="textarea"
-					id="mealDescription"
-					onChange={(e) => {
-						setProductDescription(e.target.value);
-					}}
-					style={{ minHeight: "150px" }}
-				/>
 			</Form.Group>
+			<Form.Group>
+				<Col style={{ alignItems: "baseline" }} md="4">
+					<Form.Label>Stock type</Form.Label>
+					<Dropdown
+						id="stockType"
+						styling="grey dropdown-input"
+						data={stockType}
+						items={["Sale", "Rentage"]}
+						function={(e) => {
+							setStockType(e);
+						}}
+					/>
+				</Col>
+			</Form.Group>
+			{rentageRate}
+			{pricing}
+
+			<Form.Label>Product description</Form.Label>
+			<div
+				style={{
+					color: "grey",
+					display: "inline-block",
+					fontSize: "12px",
+					textAlign: "left",
+				}}
+			>
+				* Provide a concise product description, highlighting its key features
+				and attributes. For example, mention materials used ('made of plastic'),
+				intended purpose ('for watering plants'), and dimensions ('10m x 3m').
+			</div>
+			<Form.Control
+				as="textarea"
+				id="mealDescription"
+				onChange={(e) => {
+					setProductDescription(e.target.value);
+				}}
+				style={{ minHeight: "150px" }}
+			/>
+
 			<Form.Group>
 				<Form.Label>Brand name</Form.Label>
 				<Form.Control
@@ -304,10 +471,14 @@ function AddProductForm_supply(props) {
 					className="blue-btn shadow-none"
 					type="submit"
 					disabled={
+						(stockType === "Sale"
+							? productPrice <= "0" || productCurrency === ""
+							: "") ||
+						(stockType === "Rentage"
+							? inputGroups[0].rateDuration.trim() === ""
+							: "") ||
 						productName.trim() === "" ||
 						productDescription.trim() === "" ||
-						productPrice <= "0" ||
-						productCurrency === "" ||
 						productQty <= "0" ||
 						brandName.trim() === "" ||
 						image === null ||

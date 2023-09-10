@@ -257,6 +257,8 @@
 .icons {
   flex: 2;
   text-align: right;
+  width: 10px;
+  height: 10px
 }
 
 .meal-box .meal-type {

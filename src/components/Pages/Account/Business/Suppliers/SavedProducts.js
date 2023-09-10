@@ -6,13 +6,15 @@ import ProductBox from "./ProductBox";
 import { connect } from "react-redux";
 import { getProducts } from "../../../../../store/actions/supplierActions/supplierData";
 import FilterComponent from "./../../Farm/Marketplace/filterComponent";
-import { Row } from "react-bootstrap";
+import { Row, Form } from "react-bootstrap";
+import { Dropdown } from "./../../../../SubComponents/Dropdown";
 
 const SavedProducts = (props) => {
 	const { t } = useTranslation();
 
 	const [sProducts, setSProducts] = useState([]);
 	const [duration, setDuration] = useState("Day");
+	const [stockType, setStockType] = useState("All");
 
 	//trigger this when editing/deleting items
 	// const [update, setUpdate] = useState(0);
@@ -88,9 +90,21 @@ const SavedProducts = (props) => {
 			</Row>
 			<div className="row">
 				<div className="col-8 basic-title-left mb-3">
-					PRODUCTS INVENTORY FOR {duration}
+					Products Inventory For {duration}
 				</div>
 			</div>
+			<Row style={{ alignItems: "baseline" }}>
+				<label>Stock Type:</label>
+				<Dropdown
+					id="currency"
+					styling="grey dropdown-input"
+					data={stockType}
+					items={["All", "Sales", "Rentage"]}
+					function={(e) => {
+						setStockType(e);
+					}}
+				/>
+			</Row>
 			{props.Products.length ? (
 				<>
 					<div className="meals">
