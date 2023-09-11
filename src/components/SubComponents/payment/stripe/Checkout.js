@@ -50,9 +50,9 @@ export default function CheckoutForm( props ) {
     });
   }, [stripe]);
 
-  const handleSuccess = async => {
+  const handleSuccess = async () => {
     try {
-        const response = fetch(`${baseUrlProd}/v1/transaction/deposit`, {
+        const response = await fetch(`${baseUrlProd}/v1/transaction/deposit`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -100,7 +100,7 @@ export default function CheckoutForm( props ) {
         if (error) {
           console.error(error);
           // handleError();
-        } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        } else if (paymentIntent && paymentIntent.status === "succeeded" || paymentIntent.status == "processing") {
           console.log("Payment succeeded");
           await handleSuccess();
           setIsLoading(false);
