@@ -12,6 +12,7 @@ const SavedProducts = (props) => {
 	const { t } = useTranslation();
 
 	const [sProducts, setSProducts] = useState([]);
+	const [duration, setDuration] = useState("Day");
 
 	//trigger this when editing/deleting items
 	// const [update, setUpdate] = useState(0);
@@ -76,6 +77,7 @@ const SavedProducts = (props) => {
 	console.log(props.Products);
 
 	const handleFetchData = (duration, period) => {
+		setDuration(duration);
 		props.getProducts(duration, period);
 	};
 
@@ -84,13 +86,13 @@ const SavedProducts = (props) => {
 			<Row style={{ alignItems: "baseline" }}>
 				<FilterComponent fetchData={handleFetchData} />
 			</Row>
+			<div className="row">
+				<div className="col-8 basic-title-left mb-3">
+					PRODUCTS INVENTORY FOR {duration}
+				</div>
+			</div>
 			{props.Products.length ? (
 				<>
-					<div className="row">
-						<div className="col-8 basic-title-left mb-3">
-							PRODUCTS INVENTORY
-						</div>
-					</div>
 					<div className="meals">
 						<ProductBox
 							// forceUpdate={forceUpdate}

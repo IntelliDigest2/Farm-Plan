@@ -14,8 +14,7 @@ const AddToSupplierSaleForm = (props) => {
 	const defaultLocal = {
 		unit: "bags",
 		quantity: "",
-		productName: "",
-		batchNumber: "",
+
 		amount: "",
 		currency: "$",
 		customerName: "",
@@ -39,6 +38,8 @@ const AddToSupplierSaleForm = (props) => {
 		setShow(false);
 	};
 
+	let currentQuantity = props.productInfo.currentQuantity;
+
 	//fired when click "done"
 	const handleSubmit = (e) => {
 		const data = {
@@ -48,33 +49,32 @@ const AddToSupplierSaleForm = (props) => {
 			productPrice: local.amount,
 			productCurrency: local.currency,
 			productMeasure: local.unit,
+			brandName: props.productInfo.brandName,
 
 			createdAt: saleDate,
-			batchNumber: local.batchNumber,
-			productName: local.productName,
+			batchNumber: props.productInfo.batchNumber,
+			productName: props.productInfo.productName,
 			customerName: local.customerName,
 		};
 
 		// console.log(data, `this is the data returned`);
-		// setSubmitLoading(true);
+		setSubmitLoading(true);
 
 		props
-			.addSupplierSaleData(data)
+			.addSupplierSaleData(data, currentQuantity)
 			.then((resp) => {
 				// console.log(resp.id, `this is the id of the newly added sale`);
 				setSubmitLoading(false);
 				setLocal(defaultLocal);
-				submitNotification("Success", "Produce added to sales");
+				submitNotification("Success", "Product added to sales");
 			})
 			.catch((err) => {
-				// console.log(err, `an error occurred`);
+				console.log(err, `an error occurred`);
 				submitNotification("Error", "Something went wrong try again");
 				setSubmitLoading(false);
 				setSubmitError(true);
 			});
 	};
-
-	console.log(props.productInfo, `this is props`);
 
 	return (
 		<div>
@@ -90,18 +90,12 @@ const AddToSupplierSaleForm = (props) => {
 							Brand Name: <span>{props.productInfo.brandName}</span>
 						</p>
 					</div>
-					<Form.Group>
-						<Form.Label>Batch Number</Form.Label>
-						<Form.Control
-							type="text"
-							id="batchNumber"
-							onChange={(e) => handleLocal(e)}
-							value={local.batchNumber}
-							placeholder="eg 5-10-2023-A"
-							required
-						/>
-						{/* TODO ADD SMALL TEXT THAT FECTHES THE PRODUCT ID FROM THE FARMPLAN WHEN THE PRODUCT NAME HAS BEEN TYPED IN THE INPUT */}
-					</Form.Group>
+					<div>
+						<p>
+							Batch Number: <span>{props.productInfo.batchNumber}</span>
+						</p>
+					</div>
+
 					<div>
 						<p>
 							Unit price:{" "}
@@ -143,6 +137,7 @@ const AddToSupplierSaleForm = (props) => {
 								id="quantity"
 								type="number"
 								min="0"
+								max={currentQuantity}
 								step="1"
 								onChange={(e) => handleLocal(e)}
 								value={local.quantity}
@@ -209,9 +204,8 @@ const AddToSupplierSaleForm = (props) => {
 						className="blue-btn shadow-none mt-3"
 						type="submit"
 						disabled={
+							local.quantity <= currentQuantity ||
 							local.quantity.trim() === "" ||
-							local.productName.trim() === "" ||
-							local.batchNumber.trim() === "" ||
 							local.amount.trim() === "" ||
 							local.customerName.trim() === ""
 						}
@@ -234,7 +228,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addSupplierSaleData: (data) => dispatch(addToSales(data)),
+		addSupplierSaleData: (data, currentQuantity) =>
+			dispatch(addToSales(data, currentQuantity)),
 	};
 };
 
