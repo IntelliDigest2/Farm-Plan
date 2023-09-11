@@ -27,64 +27,64 @@ const SavedRent = (props) => {
 		props.getRent(duration, period);
 	};
 
-	const updateSRent = async () => {
-		//clears the meals array before each update- IMPORTANT
-		setSRent([]);
+	// const updateSRent = async () => {
+	// 	//clears the meals array before each update- IMPORTANT
+	// 	setSRent([]);
 
-		//sets a new meal object in the array for every document with this date attached
-		props.Rent.forEach((doc) => {
-			var productName = doc.productName;
-			var productDescription = doc.productDescription;
-			var id = doc.id;
-			var companyID = doc.companyID;
-			var imageURL = doc.imageURL;
-			var productCurrency = doc.productCurrency;
-			var productPrice = doc.productPrice;
-			var productMeasure = doc.productMeasure;
-			var productQty = doc.productQty;
+	// 	//sets a new meal object in the array for every document with this date attached
+	// 	props.Rent.forEach((doc) => {
+	// 		var productName = doc.productName;
+	// 		var productDescription = doc.productDescription;
+	// 		var id = doc.id;
+	// 		var companyID = doc.companyID;
+	// 		var imageURL = doc.imageURL;
+	// 		var productCurrency = doc.productCurrency;
+	// 		var productPrice = doc.productPrice;
+	// 		var productMeasure = doc.productMeasure;
+	// 		var productQty = doc.productQty;
 
-			setSRent((sRent) => [
-				...sRent,
-				{
-					productName: productName,
-					productDescription: productDescription,
-					productCurrency: productCurrency,
-					id: id,
-					companyID: companyID,
-					imageURL: imageURL,
-					productPrice: productPrice,
-					productMeasure: productMeasure,
-					productQty: productQty,
-				},
-			]);
-		});
-	};
+	// 		setSRent((sRent) => [
+	// 			...sRent,
+	// 			{
+	// 				productName: productName,
+	// 				productDescription: productDescription,
+	// 				productCurrency: productCurrency,
+	// 				id: id,
+	// 				companyID: companyID,
+	// 				imageURL: imageURL,
+	// 				productPrice: productPrice,
+	// 				productMeasure: productMeasure,
+	// 				productQty: productQty,
+	// 			},
+	// 		]);
+	// 	});
+	// };
 
-	useEffect(() => {
-		// const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-		updateSRent();
-		console.log("Saved Meals", sRent);
-		// .then(setSMeals(sorted));
-		// console.log(props.data);
-	}, [props.Rent]);
+	// useEffect(() => {
+	// 	// const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
+	// 	updateSRent();
+	// 	console.log("Saved Meals", sRent);
+	// 	// .then(setSMeals(sorted));
+	// 	// console.log(props.data);
+	// }, [props.Rent]);
+
+	console.log(props.Rent, `this is the rent returned in the saved Rent`);
 
 	return (
 		<>
 			<Row style={{ alignItems: "baseline" }}>
 				<FilterComponent fetchData={handleFetchData} />
 			</Row>
-			{sRent.length ? (
+			{props.Rent.length ? (
 				<>
 					<div className="row">
-						<div className="col-8 basic-title-left mb-3">
-							My available products listing
-						</div>
+						<div className="col-8 basic-title-left mb-3">Rentage List</div>
 					</div>
 					<div className="meals">
 						<RentBox
 							forceUpdate={forceUpdate}
 							onChange={props.onChange}
-							rent={sRent}
+							rent={props.Rent}
 						/>
 					</div>
 				</>

@@ -7,6 +7,11 @@ import ListSubheader from "@mui/material/ListSubheader";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import Image from "../../../../SubComponents/Image"
 import AddToSalesIcon from "./Icons/AddToSalesIcon";
+import {format} from 'date-fns'
+import {
+	
+	Table,
+} from "react-bootstrap";
 // import Edit from "./Icons/EditIcon";
 
 export default function RentBox(props) {
@@ -18,14 +23,64 @@ export default function RentBox(props) {
 //    setUpdate(update + 1);
 //  };
 
+const generateRentTable = (rent) => {
+  return props.rent.map((rent, index) => {
+    let formattedDate = format(rent.createdAt.toDate(), "M/d/yyyy");
+    return (
+    <tbody>
+      <tr key={`${index}`}>
+      <td>{formattedDate}</td>
+      <td>{rent.rentId}</td>
+      <td>{rent.productName}</td>
+      <td>{rent.batchNumber}</td>
+      <td>{rent.duration} {rent.rateDuration}</td>
+      <td>@ {rent.rateAmount}{rent.productCurrency
+} per {rent.rateDuration}</td>
+      <td>
+      {rent.productQty} {rent.productMeasure}
+      </td>
+      <td>{rent.customerName}</td>
+      <td>
+        {rent.totalCost}
+        
+      </td>
+      <td>
+        {rent.medium}
+        
+      </td>
+      
+      </tr>
+    </tbody>
+  
+    // 	// {/* {actualDay.toUpperCase()} */}
+    );
+  });
+  };
 
-  //console.log("let fetch what weekly props is ==> ", props)
+
+  console.log(props.rent,`this is the rent list`)
   return (
     <>
-      {props.rent.map((newProduct, index) => (
+      {props.rent.map((product, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
           <div className="ingredients">
-             <List
+          <Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Rent Id </th>
+							<th>Product Name</th>
+							<th>Batch Number</th>
+
+							<th>Duration</th>
+							<th>Rate</th>
+							<th>Quantity</th>
+							<th>Customer Name</th>
+							<th>Medium</th>
+						</tr>
+					</thead>
+					{generateRentTable(product)}
+             {/* <List
               key={`product${index}`}
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
@@ -45,17 +100,8 @@ export default function RentBox(props) {
                    id={newProduct.id}
                   //  update={update}
                   //  setUpdate={setUpdate}
-                  />  */}
-                  {/* {newMeal.nonNativeData ? null : (
-                    <Edit
-                      value={props.value}
-                      meal={newMeal.meal}
-                      ingredients={newMeal.ingredients}
-                      id={newMeal.id}
-                      forceUpdate={props.forceUpdate}
-                      saved={props.saved}
-                    />
-                  )} */}
+                  />  
+                  
                 </div>
               </ListSubheader>
 
@@ -80,10 +126,13 @@ export default function RentBox(props) {
                     </p>
                   </div>
               </ListItem>
-            </List>
+            </List> */}
+            </Table>
           </div>
         </div>
+   
+
       ))}
-    </>
+      </>
   );
 }

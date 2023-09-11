@@ -184,7 +184,7 @@ export const getProducts = (duration, period) => {
 				});
 
 				// Do something with the values array, e.g., update the UI
-				console.log(supplierProducts, `this is what is returned for the stock`);
+				// console.log(supplierProducts, `this is what is returned for the stock`);
 				dispatch({ type: "GET_PRODUCTS", payload: supplierProducts });
 			},
 			(err) => {
@@ -214,7 +214,6 @@ export const addToSales = (data, currentQuantity) => {
 		const db = getFirestore();
 
 		const batch = db.batch();
-		console.log(batch);
 
 		var uid;
 		switch (profile.type) {
@@ -253,7 +252,8 @@ export const addToSales = (data, currentQuantity) => {
 			.collection("products")
 			.where("productName", "==", data.productName)
 			.where("brandName", "==", data.brandName)
-			.where("batchNumber", "==", data.batchNumber);
+			.where("batchNumber", "==", data.batchNumber)
+			.where("stockType", "==", "Sale");
 		const newDocRef = db.collection("sales").doc(); // Firestore will generate a unique document ID
 
 		// // Set data for the new document in the batch
@@ -275,11 +275,14 @@ export const addToSales = (data, currentQuantity) => {
 	};
 };
 
-export const addToRent = (data) => {
+export const addToRent = (data, currentQuantity) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
+		const db = getFirestore();
+
+		const batch = db.batch();
 
 		var uid;
 		switch (profile.type) {
@@ -306,18 +309,32 @@ export const addToRent = (data) => {
 				break;
 		}
 
-		getFirestore()
-			.collection("rent")
-			.add(data.upload)
-			.then((docRef) => {
-				// make the docId easily accessible so that we can delete it later if we want.
-				getFirestore().collection("rent").doc(docRef.id);
-				// .set({ id: data.upload.id }, { merge: true });
-				dispatch({ type: "ADD_TO_RENT" });
-			})
-			.catch((err) => {
-				dispatch({ type: "ADD_TO_RENT_ERROR", err });
+		const productsCollectionRef = getFirestore().collection("products");
+
+		const productsCollectionQuery = getFirestore()
+			.collection("products")
+			.where("productName", "==", data.productName)
+			.where("brandName", "==", data.brandName)
+			.where("batchNumber", "==", data.batchNumber)
+			.where("stockType", "==", "Rentage");
+		const newDocRef = db.collection("rent").doc(); // Firestore will generate a unique document ID
+
+		// // Set data for the new document in the batch
+		batch.set(newDocRef, { ...data, companyID: uid });
+		return productsCollectionQuery.get().then((snapshot) => {
+			snapshot.forEach((doc) => {
+				// You can access and update each document here
+				const documentRef = productsCollectionRef.doc(doc.id);
+
+				// Add the update operation to the batch
+				batch.update(documentRef, {
+					currentQuantity:
+						parseInt(currentQuantity) - parseInt(data.productQty),
+				});
 			});
+
+			return batch.commit();
+		});
 	};
 };
 
@@ -597,7 +614,7 @@ export const getRent = (duration, period) => {
 				const data = [];
 
 				snapshot.forEach((doc) => {
-					data.push({ ...doc.data(), salesId: doc.id });
+					data.push({ ...doc.data(), rentId: doc.id });
 				});
 				console.log(data, `this is the data rerurned for the rent`);
 				// Do something with the values array, e.g., update the UI

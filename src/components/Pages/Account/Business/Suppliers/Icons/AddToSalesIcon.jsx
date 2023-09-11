@@ -18,7 +18,7 @@ function AddToSalesIcon(props) {
   
   // const handleForm = () => setShow(true);
 	const handleFormClose = () => setShow(false);
-  console.log(props, `this is the props on the icon`)
+  // console.log(props, `this is the props on the icon`)
 
  // console.log("to inventory ==> ", props.food)
   const handleSelect = async () => {
