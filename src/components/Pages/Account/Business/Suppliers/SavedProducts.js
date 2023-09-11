@@ -12,7 +12,7 @@ import { Dropdown } from "./../../../../SubComponents/Dropdown";
 const SavedProducts = (props) => {
 	const { t } = useTranslation();
 
-	const [sProducts, setSProducts] = useState([]);
+	const [products, setProducts] = useState(null);
 	const [duration, setDuration] = useState("Day");
 	const [stockType, setStockType] = useState("All");
 
@@ -27,54 +27,68 @@ const SavedProducts = (props) => {
 	// 	props.getProducts();
 	// }, [update]);
 
-	const updateSProducts = async () => {
-		//clears the meals array before each update- IMPORTANT
-		setSProducts([]);
+	// const updateSProducts = async () => {
+	// 	//clears the meals array before each update- IMPORTANT
+	// 	setSProducts([]);
 
-		//sets a new meal object in the array for every document with this date attached
-		props.Products.forEach((doc) => {
-			var productName = doc.productName;
-			var productDescription = doc.productDescription;
-			var id = doc.id;
-			var companyID = doc.companyID;
-			var region = doc.region;
-			var city = doc.city;
-			var companyName = doc.companyName;
-			var imageURL = doc.imageURL;
-			var productCurrency = doc.productCurrency;
-			var productPrice = doc.productPrice;
-			var productMeasure = doc.productMeasure;
-			var productQty = doc.productQty;
-			var createdAt = doc.createdAt;
+	// 	//sets a new meal object in the array for every document with this date attached
+	// 	props.Products.forEach((doc) => {
+	// 		var productName = doc.productName;
+	// 		var productDescription = doc.productDescription;
+	// 		var id = doc.id;
+	// 		var companyID = doc.companyID;
+	// 		var region = doc.region;
+	// 		var city = doc.city;
+	// 		var companyName = doc.companyName;
+	// 		var imageURL = doc.imageURL;
+	// 		var productCurrency = doc.productCurrency;
+	// 		var productPrice = doc.productPrice;
+	// 		var productMeasure = doc.productMeasure;
+	// 		var productQty = doc.productQty;
+	// 		var createdAt = doc.createdAt;
 
-			setSProducts((sProducts) => [
-				...sProducts,
-				{
-					productName: productName,
-					productDescription: productDescription,
-					productCurrency: productCurrency,
-					id: id,
-					companyID: companyID,
-					region: doc.region,
-					city: doc.city,
-					companyName: doc.companyName,
-					imageURL: imageURL,
-					productPrice: productPrice,
-					productMeasure: productMeasure,
-					productQty: productQty,
-					createdAt: createdAt,
-				},
-			]);
+	// 		setSProducts((sProducts) => [
+	// 			...sProducts,
+	// 			{
+	// 				productName: productName,
+	// 				productDescription: productDescription,
+	// 				productCurrency: productCurrency,
+	// 				id: id,
+	// 				companyID: companyID,
+	// 				region: doc.region,
+	// 				city: doc.city,
+	// 				companyName: doc.companyName,
+	// 				imageURL: imageURL,
+	// 				productPrice: productPrice,
+	// 				productMeasure: productMeasure,
+	// 				productQty: productQty,
+	// 				createdAt: createdAt,
+	// 			},
+	// 		]);
+	// 	});
+	// };
+
+	useEffect(() => {
+		// 	// const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
+		// 	updateSProducts();
+		// 	console.log("Saved Meals", sProducts);
+		// 	// .then(setSMeals(sorted));
+		// 	// console.log(props.data);
+	}, [stockType]);
+
+	if (stockType === "Sale") {
+		let result = props.products.filter((product) => {
+			return product.stockType === "Sale";
 		});
-	};
 
-	// useEffect(() => {
-	// 	// const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-	// 	updateSProducts();
-	// 	console.log("Saved Meals", sProducts);
-	// 	// .then(setSMeals(sorted));
-	// 	// console.log(props.data);
-	// }, [props.Products]);
+		setProducts(result);
+	} else if (stockType === "Rentage") {
+		let result = props.products.filter((product) => {
+			return product.stockType === "Rentage";
+		});
+
+		setProducts(result);
+	} else setProducts(props.products);
 
 	console.log(props.Products);
 
@@ -99,7 +113,7 @@ const SavedProducts = (props) => {
 					id="currency"
 					styling="grey dropdown-input"
 					data={stockType}
-					items={["All", "Sales", "Rentage"]}
+					items={["All", "Sale", "Rentage"]}
 					function={(e) => {
 						setStockType(e);
 					}}
@@ -111,7 +125,7 @@ const SavedProducts = (props) => {
 						<ProductBox
 							// forceUpdate={forceUpdate}
 							onChange={props.onChange}
-							products={props.Products}
+							products={products}
 						/>
 					</div>
 				</>
