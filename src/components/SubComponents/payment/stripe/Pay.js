@@ -10,7 +10,7 @@ import "./Pay.css";
 // This is a public sample test API key.
 // Don’t submit any personally identifiable information in requests made with this key.
 // Sign in to see your own test API key embedded in code samples.
-const stripePromise = loadStripe("pk_test_51NXkNaIGzKA0OZY8ihs7V2nCScOl7CbJqzL2LVens74k7oAvDVxzmcpO8EQ6NAxJxCM9EQXDxZiqHwA0p3k7tRPo00sDDaiLBp");
+const stripePromise = loadStripe("pk_live_51NXkNaIGzKA0OZY8UZQluLvAbq7nJp3cGrMAMTtigmkO0MVduUrzBUPy6tic7luPVDWldGx9u8fZr14S4DUKjnQ800XfLt9vZo");
 
 export default function Pay(props) {
 
@@ -26,7 +26,7 @@ export default function Pay(props) {
     const fetchPaymentIntent = async () => {
       try {
         console.log("Fetching payment intent with amount:", amount);
-        const response = await fetch(`${baseUrlDev}/v1/payment/create-payment-intent`, {
+        const response = await fetch(`${baseUrlProd}/v1/payment/create-payment-intent`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount }),
