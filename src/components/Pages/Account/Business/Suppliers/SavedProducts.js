@@ -68,29 +68,45 @@ const SavedProducts = (props) => {
 	// 	});
 	// };
 
+	// useEffect(() => {
+	// 	// 	// const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
+	// 	// 	updateSProducts();
+	// 	// 	console.log("Saved Meals", sProducts);
+	// 	// 	// .then(setSMeals(sorted));
+	// 	// 	// console.log(props.data);
+	// }, [stockType]);
+
 	useEffect(() => {
-		// 	// const sorted = sMeals.sort((a, b) => a.meal.localeCompare(b.meal));
-		// 	updateSProducts();
-		// 	console.log("Saved Meals", sProducts);
-		// 	// .then(setSMeals(sorted));
-		// 	// console.log(props.data);
-	}, [stockType]);
+		console.log(`stockType changed`);
+		if (stockType === "Sale") {
+			let result = props.Products.filter((product) => {
+				return product.stockType === "Sale";
+			});
+			console.log(result, `testing result`);
+			setProducts(result);
+		} else if (stockType === "Rentage") {
+			let result = props.Products.filter((product) => {
+				return product.stockType === "Rentage";
+			});
+			setProducts(result);
+		} else setProducts(props.Products);
+	}, [stockType, props.Products]);
 
-	if (stockType === "Sale") {
-		let result = props.products.filter((product) => {
-			return product.stockType === "Sale";
-		});
+	// if (stockType === "Sale") {
+	// 	let result = props.Products.filter((product) => {
+	// 		return product.stockType === "Sale";
+	// 	});
 
-		setProducts(result);
-	} else if (stockType === "Rentage") {
-		let result = props.products.filter((product) => {
-			return product.stockType === "Rentage";
-		});
+	// 	setProducts(result);
+	// } else if (stockType === "Rentage") {
+	// 	let result = props.Products.filter((product) => {
+	// 		return product.stockType === "Rentage";
+	// 	});
 
-		setProducts(result);
-	} else setProducts(props.products);
+	// 	setProducts(result);
+	// } else setProducts(props.Products);
 
-	console.log(props.Products);
+	console.log(products, `this is the product to show`);
 
 	const handleFetchData = (duration, period) => {
 		setDuration(duration);

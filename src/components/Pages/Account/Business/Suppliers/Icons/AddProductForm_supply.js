@@ -236,32 +236,32 @@ function AddProductForm_supply(props) {
 			data.upload.productPrice = productPrice;
 			data.upload.productCurrency = productCurrency;
 		}
-		console.log(data.upload);
+		// console.log(data.upload);
 
-		// setLoadingSubmit(true);
-		// uploadImage()
-		// 	.then((resp) => {
-		// 		console.log(resp, `this is ithe image url response`);
-		// 		data.upload.imageURL = resp;
-		// 		return resp;
-		// 		// props.createProduct(data);
-		// 	})
-		// 	.then((resp) => {
-		// 		console.log(data.upload, `the data we want to upload`);
-		// 		props.createProduct(data);
-		// 	})
-		// 	.then((resp) => {
-		// 		submitNotification("Success", `${productName} has been added!`);
-		// 		setLoadingSubmit(false);
-		// 		formRef.current.reset();
-		// 		setProductPrice("");
-		// 		setProductQty("");
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 		submitNotification("Error", `Something went wrong`);
-		// 		setLoadingSubmit(false);
-		// 	});
+		setLoadingSubmit(true);
+		uploadImage()
+			.then((resp) => {
+				console.log(resp, `this is ithe image url response`);
+				data.upload.imageURL = resp;
+				return resp;
+				// props.createProduct(data);
+			})
+			.then((resp) => {
+				console.log(data.upload, `the data we want to upload`);
+				props.createProduct(data);
+			})
+			.then((resp) => {
+				submitNotification("Success", `${productName} has been added!`);
+				setLoadingSubmit(false);
+				formRef.current.reset();
+				setProductPrice("");
+				setProductQty("");
+			})
+			.catch((err) => {
+				console.log(err);
+				submitNotification("Error", `Something went wrong`);
+				setLoadingSubmit(false);
+			});
 
 		// forceUpdate();
 

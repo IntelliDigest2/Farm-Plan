@@ -25,7 +25,6 @@ function AddToRentIcon(props) {
   
   };
 
-  console.log(props.products)
 
 
   return (
@@ -50,7 +49,7 @@ function AddToRentIcon(props) {
 			>
 				<Modal.Header closeButton>
 					<Modal.Title id="add-item" className="basic-title-left basic-lg">
-						Add External Sale
+						Add External Rentage
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>

@@ -14,10 +14,10 @@ const AddToSupplierRentForm = (props) => {
 	const defaultLocal = {
 		unit: "bags",
 		quantity: "",
-		duration: "0",
-		period: "week",
+		duration: "",
+		rateDuration: "day",
 
-		amount: "",
+		rateAmount: "",
 		currency: "$",
 		customerName: "",
 		medium: "ext",
@@ -25,10 +25,9 @@ const AddToSupplierRentForm = (props) => {
 	const [submitLoading, setSubmitLoading] = useState(false);
 
 	const [show, setShow] = useState(true);
-	const [saleDate, setSaleDate] = useState(new Date());
+	const [rentDate, setRentDate] = useState(new Date());
 
 	const [local, setLocal] = useState(defaultLocal);
-	const [productType, setProductType] = useState("Horticulture");
 	const formRef = useRef(null);
 
 	const handleLocal = (e) => {
@@ -48,12 +47,15 @@ const AddToSupplierRentForm = (props) => {
 			medium: "ext",
 
 			productQty: local.quantity,
-			productPrice: local.amount,
+			rateAmount: local.rateAmount,
+			rateDuration: local.rateDuration,
+			duration: local.duration,
+			totalCost: local.duration * local.rateAmount,
 			productCurrency: local.currency,
 			productMeasure: local.unit,
 			brandName: props.productInfo.brandName,
 
-			createdAt: saleDate,
+			createdAt: rentDate,
 			batchNumber: props.productInfo.batchNumber,
 			productName: props.productInfo.productName,
 			customerName: local.customerName,
@@ -68,7 +70,7 @@ const AddToSupplierRentForm = (props) => {
 				// console.log(resp.id, `this is the id of the newly added sale`);
 				setSubmitLoading(false);
 				setLocal(defaultLocal);
-				submitNotification("Success", "Product added to sales");
+				submitNotification("Success", "Product added to rent");
 			})
 			.catch((err) => {
 				console.log(err, `an error occurred`);
@@ -98,7 +100,7 @@ const AddToSupplierRentForm = (props) => {
 						</p>
 					</div>
 
-					<div>
+					{/* <div>
 						<p>
 							Unit price:{" "}
 							<span>
@@ -106,18 +108,19 @@ const AddToSupplierRentForm = (props) => {
 								{props.productInfo.productCurrency}
 							</span>
 						</p>
-					</div>
+					</div> */}
 
 					<Form.Group>
 						<Form.Label>Renting price</Form.Label>
-						<InputGroup>
+
+						<InputGroup style={{ alignItems: "baseline" }}>
 							<Form.Control
-								id="amount"
+								id="rateAmount"
 								type="number"
 								min="0"
 								step="1"
 								onChange={(e) => handleLocal(e)}
-								value={local.amount}
+								value={local.rateAmount}
 								placeholder="0"
 								required
 							/>
@@ -128,6 +131,16 @@ const AddToSupplierRentForm = (props) => {
 								items={["$", "€", "£"]}
 								function={(e) => {
 									setLocal({ ...local, currency: e });
+								}}
+							/>
+							per
+							<Dropdown
+								id="rateDuration"
+								styling="grey dropdown-input"
+								data={local.rateDuration}
+								items={["hour", "day", "week", "month", "year"]}
+								function={(e) => {
+									setLocal({ ...local, rateDuration: e });
 								}}
 							/>
 						</InputGroup>
@@ -175,7 +188,6 @@ const AddToSupplierRentForm = (props) => {
 								id="duration"
 								type="number"
 								min="0"
-								max={currentQuantity}
 								step="1"
 								onChange={(e) => handleLocal(e)}
 								value={local.duration}
@@ -185,10 +197,10 @@ const AddToSupplierRentForm = (props) => {
 							<Dropdown
 								id="period"
 								styling="grey dropdown-input"
-								data={local.period}
-								items={["day", "week", "month", "year"]}
+								data={local.rateDuration}
+								items={["hour", "day", "week", "month", "year"]}
 								function={(e) => {
-									setLocal({ ...local, unit: e });
+									setLocal({ ...local, rateDuration: e });
 								}}
 							/>
 						</InputGroup>
@@ -200,7 +212,7 @@ const AddToSupplierRentForm = (props) => {
 								type="text"
 								id="customerName"
 								required
-								placeholder="mr/mrs ..."
+								placeholder="mr/mrs/company name ..."
 								onChange={(e) => handleLocal(e)}
 								// style={{ maxHeight: "300px" }}
 								value={local.customerName}
@@ -211,8 +223,8 @@ const AddToSupplierRentForm = (props) => {
 					<Form.Group>
 						<Form.Label>Date</Form.Label>
 						<DatePicker
-							selected={saleDate}
-							onChange={(date) => setSaleDate(date)}
+							selected={rentDate}
+							onChange={(date) => setRentDate(date)}
 							dateFormat="dd/MM/yyyy"
 						/>
 					</Form.Group>
@@ -231,9 +243,14 @@ const AddToSupplierRentForm = (props) => {
 						className="blue-btn shadow-none mt-3"
 						type="submit"
 						disabled={
-							local.quantity <= currentQuantity ||
+							local.quantity > currentQuantity ||
+							local.duration === "" ||
+							local.duration === 0 ||
+							local.duration === "0" ||
+							local.rateAmount === "0" ||
+							local.rateAmount === 0 ||
 							local.quantity.trim() === "" ||
-							local.amount.trim() === "" ||
+							local.rateAmount.trim() === "" ||
 							local.customerName.trim() === ""
 						}
 					>

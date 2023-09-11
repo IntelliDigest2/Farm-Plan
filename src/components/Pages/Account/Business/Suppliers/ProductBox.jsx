@@ -27,7 +27,7 @@ export default function ProductBox(props) {
 
   const iconToShow =(newProduct)=> {
 
-   return props.products?.stockType === 'Rent' ?  <AddToRentIcon 
+   return newProduct?.stockType === 'Rentage' ?  <AddToRentIcon 
   product={newProduct}
   show={show} 
   setShow={setShow}
@@ -40,6 +40,14 @@ export default function ProductBox(props) {
      value={props.value}
   
   /> }
+
+  let cost =(newProduct)=> {
+    return newProduct.stockType === 'Sale'? <p>
+    Price: <span>{newProduct.productCurrency} {newProduct.productPrice}</span>  
+    </p> :<p> Rent rates: {newProduct.rentRates.map((rate)=>{
+      return <span>{rate.rateDuration}{newProduct.currency} per {rate.ratePeriod}</span>
+    }) }</p> 
+   }
 
   
   return (
@@ -100,12 +108,10 @@ export default function ProductBox(props) {
                     <p>
                       Quantity available: <span>{newProduct.currentQuantity}{newProduct.productMeasure}</span> 
                     </p>
-                    {/* <p>
-                     Quntity: <span>{newProduct.productQty} {newProduct.productMeasure}</span> 
-                    </p> */}
                     <p>
-                    Price: <span>{newProduct.productCurrency} {newProduct.productPrice}</span>  
+                     Stock Type: <span>{newProduct.stockType}</span> 
                     </p>
+                    {cost(newProduct)}
                     </div>
                    
                   </div>
