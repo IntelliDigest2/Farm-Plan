@@ -100,7 +100,7 @@ export default function CheckoutForm( props ) {
         if (error) {
           console.error(error);
           // handleError();
-        } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        } else if (paymentIntent && paymentIntent.status === "succeeded" || paymentIntent.status == "processing") {
           console.log("Payment succeeded");
           await handleSuccess();
           setIsLoading(false);
