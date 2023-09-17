@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap";
 import { PaystackButton } from "react-paystack"
 
+
 import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Wallet.css"
@@ -12,6 +13,8 @@ import RevolutPay from "./RevolutPay"
 import Pay from './stripe/Pay';
 
 import { connect } from "react-redux";
+import ConnectAccount from './stripe/ConnectAccount';
+import WithdrawFunds from './stripe/WithdrawFunds';
 
 // Loading component to be displayed while waiting for data
 const SpinnerComponent = () => {
@@ -316,6 +319,12 @@ const WalletComponent = (props) => {
 
             </Card.Body>
           </Card>
+        </div>
+        <div>
+          <ConnectAccount userID={props.profile.uid} />
+        </div>
+        <div>
+          <WithdrawFunds />
         </div>
         {/* Powered by Logo */}
           {/* <div className="powered-by-logo">

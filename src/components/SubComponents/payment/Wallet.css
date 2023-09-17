@@ -19,7 +19,10 @@
     font-size: 32px;
   }
   
-  
+.card-details {
+  margin-bottom: 0; /* Remove margin between elements */
+}
+
   
   .custom-card {
     background-color: #160c67;

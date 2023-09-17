@@ -114,6 +114,7 @@ import Reservations from "./components/SubComponents/payment/Reservations";
 import ReservationsOther from "./components/SubComponents/payment/ReservationsOther";
 import PaymentSuccess from "./components/Pages/PaymentSuccess";
 import SupplyRevenue from "./components/Pages/Account/Business/Suppliers/supplyRevenue";
+import Withdraw from "./components/SubComponents/payment/Withdraw";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -344,6 +345,7 @@ const App = (props) => {
 
 						<Route path="/payment" component={RevolutPay} />
 						<Route path="/wallet" component={Wallet} />
+						<Route path="/withdraw-funds" component={Withdraw} />
 						<Route path="/create-coupon" component={Coupon} />
 						<Route path="/redeem-coupon" component={RedeemCoupon} />
 						<Route path="/transactions" component={Transactions} />
