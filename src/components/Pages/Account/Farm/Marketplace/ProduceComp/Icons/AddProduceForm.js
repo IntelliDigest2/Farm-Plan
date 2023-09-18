@@ -32,6 +32,7 @@ const AddProduceForm = (props) => {
 		measure: "units",
 		price: "",
 		currency: "$",
+		sellingPrice: "",
 		cycleStartMonth: "Jan",
 		cycleStartYear: "2023",
 		cycleEndMonth: "Jun",
@@ -231,7 +232,7 @@ const AddProduceForm = (props) => {
 							/>
 						</Form.Group>
 
-						{/* <Form.Group>
+						<Form.Group>
 							<Form.Label style={{ display: "block" }}>
 								Crop farmCycle
 							</Form.Label>
@@ -298,7 +299,26 @@ const AddProduceForm = (props) => {
 									/>
 								</Col>
 							</Row>
-						</Form.Group> */}
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Batch Number</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Batch number should have the format Date-letter eg
+								"15-06-2024-A"
+							</div>
+							<Form.Control
+								type="text"
+								id="batchNumber"
+								onChange={(e) => handleLocal(e)}
+								value={local.batchNumber}
+								required
+							/>
+						</Form.Group>
 
 						<Form.Group>
 							<Form.Label>Quantity of crops</Form.Label>
@@ -427,7 +447,26 @@ const AddProduceForm = (props) => {
 								value={local.item}
 							/>
 						</Form.Group>
-						{/* <Form.Group>
+						<Form.Group>
+							<Form.Label>Batch Number</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Batch number should have the format Date-letter eg
+								"15-06-2024-A"
+							</div>
+							<Form.Control
+								type="text"
+								id="batchNumber"
+								onChange={(e) => handleLocal(e)}
+								value={local.batchNumber}
+								required
+							/>
+						</Form.Group>
+						<Form.Group>
 							<Form.Label style={{ display: "block" }}>
 								Crop farmCycle
 							</Form.Label>
@@ -494,7 +533,26 @@ const AddProduceForm = (props) => {
 									/>
 								</Col>
 							</Row>
-						</Form.Group> */}
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Batch Number</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Batch number should have the format Date-letter eg
+								"15-06-2024-A"
+							</div>
+							<Form.Control
+								type="text"
+								id="batchNumber"
+								onChange={(e) => handleLocal(e)}
+								value={local.batchNumber}
+								required
+							/>
+						</Form.Group>
 
 						<Form.Group>
 							<Form.Label>Quantity/amount</Form.Label>
@@ -597,7 +655,7 @@ const AddProduceForm = (props) => {
 								value={local.item}
 							/>
 						</Form.Group>
-						{/* <Form.Group>
+						<Form.Group>
 							<Form.Label style={{ display: "block" }}>
 								Crop farmCycle
 							</Form.Label>
@@ -664,7 +722,7 @@ const AddProduceForm = (props) => {
 									/>
 								</Col>
 							</Row>
-						</Form.Group> */}
+						</Form.Group>
 						<Form.Group>
 							<Form.Label>Batch Number</Form.Label>
 							<div
@@ -799,23 +857,25 @@ const AddProduceForm = (props) => {
 			data.nutrients = inputGroups;
 		}
 
+		console.log(data, `this is the data we are submitting`);
+
 		setSubmitLoading(true);
 
-		props
-			.addProduceData(data)
-			.then((resp) => {
-				// console.log(resp.id, `this is the id of the newly added sale`);
-				setSubmitLoading(false);
-				setLocal(defaultLocal);
-				setInputGroups(defaultNutrient);
-				submitNotification("Success", "Produce added to product Inventory");
-			})
-			.catch((err) => {
-				// console.log(err, `an error occurred`);
-				submitNotification("Error", "Something went wrong try again");
-				setSubmitLoading(false);
-				setSubmitError(true);
-			});
+		// props
+		// 	.addProduceData(data)
+		// 	.then((resp) => {
+		// 		// console.log(resp.id, `this is the id of the newly added sale`);
+		// 		setSubmitLoading(false);
+		// 		setLocal(defaultLocal);
+		// 		setInputGroups(defaultNutrient);
+		// 		submitNotification("Success", "Produce added to product Inventory");
+		// 	})
+		// 	.catch((err) => {
+		// 		// console.log(err, `an error occurred`);
+		// 		submitNotification("Error", "Something went wrong try again");
+		// 		setSubmitLoading(false);
+		// 		setSubmitError(true);
+		// 	});
 
 		// forceUpdate();
 	};

@@ -5,7 +5,7 @@ import {
 	Route,
 	Redirect,
 } from "react-router-dom";
-import firebase, { auth, fs } from "./config/fbConfig"; 
+import firebase, { auth, fs } from "./config/fbConfig";
 import "./App.css";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -77,9 +77,9 @@ import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan
 import NewAccount from "./components/Pages/Account/Account";
 import ConsultAdminTest from "./components/Pages/Account/Admin/Admin/AdminComp/AdminConsultant";
 
-import RevolutPay from "./components/SubComponents/payment/RevolutPay"
+import RevolutPay from "./components/SubComponents/payment/RevolutPay";
 
-import FailedDeposit from "./components/SubComponents/payment/Failed"
+import FailedDeposit from "./components/SubComponents/payment/Failed";
 // import Example from "./components/Pages/Account/Example";
 
 import { Notifications } from "react-push-notification";
@@ -113,6 +113,7 @@ import RedeemCoupon from "./components/SubComponents/payment/RedeemCoupon";
 import Reservations from "./components/SubComponents/payment/Reservations";
 import ReservationsOther from "./components/SubComponents/payment/ReservationsOther";
 import PaymentSuccess from "./components/Pages/PaymentSuccess";
+import SupplyRevenue from "./components/Pages/Account/Business/Suppliers/supplyRevenue";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -145,31 +146,31 @@ const App = (props) => {
 		})
 		.catch((err) => console.log("failed: ", err));
 
-		const updateFirestore = async () => {
-			const collectionRef = fs.collection("users");
-		  
-			try {
-			  const snapshot = await collectionRef.get();
-		  
-			  const batch = fs.batch();
-		  
-			  snapshot.forEach((doc) => {
+	const updateFirestore = async () => {
+		const collectionRef = fs.collection("users");
+
+		try {
+			const snapshot = await collectionRef.get();
+
+			const batch = fs.batch();
+
+			snapshot.forEach((doc) => {
 				const documentRef = collectionRef.doc(doc.id);
 				const updatedData = {
-				  ...doc.data(),
-				//   uid: doc.id.toString(),
-				  voucherBalance: 0,
+					...doc.data(),
+					//   uid: doc.id.toString(),
+					voucherBalance: 0,
 				};
 				batch.update(documentRef, updatedData);
-			  });
-		  
-			  await batch.commit();
-			  console.log("xxxxxxxxxxxx> Update successful");
-			} catch (error) {
-			  console.error("Error updating documents:", error);
-			}
-		  };
-		  
+			});
+
+			await batch.commit();
+			console.log("xxxxxxxxxxxx> Update successful");
+		} catch (error) {
+			console.error("Error updating documents:", error);
+		}
+	};
+
 	return (
 		<React.Fragment>
 			<Notifications position="top-right" />
@@ -334,6 +335,7 @@ const App = (props) => {
 							component={RestaurantMealPlan}
 						/>
 						<Route path="/supply-plan" component={SupplyPlan} />
+						<Route path="/supply-revenue" component={SupplyRevenue} />
 						<Route path="/produce" component={ProduceTab} />
 						<Route path="/turnover" component={TurnOverPage} />
 						<Route path="/expense" component={ExpensePage} />
@@ -347,7 +349,10 @@ const App = (props) => {
 						<Route path="/transactions" component={Transactions} />
 						<Route path="/coupon-transactions" component={CouponTransactions} />
 						<Route path="/track-reservations" component={Reservations} />
-						<Route path="/track-reservations-other" component={ReservationsOther} />
+						<Route
+							path="/track-reservations-other"
+							component={ReservationsOther}
+						/>
 
 						<Route
 							path="/db"

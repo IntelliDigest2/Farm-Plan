@@ -244,13 +244,15 @@ const AddToSupplierRentForm = (props) => {
 						type="submit"
 						disabled={
 							local.quantity > currentQuantity ||
-							local.duration === "" ||
-							local.duration === 0 ||
-							local.duration === "0" ||
-							local.rateAmount === "0" ||
-							local.rateAmount === 0 ||
-							local.quantity.trim() === "" ||
-							local.rateAmount.trim() === "" ||
+							// local.duration === "" ||
+							// // local.duration === 0 ||
+							// local.duration === "0" ||
+							// local.quantity === 0 ||
+							// local.quantity === "0" ||
+							// local.rateAmount === "0" ||
+							// local.rateAmount === 0 ||
+							local.quantity === "" ||
+							local.rateAmount === "" ||
 							local.customerName.trim() === ""
 						}
 					>

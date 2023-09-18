@@ -629,6 +629,203 @@ export const getRent = (duration, period) => {
 		);
 	};
 };
+export const getRentForChart = (duration, period) => {
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+
+		if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(period.monthYear, period.monthNumber - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(period.monthYear, period.monthNumber, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else {
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+
+			// console.log(startOfYear, `this is the start of the year`);
+			// console.log(endOfYear, `this is the end of the year`);
+		}
+
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+
+		let collectionRef = getFirestore()
+			.collection("rent")
+			.where("companyID", "==", uid);
+
+		let query;
+
+		switch (duration) {
+			case "Month":
+				query = collectionRef
+					.where("createdAt", ">=", startOfMonth)
+					.where("createdAt", "<=", endOfMonth);
+				break;
+
+			default:
+				query = collectionRef
+					.where("createdAt", ">=", startOfYear)
+					.where("createdAt", "<=", endOfYear);
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const data = [];
+
+				snapshot.forEach((doc) => {
+					data.push({ ...doc.data(), rentId: doc.id });
+				});
+				// console.log(data, `this is the data rerurned for the rent`);
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({ type: "GET_RENT_CHART", payload: data });
+			},
+			(error) => {
+				console.error("Error getting real-time rent chart updates:", error);
+
+				dispatch({ type: "GET_RENT_CHART_ERROR", error });
+			}
+		);
+	};
+};
+export const getSalesForChart = (duration, period) => {
+	let startOfMonth, endOfMonth;
+	let startOfYear, endOfYear;
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+
+		if (duration === "Month") {
+			const currentDate = new Date();
+			let year = currentDate.getFullYear();
+
+			// Calculate the start and end timestamps for the week of the month
+
+			startOfMonth = new Date(period.monthYear, period.monthNumber - 1, 1); // Month is 0-indexed, so we subtract 1 from the specified month
+			endOfMonth = new Date(period.monthYear, period.monthNumber, 0);
+			startOfMonth.setHours(0, 0, 0, 0);
+			endOfMonth.setHours(23, 59, 59, 999);
+
+			// console.log(startOfMonth, `this is the start of the month`);
+			// console.log(endOfMonth, `this is the end of the month`);
+		} else {
+			const year = period;
+
+			startOfYear = new Date(year, 0, 1);
+			startOfYear.setHours(0, 0, 0, 0);
+
+			endOfYear = new Date(year, 11, 31);
+			endOfYear.setHours(23, 59, 59, 999);
+		}
+
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+
+		let collectionRef = getFirestore()
+			.collection("sales")
+			.where("companyID", "==", uid);
+
+		let query;
+
+		switch (duration) {
+			case "Month":
+				query = collectionRef
+					.where("createdAt", ">=", startOfMonth)
+					.where("createdAt", "<=", endOfMonth);
+				break;
+
+			default:
+				query = collectionRef
+					.where("createdAt", ">=", startOfYear)
+					.where("createdAt", "<=", endOfYear);
+				break;
+		}
+
+		query.onSnapshot(
+			(snapshot) => {
+				const data = [];
+
+				snapshot.forEach((doc) => {
+					data.push({ ...doc.data(), rentId: doc.id });
+				});
+				console.log(data, `this is the data returned for the rent`);
+				// Do something with the values array, e.g., update the UI
+				// console.log(products);
+				dispatch({ type: "GET_SALES_CHART", payload: data });
+			},
+			(error) => {
+				console.error("Error getting real-time sale updates:", error);
+
+				dispatch({ type: "GET_SALES_CHART_ERROR", error });
+			}
+		);
+	};
+};
 
 // export const getRent = (rent) => {
 // 	return (dispatch, getState, { getFirestore }) => {

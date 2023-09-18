@@ -287,7 +287,7 @@ export const ProfitData = (props) => {
 		}
 	};
 
-	let origin =
+	let mainContent =
 		props.produceData === null ? (
 			<>...loading</>
 		) : (
@@ -324,7 +324,7 @@ export const ProfitData = (props) => {
 		<div>
 			<CycleFilterComponent fetchData={handleFetchData} />
 
-			{origin}
+			{mainContent}
 			{/* <div>
 				<p>Product Harvest quantity : {harvestQuantity}</p>
 				{content}

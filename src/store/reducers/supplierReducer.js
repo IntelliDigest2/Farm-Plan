@@ -10,6 +10,8 @@ const initState = {
 	newShoppingList: [],
 	shoppingList: [],
 	inventory: [],
+	rentChartData: null,
+	salesChartData: null,
 };
 
 const supplierReducer = (state = initState, action) => {
@@ -69,6 +71,32 @@ const supplierReducer = (state = initState, action) => {
 			return {
 				...state,
 				authError: "Get rent failed",
+			};
+		case "GET_RENT_CHART":
+			// console.log("get rent success", action.payload);
+			return {
+				...state,
+				rentChartData: action.payload,
+				authError: null,
+			};
+		case "GET_RENT_CHART_ERROR":
+			console.log("error, couldn't fetch rent", action.err);
+			return {
+				...state,
+				authError: "Get rent chart failed",
+			};
+		case "GET_SALES_CHART":
+			// console.log("get rent success", action.payload);
+			return {
+				...state,
+				salesChartData: action.payload,
+				authError: null,
+			};
+		case "GET_SALES_CHART_ERROR":
+			console.log("error, couldn't fetch rent", action.err);
+			return {
+				...state,
+				authError: "Get rent chart failed",
 			};
 
 		case "ADD_TO_SALES":

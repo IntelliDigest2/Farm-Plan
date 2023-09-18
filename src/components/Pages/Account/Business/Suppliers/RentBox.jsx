@@ -23,7 +23,7 @@ export default function RentBox(props) {
 //    setUpdate(update + 1);
 //  };
 
-const generateRentTable = (rent) => {
+const generateRentTable = () => {
   return props.rent.map((rent, index) => {
     let formattedDate = format(rent.createdAt.toDate(), "M/d/yyyy");
     return (
@@ -61,8 +61,9 @@ const generateRentTable = (rent) => {
   console.log(props.rent,`this is the rent list`)
   return (
     <>
-      {props.rent.map((product, index) => (
-        <div className="meal-box" key={`meal-box${index}`}>
+      {
+      // props.rent.map((product, index) => (
+        <div className="meal-box" >
           <div className="ingredients">
           <Table striped bordered hover>
 					<thead>
@@ -79,7 +80,7 @@ const generateRentTable = (rent) => {
 							<th>Medium</th>
 						</tr>
 					</thead>
-					{generateRentTable(product)}
+					{generateRentTable()}
              {/* <List
               key={`product${index}`}
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
@@ -132,7 +133,9 @@ const generateRentTable = (rent) => {
         </div>
    
 
-      ))}
+      // )
+      // )
+      }
       </>
   );
 }
