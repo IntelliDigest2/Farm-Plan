@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap";
 
 import { connect } from "react-redux";
 
@@ -39,7 +40,6 @@ const ConnectAccount = ( props ) => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
     try {
       const response = await fetch(`${baseUrlDev}/v1/payment/connect-stripe-account`, {
@@ -73,7 +73,7 @@ const ConnectAccount = ( props ) => {
       };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
         <div className="form-group">
         {/* <label htmlFor="businessType">Business Type:</label> */}
         <select
@@ -88,11 +88,12 @@ const ConnectAccount = ( props ) => {
         <option value="government_entity">Government Entity</option>
         </select>
       </div>
-      <button id="submit">
-        <span id="button-text">
-          Add
-        </span>
-      </button>
+      <Button 
+      className="blue-btn shadow-none mt-3" 
+      onClick={() => {handleSubmit()}} // Open the modal
+      >
+        Add
+      </Button>
     </form>
   );
 }

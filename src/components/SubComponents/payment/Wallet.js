@@ -320,12 +320,6 @@ const WalletComponent = (props) => {
             </Card.Body>
           </Card>
         </div>
-        <div>
-          <ConnectAccount userID={props.profile.uid} />
-        </div>
-        <div>
-          <WithdrawFunds />
-        </div>
         {/* Powered by Logo */}
           {/* <div className="powered-by-logo">
             <img

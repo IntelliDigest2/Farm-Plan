@@ -147,7 +147,7 @@ const formatCardInfo = (cardNumber, bankName) => {
 
         {/* payment method */}
         <Card className=" custom-card mb-3">
-        <div className="card-overlay"></div>
+        {/* <div className="card-overlay"></div> */}
           <Card.Body>
             {cardInfo ? (
               <>
