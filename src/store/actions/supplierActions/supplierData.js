@@ -344,6 +344,9 @@ export const getSales = (duration, period) => {
 
 	let startOfMonth, endOfMonth;
 	let startOfYear, endOfYear;
+
+	console.log(duration, `this is the duration at the supplier Data js`);
+	console.log(period, `this is the period at the supplier Data js`);
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
@@ -790,40 +793,111 @@ export const getSalesForChart = (duration, period) => {
 			.collection("sales")
 			.where("companyID", "==", uid);
 
-		let query;
+		let productionCollectionRef = getFirestore()
+			.collection("products")
+			.where("companyID", "==", uid);
+
+		let salesQuery, productsQuery;
 
 		switch (duration) {
 			case "Month":
-				query = collectionRef
+				salesQuery = collectionRef
 					.where("createdAt", ">=", startOfMonth)
 					.where("createdAt", "<=", endOfMonth);
+				productsQuery = productionCollectionRef
+					.where("createdAt", ">=", startOfMonth)
+					.where("createdAt", "<=", endOfMonth);
+
 				break;
 
 			default:
-				query = collectionRef
+				salesQuery = collectionRef
+					.where("createdAt", ">=", startOfYear)
+					.where("createdAt", "<=", endOfYear);
+
+				productsQuery = productionCollectionRef
 					.where("createdAt", ">=", startOfYear)
 					.where("createdAt", "<=", endOfYear);
 				break;
 		}
 
-		query.onSnapshot(
-			(snapshot) => {
-				const data = [];
+		let salesResult = new Promise((resolve, reject) => {
+			salesQuery.onSnapshot(
+				(snapshot) => {
+					const sales = [];
 
-				snapshot.forEach((doc) => {
-					data.push({ ...doc.data(), rentId: doc.id });
+					snapshot.forEach((doc) => {
+						sales.push({ ...doc.data(), salesId: doc.id });
+					});
+
+					resolve(sales);
+				},
+				(error) => {
+					console.error("Error getting real-time updates:", error);
+
+					reject(error);
+				}
+			);
+		});
+		let productsResult = new Promise((resolve, reject) => {
+			productsQuery.onSnapshot(
+				(snapshot) => {
+					const stockResult = [];
+
+					snapshot.forEach((doc) => {
+						stockResult.push({ ...doc.data(), salesId: doc.id });
+					});
+
+					resolve(stockResult);
+				},
+				(error) => {
+					console.error("Error getting real-time updates:", error);
+
+					reject(error);
+				}
+			);
+		});
+
+		// if (duration === "Month") {
+		Promise.all([productsResult, salesResult])
+			.then(([stockResult, sales]) => {
+				dispatch({
+					type: "FETCH_PRODUCE_FOR_SALES_CHART",
+					payload: stockResult,
 				});
-				console.log(data, `this is the data returned for the rent`);
-				// Do something with the values array, e.g., update the UI
-				// console.log(products);
-				dispatch({ type: "GET_SALES_CHART", payload: data });
-			},
-			(error) => {
-				console.error("Error getting real-time sale updates:", error);
 
-				dispatch({ type: "GET_SALES_CHART_ERROR", error });
-			}
-		);
+				dispatch({
+					type: "GET_SALES_CHART",
+					payload: sales,
+				});
+			})
+			.catch((err) => {
+				console.error("Error:", err);
+				dispatch({
+					type: "GET_SALES_CHART_ERROR",
+					payload: err,
+				});
+			});
+		// }
+
+		// query.onSnapshot(
+		// 	(snapshot) => {
+		// 		const data = [];
+
+		// 		snapshot.forEach((doc) => {
+		// 			data.push({ ...doc.data(), rentId: doc.id });
+		// 		});
+		// 		console.log(data, `this is the data returned for the rent`);
+		// 		// Do something with the values array, e.g., update the UI
+		// 		// console.log(products);
+		// 		dispatch({ type: "GET_SALES_CHART", payload: data });
+		// 	},
+		// 	(error) => {
+		// 		console.error("Error getting real-time sale updates:", error);
+
+		// 		dispatch({ type: "GET_SALES_CHART_ERROR", error });
+		// 	}
+		// );
 	};
 };
 

@@ -42,6 +42,8 @@ function FilterComponent({ fetchData }) {
 	];
 
 	const sendDataToParent = (duration, period) => {
+		console.log(duration, `this is the duration in the filter component`);
+		console.log(period, `this is the period in the filter component`);
 		fetchData(duration, period);
 	};
 

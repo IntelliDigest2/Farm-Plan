@@ -19,40 +19,100 @@ export const SupplySalesComponent = (props) => {
 		// console.log(props.salesData, `this is the produce returned`);
 	}, [props.salesData]);
 
-	let farmTypesSet = new Set();
+	// let salesSet = new Set();
+	// let faTypesSet = new Set();
 
-	let saleTypeObjects = {};
+	// let saleTypeObjects = {};
 
-	props.salesData?.forEach((sale) => {
-		farmTypesSet.add(sale.productType);
-		// console.log(sale, `this is sale number x`);
+	// props.salesData?.forEach((sale) => {
+	// 	salesSet.add(sale.productType);
+	// 	// console.log(sale, `this is sale number x`);
 
-		if (!saleTypeObjects[sale.productType]) {
-			saleTypeObjects[sale.productType] = {};
-			saleTypeObjects[sale.productType].sales = [];
-		}
-		saleTypeObjects[sale.productType].sales.push(sale);
-	});
+	// 	if (!saleTypeObjects[sale.productType]) {
+	// 		saleTypeObjects[sale.productType] = {};
+	// 		saleTypeObjects[sale.productType].sales = [];
+	// 	}
+	// 	saleTypeObjects[sale.productType].sales.push(sale);
+	// });
 
-	const calcDataInfo2 = (key) => {
-		let products = saleTypeObjects[key].sales;
+	const calcDataInfo2 = () => {
+		let sales = props.salesData;
+		let stockProducts = props.stockData.filter((product) => {
+			return product.stockType === "Sale";
+		});
 
 		const resultMap = new Map();
+		const stockMap = new Map();
 
-		console.log(products, `this the products for the farmType`);
+		// console.log(sales, `this the products for the farmType`);
 
 		//this helps to add mutliple products of the same name and give a total quantity
-		products.forEach((product) => {
+		sales.forEach((product) => {
 			// console.log(product, `this is the item inthe first loop`);
 			if (resultMap.has(product.productName)) {
-				console.log(`this shows there is repetition`);
 				let newQuantity =
-					parseInt(resultMap.get(product.productName).quantity) +
-					parseInt(product.quantity);
+					parseInt(resultMap.get(product.productName).productQty) +
+					parseInt(product.productQty);
 
-				resultMap.get(product.productName).quantity = `${newQuantity}`;
+				resultMap.get(product.productName).productQty = `${newQuantity}`;
 			} else {
-				resultMap.set(product.productName, { ...product });
+				resultMap.set(product.productName, {
+					currency: product.productCurrency,
+					productName: product.productName,
+					productQty: product.productQty,
+					price: product.productPrice,
+
+					unit: product.productMeasure,
+				});
+			}
+		});
+		stockProducts.forEach((product) => {
+			// console.log(product, `this is the item inthe first loop`);
+			if (stockMap.has(product.productName)) {
+				if (!resultMap.get(product.productName)[`${product.brandName}`]) {
+					// let totalTime =
+					// 	parseInt(product.duration) * parseInt(product.productQty);
+					resultMap.get(product.productName)[`${product.brandName}`] = 1;
+
+					// resultMap.get(product.productName)[
+					// 	`total${product.rateDuration}Duration`
+					// ] = totalTime;
+
+					// resultMap.get(product.productName)[
+					// 	`base${product.rateDuration}Price`
+					// ] = product.rateAmount;
+				} else {
+					resultMap.get(product.productName)[`${product.rateDuration}Rents`] =
+						parseInt(
+							resultMap.get(product.productName)[`${product.branchName}`]
+						) + 1;
+
+					// let newCummulativeTime =
+					// 	parseInt(
+					// 		resultMap.get(product.productName)[
+					// 			`total${product.rateDuration}Duration`
+					// 		]
+					// 	) + totalTime;
+
+					// resultMap.get(product.productName)[
+					// 	`total${product.rateDuration}Duration`
+					// ] = newCummulativeTime;
+				}
+
+				let newQuantity =
+					parseInt(stockMap.get(product.productName).productQty) +
+					parseInt(product.productQty);
+
+				stockMap.get(product.productName).productQty = `${newQuantity}`;
+			} else {
+				stockMap.set(product.productName, {
+					currency: product.productCurrency,
+					productName: product.productName,
+					productQty: product.productQty,
+					price: product.productPrice,
+
+					unit: product.productMeasure,
+				});
 			}
 		});
 
@@ -80,8 +140,10 @@ export const SupplySalesComponent = (props) => {
 		];
 
 		let salesResultArray = Array.from(resultMap.values());
+		let stockResultArray = Array.from(stockMap.values());
 
-		console.log(salesResultArray, `this is the accumulated product values`);
+		// console.log(salesResultArray, `this is the accumulated product values`);
+		console.log(stockResultArray, `this is the accumulated stock values`);
 
 		let productColor = [];
 		let salesQuantityArray = [];
@@ -99,21 +161,21 @@ export const SupplySalesComponent = (props) => {
 
 		console.log(salesResultArray, `this is the sales result`);
 
-		let productsData = salesQuantityArray.map((product) => {
-			return (
-				<div style={{ margin: "0 4px", fontSize: "13px" }}>
-					{`${product.name.toUpperCase()} `}
-					<span style={{ color: "blue" }}>
-						{product.quantity}
-						{product.unit}
-					</span>
-					{` at `}
-					{product.price.currency}
-					{product.price.amount}
-					{` each`}
-				</div>
-			);
-		});
+		// let productsData = salesQuantityArray.map((product) => {
+		// 	return (
+		// 		<div style={{ margin: "0 4px", fontSize: "13px" }}>
+		// 			{`${product.name.toUpperCase()} `}
+		// 			<span style={{ color: "blue" }}>
+		// 				{product.quantity}
+		// 				{product.unit}
+		// 			</span>
+		// 			{` at `}
+		// 			{product.price.currency}
+		// 			{product.price.amount}
+		// 			{` each`}
+		// 		</div>
+		// 	);
+		// });
 
 		let productsLabel = salesResultArray.map((product) => {
 			return product.productName;
@@ -122,7 +184,23 @@ export const SupplySalesComponent = (props) => {
 		console.log(productsLabel, `this is the product labels`);
 
 		let productInfo = salesResultArray.map((product) => {
-			return product.quantity;
+			return product.productQty;
+		});
+
+		let content = stockResultArray.map((product) => {
+			return (
+				<ListGroupItem style={{ textAlign: "left" }}>
+					<div>Product Name: {product.productName.toUpperCase()}</div>
+					<div>
+						Number of {product.productName}(s) for rent :
+						{/* {product.productQty} */}
+					</div>
+
+					{/* <div>{product.productName}</div>
+					<div>{product.productName}</div>
+					<div>{product.productName}</div> */}
+				</ListGroupItem>
+			);
 		});
 
 		let data = {
@@ -137,8 +215,11 @@ export const SupplySalesComponent = (props) => {
 			],
 		};
 		return (
-			<div style={{ width: "70%", margin: "30px auto" }}>
-				<Doughnut data={data} />
+			<div>
+				<div style={{ width: "30%", margin: "30px auto" }}>
+					<Doughnut data={data} />
+				</div>
+
 				<div
 					style={{
 						display: "flex",
@@ -147,16 +228,17 @@ export const SupplySalesComponent = (props) => {
 						justifyContent: "center",
 					}}
 				>
-					{productsData}
+					{/* {productsData} */}
 				</div>
 			</div>
 		);
 	};
 	console.log(props.salesData, `these are the saled data`);
+	console.log(props.stockData, `these are the stock data`);
 
-	let content2 = (key) => {
+	let content2 = () => {
 		return props.salesData?.length > 0 ? (
-			calcDataInfo2(key)
+			calcDataInfo2()
 		) : (
 			<div>
 				<p>You don't have any produce for this period</p>
@@ -164,22 +246,14 @@ export const SupplySalesComponent = (props) => {
 		);
 	};
 
-	let content = (
-		// Object.keys(saleTypeObjects).length > 0 ? (
-		// 	Object.keys(saleTypeObjects).map((key) => {
-		// 		return (
-		// 			<ListGroupItem style={{ textAlign: "left" }}>
-		// 				{/* <ListGroup className="list-group-flush">{listItems(key)}</ListGroup> */}
-		// 				{content2(key)}
-		// 			</ListGroupItem>
-		// 		);
-		// 	})
-		// ) : (
-		<div style={{ marginTop: "20px" }}>
-			<p>You don't have any produce for this period</p>
-		</div>
-	);
-	// );
+	let content =
+		props.salesData?.length >= 0 ? (
+			<ListGroup>{content2()}</ListGroup>
+		) : (
+			<div style={{ marginTop: "20px" }}>
+				<p>You don't have any produce for this period</p>
+			</div>
+		);
 
 	return (
 		<div>
@@ -195,6 +269,7 @@ export const SupplySalesComponent = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		salesData: state.supplier.salesChartData,
+		stockData: state.supplier.productsSalesChartData,
 	};
 };
 

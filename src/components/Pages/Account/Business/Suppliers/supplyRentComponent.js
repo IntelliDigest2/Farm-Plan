@@ -194,9 +194,7 @@ export const SupplyRentComponent = (props) => {
 			let hourRate = product.hourRents ? (
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
 					<div>Total Hourly rents made: {product.hourRents}</div>
-					<div>
-						Cummulative machine-hours rentage : {product.totalhourDuration}
-					</div>
+					<div>Cummulative hours rentage : {product.totalhourDuration}</div>
 					<div>
 						Hourly base rate : {product.basehourPrice}
 						{product.currency}
@@ -208,9 +206,7 @@ export const SupplyRentComponent = (props) => {
 			let dayRate = product.dayRents ? (
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
 					<div>Total daily rents made: {product.dayRents}</div>
-					<div>
-						Cummulative machine-days rentage : {product.totaldayDuration}
-					</div>
+					<div>Cummulative days rentage : {product.totaldayDuration}</div>
 					<div>
 						Daily base rate : {product.basedayPrice}
 						{product.currency}
@@ -222,9 +218,7 @@ export const SupplyRentComponent = (props) => {
 			let weekRate = product.weekRents ? (
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
 					<div>Total weekly rents made: {product.weekRents}</div>
-					<div>
-						Cummulative machine-weeks rentage : {product.totalweekDuration}
-					</div>
+					<div>Cummulative weeks rentage : {product.totalweekDuration}</div>
 					<div>
 						Weekly base rate : {product.baseweekPrice}
 						{product.currency}
@@ -237,9 +231,7 @@ export const SupplyRentComponent = (props) => {
 			let monthRate = product.monthRents ? (
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
 					<div>Total monthly rents made: {product.monthRents}</div>
-					<div>
-						Cummulative machine-months rentage : {product.totalmonthDuration}
-					</div>
+					<div>Cummulative months rentage : {product.totalmonthDuration}</div>
 					<div>
 						Monthly base rate : {product.basemonthPrice}
 						{product.currency}
@@ -251,9 +243,7 @@ export const SupplyRentComponent = (props) => {
 			let yearRate = product.yearRents ? (
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
 					<div>Total yearly rents made: {product.yearRents}</div>
-					<div>
-						Cummulative machine-years rentage : {product.totalyearDuration}
-					</div>
+					<div>Cummulative years rentage : {product.totalyearDuration}</div>
 					<div>
 						Yearly base rate : {product.baseyearPrice}
 						{product.currency}
