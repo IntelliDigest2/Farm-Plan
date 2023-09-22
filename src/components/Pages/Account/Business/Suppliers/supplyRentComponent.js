@@ -256,10 +256,7 @@ export const SupplyRentComponent = (props) => {
 			return (
 				<ListGroupItem style={{ textAlign: "left" }}>
 					<div>Product Name: {product.productName.toUpperCase()}</div>
-					<div>
-						Number of {product.productName}(s) for rent :
-						{/* {product.productQty} */}
-					</div>
+
 					{hourRate}
 					{dayRate}
 					{weekRate}

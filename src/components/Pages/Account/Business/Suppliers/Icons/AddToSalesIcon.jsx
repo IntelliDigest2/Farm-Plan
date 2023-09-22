@@ -73,7 +73,7 @@ function AddToSalesIcon(props) {
 			>
 				<Modal.Header closeButton>
 					<Modal.Title id="add-item" className="basic-title-left basic-lg">
-						Add External Sale
+						Add External Supply Sale
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>

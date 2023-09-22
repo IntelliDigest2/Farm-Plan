@@ -9,12 +9,19 @@ import Image from "../../../../SubComponents/Image"
 import AddToSalesIcon from "./Icons/AddToSalesIcon";
 import {format} from 'date-fns'
 import {
-	
+	Button,
 	Table,
 } from "react-bootstrap";
-// import Edit from "./Icons/EditIcon";
 
-export default function RentBox(props) {
+import { connect } from "react-redux";
+
+
+
+// import Edit from "./Icons/EditIcon";
+import {returnRentedItem} from './../../../../../store/actions/supplierActions/supplierData.js';
+import {submitNotification} from './../../../../lib/Notifications.js';
+
+ const RentBox =  (props) =>{
 
    //trigger this when editing/deleting items
 //  const [update, setUpdate] = useState(0);
@@ -23,19 +30,32 @@ export default function RentBox(props) {
 //    setUpdate(update + 1);
 //  };
 
+const markRentedItemAsReturned=(rentQty,rentId,productId)=>{
+
+  props.markRentAsReturned(rentQty,rentId,productId)
+  
+
+
+}
+
 const generateRentTable = () => {
   return props.rent.map((rent, index) => {
     let formattedDate = format(rent.createdAt.toDate(), "M/d/yyyy");
+    let rentQuantity = rent.productQty
+    let productId = rent.productId
+    let rentId = rent.rentId
     return (
-    <tbody>
-      <tr key={`${index}`}>
+    <tbody key={`rent-${index}`}>
+      <tr >
       <td>{formattedDate}</td>
+      <td> {rent.status=== 'active' ?  <Button onClick={()=>markRentedItemAsReturned(rentQuantity,rentId,productId)} variant="info" type="button">Notify Receipt</Button> : 'RETURNED'}      
+</td>
       <td>{rent.rentId}</td>
       <td>{rent.productName}</td>
       <td>{rent.batchNumber}</td>
       <td>{rent.duration} {rent.rateDuration}</td>
       <td>@ {rent.rateAmount}{rent.productCurrency
-} per {rent.rateDuration}</td>
+}</td>
       <td>
       {rent.productQty} {rent.productMeasure}
       </td>
@@ -58,7 +78,7 @@ const generateRentTable = () => {
   };
 
 
-  console.log(props.rent,`this is the rent list`)
+  // console.log(props.rent,`this is the rent list`)
   return (
     <>
       {
@@ -69,6 +89,7 @@ const generateRentTable = () => {
 					<thead>
 						<tr>
 							<th>Date</th>
+							<th>Status</th>
 							<th>Rent Id </th>
 							<th>Product Name</th>
 							<th>Batch Number</th>
@@ -77,6 +98,8 @@ const generateRentTable = () => {
 							<th>Rate</th>
 							<th>Quantity</th>
 							<th>Customer Name</th>
+							<th>Total Cost</th>
+
 							<th>Medium</th>
 						</tr>
 					</thead>
@@ -139,3 +162,16 @@ const generateRentTable = () => {
       </>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		markRentAsReturned: (rentQty,rentId,productId) => {
+			dispatch(returnRentedItem(rentQty,rentId,productId));
+		},
+	};
+};
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(RentBox);

@@ -32,6 +32,7 @@ const generatesalesTable = () => {
           <td>{formattedDate}</td>
           <td>{sale.salesId}</td>
           <td>{sale.productName}</td>
+          <td>{sale.brandName}</td>
           <td>{sale.batchNumber}</td>
           <td>{sale.productCurrency} {sale.productPrice}</td>
           <td>
@@ -62,6 +63,7 @@ const generatesalesTable = () => {
 							<th>Date</th>
 							<th>Sale Id </th>
 							<th>Product Name</th>
+							<th>Brand Name</th>
 							<th>Batch Number</th>
 
 							<th>Price</th>

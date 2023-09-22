@@ -44,8 +44,8 @@ export default function ProductBox(props) {
   let cost =(newProduct)=> {
     return newProduct.stockType === 'Sale'? <p>
     Price: <span>{newProduct.productCurrency} {newProduct.productPrice}</span>  
-    </p> :<p> Rent rates: {newProduct.rentRates.map((rate)=>{
-      return <span>{rate.rateDuration}{newProduct.currency} per {rate.ratePeriod}</span>
+    </p> :<p> Rent rates: {newProduct.rentRates.map((rate,index)=>{
+      return <span key={`rate-${index}`}>{rate.rateDuration}{newProduct.currency} per {rate.ratePeriod}</span>
     }) }</p> 
    }
 

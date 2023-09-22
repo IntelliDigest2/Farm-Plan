@@ -106,7 +106,7 @@ const SavedProducts = (props) => {
 	// 	setProducts(result);
 	// } else setProducts(props.Products);
 
-	console.log(products, `this is the product to show`);
+	// console.log(products, `this is the product to show`);
 
 	const handleFetchData = (duration, period) => {
 		setDuration(duration);

@@ -11,48 +11,62 @@ import YearFilterComponent from "./yearFilterComponent";
 Chart.register(...registerables);
 
 export const SupplySalesComponent = (props) => {
+	const [time, setTime] = useState("Month");
 	const handleFetchData = (duration, period) => {
+		console.log(duration, `this is ithe duration`);
+		console.log(duration, `this is ithe period`);
 		props.getData(duration, period);
+		// .then(() => {
+		setTime(duration);
+		// });
 	};
 
 	useEffect(() => {
-		// console.log(props.salesData, `this is the produce returned`);
+		console.log(props.salesData);
 	}, [props.salesData]);
-
-	// let salesSet = new Set();
-	// let faTypesSet = new Set();
-
-	// let saleTypeObjects = {};
-
-	// props.salesData?.forEach((sale) => {
-	// 	salesSet.add(sale.productType);
-	// 	// console.log(sale, `this is sale number x`);
-
-	// 	if (!saleTypeObjects[sale.productType]) {
-	// 		saleTypeObjects[sale.productType] = {};
-	// 		saleTypeObjects[sale.productType].sales = [];
-	// 	}
-	// 	saleTypeObjects[sale.productType].sales.push(sale);
-	// });
 
 	const calcDataInfo2 = () => {
 		let sales = props.salesData;
-		let stockProducts = props.stockData.filter((product) => {
-			return product.stockType === "Sale";
-		});
 
 		const resultMap = new Map();
-		const stockMap = new Map();
-
-		// console.log(sales, `this the products for the farmType`);
 
 		//this helps to add mutliple products of the same name and give a total quantity
 		sales.forEach((product) => {
-			// console.log(product, `this is the item inthe first loop`);
+			let brandName = product.brandName;
 			if (resultMap.has(product.productName)) {
 				let newQuantity =
 					parseInt(resultMap.get(product.productName).productQty) +
 					parseInt(product.productQty);
+				if (
+					resultMap.get(product.productName).brandInfo.some((exp) => {
+						return exp.name === brandName;
+					})
+				) {
+					let index = resultMap
+						.get(product.productName)
+						.brandInfo.findIndex((product) => product.name === brandName);
+
+					let newQuantityVal =
+						parseInt(
+							resultMap.get(product.productName).brandInfo[index].saleCount
+						) + 1;
+
+					let newTotal =
+						parseInt(
+							resultMap.get(product.productName).brandInfo[index].amountSold
+						) + parseInt(product.productQty);
+
+					resultMap.get(product.productName).brandInfo[index].saleCount =
+						newQuantityVal;
+					resultMap.get(product.productName).brandInfo[index].amountSold =
+						newTotal;
+				} else {
+					resultMap.get(product.productName).brandInfo.push({
+						name: brandName,
+						saleCount: 1,
+						amountSold: product.productQty,
+					});
+				}
 
 				resultMap.get(product.productName).productQty = `${newQuantity}`;
 			} else {
@@ -63,55 +77,13 @@ export const SupplySalesComponent = (props) => {
 					price: product.productPrice,
 
 					unit: product.productMeasure,
-				});
-			}
-		});
-		stockProducts.forEach((product) => {
-			// console.log(product, `this is the item inthe first loop`);
-			if (stockMap.has(product.productName)) {
-				if (!resultMap.get(product.productName)[`${product.brandName}`]) {
-					// let totalTime =
-					// 	parseInt(product.duration) * parseInt(product.productQty);
-					resultMap.get(product.productName)[`${product.brandName}`] = 1;
-
-					// resultMap.get(product.productName)[
-					// 	`total${product.rateDuration}Duration`
-					// ] = totalTime;
-
-					// resultMap.get(product.productName)[
-					// 	`base${product.rateDuration}Price`
-					// ] = product.rateAmount;
-				} else {
-					resultMap.get(product.productName)[`${product.rateDuration}Rents`] =
-						parseInt(
-							resultMap.get(product.productName)[`${product.branchName}`]
-						) + 1;
-
-					// let newCummulativeTime =
-					// 	parseInt(
-					// 		resultMap.get(product.productName)[
-					// 			`total${product.rateDuration}Duration`
-					// 		]
-					// 	) + totalTime;
-
-					// resultMap.get(product.productName)[
-					// 	`total${product.rateDuration}Duration`
-					// ] = newCummulativeTime;
-				}
-
-				let newQuantity =
-					parseInt(stockMap.get(product.productName).productQty) +
-					parseInt(product.productQty);
-
-				stockMap.get(product.productName).productQty = `${newQuantity}`;
-			} else {
-				stockMap.set(product.productName, {
-					currency: product.productCurrency,
-					productName: product.productName,
-					productQty: product.productQty,
-					price: product.productPrice,
-
-					unit: product.productMeasure,
+					brandInfo: [
+						{
+							name: product.brandName,
+							saleCount: 1,
+							amountSold: product.productQty,
+						},
+					],
 				});
 			}
 		});
@@ -140,65 +112,52 @@ export const SupplySalesComponent = (props) => {
 		];
 
 		let salesResultArray = Array.from(resultMap.values());
-		let stockResultArray = Array.from(stockMap.values());
-
-		// console.log(salesResultArray, `this is the accumulated product values`);
-		console.log(stockResultArray, `this is the accumulated stock values`);
 
 		let productColor = [];
-		let salesQuantityArray = [];
 
 		salesResultArray.forEach((produce, index) => {
-			salesQuantityArray.push({
-				name: produce.productName,
-				quantity: produce.quantity,
-				price: produce.price,
-				unit: produce.unit,
-			});
 			productColor.push(colorArray[index]);
 			index++;
 		});
-
-		console.log(salesResultArray, `this is the sales result`);
-
-		// let productsData = salesQuantityArray.map((product) => {
-		// 	return (
-		// 		<div style={{ margin: "0 4px", fontSize: "13px" }}>
-		// 			{`${product.name.toUpperCase()} `}
-		// 			<span style={{ color: "blue" }}>
-		// 				{product.quantity}
-		// 				{product.unit}
-		// 			</span>
-		// 			{` at `}
-		// 			{product.price.currency}
-		// 			{product.price.amount}
-		// 			{` each`}
-		// 		</div>
-		// 	);
-		// });
 
 		let productsLabel = salesResultArray.map((product) => {
 			return product.productName;
 		});
 
-		console.log(productsLabel, `this is the product labels`);
-
 		let productInfo = salesResultArray.map((product) => {
 			return product.productQty;
 		});
 
-		let content = stockResultArray.map((product) => {
+		let brandCont = (saleProduct, index) => {
+			return saleProduct.brandInfo.map((saleProductBrand) => {
+				return (
+					<div
+						style={{
+							display: "flex",
+							flexWrap: "wrap",
+							justifyContent: "space-between",
+						}}
+					>
+						<span> Brand name: {saleProductBrand.name} </span>{" "}
+						<span> Total products sold:{saleProductBrand.amountSold} </span>{" "}
+						<span>
+							{" "}
+							No of sales made:
+							{saleProductBrand.saleCount}
+						</span>
+					</div>
+				);
+			});
+		};
+
+		let content = salesResultArray.map((product) => {
 			return (
 				<ListGroupItem style={{ textAlign: "left" }}>
 					<div>Product Name: {product.productName.toUpperCase()}</div>
 					<div>
-						Number of {product.productName}(s) for rent :
-						{/* {product.productQty} */}
+						Number of sales for {time} :{product.productQty}
 					</div>
-
-					{/* <div>{product.productName}</div>
-					<div>{product.productName}</div>
-					<div>{product.productName}</div> */}
+					{brandCont(product)}
 				</ListGroupItem>
 			);
 		});
@@ -217,24 +176,14 @@ export const SupplySalesComponent = (props) => {
 		return (
 			<div>
 				<div style={{ width: "30%", margin: "30px auto" }}>
+					chart for sold products
 					<Doughnut data={data} />
 				</div>
 
-				<div
-					style={{
-						display: "flex",
-						flexWrap: "wrap",
-						marginTop: "14px",
-						justifyContent: "center",
-					}}
-				>
-					{/* {productsData} */}
-				</div>
+				<div>{content}</div>
 			</div>
 		);
 	};
-	console.log(props.salesData, `these are the saled data`);
-	console.log(props.stockData, `these are the stock data`);
 
 	let content2 = () => {
 		return props.salesData?.length > 0 ? (
@@ -247,14 +196,11 @@ export const SupplySalesComponent = (props) => {
 	};
 
 	let content =
-		props.salesData?.length >= 0 ? (
-			<ListGroup>{content2()}</ListGroup>
+		props.salesData === null ? (
+			<div>...loading</div>
 		) : (
-			<div style={{ marginTop: "20px" }}>
-				<p>You don't have any produce for this period</p>
-			</div>
+			<ListGroup>{content2()}</ListGroup>
 		);
-
 	return (
 		<div>
 			<Row style={{ alignItems: "center" }}>
@@ -269,7 +215,7 @@ export const SupplySalesComponent = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		salesData: state.supplier.salesChartData,
-		stockData: state.supplier.productsSalesChartData,
+		// stockData: state.supplier.productsSalesChartData,
 	};
 };
 

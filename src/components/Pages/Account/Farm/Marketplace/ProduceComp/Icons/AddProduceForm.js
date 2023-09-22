@@ -843,9 +843,13 @@ const AddProduceForm = (props) => {
 			farmType: farmType,
 			item: local.item,
 			measure: local.measure,
-			quantity: local.quantity,
-			price: local.price,
-			sellingPrice: local.sellingPrice,
+			quantity: parseInt(local.quantity),
+			price: parseInt(local.price),
+			sellingPrice: parseInt(local.sellingPrice),
+			cycleStartMonth: local.cycleStartMonth,
+			cycleStartYear: local.cycleStartYear,
+			cycleEndMonth: local.cycleEndMonth,
+			cycleEndYear: local.cycleEndYear,
 
 			currency: local.currency,
 			//quantity: local.quantity
@@ -857,25 +861,35 @@ const AddProduceForm = (props) => {
 			data.nutrients = inputGroups;
 		}
 
-		console.log(data, `this is the data we are submitting`);
+		// console.log(local.quantity.trim() === "", `quantity trim`);
+		// console.log(local.quantity === "0", `quantity '0'`);
+		// console.log(local.quantity === 0, `quantity 0`);
+		// console.log(local.batchNumber.trim() === "", `batchNumber ''`);
+		// console.log(local.price === "", `price ''`);
+		// console.log(local.price === "0", `price ''`);
+		// console.log(local.price === 0, `price ''`);
+		// console.log(local.sellingPrice === "", `sellingprice ''`);
+		// console.log(local.sellingPrice === "0", `sellingprice '0'`);
+		// console.log(local.sellingPrice === "", `sellingprice 0`);
+		// console.log(local.item.trim() === "", `price ''`);
 
 		setSubmitLoading(true);
 
-		// props
-		// 	.addProduceData(data)
-		// 	.then((resp) => {
-		// 		// console.log(resp.id, `this is the id of the newly added sale`);
-		// 		setSubmitLoading(false);
-		// 		setLocal(defaultLocal);
-		// 		setInputGroups(defaultNutrient);
-		// 		submitNotification("Success", "Produce added to product Inventory");
-		// 	})
-		// 	.catch((err) => {
-		// 		// console.log(err, `an error occurred`);
-		// 		submitNotification("Error", "Something went wrong try again");
-		// 		setSubmitLoading(false);
-		// 		setSubmitError(true);
-		// 	});
+		props
+			.addProduceData(data)
+			.then((resp) => {
+				// console.log(resp.id, `this is the id of the newly added sale`);
+				setSubmitLoading(false);
+				setLocal(defaultLocal);
+				setInputGroups(defaultNutrient);
+				submitNotification("Success", "Produce added to product Inventory");
+			})
+			.catch((err) => {
+				// console.log(err, `an error occurred`);
+				submitNotification("Error", "Something went wrong try again");
+				setSubmitLoading(false);
+				setSubmitError(true);
+			});
 
 		// forceUpdate();
 	};
@@ -917,9 +931,15 @@ const AddProduceForm = (props) => {
 								: "") ||
 							local.item.trim() === "" ||
 							local.quantity.trim() === "" ||
+							local.quantity === "0" ||
+							local.quantity === 0 ||
 							local.batchNumber.trim() === "" ||
 							local.price === "" ||
-							local.sellingPrice === ""
+							local.price === "0" ||
+							local.price === 0 ||
+							local.sellingPrice === "" ||
+							local.sellingPrice === "0" ||
+							local.sellingPrice === 0
 						}
 					>
 						{submitLoading === false ? "Submit" : "...Loading"}

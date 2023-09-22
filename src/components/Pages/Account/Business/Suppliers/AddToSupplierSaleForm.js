@@ -205,7 +205,7 @@ const AddToSupplierSaleForm = (props) => {
 						className="blue-btn shadow-none mt-3"
 						type="submit"
 						disabled={
-							local.quantity > currentQuantity ||
+							local.quantity > parseInt(currentQuantity) ||
 							local.quantity.trim() === "" ||
 							local.quantity === 0 ||
 							local.quantity === "0" ||
