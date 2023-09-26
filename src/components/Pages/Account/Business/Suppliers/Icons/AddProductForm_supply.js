@@ -211,10 +211,10 @@ function AddProductForm_supply(props) {
 				productName: productName,
 				productDescription: productDescription,
 
-				productQty: productQty,
+				productQty: parseInt(productQty),
 				imageURL: Url,
 				brandName: brandName,
-				currentQuantity: productQty,
+				currentQuantity: parseInt(productQty),
 				batchNumber: batchNumber,
 				// mealType: mealType,
 				productMeasure: productMeasure,

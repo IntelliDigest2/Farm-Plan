@@ -59,10 +59,29 @@ const AddToSupplierRentForm = (props) => {
 			batchNumber: props.productInfo.batchNumber,
 			productName: props.productInfo.productName,
 			customerName: local.customerName,
+			productId: props.productInfo.id,
+			status: "active",
 		};
 
 		// console.log(data, `this is the data returned`);
 		setSubmitLoading(true);
+
+		// console.log(local.duration === "", `this is the duration ''`);
+		// console.log(local.duration === 0, `this is the duration 0`);
+		// console.log(local.duration === "0", `this is the duration "0"`);
+		// console.log(local.quantity === 0, `this is the quantity 0`);
+		// console.log(local.rateAmount === "0", `this is the rateAmount "0"`);
+		// console.log(local.rateAmount === 0, `this is the rateAmount 0`);
+		// console.log(local.quantity === "", `this is the quantity ''`);
+		// console.log(local.rateAmount === "", `this is the rateAmount ''`);
+		// console.log(
+		// 	local.customerName.trim() === "",
+		// 	`this is the customerName trim`
+		// );
+		// console.log(
+		// 	parseInt(local.quantity) > parseInt(currentQuantity),
+		// 	`this is the data returned`
+		// );
 
 		props
 			.addSupplierRentData(data, currentQuantity)
@@ -243,14 +262,15 @@ const AddToSupplierRentForm = (props) => {
 						className="blue-btn shadow-none mt-3"
 						type="submit"
 						disabled={
-							local.quantity > currentQuantity ||
+							parseInt(local.quantity) > parseInt(currentQuantity) ||
 							local.duration === "" ||
-							local.duration === 0 ||
 							local.duration === "0" ||
+							local.quantity === 0 ||
+							local.quantity === "0" ||
 							local.rateAmount === "0" ||
 							local.rateAmount === 0 ||
-							local.quantity.trim() === "" ||
-							local.rateAmount.trim() === "" ||
+							local.quantity === "" ||
+							local.rateAmount === "" ||
 							local.customerName.trim() === ""
 						}
 					>

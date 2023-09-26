@@ -32,6 +32,7 @@ const AddProduceForm = (props) => {
 		measure: "units",
 		price: "",
 		currency: "$",
+		sellingPrice: "",
 		cycleStartMonth: "Jan",
 		cycleStartYear: "2023",
 		cycleEndMonth: "Jun",
@@ -231,7 +232,7 @@ const AddProduceForm = (props) => {
 							/>
 						</Form.Group>
 
-						{/* <Form.Group>
+						<Form.Group>
 							<Form.Label style={{ display: "block" }}>
 								Crop farmCycle
 							</Form.Label>
@@ -298,7 +299,26 @@ const AddProduceForm = (props) => {
 									/>
 								</Col>
 							</Row>
-						</Form.Group> */}
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Batch Number</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Batch number should have the format Date-letter eg
+								"15-06-2024-A"
+							</div>
+							<Form.Control
+								type="text"
+								id="batchNumber"
+								onChange={(e) => handleLocal(e)}
+								value={local.batchNumber}
+								required
+							/>
+						</Form.Group>
 
 						<Form.Group>
 							<Form.Label>Quantity of crops</Form.Label>
@@ -427,7 +447,26 @@ const AddProduceForm = (props) => {
 								value={local.item}
 							/>
 						</Form.Group>
-						{/* <Form.Group>
+						<Form.Group>
+							<Form.Label>Batch Number</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Batch number should have the format Date-letter eg
+								"15-06-2024-A"
+							</div>
+							<Form.Control
+								type="text"
+								id="batchNumber"
+								onChange={(e) => handleLocal(e)}
+								value={local.batchNumber}
+								required
+							/>
+						</Form.Group>
+						<Form.Group>
 							<Form.Label style={{ display: "block" }}>
 								Crop farmCycle
 							</Form.Label>
@@ -494,7 +533,26 @@ const AddProduceForm = (props) => {
 									/>
 								</Col>
 							</Row>
-						</Form.Group> */}
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Batch Number</Form.Label>
+							<div
+								style={{
+									color: "grey",
+									fontSize: "12px",
+								}}
+							>
+								* Batch number should have the format Date-letter eg
+								"15-06-2024-A"
+							</div>
+							<Form.Control
+								type="text"
+								id="batchNumber"
+								onChange={(e) => handleLocal(e)}
+								value={local.batchNumber}
+								required
+							/>
+						</Form.Group>
 
 						<Form.Group>
 							<Form.Label>Quantity/amount</Form.Label>
@@ -597,7 +655,7 @@ const AddProduceForm = (props) => {
 								value={local.item}
 							/>
 						</Form.Group>
-						{/* <Form.Group>
+						<Form.Group>
 							<Form.Label style={{ display: "block" }}>
 								Crop farmCycle
 							</Form.Label>
@@ -664,7 +722,7 @@ const AddProduceForm = (props) => {
 									/>
 								</Col>
 							</Row>
-						</Form.Group> */}
+						</Form.Group>
 						<Form.Group>
 							<Form.Label>Batch Number</Form.Label>
 							<div
@@ -785,9 +843,13 @@ const AddProduceForm = (props) => {
 			farmType: farmType,
 			item: local.item,
 			measure: local.measure,
-			quantity: local.quantity,
-			price: local.price,
-			sellingPrice: local.sellingPrice,
+			quantity: parseInt(local.quantity),
+			price: parseInt(local.price),
+			sellingPrice: parseInt(local.sellingPrice),
+			cycleStartMonth: local.cycleStartMonth,
+			cycleStartYear: local.cycleStartYear,
+			cycleEndMonth: local.cycleEndMonth,
+			cycleEndYear: local.cycleEndYear,
 
 			currency: local.currency,
 			//quantity: local.quantity
@@ -798,6 +860,18 @@ const AddProduceForm = (props) => {
 			// console.log(inputGroups, `this is the input groups that is shown`);
 			data.nutrients = inputGroups;
 		}
+
+		// console.log(local.quantity.trim() === "", `quantity trim`);
+		// console.log(local.quantity === "0", `quantity '0'`);
+		// console.log(local.quantity === 0, `quantity 0`);
+		// console.log(local.batchNumber.trim() === "", `batchNumber ''`);
+		// console.log(local.price === "", `price ''`);
+		// console.log(local.price === "0", `price ''`);
+		// console.log(local.price === 0, `price ''`);
+		// console.log(local.sellingPrice === "", `sellingprice ''`);
+		// console.log(local.sellingPrice === "0", `sellingprice '0'`);
+		// console.log(local.sellingPrice === "", `sellingprice 0`);
+		// console.log(local.item.trim() === "", `price ''`);
 
 		setSubmitLoading(true);
 
@@ -857,9 +931,15 @@ const AddProduceForm = (props) => {
 								: "") ||
 							local.item.trim() === "" ||
 							local.quantity.trim() === "" ||
+							local.quantity === "0" ||
+							local.quantity === 0 ||
 							local.batchNumber.trim() === "" ||
 							local.price === "" ||
-							local.sellingPrice === ""
+							local.price === "0" ||
+							local.price === 0 ||
+							local.sellingPrice === "" ||
+							local.sellingPrice === "0" ||
+							local.sellingPrice === 0
 						}
 					>
 						{submitLoading === false ? "Submit" : "...Loading"}

@@ -1082,13 +1082,7 @@ export const addProduceData = (data) => {
 					.collection("produce")
 					.doc(docRef.id)
 					.set({ id: docRef.id }, { merge: true });
-				// dispatch({ type: "CREATE_PRODUCE_ITEM", payload: data });
-				// dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
 			});
-		// .catch((err) => {
-		// 	dispatch({ type: "CREATE_PRODUCE_ITEM_ERROR", err });
-		// 	dispatch({ type: "CREATE_PRODUCE_ITEM_LOADER", payload: false });
-		// });
 	};
 };
 export const addExpenseData = (data) => {
@@ -1613,7 +1607,7 @@ export const deleteProduceData = (data) => {
 			});
 	};
 };
- 
+
 export const getPurchaseInfoFarm = (info) => {
 	return (dispatch, getState, { getFirebase }) => {
 		//make async call to database
@@ -1656,7 +1650,7 @@ export const getPurchaseInfoFarm = (info) => {
 				snapshot.forEach((doc) => {
 					const data = doc.data();
 					if (!(data.status === "COMPLETED" || data.status === "ACCEPTED")) {
-					  orderInfo.push(data);
+						orderInfo.push(data);
 					}
 				});
 				dispatch({ type: "GET_PURCHASE_INFO_FARM", payload: orderInfo });
@@ -1705,14 +1699,17 @@ export const editPurchaseStatusOnFarmer = (data) => {
 			.doc(uid)
 			.collection("messages")
 			.doc(data.id)
-			.set({ 
-				cart: data.item, 
-				// farmerID: data.farmerID,
-				// receiversID: data.receiversID, 
-				status: data.status,
-				deliveryDueDate: data.deliveryDueDate, 
-				date: date 
-			}, { merge: true })
+			.set(
+				{
+					cart: data.item,
+					// farmerID: data.farmerID,
+					// receiversID: data.receiversID,
+					status: data.status,
+					deliveryDueDate: data.deliveryDueDate,
+					date: date,
+				},
+				{ merge: true }
+			)
 			.then(() => dispatch({ type: "EDIT_PURCHASE_STATUS", payload: data }))
 			.catch((err) => {
 				dispatch({ type: "EDIT_PURCHASE_STATUS_ERROR", err });

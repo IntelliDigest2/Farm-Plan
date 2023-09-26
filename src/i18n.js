@@ -76,7 +76,7 @@ i18n
 						eat_home_out: "Are you cooking at home or eating out?",
 						add_save_meal: "Add To Saved Meals",
 						give_this_plan_name: "Give this plan a name",
-						create_six_plan_from: "Create 6-Months meal plan from",
+						create_six_plan_from: "Create a 6-Months meal plan starting from",
 						add_from_saved_meal: "Add from saved meals",
 						add: "Add",
 						to_calendar: "to Calendar",

@@ -1,29 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown } from "./../../../../SubComponents/Dropdown";
-import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { Form, Row, Col, Accordion, Button } from "react-bootstrap";
 
-import {
-	Form,
-	Row,
-	Col,
-	Accordion,
-	Button,
-	ListGroup,
-	ListGroupItem,
-	Table,
-} from "react-bootstrap";
-
-function FilterComponent({ fetchData }) {
+function YearFilterComponent({ fetchData }) {
 	const currentYear = new Date().getFullYear();
 	const currentDate = new Date();
 	const currentMonth = format(currentDate, "MMMM").substring(0, 3);
-	const [day, setDay] = useState(currentDate);
-	const [filter, setFilter] = useState("Day");
+
+	const [filter, setFilter] = useState("Month");
 	const [month, setMonth] = useState(currentMonth);
-	const [week, setWeek] = useState("1");
 	const [year, setYear] = useState(currentYear);
-	const [show, setShow] = useState(false);
 	const [monthYear, setMonthYear] = useState(currentYear);
 
 	let months = [
@@ -41,28 +28,28 @@ function FilterComponent({ fetchData }) {
 		"Dec",
 	];
 
+	const endYear = 2030;
+	const years = [];
+
+	for (let year = currentYear; year <= endYear; year++) {
+		years.push(year);
+	}
+
 	const sendDataToParent = (duration, period) => {
-		console.log(duration, `this is the duration in the filter component`);
-		console.log(period, `this is the period in the filter component`);
 		fetchData(duration, period);
 	};
 
 	useEffect(() => {
 		let period;
-		if (filter === "Week") {
-			console.log(`filter changed to week`);
-			period = week;
-		} else if (filter === "Month") {
+		if (filter === "Month") {
 			console.log(`filter changed to month `);
 			let monthNumber = months.indexOf(month) + 1;
 
 			period = { monthNumber, monthYear };
-		} else if (filter === "Year") {
+		} else {
 			console.log(`filter changed to year `);
 
 			period = year;
-		} else {
-			period = day;
 		}
 
 		// console.log(filter, period);
@@ -72,27 +59,10 @@ function FilterComponent({ fetchData }) {
 	}, [filter]);
 
 	useEffect(() => {
-		if (filter === "Week") {
-			console.log(`Week change`);
-			// props.getSalesData(filter, week);
-			sendDataToParent(filter, week);
-		}
-	}, [week]);
-
-	useEffect(() => {
-		if (filter === "Day") {
-			// console.log(`day changed to ${day}`);
-			// props.getSalesData(filter, day);
-			sendDataToParent(filter, day);
-		}
-	}, [day]);
-
-	useEffect(() => {
 		if (filter === "Month") {
 			console.log(`month change`);
 			let monthNumber = months.indexOf(month) + 1;
 
-			// props.getSalesData(filter, monthNumber);
 			sendDataToParent(filter, { monthNumber, monthYear });
 		}
 	}, [month]);
@@ -101,7 +71,6 @@ function FilterComponent({ fetchData }) {
 			console.log(`month change`);
 			let monthNumber = months.indexOf(month) + 1;
 
-			// props.getSalesData(filter, monthNumber);
 			sendDataToParent(filter, { monthNumber, monthYear });
 		}
 	}, [monthYear]);
@@ -115,28 +84,8 @@ function FilterComponent({ fetchData }) {
 		}
 	}, [year]);
 
-	const endYear = 2030;
-	const years = [];
-
-	for (let year = currentYear; year <= endYear; year++) {
-		years.push(year);
-	}
-
 	let componentToRender =
-		filter === "Week" ? (
-			<>
-				<Dropdown
-					id="week"
-					styling="grey dropdown-input"
-					data={week}
-					// data={local.measure}
-					required
-					items={["1", "2", "3", "4"]}
-					function={(e) => setWeek(e)}
-				/>
-				<span style={{ marginLeft: "5px" }}> of {currentMonth}</span>
-			</>
-		) : filter === "Month" ? (
+		filter === "Month" ? (
 			<>
 				<Dropdown
 					id="month"
@@ -170,7 +119,7 @@ function FilterComponent({ fetchData }) {
 					function={(e) => setMonthYear(e)}
 				/>
 			</>
-		) : filter === "Year" ? (
+		) : (
 			<Dropdown
 				id="year"
 				styling="grey dropdown-input"
@@ -180,17 +129,6 @@ function FilterComponent({ fetchData }) {
 				items={years}
 				function={(e) => setYear(e)}
 			/>
-		) : (
-			<div style={{ display: "flex" }}>
-				<span>pick date</span>
-				<span>
-					<DatePicker
-						selected={day}
-						onChange={(date) => setDay(date)}
-						// dateFormat="dd/m/yyyy"
-					/>
-				</span>
-			</div>
 		);
 	return (
 		<>
@@ -202,7 +140,7 @@ function FilterComponent({ fetchData }) {
 					data={filter}
 					// data={local.measure}
 					required
-					items={["Day", "Week", "Month", "Year"]}
+					items={["Month", "Year"]}
 					function={(e) => setFilter(e)}
 				/>
 			</Col>
@@ -213,4 +151,4 @@ function FilterComponent({ fetchData }) {
 	);
 }
 
-export default FilterComponent;
+export default YearFilterComponent;

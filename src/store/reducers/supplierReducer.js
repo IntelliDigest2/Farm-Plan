@@ -10,6 +10,9 @@ const initState = {
 	newShoppingList: [],
 	shoppingList: [],
 	inventory: [],
+	rentChartData: null,
+	salesChartData: null,
+	productsSalesChartData: null,
 };
 
 const supplierReducer = (state = initState, action) => {
@@ -27,20 +30,20 @@ const supplierReducer = (state = initState, action) => {
 			console.log("error, product not saved", action.err);
 			return {
 				...state,
-				authError: "Create product failed",
+				createProductError: "Create product failed",
 			};
 		case "GET_PRODUCTS":
 			console.log("get products success", action.payload);
 			return {
 				...state,
 				savedProducts: action.payload,
-				authError: null,
+				getProductError: null,
 			};
 		case "GET_PRODUCT_ERROR":
 			console.log("error, couldn't fetch products", action.err);
 			return {
 				...state,
-				authError: "Get products failed",
+				getProductError: "Get products failed",
 			};
 
 		case "GET_SALES":
@@ -48,13 +51,13 @@ const supplierReducer = (state = initState, action) => {
 			return {
 				...state,
 				savedSales: action.payload,
-				authError: null,
+				getSalesError: null,
 			};
 		case "GET_SALES_ERROR":
 			console.log("error, couldn't fetch sales", action.err);
 			return {
 				...state,
-				authError: "Get sales failed",
+				getSalesError: "Get sales failed",
 			};
 
 		case "GET_RENT":
@@ -62,13 +65,45 @@ const supplierReducer = (state = initState, action) => {
 			return {
 				...state,
 				savedRent: action.payload,
-				authError: null,
+				getRentError: null,
 			};
 		case "GET_RENT_ERROR":
 			console.log("error, couldn't fetch rent", action.err);
 			return {
 				...state,
-				authError: "Get rent failed",
+				getRentError: "Get rent failed",
+			};
+		case "GET_RENT_CHART":
+			// console.log("get rent success", action.payload);
+			return {
+				...state,
+				rentChartData: action.payload,
+				getRentChartError: null,
+			};
+		case "GET_RENT_CHART_ERROR":
+			console.log("error, couldn't fetch rent", action.err);
+			return {
+				...state,
+				getRentChartError: "Get rent chart failed",
+			};
+		case "GET_SALES_CHART":
+			// console.log("get rent success", action.payload);
+			return {
+				...state,
+				salesChartData: action.payload,
+				getSalesChatError: null,
+			};
+		case "FETCH_PRODUCE_FOR_SALES_CHART":
+			// console.log("get rent success", action.payload);
+			return {
+				...state,
+				productsSalesChartData: action.payload,
+			};
+		case "GET_SALES_CHART_ERROR":
+			console.log("error, couldn't fetch rent", action.err);
+			return {
+				...state,
+				getSalesChatError: "Get rent chart failed",
 			};
 
 		case "ADD_TO_SALES":

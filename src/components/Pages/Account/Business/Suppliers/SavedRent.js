@@ -10,13 +10,11 @@ import { getRent } from "../../../../../store/actions/supplierActions/supplierDa
 const SavedRent = (props) => {
 	const { t } = useTranslation();
 
-	const [sRent, setSRent] = useState([]);
-
 	//trigger this when editing/deleting items
-	const [update, setUpdate] = useState(0);
-	const forceUpdate = () => {
-		setUpdate(update + 1);
-	};
+	// const [update, setUpdate] = useState(0);
+	// const forceUpdate = () => {
+	// 	setUpdate(update + 1);
+	// };
 
 	//this sends data request
 	// useEffect(() => {
@@ -68,7 +66,7 @@ const SavedRent = (props) => {
 	// 	// console.log(props.data);
 	// }, [props.Rent]);
 
-	console.log(props.Rent, `this is the rent returned in the saved Rent`);
+	// console.log(props.Rent, `this is the rent returned in the saved Rent`);
 
 	return (
 		<>
@@ -82,7 +80,7 @@ const SavedRent = (props) => {
 					</div>
 					<div className="meals">
 						<RentBox
-							forceUpdate={forceUpdate}
+							// forceUpdate={forceUpdate}
 							onChange={props.onChange}
 							rent={props.Rent}
 						/>
