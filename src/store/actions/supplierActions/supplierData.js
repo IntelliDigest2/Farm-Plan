@@ -240,11 +240,11 @@ export const addToSales = (data, currentQuantity) => {
 				break;
 		}
 
-		console.log(data, `this is the data that is sent to batch write`);
-		console.log(
-			currentQuantity,
-			`this is the current quantity that is sent to the batch write`
-		);
+		// console.log(data, `this is the data that is sent to batch write`);
+		// console.log(
+		// 	currentQuantity,
+		// 	`this is the current quantity that is sent to the batch write`
+		// );
 
 		const productsCollectionRef = getFirestore().collection("products");
 
@@ -499,7 +499,7 @@ export const getSales = (duration, period) => {
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
 
-		console.log(authUID, `this is the auth UiD`);
+		// console.log(authUID, `this is the auth UiD`);
 
 		var uid;
 
@@ -581,13 +581,13 @@ export const getSales = (duration, period) => {
 				break;
 		}
 
-		console.log(uid, `this is the uid`);
+		// console.log(uid, `this is the uid`);
 
 		let collectionRef = getFirestore()
 			.collection("sales")
 			.where("companyID", "==", uid);
 
-		console.log(uid, `this is the user id`);
+		// console.log(uid, `this is the user id`);
 		let query;
 
 		switch (duration) {
@@ -625,7 +625,7 @@ export const getSales = (duration, period) => {
 				snapshot.forEach((doc) => {
 					data.push({ ...doc.data(), salesId: doc.id });
 				});
-				console.log(data, `this is the data rerurned for the sales`);
+				// console.log(data, `this is the data rerurned for the sales`);
 				// Do something with the values array, e.g., update the UI
 				// console.log(products);
 				dispatch({ type: "GET_SALES", payload: data });
@@ -770,7 +770,7 @@ export const getRent = (duration, period) => {
 				snapshot.forEach((doc) => {
 					data.push({ ...doc.data(), rentId: doc.id });
 				});
-				console.log(data, `this is the data rerurned for the rent`);
+				// console.log(data, `this is the data rerurned for the rent`);
 				// Do something with the values array, e.g., update the UI
 				// console.log(products);
 				dispatch({ type: "GET_RENT", payload: data });
@@ -1109,21 +1109,28 @@ export const getSalesForChart = (duration, period) => {
 // 	};
 // };
 
-export const returnRentedItem = (quantityRented, rentId, productId) => {
+export const returnRentedItem = (rent) => {
 	return (dispatch, getState, { getFirestore }) => {
 		const db = getFirestore();
 
 		const batch = db.batch();
 
+		console.log(rent.productQty, `quantityRented`);
+		console.log(rent.rentId, `rentId`);
+		console.log(rent.productId, `productId`);
+		let rentQuantity = rent.productQty;
+		let productId = rent.productId;
+		let rentId = rent.rentId;
+		// let rentBatch = rent.batchNumber;
+
 		let rentDocumentRef = getFirestore().collection("rent").doc(rentId);
 		let productCollectionRef = getFirestore()
 			.collection("products")
 			.doc(productId);
-
-		
+		// .where("batchNumber", "==", rentBatch);
 
 		batch.update(productCollectionRef, {
-			currentQuantity: db.FieldValue.increment(quantityRented),
+			currentQuantity: db.FieldValue.increment(rentQuantity),
 		});
 
 		batch.update(rentDocumentRef, {

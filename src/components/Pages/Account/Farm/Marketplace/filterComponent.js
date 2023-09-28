@@ -42,23 +42,23 @@ function FilterComponent({ fetchData }) {
 	];
 
 	const sendDataToParent = (duration, period) => {
-		console.log(duration, `this is the duration in the filter component`);
-		console.log(period, `this is the period in the filter component`);
+		// console.log(duration, `this is the duration in the filter component`);
+		// console.log(period, `this is the period in the filter component`);
 		fetchData(duration, period);
 	};
 
 	useEffect(() => {
 		let period;
 		if (filter === "Week") {
-			console.log(`filter changed to week`);
+			// console.log(`filter changed to week`);
 			period = week;
 		} else if (filter === "Month") {
-			console.log(`filter changed to month `);
+			// console.log(`filter changed to month `);
 			let monthNumber = months.indexOf(month) + 1;
 
 			period = { monthNumber, monthYear };
 		} else if (filter === "Year") {
-			console.log(`filter changed to year `);
+			// console.log(`filter changed to year `);
 
 			period = year;
 		} else {
@@ -73,7 +73,7 @@ function FilterComponent({ fetchData }) {
 
 	useEffect(() => {
 		if (filter === "Week") {
-			console.log(`Week change`);
+			// console.log(`Week change`);
 			// props.getSalesData(filter, week);
 			sendDataToParent(filter, week);
 		}
@@ -89,7 +89,7 @@ function FilterComponent({ fetchData }) {
 
 	useEffect(() => {
 		if (filter === "Month") {
-			console.log(`month change`);
+			// console.log(`month change`);
 			let monthNumber = months.indexOf(month) + 1;
 
 			// props.getSalesData(filter, monthNumber);
@@ -98,7 +98,7 @@ function FilterComponent({ fetchData }) {
 	}, [month]);
 	useEffect(() => {
 		if (filter === "Month") {
-			console.log(`month change`);
+			// console.log(`month change`);
 			let monthNumber = months.indexOf(month) + 1;
 
 			// props.getSalesData(filter, monthNumber);
@@ -108,7 +108,7 @@ function FilterComponent({ fetchData }) {
 
 	useEffect(() => {
 		if (filter === "Year") {
-			console.log(`year change`);
+			// console.log(`year change`);
 
 			// props.getSalesData(filter, year);
 			sendDataToParent(filter, year);

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -11,9 +11,11 @@ import {format} from 'date-fns'
 import {
 	Button,
 	Table,
+  Modal
 } from "react-bootstrap";
 
 import { connect } from "react-redux";
+
 
 
 
@@ -30,25 +32,46 @@ import {submitNotification} from './../../../../lib/Notifications.js';
 //    setUpdate(update + 1);
 //  };
 
-const markRentedItemAsReturned=(rentQty,rentId,productId)=>{
 
-  props.markRentAsReturned(rentQty,rentId,productId)
+const [showModal, setShowModal] = useState(false)
+const [currentRent, setCurrentRent] = useState(null)
+const openModal=(rent)=>{
+
+
+  setShowModal(true)
+  setCurrentRent(rent)
+
+
+
   
 
 
 }
 
+const closeModal =()=>{
+  setShowModal(false)
+
+}
+
+const markRentedItemAsReturned=(rent)=>{
+   // props.markRentAsReturned(rent)
+   console.log(`this has been clicked in the supplier rent modal`)
+
+}
+
+
+
 const generateRentTable = () => {
   return props.rent.map((rent, index) => {
     let formattedDate = format(rent.createdAt.toDate(), "M/d/yyyy");
-    let rentQuantity = rent.productQty
-    let productId = rent.productId
-    let rentId = rent.rentId
+    // let rentQuantity = rent.productQty
+    // let productId = rent.productId
+    // let rentId = rent.rentId
     return (
     <tbody key={`rent-${index}`}>
       <tr >
       <td>{formattedDate}</td>
-      <td> {rent.status=== 'active' ?  <Button onClick={()=>markRentedItemAsReturned(rentQuantity,rentId,productId)} variant="info" type="button">Notify Receipt</Button> : 'RETURNED'}      
+      <td> {rent.status=== 'active' ?  <Button onClick={()=>openModal(rent)} variant="info" type="button">Notify Receipt</Button> : 'RETURNED'}      
 </td>
       <td>{rent.rentId}</td>
       <td>{rent.productName}</td>
@@ -81,8 +104,8 @@ const generateRentTable = () => {
   // console.log(props.rent,`this is the rent list`)
   return (
     <>
-      {
-      // props.rent.map((product, index) => (
+      
+     
         <div className="meal-box" >
           <div className="ingredients">
           <Table striped bordered hover>
@@ -104,6 +127,7 @@ const generateRentTable = () => {
 						</tr>
 					</thead>
 					{generateRentTable()}
+
              {/* <List
               key={`product${index}`}
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
@@ -153,20 +177,45 @@ const generateRentTable = () => {
             </List> */}
             </Table>
           </div>
+          
         </div>
-   
+        <Modal show={showModal} 
+        onHide={closeModal}
+        >
+            <Modal.Header closeButton>
+              <Modal.Title>Create</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+             {/* Are you sure you want to mark {currentRent?.productName} rented on {format(currentRent?.createdAt.toDate(), "M/d/yyyy")} as returned? */}
+             {currentRent ?` Are you sure you want to mark ${currentRent?.productName} rented on ${format(currentRent?.createdAt.toDate(), "M/d/yyyy")} as returned? `: ''}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button className="grey-btn" 
+              onClick={closeModal}
+              
+              >
+                Cancel
+              </Button>
+              <Button className="blue-btn" onClick={() => {
+                markRentedItemAsReturned(currentRent);
+                
+              }}>
+                Yes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        
+       
 
-      // )
-      // )
-      }
+      
       </>
   );
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		markRentAsReturned: (rentQty,rentId,productId) => {
-			dispatch(returnRentedItem(rentQty,rentId,productId));
+		markRentAsReturned: (rent) => {
+			dispatch(returnRentedItem(rent));
 		},
 	};
 };
