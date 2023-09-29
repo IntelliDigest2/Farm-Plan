@@ -86,7 +86,8 @@ export default function ProductBox(props) {
                 className="list"
                 style={{ alignItems: "baseline" }}
               >
-                  <div >
+                
+                  <div style={{ width: "100%" }}  >
                     <Image  imageUrl={newProduct.imageURL} />
                     <div>
                     <p>
@@ -99,17 +100,17 @@ export default function ProductBox(props) {
                      Batch Number:  {newProduct.batchNumber}
                     </p>
                    
+                    <div style={{marginBottom : '0.9rem'}}>
+                      Description: <span style={{textWrap : 'wrap', lineHeigt: '1.2rem'}}>{newProduct.productDescription}</span> 
+                    </div>
                     <p>
-                      Description: <span>{newProduct.productDescription}</span> 
+                      Initial quantity:{newProduct.productQty}{newProduct.productMeasure} 
                     </p>
                     <p>
-                      Initial quantity: <span>{newProduct.productQty}{newProduct.productMeasure}</span> 
+                      Quantity available: {newProduct.currentQuantity}{newProduct.productMeasure} 
                     </p>
                     <p>
-                      Quantity available: <span>{newProduct.currentQuantity}{newProduct.productMeasure}</span> 
-                    </p>
-                    <p>
-                     Stock Type: <span>{newProduct.stockType}</span> 
+                     Stock Type: {newProduct.stockType}
                     </p>
                     {cost(newProduct)}
                     </div>

@@ -35,6 +35,7 @@ i18n
 						add_meal_diary:
 							"Add casual meals to your calendar or edit added meals",
 						my_saved_meals: "My Saved Meals",
+						restaurant_menu: "Restuarant Menu",
 						search_recipes: "Search Recipes",
 						enter_meal_name: "Enter Meal Name",
 						button_search: "Search",

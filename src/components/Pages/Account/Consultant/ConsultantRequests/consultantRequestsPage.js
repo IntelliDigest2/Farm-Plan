@@ -62,7 +62,7 @@ function ConsultantRequestsPage(props) {
 			</ListGroup>
 		);
 	}
-	console.log(requests, `this is the requests stuff`);
+	// console.log(requests, `this is the requests stuff`);
 	let requestContent =
 		requests === null ? (
 			"...loading"

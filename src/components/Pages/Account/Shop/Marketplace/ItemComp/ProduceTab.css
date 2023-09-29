@@ -212,6 +212,7 @@
     min-width: 10rem;
     color: #302d53;
     margin-top: 20px;
+    overflow-x: scroll;
 }
 
 .meal-box-recipe {

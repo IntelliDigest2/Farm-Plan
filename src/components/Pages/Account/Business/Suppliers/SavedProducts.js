@@ -77,12 +77,12 @@ const SavedProducts = (props) => {
 	// }, [stockType]);
 
 	useEffect(() => {
-		console.log(`stockType changed`);
+		// console.log(`stockType changed`);
 		if (stockType === "Sale") {
 			let result = props.Products.filter((product) => {
 				return product.stockType === "Sale";
 			});
-			console.log(result, `testing result`);
+			// console.log(result, `testing result`);
 			setProducts(result);
 		} else if (stockType === "Rentage") {
 			let result = props.Products.filter((product) => {

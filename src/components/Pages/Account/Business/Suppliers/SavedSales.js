@@ -27,8 +27,8 @@ const SavedSales = (props) => {
 
 	const handleFetchData = (duration, period) => {
 		setDuration(duration);
-		console.log(duration, `this is the duration in the saved Sales`);
-		console.log(period, `this is the period in the saved Sales`);
+		// console.log(duration, `this is the duration in the saved Sales`);
+		// console.log(period, `this is the period in the saved Sales`);
 		props.getSales(duration, period);
 	};
 
