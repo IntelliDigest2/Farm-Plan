@@ -47,7 +47,7 @@ const AddPayment = ( props ) => {
         userID: props.profile.uid,
       };
   
-      const response = await fetch(`${baseUrlDev}/v1/payment/create-transfer-recipient`, {
+      const response = await fetch(`${baseUrlProd}/v1/payment/create-transfer-recipient`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const AddPayment = ( props ) => {
         createRecipient(accountName, accountNumber, selectedBank);
       } else {
         // Otherwise, fetch and resolve the bank account
-        const response = await fetch(`${baseUrlDev}/v1/payment/resolve-bank-account?number=${accountNumber}&code=${selectedBank}`, {
+        const response = await fetch(`${baseUrlProd}/v1/payment/resolve-bank-account?number=${accountNumber}&code=${selectedBank}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -128,9 +128,9 @@ const AddPayment = ( props ) => {
     // Define the API endpoints based on the currency value
     let apiEndpoint;
     if (currency === "NGN" || currency === "ZAR") {
-      apiEndpoint = `${baseUrlDev}/v1/payment/get-bank-list-nuban?currency=${currency}`;
+      apiEndpoint = `${baseUrlProd}/v1/payment/get-bank-list-nuban?currency=${currency}`;
     } else if (currency === "KES" || currency === "GHS") {
-      apiEndpoint = `${baseUrlDev}/v1/payment/get-bank-list-mobile?currency=${currency}`;
+      apiEndpoint = `${baseUrlProd}/v1/payment/get-bank-list-mobile?currency=${currency}`;
     } else {
       // Handle unsupported currencies or default case
       console.error("Unsupported currency");

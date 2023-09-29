@@ -32,7 +32,7 @@ function PayIconWallet(props) {
     console.log("transfer data ===>", transferData)
 
     
-    await fetch(`${baseUrlDev}/v1/payment/initiate-payment`, {
+    await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {
 
       method: 'POST', 
       body: JSON.stringify(transferData),

@@ -27,7 +27,7 @@ const WithdrawFunds = ( props ) => {
 
   const handleWithdraw = async () => {
     try {
-      const pinVerificationResponse = await fetch(`${baseUrlDev}/v1/auth/verify-pin`, {
+      const pinVerificationResponse = await fetch(`${baseUrlProd}/v1/auth/verify-pin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,13 +43,13 @@ const WithdrawFunds = ( props ) => {
         let requestBody;
   
         if (props.profile.region === 'Africa') {
-          endpoint = `${baseUrlDev}/v1/payment/withdrawal-paystack`;
+          endpoint = `${baseUrlProd}/v1/payment/withdrawal-paystack`;
           requestBody = {
             userID: userID,
             amount: amountWithdraw,
           };
         } else {
-          endpoint = `${baseUrlDev}/v1/payment/pay-out-fund`;
+          endpoint = `${baseUrlProd}/v1/payment/pay-out-fund`;
           requestBody = {
             userID: userID,
             accountID: accountID,
