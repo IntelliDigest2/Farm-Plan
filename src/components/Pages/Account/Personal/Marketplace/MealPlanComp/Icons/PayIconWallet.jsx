@@ -26,7 +26,7 @@ function PayIconWallet(props) {
 
     const transferData = {
       user: props.uid,
-      order: props.order,
+      order: props.order, 
     };
 
     console.log("transfer data ===>", transferData)

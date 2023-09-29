@@ -20,7 +20,7 @@ const Reservations = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlProd}/v1/payment/track-reservations`, {
+    fetch(`${baseUrlDev}/v1/payment/track-reservations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,6 +46,8 @@ const Reservations = (props) => {
   const measurementUnits = {
     '&lt;unit>': 'unit', // Add other mappings as needed
   };
+
+  console.log("reservationa", reservations)
 
   return (
     <PageWrap goTo="/account" header="Wallet">
@@ -87,6 +89,8 @@ const Reservations = (props) => {
                           farmerID={item.farmerID}
                           farmerRef={item.farmerRef}
                           cartItems={item.cartItems}
+                          receiversID={item.receiversID}
+                          receiversName={item.receiversName}
                         />
                       ) : (
                         <></>

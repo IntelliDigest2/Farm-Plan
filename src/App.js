@@ -113,12 +113,9 @@ import RedeemCoupon from "./components/SubComponents/payment/RedeemCoupon";
 import Reservations from "./components/SubComponents/payment/Reservations";
 import ReservationsOther from "./components/SubComponents/payment/ReservationsOther";
 import PaymentSuccess from "./components/Pages/PaymentSuccess";
-<<<<<<< HEAD
 import SupplyRevenue from "./components/Pages/Account/Business/Suppliers/supplyRevenue";
-=======
 import WithdrawalSuccess from "./components/Pages/WithdrawalSuccess";
 
->>>>>>> 23e072f2 (fix: error response)
 import Withdraw from "./components/SubComponents/payment/Withdraw";
 
 const App = (props) => {
