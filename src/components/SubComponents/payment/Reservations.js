@@ -47,6 +47,8 @@ const Reservations = (props) => {
     '&lt;unit>': 'unit', // Add other mappings as needed
   };
 
+  console.log("reservationa", reservations)
+
   return (
     <PageWrap goTo="/account" header="Wallet">
 
@@ -86,6 +88,9 @@ const Reservations = (props) => {
                           trackingID={item.trackingID}
                           farmerID={item.farmerID}
                           farmerRef={item.farmerRef}
+                          cartItems={item.cartItems}
+                          receiversID={item.receiversID}
+                          receiversName={item.receiversName}
                         />
                       ) : (
                         <></>

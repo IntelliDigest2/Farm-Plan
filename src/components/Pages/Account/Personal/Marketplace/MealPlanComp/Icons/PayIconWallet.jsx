@@ -26,13 +26,13 @@ function PayIconWallet(props) {
 
     const transferData = {
       user: props.uid,
-      order: props.order,
+      order: props.order, 
     };
 
     console.log("transfer data ===>", transferData)
 
     
-    await fetch(`${baseUrlDev}/v1/payment/initiate-payment`, {
+    await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {
 
       method: 'POST', 
       body: JSON.stringify(transferData),

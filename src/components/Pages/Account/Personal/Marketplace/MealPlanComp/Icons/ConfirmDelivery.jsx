@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
+import { addToFarmerSalesData, addToSalesData } from "../../../../../../../store/actions/dataActions";
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
@@ -28,7 +29,7 @@ function ConfirmDelivery(props) {
       trackingID: props.trackingID,
     };
     
-    await fetch(`${baseUrlDev}/v1/payment/confirm-delivery`, {
+    await fetch(`${baseUrlProd}/v1/payment/confirm-delivery`, {
 
       method: 'POST', 
       body: JSON.stringify(transferData),
@@ -38,7 +39,34 @@ function ConfirmDelivery(props) {
     })
     .then((response) => response.json())
     .then((res) => {
-      console.log("reservation ===>", res)
+      const receiversID = props.receiversID
+      const receiversName = props.receiversName
+      // Loop through cart items and dispatch addToSales for each item
+      props.cartItems.forEach((cartItem) => {
+        const salesData = {
+          batchNumber: null,
+          brandName: null,
+          companyID: props.farmerID,
+          customerInfo: {
+            customerID: receiversID,
+            customerName: receiversName
+          },
+          medium: "inApp",
+          productName: cartItem.data,
+          productType: 'Horticulture',
+          price: {
+            amount: cartItem.price,
+            currency: cartItem.currency
+          },
+          quantity: cartItem.quantity,
+          unit: cartItem.measure,
+          currency: cartItem.currency,
+        };
+        // Dispatch addToSales action for each item
+        props.addToSales(salesData);
+        props.addToFarmerSalesData(salesData);
+      });
+
       const data = {
         farmerRef: props.farmerRef,
         farmerID: props.farmerID,
@@ -105,7 +133,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editPurchaseStatusOnFarmer: (data) => dispatch(editPurchaseStatusOnFarmer(data)),
-
+    addToSales: (data) => dispatch(addToSalesData(data)),
+    addToFarmerSalesData: (data) => dispatch(addToFarmerSalesData(data))
   };
 };
 
