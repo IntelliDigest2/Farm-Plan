@@ -932,3 +932,52 @@ export const getOtherMeals = () => {
 		});
 	};
   };
+
+  export const addToSalesData = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+	  //make async call to database
+	  const profile = getState().firebase.profile;
+	  const authUID = getState().firebase.auth.uid;
+  
+	  var uid;
+	  switch (profile.type) {
+		case "business_admin":
+		  uid = authUID;
+		  break;
+		case "business_sub":
+		  uid = profile.admin;
+		  break;
+		case "academic_admin":
+		  uid = authUID;
+		  break;
+		case "academic_sub":
+		  uid = profile.admin;
+		  break;
+		case "household_admin":
+		  uid = authUID;
+		  break;
+		case "household_sub":
+		  uid = profile.admin;
+		  break;
+		default:
+		  uid = authUID;
+		  break;
+	  }
+	 
+	  getFirestore()
+	  .collection("sales")
+	  .add(data)
+	  .then((docRef) => {
+  
+		// make the docId easily accessible so that we can delete it later if we want.
+		getFirestore()
+		  .collection("sales")
+		  .doc(docRef.id)
+		  .set({ id: docRef.id, uid: uid }, { merge: true })
+		dispatch({ type: "ADD_TO_SALES", payload: data });
+	  })
+	  .catch((err) => {
+		dispatch({ type: "ADD_TO_SALES_ERROR", err });
+	  });
+	};
+  };

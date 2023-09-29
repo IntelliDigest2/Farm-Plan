@@ -3,7 +3,6 @@ import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap"
 import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Wallet.css"
-import Swal from 'sweetalert2';
 
 import logo from "../../../images/Revolut-logo-1.gif"
 
@@ -12,7 +11,6 @@ import RevolutPay from "./RevolutPay"
 import { connect } from "react-redux";
 import WithdrawFunds from './stripe/WithdrawFunds';
 import ConnectAccount from './stripe/ConnectAccount';
-import AddPayment from './paystack/AddPayment';
 
 // Loading component to be displayed while waiting for data
 const SpinnerComponent = () => {
@@ -42,11 +40,6 @@ const PinComponent = (userID) => {
     })
       const data = await response.json();
       setMessage(data.message);
-      Swal.fire({
-        title: 'Success!',
-        text: 'Your Pin has been set!',
-        icon: 'success',
-      });
     } else {
       setMessage('PINs do not match. Please try again.');
     }
@@ -101,35 +94,27 @@ const formatCardInfo = (cardNumber, bankName) => {
   return { cardNumber: '', bankName }; // Return an empty string for cardNumber if it's empty
 }
 
-useEffect(() => {
-  const fetchData = async () => {
-    const endpoint = props.profile.region === 'Africa'
-      ? `${baseUrlDev}/v1/payment/transfer-recipient-info`
-      : `${baseUrlDev}/v1/payment/connected-account-info`;
+  // Fetch the user's wallet balance from the backend
+  useEffect(() => {
 
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userID: props.profile.uid }),
-      });
+    // const baseUrl = process.env.REACT_APP_BASE_URL_TEST;
 
-      if (!response) {
-        throw new Error(`Fetch failed with status ${response.status}`);
-      }
-
-      const data = await response.json();
-      const formattedCardInfo = formatCardInfo(data.cardNumber, data.bankName);
+    fetch(`${baseUrlDev}/v1/payment/connected-account-info`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userID: props.profile.uid }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        const formattedCardInfo = formatCardInfo(data.cardNumber, data.bankName);
         setCardInfo(formattedCardInfo);
-    } catch (error) {
-      console.error('Error fetching card number:', error);
-    }
-  };
-
-  fetchData();
-}, [props.profile]);
+      })
+      .catch(error => {
+        console.error('Error fetching card number:', error);
+      });
+  }, [props.profile]);
   
   
   // Fetch the user's PIN status from the backend
@@ -170,12 +155,14 @@ useEffect(() => {
                 <p className="card-details">{cardInfo.bankName}</p>
                 <p className="card-details">{cardInfo.cardNumber}</p>
               </>
-            ) : (
+              ):(
               <>
-                <h3>{props.profile.region === 'Africa' ? 'Add Payment Method' : 'Add Payment Method'}</h3>
-                {props.profile.region === 'Africa' ? <AddPayment userID={props.profile.uid} /> : <ConnectAccount userID={props.profile.uid} />}
+                <h3>Add Payment Method</h3>
+                <ConnectAccount userID={props.profile.uid} />
               </>
+           
             )}
+            
           </Card.Body>
         </Card>
 
@@ -188,7 +175,7 @@ useEffect(() => {
                 // If the user has set a PIN, render the withdrawal component
                 <>
                   <h5>Withdraw Fund</h5>
-                  <WithdrawFunds userID={props.profile.uid} currency={props.profile.currency}/>
+                  <WithdrawFunds />
                 </>
               ) : (
                 // If the user has not set a PIN, render the PIN component

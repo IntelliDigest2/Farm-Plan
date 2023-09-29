@@ -28,6 +28,7 @@ const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
   const [openEmailModal, setOpenEmailModal] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
   const [selectedEmail, setSelectedEmail] = useState(""); 
+  const [emailSentStatus, setEmailSentStatus] = useState({});
 
   const handleCopyClick = (uid) => {
     const textArea = document.createElement('textarea');
@@ -101,7 +102,11 @@ const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
   // Function to handle sending email from the modal
   const handleSendEmail = () => {
-    sendEmail(selectedEmail, emailMessage); // Pass the email and message to sendEmail function
+    sendEmail(selectedEmail, emailMessage);
+	setEmailSentStatus({
+		...emailSentStatus,
+		[selectedEmail]: true,
+	  });
     handleCloseEmailModal(); // Close the modal after sending
   };
 
@@ -148,6 +153,9 @@ const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 					>
 						<EmailIcon />
 					</IconButton>
+					{emailSentStatus[item.email] && (
+                      <span style={{ color: 'green', marginLeft: '5px' }}>Email Sent</span>
+                    )}
 					{copySuccess === item.uid && (
 						<span style={{ color: 'green', marginLeft: '5px' }}>Copied!</span>
 					)}

@@ -86,6 +86,7 @@ const Reservations = (props) => {
                           trackingID={item.trackingID}
                           farmerID={item.farmerID}
                           farmerRef={item.farmerRef}
+                          cartItems={item.cartItems}
                         />
                       ) : (
                         <></>

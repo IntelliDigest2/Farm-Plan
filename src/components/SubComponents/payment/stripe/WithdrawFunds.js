@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
+import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const WithdrawFunds = ( props ) => {
+  const history = useHistory();
 
   const [businessType, setBusinessType] = useState('');
   const [pin, setPin] = useState(''); // State to store PIN entered by the user
@@ -17,70 +20,122 @@ const WithdrawFunds = ( props ) => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const userID = props.profile.uid
+  const userID = props.userID
+  const currency = props.currency
   const accountID = props.profile.accountID
 
 
   const handleWithdraw = async () => {
-
     try {
-
-       // Verify the PIN before allowing the withdrawal
-       const pinVerificationResponse = await fetch(`${baseUrlDev}/v1/auth/verify-pin`, {
+      const pinVerificationResponse = await fetch(`${baseUrlDev}/v1/auth/verify-pin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           userID: userID,
-          enteredPin: pin, // Send the PIN entered by the user
+          enteredPin: pin,
         }),
       });
-
-      if(pinVerificationResponse.ok){
-        const response = await fetch(`${baseUrlDev}/v1/payment/pay-out-fund`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ 
+  
+      if (pinVerificationResponse.ok) {
+        let endpoint;
+        let requestBody;
+  
+        if (props.profile.region === 'Africa') {
+          endpoint = `${baseUrlDev}/v1/payment/withdrawal-paystack`;
+          requestBody = {
+            userID: userID,
+            amount: amountWithdraw,
+          };
+        } else {
+          endpoint = `${baseUrlDev}/v1/payment/pay-out-fund`;
+          requestBody = {
             userID: userID,
             accountID: accountID,
             amount: amountWithdraw,
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const accountID = data.accountID
-          console.log("account id:", accountID);
-        } else {
-          console.error("Failed to fetch account id");
+          };
         }
-
+  
+        try {
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          });
+  
+          if (response.ok) {
+            const data = await response.json();
+            const accountID = data.accountID;
+            console.log("account id:", accountID);
+  
+            // Show a success alert
+            Swal.fire({
+              title: 'Success!',
+              text: 'Withdrawal successful',
+              icon: 'success',
+            }).then(() => {
+              history.push(`/withdrawal-success?amount=${amountWithdraw}&currency=${currency}`);
+            });
+          } else {
+            const errorData = await response.json();
+            if (errorData.error === 'InsufficientFunds') {
+              // Show an error alert for insufficient funds
+              Swal.fire({
+                title: 'Error!',
+                text: 'Insufficient funds in your wallet',
+                icon: 'error',
+              });
+            } else {
+              console.error("Failed to fetch account id");
+              // Show an error alert for other withdrawal error
+              Swal.fire({
+                title: 'Error!',
+                text: 'Something went wrong!',
+                icon: 'error',
+              });
+            }
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          // Show a generic error alert for failed withdrawal
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to withdraw funds',
+            icon: 'error',
+          });
+        }
       } else {
         console.error("PIN verification failed");
-        // You can handle the case where PIN verification fails, e.g., show an error message.
+        // Show an error alert for wrong PIN
+        Swal.fire({
+          title: 'Error!',
+          text: 'Wrong Withdrawal Pin',
+          icon: 'error',
+        });
       }
+    } catch (error) {
+      console.error(error);
+      // Show a generic error alert for PIN verification failure
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to verify PIN',
+        icon: 'error',
+      });
+    }
+  };
+  
 
-      } catch (error) {
-        console.error(error);
-      }};
+  const handleModalOpen = () => {
+    setShowModal(true);
+  };
 
-      const handleBusinessTypeChange = (e) => {
-        // Update the businessType state when the user selects a new option
-        setBusinessType(e.target.value);
-      };
-
-
-      const handleModalOpen = () => {
-        setShowModal(true);
-      };
-    
-      const handleModalClose = () => {
-        setShowModal(false);
-      };
-    
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+      
   return (
    <>
    

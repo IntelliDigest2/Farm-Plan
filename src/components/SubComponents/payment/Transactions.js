@@ -18,7 +18,7 @@ const SpinnerComponent = () => {
 const Transaction = (props) => {
   const [transactions, setTransactions] = useState([]);
 
-  console.log("profile", props.profile)
+  console.log("transactions page profile", props.profile.uid)
 
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"

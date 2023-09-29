@@ -182,6 +182,18 @@ const dataReducer = (state = initState, action) => {
           authError: null,
         };
 
+        case "ADD_TO_SALES_ERROR":
+          console.log("add item to sales" + action.err.message);
+          return {
+            ...state,
+            authError: "set failed",
+          };
+        case "ADD_TO_SALES":
+          console.log("add add items to sales success", action.payload);
+          return {
+            ...state,
+            authError: null,
+          };
         case "GET_OTHER_MEALS_ERROR":
           console.log("fetch other meals error " + action.err.message);
           return {

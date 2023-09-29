@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
+import { addToSalesData } from "../../../../../../../store/actions/dataActions";
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
@@ -38,7 +39,27 @@ function ConfirmDelivery(props) {
     })
     .then((response) => response.json())
     .then((res) => {
-      console.log("reservation ===>", res)
+
+      // Loop through cart items and dispatch addToSales for each item
+      props.cartItems.forEach((cartItem) => {
+        const salesData = {
+          batchNumber: null,
+          brandName: null,
+          companyID: null,
+          createdAt: null,
+          customerName: null,
+          medium: null,
+          productCurrency: cartItem.currency,
+          productMeasure: cartItem.measure,
+          productName: cartItem.data,
+          productPrice: cartItem.price,
+          productQty: cartItem.quantity,
+        };
+
+        // Dispatch addToSales action for each item
+        props.addToSales(salesData);
+      });
+
       const data = {
         farmerRef: props.farmerRef,
         farmerID: props.farmerID,
@@ -105,7 +126,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editPurchaseStatusOnFarmer: (data) => dispatch(editPurchaseStatusOnFarmer(data)),
-
+    addToSales: (data) => dispatch(addToSalesData(data))
   };
 };
 
