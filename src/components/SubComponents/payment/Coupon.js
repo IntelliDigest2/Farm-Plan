@@ -5,6 +5,7 @@ import "../Button.css";
 import "./Wallet.css"
 
 import logo from "../../../images/Revolut-logo-1.gif"
+import Swal from 'sweetalert2';
 
 import RevolutPay from "./RevolutPay"
 
@@ -35,7 +36,7 @@ const CouponComponent = (props) => {
 
     // const baseUrl = process.env.REACT_APP_BASE_URL_TEST;
 
-    fetch(`${baseUrlProd}/v1/transaction/balance`, {
+    fetch(`${baseUrlDev}/v1/transaction/balance`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ const CouponComponent = (props) => {
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlProd}/v1/coupon/create-coupon`, {
+    fetch(`${baseUrlDev}/v1/coupon/create-coupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,9 +76,19 @@ const CouponComponent = (props) => {
         // Reset the form fields
         setAmount('');
         setRecipient('');
+        Swal.fire({
+          title: 'Success!',
+          text: 'Coupon has been created',
+          icon: 'success',
+        });
       })
       .catch(error => {
         console.error('Error transferring funds:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong. Please check your wallet balance and try again',
+          icon: 'error',
+        });
       })
       .finally(() => {
         setIsLoadingBalance(false); // Mark balance loading as complete, regardless of success or error
@@ -93,7 +104,7 @@ const CouponComponent = (props) => {
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlProd}/v1/coupon/redeem-coupon`, {
+    fetch(`${baseUrlDev}/v1/coupon/redeem-coupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

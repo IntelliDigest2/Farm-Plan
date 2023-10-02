@@ -20,7 +20,7 @@ const Reservations = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlProd}/v1/payment/track-reservations`, {
+    fetch(`${baseUrlDev}/v1/payment/track-reservations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const Reservations = (props) => {
                     </div>
 
                     <div className="date">
-                      {`Delivery due in ${moment(item.deliveryDueDate).fromNow(true)}`}
+                      {`Estimated Delivery is in ${moment(item.deliveryDueDate).fromNow(true)}`}
                     </div>
                   </div>
                   </div>

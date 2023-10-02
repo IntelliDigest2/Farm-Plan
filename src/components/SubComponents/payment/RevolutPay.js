@@ -34,7 +34,7 @@ useEffect(() => {
   async function fetchData() {
     
     try {
-      const response = await fetch(`${baseUrlProd}/v1/transaction/create-order`, {
+      const response = await fetch(`${baseUrlDev}/v1/transaction/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: props.amount })
@@ -307,7 +307,7 @@ async function finishOrder(id, userId, history) {
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
-  const response = await fetch(`${baseUrlProd}/v1/tansaction/deposit`, { 
+  const response = await fetch(`${baseUrlDev}/v1/tansaction/deposit`, { 
     method: "POST",
     body: JSON.stringify({ id: id, user_id: userId, history: history })
   });

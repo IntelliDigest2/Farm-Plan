@@ -26,7 +26,7 @@ const Transaction = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlProd}/v1/transaction/transactions`, {
+    fetch(`${baseUrlDev}/v1/transaction/transactions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

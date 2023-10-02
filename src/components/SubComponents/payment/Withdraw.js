@@ -33,7 +33,7 @@ const PinComponent = (userID) => {
   const handleSetPin = async () => {
     if (pin === confirmationPin) {
 
-      const response = await fetch(`${baseUrlProd}/v1/auth/set-pin`, {
+      const response = await fetch(`${baseUrlDev}/v1/auth/set-pin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,8 +104,8 @@ const formatCardInfo = (cardNumber, bankName) => {
 useEffect(() => {
   const fetchData = async () => {
     const endpoint = props.profile.region === 'Africa'
-      ? `${baseUrlProd}/v1/payment/transfer-recipient-info`
-      : `${baseUrlProd}/v1/payment/connected-account-info`;
+      ? `${baseUrlDev}/v1/payment/transfer-recipient-info`
+      : `${baseUrlDev}/v1/payment/connected-account-info`;
 
     try {
       const response = await fetch(endpoint, {
@@ -137,7 +137,7 @@ useEffect(() => {
     // ...
 
     // Check if the user has set a PIN
-    fetch(`${baseUrlProd}/v1/auth/has-pin`, {
+    fetch(`${baseUrlDev}/v1/auth/has-pin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -7,7 +7,7 @@ import "./Reservations.css"
 import moment from 'moment';
 
 import { connect } from "react-redux";
-import ConfirmDelivery from '../../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/ConfirmDelivery';
+import ConfirmDeliveryFarmer from '../../Pages/Account/Farm/Marketplace/ProduceComp/Icons/ConfirmDeliveryFarmer';
 
 const ReservationsOther = (props) => {
   const [reservations, setReservations] = useState([]);
@@ -20,7 +20,7 @@ const ReservationsOther = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlProd}/v1/payment/track-reservations-other`, {
+    fetch(`${baseUrlDev}/v1/payment/track-reservations-other`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +81,16 @@ const ReservationsOther = (props) => {
                     <div className="transaction-id-content">
                       <span className="operation">{moment(item.createdAt).format("D MMM YYYY")}</span>
                       <span className="transaction-id">{item.trackingID}</span>
-                             
+                      {(item.status == "PENDING") ? (
+                        <ConfirmDeliveryFarmer
+                          trackingID={item.trackingID}
+                          deliveryDuration={item.deliveryDuration}
+                        />
+                      ) : (
+                        <></>
+                      )}
+
+    
                     </div>
                   </Badge>
                 </ListGroup.Item>

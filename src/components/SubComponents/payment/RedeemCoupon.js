@@ -3,6 +3,7 @@ import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap"
 import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Wallet.css"
+import Swal from 'sweetalert2';
 
 import logo from "../../../images/Revolut-logo-1.gif"
 
@@ -35,7 +36,7 @@ const CouponComponent = (props) => {
 
     // const baseUrl = process.env.REACT_APP_BASE_URL_TEST;
 
-    fetch(`${baseUrlProd}/v1/coupon/balance`, {
+    fetch(`${baseUrlDev}/v1/coupon/balance`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ const CouponComponent = (props) => {
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlProd}/v1/coupon/redeem-coupon`, {
+    fetch(`${baseUrlDev}/v1/coupon/redeem-coupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,9 +73,19 @@ const CouponComponent = (props) => {
       .then(data => {
         // Reset the form fields
         setCouponCode('');
+        Swal.fire({
+          title: 'Success!',
+          text: 'Coupon was redeemed succesfully',
+          icon: 'success',
+        });
       })
       .catch(error => {
         console.error('Error transferring funds:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong. This coupon have reached the maximum limit or check the coupon code and try again ',
+          icon: 'error',
+        });
       })
       .finally(() => {
         setIsLoadingBalance(false); // Mark balance loading as complete, regardless of success or error
