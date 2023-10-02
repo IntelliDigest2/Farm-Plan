@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Dropdown } from "../../../../../SubComponents/Dropdown";
 import MenuSection from "../../../Personal/Marketplace/MealPlanComp/Search/menuSection";
 import MealType from "../../../Personal/Marketplace/MealPlanComp/Search/mealType";
@@ -39,13 +39,7 @@ function AddMealForm_restaurant(props) {
 		foodItemApi(query, setResponse);
 	}, [query]);
 
-	const setFormToDefualt = () => {
-		setMealName("");
-		setMealDescription("");
-		setMealPrice("");
-		setMealCurrency("$");
-		setMenuSection("Any");
-	};
+	const formRef = useRef(null);
 
 	//saves recipe to saved meal list
 	const [save, setSave] = useState(true);
@@ -219,18 +213,7 @@ function AddMealForm_restaurant(props) {
 							data={group.ingredientUnit}
 							// data={local.measure}
 							required
-							items={[
-								"g",
-								"kg",
-								"pcs",
-								"/",
-								"mL",
-								"L",
-								"/",
-								"tsp",
-								"tbsp",
-								"cups",
-							]}
+							items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
 							function={(e) => handleIngredientUnit(index, e)}
 						/>
 					</Col>
@@ -258,17 +241,19 @@ function AddMealForm_restaurant(props) {
 	// });
 
 	//trigger this when editing/deleting items
-	// const [update, setUpdate] = useState(0);
-	// const forceUpdate = () => {
-	// 	setUpdate(update + 1);
-	// };
+	const [update, setUpdate] = useState(0);
+	const forceUpdate = () => {
+		setUpdate(update + 1);
+	};
 
 	const uploadImage = async () => {
 		const formData = new FormData();
 		formData.append("file", image);
 		formData.append("upload_preset", "upylhe4l");
 		formData.append("cloud_name", "dghm4xm7k");
-
+		// formData.append("resize", "fill");
+		// formData.append("width", "500");
+		// formData.append("height", "500");
 		try {
 			const response = await fetch(
 				"https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",
@@ -309,7 +294,7 @@ function AddMealForm_restaurant(props) {
 			},
 		};
 
-		setCreateMenuLoading(true);
+		// setCreateMenuLoading(true);
 
 		uploadImage()
 			.then((resp) => {
@@ -323,9 +308,9 @@ function AddMealForm_restaurant(props) {
 				props.createMenu(data);
 			})
 			.then((resp) => {
-				setCreateMenuLoading(false);
 				submitNotification("Success", `Dish has been added to menu!`);
-				setFormToDefualt();
+				setCreateMenuLoading(false);
+				// formRef.current.reset();
 			})
 			.catch((err) => {
 				console.log(err);
@@ -336,7 +321,12 @@ function AddMealForm_restaurant(props) {
 		// props.addToShoppingList(data);
 	};
 
-	useEffect(() => {}, [createMenuLoading]);
+	console.log(menuSection, `this is the menusection set`);
+
+	const handleMenuSection = (value) => {
+		console.log(value, `this is wat was passed`);
+		console.log(value, `this is wat was passed`);
+	};
 
 	const menuSections = [
 		"Any",

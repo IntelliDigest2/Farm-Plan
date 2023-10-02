@@ -12,20 +12,47 @@ import ListSubheader from "@mui/material/ListSubheader";
 export default function MealsBoxRecipe(props) {
 
   //console.log("let fetch what weekly props is ==> ", props)
+  console.log(props.meals,`these are all the menus`)
+
+  const mealIngredients = (ingredients)=>{
+   return ingredients.map((ingredient)=>{
+      return <span>{ingredient.ingredientName} {ingredient.ingredientQuantity}{ingredient.ingredientUnit}</span>
+    })
+  }
   return (
     <>
-      {props.meals.map((newMeal, index) => (
+      {props.meals.map((meal, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
-          <div className="ingredients">
+          <div >
              <List
               key={`ingrs${index}`}
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
               <ListSubheader className="heading">
-                <div className="meal-name">{newMeal.meal}</div>
-                {newMeal.mealType ? (
-                  <div className="meal-type">{newMeal.mealType}</div>
-                ) : null}
+                <div className="meal-name">{meal.meal}</div>
+                </ListSubheader>
+                <ListItem>
+                <div style={{display: "flex"}}>
+                  <div>
+                <img style={{display: 'cover'}} src={meal.imageURL} alt={meal.meal} ></img>
+
+                  </div>
+                  <div style={{padding: '10px'}}>
+                  <div className="meal-type"> {meal.menuSection}</div>
+                  {/* <div >Meal Id: {meal.id}</div> */}
+                 <div>
+                  Ingredients:
+                 { mealIngredients(meal.ingredients)}
+                 </div>
+                 
+                  <div >Meal Description: {meal.mealDescription}</div>
+                  <div >Meal Price: {meal.mealPrice}</div>
+                  </div>
+                </div>
+                </ListItem>
+                
+                  
+                
                 <div className="icons">
                   {/* <Delete
                     value={props.value}
@@ -44,9 +71,9 @@ export default function MealsBoxRecipe(props) {
                     />
                   )} */}
                 </div>
-              </ListSubheader>
+             
 
-              {newMeal.ingredients.map((ingredient, index) => (
+              {/* {newMeal.ingredients.map((ingredient, index) => (
                 <ListItem
                   key={`item${index}`}
                   className="list"
@@ -65,10 +92,10 @@ export default function MealsBoxRecipe(props) {
                     </>
                   )}
                 </ListItem>
-              ))}
-              <ListItem>
+              ))} */}
+              {/* <ListItem>
                 {newMeal.url ? <a href={newMeal.url}>{newMeal.url}</a> : null}
-              </ListItem>
+              </ListItem> */}
             </List>
           </div>
         </div>
