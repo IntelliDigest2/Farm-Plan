@@ -14,7 +14,7 @@ const ConnectAccount = ( props ) => {
 
   const handleSuccess = async (accountID) => {
     try {
-        const response = await fetch(`${baseUrlDev}/v1/payment/create-account-link`, {
+        const response = await fetch(`${baseUrlProd}/v1/payment/create-account-link`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const ConnectAccount = ( props ) => {
   const handleSubmit = async (e) => {
 
     try {
-      const response = await fetch(`${baseUrlDev}/v1/payment/connect-stripe-account`, {
+      const response = await fetch(`${baseUrlProd}/v1/payment/connect-stripe-account`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

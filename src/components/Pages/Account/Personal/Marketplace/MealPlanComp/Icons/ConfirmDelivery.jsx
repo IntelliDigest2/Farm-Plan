@@ -30,7 +30,7 @@ function ConfirmDelivery(props) {
       trackingID: props.trackingID,
     };
     
-    await fetch(`${baseUrlDev}/v1/payment/confirm-delivery`, {
+    await fetch(`${baseUrlProd}/v1/payment/confirm-delivery`, {
 
       method: 'POST', 
       body: JSON.stringify(transferData),

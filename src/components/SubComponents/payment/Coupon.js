@@ -36,7 +36,7 @@ const CouponComponent = (props) => {
 
     // const baseUrl = process.env.REACT_APP_BASE_URL_TEST;
 
-    fetch(`${baseUrlDev}/v1/transaction/balance`, {
+    fetch(`${baseUrlProd}/v1/transaction/balance`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const CouponComponent = (props) => {
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlDev}/v1/coupon/create-coupon`, {
+    fetch(`${baseUrlProd}/v1/coupon/create-coupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const CouponComponent = (props) => {
     };
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlDev}/v1/coupon/redeem-coupon`, {
+    fetch(`${baseUrlProd}/v1/coupon/redeem-coupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

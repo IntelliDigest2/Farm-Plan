@@ -534,6 +534,7 @@ const addToList = () => {
                 <div style={{ marginLeft: "20px" }}>
                   
                 </div>
+                
                 <div className="icons">
                 
                   <Tooltip title="Add to cart">

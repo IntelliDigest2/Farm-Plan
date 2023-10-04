@@ -26,7 +26,7 @@ const Transaction = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlDev}/v1/transaction/transactions`, {
+    fetch(`${baseUrlProd}/v1/transaction/transactions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const Transaction = (props) => {
                       <span className={`item-operation ${item.type === "Debit" ? "debit" : "credit"}`}>
                         {item.type}
                       </span>
-                      <span className="item-amount">£{item.amount}</span>
+                      <span className="item-amount">{item.currency}{item.amount}</span>
                     </div>
                     <div className="date">
                       {moment(item.createdAt).format("D MMM YYYY [at] HH:mm")}

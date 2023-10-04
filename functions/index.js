@@ -24,9 +24,7 @@ if (useEmulator === "development") {
 	console.log(`i am connected to the local`);
 } else {
 	admin.initializeApp();
-	// console.log(`====================`);
-	// console.log(`i am connected to the live firestore`);
-	// console.log(`--------------------------------------------------`);
+	console.log(`i am connected to the live firestore`);
 }
 
 const fireStoreDB = admin.firestore();
@@ -423,6 +421,7 @@ sendFarmersNotification.use(
 			// -----------------------------------
 			"http://localhost:3000", //this is just a sample eg http://worldfoodtracker.com/
 			"http://worldfoodtracker.com", //another example incase it has two links
+			"https://worldfoodtracker.com", //another example incase it has two linkss
 		],
 
 		methods: ["GET", "PUT", "POST"],
@@ -467,7 +466,8 @@ getFarmersInLocationWithProducts.use(
 	cors({
 		origin: [
 			"http://localhost:3000", //this is just a sample eg http://worldfoodtracker.com/
-			"http://worldfoodtracker.com", //another example incase it has two links
+			"https://worldfoodtracker.com", //another example incase it has two links
+			// "http://worldfoodtracker.com"
 		],
 
 		methods: ["GET", "PUT", "POST"],

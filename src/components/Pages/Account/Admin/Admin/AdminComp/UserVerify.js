@@ -80,7 +80,7 @@ const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
   
   const sendEmail = (email, message) => {
     try {
-        const response = fetch(`${baseUrlDev}/v1/auth/send-email`, {
+        const response = fetch(`${baseUrlProd}/v1/auth/send-email`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

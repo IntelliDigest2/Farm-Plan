@@ -33,7 +33,7 @@ function ConfirmDelivery(props) {
 
     console.log("duration", transferData)
     
-    await fetch(`${baseUrlDev}/v1/payment/confirm-delivery-farmer`, {
+    await fetch(`${baseUrlProd}/v1/payment/confirm-delivery-farmer`, {
 
       method: 'POST', 
       body: JSON.stringify(transferData),

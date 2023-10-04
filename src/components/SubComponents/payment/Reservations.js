@@ -20,7 +20,7 @@ const Reservations = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlDev}/v1/payment/track-reservations`, {
+    fetch(`${baseUrlProd}/v1/payment/track-reservations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,12 +64,14 @@ const Reservations = (props) => {
                       <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
                         {item.status || "pending"}
                       </span>
-                      <span className="item-amount">${item.totalAmount}</span>
+                      <span className="item-amount">
+                        {item.currency}{item.convertedTotalAmount}{' '}
+                      </span>
                     </div>
                     <div className="cart-items">
                       {item.cartItems.map((cartItem, cartIndex) => (
                         <div key={cartIndex}>
-                          {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - ${cartItem.price * cartItem.quantity}
+                          {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - {item.currency}{cartItem.convertedPrice * cartItem.quantity}
                         </div>
                       ))}
                     </div>

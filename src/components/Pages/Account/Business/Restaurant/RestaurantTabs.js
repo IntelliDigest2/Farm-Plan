@@ -136,6 +136,55 @@ export function Environment({ setShow, setChooseModal }) {
   );
 }
 
+export function Funds() {
+	return (
+		<>
+			<IconButton
+				title="Transfer voucher or deposit funds."
+				icon="wallet"
+				label="Wallet"
+				color="turquoise"
+				goTo="/wallet"
+			/>
+			<IconButton
+				title="View your transaction history."
+				icon="transactions"
+				label="Transactions"
+				color="yellow"
+				goTo="/transactions"
+			/>
+			<IconButton
+				title="Create a coupon."
+				icon="coupon"
+				label="Create Coupon"
+				color="purple"
+				goTo="/create-coupon"
+			/>
+			<IconButton
+				title="Redeem a coupon."
+				icon="redeem"
+				label="Redeem Coupon"
+				color="cyan"
+				goTo="/redeem-coupon"
+			/>
+			<IconButton
+				title="View your transaction history."
+				icon="list"
+				label="View My Coupons"
+				color="orange"
+				goTo="/coupon-transactions"
+			/>
+			<IconButton
+				title="Withdraw fund from your wallet."
+				icon="list"
+				label="Withdraw Fund"
+				color="green"
+				goTo="/withdraw-funds"
+			/>
+		</>
+	);
+}
+
 export function FSSP() {
   return (
     <>

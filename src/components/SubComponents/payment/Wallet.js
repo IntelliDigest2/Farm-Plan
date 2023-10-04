@@ -46,7 +46,7 @@ const WalletComponent = (props) => {
 
   const handleSuccess = () => {
     try {
-        const response = fetch(`${baseUrlDev}/v1/transaction/deposit-paystack`, {
+        const response = fetch(`${baseUrlProd}/v1/transaction/deposit-paystack`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -109,7 +109,7 @@ const WalletComponent = (props) => {
 
     // const baseUrl = process.env.REACT_APP_BASE_URL_TEST;
 
-    fetch(`${baseUrlDev}/v1/transaction/balance`, {
+    fetch(`${baseUrlProd}/v1/transaction/balance`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ const WalletComponent = (props) => {
     console.log("transferrData", transferData)
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlDev}/v1/transaction/transfer`, {
+    fetch(`${baseUrlProd}/v1/transaction/transfer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

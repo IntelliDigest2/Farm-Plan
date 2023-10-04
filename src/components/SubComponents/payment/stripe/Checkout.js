@@ -52,7 +52,7 @@ export default function CheckoutForm( props ) {
 
   const handleSuccess = async () => {
     try {
-        const response = await fetch(`${baseUrlDev}/v1/transaction/deposit`, {
+        const response = await fetch(`${baseUrlProd}/v1/transaction/deposit`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

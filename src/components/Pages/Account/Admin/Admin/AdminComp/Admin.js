@@ -146,9 +146,9 @@ function Admin(props) {
 						</Card>
 					</Accordion>
 				)))}	
-				<div className="admin_paginator">
+				{/* <div className="admin_paginator">
 					<Paginator />
-				</div>
+				</div> */}
 				</main>
 		</div>
 		</>
