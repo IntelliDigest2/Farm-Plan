@@ -64,18 +64,20 @@ const Reservations = (props) => {
                       <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
                         {item.status || "pending"}
                       </span>
-                      <span className="item-amount">${item.totalAmount}</span>
+                      <span className="item-amount">
+                        {item.currency}{item.convertedTotalAmount}{' '}
+                      </span>
                     </div>
                     <div className="cart-items">
                       {item.cartItems.map((cartItem, cartIndex) => (
                         <div key={cartIndex}>
-                          {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - ${cartItem.price * cartItem.quantity}
+                          {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - {item.currency}{cartItem.convertedPrice * cartItem.quantity}
                         </div>
                       ))}
                     </div>
 
                     <div className="date">
-                      {`Delivery due in ${moment(item.deliveryDueDate).fromNow(true)}`}
+                      {`Estimated Delivery is in ${moment(item.deliveryDueDate).fromNow(true)}`}
                     </div>
                   </div>
                   </div>

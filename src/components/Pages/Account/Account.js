@@ -252,10 +252,10 @@ const AccountType = (props) => {
 						<TabPanel value={props.value} index={1} dir={props.theme.direction}>
 							<Farm.Environment />
 						</TabPanel>
-						<TabPanel value={props.value} index={1} dir={props.theme.direction}>
+						<TabPanel value={props.value} index={2} dir={props.theme.direction}>
 							<Farm.Funds />
 						</TabPanel>
-						<TabPanel value={props.value} index={2} dir={props.theme.direction}>
+						<TabPanel value={props.value} index={3} dir={props.theme.direction}>
 							<Farm.FSSP />
 						</TabPanel>
 					</SwipeableViews>
@@ -266,18 +266,41 @@ const AccountType = (props) => {
 			return (
 				<>
 					<TabList
+						className={isMobile ? classes.scrollableTabList : classes.tabList}
 						TabIndicatorProps={{
 							style: {
 								backgroundColor: Colors.brandGreen,
 							},
 						}}
-						variant="standard"
+						variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
 						onChange={props.handleChange}
-						centered
+						centered={!isMobile} // Centered tabs on larger screens
 					>
-						<Tab disableRipple label="Food" value="0" />
-						<Tab disableRipple label="Environment" value="1" />
-						<Tab disableRipple label="FSSP" value="2" />
+						<Tab 
+							disableRipple 
+							label="Food" 
+							value="0" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple 
+							label="Environment" 
+							value="1" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple 
+							label="Funds" 
+							value="2" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+
+						/>
+						<Tab 
+							disableRipple 
+							label="FSSP" 
+							value="3" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
 					</TabList>
 					<SwipeableViews
 						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -298,6 +321,9 @@ const AccountType = (props) => {
 							/>
 						</TabPanel>
 						<TabPanel value={props.value} index={2} dir={props.theme.direction}>
+							<Farm.Funds />
+						</TabPanel>
+						<TabPanel value={props.value} index={3} dir={props.theme.direction}>
 							<Business.FSSP />
 						</TabPanel>
 					</SwipeableViews>
@@ -309,18 +335,40 @@ const AccountType = (props) => {
 			return (
 				<>
 					<TabList
+						className={isMobile ? classes.scrollableTabList : classes.tabList}
 						TabIndicatorProps={{
 							style: {
 								backgroundColor: Colors.brandGreen,
 							},
 						}}
-						variant="standard"
+						variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
 						onChange={props.handleChange}
-						centered
+						centered={!isMobile} // Centered tabs on larger screens
 					>
-						<Tab disableRipple label="Food" value="0" />
-						<Tab disableRipple label="Environment" value="1" />
-						<Tab disableRipple label="FSSP" value="2" />
+						<Tab 
+							disableRipple 
+							label="Food" 
+							value="0" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple 
+							label="Environment" 
+							value="1" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple 
+							label="Funds" 
+							value="2" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple 
+							label="FSSP" 
+							value="3" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
 					</TabList>
 					<SwipeableViews
 						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -341,6 +389,9 @@ const AccountType = (props) => {
 							/>
 						</TabPanel>
 						<TabPanel value={props.value} index={2} dir={props.theme.direction}>
+							<Farm.Funds />
+						</TabPanel>
+						<TabPanel value={props.value} index={3} dir={props.theme.direction}>
 							<Restaurant.FSSP />
 						</TabPanel>
 					</SwipeableViews>
@@ -352,16 +403,28 @@ const AccountType = (props) => {
 			return (
 				<>
 					<TabList
+						className={isMobile ? classes.scrollableTabList : classes.tabList}
 						TabIndicatorProps={{
 							style: {
 								backgroundColor: Colors.brandGreen,
 							},
 						}}
-						variant="standard"
+						variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
 						onChange={props.handleChange}
-						centered
+						centered={!isMobile} // Centered tabs on larger screens
 					>
-						<Tab disableRipple label="Items" value="0" />
+						<Tab 
+							disableRipple 
+							label="Items" 
+							value="0" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple 
+							label="Funds" 
+							value="1" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
 					</TabList>
 					<SwipeableViews
 						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -373,6 +436,9 @@ const AccountType = (props) => {
 								setShow={props.setShow}
 								setChooseModal={props.setChooseModal}
 							/>
+						</TabPanel>
+						<TabPanel value={props.value} index={1} dir={props.theme.direction}>
+							<Farm.Funds />
 						</TabPanel>
 					</SwipeableViews>
 				</>
@@ -414,19 +480,45 @@ const AccountType = (props) => {
 			return (
 				<>
 					<TabList
+						className={isMobile ? classes.scrollableTabList : classes.tabList}
 						TabIndicatorProps={{
 							style: {
 								backgroundColor: Colors.brandGreen,
 							},
 						}}
-						variant="standard"
+						variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
 						onChange={props.handleChange}
-						centered
+						centered={!isMobile} // Centered tabs on larger screens
 					>
-						<Tab disableRipple label="Food Business" value="0" />
-						<Tab disableRipple label="Research" value="1" />
-						<Tab disableRipple label="Environment" value="2" />
-						<Tab disableRipple label="FSSP" value="3" />
+						<Tab 
+							disableRipple 
+							label="Food Business" 
+							value="0" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple 
+							label="Research" 
+							value="1" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+							/>
+						<Tab 
+							disableRipple 
+							label="Environment" 
+							value="2" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+							/>
+						<Tab 
+							disableRipple 
+							label="Funds" 
+							value="3" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple label="FSSP" 
+							value="4" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
 					</TabList>
 					<SwipeableViews
 						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -453,6 +545,9 @@ const AccountType = (props) => {
 							/>
 						</TabPanel>
 						<TabPanel value={props.value} index={3} dir={props.theme.direction}>
+							<Farm.Funds />
+						</TabPanel>
+						<TabPanel value={props.value} index={4} dir={props.theme.direction}>
 							<Schools.FSSP />
 						</TabPanel>
 					</SwipeableViews>
@@ -464,15 +559,15 @@ const AccountType = (props) => {
 			return (
 				<>
 					<TabList
-						className={classes.tabList} // Add this line to apply the custom style
+						className={isMobile ? classes.scrollableTabList : classes.tabList}
 						TabIndicatorProps={{
 							style: {
 								backgroundColor: Colors.brandGreen,
 							},
 						}}
-						variant="standard"
+						variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
 						onChange={props.handleChange}
-						centered
+						centered={!isMobile} // Centered tabs on larger screens
 					>
 						<Tab 
 							disableRipple 
@@ -482,8 +577,14 @@ const AccountType = (props) => {
 							/>
 						<Tab 
 							disableRipple 
+							label="Funds" 
+							value="1" 
+							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+						/>
+						<Tab 
+							disableRipple 
 							label="FSSP" 
-							value="1"
+							value="2"
 							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab} 
 							/>
 					</TabList>
@@ -498,6 +599,9 @@ const AccountType = (props) => {
 								setChooseModal={props.setChooseModal}
 								profile={props.profile}
 							/>
+						</TabPanel>
+						<TabPanel value={props.value} index={1} dir={props.theme.direction}>
+							<Farm.Funds />
 						</TabPanel>
 						<TabPanel value={props.value} index={2} dir={props.theme.direction}>
 							<Shops.FSSP />

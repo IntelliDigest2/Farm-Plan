@@ -5,6 +5,7 @@ import "../Button.css";
 import "./Wallet.css"
 
 import logo from "../../../images/Revolut-logo-1.gif"
+import Swal from 'sweetalert2';
 
 import RevolutPay from "./RevolutPay"
 
@@ -75,9 +76,19 @@ const CouponComponent = (props) => {
         // Reset the form fields
         setAmount('');
         setRecipient('');
+        Swal.fire({
+          title: 'Success!',
+          text: 'Coupon has been created',
+          icon: 'success',
+        });
       })
       .catch(error => {
         console.error('Error transferring funds:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong. Please check your wallet balance and try again',
+          icon: 'error',
+        });
       })
       .finally(() => {
         setIsLoadingBalance(false); // Mark balance loading as complete, regardless of success or error

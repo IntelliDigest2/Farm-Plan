@@ -10,6 +10,7 @@ import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
 import { addToFarmerSalesData, addToSalesData } from "../../../../../../../store/actions/dataActions";
 
+import Swal from 'sweetalert2';
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function ConfirmDelivery(props) {
@@ -65,6 +66,7 @@ function ConfirmDelivery(props) {
         // Dispatch addToSales action for each item
         props.addToSales(salesData);
         props.addToFarmerSalesData(salesData);
+        
       });
 
       const data = {
@@ -73,9 +75,20 @@ function ConfirmDelivery(props) {
         status: "COMPLETED",
       };
       props.editPurchaseStatusOnFarmer(data);
+
+      Swal.fire({
+        title: 'Success!',
+        text: 'Item marked as delivered',
+        icon: 'success',
+      });
     })
     .catch((err) => {
       console.log(err.message);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong. Please try again or contact our support at admin@intellidigest.com',
+        icon: 'error',
+      });
     })
   
  };

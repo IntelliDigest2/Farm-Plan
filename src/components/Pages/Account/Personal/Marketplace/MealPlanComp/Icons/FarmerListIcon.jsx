@@ -4,7 +4,10 @@ import { Modal } from "react-bootstrap";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import PageviewIcon from '@mui/icons-material/Pageview';
+import CircularProgress from '@mui/material/CircularProgress';
+
 import {FarmersList} from "./FarmersList"
+import Swal from 'sweetalert2';
 
 //takes props value, meal(name), ingredients, id, forceUpdate and whether or not it is saved
 function FarmerListIcon(props) {
@@ -15,11 +18,12 @@ function FarmerListIcon(props) {
   const [city, setCity] = useState(props.city)
   //shows edit modal
   const [show, setShow] = useState(false);
-
-  console.log("testtt", cart, city)
+  const [loading, setLoading] = useState(false); // Add loading state
 
    // ...
    const fetchFarmers = async () => {
+    setLoading(true); // Set loading to true when the button is clicked
+
     await fetch('https://us-central1-itracker-development.cloudfunctions.net/getFarmersInLocationWithProducts/farmers', {
        method: 'POST',
        body: JSON.stringify({
@@ -33,10 +37,18 @@ function FarmerListIcon(props) {
        .then((response) => response.json())
        .then((data) => {
           setList(data.data);
-          console.log("this are avilable items", data.data)
+          setLoading(false); // Set loading back to false when data is received
+          setShow(true);
+  
+          console.log("this are available items", data.data)
        })
        .catch((err) => {
           console.log(err.message);
+          Swal.fire({
+            title: 'Success!',
+            text: 'Item marked as delivered',
+            icon: 'success',
+          });
        });
  };
 
@@ -49,10 +61,16 @@ function FarmerListIcon(props) {
           sx={{ ml: 2 }}
           onClick={() => {
             fetchFarmers();
-            setShow(true);
           }}
+          disabled={loading} // Disable the button when loading is true
+
         >
-          <PageviewIcon fontSize="inherit" />
+          {loading ? (
+            // Show a loading indicator while loading is true
+            <CircularProgress size={24} />
+          ) : (
+            <PageviewIcon fontSize="inherit" />
+          )}        
         </IconButton>
       </Tooltip>
       <FarmersList

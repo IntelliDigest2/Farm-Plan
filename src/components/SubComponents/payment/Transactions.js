@@ -64,7 +64,7 @@ const Transaction = (props) => {
                       <span className={`item-operation ${item.type === "Debit" ? "debit" : "credit"}`}>
                         {item.type}
                       </span>
-                      <span className="item-amount">£{item.amount}</span>
+                      <span className="item-amount">{item.currency}{item.amount}</span>
                     </div>
                     <div className="date">
                       {moment(item.createdAt).format("D MMM YYYY [at] HH:mm")}

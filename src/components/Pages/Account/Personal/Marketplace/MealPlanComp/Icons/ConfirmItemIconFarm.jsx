@@ -28,6 +28,7 @@ function ConfirmItemIconFarm(props) {
       farmerRef: props.farmerRef,
       status: "ACCEPTED",
       item: props.item,
+      currency: props.currency,
       farmerID: props.farmerID,
       receiversID: props.receiversID,
       deliveryDueDate: props.deliveryDueDate

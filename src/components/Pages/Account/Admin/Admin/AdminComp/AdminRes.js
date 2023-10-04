@@ -147,9 +147,9 @@ function Admin(props) {
 						</Card>
 					</Accordion>
 				)))}	
-				<div className="admin_paginator">
+				{/* <div className="admin_paginator">
 					<Paginator />
-				</div>
+				</div> */}
 				</main>
 				{/* <div className="admin_right_section">
 					<div className="admin_calendar_mock"></div>
