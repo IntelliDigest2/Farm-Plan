@@ -68,13 +68,13 @@ export default function CommerceTab() {
 
         <Tab
 					eventKey="shopscan"
-					title={t("description.shopping_list")}
+					title="Meal Plan Shopping List"
 					className="mealtab"
 				>
 					<CalendarShop value={value} onChange={setValue} getItems={getItems} />
 				</Tab>
 
-        <Tab eventKey="buy" title="Buy Item" className="mealtab">
+        <Tab eventKey="buy" title="Add and Shop" className="mealtab">
           <Buy />
         </Tab>
       </Tabs> 
