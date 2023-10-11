@@ -154,7 +154,7 @@ const CouponComponent = (props) => {
               <Modal.Title>Redeem</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p>Are you sure you want to coninue to redeem this coupon?</p>
+              <p>Are you sure you want to continue to redeem this coupon?</p>
             </Modal.Body>
             <Modal.Footer>
               <Button className="grey-btn" onClick={handleModalRedeemClose}>
