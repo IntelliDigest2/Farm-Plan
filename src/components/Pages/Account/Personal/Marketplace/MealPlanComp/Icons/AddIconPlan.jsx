@@ -9,6 +9,19 @@ import { setSelectedRecipe } from "../../../../../../../store/actions/dataAction
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function AddIconPlan(props) {
 
+  const addOtherMeal = () => {
+    const upload = {
+      meal_name: props.meal_name,
+      meal_type: props.meal_type,
+      ingredients: props.ingredients,
+      total_daily: props.total_daily,
+      total_nutrients: props.total_nutrients,
+      recipe_yield: props.recipe_yield,
+    }
+
+    props.setSelectedRecipe(upload)
+  }
+
   return (
     <>
       <Tooltip title="Add to Meal Plan">
@@ -16,7 +29,7 @@ function AddIconPlan(props) {
           aria-label="Add to Meal Plan"
           sx={{ ml: 2 }}
           onClick={() => {
-            props.setSelectedRecipe(props.recipe);
+            addOtherMeal();
           }}
         >
           <AddBoxIcon fontSize="40" />

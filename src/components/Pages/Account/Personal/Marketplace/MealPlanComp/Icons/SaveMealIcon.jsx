@@ -2,7 +2,7 @@ import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
+import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 
@@ -17,17 +17,17 @@ function SaveMealIcon(props) {
       week: props.value.format("w") - 1,
       day: props.value.format("DD"),
       upload: {
-        meal: props.meal,
-        mealType: props.mealType,
+        meal_name: props.meal_name,
+        meal_type: props.meal_type,
         ingredients: props.ingredients,
         url: props.url,
-        totalNutrients: props.totalNutrients,
-        totalDaily: props.totalDaily,
-        yield: props.yield,
-        nonNativeData: true,
+        total_nutrients: props.total_nutrients,
+        total_daily: props.total_daily,
+        recipe_yield: props.recipe_yield,
+        non_native_data: true,
       },
     };
-    props.createRecipe(data);
+    props.createSavedMeal(data);
     submitNotification("Success", "Added to Saved Meals!");
   };
 
@@ -56,7 +56,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createRecipe: (data) => dispatch(createRecipe(data)),
+    createSavedMeal: (data) => dispatch(createSavedMeal(data)),
   };
 };
 

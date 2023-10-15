@@ -106,49 +106,49 @@ function FullCalendarApp(props) {
     //sets a new item object in the array for every document
     props.data.forEach((doc) => {
       // id is the docref for deletion
-      var mealName = doc.meal;
+      var meal_name = doc.meal_name;
       var ingredients = doc.ingredients;
       var id = doc.id;
-      var mealType = doc.mealType;
+      var meal_type = doc.meal_type;
       var url = doc.url;
-      var totalNutrients = doc.totalNutrients;
-      var totalDaily = doc.totalDaily;
-      var recipeYield = doc.yield;
+      var total_nutrients = doc.total_nutrients;
+      var total_daily = doc.total_daily;
+      var recipe_yield = doc.recipe_yield;
       let nn;
-      if (doc.nonNativeData) {
-        nn = doc.nonNativeData;
+      if (doc.non_native_data) {
+        nn = doc.non_native_data;
       } else {
         nn = false;
       }
 
-      if (mealType == 'breakfast') {
+      if (meal_type == 'breakfast') {
         setBreakfast((meals) => [
           ...meals,
           {
-            meal: mealName,
-            mealType: mealType,
+            meal_name: meal_name,
+            meal_type: meal_type,
             ingredients: ingredients,
             id: id,
             nn: nn,
             url: url,
-            totalNutrients: totalNutrients,
-            totalDaily: totalDaily,
-            recipeYield: recipeYield,
+            total_nutrients: total_nutrients,
+            total_daily: total_daily,
+            recipe_yield: recipe_yield,
           },
         ]);
       } else {
         setLunch((meals) => [
           ...meals,
           {
-            meal: mealName,
-            mealType: mealType,
+            meal_name: meal_name,
+            meal_type: meal_type,
             ingredients: ingredients,
             id: id,
             nn: nn,
             url: url,
-            totalNutrients: totalNutrients,
-            totalDaily: totalDaily,
-            recipeYield: recipeYield,
+            total_nutrients: total_nutrients,
+            total_daily: total_daily,
+            recipe_yield: recipe_yield,
           },
         ]);
       }
@@ -224,14 +224,14 @@ function FullCalendarApp(props) {
     for (let i = 0; i < newObjects.length; i++) {
       var e = {}
       //e['id'] = allMeals[count].id
-      e['title'] = allMeals[count].meal;
+      e['title'] = allMeals[count].meal_name;
       e['start'] = newObjects[i].start + T;
       e['end'] = newObjects[i].end + T;
       e['ingredients'] = allMeals[count].ingredients;
-      e['totalDaily'] = allMeals[count].totalDaily;
-      e['totalNutrients'] = allMeals[count].totalNutrients;
-      e['recipeYield'] = allMeals[count].recipeYield;
-      e['mealType'] = allMeals[count].mealType[0];
+      e['total_daily'] = allMeals[count].total_daily;
+      e['total_nutrients'] = allMeals[count].total_nutrients;
+      e['recipe_yield'] = allMeals[count].recipe_yield;
+      e['meal_type'] = allMeals[count].meal_type[0];
       e['nn'] = allMeals[count].nn;
       e['url'] = allMeals[count].url;
 
@@ -265,9 +265,9 @@ function FullCalendarApp(props) {
         // Skip the iteration if the item is undefined
         return;
       }
-      const mealType = item.mealType
+      const meal_type = item.meal_type
       const dayOfWeek = moment(item.start).format("dddd");
-      const matchingRecipe = otherMeals.find((recipe) => recipe.dayOfWeek === dayOfWeek && recipe.mealType == mealType);
+      const matchingRecipe = otherMeals.find((recipe) => recipe.dayOfWeek === dayOfWeek && recipe.meal_type == meal_type);
       
       //console.log("matching recipe", otherMeals)
 
@@ -276,15 +276,15 @@ function FullCalendarApp(props) {
         week: moment(item.start).format("w"),
         dayOfWeek: dayOfWeek,
         upload: {
-          meal: matchingRecipe ? matchingRecipe.mealName : item.title,
+          meal_name: matchingRecipe ? matchingRecipe.meal_name : item.title,
           ingredients: matchingRecipe ? matchingRecipe.ingredients : item.ingredients,
-          totalDaily: matchingRecipe ? matchingRecipe.totalDaily : item.totalDaily,
-          totalNutrients: matchingRecipe ? matchingRecipe.totalNutrients : item.totalNutrients,
-          recipeYield: matchingRecipe ? matchingRecipe.recipeYield : item.recipeYield,
-          mealType: matchingRecipe ? matchingRecipe.mealType : item.mealType,
+          total_daily: matchingRecipe ? matchingRecipe.total_daily : item.total_daily,
+          total_nutrients: matchingRecipe ? matchingRecipe.total_nutrients : item.total_nutrients,
+          recipe_yield: matchingRecipe ? matchingRecipe.recipe_yield : item.recipe_yield,
+          meal_type: matchingRecipe ? matchingRecipe.meal_type : item.meal_type,
           isEatOut: matchingRecipe ? matchingRecipe.isEatOut : false,
-          // nn: matchingRecipe ? matchingRecipe.recipe.nn : item.nn,
-          // url: matchingRecipe ? matchingRecipe.recipe.url : item.url,
+          nn: matchingRecipe ? matchingRecipe.recipe.nn : item.nn,
+          url: matchingRecipe ? matchingRecipe.recipe.url : item.url,
           start: item.start,
           end: item.end,
           day: moment(item.start).format("DD-MM-yyyy"),
@@ -294,7 +294,7 @@ function FullCalendarApp(props) {
   
       props.generateNewPlan(data);
 
-      //console.log("upload", data.upload)
+      // console.log("upload", data.upload)
     });
   
     submitNotificationPlan("Saving,..", "Please wait, Refresh when notification disappears!");
@@ -309,29 +309,28 @@ function FullCalendarApp(props) {
       //sets a new item object in the array for every document
       props.allPlan.forEach((doc) => {
         // id is the docref for deletion
-        var meal = doc.meal;
+        var meal_name = doc.meal_name;
         var ingredients = doc.ingredients;
-        var totalDaily = doc.totalDaily;
-        var totalNutrients = doc.totalNutrients;
-        var recipeYield = doc.recipeYield;
-        var mealType = doc.mealType[0]
+        var total_daily = doc.total_daily;
+        var total_nutrients = doc.total_nutrients;
+        var recipe_yield = doc.recipe_yield;
+        var meal_type = doc.meal_type[0]
         var nn = doc.nn;
-        //var url = doc.url;
+        var url = doc.url;
         var start = doc.start;
         var end = doc.end;
       
-  
         setNewPlan((meals) => [
           ...meals,
           {
-          title: meal,
+          title: meal_name,
           ingredients: ingredients,
-          totalDaily: totalDaily,
-          totalNutrients: totalNutrients,
-          recipeYield: recipeYield,
-          mealType: mealType,
+          total_daily: total_daily,
+          total_nutrients: total_nutrients,
+          recipe_yield: recipe_yield,
+          meal_type: meal_type,
           nn: nn,
-          //url: url,
+          url: url,
           start: start,
           end: end,
           },
@@ -354,8 +353,8 @@ function FullCalendarApp(props) {
     const handleAdd = async ()  => {
         const data = {
           upload: {
-            dayOfWeek: dayOfWeek,
-            restaurantName: restaurantName,
+            day_of_week: dayOfWeek,
+            restaurant_name: restaurantName,
             recipe: props.SelectedRecipe,
           }        
         };
@@ -397,13 +396,13 @@ function FullCalendarApp(props) {
   
     // Set the sorted meals in the state
     sortedMeals.forEach((doc) => {
-      const dayOfWeek = doc.dayOfWeek;
-      const mealName = doc.recipe.label;
+      const day_of_week = doc.day_of_week;
+      const meal_name = doc.recipe.meal_name;
       const ingredients = doc.recipe.ingredients;
-      const totalDaily = doc.recipe.totalDaily;
-      const totalNutrients = doc.recipe.totalNutrients;
-      const recipeYield = doc.recipe.yield;
-      const mealType = doc.recipe.mealType[0];
+      const total_daily = doc.recipe.total_daily;
+      const total_nutrients = doc.recipe.total_nutrients;
+      const recipe_yield = doc.recipe.recipe_yield;
+      const meal_type = doc.recipe.meal_type[0];
       const isEatOut = true
       // let mealType; 
 
@@ -415,13 +414,13 @@ function FullCalendarApp(props) {
       setOtherMeals((meals) => [
         ...meals,
         {
-          dayOfWeek: dayOfWeek,
-          mealName: mealName,
+          day_of_week: day_of_week,
+          meal_name: meal_name,
           ingredients: ingredients,
-          totalDaily: totalDaily,
-          totalNutrients: totalNutrients,
-          recipeYield: recipeYield,
-          mealType: mealType,
+          total_daily: total_daily,
+          total_nutrients: total_nutrients,
+          recipe_yield: recipe_yield,
+          meal_type: meal_type,
           isEatOut: isEatOut
           // nn: nn
         },
@@ -595,8 +594,8 @@ function FullCalendarApp(props) {
     <div>
       {otherMeals.map((meal) => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <p style={{ marginRight: '10px', fontWeight: 'bold' }}>{meal.dayOfWeek}</p>
-          <p>{meal.mealName}</p>
+          <p style={{ marginRight: '10px', fontWeight: 'bold' }}>{meal.day_of_week}</p>
+          <p>{meal.meal_name}</p>
         </div>
       ))}
     </div>

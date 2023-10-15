@@ -11,14 +11,14 @@ function SaveMealPlanIcon(props) {
   const handleSelect = async () => {
     const data = {
       upload: {
-        meal: props.meal,
-        mealType: props.mealType,
+        meal_name: props.meal_name,
+        meal_type: props.mealType,
         ingredients: props.ingredients,
         url: props.url,
-        totalNutrients: props.totalNutrients,
-        totalDaily: props.totalDaily,
-        yield: props.yield,
-        nonNativeData: true,
+        total_nutrients: props.totalNutrients,
+        total_daily: props.totalDaily,
+        recipe_yield: props.recipe_yield,
+        non_native_data: true,
       },
     };
     props.createMealPlannerData(data);

@@ -469,8 +469,10 @@ const addToList = () => {
                     <IconButton
                       aria-label="Add to cart"
                       sx={{ ml: 2 }}
-                      onClick={() => {
+                      onClick={(e) => {
+                        addToCart(ingr)
                         notify(ingr.data);
+                        e.target.disabled = true;
                       }}
                     >
                       <AddCircleOutlineIcon fontSize="25" />

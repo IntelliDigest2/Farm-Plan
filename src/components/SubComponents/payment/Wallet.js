@@ -37,7 +37,7 @@ const WalletComponent = (props) => {
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
-  const publicKeyPaystack = "pk_test_06ddf38e4db384a988baf4f9a563c864980c6741"
+  const publicKeyPaystack = "pk_live_6ebca5ec3370c215ded414dc7b70d568416e4c1a"
   const amount = amountDeposit * 100
   const email = props.profile.email
   const name = props.profile.firstName

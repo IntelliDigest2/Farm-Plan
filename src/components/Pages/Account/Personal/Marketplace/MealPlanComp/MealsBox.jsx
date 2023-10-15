@@ -24,9 +24,9 @@ export default function MealsBox(props) {
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
               <ListSubheader className="heading">
-                <div className="meal-name">{newMeal.meal}</div>
-                {newMeal.mealType ? (
-                  <div className="meal-type">{newMeal.mealType}</div>
+                <div className="meal-name">{newMeal.meal_name}</div>
+                {newMeal.meal_type ? (
+                  <div className="meal-type">{newMeal.meal_type}</div>
                 ) : null}
                 <div className="icons">
                   {/* <Delete
@@ -38,23 +38,23 @@ export default function MealsBox(props) {
                   {props.saved ? (
                     <Add
                       value={props.value}
-                      meal={newMeal.meal}
+                      meal_name={newMeal.meal_name}
                       ingredients={newMeal.ingredients}
-                      mealType={newMeal.mealType}
+                      meal_type={newMeal.meal_type}
                       id={newMeal.id}
                       onChange={props.onChange}
                       saved={props.saved}
-                      nonNativeData={newMeal.nonNativeData}
-                      totalDaily={newMeal.totalDaily}
-                      totalNutrients={newMeal.totalNutrients}
+                      non_native_data={newMeal.non_native_data}
+                      total_daily={newMeal.total_daily}
+                      total_nutrients={newMeal.total_nutrients}
                       url={newMeal.url}
-                      recipeYield={newMeal.recipeYield}
+                      recipe_yield={newMeal.recipe_yield}
                     />
                   ) : null}
                   {newMeal.nonNativeData ? null : (
                     <Edit
                       value={props.value}
-                      meal={newMeal.meal}
+                      meal_name={newMeal.meal_name}
                       ingredients={newMeal.ingredients}
                       id={newMeal.id}
                       forceUpdate={props.forceUpdate}
@@ -107,9 +107,9 @@ export default function MealsBox(props) {
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
               <ListSubheader className="heading">
-                <div className="meal-name">{newMeal.meal}</div>
-                {newMeal.mealType ? (
-                  <div className="meal-type">{newMeal.mealType}</div>
+                <div className="meal-name">{newMeal.meal_name}</div>
+                {newMeal.meal_type ? (
+                  <div className="meal-type">{newMeal.meal_type}</div>
                 ) : null}
                 <div className="icons">
                   <Delete
@@ -121,23 +121,23 @@ export default function MealsBox(props) {
                   {props.saved ? (
                     <Add
                       value={props.value}
-                      meal={newMeal.meal}
+                      meal_name={newMeal.meal_name}
                       ingredients={newMeal.ingredients}
-                      mealType={newMeal.mealType}
+                      meal_type={newMeal.meal_type}
                       id={newMeal.id}
                       onChange={props.onChange}
                       saved={props.saved}
-                      nonNativeData={newMeal.nonNativeData}
-                      totalDaily={newMeal.totalDaily}
-                      totalNutrients={newMeal.totalNutrients}
+                      non_native_data={newMeal.non_native_data}
+                      total_daily={newMeal.total_daily}
+                      total_nutrients={newMeal.total_nutrients}
                       url={newMeal.url}
-                      recipeYield={newMeal.recipeYield}
+                      recipe_yield={newMeal.recipe_yield}
                     />
                   ) : null}
-                  {newMeal.nonNativeData ? null : (
+                  {newMeal.non_native_data ? null : (
                     <Edit
                       value={props.value}
-                      meal={newMeal.meal}
+                      meal_name={newMeal.meal_name}
                       ingredients={newMeal.ingredients}
                       id={newMeal.id}
                       forceUpdate={props.forceUpdate}

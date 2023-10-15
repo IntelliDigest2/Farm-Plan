@@ -19,21 +19,21 @@ function Add(props) {
       if (props.nonNativeData) {
         // saved and non native
         setSelected({
-          meal: props.meal,
-          mealType: props.mealType,
+          meal_name: props.meal_name,
+          meal_type: props.meal_type,
           ingredients: props.ingredients,
           id: props.id,
-          nonNativeData: props.nonNativeData,
-          totalDaily: props.totalDaily,
-          totalNutrients: props.totalNutrients,
+          non_native_data: props.non_native_data,
+          total_daily: props.total_daily,
+          total_nutrients: props.total_nutrients,
           url: props.url,
-          yield: props.recipeYield,
+          recipe_yield: props.recipe_yield,
         });
       } else {
         // saved and native
         setSelected({
-          meal: props.meal,
-          mealType: props.mealType,
+          meal_name: props.meal_name,
+          meal_type: props.meal_type,
           ingredients: props.ingredients,
           id: props.id,
         });
@@ -41,13 +41,13 @@ function Add(props) {
     } else {
       // not saved
       setSelected({
-        meal: props.meal,
-        mealType: props.mealType,
+        meal_name: props.meal_name,
+        meal_type: props.meal_type,
         ingredients: props.ingredients,
         url: props.url,
-        totalNutrients: props.totalNutrients,
-        totalDaily: props.totalDaily,
-        yield: props.yield,
+        total_nutrients: props.total_nutrients,
+        total_daily: props.total_daily,
+        recipe_yield: props.recipe_yield,
       });
     }
   };

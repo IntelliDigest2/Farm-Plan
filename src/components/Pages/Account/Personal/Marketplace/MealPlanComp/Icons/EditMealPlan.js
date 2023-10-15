@@ -4,7 +4,7 @@ import EditMealFormPlan from "./EditMealFormPlan";
 import { useTranslation, Trans } from 'react-i18next';
 
 export function EditMealPlan({
-  meal,
+  meal_name,
   ingredients,
   id,
   show,
@@ -30,7 +30,7 @@ export function EditMealPlan({
       <Modal.Body>
         {/* <p>bleeeeeeeeh</p> */}
         <EditMealFormPlan
-          meal={meal}
+          meal_name={meal_name}
           ingredient={ingredients}
           id={id}
           forceUpdate={forceUpdate}

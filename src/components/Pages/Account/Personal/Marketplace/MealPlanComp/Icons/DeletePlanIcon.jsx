@@ -19,7 +19,7 @@ function Delete(props) {
     };
     //saved meals and calendar meals are in different places in firestore
       props.deleteMealPlannerData(data);
-      submitNotification("Success", `${props.meal}` + " has been removed!");
+      submitNotification("Success", `${props.meal_name}` + " has been removed!");
       props.forceUpdate();
   };
 

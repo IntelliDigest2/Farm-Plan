@@ -7,7 +7,7 @@ import "../../../../../../SubComponents/Button.css";
 import { useTranslation, Trans } from 'react-i18next';
 
 import { connect } from "react-redux";
-import { createRecipe } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
+import { createSavedMeal } from "../../../../../../../store/actions/marketplaceActions/savedMealData";
 //import { createMealPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { addToShoppingList } from "../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { foodIdAPI, nutritionAPI } from "./InputRecipe/NutritionApi";
@@ -91,14 +91,14 @@ function AddMealFormRecipe(props) {
     const data = {
       // month and day are used for the MealPlan db, year and week for the shopping list.
       upload: {
-        meal: mealName,
-        mealType: mealType,
+        meal_name: mealName,
+        meal_type: mealType,
         ingredients: ingredients,
         createdAt: new Date()
       },
     };
 
-    props.createRecipe(data);
+    props.createSavedMeal(data);
     forceUpdate();
 
     // if (save) {
@@ -206,7 +206,7 @@ function AddMealFormRecipe(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     //createMealPlanData: (mealPlan) => dispatch(createMealPlanData(mealPlan)),
-    createRecipe: (data) => dispatch(createRecipe(data)),
+    createSavedMeal: (data) => dispatch(createSavedMeal(data)),
     //addToShoppingList: (data) => dispatch(addToShoppingList(data)),
   };
 };

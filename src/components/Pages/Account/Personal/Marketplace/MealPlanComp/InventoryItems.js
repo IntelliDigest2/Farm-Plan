@@ -16,7 +16,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import EventIcon from '@mui/icons-material/Event';
-import Edit from "./Icons/EditIconInventory.jsx"
+import Edit from "./Icons/EditIconInventory.jsx";
 import moment from "moment";
 import { Button } from "react-bootstrap";
 import { SubButtonInventory } from "../../../../../SubComponents/Button";
@@ -79,9 +79,9 @@ function InventoryItems(props) {
       var food = doc.ingredients;
       var item = doc.item;
       var measure = doc.measure;
-      var updatedMeasure = doc.updatedMeasure;
+      var updated_measure = doc.updated_measure;
       var quantity = doc.quantity;
-      var updatedQty = doc.updatedQty;
+      var updated_qty = doc.updated_qty;
       var expiry = doc.expiry;
       var purchase = doc.purchase;
       var storage = doc.storage;
@@ -94,9 +94,9 @@ function InventoryItems(props) {
           food: food + " " + quantity + " " + measure,
           item: item,
           quantity: quantity,
-          updatedQty: updatedQty,
+          updated_qty: updated_qty,
           measure: measure,
-          updatedMeasure: updatedMeasure,
+          updated_measure: updated_measure,
           purchase: purchase,
           storage: storage,
           expiry: moment(expiry, 'DD-MM-YYYY').format('ll'),
@@ -145,8 +145,12 @@ function InventoryItems(props) {
                 style={{ alignItems: "flex-end" }}
               >
                 <div>
-                  <p style={{ padding: "14px 0 9px 25px", fontWeight: "bolder", fontSize: "25px" }}>{item.item + " " + item.quantity + " " + item.measure}</p>
-                  <p><ScaleIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}>Weight/Vol: </b>{item.updatedQty} {item.updatedMeasure}</p>
+                  <p style={{ padding: "14px 0 9px 25px", fontWeight: "bolder", fontSize: "25px" }}>
+                    {/* { item.updated_qty ? (item.item + " " + item.updated_qty + " " + item.updated_measure):(item.item + " " + item.quantity + " " + item.measure)} */}
+                    {item.item + " " + item.quantity + " " + item.measure}
+                    
+                    </p>
+                  <p><ScaleIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}>Weight/Vol: </b>{item.updated_qty} {item.updated_measure}</p>
 
                   <p><CalendarTodayIcon /><b style={{ paddingLeft: "6px", fontWeight: "bolder" }}>Expiry Date: </b>{item.expiry}</p>
 
@@ -204,8 +208,8 @@ function InventoryItems(props) {
                       food={item.item}
                       measure={item.measure}
                       quantity={item.quantity}
-                      updatedQty={item.updatedQty}
-                      updatedMeasure={item.updatedMeasure}
+                      updated_qty={item.updated_qty}
+                      updated_measure={item.updated_measure}
                       expiry={item.expiry}
                       id={item.id}
                       update={props.update}

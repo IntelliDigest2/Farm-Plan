@@ -6,7 +6,7 @@ import "./MealsBox.css"
 
 import MealsBoxRecipe from "./MealsBox";
 import { connect } from "react-redux";
-import { getRecipes } from "../../../../../../store/actions/marketplaceActions/savedMealData";
+import { getSavedMeals } from "../../../../../../store/actions/marketplaceActions/savedMealData";
 import { getWeeklyPlan } from "../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { AddMealModalRecipe } from "./Icons/AddMealModalRecipe";
 const SavedMeals = (props) => {
@@ -27,7 +27,7 @@ const SavedMeals = (props) => {
 
   //this sends data request
   useEffect(() => {
-    props.getRecipes();
+    props.getSavedMeals();
   }, [update]);
 
   const updateWeeklyMeals = async () => {
@@ -36,33 +36,33 @@ const SavedMeals = (props) => {
 
     //sets a new meal object in the array for every document with this date attached
     props.weekPlans.forEach((doc) => {
-      var mealName = doc.meal;
+      var meal_name = doc.meal_name;
       var ingredients = doc.ingredients;
       var id = doc.id;
      // var mealType = doc.mealType;
       var url = doc.url;
-      var totalNutrients = doc.totalNutrients;
-      var totalDaily = doc.totalDaily;
-      var recipeYield = doc.recipeYield;
+      var total_nutrients = doc.total_nutrients;
+      var total_daily = doc.total_daily;
+      var recipe_yield = doc.recipe_yield;
       let nn = doc.nn
-      // if (doc.nonNativeData) {
-      //   nn = doc.nonNativeData;
-      // } else {
-      //   nn = false;
-      // }
+      if (doc.non_native_data) {
+        nn = doc.non_native_data;
+      } else {
+        nn = false;
+      }
 
       setWeeklyMeals((meals) => [
         ...meals,
         {
-          meal: mealName,
+          meal_name: meal_name,
           //mealType: mealType,
           ingredients: ingredients,
           id: id,
           nn: nn,
           url: url,
-          totalNutrients: totalNutrients,
-          totalDaily: totalDaily,
-          recipeYield: recipeYield,
+          total_nutrients: total_nutrients,
+          total_daily: total_daily,
+          recipe_yield: recipe_yield,
         },
       ]);
     });
@@ -75,30 +75,30 @@ const SavedMeals = (props) => {
 
     //sets a new meal object in the array for every document with this date attached
     props.mealPlan.forEach((doc) => {
-      var mealName = doc.meal;
+      var meal_name = doc.meal_name;
       var ingredients = doc.ingredients;
       var id = doc.id;
-      var mealType = doc.mealType;
-      var nonNativeData = doc.nonNativeData;
-      var totalDaily = doc.totalDaily;
-      var totalNutrients = doc.totalNutrients;
+      var meal_type = doc.meal_type;
+      var non_native_data = doc.non_native_data;
+      var total_daily = doc.total_daily;
+      var total_nutrients = doc.total_nutrients;
       var url = doc.url;
-      var recipeYield = doc.yield;
+      var recipe_yield = doc.recipe_yield;
 
 
-      if(nonNativeData) {
+      if(non_native_data) {
         setSMeals((sMeals) => [
           ...sMeals,
           {
-            meal: mealName,
-            mealType: mealType,
+            meal_name: meal_name,
+            meal_type: meal_type,
             ingredients: ingredients,
             id: id,
-            nonNativeData: nonNativeData,
-            totalDaily: totalDaily,
-            totalNutrients: totalNutrients,
+            non_native_data: non_native_data,
+            total_daily: total_daily,
+            total_nutrients: total_nutrients,
             url: url,
-            recipeYield: recipeYield
+            recipe_yield: recipe_yield
           },
         ]);
       }
@@ -106,8 +106,8 @@ const SavedMeals = (props) => {
         setSMeals((sMeals) => [
           ...sMeals,
           {
-            meal: mealName,
-            mealType: mealType,
+            meal_name: meal_name,
+            meal_type: meal_type,
             ingredients: ingredients,
             id: id,
           },
@@ -130,7 +130,8 @@ const SavedMeals = (props) => {
         <div className="col-8 basic-title-left mb-3">{t('description.my_saved_meals')}</div>
         <div className="col-4" style={{textAlign: "right"}}><AddMealModalRecipe show={show} setShow={setShow} /></div>
       </div>
-      <div className="meal-item">
+      { sMeals.length ? (
+        <div className="meal-item">
         <MealsBoxRecipe
           forceUpdate={forceUpdate}
           onChange={props.onChange}
@@ -140,6 +141,12 @@ const SavedMeals = (props) => {
           value={props.value}
         />
       </div>
+      ):(
+        <div className="empty basic-title-left">
+          <p> You have not saved any meal yet 🙂 use the add button </p>
+        </div>
+      )}
+      
     </>
   );
 };
@@ -153,7 +160,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getRecipes: (saved) => dispatch(getRecipes(saved)),
+    getSavedMeals: (saved) => dispatch(getSavedMeals(saved)),
     getWeeklyPlan: (plan) => dispatch(getWeeklyPlan(plan)),
   };
 };

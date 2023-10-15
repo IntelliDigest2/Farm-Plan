@@ -27,25 +27,25 @@ export default function RecipeList(props) {
                     <div className="icons">
                       <Add
                         value={props.value}
-                        mealType={item.recipe.mealType}
-                        meal={item.recipe.label}
+                        meal_type={item.recipe.mealType}
+                        meal_name={item.recipe.label}
                         ingredients={item.recipe.ingredients}
                         url={item.recipe.url}
-                        totalNutrients={item.recipe.totalNutrients}
-                        totalDaily={item.recipe.totalDaily}
-                        yield={item.recipe.yield}
+                        total_nutrients={item.recipe.totalNutrients}
+                        total_daily={item.recipe.totalDaily}
+                        recipe_yield={item.recipe.yield}
                         onChange={props.onChange}
                         saved={false}
                       />
                       <SaveMealIcon 
                         value={props.value}
-                        mealType={item.recipe.mealType}
-                        meal={item.recipe.label}
+                        meal_type={item.recipe.mealType}
+                        meal_name={item.recipe.label}
                         ingredients={item.recipe.ingredients}
                         url={item.recipe.url}
-                        totalNutrients={item.recipe.totalNutrients}
-                        totalDaily={item.recipe.totalDaily}
-                        yield={item.recipe.yield}
+                        total_nutrients={item.recipe.totalNutrients}
+                        total_daily={item.recipe.totalDaily}
+                        recipe_yield={item.recipe.yield}
                       /> 
                     </div>
                   </ListSubheader>
