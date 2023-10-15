@@ -28,7 +28,7 @@ function AddToCalendar(props) {
   const handleSubmit = () => {
     let data;
     //data is a little different between saved meals and searched meals
-    if (props.saved && !props.selected.nonNativeData) {
+    if (props.saved && !props.selected.non_native_data) {
       data = {
         // month and day are used for the MealPlan db, year and week for the shopping list.
         year: props.value.format("YYYY"),
@@ -36,8 +36,8 @@ function AddToCalendar(props) {
         week: props.value.format("w"),
         day: props.value.format("DD"),
         upload: {
-          meal: props.selected.meal,
-          mealType: props.selected.mealType,
+          meal_name: props.selected.meal_name,
+          meal_type: props.selected.meal_type,
           ingredients: props.selected.ingredients,
         },
       };
@@ -48,14 +48,14 @@ function AddToCalendar(props) {
         week: props.value.format("w"),
         day: props.value.format("DD"),
         upload: {
-          meal: props.selected.meal,
+          meal_name: props.selected.meal_name,
           ingredients: props.selected.ingredients,
-          mealType: props.selected.mealType,
-          totalNutrients: props.selected.totalNutrients,
-          totalDaily: props.selected.totalDaily,
-          yield: props.selected.yield,
+          meal_type: props.selected.meal_type,
+          total_nutrients: props.selected.total_nutrients,
+          total_daily: props.selected.total_daily,
+          recipe_yield: props.selected.recipe_yield,
           url: props.selected.url,
-          nonNativeData: true,
+          non_native_data: true,
         },
       };
     }

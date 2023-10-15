@@ -11,7 +11,7 @@ function EditMealForm(props) {
 
   const { t } = useTranslation();
 
-  const [mealName, setMealName] = useState(props.meal);
+  const [mealName, setMealName] = useState(props.meal_name);
   const [ingredients, setIngredients] = useState(props.ingredient);
 
   const handleSubmit = () => {
@@ -20,7 +20,7 @@ function EditMealForm(props) {
       day: props.value.format("DD"),
       id: props.id,
       upload: {
-        meal: mealName,
+        meal_name: mealName,
         ingredients: ingredients,
         id: props.id,
         updatedAt: new Date()

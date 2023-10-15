@@ -28,7 +28,7 @@ function Edit(props) {
         value={props.value}
         show={show}
         setShow={setShow}
-        meal={props.meal}
+        meal_name={props.meal_name}
         ingredients={props.ingredients}
         id={props.id}
         forceUpdate={props.forceUpdate}

@@ -27,7 +27,14 @@ function RecipeListPlan(props) {
                     <div className="meal-name">{item.recipe.label}</div>
                     <div className="icons">
                       <AddPlan
-                         recipe={item.recipe}
+                        // recipe={item.recipe}
+                        meal_type={item.recipe.mealType}
+                        meal_name={item.recipe.label}
+                        ingredients={item.recipe.ingredients}
+                        url={item.recipe.url}
+                        total_nutrients={item.recipe.totalNutrients}
+                        total_daily={item.recipe.totalDaily}
+                        recipe_yield={item.recipe.yield}
                       />
                     </div>
                   </ListSubheader>
