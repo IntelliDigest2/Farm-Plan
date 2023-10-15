@@ -16,7 +16,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import EventIcon from '@mui/icons-material/Event';
-import Edit from "./Icons/EditIconInventory.jsx"
+import Edit from "./Icons/EditIconInventory.jsx";
 import moment from "moment";
 import { Button } from "react-bootstrap";
 import { SubButtonInventory } from "../../../../../SubComponents/Button";

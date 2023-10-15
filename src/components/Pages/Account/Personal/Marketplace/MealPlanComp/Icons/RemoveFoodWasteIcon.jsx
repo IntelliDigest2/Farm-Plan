@@ -32,7 +32,7 @@ function RemoveFoodWasteIcon(props) {
         item: getItem.item,
         measure: getItem.measure,
         quantity: getItem.quantity,
-        createdAt: new Date()
+        created_at: new Date()
       }
      
     };
