@@ -49,7 +49,7 @@ function AddToCalendar(props) {
         day: props.value.format("DD"),
         upload: {
           meal_name: props.selected.meal_name,
-          ingredients: props.selected.ingredients,
+          ingredient: props.selected.ingredients,
           meal_type: props.selected.meal_type,
           total_nutrients: props.selected.total_nutrients,
           total_daily: props.selected.total_daily,
@@ -61,7 +61,7 @@ function AddToCalendar(props) {
     }
 
     props.createMealPlanData(data);
-    props.addToShoppingList(data);
+    // props.addToShoppingList(data);
   };
 
   return (
