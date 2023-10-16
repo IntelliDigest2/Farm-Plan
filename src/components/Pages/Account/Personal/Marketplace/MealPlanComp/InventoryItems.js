@@ -133,7 +133,7 @@ function InventoryItems(props) {
   }
   
   return (
-    <>
+    <div className="inventory">
     <RefreshIcon update={props.update} setUpdate={props.setUpdate} />
       {list.length ? (
         <>
@@ -202,7 +202,7 @@ function InventoryItems(props) {
                   
                 </div>
                 
-                <div className="icons">
+                <div className="button">
                 <Edit
                       //value={props.value}
                       food={item.item}
@@ -233,7 +233,7 @@ function InventoryItems(props) {
           <p>There are no items in the list :( </p>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

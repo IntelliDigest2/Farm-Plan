@@ -31,7 +31,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
-
+import "./ShopItems.css"
 function ShopItems(props) {
   
   // console.log("All hail props", props)
@@ -458,7 +458,7 @@ const addToList = () => {
                 <div style={{ marginLeft: "20px" }}>
                   
                 </div>
-                <div className="icons">
+                <div className="button">
 
                   {/* <AddToCartIcon 
                    item={ingr.data}
@@ -537,7 +537,7 @@ const addToList = () => {
                   
                 </div>
                 
-                <div className="icons">
+                <div className="button">
                 
                   <Tooltip title="Add to cart">
                     <IconButton
