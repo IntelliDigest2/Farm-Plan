@@ -4,11 +4,19 @@
   min-height: 8rem;
   position: relative;
   padding-bottom: 1.5rem;
-  background-color: greenyellow;
+}
+
+
+
+.icons {
+  flex: 1;
+  text-align: right;
 }
 
 .inventory .button {
   position: absolute;
-  /* bottom: 0.5%; */
-  right: 2%;
+  bottom: 1.5rem; /* Adjust this value as needed */
+  right: 2%; /* You can adjust the right distance as needed */
 }
+
+

@@ -1,0 +1,23 @@
+.shop-items {
+    margin: 0 2% 2% 0;
+    width: 100%;
+    min-height: 8rem;
+    position: relative;
+    padding-bottom: 1.5rem;
+  }
+  
+  
+  
+  .icons {
+    flex: 1;
+    text-align: right;
+  }
+  
+  .shop-items .button {
+    position: absolute;
+    bottom: 1.5rem; /* Adjust this value as needed */
+    right: 2%; /* You can adjust the right distance as needed */
+  }
+  
+  
+  
