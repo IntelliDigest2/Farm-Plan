@@ -8,6 +8,8 @@ import ListSubheader from "@mui/material/ListSubheader";
 
 // import Delete from "./Icons/DeleteIcon";
 // import Edit from "./Icons/EditIcon";
+import { Row, Col } from "react-bootstrap";
+
 
 export default function MealsBoxRecipe(props) {
 
@@ -16,7 +18,7 @@ export default function MealsBoxRecipe(props) {
 
   const mealIngredients = (ingredients)=>{
    return ingredients.map((ingredient)=>{
-      return <span>{ingredient.ingredientName} {ingredient.ingredientQuantity}{ingredient.ingredientUnit}</span>
+      return <span>{ingredient.food} {ingredient.metric}{ingredient.metricUnit}</span>
     })
   }
   return (
@@ -32,11 +34,13 @@ export default function MealsBoxRecipe(props) {
                 <div className="meal-name">{meal.meal}</div>
                 </ListSubheader>
                 <ListItem>
-                <div style={{display: "flex"}}>
+                <Row style={{display: "flex"}}>
+                  <Col>
                   <div>
                 <img style={{display: 'cover'}} src={meal.imageURL} alt={meal.meal} ></img>
 
-                  </div>
+                  </div></Col>
+                  <Col>
                   <div style={{padding: '10px'}}>
                   <div className="meal-type"> {meal.menuSection}</div>
                   {/* <div >Meal Id: {meal.id}</div> */}
@@ -47,8 +51,10 @@ export default function MealsBoxRecipe(props) {
                  
                   <div >Meal Description: {meal.mealDescription}</div>
                   <div >Meal Price: {meal.mealPrice}</div>
-                  </div>
-                </div>
+                  </div></Col>
+                  
+                  
+                </Row>
                 </ListItem>
                 
                   

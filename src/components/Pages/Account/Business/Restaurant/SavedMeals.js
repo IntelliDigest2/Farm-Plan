@@ -20,15 +20,15 @@ const SavedMeals = (props) => {
 	// const [first, setfirst] = useState(second);
 
 	//trigger this when editing/deleting items
-	const [update, setUpdate] = useState(0);
-	const forceUpdate = () => {
-		setUpdate(update + 1);
-	};
+	// const [update, setUpdate] = useState(0);
+	// const forceUpdate = () => {
+	// 	setUpdate(update + 1);
+	// };
 
 	//this sends data request
 	useEffect(() => {
 		props.getMenus();
-	}, [update]);
+	}, []);
 
 	const menuSections = [
 		"All",
@@ -164,7 +164,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getMenus: (saved) => dispatch(getMenus(saved)),
+		getMenus: () => dispatch(getMenus()),
 	};
 };
 

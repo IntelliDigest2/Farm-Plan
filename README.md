@@ -50,6 +50,21 @@ The Api for the chat and video call has the following endpoint.
 To develop this flow diagram you would need to install the [drawio](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) extension on your IDE
 this will allow you to view and edit as at when necessary
 
+This is a list of all the types of Users
+Households
+Farm
+Schools
+Consultant
+Consultant
+Other
+Offices
+Restaurants
+Admin
+Hospitals
+Hotels
+Shop
+Machinery/Supplier
+
 > Harvest workflow
 > ![drawio diagram for workflow](./workflow_farmer_harvest.png)
 > Consultant workflow

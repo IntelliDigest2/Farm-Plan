@@ -7,6 +7,7 @@ const initState = {
 	otherBookingsError: "",
 	completedBookings: null,
 	completedBookingsError: "",
+	consultingBooking: null,
 };
 
 const consultingReducer = (state = initState, action) => {
@@ -75,6 +76,18 @@ const consultingReducer = (state = initState, action) => {
 				...state,
 				completedBookingsError: action.payload,
 			};
+		case "GET_CONSULTING_BOOKINGS_SUCCESS":
+			// console.log("data fetched", action.payload);
+			return {
+				...state,
+				consultingBooking: action.payload,
+			};
+		// case "GET_COMPLETED_CONSULTING_BOOKINGS_ERROR":
+		// 	// console.log("data fetched");
+		// 	return {
+		// 		...state,
+		// 		completedBookingsError: action.payload,
+		// 	};
 
 		default:
 			return state;

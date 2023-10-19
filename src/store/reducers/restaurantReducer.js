@@ -8,6 +8,10 @@ const initState = {
 	newShoppingList: [],
 	shoppingList: [],
 	inventory: [],
+	sales: null,
+	salesError: false,
+	salesChart: null,
+	salesChartError: false,
 };
 
 const restaurantReducer = (state = initState, action) => {
@@ -134,6 +138,52 @@ const restaurantReducer = (state = initState, action) => {
 				...state,
 				authError: "Get meals failed",
 			};
+		case "GET_SALES":
+			console.log("get restaurant sales success", action.payload);
+			return {
+				...state,
+				sales: action.payload,
+				salesError: null,
+			};
+		case "GET_SALES_ERROR":
+			console.log("error, couldn't fetch new plan", action.err);
+			return {
+				...state,
+				salesError: "Get restaurant sales failed",
+			};
+		case "GET_SALES_FOR_CHART":
+			console.log("get restaurant sales success", action.payload);
+			return {
+				...state,
+				salesChart: action.payload,
+				salesError: null,
+			};
+		case "GET_SALES_FOR_CHART_ERROR":
+			console.log("error, couldn't fetch new plan", action.err);
+			return {
+				...state,
+				salesChartError: "Get restaurant sales failed",
+			};
+		case "FETCH_RESTURANT_PRODUCE_FOR_TURNOVER_SUCCESS":
+			console.log("get restaurant turnover produce success", action.payload);
+			return {
+				...state,
+				turnoverProduce: action.payload,
+				salesError: null,
+			};
+		case "FETCH_RESTURANT_SALES_FOR_TURNOVER_SUCCESS":
+			console.log("get restaurant turnover sales success", action.payload);
+			return {
+				...state,
+				turnoverSales: action.payload,
+				salesError: null,
+			};
+		case "FETCH_RESTURANT_PRODUCE_FOR_TURNOVER_ERROR":
+			console.log("error, couldn't fetch new plan", action.err);
+			return {
+				...state,
+				turnoverError: "Get restaurant sales failed",
+			};
 
 		case "GET_NEW_SHOPPING_LIST_RES":
 			console.log("get shopping list success", action.payload);
@@ -249,6 +299,13 @@ const restaurantReducer = (state = initState, action) => {
 				...state,
 				savedMenus: action.payload,
 				authError: null,
+			};
+		case "GET_MENUS_ERROR":
+			console.log("get menus success", action.err);
+			return {
+				...state,
+				getMenuError: action.err,
+				// authError: null,
 			};
 		case "GET_RECIPES_ERROR":
 			console.log("error, couldn't fetch recipes", action.err);

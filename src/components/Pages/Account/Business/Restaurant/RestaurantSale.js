@@ -1,14 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Tab, Tabs } from "react-bootstrap";
-import { PageWrapRes } from "../../../../SubComponents/PageWrapRes";
+
 import RestaurantSalesComponent from "./RestaurantSalesComponent";
 import RestuarantSalesChart from "./RestuarantSalesChart";
+import { PageWrap } from "./../../../../SubComponents/PageWrap";
 
 export const RestaurantSale = (props) => {
 	return (
 		<div>
-			<PageWrapRes goTo="/account" header="Dashboard">
+			<PageWrap goTo="/account" header="Dashboard">
 				{/* <WaveLoader /> */}
 				<Tabs
 					defaultActiveKey="RestaurantSales"
@@ -42,7 +43,7 @@ export const RestaurantSale = (props) => {
 
 				{/* input available locations for picking up */}
 				{/* shopping list */}
-			</PageWrapRes>
+			</PageWrap>
 		</div>
 	);
 };

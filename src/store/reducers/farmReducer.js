@@ -31,6 +31,7 @@ const initState = {
 	expenseInfo: null,
 	expenseError: false,
 	expenseLoader: false,
+	purcaseAdminMessages: null,
 };
 
 const farmReducer = (state = initState, action) => {
@@ -156,19 +157,19 @@ const farmReducer = (state = initState, action) => {
 				expenseLoader: true,
 			};
 
-			// console.log("error, produce not added", action.err);
-			return {
-				...state,
+		// console.log("error, produce not added", action.err);
+		// return {
+		// 	...state,
 
-				addExpenseLoader: true,
-			};
+		// 	addExpenseLoader: true,
+		// };
 
-			// console.log("error, produce not added", action.err);
-			return {
-				...state,
+		// // console.log("error, produce not added", action.err);
+		// return {
+		// 	...state,
 
-				addSaleLoader: true,
-			};
+		// 	addSaleLoader: true,
+		// };
 		case "FETCH_PRODUCE_FOR_SALESCHART_SUCCESS":
 			// console.log("produce chart success ", action.payload);
 			return {
@@ -290,6 +291,18 @@ const farmReducer = (state = initState, action) => {
 			return {
 				...state,
 				authError: "Get produce items failed",
+			};
+		case "GET_PURCHASEADMIN_MESSAGES_SUCCESS":
+			console.log("get produce items success", action.payload);
+			return {
+				...state,
+				purcaseAdminMessages: action.payload,
+			};
+		case "GET_PURCHASEADMIN_MESSAGES__ERROR":
+			console.log("error, couldn't fetch produce items", action.err);
+			return {
+				...state,
+				purcaseAdminMessagesError: "Get produce items failed",
 			};
 		case "EDIT_PRODUCE":
 			console.log("successfully edited", action.produce);

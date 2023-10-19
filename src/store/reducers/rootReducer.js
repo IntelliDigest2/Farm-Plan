@@ -15,6 +15,7 @@ import consultantReducer from "./consultantReducer";
 import consultantAuthReducer from "./consultantAuthReducer";
 import consultingReducer from "./consultingReducer";
 import consultingBookingReducer from "./consultingBookingReducer";
+import notificationReducer from "./notificationsReducer";
 
 //fireStoreReducer is a premade reducer for syncing firestore data with state in the background.
 
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
 	consultingState: consultingReducer,
 	consultantAuth: consultantAuthReducer,
 	bookingPurchaseState: consultingBookingReducer,
+	notificationState: notificationReducer,
 });
 
 export default rootReducer;

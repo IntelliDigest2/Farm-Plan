@@ -142,6 +142,15 @@ const AddProduceForm = (props) => {
 		setInputGroups(updatedInputGroups);
 	};
 
+	let validity = inputGroups.every((inputGroup) => {
+		return (
+			inputGroup.nutrientName.trim() !== "" &&
+			inputGroup.nutrientQuantity !== "0" &&
+			inputGroup.nutrientQuantity !== 0 &&
+			inputGroup.nutrientQuantity !== ""
+		);
+	});
+
 	let nutrientGroup = inputGroups.map((group, index) => {
 		return (
 			<>
@@ -294,7 +303,7 @@ const AddProduceForm = (props) => {
 										required
 										items={years}
 										function={(e) => {
-											setLocal({ ...local, cycleEndMonth: e });
+											setLocal({ ...local, cycleEndYear: e });
 										}}
 									/>
 								</Col>
@@ -925,10 +934,7 @@ const AddProduceForm = (props) => {
 						className="blue-btn shadow-none mt-3"
 						type="submit"
 						disabled={
-							(farmType === "Horticulture"
-								? inputGroups[0].nutrientName.trim() === "" ||
-								  inputGroups[0].nutrientQuantity.trim() === ""
-								: "") ||
+							(farmType === "Horticulture" ? !validity : "") ||
 							local.item.trim() === "" ||
 							local.quantity.trim() === "" ||
 							local.quantity === "0" ||

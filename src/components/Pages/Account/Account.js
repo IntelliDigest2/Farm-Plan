@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-
 import { useTranslation, Trans } from "react-i18next";
 
 import { Container, Dropdown, DropdownButton } from "react-bootstrap";
@@ -112,7 +111,7 @@ const NewAccount = (props) => {
 							<img
 								src={logo}
 								alt="World Food Tracker, empowering global food sustainability"
-								className="name-container img-fluid rounded fix-image mb-3"
+								className="logo_img"
 							/>
 						</div>
 						<div className="profile-container">
@@ -168,26 +167,26 @@ const AccountType = (props) => {
 		tabListContainer: {
 			width: "100%", // Set the desired width for the container
 			overflowX: "auto", // Add horizontal scrolling for overflow
-		  },
+		},
 		tabList: {
-		//   width: "100%",
-		  display: "flex",
-		  justifyContent: "center",
-		//   overflowX: "auto", // Make tabs scrollable
+			//   width: "100%",
+			display: "flex",
+			justifyContent: "center",
+			//   overflowX: "auto", // Make tabs scrollable
 		},
 		tab: {
 			flex: "0 0 auto", // Maintain the tab size without flexibility
 			maxWidth: "100px", // You can adjust the maximum width for the tabs if needed
 			textAlign: "center", // Center-align the tab label
-		  },
-		  mobileTab: {
+		},
+		mobileTab: {
 			// Increase the width of the tabs for mobile devices
 			flexBasis: "120px", // Set the desired width for mobile
 			maxWidth: "none", // Remove the maximum width restriction
-		  },
-	  });
+		},
+	});
 
-	const classes = useStyles(); 
+	const classes = useStyles();
 	const theme = useTheme();
 	const isMobile = useMediaQuery("(max-width: 600px)"); // Adjust the screen width breakpoint as needed
 
@@ -208,26 +207,23 @@ const AccountType = (props) => {
 						onChange={props.handleChange}
 						centered
 					>
-						<Tab 
-							disableRipple 
-							label="Food" 
-							value="0" 
+						<Tab
+							disableRipple
+							label="Food"
+							value="0"
 							style={{ minWidth: "80px" }} // Adjust the minWidth as needed
-
 						/>
-						<Tab 
-							disableRipple 
-							label="Environment" 
-							value="1" 
+						<Tab
+							disableRipple
+							label="Environment"
+							value="1"
 							style={{ minWidth: "80px" }} // Adjust the minWidth as needed
-
 						/>
-						<Tab 
-							disableRipple 
-							label="FSSP" 
-							value="2" 
+						<Tab
+							disableRipple
+							label="FSSP"
+							value="2"
 							style={{ minWidth: "80px" }} // Adjust the minWidth as needed
-
 						/>
 					</TabList>
 					<SwipeableViews
@@ -463,18 +459,22 @@ const AccountType = (props) => {
 						onChange={props.handleChange}
 						centered
 					>
-						<Tab 
-							disableRipple 
-							label="Items" 
+						<Tab
+							disableRipple
+							label="Items"
 							value="0"
-							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab} 
-							/>
-						<Tab 
-							disableRipple 
-							label="FSSP" 
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
+						<Tab
+							disableRipple
+							label="FSSP"
 							value="1"
-							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab} 
-							/>
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
 					</TabList>
 					<SwipeableViews
 						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -499,45 +499,53 @@ const AccountType = (props) => {
 		default:
 			return (
 				<>
-				<div className={classes.tabListContainer}>
-				<TabList
-						className={isMobile ? classes.scrollableTabList : classes.tabList}
-						TabIndicatorProps={{
-							style: {
-								backgroundColor: Colors.brandGreen,
-							},
-						}}
-						variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
-						onChange={props.handleChange}
-						centered={!isMobile} // Centered tabs on larger screens
-					>
-						<Tab 
-							disableRipple 
-							label={t("description.tab_food")} 
-							value="0" 
-							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+					<div className={classes.tabListContainer}>
+						<TabList
+							className={isMobile ? classes.scrollableTabList : classes.tabList}
+							TabIndicatorProps={{
+								style: {
+									backgroundColor: Colors.brandGreen,
+								},
+							}}
+							variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
+							onChange={props.handleChange}
+							centered={!isMobile} // Centered tabs on larger screens
+						>
+							<Tab
+								disableRipple
+								label={t("description.tab_food")}
+								value="0"
+								className={
+									isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+								}
 							/>
-						<Tab 
-							disableRipple 
-							label={t("description.tab_health")} 
-							value="1" 
-							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+							<Tab
+								disableRipple
+								label={t("description.tab_health")}
+								value="1"
+								className={
+									isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+								}
 							/>
-						<Tab
-							disableRipple
-							label={t("description.tab_environment")}
-							value="2"
-							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+							<Tab
+								disableRipple
+								label={t("description.tab_environment")}
+								value="2"
+								className={
+									isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+								}
 							/>
-						<Tab 
-							disableRipple 
-							label="Funds" 
-							value="3"
-							className={isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab}
+							<Tab
+								disableRipple
+								label="Funds"
+								value="3"
+								className={
+									isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+								}
 							/>
-					</TabList>
-				</div>
-					
+						</TabList>
+					</div>
+
 					<SwipeableViews
 						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
 						index={parseInt(props.value)}

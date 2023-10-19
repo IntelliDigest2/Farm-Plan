@@ -215,3 +215,63 @@ export const fetchConsultingCompletedBookings = (userId) => {
 			);
 	};
 };
+
+export const fetchConsultingBookingsInfo = (userId) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+		getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("bookings")
+
+			// .where("eventCompleted", "==", true)
+			.onSnapshot(
+				(querySnapshot) => {
+					let allBookings = [];
+					querySnapshot.forEach((doc) => {
+						// console.log(doc.data());
+						allBookings.push({ id: doc.id, ...doc.data() });
+					});
+
+					console.log(allBookings, `this is the allBookings`);
+					dispatch({
+						type: "GET_CONSULTING_BOOKINGS_SUCCESS",
+						payload: allBookings,
+					});
+				},
+				(error) => {
+					console.log(error);
+					dispatch({
+						type: "GET_CONSULTING_BOOKINGS_ERROR",
+						payload: error,
+					});
+				}
+			);
+	};
+};

@@ -121,7 +121,7 @@ i18n
 						supplier: "Supplier",
 						measure: "Measure",
 						price: "Price",
-						no_notifications: "You dont have any Notifications :(",
+						no_notifications: "You dont have any Notifications ",
 						add_meal: "Add Meal",
 						button_submit: "Submit",
 						ingredient: "Ingredients",
