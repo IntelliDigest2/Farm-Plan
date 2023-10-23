@@ -15,7 +15,8 @@ function FarmerListIcon(props) {
 
   const [list, setList] = useState([]);
   const [cart, setCart] = useState(props.cart);
-  const [city, setCity] = useState(props.city)
+  const [city, setCity] = useState(props.city);
+  const [address, setAddress] = useState(props.address)
   //shows edit modal
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false); // Add loading state
@@ -78,6 +79,8 @@ function FarmerListIcon(props) {
         setShow={setShow}
         list={list}
         cart={props.cart}
+        address={props.address}
+        delivery_code={props.delivery_code}
         receiversID={props.receiversID}
         forceUpdate={props.forceUpdate}
       />

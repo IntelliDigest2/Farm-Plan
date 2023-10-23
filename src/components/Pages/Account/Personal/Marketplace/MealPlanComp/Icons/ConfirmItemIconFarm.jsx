@@ -31,12 +31,13 @@ function ConfirmItemIconFarm(props) {
       currency: props.currency,
       farmerID: props.farmerID,
       receiversID: props.receiversID,
-      deliveryDueDate: props.deliveryDueDate
+      deliveryDueDate: props.deliveryDueDate,
+      delivery_code: props.delivery_code,
     };
     props.editPurchaseStatusOnFarmer(data);
     props.sendToUser(data);
     // console.log("show items", data)
-    submitNotification("Success", "You will be contacted shortly");
+    submitNotification("Success", "You will receive a notification when users completes payment");
   };
 
   const handleClose = () => setShow(false);

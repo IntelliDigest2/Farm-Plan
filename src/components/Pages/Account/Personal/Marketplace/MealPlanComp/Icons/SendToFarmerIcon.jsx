@@ -17,13 +17,13 @@ function SendToFarmerIcon(props) {
       receiversID: props.receiversID,
       status: "IN PROGRESS",
       cart: props.cart,
+      address: props.address,
+      delivery_code: props.delivery_code
     };
     props.sendToFarmer(data);
     //props.editPurchaseStatus(data)
     submitNotification("Success", " Items has been sent to farmer!");
   };
-
-
 
   return (
     <>

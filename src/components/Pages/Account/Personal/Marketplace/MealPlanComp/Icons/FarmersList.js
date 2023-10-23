@@ -7,6 +7,8 @@ import { useTranslation, Trans } from 'react-i18next';
 export function FarmersList({
   list,
   cart,
+  address,
+  delivery_code,
   receiversID,
   show,
   setShow,
@@ -30,6 +32,8 @@ export function FarmersList({
         <FarmerListInfo 
           list={list}
           cart={cart}
+          address={address}
+          delivery_code={delivery_code}
           forceUpdate={forceUpdate}
           receiversID={receiversID}
           handleFormClose={handleFormClose}

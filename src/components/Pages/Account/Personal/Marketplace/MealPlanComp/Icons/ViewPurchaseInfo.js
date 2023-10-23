@@ -78,6 +78,7 @@ function ViewPurchaseInfo(props) {
 			var receiversID = doc.receiversID;
 			var status = doc.status;
 			var deliveryDueDate = doc.deliveryDueDate;
+			var delivery_code = doc.delivery_code;
 
 			setList((list) => [
 				...list,
@@ -90,6 +91,7 @@ function ViewPurchaseInfo(props) {
 					receiversID: receiversID,
 					status: status,
 					deliveryDueDate: deliveryDueDate,
+					delivery_code: delivery_code,
 				},
 			]);
 		});
@@ -202,7 +204,11 @@ function ViewPurchaseInfo(props) {
                         {cart.refID}
                       </h6>
                       <h6>
-                        <b>Status: {cart.status} </b>
+						<span>
+							<b>Status: {cart.status} </b>
+							<b>Pickup Code: </b>{cart.delivery_code}
+						</span>
+                        
                       </h6>
                     </tr>
                     <tr>

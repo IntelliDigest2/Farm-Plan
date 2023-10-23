@@ -52,6 +52,10 @@ function Admin(props) {
 		  var status = doc.status;
 		  var id = doc.id;
 		  var uid = doc.uid;
+		  var address = doc.address;
+		  var delivery_option = doc.delivery_option;
+		  var phone_number = doc.phone_number;
+		  var delivery_code = doc.delivery_code;
 	
 		  setList((list) => [
 			...list,
@@ -62,6 +66,10 @@ function Admin(props) {
 			  status: status,
 			  id: id,
 			  uid: uid,
+			  address: address,
+			  delivery_option: delivery_option,
+			  delivery_code: delivery_code,
+			  phone_number: phone_number,
 			},
 		  ]);
 		});
@@ -87,6 +95,8 @@ function Admin(props) {
 						<Card>
 							<Accordion.Toggle as={Card.Header} eventKey="0">
 								<p>{item.date}</p>
+								<p>{item.delivery_option}</p>
+								<p>{item.phone_number}</p>
 								{item.profile.firstName} {item.profile.city},{item.profile.country}
 							</Accordion.Toggle>
 							<Accordion.Collapse eventKey="0">
@@ -135,6 +145,7 @@ function Admin(props) {
 								uid={item.uid}
 								cart={item.cartList}
 								city={item.profile.city}
+								address={item.address}
 								/>
 							</p>
 							<ListGroup className="list-group-flush">

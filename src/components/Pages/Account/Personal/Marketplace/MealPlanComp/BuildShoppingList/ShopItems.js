@@ -32,12 +32,20 @@ import IconButton from "@mui/material/IconButton";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 import "./ShopItems.css"
+
+const { nanoid } = require('nanoid');
+
 function ShopItems(props) {
   
   // console.log("All hail props", props)
 
   const { t } = useTranslation();
 
+// Function to generate a random code using uuid
+function generateRandomCode() {
+  // Generate a random 5-character code using nanoid
+  return nanoid(6);
+}
 
   const [list, setList] = useState([]);
   const [allList, setAllList] = useState([]);
@@ -48,6 +56,10 @@ function ShopItems(props) {
   const [open, setOpen] = React.useState(false);
   const [shoppingList, setShoppingList] = useState([]);
   const [clicked, setClicked] = useState(false)
+  const [deliveryOption, setDeliveryOption] = useState('delivery'); 
+  const [address, setAddress] = useState(''); 
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [cartIsEmpty, setCartIsEmpty] = useState(true);
 
   //this sends data request
   useEffect(() => {
@@ -124,6 +136,7 @@ const [cart, setCart] = useState([]);
 
 const addToCart = (ingr) => {
   setCart([...cart, ingr]);
+  setCartIsEmpty(false);
   };
 
   const removeFromCart = (ingr) => {
@@ -172,13 +185,19 @@ const addToCart = (ingr) => {
           // City: props.profile.city,
           // Email: props.profile.email,
           date: props.value.format("YYYY/MM/DD"),
-          status: "pending"
+          status: "pending",
+          delivery_option: deliveryOption, // Add delivery option to the data
+          address: deliveryOption === 'delivery' ? address : "", // Add address if delivery is chosen
+          phone_number: phoneNumber,
+          delivery_code: generateRandomCode(),
         }
        
       };
 
       props.addToPurchaseItems(data);
-    submitNotification("Thanks for placing your order with us", "We will contact local sustainable farmers and grocery shops and get back to you shortly with prices and delivery time");
+    submitNotification(
+    "Thanks for placing your order with us", 
+    "We will contact local sustainable farmers and grocery shops and get back to you shortly with prices and delivery time");
 
     }
 
@@ -602,17 +621,79 @@ const addToList = () => {
           <Modal.Header closeButton>
             <Modal.Title>{t('description.list_of_items')} </Modal.Title>
           </Modal.Header>
-        <Modal.Body>
-            {cartItems}
+          <Modal.Body>
+            {cartItems.length > 0 ? (
+              <>
+                {/* Render cart items if the cart is not empty */}
+                {cartItems}
+                <div>
+                  <input
+                    type="radio"
+                    id="delivery"
+                    value="delivery"
+                    checked={deliveryOption === 'delivery'}
+                    onChange={() => setDeliveryOption('delivery')}
+                  />
+                  <label htmlFor="delivery">Delivery</label>
+
+                  <input
+                    type="radio"
+                    id="pickup"
+                    value="pickup"
+                    checked={deliveryOption === 'pickup'}
+                    onChange={() => setDeliveryOption('pickup')}
+                    required  // Add the required attribute
+
+                  />
+                  <label htmlFor="pickup">Pickup</label>
+                </div>
+
+                <div>
+                  <label htmlFor="phoneNumber">Phone Number:</label>
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    required  // Add the required attribute
+
+                  />
+                </div>
+
+                {deliveryOption === 'delivery' && (
+                  <>
+                    <div>
+                      <label htmlFor="address">Delivery Address:</label>
+                      <input
+                        type="text"
+                        id="address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                    </div>
+                  </>
+                )}
+              </>
+            ) : (
+              // Display a message when the cart is empty
+              <p>Your cart is empty.</p>
+            )}
           </Modal.Body>
+
         <Modal.Footer>
-        <Button variant="secondary" onClick={() => {
-          PurchaseItem()
-          setCart([])
-          handleClose()
-          }}>
-            {t('description.button_confirm')}
-          </Button>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            if (!cartIsEmpty && phoneNumber && (deliveryOption !== 'delivery' || (deliveryOption === 'delivery' && address))) {
+              PurchaseItem();
+              setCart([]);
+              handleClose();
+            }
+          }}
+          disabled={cartIsEmpty || !phoneNumber || (deliveryOption === 'delivery' && !address)}
+        >
+          {t('description.button_confirm')}
+        </Button>
           <Button variant="secondary" onClick={handleClose}>
             {t('description.button_cancel')}
           </Button>
