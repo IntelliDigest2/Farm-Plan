@@ -697,19 +697,6 @@ export const sendToRes = (data) => {
 			});
 	};
 };
-Households;
-Farm;
-Schools;
-Consultant;
-Consultant;
-Other;
-Offices;
-Restaurants;
-Admin;
-Hospitals;
-Hotels;
-Shop;
-Machinery / Supplier;
 
 const setUsersCollection = (buildingFunction) => {
 	let userCollection;
