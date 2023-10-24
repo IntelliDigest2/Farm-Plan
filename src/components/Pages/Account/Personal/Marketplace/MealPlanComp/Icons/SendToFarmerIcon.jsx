@@ -18,9 +18,13 @@ function SendToFarmerIcon(props) {
       status: "IN PROGRESS",
       cart: props.cart,
     };
-    props.sendToFarmer(data);
-    //props.editPurchaseStatus(data)
+    props.sendToFarmer(data).then((resp)=>{
     submitNotification("Success", " Items has been sent to farmer!");
+
+    }).catch((err)=>{
+      submitNotification("Error ", " Something went wrong, try again");
+    });
+    //props.editPurchaseStatus(data)
   };
 
 

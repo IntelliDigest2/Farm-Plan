@@ -12,6 +12,11 @@ const initState = {
 	salesError: false,
 	salesChart: null,
 	salesChartError: false,
+	restaurantExpenseError: false,
+	restaurantExpense: null,
+	turnoverSales: null,
+	turnoverProduce: null,
+	turnoverError: false,
 };
 
 const restaurantReducer = (state = initState, action) => {
@@ -255,6 +260,19 @@ const restaurantReducer = (state = initState, action) => {
 				...state,
 				shoppingList: action.payload,
 				authError: null,
+			};
+		case "FETCH_RESTURANT_EXPENSE_SUCCESS":
+			// console.log("error, couldn't add to shopping list", action.err);
+			return {
+				...state,
+				restaurantExpense: action.payload,
+			};
+		case "FETCH_RESTURANT_EXPENSE_ERROR":
+			console.log("get user added shopping list success", action.payload);
+			return {
+				...state,
+
+				restaurantExpenseError: action.payload,
 			};
 		case "GET_SHOPPING_LIST_RES_ERROR":
 			console.log("error, couldn't get user added shopping list", action.err);

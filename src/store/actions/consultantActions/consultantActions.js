@@ -271,6 +271,24 @@ export const acceptBookingRequest = (event) => {
 		.collection("bookings")
 		.doc(event.eventId);
 
+	let notification = {
+		notification_type: "consultation_acceptance",
+		created_at: new Date(),
+	};
+
+	let consulteeCollection;
+
+	if (event.status.requesterAccountType === "Farm") {
+		consulteeCollection = "farm_user";
+	} else if (event.status.requesterAccountType === "Restaurant") {
+		consulteeCollection = "restaurant_user";
+	}
+
+	let consulteeNotificationRef = db
+		.collection(consulteeCollection)
+		.doc(event.status.requesterId)
+		.collection("notifications");
+
 	batch.update(consultantRef, {
 		status: { ...event.status, requestAccepted: true },
 	});
@@ -291,6 +309,8 @@ export const acceptBookingRequest = (event) => {
 		},
 		eventCompleted: false,
 	});
+
+	batch.set(consulteeNotificationRef, notification);
 
 	return batch.commit();
 	// getFirestore()
@@ -334,6 +354,13 @@ export const cancelBookingRequest = (event) => {
 		});
 		// const batch = db.batch();
 
+		let notification = {
+			notification_type: "consultation_rejection",
+			created_at: new Date(),
+		};
+
+		const batch = db.batch();
+
 		let consultantRef = getFirestore()
 			.collection("consultants")
 			.doc(event.consultant.id)
@@ -346,24 +373,42 @@ export const cancelBookingRequest = (event) => {
 		// 	calendarEvents: firebase.firestore.FieldValue.arrayRemove(event),
 		// })
 		// .then(() => {
-		consultantRef
-			.update({
-				status: {
-					requesterId: null,
-					requestAccepted: false,
-				},
-			})
-			.then(() => {
-				dispatch({
-					type: "CANCEL_BOOKING_SUCCESS",
-				});
-			})
-			.catch((err) => {
-				dispatch({
-					type: "CANCEL_BOOKING_FAILED",
-					payload: err,
-				});
-			});
+
+		let consulteeCollection;
+
+		if (event.status.requesterAccountType === "Farm") {
+			consulteeCollection = "farm_user";
+		} else if (event.status.requesterAccountType === "Restaurant") {
+			consulteeCollection = "restaurant_user";
+		}
+
+		let consulteeNotificationRef = db
+			.collection(consulteeCollection)
+			.doc(event.status.requesterId)
+			.collection("notifications");
+
+		// consultantRef
+		batch.update(consultantRef, {
+			status: {
+				requesterId: null,
+				requestAccepted: false,
+			},
+		});
+		// .then(() => {
+		// 	dispatch({
+		// 		type: "CANCEL_BOOKING_SUCCESS",
+		// 	});
+		// })
+		// .catch((err) => {
+		// 	dispatch({
+		// 		type: "CANCEL_BOOKING_FAILED",
+		// 		payload: err,
+		// 	});
+		// });
+
+		batch.set(consulteeNotificationRef, notification);
+
+		return batch.commit();
 	};
 };
 

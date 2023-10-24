@@ -82,46 +82,64 @@ export const bookEvent = (
 
 	userId
 ) => {
-	// return (dispatch, getState, { getFirebase, getFirestore }) => {
-	let consultantRef = db
-		.collection("consultants")
-		.doc(event.consultant.id)
-		.collection("calendarEvents")
-		.doc(event.eventId);
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const profile = getState().firebase.profile;
+		let consultantRef = db
+			.collection("consultants")
+			.doc(event.consultant.id)
+			.collection("calendarEvents")
+			.doc(event.eventId);
 
-	// dispatch({
-	// 	type: "BOOKING_CONSULTANT",
-	// 	payload: true,
-	// });
+		let consultantNotification = db
+			.collection("consultants")
+			.doc(event.consultant.id)
+			.collection("notifications");
 
-	return db.runTransaction(async (transaction) => {
-		// This code may get re-run multiple times if there are conflicts.
+		// dispatch({
+		// 	type: "BOOKING_CONSULTANT",
+		// 	payload: true,
+		// });
 
-		return transaction.get(consultantRef).then((sfDoc) => {
-			let data = sfDoc.data();
+		return db.runTransaction(async (transaction) => {
+			// This code may get re-run multiple times if there are conflicts.
 
-			if (data.status.requesterId !== null) {
-				throw new Error("opening has been booked");
-			}
+			// TODO NOTIFICATION
+			// this is the notification sent to the consultant to show that a consultation has been requested
+			return transaction.get(consultantRef).then((sfDoc) => {
+				let data = sfDoc.data();
+				let notification = {
+					notification_type: "consulting_request",
+					created_at: new Date(),
+				};
 
-			transaction.update(consultantRef, {
-				status: { ...event.status, requesterId: userId },
+				if (data.status.requesterId !== null) {
+					throw new Error("opening has been booked");
+				}
+
+				transaction.update(consultantRef, {
+					status: {
+						...event.status,
+						requesterId: userId,
+						requesterAccountType: profile.buildingFunction,
+					},
+				});
+
+				transaction.set(consultantNotification, notification);
 			});
 		});
-	});
-	// .then((result) => {
-	// 	dispatch({
-	// 		type: "BOOKING_CONSULTANT_SUCCESS",
-	// 		payload: result,
-	// 	});
-	// })
-	// .catch((error) => {
-	// 	console.log("Transaction failed: ", error);
-	// 	dispatch({
-	// 		type: "BOOKING_CONSULTANT_FAILED",
-	// 	});
-	// });
-	// };
+		// .then((result) => {
+		// 	dispatch({
+		// 		type: "BOOKING_CONSULTANT_SUCCESS",
+		// 		payload: result,
+		// 	});
+		// })
+		// .catch((error) => {
+		// 	console.log("Transaction failed: ", error);
+		// 	dispatch({
+		// 		type: "BOOKING_CONSULTANT_FAILED",
+		// 	});
+		// });
+	};
 };
 
 export const fetchOtherConsultingBookings = (userId) => {

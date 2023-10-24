@@ -33,9 +33,15 @@ function ConfirmItemIconFarm(props) {
       deliveryDueDate: props.deliveryDueDate
     };
     props.editPurchaseStatusOnFarmer(data);
-    props.sendToUser(data);
+    props.sendToUser(data).then((resp)=>{
+    submitNotification("Success", "You will be contacted shortly")
+
+    }).catch((err)=>{
+    submitNotification("Error", "Something went wrong, try again")
+
+
+    });
     // console.log("show items", data)
-    submitNotification("Success", "You will be contacted shortly");
   };
 
   const handleClose = () => setShow(false);

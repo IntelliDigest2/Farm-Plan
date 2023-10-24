@@ -117,6 +117,7 @@ import PaymentSuccess from "./components/Pages/PaymentSuccess";
 import SupplyRevenue from "./components/Pages/Account/Business/Suppliers/supplyRevenue";
 import RestaurantSale from "./components/Pages/Account/Business/Restaurant/RestaurantSale";
 import RestaurantTurnover from "./components/Pages/Account/Business/Restaurant/RestaurantTurnover";
+import RestaurantExpense from "./components/Pages/Account/Business/Restaurant/RestaurantExpense";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -339,6 +340,7 @@ const App = (props) => {
 						/>
 						<Route path="/restaurant-sale" component={RestaurantSale} />
 						<Route path="/restaurant-turnover" component={RestaurantTurnover} />
+						<Route path="/restaurant-expense" component={RestaurantExpense} />
 						<Route path="/supply-plan" component={SupplyPlan} />
 						<Route path="/supply-revenue" component={SupplyRevenue} />
 						<Route path="/produce" component={ProduceTab} />

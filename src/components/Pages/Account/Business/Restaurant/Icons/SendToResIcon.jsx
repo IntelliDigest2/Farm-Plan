@@ -21,10 +21,15 @@ function SendToRes(props) {
         status: "IN PROGRESS"
       },
     };
-    props.sendToRes(data);
+    props.sendToRes(data).then((resp)=>{
+    submitNotification("Success", " Items has been sent to restaurant!");
+
+    }).catch(()=>{
+    submitNotification("Error", " Something went wrong, pls try again");
+
+    });
     // props.sendOrderToUser(data);
     //props.editPurchaseStatus(data)
-    submitNotification("Success", " Items has been sent to restaurant!");
   };
 
   return (

@@ -70,7 +70,13 @@ export function Food({ setShow, setChooseModal }) {
 				goTo="/restaurant-turnover"
 				disabled
 			/>
-			<IconButton icon="notes" label="Expense" color="blue" goTo="/" disabled />
+			<IconButton
+				icon="notes"
+				label="Expense"
+				color="blue"
+				goTo="/restaurant-expense"
+				disabled
+			/>
 			<IconButton
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="kitchen"

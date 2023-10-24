@@ -64,9 +64,11 @@ export const getNotificationData = (lastDate) => {
 
 		let query;
 		if (lastDate) {
-			console.log(lastDate, `this is the last date on notificationData.js`);
+			// console.log(lastDate, `this is the last date on notificationData.js`);
 
 			query = collectionRef.where("created_at", ">", lastDate);
+		} else {
+			query = collectionRef;
 		}
 
 		return query.orderBy("created_at", "desc").onSnapshot(
@@ -80,7 +82,7 @@ export const getNotificationData = (lastDate) => {
 
 					notifications.push(document);
 				});
-				console.log(notifications, `these are the notifications`);
+				// console.log(notifications, `these are the notifications`);
 				dispatch({
 					type: "GET_USER_NOTIFICATIONS_SUCCESS",
 					payload: notifications,

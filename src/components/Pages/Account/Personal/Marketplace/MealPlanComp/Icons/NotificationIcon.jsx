@@ -28,9 +28,9 @@ function Notification(props) {
        const jsDate=   new Date(notif.seconds * 1000 + notif.nanoseconds / 1e6)
         const adjustedDate = subMilliseconds(jsDate, 1);
 
-        console.log(jsDate,`this is the normal date`)
-        console.log(adjustedDate,`this is the adjusted date`)
-        console.log(notif,`this is the last notif`)
+        // console.log(jsDate,`this is the normal date`)
+        // console.log(adjustedDate,`this is the adjusted date`)
+        // console.log(notif,`this is the last notif`)
         date= jsDate
       }
      
@@ -98,7 +98,7 @@ function Notification(props) {
 
   const turnOffNotification =()=>{
     props.setNotificationStat(false)
-    if(props.notifications !== null){
+    if(props.notifications !== null || props.notification.length > 0){
       const latestNotificationJSON = JSON.stringify(props.notifications[0])
     localStorage.setItem('lastCheckedNotification', latestNotificationJSON);
 

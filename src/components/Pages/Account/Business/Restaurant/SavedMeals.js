@@ -128,20 +128,17 @@ const SavedMeals = (props) => {
 	return (
 		<>
 			<Row className="row">
-				<Col className="col-8 basic-title-left mb-3">
+				<Col md="9" className=" basic-title-left mb-3">
 					{t("description.restaurant_menu")}
 				</Col>
-				<Col
-					style={{ display: "flex", justifyItems: "space-evenly" }}
-					className="col-4"
-				>
+				<Col md="3" style={{ display: "flex", alignItems: "baseline" }}>
 					Add New Menu{" "}
 					<AddMenuModal value={props.value} show={show} setShow={setShow} />
 				</Col>
 			</Row>
 			<Row>
-				<Col className="col-2"> Filter by </Col>
-				<Col className="col-3">
+				<Col md="3"> Filter by </Col>
+				<Col md="3">
 					<Dropdown
 						id="menu-section"
 						styling="green dropdown-input"

@@ -34,13 +34,14 @@ export default function MealsBoxRecipe(props) {
                 <div className="meal-name">{meal.meal}</div>
                 </ListSubheader>
                 <ListItem>
-                <Row style={{display: "flex"}}>
-                  <Col>
-                  <div>
-                <img style={{display: 'cover'}} src={meal.imageURL} alt={meal.meal} ></img>
+                <Row >
+                  <Col md='4'>
+                  {/* <div > */}
+                <img style={{display: 'cover'}} src={meal.imageURL} alt={meal.meal} width={'250px'}></img>
 
-                  </div></Col>
-                  <Col>
+                  {/* </div> */}
+                  </Col>
+                  <Col md='8'>
                   <div style={{padding: '10px'}}>
                   <div className="meal-type"> {meal.menuSection}</div>
                   {/* <div >Meal Id: {meal.id}</div> */}

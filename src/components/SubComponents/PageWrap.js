@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 const PageWrapper = (props) => {
 	// console.log(props.header, `this is the header`);
 
-	// console.log(props.profile, "this sithe profile that was passed");
+	// console.log(props.profile, "this is the profile that was passed");
 	useEffect(() => {}, [props.profile]);
 
 	return (

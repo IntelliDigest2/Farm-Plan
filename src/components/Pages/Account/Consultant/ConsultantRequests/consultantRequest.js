@@ -11,6 +11,8 @@ import {
 	cancelBookingRequest,
 } from "../../../../../store/actions/consultantActions/consultantActions";
 
+import { submitNotification } from "./../../../../lib/Notifications";
+
 export const ConsultantRequest = (props) => {
 	const [cancelLoading, setCancelLoading] = useState(false);
 	const [acceptLoading, setAcceptLoading] = useState(false);
@@ -68,19 +70,28 @@ export const ConsultantRequest = (props) => {
 				.then((result) => {
 					// console.log(result);
 					setAcceptLoading(false);
+					submitNotification("Sucess", "Consultation Request Accepted");
 				})
 				.catch((error) => {
 					console.log(error);
+					setAcceptLoading(false);
+
+					submitNotification("Error", "Something went wrong, pls try again");
 				});
 		} else if (actionType === "reject") {
 			setCancelLoading(true);
 			cancelBookingRequest(auth.uid, event)
 				.then((result) => {
 					// console.log(result);
+					submitNotification("Sucess", "Consultation Request Canceled");
+
 					setCancelLoading(false);
 				})
 				.catch((err) => {
 					console.log(err);
+					setCancelLoading(false);
+
+					submitNotification("Error", "Something went wrong, pls try again");
 				});
 		}
 	};

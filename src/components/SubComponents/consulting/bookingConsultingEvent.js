@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Button, Row, Col } from "react-bootstrap";
 import { bookEvent } from "../../../store/actions/consultingActions";
 import { format, parseISO } from "date-fns";
+import { submitNotification } from "./../../lib/Notifications";
 
 export const BookingConsultingEvent = (props) => {
 	const [isBookingLoading, setisBookingLoading] = useState(false);
@@ -16,6 +17,7 @@ export const BookingConsultingEvent = (props) => {
 		event,
 
 		auth,
+		profile,
 	} = props;
 
 	let startTime = format(parseISO(event.start), "hh:mm a");
@@ -35,9 +37,14 @@ export const BookingConsultingEvent = (props) => {
 		bookEvent(event, auth.uid)
 			.then((result) => {
 				setisBookingLoading(false);
+				submitNotification("Success", "Consultation request has been sent");
 			})
 			.catch((err) => {
 				console.log(err);
+				submitNotification(
+					"Error",
+					"Something went wrong while booking, this consultation time might have been taken"
+				);
 				setisBookingLoading(false);
 			});
 	};
@@ -82,6 +89,7 @@ export const BookingConsultingEvent = (props) => {
 const mapStateToProps = (state) => ({
 	// bookingLoading: state.consultingState.isBooking,
 	auth: state.firebase.auth,
+	profile: state.firebase.profile,
 });
 
 const mapDispatchToProps = (dispatch) => {

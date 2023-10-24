@@ -1,5 +1,8 @@
 //startData has been moved to happen within authActions/signup but has been left here for now as some accounts still need to use it currently.
 //Feel free to delete in the future
+import firebase from "firebase";
+const db = firebase.firestore();
+
 export const startData = (data) => {
 	return (dispatch, getState, { getFirebase }) => {
 		getFirebase()
@@ -539,7 +542,8 @@ export const getPurchaseData = (data) => {
 
 		getFirestore()
 			// .collection("purchases")
-			.collection("purchases").where('profile.region', "==", data)
+			.collection("purchases")
+			.where("profile.region", "==", data)
 			.get()
 			.then((snapshot) => {
 				const data = [];
@@ -561,7 +565,8 @@ export const getPurchaseDataRes = (data) => {
 		// console.log("user region", profile.region)
 
 		getFirestore()
-			.collection("purchasesRes").where('profile.region', "==", data)
+			.collection("purchasesRes")
+			.where("profile.region", "==", data)
 			.get()
 			.then((snapshot) => {
 				const data = [];
@@ -620,36 +625,53 @@ export const getRentData = (data) => {
 	};
 };
 
-
-
-
 export const sendToUser = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 
-		console.log("db call here", data)
+		console.log("db call here", data);
 
-		getFirestore()
+		const batch = db.batch();
+
+		let notification = {
+			notification_type: "shopping_response",
+			created_at: new Date(),
+		};
+
+		// TODO NOTIFICATION
+		// this function changes the state of the messages collection in the marketplace
+		let userCollection = setUsersCollection(data.receiversBuildingFunction);
+
+		let notificationRef = getFirestore()
+			.collection(userCollection)
+			.doc(data.receiversID)
+			.collection("notifications");
+
+		let marketPlaceMessagesRef = getFirestore()
 			.collection("marketplace")
 			.doc(data.receiversID)
-			.collection("messages")
-			.add(data)
-			.then((docRef) => {
-				// make the docId easily accessible so that we can delete it later if we want.
-				getFirestore()
-					.collection("marketplace")
-					.doc(data.receiversID)
-					.collection("messages")
-					.doc(docRef.id)
-					.set({ id: docRef.id }, { merge: true });
-				dispatch({ type: "SEND_TO_USER" });
-			})
-			.catch((err) => {
-				dispatch({ type: "SEND_TO_USER_ERROR", err });
-			});
+			.collection("messages");
+
+		batch.set(marketPlaceMessagesRef, data);
+		batch.set(notificationRef, notification);
+
+		return batch.commit();
+		// .add(data)
+		// .then((docRef) => {
+		// 	// make the docId easily accessible so that we can delete it later if we want.
+		// 	getFirestore()
+		// 		.collection("marketplace")
+		// 		.doc(data.receiversID)
+		// 		.collection("messages")
+		// 		.doc(docRef.id)
+		// 		.set({ id: docRef.id }, { merge: true });
+		// 	dispatch({ type: "SEND_TO_USER" });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "SEND_TO_USER_ERROR", err });
+		// });
 	};
 };
-
 
 export const sendToRes = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
@@ -675,78 +697,140 @@ export const sendToRes = (data) => {
 			});
 	};
 };
+Households;
+Farm;
+Schools;
+Consultant;
+Consultant;
+Other;
+Offices;
+Restaurants;
+Admin;
+Hospitals;
+Hotels;
+Shop;
+Machinery / Supplier;
 
+const setUsersCollection = (buildingFunction) => {
+	let userCollection;
+	switch (buildingFunction) {
+		case buildingFunction === "Farm":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Households":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Restaurants":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Consultant":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Offices":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Hotels":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Shop":
+			userCollection = "farm_user";
+			break;
 
+		default:
+			userCollection = "Machinery/Supplier";
+			break;
+	}
+
+	return userCollection;
+};
 export const sendToFarmer = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 
-		getFirestore()
+		const batch = db.batch();
+
+		let farmUserDocRef = getFirestore()
 			.collection("farm_users")
-			.doc(data.farmerId)
-			.collection("messages")
-			.add(data)
-			.then((docRef) => {
-				// make the docId easily accessible so that we can delete it later if we want.
-				getFirestore()
-					.collection("farm_users")
-					.doc(data.farmerId)
-					.collection("messages")
-					.doc(docRef.id)
-					.set({ id: docRef.id }, { merge: true });
-				dispatch({ type: "SEND_TO_FARMER" });
-			})
-			.catch((err) => {
-				dispatch({ type: "SEND_TO_FARMER_ERROR", err });
-			});
+			.doc(data.farmerId);
+
+		let farmUserMessages = farmUserDocRef.collection("messages");
+		let farmUserNotifications = farmUserDocRef.collection("notifications");
+
+		// .add(data)
+
+		// .then((docRef) => {
+		// 	// make the docId easily accessible so that we can delete it later if we want.
+		// 	getFirestore()
+		// 		.collection("farm_users")
+		// 		.doc(data.farmerId)
+		// 		.collection("messages")
+		// 		.doc(docRef.id)
+		// 		.set({ id: docRef.id }, { merge: true });
+		// 	dispatch({ type: "SEND_TO_FARMER" });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "SEND_TO_FARMER_ERROR", err });
+		// });
+
+		// TODO NOTIFICATION
+		// this is the notification sent to a farmer by the admin to show that a purchase request as been made and the status is changed to 'IN PROGRESS'
+
+		let notification = {
+			notification_type: "admin_request",
+			created_at: new Date(),
+		};
+
+		batch.set(farmUserMessages, data);
+		batch.set(farmUserNotifications, notification);
+
+		return batch.commit();
 	};
 };
 
 export const editConfirmStatus = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
-  
-	  getFirestore()
-	  .collection("purchases")
-	  .doc(data.refID)
-	  .set({status: data.status}, { merge: true })
-		.then(() => dispatch({ type: "EDIT_PURCHASE", data }))
-		.catch((err) => {
-		  dispatch({ type: "EDIT_PURCHASE_ERROR", err });
-		});
+		getFirestore()
+			.collection("purchases")
+			.doc(data.refID)
+			.set({ status: data.status }, { merge: true })
+			.then(() => dispatch({ type: "EDIT_PURCHASE", data }))
+			.catch((err) => {
+				dispatch({ type: "EDIT_PURCHASE_ERROR", err });
+			});
 	};
-  };
+};
 
-  export const updateNutrientData = (data) => {
+export const updateNutrientData = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 
 		//make async call to database
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
-	
+
 		var uid;
 		switch (profile.type) {
-		  case "business_admin":
-			uid = authUID;
-			break;
-		  case "business_sub":
-			uid = profile.admin;
-			break;
-		  case "academic_admin":
-			uid = authUID;
-			break;
-		  case "academic_sub":
-			uid = profile.admin;
-			break;
-		  case "household_admin":
-			uid = authUID;
-			break;
-		  case "household_sub":
-			uid = profile.admin;
-			break;
-		  default:
-			uid = authUID;
-			break;
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
 		}
 
 		getFirestore()
@@ -775,7 +859,7 @@ export const editConfirmStatus = (data) => {
 // 	payload: recipe,
 //   });
 
-  export const setSelectedRecipe = (recipe) => {
+export const setSelectedRecipe = (recipe) => {
 	return (dispatch) => {
 		dispatch({ type: "SET_SELECTED_RECIPE", payload: recipe });
 	};
@@ -789,30 +873,30 @@ export const addOtherMeals = (data) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
-	
+
 		var uid;
 		switch (profile.type) {
-		  case "business_admin":
-			uid = authUID;
-			break;
-		  case "business_sub":
-			uid = profile.admin;
-			break;
-		  case "academic_admin":
-			uid = authUID;
-			break;
-		  case "academic_sub":
-			uid = profile.admin;
-			break;
-		  case "household_admin":
-			uid = authUID;
-			break;
-		  case "household_sub":
-			uid = profile.admin;
-			break;
-		  default:
-			uid = authUID;
-			break;
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
 		}
 
 		getFirestore()
@@ -836,54 +920,51 @@ export const addOtherMeals = (data) => {
 	};
 };
 
-
 export const getOtherMeals = () => {
 	return (dispatch, getState, { getFirestore }) => {
-	  //make async call to database
-	  const profile = getState().firebase.profile;
-	  const authUID = getState().firebase.auth.uid;
-  
-	  var uid;
-	  switch (profile.type) {
-		case "business_admin":
-		  uid = authUID;
-		  break;
-		case "business_sub":
-		  uid = profile.admin;
-		  break;
-		case "academic_admin":
-		  uid = authUID;
-		  break;
-		case "academic_sub":
-		  uid = profile.admin;
-		  break;
-		case "household_admin":
-		  uid = authUID;
-		  break;
-		case "household_sub":
-		  uid = profile.admin;
-		  break;
-		default:
-		  uid = authUID;
-		  break;
-	  }
-  
-	  getFirestore()
-		.collection("marketplace")
-		.doc(uid)
-		.collection("otherMeals")
-		.get()
-		.then((snapshot) => {
-		  const data = [];
-		  snapshot.forEach((doc) => {
-			data.push(doc.data());
-		  });
-		  dispatch({ type: "GET_OTHER_MEALS", payload: data });
-		})
-		.catch((err) => {
-		  dispatch({ type: "GET_OTHER_MEALS_ERROR", err });
-		});
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+
+		getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("otherMeals")
+			.get()
+			.then((snapshot) => {
+				const data = [];
+				snapshot.forEach((doc) => {
+					data.push(doc.data());
+				});
+				dispatch({ type: "GET_OTHER_MEALS", payload: data });
+			})
+			.catch((err) => {
+				dispatch({ type: "GET_OTHER_MEALS_ERROR", err });
+			});
 	};
-  };
-  
-  
+};
