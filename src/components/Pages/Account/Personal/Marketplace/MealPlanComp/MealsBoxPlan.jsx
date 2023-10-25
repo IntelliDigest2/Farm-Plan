@@ -31,7 +31,7 @@ export default function MealsBox(props) {
   function selectGroup(e) {
     const value = e.target.value;
     const filteredMeal =
-      value === "all" ? props.meals : props.meals.filter((p) => p.mealType[0] === value);
+      value === "all" ? props.meals : props.meals.filter((p) => p.meal_type[0] === value);
     setFilter(filteredMeal);
   }
 
@@ -41,7 +41,7 @@ export default function MealsBox(props) {
     <p>
       <select onChange={selectGroup}>
         <option value="all">Meal Plan List</option>
-        <option value="breakfast">beakfast</option>
+        <option value="breakfast">breakfast</option>
         <option value="lunch/dinner">lunch/dinner</option>
         <option value="snack">snack</option>
       </select>
@@ -55,15 +55,15 @@ export default function MealsBox(props) {
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
               <ListSubheader className="heading">
-                <div className="meal-name">{newMeal.meal}</div>
+                <div className="meal-name">{newMeal.meal_name}</div>
                 {newMeal.mealType ? (
-                  <div className="meal-type">{newMeal.mealType}</div>
+                  <div className="meal-type">{newMeal.meal_type}</div>
                 ) : null}
                 <div className="icons">
                   <Delete
                     value={props.value}
                     id={newMeal.id}
-                    meal={newMeal.meal}
+                    meal_name={newMeal.meal_name}
                     saved={props.saved}
                     forceUpdate={forceUpdate}
                   />
@@ -86,7 +86,7 @@ export default function MealsBox(props) {
                   {newMeal.nonNativeData ? null : (
                     <EditIconPlan
                       value={props.value}
-                      meal={newMeal.meal}
+                      meal_name={newMeal.meal_name}
                       ingredients={newMeal.ingredients}
                       id={newMeal.id}
                       forceUpdate={forceUpdate}

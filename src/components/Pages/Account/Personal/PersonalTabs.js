@@ -234,6 +234,13 @@ export function Funds() {
 				color="orange"
 				goTo="/coupon-transactions"
 			/>
+			<IconButton
+				title="Withdraw fund from your wallet."
+				icon="list"
+				label="Withdraw Fund"
+				color="green"
+				goTo="/withdraw-funds"
+			/>
 		</>
 	);
 }

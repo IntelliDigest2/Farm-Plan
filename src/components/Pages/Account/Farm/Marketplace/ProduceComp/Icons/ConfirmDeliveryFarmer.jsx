@@ -2,17 +2,18 @@ import React, {useState} from "react";
 import Tooltip from "@mui/material/Tooltip";
 import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
-import CreditScoreIcon from '@mui/icons-material/CreditScore';
-import { editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { editPurchaseStatusOnFarmer } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
+import { addToFarmerSalesData, addToSalesData } from "../../../../../../../store/actions/dataActions";
+
 import Swal from 'sweetalert2';
 
-
 //takes props value, meal(name), ingredients, id and onChange(change of value)
-function PayIconWallet(props) {
+function ConfirmDelivery(props) {
 
   const { t } = useTranslation();
 
@@ -26,15 +27,13 @@ function PayIconWallet(props) {
   const handlePay = async () => {
 
     const transferData = {
-      user: props.uid,
-      order: props.order, 
-      currency: props.currency,
+      trackingID: props.trackingID,
+      deliveryDuration: props.deliveryDuration,
     };
 
-    console.log("transfer data ===>", transferData)
-
+    console.log("duration", transferData)
     
-    await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {
+    await fetch(`${baseUrlProd}/v1/payment/confirm-delivery-farmer`, {
 
       method: 'POST', 
       body: JSON.stringify(transferData),
@@ -44,31 +43,18 @@ function PayIconWallet(props) {
     })
     .then((response) => response.json())
     .then((res) => {
-      console.log("reservation ===>", res)
-      const data = {
-        refID: props.refID,
-        status: "COMPLETED",
-      };
-      props.editPurchaseStatusOnUser(data);
-      // history.push('/payment-success')
+      
       Swal.fire({
         title: 'Success!',
-        text: 'Payment was successful',
+        text: 'Delivery in progress',
         icon: 'success',
       });
-      const newPage = window.open('/payment-success', '_blank');
-  
-      // Optionally, you can focus on the new window/tab
-      if (newPage) {
-        newPage.focus();
-      }
-      handleClose()
     })
     .catch((err) => {
       console.log(err.message);
       Swal.fire({
         title: 'Error!',
-        text: 'Please check your wallet balance and try again',
+        text: 'Something went wrong. Please try again or contact our support at admin@intellidigest.com',
         icon: 'error',
       });
     })
@@ -88,16 +74,16 @@ function PayIconWallet(props) {
           sx={{ ml: 2 }}
           onClick={handleShow}
         >
-            Pay <CreditScoreIcon sx={{ fontSize: 32 }} />
+            <CheckCircleIcon fontSize="inherit" />
         </IconButton>
       </Tooltip>
 
       <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>{t('description.payment')}</Modal.Title>
+            <Modal.Title>Start Delivery</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            <p><h5>{t('description.continue_to_payment')}</h5></p>
+            <p><h5>Have you started the delivery of this item?</h5></p>
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"
@@ -127,9 +113,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editPurchaseStatusOnUser: (data) => dispatch(editPurchaseStatusOnUser(data)),
-
+    editPurchaseStatusOnFarmer: (data) => dispatch(editPurchaseStatusOnFarmer(data)),
+    addToSales: (data) => dispatch(addToSalesData(data)),
+    addToFarmerSalesData: (data) => dispatch(addToFarmerSalesData(data))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PayIconWallet);
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmDelivery);

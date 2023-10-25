@@ -79,36 +79,36 @@ function MyPlans(props) {
 
     //sets a new meal object in the array for every document with this date attached
     props.mealPlanner.forEach((doc) => {
-      var mealName = doc.meal;
+      var meal_name = doc.meal_name;
       var ingredients = doc.ingredients;
       var id = doc.id;
      // var mealType = doc.mealType;
       var url = doc.url;
-      var totalNutrients = doc.totalNutrients;
-      var totalDaily = doc.totalDaily;
-      var recipeYield = doc.recipeYield;
-      var mealType = doc.mealType;
+      var total_nutrients = doc.total_nutrients;
+      var total_daily = doc.total_daily;
+      var recipe_yield = doc.recipe_yield;
+      var meal_type = doc.meal_type;
       let nn = doc.nn;
       
-      // if (doc.nonNativeData) {
-      //   nn = doc.nonNativeData;
-      // } else {
-      //   nn = false;
-      // }
+      if (doc.non_native_data) {
+        nn = doc.non_native_data;
+      } else {
+        nn = false;
+      }
 
       setMeals((meals) => [
         ...meals,
         {
-          meal: mealName,
+          meal_name: meal_name,
           //mealType: mealType,
           ingredients: ingredients,
           id: id,
           nn: nn,
           url: url,
-          mealType: mealType,
-          totalNutrients: totalNutrients,
-          totalDaily: totalDaily,
-          recipeYield: recipeYield,
+          meal_type: meal_type,
+          total_nutrients: total_nutrients,
+          total_daily: total_daily,
+          recipe_yield: recipe_yield,
         },
       ]);
     });
@@ -124,10 +124,10 @@ function MyPlans(props) {
 
   function getFilteredMeal() {
     return meals.filter(data => {
-      var mealType = 'breakfast'
+      var meal_type = 'breakfast'
       //console.log("mealType", data.mealType[0])
     
-      return mealType == data.mealType[0];
+      return meal_type == data.meal_type[0];
     });
   }
 

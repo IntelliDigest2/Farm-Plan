@@ -55,6 +55,14 @@ function Admin(props) {
 			var status = doc.status;
 			var id = doc.id;
 			var uid = doc.uid;
+			var address = doc.address;
+			var delivery_option = doc.delivery_option;
+			var phone_number = doc.phone_number;
+			var delivery_code = doc.delivery_code;
+
+			if (address === null) {
+				address = props.profile.address !== null ? props.profile.address : null;
+			}
 
 			setList((list) => [
 				...list,
@@ -65,6 +73,10 @@ function Admin(props) {
 					status: status,
 					id: id,
 					uid: uid,
+					address: address,
+					delivery_option: delivery_option,
+					delivery_code: delivery_code,
+					phone_number: phone_number,
 				},
 			]);
 		});
@@ -87,8 +99,16 @@ function Admin(props) {
 								<Card>
 									<Accordion.Toggle as={Card.Header} eventKey="0">
 										<p>{item.date}</p>
-										{item.profile.firstName} {item.profile.city},
-										{item.profile.country}
+										<p>{item.delivery_option}</p>
+										<span>{item.phone_number}</span>
+										<p>
+											{item.profile.firstName} {item.profile.city},{" "}
+											{item.profile.country}
+										</p>
+										<p>
+											{item.delivery_code &&
+												`pickup code: ${item.delivery_code}`}
+										</p>
 									</Accordion.Toggle>
 									<Accordion.Collapse eventKey="0">
 										<Card.Body>
@@ -136,6 +156,8 @@ function Admin(props) {
 														uid={item.uid}
 														receiversID={item.profile.uid}
 														cart={item.cartList}
+														address={item.address}
+														delivery_code={item.delivery_code}
 														city={item.profile.city}
 													/>
 												</p>

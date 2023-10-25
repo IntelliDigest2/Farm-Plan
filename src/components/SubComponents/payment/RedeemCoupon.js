@@ -3,6 +3,7 @@ import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap"
 import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Wallet.css"
+import Swal from 'sweetalert2';
 
 import logo from "../../../images/Revolut-logo-1.gif"
 
@@ -72,9 +73,19 @@ const CouponComponent = (props) => {
       .then(data => {
         // Reset the form fields
         setCouponCode('');
+        Swal.fire({
+          title: 'Success!',
+          text: 'Coupon was redeemed succesfully',
+          icon: 'success',
+        });
       })
       .catch(error => {
         console.error('Error transferring funds:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong. This coupon have reached the maximum limit or check the coupon code and try again ',
+          icon: 'error',
+        });
       })
       .finally(() => {
         setIsLoadingBalance(false); // Mark balance loading as complete, regardless of success or error
@@ -143,7 +154,7 @@ const CouponComponent = (props) => {
               <Modal.Title>Redeem</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p>Are you sure you want to coninue to redeem this coupon?</p>
+              <p>Are you sure you want to continue to redeem this coupon?</p>
             </Modal.Body>
             <Modal.Footer>
               <Button className="grey-btn" onClick={handleModalRedeemClose}>

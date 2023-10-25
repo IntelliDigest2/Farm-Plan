@@ -29,16 +29,16 @@ function EditInventoryForm(props) {
       // day: props.value.format("DD"),
       id: props.id,
       upload: {
-        food: food,
+        item: food,
         quantity: quantity,
-        updatedQty: updatedQty,
+        updated_qty: updatedQty,
         measure: measure,
-        updatedMeasure: updatedMeasure,
+        updated_measure: updatedMeasure,
         id: props.id,
         expiry: moment(ExpiryDate).format("DD/MM/yyyy"),
         purchase: placeOfPurchase,
         storage: storage,
-        updatedAt: new Date()
+        updated_at: new Date()
       }, 
     };
     console.log("checking ingredients props ==>", data)

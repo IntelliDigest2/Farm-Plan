@@ -955,3 +955,163 @@ export const getOtherMeals = () => {
 			});
 	};
 };
+
+export const getUnverifiedUsers = () => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+
+		getFirestore()
+			.collection("users")
+			.where("verification", "==", "pending")
+			.get()
+			.then((snapshot) => {
+				const data = [];
+				snapshot.forEach((doc) => {
+					data.push(doc.data());
+				});
+				dispatch({ type: "GET_UNVERIFIED_USERS", payload: data });
+			})
+			.catch((err) => {
+				dispatch({ type: "GET_UNVERIFIED_USERS", err });
+			});
+	};
+};
+
+export const addToSalesData = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+		const firestore = getFirestore();
+
+		// Add the current date to the data
+		const newData = {
+			...data,
+			date: firestore.FieldValue.serverTimestamp(), // Add server timestamp
+		};
+
+		getFirestore()
+			.collection("sales")
+			.add(newData)
+			.then((docRef) => {
+				// make the docId easily accessible so that we can delete it later if we want.
+				getFirestore()
+					.collection("sales")
+					.doc(docRef.id)
+					.set({ id: docRef.id }, { merge: true });
+				dispatch({ type: "ADD_TO_SALES", payload: data });
+			})
+			.catch((err) => {
+				dispatch({ type: "ADD_TO_SALES_ERROR", err });
+			});
+	};
+};
+
+export const addToFarmerSalesData = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+		const firestore = getFirestore();
+
+		// Add the current date to the data
+		const newData = {
+			...data,
+			date: firestore.FieldValue.serverTimestamp(), // Add server timestamp
+		};
+
+		getFirestore()
+			.collection("marketplace")
+			.doc(data.companyID)
+			.collection("sales")
+			.add(newData)
+			.then((docRef) => {
+				// make the docId easily accessible so that we can delete it later if we want.
+				getFirestore()
+					.collection("sales")
+					.doc(docRef.id)
+					.set({ id: docRef.id }, { merge: true });
+				dispatch({ type: "ADD_TO_SALES", payload: data });
+			})
+			.catch((err) => {
+				dispatch({ type: "ADD_TO_SALES_ERROR", err });
+			});
+	};
+};

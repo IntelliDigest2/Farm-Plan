@@ -49,15 +49,15 @@ function AteMealIconPlan(props) {
       id: props.id,
       upload: {
        eaten: true,
-        meal: getMeal.meal,
+        meal_name: getMeal.meal_name,
         //mealType: getMeal.mealType,
         ingredients: getMeal.ingredients,
         id: getMeal.id,
         nn: getMeal.nn,
         url: getMeal.url,
-        totalNutrients: getMeal.totalNutrients,
-        totalDaily: getMeal.totalDaily,
-        recipeYield: getMeal.recipeYield,
+        total_nutrients: getMeal.total_nutrients,
+        total_daily: getMeal.total_daily,
+        recipe_yield: getMeal.recipe_yield,
       },
     };
 

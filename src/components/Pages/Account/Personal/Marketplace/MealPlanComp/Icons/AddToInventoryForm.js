@@ -68,7 +68,7 @@ const AddToInventoryForm = (props) => {
         quantity: local.quantity,
         //quantity: local.quantity
         expiry: moment(startDate).format("DD/MM/yyyy"),
-        createdAt: new Date()
+        created_at: new Date()
       },
     }; 
 

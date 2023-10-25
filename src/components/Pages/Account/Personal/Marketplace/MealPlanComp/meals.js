@@ -68,14 +68,14 @@ function MyMeals(props) {
 
     //sets a new meal object in the array for every document with this date attached
     props.weekPlans.forEach((doc) => {
-      var mealName = doc.meal;
+      var meal_name = doc.meal_name;
       var ingredients = doc.ingredients;
       var id = doc.id;
      // var mealType = doc.mealType;
       var url = doc.url;
-      var totalNutrients = doc.totalNutrients;
-      var totalDaily = doc.totalDaily;
-      var recipeYield = doc.recipeYield;
+      var total_nutrients = doc.total_nutrients;
+      var total_daily = doc.total_daily;
+      var recipe_yield = doc.recipe_yield;
       let nn = doc.nn
       // if (doc.nonNativeData) {
       //   nn = doc.nonNativeData;
@@ -86,15 +86,15 @@ function MyMeals(props) {
       setWeeklyMeals((meals) => [
         ...meals,
         {
-          meal: mealName,
+          meal_name: meal_name,
           //mealType: mealType,
           ingredients: ingredients,
           id: id,
           nn: nn,
           url: url,
-          totalNutrients: totalNutrients,
-          totalDaily: totalDaily,
-          recipeYield: recipeYield,
+          total_nutrients: total_nutrients,
+          total_daily: total_daily,
+          recipe_yield: recipe_yield,
         },
       ]);
     });
@@ -107,17 +107,17 @@ function MyMeals(props) {
 
     //sets a new meal object in the array for every document with this date attached
     props.mealDiary.forEach((doc) => {
-      var mealName = doc.meal;
+      var meal_name = doc.meal_name;
       var ingredients = doc.ingredients;
       var id = doc.id;
-      var mealType = doc.mealType;
+      var meal_type = doc.meal_type;
       let url;
-      let totalNutrients;
-      let totalDaily;
-      let recipeYield;
+      let total_nutrients;
+      let total_daily;
+      let recipe_yield;
       let nn;
-      if (doc.nonNativeData) {
-        nn = doc.nonNativeData;
+      if (doc.non_native_data) {
+        nn = doc.non_native_data;
       } else {
         nn = false;
       }
@@ -126,35 +126,35 @@ function MyMeals(props) {
       } else {
         url = doc.url;
       }
-      if (!doc.totalNutrients) {
-        totalNutrients = null;
+      if (!doc.total_nutrients) {
+        total_nutrients = null;
       } else {
-        totalNutrients = doc.totalNutrients;
+        total_nutrients = doc.total_nutrients;
       }
-      if (!doc.totalDaily) {
-        totalDaily = null;
+      if (!doc.total_daily) {
+        total_daily = null;
       } else {
-        totalDaily = doc.totalDaily;
+        total_daily = doc.total_daily;
       }
-      if (!doc.recipeYield) {
-        recipeYield = null;
+      if (!doc.recipe_yield) {
+        recipe_yield = null;
       } else {
-        recipeYield = doc.recipeYield;
+        recipe_yield = doc.recipe_yield;
       }
 
 
       setMeals((meals) => [
         ...meals,
         {
-          meal: mealName,
-          mealType: mealType,
+          meal_name: meal_name,
+          meal_type: meal_type,
           ingredients: ingredients,
           id: id,
           url: url,
           nn: nn,
-          totalNutrients: totalNutrients,
-          totalDaily: totalDaily,
-          recipeYield: recipeYield,
+          total_nutrients: total_nutrients,
+          total_daily: total_daily,
+          recipe_yield: recipe_yield,
         },
       ]);
     });

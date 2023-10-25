@@ -8,6 +8,8 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import { getCurrencySymbol } from '../../../../../../../config/CurrerncyUtils'; 
+
 
 function ViewPurchaseInfoFarm(props) {
   const { t } = useTranslation();
@@ -15,8 +17,17 @@ function ViewPurchaseInfoFarm(props) {
   const [list, setList] = useState([]);
   const [isDateEntered, setIsDateEntered] = useState(false);
 
+  const userCountryCode = props.profile.country;
+  const userCurrency = getCurrencySymbol(userCountryCode)
 
-  
+// Function to retrieve currency symbol based on country code
+// const getCurrencySymbol = (countryCode) => {
+//   const countryData = currencyData.countries.country.find(
+//     (country) => country.countryName === countryCode
+//   );
+//   return countryData ? countryData.currencyCode : '$'; // Default to '$' if not found
+// };
+
 //this sends data request
 useEffect(() => {
   props.getPurchaseInfoFarm();
@@ -35,12 +46,14 @@ const getPurchaseInfoList = async () => {
     var status = doc.status;
     var receiversID = doc.receiversID;
     var farmerID = doc.farmerId
+    var address = doc.address
+    var delivery_code = doc.delivery_code
 
     var cartWithPrices = doc.cart.map((cartItem) => {
       return {
         ...cartItem,
         price: 0,
-        currency: "$"
+        currency: getCurrencySymbol(userCountryCode)
       };
     });
 
@@ -53,6 +66,8 @@ const getPurchaseInfoList = async () => {
         status: status,
         farmerID: farmerID,
         receiversID: receiversID,
+        address: address,
+        delivery_code: delivery_code,
       },
     ]);
   });
@@ -101,7 +116,7 @@ useEffect(() => {
                       <td>{cartItem.measure}</td>
                       <td>
                         <InputGroup>
-                          <InputGroup.Text>$</InputGroup.Text>
+                        <InputGroup.Text>{userCurrency}</InputGroup.Text>
                           <Form.Control
                             type="number"
                             min="0"
@@ -138,10 +153,15 @@ useEffect(() => {
                           farmerRef={item.id}
                           receiversID={item.receiversID}
                           deliveryDueDate={item.deliveryDueDate}
+                          delivery_code={item.delivery_code}
+                          currency={userCurrency}
                         />
                       )}
                     </td>
-
+                    <td colSpan="6">
+                    <td colSpan="3">
+                    <h5>Delivery Address: {item.address}</h5>
+                    </td>
                     <td colSpan="3">
                     <h5>Add Delivery Date</h5>
                       <Form.Control
@@ -158,6 +178,8 @@ useEffect(() => {
                         }}
                       />
                     </td>
+                    </td>
+                    
                   </tr>
                 </tfoot>
 							</Table>
@@ -177,6 +199,7 @@ useEffect(() => {
 const mapStateToProps = (state) => {
   return {
     infoFarm: state.farmData.purchaseInfoFarm,
+    profile: state.firebase.profile,
   };
 };
 

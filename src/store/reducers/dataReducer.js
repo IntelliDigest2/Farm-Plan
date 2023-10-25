@@ -7,6 +7,7 @@ const initState = {
   rentData: [],
   SelectedRecipe: [],
   otherMeals: [],
+  unverifiedUsers: [],
 };
 
 const dataReducer = (state = initState, action) => {
@@ -181,6 +182,18 @@ const dataReducer = (state = initState, action) => {
           authError: null,
         };
 
+        case "ADD_TO_SALES_ERROR":
+          console.log("add item to sales" + action.err.message);
+          return {
+            ...state,
+            authError: "set failed",
+          };
+        case "ADD_TO_SALES":
+          console.log("add add items to sales success", action.payload);
+          return {
+            ...state,
+            authError: null,
+          };
         case "GET_OTHER_MEALS_ERROR":
           console.log("fetch other meals error " + action.err.message);
           return {
@@ -192,6 +205,20 @@ const dataReducer = (state = initState, action) => {
           return {
             ...state,
             otherMeals: action.payload,
+            authError: null,
+          };
+
+          case "GET_UNVERIFIED_USERS_ERROR":
+          console.log("fetch unverified users error " + action.err.message);
+          return {
+            ...state,
+            authError: "fetch unverified users failed",
+          };
+        case "GET_UNVERIFIED_USERS":
+          console.log("fetch unverified user success", action.payload);
+          return {
+            ...state,
+            unverifiedUsers: action.payload,
             authError: null,
           };
 

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap";
 import { PaystackButton } from "react-paystack"
 
+import Swal from 'sweetalert2';
+
 import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Wallet.css"
@@ -12,6 +14,8 @@ import RevolutPay from "./RevolutPay"
 import Pay from './stripe/Pay';
 
 import { connect } from "react-redux";
+import ConnectAccount from './stripe/ConnectAccount';
+import WithdrawFunds from './stripe/WithdrawFunds';
 
 // Loading component to be displayed while waiting for data
 const SpinnerComponent = () => {
@@ -33,13 +37,11 @@ const WalletComponent = (props) => {
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
-  const publicKey = "pk_live_6ebca5ec3370c215ded414dc7b70d568416e4c1a"
+  const publicKeyPaystack = "pk_live_6ebca5ec3370c215ded414dc7b70d568416e4c1a"
   const amount = amountDeposit * 100
   const email = props.profile.email
   const name = props.profile.firstName
   const userID = props.profile.uid
-  console.log("amount ====>", amount)
-  console.log("user ID ====>", userID)
 
 
   const handleSuccess = () => {
@@ -55,6 +57,12 @@ const WalletComponent = (props) => {
         // Handle the response from your backend
         if (response) {
           setMessage("Payment succeeded!");
+          
+          Swal.fire({
+            title: 'Success!',
+            text: 'Payment is successful',
+            icon: 'success',
+          });
 
           const currentHost = window.location.origin;
           const successUrl = `${currentHost}/payment-success`;
@@ -63,9 +71,19 @@ const WalletComponent = (props) => {
           window.location.href = successUrl;
         } else {
           setMessage("Payment succeeded, but balance update failed.");
+          Swal.fire({
+            title: 'Success!',
+            text: 'Payment succeeded, but balance update failed.',
+            icon: 'success',
+          });
         }
       } catch (err) {
         setMessage("An error occurred while updating the balance.");
+        Swal.fire({
+          title: 'Error!',
+          text: 'An error occurred while updating the balance.',
+          icon: 'error',
+        });
       }
   }
 
@@ -75,7 +93,7 @@ const WalletComponent = (props) => {
     metadata: {
       name,
     },
-    publicKey,
+    publicKeyPaystack,
     text: "Pay Now",
     onSuccess: () => {
       handleSuccess()
@@ -133,9 +151,20 @@ const WalletComponent = (props) => {
         // Reset the form fields
         setAmountTransfer('');
         setRecipientEmail('');
+        Swal.fire({
+          title: 'Success!',
+          text: 'Transfer was successful',
+          icon: 'success',
+        });
+        
       })
       .catch(error => {
         console.error('Error transferring funds:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'An error occurred. Please check your balance and try again',
+          icon: 'error',
+        });
       })
       .finally(() => {
         setIsLoadingBalance(false); // Mark balance loading as complete, regardless of success or error

@@ -11,14 +11,14 @@ import { useTranslation, Trans } from 'react-i18next';
 function EditMealFormPlan(props) {
   const { t } = useTranslation();
 
-  const [mealName, setMealName] = useState(props.meal);
+  const [mealName, setMealName] = useState(props.meal_name);
   const [ingredients, setIngredients] = useState(props.ingredient);
 
   const handleSubmit = () => {
     const data = {
       id: props.id,
       upload: {
-        meal: mealName,
+        meal_name: mealName,
         ingredients: ingredients,
         id: props.id,
       },

@@ -13,6 +13,7 @@ import moment from "moment";
 import ChartProduce from "../../../Charts/ChartProduce";
 import AdminRes from "./AdminRes";
 import AdminConsultant from "./AdminConsultant";
+import UserVerify from "./UserVerify";
 
 const AdminTab = (props) => {
 	const { i18n } = useTranslation();
@@ -45,6 +46,13 @@ const AdminTab = (props) => {
 					className="mealtab"
 				>
 					<AdminConsultant />
+				</Tab>
+				<Tab
+					eventKey="Pending Verification"
+					title="Pending Verification"
+					className="mealtab"
+				>
+					<UserVerify/>
 				</Tab>
 			</Tabs>
 		) : (

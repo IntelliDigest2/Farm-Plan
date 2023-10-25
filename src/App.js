@@ -118,6 +118,10 @@ import SupplyRevenue from "./components/Pages/Account/Business/Suppliers/supplyR
 import RestaurantSale from "./components/Pages/Account/Business/Restaurant/RestaurantSale";
 import RestaurantTurnover from "./components/Pages/Account/Business/Restaurant/RestaurantTurnover";
 import RestaurantExpense from "./components/Pages/Account/Business/Restaurant/RestaurantExpense";
+import WithdrawalSuccess from "./components/Pages/WithdrawalSuccess";
+
+import Withdraw from "./components/SubComponents/payment/Withdraw";
+import SignUpAdmin from "./components/Pages/Auth/SignUpAdmin";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -236,6 +240,7 @@ const App = (props) => {
 						<Route path="/landing" exact component={LandingPage} />
 						<Route path="/about-us" exact component={AboutUs} />
 						<Route path="/signup" exact component={SignUp} />
+						<Route path="/signup-super-admin" exact component={SignUpAdmin} />
 						<Route path="/settings" exact component={Settings} />
 						<Route path="/questionnaire" exact component={Questionnaire} />
 						<Route path="/contact" exact component={Contact} />
@@ -348,9 +353,11 @@ const App = (props) => {
 						<Route path="/expense" component={ExpensePage} />
 						<Route path="/in-progress" component={InProgress} />
 						<Route path="/payment-success" component={PaymentSuccess} />
+						<Route path="/withdrawal-success" component={WithdrawalSuccess} />
 
 						<Route path="/payment" component={RevolutPay} />
 						<Route path="/wallet" component={Wallet} />
+						<Route path="/withdraw-funds" component={Withdraw} />
 						<Route path="/create-coupon" component={Coupon} />
 						<Route path="/redeem-coupon" component={RedeemCoupon} />
 						<Route path="/transactions" component={Transactions} />

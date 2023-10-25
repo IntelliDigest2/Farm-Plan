@@ -1,0 +1,37 @@
+/* Add this CSS to your existing styles or create a new CSS file */
+
+/* Default styles for larger screens */
+.table-header {
+    font-weight: bold;
+  }
+  
+  /* Adjust styles for smaller screens using media queries */
+  @media (max-width: 768px) {
+    .table-header {
+      font-size: 14px;
+    }
+    
+    /* Adjust other styles as needed for smaller screens */
+    /* For example, you can reduce padding, margins, font sizes, etc. */
+  }
+  
+  /* Add this CSS to your existing styles or create a new CSS file */
+
+/* Adjust modal styles for smaller screens */
+.modal {
+    max-width: 100%;
+  }
+  
+  .modal-dialog {
+    max-width: 100%;
+    margin: 1.75rem auto;
+  }
+  
+  /* Optional: Center the modal vertically on smaller screens */
+  @media (max-width: 768px) {
+    .modal-dialog {
+      margin: 1.75rem auto;
+      transform: translate(0, 0);
+    }
+  }
+  

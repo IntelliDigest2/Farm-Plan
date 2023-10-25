@@ -8,7 +8,9 @@ import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
+import { addToFarmerSalesData, addToSalesData } from "../../../../../../../store/actions/dataActions";
 
+import Swal from 'sweetalert2';
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function ConfirmDelivery(props) {
@@ -28,7 +30,7 @@ function ConfirmDelivery(props) {
       trackingID: props.trackingID,
     };
     
-    await fetch(`${baseUrlDev}/v1/payment/confirm-delivery`, {
+    await fetch(`${baseUrlProd}/v1/payment/confirm-delivery`, {
 
       method: 'POST', 
       body: JSON.stringify(transferData),
@@ -38,16 +40,55 @@ function ConfirmDelivery(props) {
     })
     .then((response) => response.json())
     .then((res) => {
-      console.log("reservation ===>", res)
+      const receiversID = props.receiversID
+      const receiversName = props.receiversName
+      // Loop through cart items and dispatch addToSales for each item
+      props.cartItems.forEach((cartItem) => {
+        const salesData = {
+          batchNumber: null,
+          brandName: null,
+          companyID: props.farmerID,
+          customerInfo: {
+            customerID: receiversID,
+            customerName: receiversName
+          },
+          medium: "inApp",
+          productName: cartItem.data,
+          productType: 'Horticulture',
+          price: {
+            amount: cartItem.price,
+            currency: cartItem.currency
+          },
+          quantity: cartItem.quantity,
+          unit: cartItem.measure,
+          currency: cartItem.currency,
+        };
+        // Dispatch addToSales action for each item
+        props.addToSales(salesData);
+        props.addToFarmerSalesData(salesData);
+        
+      });
+
       const data = {
         farmerRef: props.farmerRef,
         farmerID: props.farmerID,
         status: "COMPLETED",
       };
       props.editPurchaseStatusOnFarmer(data);
+
+      Swal.fire({
+        title: 'Success!',
+        text: 'Item marked as delivered',
+        icon: 'success',
+      });
     })
     .catch((err) => {
       console.log(err.message);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong. Please try again or contact our support at admin@intellidigest.com',
+        icon: 'error',
+      });
     })
   
  };
@@ -105,7 +146,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editPurchaseStatusOnFarmer: (data) => dispatch(editPurchaseStatusOnFarmer(data)),
-
+    addToSales: (data) => dispatch(addToSalesData(data)),
+    addToFarmerSalesData: (data) => dispatch(addToFarmerSalesData(data))
   };
 };
 

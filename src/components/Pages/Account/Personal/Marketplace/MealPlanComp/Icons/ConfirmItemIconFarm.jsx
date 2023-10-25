@@ -28,13 +28,17 @@ function ConfirmItemIconFarm(props) {
       farmerRef: props.farmerRef,
       status: "ACCEPTED",
       item: props.item,
+      currency: props.currency,
       farmerID: props.farmerID,
       receiversID: props.receiversID,
-      deliveryDueDate: props.deliveryDueDate
+      deliveryDueDate: props.deliveryDueDate,
+      delivery_code: props.delivery_code,
     };
     props.editPurchaseStatusOnFarmer(data);
     props.sendToUser(data).then((resp)=>{
-    submitNotification("Success", "You will be contacted shortly")
+    // submitNotification("Success", "You will be contacted shortly")
+    submitNotification("Success", "You will receive a notification when users completes payment");
+
 
     }).catch((err)=>{
     submitNotification("Error", "Something went wrong, try again")
