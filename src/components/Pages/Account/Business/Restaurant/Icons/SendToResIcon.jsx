@@ -18,11 +18,12 @@ function SendToRes(props) {
         order: props.order,
         seat: props.seat,
         fullname: props.fullname,
-        status: "IN PROGRESS"
+        status: "IN PROGRESS",
+        userRequestAccountType: props.profile.buildingFunction
       },
     };
     props.sendToRes(data).then((resp)=>{
-    submitNotification("Success", " Items has been sent to restaurant!");
+    submitNotification("Success", " Eating out items has been sent to restaurant!");
 
     }).catch(()=>{
     submitNotification("Error", " Something went wrong, pls try again");
@@ -49,6 +50,13 @@ function SendToRes(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  // console.log(state);
+  return {
+    profile: state.firebase.profile,
+  };  
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     sendToRes: (data) => dispatch(sendToRes(data)),
@@ -56,5 +64,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SendToRes);
+export default connect(mapStateToProps, mapDispatchToProps)(SendToRes);
  
