@@ -51,11 +51,14 @@ function Admin(props) {
 			//array of object
 			var profile = doc.profile;
 
-<<<<<<< HEAD
 			var date = doc.date;
 			var status = doc.status;
 			var id = doc.id;
 			var uid = doc.uid;
+			var address = doc.address;
+			var delivery_option = doc.delivery_option;
+			var phone_number = doc.phone_number;
+			var delivery_code = doc.delivery_code;
 
 			setList((list) => [
 				...list,
@@ -66,34 +69,12 @@ function Admin(props) {
 					status: status,
 					id: id,
 					uid: uid,
+					address: address,
+					delivery_option: delivery_option,
+					delivery_code: delivery_code,
+					phone_number: phone_number,
 				},
 			]);
-=======
-		  var date = doc.date;
-		  var status = doc.status;
-		  var id = doc.id;
-		  var uid = doc.uid;
-		  var address = doc.address;
-		  var delivery_option = doc.delivery_option;
-		  var phone_number = doc.phone_number;
-		  var delivery_code = doc.delivery_code;
-	
-		  setList((list) => [
-			...list,
-			{
-			  cartList: cartList,
-			  profile: profile,
-			  date: date,
-			  status: status,
-			  id: id,
-			  uid: uid,
-			  address: address,
-			  delivery_option: delivery_option,
-			  delivery_code: delivery_code,
-			  phone_number: phone_number,
-			},
-		  ]);
->>>>>>> 179d132758f40cb01ef16f5c59977d7141e3ff05
 		});
 	};
 
@@ -146,7 +127,6 @@ function Admin(props) {
 												</tbody>
 											</Table>
 
-<<<<<<< HEAD
 											<div>
 												<p>
 													<SendItemIcon
@@ -182,7 +162,6 @@ function Admin(props) {
 						))
 					)}
 					{/* <div className="admin_paginator">
-=======
 				{list.length === 0 ? (
 				<p>There is no purchase request from your location.</p>
 				) : (
@@ -255,7 +234,6 @@ function Admin(props) {
 					</Accordion>
 				)))}	
 				{/* <div className="admin_paginator">
->>>>>>> 179d132758f40cb01ef16f5c59977d7141e3ff05
 					<Paginator />
 				</div> */}
 				</main>

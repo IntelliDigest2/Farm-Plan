@@ -7,7 +7,7 @@ import { AppNotifications } from "./appNotifications";
 import { connect } from "react-redux";
 import {getNotificationData} from './notificationData.js';
 import {setNotificationBulbStatus} from './notificationData.js';
-const { subMilliseconds,format, parseJSON ,isAfter} = require('date-fns');
+
 
 
 
@@ -23,16 +23,11 @@ function Notification(props) {
       let date
       const lastNotif = localStorage.getItem('lastCheckedNotification')
 
-      // console.log(lastNotif,`this is the notif that is showed`)
       if (lastNotif){
 
         const notif = JSON.parse(lastNotif).created_at;
        const jsDate=   new Date(notif.seconds * 1000 + notif.nanoseconds / 1e6)
-        const adjustedDate = subMilliseconds(jsDate, 1);
 
-        // console.log(jsDate,`this is the normal date`)
-        // console.log(adjustedDate,`this is the adjusted date`)
-        // console.log(notif,`this is the last notif`)
         date= jsDate
       }
      
@@ -53,16 +48,14 @@ function Notification(props) {
 
   useEffect(() => {
    
-  //  console.log(props.notifications, `these are the notifications` )
-    //  console.log(props.notificatons?.length > 0,`check check`)
+  
 
-  //  props.notifications !== null &&
+  
       if(  props.notifications?.length > 0){
 
-        // console.log(`it got to this point`)
+      
       let lastCheckedNotification = localStorage.getItem('lastCheckedNotification');
 
-      console.log(lastCheckedNotification,`checks if last notification exists`)
       if(lastCheckedNotification){
         const notif = JSON.parse(lastCheckedNotification);
         // if(props.notifications.length > 0){
@@ -70,7 +63,7 @@ function Notification(props) {
           const oldNotif = new Date(notif.created_at.seconds * 1000 + notif.created_at.nanoseconds / 1e6)
           const newNotif = new Date(newNotifTime.seconds * 1000 + newNotifTime.nanoseconds / 1e6)
        
-          if(isAfter(newNotif, oldNotif) ){
+          if(newNotif > oldNotif ){
               props.setNotificationStat(true)
             }
         // }
@@ -106,9 +99,9 @@ function Notification(props) {
 
   const turnOffNotification =()=>{
     props.setNotificationStat(false)
-   console.log(props.notifications,`the notification in the turnOff`) 
     if(props.notifications !== null || props.notifications?.length > 0){
-      // console.log(`it ran here`)
+   
+    
       const latestNotificationJSON = JSON.stringify(props.notifications[0])
     localStorage.setItem('lastCheckedNotification', latestNotificationJSON);
 
