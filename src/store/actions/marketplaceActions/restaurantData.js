@@ -1046,7 +1046,7 @@ export const sendToRes = (data) => {
 
 		let notification = {
 			notification_type: "eatingOut_request",
-			created_at: new Date(),
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
 		};
 
 		let restaurantMessagesCollection =

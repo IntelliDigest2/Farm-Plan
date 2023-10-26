@@ -578,17 +578,36 @@ export const getPurchaseData = (data) => {
 			// .collection("purchases")
 			.collection("purchases")
 			.where("profile.region", "==", data)
-			.get()
-			.then((snapshot) => {
-				const data = [];
-				snapshot.forEach((doc) => {
-					data.push(doc.data());
-				});
-				dispatch({ type: "GET_PURCHASE_DATA", payload: data });
-			})
-			.catch((err) => {
-				dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
-			});
+			.onSnapshot(
+				(doc) => {
+					dispatch({
+						type: "SET_FETCHING",
+						payload: true,
+					});
+					let data = [];
+					doc.forEach((doc) => {
+						data.push({ ...doc.data(), id: doc.id });
+						// console.log(doc.id, " => ", doc.data());
+					});
+					// console.log("Current data: ", consultants);
+					dispatch({ type: "GET_PURCHASE_DATA", payload: data });
+				},
+				(err) => {
+					console.log(err);
+					dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
+				}
+			);
+		// .get()
+		// .then((snapshot) => {
+		// 	const data = [];
+		// 	snapshot.forEach((doc) => {
+		// 		data.push(doc.data());
+		// 	});
+		// 	dispatch({ type: "GET_PURCHASE_DATA", payload: data });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
+		// });
 	};
 };
 
@@ -668,8 +687,8 @@ export const sendToUser = (data) => {
 		const batch = db.batch();
 
 		let notification = {
-			notification_type: "shopping_response",
-			created_at: new Date(),
+			notification_type: "shopping",
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
 		};
 
 		// TODO NOTIFICATION
@@ -766,7 +785,7 @@ export const sendToFarmer = (data) => {
 
 		let notification = {
 			notification_type: "admin_request",
-			created_at: new Date(),
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
 		};
 
 		batch.set(farmUserMessages, data);
