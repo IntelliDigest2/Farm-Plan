@@ -60,24 +60,42 @@ const AddSalesForm = (props) => {
 			price: { amount: local.amount, currency: local.currency },
 			currency: local.currency,
 			date: saleDate,
-			productName: local.productName,
+			productName: local.productName.toLowerCase(),
 			productType: productType,
+			batchNumber: local.batchNumber,
 			customerInfo: { customerName: local.customerName, customerId: null },
 		};
 
-		// console.log(data, `this is the data returned`);
-		// setSubmitLoading(true);
+		console.log(data, `this is the data returned`);
+		setSubmitLoading(true);
 
 		props
 			.addSaleData(data)
 			.then((resp) => {
+				console.log(resp, `thi is the response before the notification`);
+				if (resp === null) {
+					setSubmitLoading(false);
+					// setLocal(defaultLocal);
+					submitNotification(
+						"Error",
+						"Please make sure your product name and batch number are correct (product must belong to the correct batch)"
+					);
+				} else if (resp === "currentQuantity deficit") {
+					setSubmitLoading(false);
+					// setLocal(defaultLocal);
+					submitNotification(
+						"Error",
+						`Insufficient Quantity ( ${data.productName} with bactchNumber  ${data.batchNumber} does not contain the desired quantity available for sale).`
+					);
+				} else {
+					setSubmitLoading(false);
+					setLocal(defaultLocal);
+					submitNotification("Success", "Produce added to sales");
+				}
 				// console.log(resp.id, `this is the id of the newly added sale`);
-				setSubmitLoading(false);
-				setLocal(defaultLocal);
-				submitNotification("Success", "Produce added to sales");
 			})
 			.catch((err) => {
-				// console.log(err, `an error occurred`);
+				console.log(err, `an error occurred`);
 				submitNotification("Error", "Something went wrong try again");
 				setSubmitLoading(false);
 				setSubmitError(true);
@@ -112,16 +130,29 @@ const AddSalesForm = (props) => {
 							id="productName"
 							onChange={(e) => handleLocal(e)}
 							value={local.productName}
+							placeholder="eg mango"
 							required
 						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>Batch Number</Form.Label>
+						<div
+							style={{
+								color: "grey",
+								display: "inline-block",
+								fontSize: "12px",
+							}}
+						>
+							products with same name but different batchNumbers should be added
+							individually
+						</div>
+
 						<Form.Control
 							type="text"
 							id="batchNumber"
 							onChange={(e) => handleLocal(e)}
 							value={local.batchNumber}
+							placeholder="add the Batch Number to which this product belongs"
 							required
 						/>
 						{/* TODO ADD SMALL TEXT THAT FECTHES THE PRODUCT ID FROM THE FARMPLAN WHEN THE PRODUCT NAME HAS BEEN TYPED IN THE INPUT */}
@@ -137,6 +168,7 @@ const AddSalesForm = (props) => {
 								step="1"
 								onChange={(e) => handleLocal(e)}
 								value={local.amount}
+								placeholder="0"
 								required
 							/>
 							<Dropdown
@@ -160,6 +192,7 @@ const AddSalesForm = (props) => {
 								step="1"
 								onChange={(e) => handleLocal(e)}
 								value={local.quantity}
+								placeholder="0"
 								required
 							/>
 							<Dropdown

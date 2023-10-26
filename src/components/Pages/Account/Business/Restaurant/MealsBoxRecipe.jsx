@@ -8,24 +8,58 @@ import ListSubheader from "@mui/material/ListSubheader";
 
 // import Delete from "./Icons/DeleteIcon";
 // import Edit from "./Icons/EditIcon";
+import { Row, Col } from "react-bootstrap";
+
 
 export default function MealsBoxRecipe(props) {
 
   //console.log("let fetch what weekly props is ==> ", props)
+  console.log(props.meals,`these are all the menus`)
+
+  const mealIngredients = (ingredients)=>{
+   return ingredients.map((ingredient)=>{
+      return <span>{ingredient.food} {ingredient.metric}{ingredient.metricUnit}</span>
+    })
+  }
   return (
     <>
-      {props.meals.map((newMeal, index) => (
+      {props.meals.map((meal, index) => (
         <div className="meal-box" key={`meal-box${index}`}>
-          <div className="ingredients">
+          <div >
              <List
               key={`ingrs${index}`}
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
               <ListSubheader className="heading">
-                <div className="meal-name">{newMeal.meal}</div>
-                {newMeal.mealType ? (
-                  <div className="meal-type">{newMeal.mealType}</div>
-                ) : null}
+                <div className="meal-name">{meal.meal}</div>
+                </ListSubheader>
+                <ListItem>
+                <Row >
+                  <Col md='4'>
+                  {/* <div > */}
+                <img style={{display: 'cover'}} src={meal.imageURL} alt={meal.meal} width={'250px'}></img>
+
+                  {/* </div> */}
+                  </Col>
+                  <Col md='8'>
+                  <div style={{padding: '10px'}}>
+                  <div className="meal-type"> {meal.menuSection}</div>
+                  {/* <div >Meal Id: {meal.id}</div> */}
+                 <div>
+                  Ingredients:
+                 { mealIngredients(meal.ingredients)}
+                 </div>
+                 
+                  <div >Meal Description: {meal.mealDescription}</div>
+                  <div >Meal Price: {meal.mealPrice}</div>
+                  </div></Col>
+                  
+                  
+                </Row>
+                </ListItem>
+                
+                  
+                
                 <div className="icons">
                   {/* <Delete
                     value={props.value}
@@ -44,9 +78,9 @@ export default function MealsBoxRecipe(props) {
                     />
                   )} */}
                 </div>
-              </ListSubheader>
+             
 
-              {newMeal.ingredients.map((ingredient, index) => (
+              {/* {newMeal.ingredients.map((ingredient, index) => (
                 <ListItem
                   key={`item${index}`}
                   className="list"
@@ -65,10 +99,10 @@ export default function MealsBoxRecipe(props) {
                     </>
                   )}
                 </ListItem>
-              ))}
-              <ListItem>
+              ))} */}
+              {/* <ListItem>
                 {newMeal.url ? <a href={newMeal.url}>{newMeal.url}</a> : null}
-              </ListItem>
+              </ListItem> */}
             </List>
           </div>
         </div>

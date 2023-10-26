@@ -23,9 +23,15 @@ function SendItemIcon(props) {
         status: "IN PROGRESS"
       },
     };
-    props.sendToUser(data);
-    props.editPurchaseStatus(data)
+    props.sendToUser(data).then((resp)=>{
     submitNotification("Success", " Items has been sent to user!");
+
+    }).catch((err)=>{
+    submitNotification("Error", " Something went wrong");
+
+
+    });
+    props.editPurchaseStatus(data)
   };
 
 

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { MDBContainer } from "mdbreact";
 import { Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import "chartjs-adapter-moment"; // or another adapter to avoid moment
 import { Form, Row, Col, Accordion, Button } from "react-bootstrap";
-import { format } from "date-fns";
-import { Dropdown } from "./../../../SubComponents/Dropdown";
-import DatePicker from "react-datepicker";
+
 import { connect } from "react-redux";
 import { getFarmProductsForDuration } from "./../../../../store/actions/marketplaceActions/farmPlanData";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
@@ -16,90 +13,9 @@ import { Filter } from "@mui/icons-material";
 Chart.register(...registerables);
 
 const ChartProduce = (props) => {
-	// const currentYear = new Date().getFullYear();
-	// const currentDate = new Date();
-	// const currentMonth = format(currentDate, "MMMM").substring(0, 3);
-	// const [day, setDay] = useState(new Date());
-	// const [filter, setFilter] = useState("Day");
-	// const [month, setMonth] = useState(currentMonth);
-	// const [week, setWeek] = useState("1");
-	// const [year, setYear] = useState(currentYear);
-
-	// let months = [
-	// 	"Jan",
-	// 	"Feb",
-	// 	"Mar",
-	// 	"Apr",
-	// 	"May",
-	// 	"Jun",
-	// 	"Jul",
-	// 	"Aug",
-	// 	"Sep",
-	// 	"Oct",
-	// 	"Nov",
-	// 	"Dec",
-	// ];
-
-	// useEffect(() => {
-	// 	let period;
-	// 	if (filter === "Week") {
-	// 		console.log(`filter changed to week`);
-	// 		period = week;
-	// 	} else if (filter === "Month") {
-	// 		console.log(`filter changed to month `);
-	// 		let monthNumber = months.indexOf(month) + 1;
-
-	// 		period = monthNumber;
-	// 	} else if (filter === "Year") {
-	// 		console.log(`filter changed to year `);
-
-	// 		period = year;
-	// 	} else {
-	// 		period = day;
-	// 	}
-
-	// 	props.getData(filter, period);
-	// }, [filter]);
-
-	// // console.log(props.produce, `this is how the produce data looks like`);
-
-	// useEffect(() => {
-	// 	if (filter === "Week") {
-	// 		console.log(`Week change`);
-	// 		props.getData(filter, week);
-	// 	}
-	// }, [week]);
-	// useEffect(() => {
-	// 	if (filter === "Month") {
-	// 		console.log(`month change`);
-	// 		let monthNumber = months.indexOf(month) + 1;
-
-	// 		props.getData(filter, monthNumber);
-	// 	}
-	// }, [month]);
-	// useEffect(() => {
-	// 	if (filter === "Year") {
-	// 		console.log(`year change`);
-
-	// 		props.getData(filter, year);
-	// 	}
-	// }, [year]);
-	// useEffect(() => {
-	// 	if (filter === "Day") {
-	// 		// console.log(`day change`);
-	// 		props.getData(filter, day);
-	// 	}
-	// }, [day]);
-
-	useEffect(() => {
-		// console.log(props.produce, `this is the produce returned`);
-	}, [props.produce]);
+	useEffect(() => {}, [props.produce]);
 
 	let farmTypesSet = new Set();
-
-	let farmTypeCounts = [];
-
-	// let colorArray = ["blue", "green", "orange", "pink"];
 
 	let farmProduceTypeObjects = {};
 
@@ -244,7 +160,6 @@ const ChartProduce = (props) => {
 					<ListGroupItem style={{ textAlign: "left" }}>
 						<h5>Farm Practice: {key}</h5>
 
-						{/* <ListGroup className="list-group-flush">{listItems(key)}</ListGroup> */}
 						{content2(key)}
 					</ListGroupItem>
 				);
@@ -254,86 +169,6 @@ const ChartProduce = (props) => {
 				<p>You don't have any produce for this period</p>
 			</div>
 		);
-
-	// const endYear = 2050;
-	// const years = [];
-
-	// for (let year = currentYear; year <= endYear; year++) {
-	// 	years.push(year);
-	// }
-
-	// let componentToRender =
-	// 	filter === "Week" ? (
-	// 		<>
-	// 			<Dropdown
-	// 				id="week"
-	// 				styling="grey dropdown-input"
-	// 				data={week}
-	// 				// data={local.measure}
-	// 				required
-	// 				items={["1", "2", "3", "4"]}
-	// 				function={(e) => setWeek(e)}
-	// 			/>
-	// 			<span style={{ marginLeft: "5px" }}> of {currentMonth}</span>
-	// 		</>
-	// 	) : filter === "Month" ? (
-	// 		<Dropdown
-	// 			id="month"
-	// 			styling="grey dropdown-input"
-	// 			data={month}
-	// 			// data={local.measure}
-	// 			required
-	// 			items={months}
-	// 			function={(e) => setMonth(e)}
-	// 		/>
-	// 	) : filter === "Year" ? (
-	// 		<Dropdown
-	// 			id="year"
-	// 			styling="grey dropdown-input"
-	// 			data={year}
-	// 			// data={local.measure}
-	// 			required
-	// 			items={years}
-	// 			function={(e) => setYear(e)}
-	// 		/>
-	// 	) : (
-	// 		//  filter === "Farm Cycle"?():
-	// 		// <Form.Group className="mb-3 land">
-	// 		// 					<Form.Label>Farm Cycle</Form.Label>
-	// 		// 					<InputGroup>
-	// 		// 						<Form.Control
-	// 		// 							type="number"
-	// 		// 							id="farmCycle"
-	// 		// 							onChange={(e) => setFarmCycle(e.target.value)}
-	// 		// 							value={land}
-	// 		// 							min={1}
-	// 		// 							max={20}
-	// 		// 							required
-	// 		// 						/>
-	// 		// 						<Dropdown
-	// 		// 							id="cycleUnit"
-	// 		// 							styling="green dropdown-input-right"
-	// 		// 							data={cycleUnit}
-	// 		// 							function={(e) => {
-	// 		// 								setCycleUnit(e);
-	// 		// 							}}
-	// 		// 							items={["months", "years"]}
-	// 		// 						/>
-	// 		// 					</InputGroup>
-	// 		// 				</Form.Group>
-	// 		<div style={{ display: "flex" }}>
-	// 			<span>pick date</span>
-	// 			<span>
-	// 				<DatePicker
-	// 					selected={day}
-	// 					onChange={(date) => setDay(date)}
-	// 					// dateFormat="dd/m/yyyy"
-	// 				/>
-	// 			</span>
-	// 		</div>
-	// 	);
-
-	// let dataDisplay = ? :
 
 	return (
 		<div>

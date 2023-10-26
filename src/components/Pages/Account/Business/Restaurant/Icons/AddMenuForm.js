@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Dropdown } from "../../../../../SubComponents/Dropdown";
 import MenuSection from "../../../Personal/Marketplace/MealPlanComp/Search/menuSection";
 import MealType from "../../../Personal/Marketplace/MealPlanComp/Search/mealType";
@@ -26,6 +26,7 @@ function AddMealForm_restaurant(props) {
 	const [mealName, setMealName] = useState("");
 	const [mealDescription, setMealDescription] = useState("");
 	const [mealPrice, setMealPrice] = useState("");
+	const [costPrice, setCostPrice] = useState("");
 	const [mealCurrency, setMealCurrency] = useState("$");
 	const [menuSection, setMenuSection] = useState("Any");
 	const [createMenuLoading, setCreateMenuLoading] = useState(false);
@@ -34,18 +35,14 @@ function AddMealForm_restaurant(props) {
 	const [query, setQuery] = useState("");
 	const [response, setResponse] = useState([]);
 	const [image, setImage] = useState(null);
+	const [metric, setMetric] = useState("");
+	const [metricUnit, setMetricUnit] = useState("g");
 
 	useEffect(() => {
 		foodItemApi(query, setResponse);
 	}, [query]);
 
-	const setFormToDefualt = () => {
-		setMealName("");
-		setMealDescription("");
-		setMealPrice("");
-		setMealCurrency("$");
-		setMenuSection("Any");
-	};
+	const formRef = useRef(null);
 
 	//saves recipe to saved meal list
 	const [save, setSave] = useState(true);
@@ -63,11 +60,12 @@ function AddMealForm_restaurant(props) {
 		foodId: "",
 	};
 
-	const defaultIngredient = [
-		{ id: 1, ingredientName: "", ingredientQuantity: "", ingredientUnit: "g" },
-	];
+	const defaultIngredient = [{ id: 1, food: "", quantity: "", measure: "g" }];
 
 	const [inputGroups, setInputGroups] = useState(defaultIngredient);
+	const [metricGroups, setMetricGroups] = useState([]);
+
+	useEffect(() => {}, [metricGroups]);
 
 	const [local, setLocal] = useState(defaultLocal);
 	const handleLocal = (e) => {
@@ -105,7 +103,7 @@ function AddMealForm_restaurant(props) {
 		}
 	};
 	useEffect(() => {
-		console.log("ingredients", ingredients);
+		// console.log("ingredients", ingredients);
 	}, [ingredients]);
 
 	useEffect(() => {}, [inputGroups]);
@@ -114,21 +112,21 @@ function AddMealForm_restaurant(props) {
 
 	const handleIngredientNameChange = (index, value) => {
 		const updatedInputGroups = inputGroups.map((group, i) =>
-			i === index ? { ...group, ingredientName: value } : group
+			i === index ? { ...group, food: value } : group
 		);
 		setInputGroups(updatedInputGroups);
 	};
 
 	const handleIngredientQuantityChange = (index, value) => {
 		const updatedInputGroups = inputGroups.map((group, i) =>
-			i === index ? { ...group, ingredientQuantity: value } : group
+			i === index ? { ...group, quantity: value } : group
 		);
 		setInputGroups(updatedInputGroups);
 	};
 
 	const handleIngredientUnit = (index, value) => {
 		const updatedInputGroups = inputGroups.map((group, i) =>
-			i === index ? { ...group, ingredientUnit: value } : group
+			i === index ? { ...group, measure: value } : group
 		);
 		setInputGroups(updatedInputGroups);
 	};
@@ -142,14 +140,25 @@ function AddMealForm_restaurant(props) {
 
 	let validity = inputGroups.every((inputGroup) => {
 		return (
-			inputGroup.ingredientName.trim() !== "" &&
-			inputGroup.ingredientQuantity !== "0" &&
-			inputGroup.ingredientQuantity !== 0 &&
-			inputGroup.ingredientQuantity !== ""
+			inputGroup.food.trim() !== "" &&
+			inputGroup.quantity !== "0" &&
+			inputGroup.quantity !== 0 &&
+			inputGroup.quantity !== ""
 		);
 	});
+	let metricValidity =
+		metricGroups.length > 0
+			? metricGroups.every((metric) => {
+					return (
+						metric.metric.trim() !== "" &&
+						metric.quantity !== "0" &&
+						metric.quantity !== 0 &&
+						metric.quantity !== ""
+					);
+			  })
+			: true;
 
-	console.log(validity, `this is te validity `);
+	// console.log(validity, `this is te validity `);
 
 	function addIngredientHandler() {
 		if (inputGroups.length <= 5) {
@@ -157,9 +166,9 @@ function AddMealForm_restaurant(props) {
 				...inputGroups,
 				{
 					id: inputGroups.length + 1,
-					ingredientName: "",
-					ingredientQuantity: "",
-					ingredientUnit: "g",
+					food: "",
+					quantity: "",
+					measure: "g",
 				},
 			]);
 		}
@@ -205,7 +214,7 @@ function AddMealForm_restaurant(props) {
 							onChange={(e) =>
 								handleIngredientQuantityChange(index, e.target.value)
 							}
-							value={group.ingredientQuantity}
+							value={group.quantity}
 							// function={(e) => {
 							//   setLocal({ ...local, measure: e });
 							// }}
@@ -216,21 +225,10 @@ function AddMealForm_restaurant(props) {
 						<Dropdown
 							// id="nutrientUnit"
 							styling="grey dropdown-input"
-							data={group.ingredientUnit}
+							data={group.measure}
 							// data={local.measure}
 							required
-							items={[
-								"g",
-								"kg",
-								"pcs",
-								"/",
-								"mL",
-								"L",
-								"/",
-								"tsp",
-								"tbsp",
-								"cups",
-							]}
+							items={["g", "kg", "/", "mL", "L", "/", "tsp", "tbsp", "cups"]}
 							function={(e) => handleIngredientUnit(index, e)}
 						/>
 					</Col>
@@ -258,17 +256,19 @@ function AddMealForm_restaurant(props) {
 	// });
 
 	//trigger this when editing/deleting items
-	// const [update, setUpdate] = useState(0);
-	// const forceUpdate = () => {
-	// 	setUpdate(update + 1);
-	// };
+	const [update, setUpdate] = useState(0);
+	const forceUpdate = () => {
+		setUpdate(update + 1);
+	};
 
 	const uploadImage = async () => {
 		const formData = new FormData();
 		formData.append("file", image);
 		formData.append("upload_preset", "upylhe4l");
 		formData.append("cloud_name", "dghm4xm7k");
-
+		// formData.append("resize", "fill");
+		// formData.append("width", "500");
+		// formData.append("height", "500");
 		try {
 			const response = await fetch(
 				"https://api.cloudinary.com/v1_1/dghm4xm7k/image/upload",
@@ -284,6 +284,26 @@ function AddMealForm_restaurant(props) {
 		}
 	};
 
+	// console.log(mealPrice === "0", `this is the mealPrice === "0"`);
+	// console.log(mealPrice === 0, `this is the mealPrice === 0`);
+	// console.log(costPrice === "", `this is the costPrice === "" `);
+	// console.log(costPrice === "0", `this is the costPrice === "0"`);
+	// console.log(costPrice === 0, `this is the costPrice === 0 `);
+	// console.log(metric === "", `this is the metric === ""`);
+	// console.log(metric === "0", `this is the metric === "0"`);
+	// console.log(metric === 0, `this is the metric === 0 `);
+	// console.log(local.quantity === "0", `this is the local.quantity === "0" `);
+	// console.log(local.quantity === 0, `this is the local.quantity === 0 `);
+	// console.log(local.quantity === "", `this is the local.quantity === "" `);
+	// console.log(!validity, `this is the  !validity`);
+	// console.log(mealName.trim() === "", `this is the mealName.trim() === "" `);
+	// console.log(
+	// 	mealDescription.trim() === "",
+	// 	`this is the mealDescription.trim() === ""`
+	// );
+	// console.log(image === null, `this is the image === null `);
+	// console.log(mealPrice === "", `this is the mealPrice === ""  `);
+
 	//fired when click "done"
 	const handleSubmit = () => {
 		const data = {
@@ -295,9 +315,13 @@ function AddMealForm_restaurant(props) {
 			upload: {
 				meal: mealName,
 				mealDescription: mealDescription,
-				mealPrice: mealPrice,
+				mealPrice: parseInt(mealPrice),
+				costPrice: parseInt(costPrice),
 				mealCurrency: mealCurrency,
 				menuSection: menuSection,
+				metric: metricGroups,
+
+				metricUnit: metricUnit,
 				// mealType: mealType,
 				ingredients: inputGroups,
 				restaurantName: props.profile.restaurantName,
@@ -309,7 +333,7 @@ function AddMealForm_restaurant(props) {
 			},
 		};
 
-		setCreateMenuLoading(true);
+		// setCreateMenuLoading(true);
 
 		uploadImage()
 			.then((resp) => {
@@ -323,9 +347,9 @@ function AddMealForm_restaurant(props) {
 				props.createMenu(data);
 			})
 			.then((resp) => {
-				setCreateMenuLoading(false);
 				submitNotification("Success", `Dish has been added to menu!`);
-				setFormToDefualt();
+				setCreateMenuLoading(false);
+				// formRef.current.reset();
 			})
 			.catch((err) => {
 				console.log(err);
@@ -336,7 +360,119 @@ function AddMealForm_restaurant(props) {
 		// props.addToShoppingList(data);
 	};
 
-	useEffect(() => {}, [createMenuLoading]);
+	// console.log(menuSection, `this is the menusection set`);
+
+	// const handleMenuSection = (value) => {
+	// 	console.log(value, `this is wat was passed`);
+	// 	console.log(value, `this is wat was passed`);
+	// };
+
+	const handleMetricNameChange = (index, value) => {
+		const updatedMetricGroups = metricGroups.map((group, i) =>
+			i === index ? { ...group, metric: value } : group
+		);
+		setMetricGroups(updatedMetricGroups);
+	};
+
+	const handleMetricQuantityChange = (index, value) => {
+		const updatedMetricGroups = metricGroups.map((group, i) =>
+			i === index ? { ...group, quantity: value } : group
+		);
+		setMetricGroups(updatedMetricGroups);
+	};
+
+	const handleMetricUnit = (index, value) => {
+		const updatedMetricGroups = metricGroups.map((group, i) =>
+			i === index ? { ...group, measure: value } : group
+		);
+		setMetricGroups(updatedMetricGroups);
+	};
+
+	function deleteMetricHandler(index) {
+		console.log(index, `this is the index that we want to delete`);
+		const updatedMetricGroups = metricGroups.filter((group, i) => i !== index);
+		console.log(updatedMetricGroups, `this is the updated Input Group`);
+		setMetricGroups(updatedMetricGroups);
+	}
+
+	function addMetricHandler() {
+		if (metricGroups.length <= 2) {
+			setMetricGroups([
+				...metricGroups,
+				{
+					id: metricGroups.length + 1,
+					metric: "",
+					quantity: "",
+					measure: "g",
+				},
+			]);
+		}
+	}
+
+	let addMetricGroup = metricGroups.map((group, index) => {
+		return (
+			<>
+				<InputGroup key={`nut-${index}`} style={{ margin: "5px 0" }}>
+					<Col md={7}>
+						<Form.Control
+							id="metric"
+							type="text"
+							onChange={(e) => handleMetricNameChange(index, e.target.value)}
+							value={local.metric}
+							placeholder="metric name"
+						/>
+					</Col>
+					<Col md={2}>
+						<Form.Control
+							// id="nutrientQuantity"
+							type="number"
+							min="0"
+							required
+							// step=".5"
+							onChange={(e) =>
+								handleMetricQuantityChange(index, e.target.value)
+							}
+							value={group.quantity}
+							// function={(e) => {
+							//   setLocal({ ...local, measure: e });
+							// }}
+							placeholder="qty"
+						/>
+					</Col>
+					<Col md={2}>
+						<Dropdown
+							// id="nutrientUnit"
+							styling="grey dropdown-input"
+							data={group.measure}
+							// data={local.measure}
+							required
+							items={[
+								"g",
+								"kg",
+								"ltr",
+								"/",
+								"mL",
+								"L",
+								"/",
+								"tsp",
+								"tbsp",
+								"cups",
+								"kcal",
+							]}
+							function={(e) => handleMetricUnit(index, e)}
+						/>
+					</Col>
+					<Col md={1}>
+						{index >= 0 ? (
+							<ClearIcon onClick={() => deleteMetricHandler(index)}></ClearIcon>
+						) : (
+							""
+						)}
+					</Col>
+				</InputGroup>
+			</>
+		);
+	});
 
 	const menuSections = [
 		"Any",
@@ -403,6 +539,29 @@ function AddMealForm_restaurant(props) {
 					placeholder="type a good description of your dish here"
 				/>
 
+				<Form.Label>Cost price</Form.Label>
+				<InputGroup>
+					<Form.Control
+						id="costPrice"
+						type="number"
+						min="0"
+						step="1"
+						placeholder="0"
+						onChange={(e) => {
+							setCostPrice(e.target.value);
+						}}
+						defaultValue={costPrice}
+					/>
+					<Dropdown
+						id="currency"
+						styling="grey dropdown-input"
+						data={mealCurrency}
+						items={["$", "€", "£"]}
+						function={(e) => {
+							setMealCurrency(e);
+						}}
+					/>
+				</InputGroup>
 				<Form.Label>Price</Form.Label>
 				<InputGroup>
 					<Form.Control
@@ -432,7 +591,11 @@ function AddMealForm_restaurant(props) {
 					<Col md={4}>
 						<Form.Label>Add Dish Ingredients</Form.Label>
 
-						<AddButton onClick={addIngredientHandler} />
+						{ingredientGroup.length < 6 ? (
+							<AddButton onClick={addIngredientHandler} />
+						) : (
+							""
+						)}
 					</Col>
 				</Row>
 
@@ -456,21 +619,40 @@ function AddMealForm_restaurant(props) {
 			{/* <FoodItemSearch handleFoodSearch={handleFoodSearch} /> */}
 			{/* </Form.Group> */}
 			<Form.Group>
-				<Form.Label>Weight/Volume/Calorie count</Form.Label>
+				<Row>
+					<Col md={8}>
+						<Form.Label>
+							Add Additional Metric (Weight/Volume/Calorie count)
+						</Form.Label>
+
+						{addMetricGroup.length < 3 ? (
+							<AddButton onClick={addMetricHandler} />
+						) : (
+							""
+						)}
+					</Col>
+				</Row>
+
+				<Row style={{ width: "100%", alignItems: "center" }}>
+					{addMetricGroup}
+				</Row>
+			</Form.Group>
+			{/* <Form.Group>
+				<Form.Label>Weight/Volume/Calorie count (metric)</Form.Label>
 				<InputGroup>
 					<Form.Control
-						id="quantity"
+						id="metric"
 						type="number"
 						min="0"
 						step=".1"
-						onChange={(e) => handleLocal(e)}
-						value={local.quantity}
+						onChange={(e) => setMetric(e.target.value)}
+						value={metric}
 						placeholder="0"
 					/>
 					<Dropdown
-						id="measure"
+						id="metric"
 						styling="grey dropdown-input"
-						data={local.measure}
+						data={metricUnit}
 						items={[
 							"g",
 							"kg",
@@ -485,11 +667,12 @@ function AddMealForm_restaurant(props) {
 							"kJ",
 						]}
 						function={(e) => {
-							setLocal({ ...local, measure: e });
+							setMetricUnit(e);
 						}}
 					/>
 				</InputGroup>
-			</Form.Group>
+			</Form.Group> */}
+
 			<Form.Group className="mb-3">
 				<Form.Label>Add product image</Form.Label>
 				<Form.Control
@@ -533,13 +716,20 @@ function AddMealForm_restaurant(props) {
 						mealPrice === "" ||
 						mealPrice === "0" ||
 						mealPrice === 0 ||
-						local.quantity === "0" ||
-						local.quantity === 0 ||
-						local.quantity === "" ||
+						costPrice === "" ||
+						costPrice === "0" ||
+						costPrice === 0 ||
+						metric === "" ||
+						metric === "0" ||
+						metric === 0 ||
+						// local.quantity === "0" ||
+						// local.quantity === 0 ||
+						// local.quantity === "" ||
 						// local.quantity === "0" ||
 						// local.quantity === 0 ||
 						// local.quantity === "" ||
 						// ingredientName: "", ingredientQuantity: ""
+						!metricValidity ||
 						!validity ||
 						mealName.trim() === "" ||
 						mealDescription.trim() === "" ||

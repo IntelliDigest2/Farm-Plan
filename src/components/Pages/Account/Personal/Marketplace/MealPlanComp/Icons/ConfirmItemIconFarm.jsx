@@ -35,9 +35,17 @@ function ConfirmItemIconFarm(props) {
       delivery_code: props.delivery_code,
     };
     props.editPurchaseStatusOnFarmer(data);
-    props.sendToUser(data);
-    // console.log("show items", data)
+    props.sendToUser(data).then((resp)=>{
+    // submitNotification("Success", "You will be contacted shortly")
     submitNotification("Success", "You will receive a notification when users completes payment");
+
+
+    }).catch((err)=>{
+    submitNotification("Error", "Something went wrong, try again")
+
+
+    });
+    // console.log("show items", data)
   };
 
   const handleClose = () => setShow(false);

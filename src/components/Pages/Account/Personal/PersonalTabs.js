@@ -13,7 +13,7 @@ export function Food({ setShow, setChooseModal, profile }) {
 	const { t } = useTranslation();
 	const [consultantService, setConsultantService] = useState("");
 
-	console.log(profile);
+	// console.log(profile);
 	useEffect(() => {
 		// if (profile.isloaded) {
 		// console.log(

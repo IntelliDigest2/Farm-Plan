@@ -72,6 +72,7 @@ import RestaurantShoppingListPlanner from "./components/Pages/Account/Business/R
 import RestaurantInventory from "./components/Pages/Account/Business/Restaurant/RestaurantInventory";
 import RestaurantDashboard from "./components/Pages/Account/Business/Restaurant/RestaurantDashboard";
 import RestaurantMealPlan from "./components/Pages/Account/Business/Restaurant/RestaurantMealPlan";
+
 import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan";
 
 import NewAccount from "./components/Pages/Account/Account";
@@ -114,6 +115,9 @@ import Reservations from "./components/SubComponents/payment/Reservations";
 import ReservationsOther from "./components/SubComponents/payment/ReservationsOther";
 import PaymentSuccess from "./components/Pages/PaymentSuccess";
 import SupplyRevenue from "./components/Pages/Account/Business/Suppliers/supplyRevenue";
+import RestaurantSale from "./components/Pages/Account/Business/Restaurant/RestaurantSale";
+import RestaurantTurnover from "./components/Pages/Account/Business/Restaurant/RestaurantTurnover";
+import RestaurantExpense from "./components/Pages/Account/Business/Restaurant/RestaurantExpense";
 import WithdrawalSuccess from "./components/Pages/WithdrawalSuccess";
 
 import Withdraw from "./components/SubComponents/payment/Withdraw";
@@ -339,6 +343,9 @@ const App = (props) => {
 							path="/restaurant-meal-plan"
 							component={RestaurantMealPlan}
 						/>
+						<Route path="/restaurant-sale" component={RestaurantSale} />
+						<Route path="/restaurant-turnover" component={RestaurantTurnover} />
+						<Route path="/restaurant-expense" component={RestaurantExpense} />
 						<Route path="/supply-plan" component={SupplyPlan} />
 						<Route path="/supply-revenue" component={SupplyRevenue} />
 						<Route path="/produce" component={ProduceTab} />

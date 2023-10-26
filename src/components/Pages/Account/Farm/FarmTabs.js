@@ -75,12 +75,7 @@ export function Food({ isSeller, profile }) {
 				goTo="/view-products"
 				disabled
 			/> */}
-			<IconButton
-				icon="chart"
-				label="Produce Chart"
-				color="green"
-				goTo="/produce"
-			/>
+			<IconButton icon="chart" label="Produce" color="green" goTo="/produce" />
 			<IconButton icon="chart" label="Expense" color="yellow" goTo="/expense" />
 			{/* <IconButton icon="chart" label="Expense" color="yellow" goTo="/in-progress" /> */}
 			{/* <IconButton

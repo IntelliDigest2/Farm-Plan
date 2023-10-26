@@ -1,10 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
 
 import { connect } from "react-redux";
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation, Trans } from "react-i18next";
 
 // import Accordion from "../SubComponents/Accordion";
-import { Accordion, Card, Table, ListGroup, ListGroupItem } from 'react-bootstrap';
+import {
+	Accordion,
+	Card,
+	Table,
+	ListGroup,
+	ListGroupItem,
+} from "react-bootstrap";
 
 import Paginator from "../../../../../SubComponents/Paginator";
 // import { v4 as uuidv4 } from "uuid";
@@ -17,178 +23,180 @@ import FarmerListIcon from "../../../Personal/Marketplace/MealPlanComp/Icons/Far
 function Admin(props) {
 	const { t } = useTranslation();
 
-	const [list, setList ] = useState([])
+	const [list, setList] = useState([]);
 	const [update, setUpdate] = useState(0);
 
-	 //trigger this when updating items
-	 const forceUpdate = () => {
-	   setUpdate(update + 1);
-	 };
-	 	
+	//trigger this when updating items
+	const forceUpdate = () => {
+		setUpdate(update + 1);
+	};
+
 	//this sends data request
 	useEffect(() => {
 		props.getPurchaseData(props.profile.region);
 		//forceUpdate()
-	  }, [props.data]);
+	}, [props.data]);
 
-
-	  const purchaseList = async () => {
+	const purchaseList = async () => {
 		//clears the items array before each update- IMPORTANT
 		setList([]);
-	
+
 		//sets a new item object in the array for every document
 		props.purchase.forEach((doc) => {
-		  // id is the docref for deletion
+			// id is the docref for deletion
 
-		  //array of object
-		  var cartList = doc.cartList;
+			//array of object
+			var cartList = doc.cartList;
 
-		  //array of object
-		  var profile = doc.profile;
+			//array of object
+			var profile = doc.profile;
 
-		  var date = doc.date;
-		  var status = doc.status;
-		  var id = doc.id;
-		  var uid = doc.uid;
-		  var address = doc.address;
-		  var delivery_option = doc.delivery_option;
-		  var phone_number = doc.phone_number;
-		  var delivery_code = doc.delivery_code;
+			var date = doc.date;
+			var status = doc.status;
+			var id = doc.id;
+			var uid = doc.uid;
+			var address = doc.address;
+			var delivery_option = doc.delivery_option;
+			var phone_number = doc.phone_number;
+			var delivery_code = doc.delivery_code;
 
-		  if (address === null) {
-			address = props.profile.address !== null ? props.profile.address : null;
-		  }
-	
-		  setList((list) => [
-			...list,
-			{
-			  cartList: cartList,
-			  profile: profile,
-			  date: date,
-			  status: status,
-			  id: id,
-			  uid: uid,
-			  address: address,
-			  delivery_option: delivery_option,
-			  delivery_code: delivery_code,
-			  phone_number: phone_number,
-			},
-		  ]);
+			if (address === null) {
+				address = props.profile.address !== null ? props.profile.address : null;
+			}
+
+			setList((list) => [
+				...list,
+				{
+					cartList: cartList,
+					profile: profile,
+					date: date,
+					status: status,
+					id: id,
+					uid: uid,
+					address: address,
+					delivery_option: delivery_option,
+					delivery_code: delivery_code,
+					phone_number: phone_number,
+				},
+			]);
 		});
-	  };
+	};
 
-	  //this sends data request
+	//this sends data request
 	useEffect(() => {
-		purchaseList()
-	  }, [props.purchase]);
-
-	
+		purchaseList();
+	}, [props.purchase]);
 
 	return (
 		<>
 			<div>
 				<main>
+					{list.length === 0 ? (
+						<p>There is no purchase request from your location.</p>
+					) : (
+						list.map((item, index) => (
+							<Accordion key={`item${index}`}>
+								<Card>
+									<Accordion.Toggle as={Card.Header} eventKey="0">
+										<p>{item.date}</p>
+										<p>{item.delivery_option}</p>
+										<span>{item.phone_number}</span>
+										<p>
+											{item.profile.firstName} {item.profile.city},{" "}
+											{item.profile.country}
+										</p>
+										<p>
+											{item.delivery_code &&
+												`pickup code: ${item.delivery_code}`}
+										</p>
+									</Accordion.Toggle>
+									<Accordion.Collapse eventKey="0">
+										<Card.Body>
+											<Table striped bordered hover>
+												<thead>
+													<tr>
+														<th>{t("description.product")}</th>
+														<th>{t("description.quantity")}</th>
+														<th>{t("description.measure")}</th>
+														<th>{t("description.price")}</th>
+														<th>{t("description.supplier")}</th>
+													</tr>
+												</thead>
+												<tbody>
+													{item.cartList.map((cart) => (
+														<tr key={`cart${index}`}>
+															<td>{cart.data}</td>
+															<td>{cart.quantity}</td>
+															<td>{cart.measure}</td>
+															{cart.price ? <td>{cart.price}</td> : <td>0</td>}
+															{cart.supplier ? (
+																<td>{cart.supplier}</td>
+															) : (
+																<td></td>
+															)}
+														</tr>
+													))}
+												</tbody>
+											</Table>
 
-				{list.length === 0 ? (
-				<p>There is no purchase request from your location.</p>
-				) : (
-				list.map((item, index) => (
-					<Accordion key={`item${index}`}>
-						<Card>
-						<Accordion.Toggle as={Card.Header} eventKey="0">
-							<p>{item.date}</p>
-							<p>{item.delivery_option}</p>
-							<span>
-								{item.phone_number} 
-							</span>
-							<p>{item.profile.firstName} {item.profile.city}, {item.profile.country}</p>
-							<p>{item.delivery_code && `pickup code: ${item.delivery_code}`}</p>
-						</Accordion.Toggle>
-							<Accordion.Collapse eventKey="0">
-							<Card.Body>
-							<Table striped bordered hover>
-								
-								<thead>
-									<tr>
-										<th>{t('description.product')}</th>
-										<th>{t('description.quantity')}</th>
-										<th>{t('description.measure')}</th>
-										<th>{t('description.price')}</th>
-										<th>{t('description.supplier')}</th>
-									</tr>
-								</thead>
-								<tbody>
-									{item.cartList.map((cart) => (
-										<tr key={`cart${index}`}>
-										<td>{cart.data}</td>
-										<td>{cart.quantity}</td>
-										<td>{cart.measure}</td>
-										{ cart.price ? (<td>{cart.price}</td>):(<td>0</td>)}
-										{ cart.supplier ? (<td>{cart.supplier}</td>):(<td></td>)}
-									</tr>
-									))}
-									
-								</tbody>
-								
-								
-							</Table>
-							
-							<div>
-							<p>
-								<SendItemIcon 
-									refID={item.id}
-									uid={item.uid}
-									cart={item.cartList}
-								/>
-								<EditPurchaseIcon 
-									id={item.id}
-									uid={item.uid}
-									cart={item.cartList}
-								/>
-								<FarmerListIcon 
-								id={item.id}
-								uid={item.uid}
-								receiversID={item.profile.uid}
-								cart={item.cartList}
-								address={item.address}
-								delivery_code={item.delivery_code}
-								city={item.profile.city}
-								/>
-							</p>
-							<ListGroup className="list-group-flush">
-								<ListGroupItem>{t('description.status')}: {item.status}</ListGroupItem>
-								<ListGroupItem>{t('description.ref_num')}: {item.id}</ListGroupItem>
-							</ListGroup>
-							</div>
-							</Card.Body>
-							</Accordion.Collapse>
-						</Card>
-					</Accordion>
-				)))}	
-				{/* <div className="admin_paginator">
+											<div>
+												<p>
+													<SendItemIcon
+														refID={item.id}
+														uid={item.uid}
+														cart={item.cartList}
+													/>
+													<EditPurchaseIcon
+														id={item.id}
+														uid={item.uid}
+														cart={item.cartList}
+													/>
+													<FarmerListIcon
+														id={item.id}
+														uid={item.uid}
+														receiversID={item.profile.uid}
+														cart={item.cartList}
+														address={item.address}
+														delivery_code={item.delivery_code}
+														city={item.profile.city}
+													/>
+												</p>
+												<ListGroup className="list-group-flush">
+													<ListGroupItem>
+														{t("description.status")}: {item.status}
+													</ListGroupItem>
+													<ListGroupItem>
+														{t("description.ref_num")}: {item.id}
+													</ListGroupItem>
+												</ListGroup>
+											</div>
+										</Card.Body>
+									</Accordion.Collapse>
+								</Card>
+							</Accordion>
+						))
+					)}
+					{/* <div className="admin_paginator">
 					<Paginator />
 				</div> */}
 				</main>
-		</div>
+			</div>
 		</>
-		
 	);
 	// <div className="adminCont">{/* {userRequests} */}</div>
-};
+}
 
 const mapStateToProps = (state) => {
 	return {
-	  purchase: state.data.purchaseData,
-	  profile: state.firebase.profile,
+		purchase: state.data.purchaseData,
+		profile: state.firebase.profile,
 	};
-  };
-  
-  const mapDispatchToProps = (dispatch) => {
-	return {
-	  getPurchaseData: (item) => dispatch(getPurchaseData(item)),
-	};
-  };
-  
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
-  
+};
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getPurchaseData: (item) => dispatch(getPurchaseData(item)),
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

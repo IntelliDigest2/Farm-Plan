@@ -20,9 +20,13 @@ function SendToFarmerIcon(props) {
       address: props.address,
       delivery_code: props.delivery_code
     };
-    props.sendToFarmer(data);
-    //props.editPurchaseStatus(data)
+    props.sendToFarmer(data).then((resp)=>{
     submitNotification("Success", " Items has been sent to farmer!");
+
+    }).catch((err)=>{
+      submitNotification("Error ", " Something went wrong, try again");
+    });
+    //props.editPurchaseStatus(data)
   };
 
   return (

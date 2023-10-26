@@ -1,4 +1,6 @@
 import { format, parse } from "date-fns";
+import firebase from "firebase";
+const db = firebase.firestore();
 
 export const getFarmerData = () => {
 	return (dispatch, getState, { getFirebase }) => {
@@ -1125,6 +1127,10 @@ export const addSaleData = (data) => {
 	return (dispatch, getState, { getFirestore, getFirebase }) => {
 		const profile = getState().firebase.profile;
 		const authUID = getState().firebase.auth.uid;
+		// const db = getFirestore();
+		const db = getFirestore();
+
+		const batch = db.batch();
 
 		var uid;
 		switch (profile.type) {
@@ -1140,11 +1146,108 @@ export const addSaleData = (data) => {
 
 		// dispatch({ type: "ADD_SALES_LOADER", payload: true });
 
-		return getFirestore()
+		console.log(data, `this is the data on the farmplan side`);
+
+		const salesCollectionDoc = getFirestore()
 			.collection("marketplace")
 			.doc(uid)
 			.collection("sales")
-			.add(data);
+			.doc();
+
+		const produceCollectionRef = getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("produce");
+
+		return produceCollectionRef
+			.where("item", "==", data.productName)
+			.where("batchNumber", "==", data.batchNumber)
+			.get()
+
+			.then((querySnapshot) => {
+				if (!querySnapshot.empty) {
+					// The query returned results
+
+					let documentId;
+					let valueToReturn;
+					querySnapshot.forEach((doc) => {
+						// const productData = doc.data();
+						// Handle the product data here
+						console.log("Product data is not empty");
+						documentId = doc.id;
+
+						console.log(
+							doc.data().current_quantity,
+							`this is the current quantity`
+						);
+
+						console.log(
+							doc.data().current_quantity > data.quantity,
+							`this shows if the current quantity is greater than the quantity in the form`
+						);
+
+						if (doc.data().current_quantity > data.quantity) {
+							getFirestore().collection("marketplace").doc(uid);
+							let decrementValue = -parseInt(data.quantity);
+
+							console.log(decrementValue, `this is the decrement value`);
+
+							const docToUpdate = produceCollectionRef.doc(documentId);
+
+							batch.update(docToUpdate, {
+								current_quantity: db.FieldValue.increment(decrementValue),
+							});
+
+							batch.set(salesCollectionDoc, data);
+							batch.commit();
+							valueToReturn = "success";
+							console.log(`yes it can go through`);
+						} else {
+							console.log(`no it can not go through`);
+
+							valueToReturn = "currentQuantity deficit";
+						}
+					});
+					console.log(documentId);
+					return valueToReturn;
+				} else {
+					// The query did not return any results
+					console.log("No matching products found.");
+					return null;
+				}
+			});
+
+		// return db.runTransaction(async (transaction) => {
+		// 	// Get the document data within the transaction
+		// 	const doc = await transaction.get(productsDocRef);
+
+		// 	// Perform operations on the document data
+		// 	// const newData = { ...doc.data(), updatedField: 'new value' };
+		// 	console.log(`here my boy`);
+		// 	if (doc.exists) {
+		// 		transaction.update(productsDocRef, {
+		// 			currentQuantity: db.FieldValue.increment(-parseInt(data.quantity)),
+		// 		});
+		// 		getFirestore()
+		// 			.collection("marketplace")
+		// 			.doc(uid)
+		// 			.collection("sales")
+		// 			.add(data);
+		// 	} else {
+		// 		return null;
+		// 	}
+
+		// 	// Update the document within the transaction
+		// 	// transaction.update(docRef, newData);
+
+		// 	// Return a value if needed (e.g., for conditional updates)
+		// });
+
+		// return getFirestore()
+		// 	.collection("marketplace")
+		// 	.doc(uid)
+		// 	.collection("sales")
+		// 	.add(data);
 		// .then((resp) => {
 		// 	console.log(resp, `this is the response`);
 		// 	// dispatch({ type: "ADD_EXPENSE_SUCCESS", payload:  });
@@ -1361,14 +1464,14 @@ export const getProduceData2 = (duration, period) => {
 		let startOfMonth, endOfMonth;
 		let startOfYear, endOfYear;
 
-		console.log(
-			duration,
-			`this is the duration for the products in the farmPlanData`
-		);
-		console.log(
-			period,
-			`this is the period for the products in the farmPlanData`
-		);
+		// console.log(
+		// 	duration,
+		// 	`this is the duration for the products in the farmPlanData`
+		// );
+		// console.log(
+		// 	period,
+		// 	`this is the period for the products in the farmPlanData`
+		// );
 
 		if (duration === "Week") {
 			const currentDate = new Date();
@@ -1658,6 +1761,73 @@ export const getPurchaseInfoFarm = (info) => {
 			.catch((err) => {
 				dispatch({ type: "GET_PURCHASE_INFO_FARM_ERROR", err });
 			});
+	};
+};
+
+export const getFarmMessagesFromShoppingAdmin = () => {
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+
+		let date = getFirebase().firestore.Timestamp.fromDate(new Date());
+
+		getFirestore()
+			.collection("farm_users")
+			.doc(uid)
+			.collection("messages")
+			.onSnapshot(
+				((docs) => {
+					//   if (doc.exists) {
+					// Document data is available in the doc object
+
+					const messages = [];
+					docs.forEach((doc) => {
+						let document = doc.data();
+
+						messages.push(document);
+					});
+					console.log(messages, `reading from the farmDataPlan`);
+					dispatch({
+						type: "GET_PURCHASEADMIN_MESSAGES_SUCCESS",
+						payload: messages,
+					});
+
+					//   } else {
+					// Document doesn't exist
+
+					//   }
+				},
+				(error) => {
+					// Handle errors gracefully
+					dispatch({ type: "GET_PURCHASEADMIN_MESSAGES__ERROR", error });
+				})
+			);
 	};
 };
 

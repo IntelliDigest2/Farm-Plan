@@ -189,12 +189,12 @@ export const SalesChart = (props) => {
 			</div>
 		);
 
-	const endYear = 2050;
-	const years = [];
+	// const endYear = 2050;
+	// const years = [];
 
-	for (let year = currentYear; year <= endYear; year++) {
-		years.push(year);
-	}
+	// for (let year = currentYear; year <= endYear; year++) {
+	// 	years.push(year);
+	// }
 
 	return (
 		<div>

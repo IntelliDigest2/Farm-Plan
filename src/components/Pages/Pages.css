@@ -298,7 +298,11 @@ body {
   height: 100%;
 }
 
-@media (max-width: 576px) {
+.logo_img{
+  width: 200px;
+}
+
+@media (max-width: 600px) {
   .card-design {
     width: 203px;
     height: 300px;
@@ -308,7 +312,13 @@ body {
     flex-direction: column;
   }
 
-  .avatar-image,
+  .logo_img{
+    width: 180px;
+  }
+
+  .avatar-image{
+    margin-bottom: 10px;
+  }
   .profile-container {
     width: 100%;
     text-align: center;
@@ -507,7 +517,7 @@ body {
 }
 
 .avatar-image {
-  width: 40%;
+  width: 45%;
   text-align: center;
 }
 
@@ -516,8 +526,9 @@ body {
 }
 
 .profile-container {
-  flex: 1;
-  margin-left: 10px; /* Adjust margin as needed */
+  /* flex: 1; */
+  width: 45%;
+  /* margin-left: 10px; Adjust margin as needed */
 }
 
 
