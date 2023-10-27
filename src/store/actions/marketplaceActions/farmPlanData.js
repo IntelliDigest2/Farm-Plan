@@ -1747,7 +1747,8 @@ export const getPurchaseInfoFarm = (info) => {
 			.collection("farm_users")
 			.doc(uid)
 			.collection("messages")
-			.where('status', '!=',"COMPLETED" ).where('status', '!=',"ACCEPTED" )
+			.where("status", "!=", "COMPLETED")
+			.where("status", "!=", "ACCEPTED")
 			.onSnapshot(
 				(querySnapshot) => {
 					let orderInfo = [];
@@ -1755,31 +1756,31 @@ export const getPurchaseInfoFarm = (info) => {
 						// console.log(doc.id, " => ", doc.data()); // Log the document ID and data
 						orderInfo.push({ eventId: doc.id, ...doc.data() });
 					});
-					
 
 					dispatch({
-						type: "GET_PURCHASE_INFO_FARM", payload: orderInfo
+						type: "GET_PURCHASE_INFO_FARM",
+						payload: orderInfo,
 					});
 				},
 				(err) => {
-					console.log(error);
-					dispatch({ "GET_PURCHASE_INFO_FARM_ERROR", err  });
+					console.log(err);
+					dispatch({ type: "GET_PURCHASE_INFO_FARM_ERROR", err });
 				}
 			);
-			// .get()
-			// .then((snapshot) => {
-			// 	const orderInfo = [];
-			// 	snapshot.forEach((doc) => {
-			// 		const data = doc.data();
-			// 		if (!(data.status === "COMPLETED" || data.status === "ACCEPTED")) {
-			// 			orderInfo.push(data);
-			// 		}
-			// 	});
-			// 	dispatch({ type: "GET_PURCHASE_INFO_FARM", payload: orderInfo });
-			// })
-			// .catch((err) => {
-			// 	dispatch({ type: "GET_PURCHASE_INFO_FARM_ERROR", err });
-			// });
+		// .get()
+		// .then((snapshot) => {
+		// 	const orderInfo = [];
+		// 	snapshot.forEach((doc) => {
+		// 		const data = doc.data();
+		// 		if (!(data.status === "COMPLETED" || data.status === "ACCEPTED")) {
+		// 			orderInfo.push(data);
+		// 		}
+		// 	});
+		// 	dispatch({ type: "GET_PURCHASE_INFO_FARM", payload: orderInfo });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "GET_PURCHASE_INFO_FARM_ERROR", err });
+		// });
 	};
 };
 
