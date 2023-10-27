@@ -50,6 +50,7 @@ function Admin(props) {
 
 			//array of object
 			var profile = doc.profile;
+			const buyersAccountType = doc.profile.buildingFunction;
 
 			var date = doc.date;
 			var status = doc.status;
@@ -77,6 +78,7 @@ function Admin(props) {
 					delivery_option: delivery_option,
 					delivery_code: delivery_code,
 					phone_number: phone_number,
+					buyersAccountType: buyersAccountType,
 				},
 			]);
 		});
@@ -145,6 +147,7 @@ function Admin(props) {
 														refID={item.id}
 														uid={item.uid}
 														cart={item.cartList}
+														buyersAccountType={item.buyersAccountType}
 													/>
 													<EditPurchaseIcon
 														id={item.id}

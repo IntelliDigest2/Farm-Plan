@@ -578,36 +578,36 @@ export const getPurchaseData = (data) => {
 			// .collection("purchases")
 			.collection("purchases")
 			.where("profile.region", "==", data)
-			.onSnapshot(
-				(doc) => {
-					dispatch({
-						type: "SET_FETCHING",
-						payload: true,
-					});
-					let data = [];
-					doc.forEach((doc) => {
-						data.push({ ...doc.data(), id: doc.id });
-						// console.log(doc.id, " => ", doc.data());
-					});
-					// console.log("Current data: ", consultants);
-					dispatch({ type: "GET_PURCHASE_DATA", payload: data });
-				},
-				(err) => {
-					console.log(err);
-					dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
-				}
-			);
-		// .get()
-		// .then((snapshot) => {
-		// 	const data = [];
-		// 	snapshot.forEach((doc) => {
-		// 		data.push(doc.data());
-		// 	});
-		// 	dispatch({ type: "GET_PURCHASE_DATA", payload: data });
-		// })
-		// .catch((err) => {
-		// 	dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
-		// });
+			// .onSnapshot(
+			// 	(doc) => {
+			// 		dispatch({
+			// 			type: "SET_FETCHING",
+			// 			payload: true,
+			// 		});
+			// 		let data = [];
+			// 		doc.forEach((doc) => {
+			// 			data.push({ ...doc.data(), id: doc.id });
+			// 			// console.log(doc.id, " => ", doc.data());
+			// 		});
+			// 		// console.log("Current data: ", consultants);
+			// 		dispatch({ type: "GET_PURCHASE_DATA", payload: data });
+			// 	},
+			// 	(err) => {
+			// 		console.log(err);
+			// 		dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
+			// 	}
+			// );
+			.get()
+			.then((snapshot) => {
+				const data = [];
+				snapshot.forEach((doc) => {
+					data.push(doc.data());
+				});
+				dispatch({ type: "GET_PURCHASE_DATA", payload: data });
+			})
+			.catch((err) => {
+				dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
+			});
 	};
 };
 
@@ -693,7 +693,8 @@ export const sendToUser = (data) => {
 
 		// TODO NOTIFICATION
 		// this function changes the state of the messages collection in the marketplace
-		let userCollection = setUsersCollection(data.receiversBuildingFunction);
+		// for the place where the admin send this to the user which is buying the notification is not supposed to show
+		let userCollection = setUsersCollection(data.buyersAccountType);
 
 		let notificationRef = getFirestore()
 			.collection(userCollection)
@@ -750,7 +751,6 @@ export const sendToRes = (data) => {
 			});
 	};
 };
-
 export const sendToFarmer = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
@@ -760,7 +760,7 @@ export const sendToFarmer = (data) => {
 		let farmUserDocRef = getFirestore()
 			.collection("farm_users")
 			.doc(data.farmerId);
-
+		//messages in the farm user collection helps the farmer to see requests from the admin
 		let farmUserMessages = farmUserDocRef.collection("messages");
 		let farmUserNotifications = farmUserDocRef.collection("notifications");
 
@@ -781,7 +781,7 @@ export const sendToFarmer = (data) => {
 		// });
 
 		// TODO NOTIFICATION
-		// this is the notification sent to a farmer by the admin to show that a purchase request as been made and the status is changed to 'IN PROGRESS'
+		// this is the notification sent to a farmer to ashk if he has the following products
 
 		let notification = {
 			notification_type: "admin_request",

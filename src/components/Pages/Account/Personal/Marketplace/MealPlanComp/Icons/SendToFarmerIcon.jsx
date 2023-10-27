@@ -15,6 +15,7 @@ function SendToFarmerIcon(props) {
     const data = {
       farmerId: props.farmerId,
       receiversID: props.receiversID,
+      buyersAccountType: props.buyersAccountType,
       status: "IN PROGRESS",
       cart: props.cart,
       address: props.address,
