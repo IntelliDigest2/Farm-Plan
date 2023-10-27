@@ -105,6 +105,9 @@ export const addToPurchaseItems = (data) => {
 
 export const editPurchaseStatus = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
+
+		// adminRef = getFirestore()
+		.collection("admin_users")
 		getFirestore()
 			.collection("purchases")
 			.doc(data.refID)

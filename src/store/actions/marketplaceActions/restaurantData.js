@@ -1075,7 +1075,7 @@ export const sendToRes = (data) => {
 	};
 };
 
-export const sendOrderToUser = (data) => {
+export const sendOrderToUserRes = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;
