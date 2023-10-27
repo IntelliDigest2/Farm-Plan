@@ -67,6 +67,40 @@ export const createExample = (data) => {
 	};
 };
 
+const setUsersCollection = (buildingFunction) => {
+	let userCollection;
+	switch (buildingFunction) {
+		case buildingFunction === "Farm":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Households":
+			userCollection = "household_users";
+			break;
+		case buildingFunction === "Restaurants":
+			userCollection = "restaurant_users";
+			break;
+		case buildingFunction === "Consultant":
+			userCollection = "consultants";
+			break;
+		case buildingFunction === "Offices":
+			userCollection = "office_users";
+			break;
+		case buildingFunction === "Hotels":
+			userCollection = "hotel_users";
+			break;
+		case buildingFunction === "Shop":
+			userCollection = "shop_users";
+			break;
+
+		default:
+			// userCollection = "Machinery/Supplier";
+			userCollection = "supply_users";
+			break;
+	}
+
+	return userCollection;
+};
+
 // Fetching consultant data
 export const getUserData = () => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -278,11 +312,7 @@ export const acceptBookingRequest = (event) => {
 
 	let consulteeCollection;
 
-	if (event.status.requesterAccountType === "Farm") {
-		consulteeCollection = "farm_user";
-	} else if (event.status.requesterAccountType === "Restaurant") {
-		consulteeCollection = "restaurant_user";
-	}
+	consulteeCollection = setUsersCollection(event.status.requesterAccountType);
 
 	let consulteeNotificationRef = db
 		.collection(consulteeCollection)
@@ -293,6 +323,7 @@ export const acceptBookingRequest = (event) => {
 		status: { ...event.status, requestAccepted: true },
 	});
 
+	//this will set the consultation booking in the "booking" collection  for the person  who requested the consultation
 	batch.set(consultRef, {
 		status: "pending",
 		consultant: {
