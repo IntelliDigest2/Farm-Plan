@@ -102,11 +102,65 @@ export const getNotificationData = (lastDate) => {
 	};
 };
 
+const setUsersCollection = (buildingFunction) => {
+	let userCollection;
+	switch (buildingFunction) {
+		case buildingFunction === "Farm":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Households":
+			userCollection = "household_users";
+			break;
+		case buildingFunction === "Restaurants":
+			userCollection = "restaurant_users";
+			break;
+		case buildingFunction === "Consultant":
+			userCollection = "consultants";
+			break;
+		case buildingFunction === "Offices":
+			userCollection = "office_users";
+			break;
+		case buildingFunction === "Hotels":
+			userCollection = "hotel_users";
+			break;
+		case buildingFunction === "Shop":
+			userCollection = "shop_users";
+			break;
+
+		default:
+			// userCollection = "Machinery/Supplier";
+			userCollection = "supply_users";
+			break;
+	}
+
+	return userCollection;
+};
+
 export const setNotificationBulbStatus = (status) => {
 	return (dispatch, getState) => {
 		dispatch({
 			type: "SET_NOTIFICATIONS_STATUS",
 			payload: status,
 		});
+	};
+};
+export const sendPaymentNotification = ({
+	receiversAccountType,
+	receiversID,
+}) => {
+	return (dispatch, getState, getFirestore) => {
+		let userCollection = setUsersCollection(receiversAccountType);
+
+		let notificationRef = getFirestore()
+			.collection(userCollection)
+			.doc(receiversID)
+			.collection("notifications");
+
+		let notification = {
+			notification_type: "payment notification",
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
+		};
+
+		notificationRef.add(notification);
 	};
 };

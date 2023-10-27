@@ -279,6 +279,8 @@ export const setErrorToDefault = (errorName) => {
 
 //
 //work on this
+
+//TODO NOTIFICATION
 export const acceptBookingRequest = (event) => {
 	// console.log(
 	// 	event,
