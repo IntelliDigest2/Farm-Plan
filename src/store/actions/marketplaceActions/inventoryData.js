@@ -84,18 +84,29 @@ export const addToPurchaseItems = (data) => {
 				uid = authUID;
 				break;
 		}
+		let adminRef = getFirestore()
+			.collection("admin_users")
+			.where("city", "==", profile.city);
+		let notification = {
+			notification_type: "adminPurchase_request",
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
+		};
+		const batch = firestore.batch();
 
-		return getFirestore()
-			.collection("purchases")
-			.add(data.upload)
-			.then((docRef) => {
-				//   // make the docId easily accessible so that we can delete it later if we want.
-				getFirestore()
-					.collection("purchases")
-					.doc(docRef.id)
-					.set({ id: docRef.id, uid: uid }, { merge: true });
-				// dispatch({ type: "ADD_PURCHASE_ITEM", data });
-			});
+		let purchasesRef = getFirestore().collection("purchases");
+		let newData = { ...data.upload, uid: uid };
+		// .add({ ...data.upload, uid: uid })
+		// .then((docRef) => {
+		// 	//   // make the docId easily accessible so that we can delete it later if we want.
+		// 	getFirestore()
+		// 		.collection("purchases")
+		// 		.doc(docRef.id)
+		// 		.set({ id: docRef.id, uid: uid }, { merge: true });
+		// 	// dispatch({ type: "ADD_PURCHASE_ITEM", data });
+		// });
+		batch.set(adminRef, notification);
+		batch.set(purchasesRef, newData);
+		return batch.commit();
 
 		// .catch((err) => {
 		//   dispatch({ type: "ADD_PURCHASE_ITEM_ERROR", err });
@@ -105,9 +116,6 @@ export const addToPurchaseItems = (data) => {
 
 export const editPurchaseStatus = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
-
-		// adminRef = getFirestore()
-		.collection("admin_users")
 		getFirestore()
 			.collection("purchases")
 			.doc(data.refID)
