@@ -1,4 +1,7 @@
 import { submitNotificationPlan } from "../../../components/lib/Notifications";
+import firebase from "firebase";
+
+const db = firebase.firestore();
 
 export const addToInventory = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
@@ -87,14 +90,16 @@ export const addToPurchaseItems = (data) => {
 		let adminRef = getFirestore()
 			.collection("admin_users")
 			.where("city", "==", profile.city);
+
 		let notification = {
 			notification_type: "adminPurchase_request",
 			created_at: getFirestore.Timestamp.fromDate(new Date()),
 		};
-		const batch = firestore.batch();
+		const batch = db.batch();
 
 		let purchasesRef = getFirestore().collection("purchases");
 		let newData = { ...data.upload, uid: uid };
+
 		// .add({ ...data.upload, uid: uid })
 		// .then((docRef) => {
 		// 	//   // make the docId easily accessible so that we can delete it later if we want.
@@ -104,6 +109,9 @@ export const addToPurchaseItems = (data) => {
 		// 		.set({ id: docRef.id, uid: uid }, { merge: true });
 		// 	// dispatch({ type: "ADD_PURCHASE_ITEM", data });
 		// });
+
+		// i will have to update this because multiple admins can be in the same city meaning that we will have to loop through does
+		//  admins and use batch.set to send notifications to for each of them
 		batch.set(adminRef, notification);
 		batch.set(purchasesRef, newData);
 		return batch.commit();
