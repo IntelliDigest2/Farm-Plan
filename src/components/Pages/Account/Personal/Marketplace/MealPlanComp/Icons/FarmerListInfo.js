@@ -56,7 +56,8 @@ function FarmerListInfo(props) {
 									address={props.address}
 									delivery_code={props.delivery_code}
 									receiversID={props.receiversID}
-									buyersAccountType={props.buyersAccountType}
+									buyers_account_type={props.buyers_account_type}
+									admin_id={props.admin_id}
 								/>
 							</Card>
 						))}

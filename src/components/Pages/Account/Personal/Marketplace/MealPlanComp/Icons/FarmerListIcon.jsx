@@ -83,7 +83,8 @@ function FarmerListIcon(props) {
         delivery_code={props.delivery_code}
         receiversID={props.receiversID}
         forceUpdate={props.forceUpdate}
-        buyersAccountType={props.buyersAccountType}
+        buyers_account_type={props.buyers_account_type}
+        admin_id={props.admin_id}
       />
     </>
   );

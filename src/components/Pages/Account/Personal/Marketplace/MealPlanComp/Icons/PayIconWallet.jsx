@@ -9,6 +9,8 @@ import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
 import Swal from 'sweetalert2';
+import {sendPaymentNotificationToSeller} from './notificationData.js';
+
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
@@ -50,6 +52,10 @@ function PayIconWallet(props) {
         status: "COMPLETED",
       };
       props.editPurchaseStatusOnUser(data);
+
+
+      props.sendPaymentNotificationToSeller(props.personReceivingPaymentAccountType.personReceivingPaymentID)
+
       // history.push('/payment-success')
       Swal.fire({
         title: 'Success!',

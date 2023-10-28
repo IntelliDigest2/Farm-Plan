@@ -22,7 +22,7 @@ function SendItemIcon(props) {
         uid: props.uid,
         status: "IN PROGRESS"
       },
-      buyersAccountType: props.buyersAccountType
+      buyers_account_type: props.buyers_account_type
     };
     props.sendToUser(data).then((resp)=>{
     submitNotification("Success", " Items has been sent to user!");

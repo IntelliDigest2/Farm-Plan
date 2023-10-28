@@ -25,14 +25,31 @@ import ConfirmItemIconRes from "../../../../Business/Restaurant/Icons/ConfirmIte
 import { getPurchaseInfoRes } from "../../../../../../../store/actions/marketplaceActions/restaurantData";
 import { getPurchaseInfoSupply } from "../../../../../../../store/actions/supplierActions/supplierData";
 import { getOrderInfo } from "./../../../../../../../store/actions/marketplaceActions/mealPlanData";
+import { getPurchaseInfoFarm } from "./../../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { getCurrencySymbol } from "./../../../../../../../config/CurrerncyUtils";
 
 function ViewAppNotifications(props) {
 	const { t } = useTranslation();
+	const [list, setList] = useState([]);
+	const [adminRequestList, setAdminRequestList] = useState(null);
+	const [otherUserPurchaselist, setOtherUserPurchaseList] = useState(null);
+	const [suppliersOrderlist, setSuppliersOrderList] = useState(null);
+	const [otherUsersSupplyRequestList, setOtherUsersSupplyRequestList] =
+		useState(null);
+	const [restaurantsOrderList, setRestaurantsOrderList] = useState([]);
+	const [list, setList] = useState([]);
+	const [list, setList] = useState([]);
 	const [list, setList] = useState([]);
 	const [supplylist, setSupplyList] = useState([]);
 	const [restaurantList, setRestaurantList] = useState([]);
 	const [isLoading, setisLoading] = useState(false);
 	const [paymentType, setPaymentType] = useState("");
+
+	// const [list, setList] = useState([]);
+	const [isDateEntered, setIsDateEntered] = useState(false);
+
+	const userCountryCode = props.profile.country;
+	const userCurrency = getCurrencySymbol(userCountryCode);
 
 	//this sends data request
 	// useEffect(() => {
@@ -114,6 +131,7 @@ function ViewAppNotifications(props) {
 		if (farmOnlyNotif) {
 			// fetch notifications for farmer for when a shopping order comes in
 			// when a supplier order comes in
+			getPurchaseInfoFarm();
 		}
 		if (consultantOnlyNotif) {
 			// fetch notifications for when a consultation request comes in
@@ -425,6 +443,130 @@ function ViewAppNotifications(props) {
 													/>
 												)}
 											</div>
+										</Table>
+									</ListItem>
+								))}
+							</List>
+						</>
+					) : (
+						<div className="empty basic-title-left">
+							<p>{t("description.no_notifications")} </p>
+						</div>
+					)}
+				</div>
+			) : (
+				""
+			)}
+			{/*requestFromAdmin*/}
+			{farmOnlyNotif ? (
+				<div>
+					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
+						Admin Notifications
+					</h2>
+					{list.length ? (
+						<>
+							<List>
+								{list.map((item, index) => (
+									<ListItem
+										key={`item${index}`}
+										// className="list"
+										style={{ alignItems: "flex-end" }}
+									>
+										<Table striped bordered hover>
+											<thead>
+												<tr>
+													<h6>
+														<b>Status: </b>
+														{item.status}
+													</h6>
+												</tr>
+												<tr>
+													<th className="table-header">
+														{t("description.product")}
+													</th>
+													<th className="table-header">
+														{t("description.quantity")}
+													</th>
+													<th className="table-header">
+														{t("description.measure")}
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												{item.cart.map((cartItem, cartIndex) => (
+													<tr key={`cart${cartIndex}`}>
+														<td>{cartItem.data}</td>
+														<td>{cartItem.quantity}</td>
+														<td>{cartItem.measure}</td>
+														<td>
+															<InputGroup>
+																<InputGroup.Text>
+																	{userCurrency}
+																</InputGroup.Text>
+																<Form.Control
+																	type="number"
+																	min="0"
+																	step="1"
+																	value={cartItem.price}
+																	onChange={(e) => {
+																		const newPrice = parseFloat(e.target.value);
+																		const updatedCart = [...item.cart];
+																		updatedCart[cartIndex].price = newPrice;
+																		const updatedList = list.map((listItem) =>
+																			listItem.id === item.id
+																				? { ...listItem, cart: updatedCart }
+																				: listItem
+																		);
+																		setList(updatedList);
+																	}}
+																/>
+															</InputGroup>
+														</td>
+													</tr>
+												))}
+											</tbody>
+
+											<tfoot>
+												<tr>
+													<td colSpan="2">
+														{/* Conditionally render the ConfirmItemIconFarm button */}
+														{item.status !== "ACCEPTED" && isDateEntered && (
+															<ConfirmItemIconFarm
+																id={item.id}
+																item={item.cart}
+																farmerID={item.farmerID}
+																farmerRef={item.id}
+																receiversID={item.receiversID}
+																deliveryDueDate={item.deliveryDueDate}
+																delivery_code={item.delivery_code}
+																currency={userCurrency}
+																buyers_account_type={item.buyers_account_type}
+															/>
+														)}
+													</td>
+													<td colSpan="6">
+														<td colSpan="3">
+															<h5>Delivery Address: {item.address}</h5>
+														</td>
+														<td colSpan="3">
+															<h5>Add Delivery Date</h5>
+															<Form.Control
+																type="date"
+																value={list[0].deliveryDueDate || ""}
+																onChange={(e) => {
+																	const newDueDate = e.target.value;
+																	const updatedList = list.map((listItem) => ({
+																		...listItem,
+																		deliveryDueDate: newDueDate,
+																	}));
+																	setList(updatedList);
+																	setIsDateEntered(newDueDate !== "");
+																}}
+															/>
+														</td>
+													</td>
+												</tr>
+											</tfoot>
 										</Table>
 									</ListItem>
 								))}
@@ -1146,6 +1288,7 @@ const mapStateToProps = (state) => {
 		infoOrder: state.mealPlan.OrderInfo,
 		infoForRes: state.restaurant.orderRes,
 		infoForSupplier: state.supplier.orderSupply,
+		infoFarm: state.farmData.purchaseInfoFarm,
 	};
 };
 

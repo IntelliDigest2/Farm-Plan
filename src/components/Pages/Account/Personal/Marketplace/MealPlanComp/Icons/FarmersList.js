@@ -13,7 +13,8 @@ export function FarmersList({
 	show,
 	setShow,
 	forceUpdate,
-	buyersAccountType,
+	buyers_account_type,
+	admin_id,
 }) {
 	const { t } = useTranslation();
 
@@ -38,7 +39,8 @@ export function FarmersList({
 					forceUpdate={forceUpdate}
 					receiversID={receiversID}
 					handleFormClose={handleFormClose}
-					buyersAccountType={buyersAccountType}
+					buyers_account_type={buyers_account_type}
+					admin_id={admin_id}
 				/>
 			</Modal.Body>
 		</Modal>

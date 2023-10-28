@@ -15,11 +15,12 @@ function SendToFarmerIcon(props) {
     const data = {
       farmerId: props.farmerId,
       receiversID: props.receiversID,
-      buyersAccountType: props.buyersAccountType,
+      buyers_account_type: props.buyers_account_type,
       status: "IN PROGRESS",
       cart: props.cart,
       address: props.address,
-      delivery_code: props.delivery_code
+      delivery_code: props.delivery_code,
+      admin_id: props.admin_id
     };
     props.sendToFarmer(data).then((resp)=>{
     submitNotification("Success", " Items has been sent to farmer!");

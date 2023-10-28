@@ -19,42 +19,39 @@ import PayIcon from "./PayIcon";
 import { format, parseISO } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 
-import { getCurrencySymbol } from '../../../../../../../config/CurrerncyUtils'; 
-import { fetchExchangeRates } from '../../../../../../../config/CurrerncyUtils';
-
+import { getCurrencySymbol } from "../../../../../../../config/CurrerncyUtils";
+import { fetchExchangeRates } from "../../../../../../../config/CurrerncyUtils";
 
 function ViewPurchaseInfo(props) {
 	const { t } = useTranslation();
 	const [list, setList] = useState([]);
 	const [isLoading, setisLoading] = useState(false);
 	const [paymentType, setPaymentType] = useState("");
-	const [conversion, setConversion] = useState("")
+	const [conversion, setConversion] = useState("");
 
 	const userCountryCode = props.profile.country;
-	const userCurrency = getCurrencySymbol(userCountryCode)
+	const userCurrency = getCurrencySymbol(userCountryCode);
 
 	// Function to convert price to user's currency
 	const handleConversion = async (baseCurrency, userCurrency, price) => {
-		
-		await fetch(`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${baseCurrency}/${userCurrency}/${price}`, {
-	
-		  method: 'GET', 
-		  headers: {
-			  'Content-type': 'application/json; charset=UTF-8',
-		  },
-		})
-		.then((response) => response.json())
-		.then((data) => {
-			console.log("rate conv", data.conversion_result)
-		  setConversion(data.conversion_result)
-		})
-		.catch((err) => {
-		  console.log(err.message);
-		})
-	  
-	 };
-	
-	
+		await fetch(
+			`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${baseCurrency}/${userCurrency}/${price}`,
+			{
+				method: "GET",
+				headers: {
+					"Content-type": "application/json; charset=UTF-8",
+				},
+			}
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				console.log("rate conv", data.conversion_result);
+				setConversion(data.conversion_result);
+			})
+			.catch((err) => {
+				console.log(err.message);
+			});
+	};
 
 	//this sends data request
 	useEffect(() => {
@@ -140,127 +137,128 @@ function ViewPurchaseInfo(props) {
 
 	useEffect(() => {
 		async function convertPrices() {
-		  // Iterate through cart items and convert prices
-		  const convertedPrices = await Promise.all(
-			list.map(async (cart) => {
-			  const convertedItemPrices = await Promise.all(
-				cart.item.map(async (cartItem) => {
-				  if (cartItem.price) {
-					try {
-					  const response = await fetch(
-						`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${cart.currency}/${userCurrency}/${cartItem.price}`,
-						{
-						  method: 'GET',
-						  headers: {
-							'Content-type': 'application/json; charset=UTF-8',
-						  },
-						}
-					  );
-					  const data = await response.json();
-					  console.log("rate conv", data.conversion_result);
-					  return data.conversion_result;
-					} catch (err) {
-					  console.error(err);
-					  return 0; // Handle cases where price conversion fails
-					}
-				  }
-				  return 0; // Handle cases where price is not available
+			// Iterate through cart items and convert prices
+			const convertedPrices = await Promise.all(
+				list.map(async (cart) => {
+					const convertedItemPrices = await Promise.all(
+						cart.item.map(async (cartItem) => {
+							if (cartItem.price) {
+								try {
+									const response = await fetch(
+										`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${cart.currency}/${userCurrency}/${cartItem.price}`,
+										{
+											method: "GET",
+											headers: {
+												"Content-type": "application/json; charset=UTF-8",
+											},
+										}
+									);
+									const data = await response.json();
+									console.log("rate conv", data.conversion_result);
+									return data.conversion_result;
+								} catch (err) {
+									console.error(err);
+									return 0; // Handle cases where price conversion fails
+								}
+							}
+							return 0; // Handle cases where price is not available
+						})
+					);
+
+					console.log("convertedItemPrices", convertedItemPrices);
+
+					return {
+						...cart,
+						item: cart.item.map((cartItems, index) => ({
+							...cartItems,
+							convertedPrice: convertedItemPrices[index],
+						})),
+					};
 				})
-			  );
-	  
-			  console.log("convertedItemPrices", convertedItemPrices);
-	  
-			  return {
-				...cart,
-				item: cart.item.map((cartItems, index) => ({
-				  ...cartItems,
-				  convertedPrice: convertedItemPrices[index],
-				})),
-			  };
-			})
-		  );
-	  
-		  setConversion(convertedPrices);
-		  setisLoading(false); // Once all conversions are done
+			);
+
+			setConversion(convertedPrices);
+			setisLoading(false); // Once all conversions are done
 		}
-	  
+
 		convertPrices();
-	  }, [list, userCurrency]);
-	  
-	
+	}, [list, userCurrency]);
 
 	return (
 		<>
 			{conversion.length ? (
 				<>
 					<List>
-            {conversion.map((cart, index) => (
-              <ListItem key={`item${index}`}>
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <h6>
-                        <b>Order ID: </b>
-                        {cart.refID}
-                      </h6>
-                      <h6>
-						<span>
-							<b>Status: {cart.status} </b>
-							<b>Pickup Code: </b>{cart.delivery_code}
-						</span>
-                        
-                      </h6>
-                    </tr>
-                    <tr>
-                      <th className="table-header">Product</th>
-                      <th className="table-header">Quantity</th>
-                      <th className="table-header">Measure</th>
-                      <th className="table-header">Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cart.item.map((cartItems) => (
-                      <tr key={`cart${index}`}>
-                        <td>{cartItems.data}</td>
-                        <td>{cartItems.quantity}</td>
-                        <td>{cartItems.measure}</td>
-                        <td>
-                          {userCurrency} {isLoading ? "Loading..." : cartItems.convertedPrice}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-				  <div className="">
-						{cart.status == "CONFIRMED" ? (
-							<>
-							<PayIconWallet
-								paytype="supplier"
-								uid={cart.receiversID}
-								order={cart}
-								// convertedPrice={convertedPrice}
-								currency={userCurrency}
-								refID={cart.refID}
-							/>
-							{/* <PayIcon
+						{conversion.map((cart, index) => (
+							<ListItem key={`item${index}`}>
+								<Table striped bordered hover>
+									<thead>
+										<tr>
+											<h6>
+												<b>Order ID: </b>
+												{cart.refID}
+											</h6>
+											<h6>
+												<span>
+													<b>Status: {cart.status} </b>
+													<b>Pickup Code: </b>
+													{cart.delivery_code}
+												</span>
+											</h6>
+										</tr>
+										<tr>
+											<th className="table-header">Product</th>
+											<th className="table-header">Quantity</th>
+											<th className="table-header">Measure</th>
+											<th className="table-header">Price</th>
+										</tr>
+									</thead>
+									<tbody>
+										{cart.item.map((cartItems) => (
+											<tr key={`cart${index}`}>
+												<td>{cartItems.data}</td>
+												<td>{cartItems.quantity}</td>
+												<td>{cartItems.measure}</td>
+												<td>
+													{userCurrency}{" "}
+													{isLoading ? "Loading..." : cartItems.convertedPrice}
+												</td>
+											</tr>
+										))}
+									</tbody>
+									<div className="">
+										{cart.status == "CONFIRMED" ? (
+											<>
+												<PayIconWallet
+													paytype="supplier"
+													uid={cart.receiversID}
+													order={cart}
+													// convertedPrice={convertedPrice}
+													currency={userCurrency}
+													refID={cart.refID}
+													personReceivingPaymentAccountType={"Farm"}
+													personReceivingPaymentID={cart.farmerID}
+												/>
+												{/* <PayIcon
 								paytype="supplier"
 								//value={props.value}
 								refID={cart.refID}
 								// id={item.id}
 								// uid={item.uid}
 							/> */}
-							</>
-						) : (
-							<ConfirmItemIcon
-							//value={props.value}
-							refID={cart.refID}
-							// id={item.id}
-						/>
-						)}
-					</div>
-                </Table>
-              </ListItem>
-            ))}
-          </List>
+											</>
+										) : (
+											<ConfirmItemIcon
+												//value={props.value}
+												refID={cart.refID}
+												// id={item.id}
+											/>
+										)}
+									</div>
+								</Table>
+							</ListItem>
+						))}
+					</List>
 				</>
 			) : (
 				<div className="empty basic-title-left">
@@ -395,7 +393,6 @@ const mapStateToProps = (state) => {
 		auth: state.firebase.auth,
 		loadingPay: state.bookingPurchaseState.purchaseStatusChangeLoading,
 		profile: state.firebase.profile,
-
 	};
 };
 

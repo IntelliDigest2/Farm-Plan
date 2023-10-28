@@ -33,7 +33,7 @@ function ConfirmItemIconFarm(props) {
       receiversID: props.receiversID,
       deliveryDueDate: props.deliveryDueDate,
       delivery_code: props.delivery_code,
-      buyersAccountType: props.buyersAccountType
+      buyers_account_type: props.buyers_account_type
     };
     props.editPurchaseStatusOnFarmer(data);
     props.sendToUser(data).then((resp)=>{

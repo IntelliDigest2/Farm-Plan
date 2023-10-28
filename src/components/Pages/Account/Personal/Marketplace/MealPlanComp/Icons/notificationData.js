@@ -144,16 +144,16 @@ export const setNotificationBulbStatus = (status) => {
 		});
 	};
 };
-export const sendPaymentNotification = ({
-	receiversAccountType,
-	receiversID,
+export const sendPaymentNotificationToSeller = ({
+	personReceivingPaymentAccountType,
+	personReceivingPaymentID,
 }) => {
 	return (dispatch, getState, getFirestore) => {
-		let userCollection = setUsersCollection(receiversAccountType);
+		let userCollection = setUsersCollection(personReceivingPaymentAccountType);
 
 		let notificationRef = getFirestore()
 			.collection(userCollection)
-			.doc(receiversID)
+			.doc(personReceivingPaymentID)
 			.collection("notifications");
 
 		let notification = {

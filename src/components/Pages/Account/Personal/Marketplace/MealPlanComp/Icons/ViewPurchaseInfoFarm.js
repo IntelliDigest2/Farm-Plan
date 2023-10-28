@@ -47,7 +47,7 @@ function ViewPurchaseInfoFarm(props) {
 			var farmerID = doc.farmerId;
 			var address = doc.address;
 			var delivery_code = doc.delivery_code;
-			const buyersAccountType = doc.buyersAccountType;
+			const buyers_account_type = doc.buyers_account_type;
 
 			var cartWithPrices = doc.cart.map((cartItem) => {
 				return {
@@ -67,7 +67,7 @@ function ViewPurchaseInfoFarm(props) {
 					receiversID: receiversID,
 					address: address,
 					delivery_code: delivery_code,
-					buyersAccountType: buyersAccountType,
+					buyers_account_type: buyers_account_type,
 				},
 			]);
 		});
@@ -157,7 +157,7 @@ function ViewPurchaseInfoFarm(props) {
 														deliveryDueDate={item.deliveryDueDate}
 														delivery_code={item.delivery_code}
 														currency={userCurrency}
-														buyersAccountType={item.buyersAccountType}
+														buyers_account_type={item.buyers_account_type}
 													/>
 												)}
 											</td>

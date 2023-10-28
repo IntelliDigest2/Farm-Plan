@@ -694,7 +694,7 @@ export const sendToUser = (data) => {
 		// TODO NOTIFICATION
 		// this function changes the state of the messages collection in the marketplace
 		// for the place where the admin send this to the user which is buying the notification is not supposed to show
-		let userCollection = setUsersCollection(data.buyersAccountType);
+		let userCollection = setUsersCollection(data.buyers_account_type);
 
 		let notificationRef = getFirestore()
 			.collection(userCollection)

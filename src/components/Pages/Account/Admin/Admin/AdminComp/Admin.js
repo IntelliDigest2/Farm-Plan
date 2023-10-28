@@ -50,7 +50,7 @@ function Admin(props) {
 
 			//array of object
 			var profile = doc.profile;
-			const buyersAccountType = doc.profile.buildingFunction;
+			const buyers_account_type = doc.profile.buildingFunction;
 
 			var date = doc.date;
 			var status = doc.status;
@@ -78,7 +78,7 @@ function Admin(props) {
 					delivery_option: delivery_option,
 					delivery_code: delivery_code,
 					phone_number: phone_number,
-					buyersAccountType: buyersAccountType,
+					buyers_account_type: buyers_account_type,
 				},
 			]);
 		});
@@ -147,7 +147,7 @@ function Admin(props) {
 														refID={item.id}
 														uid={item.uid}
 														cart={item.cartList}
-														buyersAccountType={item.buyersAccountType}
+														buyers_account_type={item.buyers_account_type}
 													/>
 													<EditPurchaseIcon
 														id={item.id}
@@ -162,6 +162,7 @@ function Admin(props) {
 														address={item.address}
 														delivery_code={item.delivery_code}
 														city={item.profile.city}
+														admin_id={item.profile.uid}
 													/>
 												</p>
 												<ListGroup className="list-group-flush">
