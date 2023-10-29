@@ -41,7 +41,7 @@ function PayIcon(props) {
          .then((response) => response.json())
          .then((data) => {
             // console.log("this is the data returned", data)
-            sendPaymentNotificationToSeller('consultant',props.consultantPaymentInfo.consultantId)
+            sendPaymentNotificationToSeller(props.payType,props.consultantPaymentInfo.consultantId)
             history.push('/payment-process',{params: {sec: `${data.clientSecret}`,
           consultInfo : [props.consultantPaymentInfo]}})
          })
