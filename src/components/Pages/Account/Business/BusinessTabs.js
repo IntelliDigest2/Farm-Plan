@@ -77,6 +77,88 @@ export function Food({ setShow, setChooseModal, profile }) {
 				disabled
 			/> */}
 			<IconButton
+				icon="notes"
+				label="Meal Plan"
+				color="turquoise"
+				goTo="/restaurant-meal-plan"
+			/>
+
+			<IconButton
+				icon="notes"
+				label="Restaurant details"
+				color="yellow"
+				goTo="/restaurant-meal-plan"
+			/>
+
+			{/* 
+      <IconButton
+        icon="notes"
+        label="Shopping List"
+        color="turquoise"
+        goTo="/restaurant-shopping-list"
+      />
+
+      <IconButton
+        icon="notes" 
+        label="Inventory" 
+        color="turquoise"
+        goTo="/restaurant-inventory"
+        />
+
+      <IconButton
+        icon="notes" 
+        label="Inventory and Shopping List" 
+        color="turquoise"
+        goTo="/restaurant-dashboard"
+        />
+         */}
+			<IconButton
+				icon="my-products"
+				label="Meal Sold"
+				color="purple"
+				goTo="/restaurant-sale"
+				disabled
+			/>
+
+			{/* <IconButton
+				icon="my-products"
+				label="Meal Returned"
+				color="blue"
+				goTo="/"
+				disabled
+			/> */}
+			{/* <IconButton
+				icon="chart"
+				label="Meal Chart"
+				color="yellow"
+				goTo="/"
+				disabled
+			/> */}
+			<IconButton
+				icon="notes"
+				label="Turnover"
+				color="turquoise"
+				goTo="/restaurant-turnover"
+				disabled
+			/>
+			<IconButton
+				icon="notes"
+				label="Expense"
+				color="blue"
+				goTo="/restaurant-expense"
+				disabled
+			/>
+			<IconButton
+				title="Find out more about the Plan to Save campaign, and what you can do to help."
+				icon="kitchen"
+				label="Plan to Save"
+				color="green"
+				onClick={() => {
+					setShow(true);
+					setChooseModal(true);
+				}}
+			/>
+			<IconButton
 				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="kitchen"
 				label="Plan to Save"
