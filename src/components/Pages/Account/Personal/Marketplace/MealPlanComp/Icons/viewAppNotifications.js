@@ -31,15 +31,16 @@ import { getCurrencySymbol } from "./../../../../../../../config/CurrerncyUtils"
 function ViewAppNotifications(props) {
 	const { t } = useTranslation();
 	const [list, setList] = useState([]);
-	const [adminRequestList, setAdminRequestList] = useState(null);
-	const [otherUserPurchaselist, setOtherUserPurchaseList] = useState(null);
+	// const [userPurchaseList, setUserPurchaseList] = useState(null);
+	// const [otherUserPurchaselist, setOtherUserPurchaseList] = useState(null);
 	const [suppliersOrderlist, setSuppliersOrderList] = useState(null);
-	const [otherUsersSupplyRequestList, setOtherUsersSupplyRequestList] =
+	const [otherUsersSupplyOrderList, setOtherUsersSupplyOrderList] =
 		useState(null);
-	const [restaurantsOrderList, setRestaurantsOrderList] = useState([]);
-	const [list, setList] = useState([]);
-	const [list, setList] = useState([]);
-	const [list, setList] = useState([]);
+	const [restaurantsOrderList, setRestaurantsOrderList] = useState(null);
+	const [otherUsersRestaurantOrderList, setOtherUsersRestaurantOrderList] =
+		useState(null);
+	const [farmersShoppingList, setFarmersShoppingList] = useState(null);
+	const [otherUsersShoppingList, setOtherUsersShoppingList] = useState(null);
 	const [supplylist, setSupplyList] = useState([]);
 	const [restaurantList, setRestaurantList] = useState([]);
 	const [isLoading, setisLoading] = useState(false);
@@ -267,10 +268,10 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Shopping Notifications
 					</h2>
-					{list.length ? (
+					{otherUsersShoppingList.length ? (
 						<>
 							<List>
-								{list.map((cart, index) => (
+								{otherUsersShoppingList.map((cart, index) => (
 									<ListItem
 										key={`item${index}`}
 										style={{ alignItems: "flex-end" }}
@@ -365,10 +366,10 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Shopping Notifications
 					</h2>
-					{list.length ? (
+					{farmersShoppingList.length ? (
 						<>
 							<List>
-								{list.map((cart, index) => (
+								{farmersShoppingList.map((cart, index) => (
 									<ListItem
 										key={`item${index}`}
 										style={{ alignItems: "flex-end" }}
@@ -461,12 +462,12 @@ function ViewAppNotifications(props) {
 			{farmOnlyNotif ? (
 				<div>
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
-						Admin Notifications
+						Purchase Notifications
 					</h2>
-					{list.length ? (
+					{userPurchaseList.length ? (
 						<>
 							<List>
-								{list.map((item, index) => (
+								{userPurchaseList.map((item, index) => (
 									<ListItem
 										key={`item${index}`}
 										// className="list"
@@ -852,10 +853,10 @@ function ViewAppNotifications(props) {
 					</h2>
 
 					<>
-						{supplylist.length ? (
+						{otherUsersSupplyOrderList.length ? (
 							<>
 								<List>
-									{supplylist.map((item, index) => (
+									{otherUsersSupplyOrderList.map((item, index) => (
 										<ListItem
 											key={`item${index}`}
 											// className="list"
@@ -918,10 +919,10 @@ function ViewAppNotifications(props) {
 					</h2>
 
 					<>
-						{supplylist.length ? (
+						{suppliersOrderlist.length ? (
 							<>
 								<List>
-									{supplylist.map((item, index) => (
+									{suppliersOrderlist.map((item, index) => (
 										<ListItem
 											key={`item${index}`}
 											// className="list"
@@ -1066,10 +1067,10 @@ function ViewAppNotifications(props) {
 						</div>
 					)} */}
 					<>
-						{restaurantList.length ? (
+						{restaurantsOrderList.length ? (
 							<>
 								<List>
-									{restaurantList.map((item, index) => (
+									{restaurantsOrderList.map((item, index) => (
 										<ListItem
 											key={`item${index}`}
 											// className="list"
@@ -1216,10 +1217,10 @@ function ViewAppNotifications(props) {
 						</div>
 					)} */}
 					<>
-						{restaurantList.length ? (
+						{otherUsersRestaurantOrderList.length ? (
 							<>
 								<List>
-									{restaurantList.map((item, index) => (
+									{otherUsersRestaurantOrderList.map((item, index) => (
 										<ListItem
 											key={`item${index}`}
 											// className="list"
