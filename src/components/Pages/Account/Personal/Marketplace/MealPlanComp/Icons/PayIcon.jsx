@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
+import {sendPaymentNotificationToSeller} from './notificationData.js';
+
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
@@ -39,6 +41,7 @@ function PayIcon(props) {
          .then((response) => response.json())
          .then((data) => {
             // console.log("this is the data returned", data)
+            sendPaymentNotificationToSeller('consultant',props.consultantPaymentInfo.consultantId)
             history.push('/payment-process',{params: {sec: `${data.clientSecret}`,
           consultInfo : [props.consultantPaymentInfo]}})
          })

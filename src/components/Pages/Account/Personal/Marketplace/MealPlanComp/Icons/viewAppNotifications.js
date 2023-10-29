@@ -27,6 +27,7 @@ import { getPurchaseInfoSupply } from "../../../../../../../store/actions/suppli
 import { getOrderInfo } from "./../../../../../../../store/actions/marketplaceActions/mealPlanData";
 import { getPurchaseInfoFarm } from "./../../../../../../../store/actions/marketplaceActions/farmPlanData";
 import { getCurrencySymbol } from "./../../../../../../../config/CurrerncyUtils";
+import ConfirmItemIconFarm from "./ConfirmItemIconFarm";
 
 function ViewAppNotifications(props) {
 	const { t } = useTranslation();
@@ -41,10 +42,10 @@ function ViewAppNotifications(props) {
 		useState(null);
 	const [farmersShoppingList, setFarmersShoppingList] = useState(null);
 	const [otherUsersShoppingList, setOtherUsersShoppingList] = useState(null);
-	const [supplylist, setSupplyList] = useState([]);
-	const [restaurantList, setRestaurantList] = useState([]);
-	const [isLoading, setisLoading] = useState(false);
-	const [paymentType, setPaymentType] = useState("");
+	// const [supplylist, setSupplyList] = useState([]);
+	// const [restaurantList, setRestaurantList] = useState([]);
+	// const [isLoading, setisLoading] = useState(false);
+	// const [paymentType, setPaymentType] = useState("");
 
 	// const [list, setList] = useState([]);
 	const [isDateEntered, setIsDateEntered] = useState(false);
@@ -464,10 +465,10 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Purchase Notifications
 					</h2>
-					{userPurchaseList.length ? (
+					{farmersShoppingList.length ? (
 						<>
 							<List>
-								{userPurchaseList.map((item, index) => (
+								{farmersShoppingList.map((item, index) => (
 									<ListItem
 										key={`item${index}`}
 										// className="list"
@@ -686,6 +687,12 @@ function ViewAppNotifications(props) {
 														id={bookingId}
 														uid={props.auth.uid}
 													/>
+													// <PayIconWallet
+													// 		paytype="supplier"
+													// 		uid={cart.receiversID}
+													// 		order={cart}
+													// 		refID={cart.refID}
+													// 	/>
 												)}
 
 												{/* {item.status == "CONFIRMED" ? (
