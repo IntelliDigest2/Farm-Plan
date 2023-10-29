@@ -42,7 +42,7 @@ function ViewAppNotifications(props) {
 		useState(null);
 	const [farmersShoppingList, setFarmersShoppingList] = useState(null);
 	const [otherUsersShoppingList, setOtherUsersShoppingList] = useState(null);
-	// const [supplylist, setSupplyList] = useState([]);
+	const [supplylist, setSupplyList] = useState([]);
 	// const [restaurantList, setRestaurantList] = useState([]);
 	// const [isLoading, setisLoading] = useState(false);
 	// const [paymentType, setPaymentType] = useState("");
@@ -66,28 +66,57 @@ function ViewAppNotifications(props) {
 	// }, [props.loadingPay]);
 
 	// //this sends data request
-	// useEffect(() => {
-	// 	getOrderInfoList();
-	// 	//console.log("getting list ==>", list)
-	// }, [props.infoSupply]);
+	useEffect(() => {
+		// getOrderInfoList();
+		//console.log("getting list ==>", list)
+		console.log(props.infoSupply, `this is the infor Supply`);
+	}, [props.infoSupply]);
+	useEffect(() => {
+		// getOrderInfoList();
+		//console.log("getting list ==>", list)
+		console.log(props.infoForSupplier, `this is the infor Supplier`);
+	}, [props.infoForSupplier]);
 
-	// //this sends data request
+	//this sends data request
 	// useEffect(() => {
 	// 	props.getPurchaseInfo();
 	// 	props.getBookingsForPurchase();
 	// 	//console.log("getting inv ==>", props.data)
 	// }, []);
 
-	// useEffect(() => {
-	// 	props.getPurchaseInfoForRes();
-	// 	//console.log("getting inv ==>", props.data)
-	// }, [props.infoRes]);
+	useEffect(() => {
+		// props.getPurchaseInfoForRes();
+		//console.log("getting inv ==>", props.data)
+		console.log(props.infoRes, `this is the infor Restaurant`);
+	}, [props.infoRes]);
 
-	// //this sends data request
-	// useEffect(() => {
-	// 	getPurchaseInfoList();
-	// 	//console.log("getting inv ==>", props.data)
-	// }, [props.infoPurchase]);
+	useEffect(() => {
+		// props.getPurchaseInfoForRes();
+		//console.log("getting inv ==>", props.data)
+		console.log(props.infoFarm, `this is the infor Farm`);
+	}, [props.infoFarm]);
+	useEffect(() => {
+		// props.getPurchaseInfoForRes();
+		//console.log("getting inv ==>", props.data)
+		console.log(props.infoOrder, `this is the infor Farm`);
+	}, [props.infoOrder]);
+	useEffect(() => {
+		// props.getPurchaseInfoForRes();
+		//console.log("getting inv ==>", props.data)
+		console.log(props.profile, `this is the infor profile`);
+	}, [props.profile]);
+	useEffect(() => {
+		// props.getPurchaseInfoForRes();
+		//console.log("getting inv ==>", props.data)
+		console.log(props.bookingsInfo, `this is the infor booking`);
+	}, [props.bookingsInfo]);
+
+	//this sends data request
+	useEffect(() => {
+		getPurchaseInfoList();
+		//console.log("getting inv ==>", props.data)
+		console.log(props.infoPurchase, `this is the infor infoPurchase`);
+	}, [props.infoPurchase]);
 
 	// useEffect(() => {}, [props.bookingsInfo]);
 
@@ -124,6 +153,10 @@ function ViewAppNotifications(props) {
 	useEffect(() => {
 		if (userType1) {
 			// fetch shopping notifications (notifications from farmers)
+			props.getConsultingBookingNotifFromConsultants();
+			props.getPurchaseInfoForMealPlanFromFarmers();
+			props.getBookingsForPurchase();
+			console.log(`here my bro`);
 		}
 		if (otherUsersRestaurantNotification) {
 			// fetch notifications from restaurants
@@ -137,10 +170,12 @@ function ViewAppNotifications(props) {
 		}
 		if (consultantOnlyNotif) {
 			// fetch notifications for when a consultation request comes in
+			props.getBookingsForPurchase();
 		}
 		if (restaurantOnlyNotif) {
 			// fetch notifications for farmer alone//
 			props.getPurchaseInfoForRes();
+			console.log(`here my bro`);
 		}
 		if (machinerysupplierOnlyNotif) {
 			// fetch notifications for farmer alone
@@ -269,7 +304,7 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Shopping Notifications
 					</h2>
-					{otherUsersShoppingList.length ? (
+					{otherUsersShoppingList?.length ? (
 						<>
 							<List>
 								{otherUsersShoppingList.map((cart, index) => (
@@ -367,7 +402,7 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Shopping Notifications
 					</h2>
-					{farmersShoppingList.length ? (
+					{farmersShoppingList?.length ? (
 						<>
 							<List>
 								{farmersShoppingList.map((cart, index) => (
@@ -465,7 +500,7 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Purchase Notifications
 					</h2>
-					{farmersShoppingList.length ? (
+					{farmersShoppingList?.length ? (
 						<>
 							<List>
 								{farmersShoppingList.map((item, index) => (
@@ -591,7 +626,7 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Consultant Booking Notifications
 					</h2>
-					{props.bookingsInfo.length ? (
+					{props.bookingsInfo?.length ? (
 						<>
 							<List>
 								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
@@ -727,7 +762,7 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Consultant Booking Notifications
 					</h2>
-					{props.bookingsInfo.length ? (
+					{props.bookingsInfo?.length ? (
 						<>
 							<List>
 								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
@@ -860,7 +895,7 @@ function ViewAppNotifications(props) {
 					</h2>
 
 					<>
-						{otherUsersSupplyOrderList.length ? (
+						{otherUsersSupplyOrderList?.length ? (
 							<>
 								<List>
 									{otherUsersSupplyOrderList.map((item, index) => (
@@ -926,7 +961,7 @@ function ViewAppNotifications(props) {
 					</h2>
 
 					<>
-						{suppliersOrderlist.length ? (
+						{suppliersOrderlist?.length ? (
 							<>
 								<List>
 									{suppliersOrderlist.map((item, index) => (
@@ -1074,7 +1109,7 @@ function ViewAppNotifications(props) {
 						</div>
 					)} */}
 					<>
-						{restaurantsOrderList.length ? (
+						{restaurantsOrderList?.length ? (
 							<>
 								<List>
 									{restaurantsOrderList.map((item, index) => (
@@ -1224,7 +1259,7 @@ function ViewAppNotifications(props) {
 						</div>
 					)} */}
 					<>
-						{otherUsersRestaurantOrderList.length ? (
+						{otherUsersRestaurantOrderList?.length ? (
 							<>
 								<List>
 									{otherUsersRestaurantOrderList.map((item, index) => (
@@ -1307,6 +1342,7 @@ const mapDispatchToProps = (dispatch) => {
 		getConsultingBookingNotifFromConsultants: () =>
 			dispatch(getConsultingBookingsForPurchase()),
 		getUsersRestaurantNotif: () => dispatch(getOrderInfo()),
+		getBookingsForPurchase: () => dispatch(getConsultingBookingsForPurchase()),
 
 		purchaseBooking: (
 			bookingPurchaseId,
@@ -1330,6 +1366,7 @@ const mapDispatchToProps = (dispatch) => {
 
 		getPurchaseInfoForRes: (data) => dispatch(getPurchaseInfoRes(data)),
 		getPurchaseInfoForSupplier: (data) => dispatch(getPurchaseInfoSupply(data)),
+		getPurchaseInfoFarm: (data) => dispatch(getPurchaseInfoFarm(data)),
 	};
 };
 
