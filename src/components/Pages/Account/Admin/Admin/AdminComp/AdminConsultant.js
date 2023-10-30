@@ -64,7 +64,7 @@ export const AdminConsultant = (props) => {
 			.then(() => {
 				setLoadingActiveConsultant(false);
 				//Notification
-				submitNotification("Success", "Consultant status changed to active");
+				submitNotification("Success", "Account status changed to active");
 				setActiveState("verified");
 			})
 			.catch((err) => {

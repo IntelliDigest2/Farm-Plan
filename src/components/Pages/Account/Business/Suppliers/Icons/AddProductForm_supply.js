@@ -218,6 +218,7 @@ function AddProductForm_supply(props) {
 				batchNumber: batchNumber,
 				// mealType: mealType,
 				productMeasure: productMeasure,
+				companyID: props.profile.uid,
 				companyName: props.profile.companyName,
 				city: props.profile.city,
 				region: props.profile.region,

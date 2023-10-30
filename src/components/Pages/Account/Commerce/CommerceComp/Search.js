@@ -18,6 +18,9 @@ import {Button, Modal } from "react-bootstrap";
 import Stack from '@mui/material/Stack';
 import { addToSupplyItems } from '../../../../../store/actions/supplierActions/supplierData';
 
+const { nanoid } = require('nanoid');
+
+
 const searchClient = algoliasearch(
     process.env.REACT_APP_ALGOLIA_APP_ID,
     process.env.REACT_APP_ALGOLIA_API_KEY
@@ -27,7 +30,15 @@ const Search = (props) => {
   const [query, setQuery] = useState('');
   const [cart, setCart] = useState([])
   const [showModal, setShow] = useState(false);
+  const [deliveryOption, setDeliveryOption] = useState('delivery'); 
+  const [address, setAddress] = useState(''); 
+  const [phoneNumber, setPhoneNumber] = useState("");
 
+  // Function to generate a random code using uuid
+function generateRandomCode() {
+  // Generate a random 5-character code using nanoid
+  return nanoid(6);
+}
 
   const addToCart = (hit) => {
     setCart([...cart, hit]);
@@ -75,14 +86,25 @@ const Search = (props) => {
 
     const PurchaseItem = () => {
 
+      const cartItems = []; // Create an empty array to store cart items
+
+
       cart.forEach((item) => {
 
-        const cartList = item
+        const cartList = {
+          productName: item.productName,
+          productMeasure: item.productMeasure,
+          productQty: item.productQty,
+          productPrice: item.productPrice,
+          productCurrency: item.productCurrency,
+        }
+
+        cartItems.push(cartList); // Add the cart item to the array
 
         const data = {
   
           upload: {
-           cartList,
+            cart: cartItems, 
             profile: props.profile,
             companyID: item.companyID,
             // FirstName: props.profile.firstName, 
@@ -91,17 +113,21 @@ const Search = (props) => {
             // City: props.profile.city,
             // Email: props.profile.email,
             createdAt: new Date(),
-            status: "pending"
+            status: "CONFIRMED",
+            delivery_option: deliveryOption, // Add delivery option to the data
+            address: deliveryOption === 'delivery' ? address : "", // Add address if delivery is chosen
+            phone_number: phoneNumber,
+            delivery_code: generateRandomCode(),
   
           }
          
         };
 
-        props.addToShopItems(data);
+        props.addToSupplyItems(data);
 
       })
 
-      submitNotification("Thanks for placing your order with us", "We will contact local sustainable farmers and grocery shops and get back to you shortly with prices and delivery time");
+      submitNotification("Thanks for placing your order with us", "We will contact the supplier and get back to you shortly with prices and delivery time");
 
     }
 
@@ -110,7 +136,22 @@ const Search = (props) => {
     <InstantSearch indexName="sales_dev" searchClient={searchClient}>
       <SearchBox onChange={(event) => setQuery(event.currentTarget.value)} />
       <InfiniteHits 
-        hitComponent={(props) => <Hit {...props} cart={cart} setCart={setCart} addToCart={addToCart} notify={notify} profile={props.profile} PurchaseItem={PurchaseItem}/>}  hitsPerPage={10} 
+        hitComponent={(props) => <Hit 
+          {...props} 
+          cart={cart} 
+          setCart={setCart} 
+          addToCart={addToCart} 
+          notify={notify} 
+          profile={props.profile} 
+          PurchaseItem={PurchaseItem}
+          address={address}
+          setAddress={setAddress}
+          deliveryOption={deliveryOption}
+          setDeliveryOption={setDeliveryOption}
+          phoneNumber={phoneNumber}
+          setPhoneNumber={setPhoneNumber}
+          />
+        }  hitsPerPage={10} 
       />
     </InstantSearch>
   );
@@ -119,7 +160,20 @@ const Search = (props) => {
 
 
 
-const Hit = ({ hit, cart, setCart, addToCart, notify, PurchaseItem}) => {
+const Hit = ({ 
+  hit, 
+  cart, 
+  setCart, 
+  addToCart, 
+  notify, 
+  PurchaseItem,
+  deliveryOption,
+  setDeliveryOption,
+  address,
+  setAddress,
+  phoneNumber,
+  setPhoneNumber,
+}) => {
   // const [cart, setCart] = useState([])
   const [showModal, setShow] = useState(false);
 
@@ -222,7 +276,62 @@ const Hit = ({ hit, cart, setCart, addToCart, notify, PurchaseItem}) => {
           <Modal.Title>Cart Items </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {cartItems}
+        {cartItems.length > 0 ? (
+              <>
+                {/* Render cart items if the cart is not empty */}
+                {cartItems}
+                <div>
+                  <input
+                    type="radio"
+                    id="delivery"
+                    value="delivery"
+                    checked={deliveryOption === 'delivery'}
+                    onChange={() => setDeliveryOption('delivery')}
+                  />
+                  <label htmlFor="delivery">Delivery</label>
+
+                  <input
+                    type="radio"
+                    id="pickup"
+                    value="pickup"
+                    checked={deliveryOption === 'pickup'}
+                    onChange={() => setDeliveryOption('pickup')}
+                    required  // Add the required attribute
+
+                  />
+                  <label htmlFor="pickup">Pickup</label>
+                </div>
+
+                <div>
+                  <label htmlFor="phoneNumber">Phone Number:</label>
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    required  // Add the required attribute
+
+                  />
+                </div>
+
+                {deliveryOption === 'delivery' && (
+                  <>
+                    <div>
+                      <label htmlFor="address">Delivery Address:</label>
+                      <input
+                        type="text"
+                        id="address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                    </div>
+                  </>
+                )}
+              </>
+            ) : (
+              // Display a message when the cart is empty
+              <p>Your cart is empty.</p>
+            )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => {

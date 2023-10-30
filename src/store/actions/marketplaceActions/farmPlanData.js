@@ -1886,3 +1886,60 @@ export const editPurchaseStatusOnFarmer = (data) => {
 			});
 	};
 };
+
+export const editPurchaseStatusOnSupplier = (data) => {
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+
+		let date = getFirebase().firestore.Timestamp.fromDate(new Date());
+
+		getFirestore()
+			.collection("supply_users")
+			.doc(uid)
+			.collection("messages")
+			.doc(data.supplierRef)
+			.set(
+				{
+					cart: data.item,
+					companyID: data.companyID,
+					receiversID: data.receiversID,
+					status: data.status,
+					deliveryDueDate: data.deliveryDueDate,
+					delivery_code: data.delivery_code,
+					date: date,
+				},
+				{ merge: true }
+			)
+			.then(() => dispatch({ type: "EDIT_PURCHASE_STATUS", payload: data }))
+			.catch((err) => {
+				dispatch({ type: "EDIT_PURCHASE_STATUS_ERROR", err });
+			});
+	};
+};

@@ -172,7 +172,7 @@ const addToCart = (ingr) => {
 
     const PurchaseItem = () => {
 
-      const cartList = cart
+      const cartList = cart 
   
       const data = {
   
@@ -458,7 +458,7 @@ const addToList = () => {
      </Button>
       <Refresh />
 
-      {newList.length ? (
+      {allList.length || newList.length ? (
         <>
           <List>
             {allList.map((ingr, index) => (

@@ -60,8 +60,8 @@ exports.sendCollectionToAlgolia = functions.https.onRequest(
 		// This array will contain all records to be indexed in Algolia.
 		const algoliaRecords = [];
 
-		// Retrieve all documents from the SALES collection.
-		const querySnapshot = await fireStoreDB.collection("sales").get();
+		// Retrieve all documents from the PRODUCT collection.
+		const querySnapshot = await fireStoreDB.collection("products").get();
 
 		querySnapshot.docs.forEach((doc) => {
 			const document = doc.data();
@@ -69,13 +69,14 @@ exports.sendCollectionToAlgolia = functions.https.onRequest(
 			// display, filtering, or relevance. Otherwise, you can leave it out.
 			const record = {
 				objectID: doc.id,
-				productName: document.productName,
-				createdAt: document.createdAt,
-				productDescription: document.productDescription,
-				productPrice: document.productPrice,
-				companyName: document.companyName,
-				city: document.city,
-				region: document.region,
+				productName: doc.productName,
+				createdAt: doc.createdAt,
+				productDescription: doc.productDescription,
+				productPrice: doc.productPrice,
+				companyID: doc.companyID,
+				companyName: doc.companyName,
+				city: doc.city,
+				region: doc.region,
 			};
 
 			algoliaRecords.push(record);
@@ -138,7 +139,7 @@ exports.sendShopCollectionToAlgolia = functions.https.onRequest(
   
 
 exports.collectionOnCreate = functions.firestore
-	.document("sales/{uid}")
+	.document("products/{uid}")
 	.onCreate(async (snapshot, context) => {
 		await saveDocumentInAlgolia(snapshot);
 	});
@@ -150,7 +151,7 @@ exports.collectionOnCreate = functions.firestore
   });
 
 exports.collectionOnUpdate = functions.firestore
-	.document("sales/{uid}")
+	.document("products/{uid}")
 	.onUpdate(async (change, context) => {
 		await updateDocumentInAlgolia(change);
 	});
@@ -162,7 +163,7 @@ exports.collectionOnUpdate = functions.firestore
 	});
 
 exports.collectionOnDelete = functions.firestore
-	.document("sales/{uid}")
+	.document("products/{uid}")
 	.onDelete(async (snapshot, context) => {
 		await deleteDocumentFromAlgolia(snapshot);
 	});

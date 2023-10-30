@@ -235,12 +235,12 @@ const App = (props) => {
 					<Switch>
 						{/* <Route path="/example" exact component={Example} /> */}
 						<Route path="/login" exact component={Login} />
-						<Route path="/admin" exact component={AdminTab} />
-						<Route path="/supply" exact component={CommerceTab} />
+						<Route path="/admin" exact component={AdminTab} /> 
+						<Route path="/supply" exact component={CommerceTab} />;
 						<Route path="/landing" exact component={LandingPage} />
 						<Route path="/about-us" exact component={AboutUs} />
 						<Route path="/signup" exact component={SignUp} />
-						<Route path="/signup-super-admin" exact component={SignUpAdmin} />
+						<Route path="/reveal" exact component={SignUpAdmin} />
 						<Route path="/settings" exact component={Settings} />
 						<Route path="/questionnaire" exact component={Questionnaire} />
 						<Route path="/contact" exact component={Contact} />

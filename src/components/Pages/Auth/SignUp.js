@@ -745,9 +745,9 @@ const Stage1 = (props) => {
 						</Form.Group>
 					</Form.Row>
 
-					{/* <Form.Group className="mb-3" style={{ backgroundColor: "white" }}>
-						<PhoneInput value={props.mobile} onChange={props.setMobile} />
-					</Form.Group> */}
+					<Form.Group className="mb-3" >
+						<PhoneInput value={props.mobile} onChange={props.setMobile}  />
+					</Form.Group>
 
 					<Form.Group className="mb-3">
 						{/* <Form.Label>Email address</Form.Label> */}
@@ -1264,7 +1264,7 @@ const Stage6 = (props) => {
 							}}
 							value={props.adminType}
 							placeholder="select admin type"
-							items={["Restaurant", "User"]}
+							items={["Restaurant", "Purchase Admin"]}
 						/>
 					</Form.Group>
 					<Form.Group className="mb-3">
