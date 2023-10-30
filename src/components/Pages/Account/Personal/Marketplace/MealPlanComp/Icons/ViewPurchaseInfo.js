@@ -206,7 +206,7 @@ function ViewPurchaseInfo(props) {
                       <h6>
 						<span>
 							<b>Status: {cart.status} </b>
-							<b>Pickup Code: </b>{cart.delivery_code}
+							<b>Order Code: </b>{cart.delivery_code}
 						</span>
                         
                       </h6>

@@ -3,24 +3,29 @@ import { Table } from 'react-bootstrap';
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
-import ConfirmItemIconRes from "./ConfirmItemIconRes"
+import ConfirmItemIconSup from "./ConfirmItemIconSup"
+import PayIconWallet from "./PayIconWallet";
 import { useTranslation, Trans } from 'react-i18next';
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { getPurchaseInfoSupply} from "../../../../../../store/actions/supplierActions/supplierData";
+import { getCurrencySymbol } from '../../../../../../config/CurrerncyUtils'; 
 
 function ViewOrderInfoSupply(props) {
   const { t } = useTranslation();
 
   const [list, setList] = useState([]);
+  const [isDateEntered, setIsDateEntered] = useState(false);
 
+  const userCountryCode = props.profile.country;
+  const userCurrency = getCurrencySymbol(userCountryCode)
   
 //this sends data request
 useEffect(() => {
   props.getPurchaseInfoSupply();
   console.log("getting sup ==>", props.data)
-}, [props.infoSupply]);
+}, []);
 
 const getOrderInfoList = async () => {
   //clears the items array before each update- IMPORTANT
@@ -30,21 +35,29 @@ const getOrderInfoList = async () => {
   props.infoSupply.forEach((doc) => {
     // id is the docref for deletion
     var id = doc.id;
-    var uid = doc.uid
-    var productName = doc.cartList.productName;
-    var productPrice = doc.cartList.productPrice;
-    var productCurrency = doc.cartList.productCurrency;
+    var companyID = doc.companyID
+    var receiversID = doc.receiversID
+    var address = doc.address
+    var delivery_code = doc.delivery_code
     var status = doc.status;
 
+
+    var cartWithPrices = doc.cart.map((cartItem) => {
+      return {
+        ...cartItem,
+        price: 0,
+        currency: getCurrencySymbol(userCountryCode)
+      };
+    });
 
     setList((list) => [
       ...list,
       {
-        productName: productName,
-        productPrice: productPrice,
-        id: id,
-        uid: uid,
-        productCurrency: productCurrency,
+        cart: cartWithPrices,
+        companyID: companyID,
+        receiversID: receiversID,
+        address: doc.address,
+        delivery_code: doc.delivery_code,
         status: status,
       }, 
     ]);
@@ -79,28 +92,80 @@ useEffect(() => {
                   </tr>
 									<tr>
 										<th className="table-header">Name</th>
-                    <th className="table-header">Price</th>
+                    <th className="table-header">Qty</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									{/* {item.order.map((order) => (
-										<tr key={`order${index}`}>
-										<td>{order.meal}</td>
-										<td>{order.price}</td>
-									</tr>
-									))} */}
-                  <td>{item.productName}</td>
-									<td>{item.productCurrency}{item.productPrice}</td>
-
+                {item.cart.map((cartItem, cartIndex) => (
+                    <tr key={`cart${cartIndex}`}>
+                      <td>{cartItem.productName}</td>
+                      <td>{cartItem.productQty}</td>
+                      <td>
+                        <InputGroup>
+                        <InputGroup.Text>{userCurrency}</InputGroup.Text>
+                          <Form.Control
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={cartItem.price}
+                            onChange={(e) => {
+                              const newPrice = parseFloat(e.target.value);
+                              const updatedCart = [...item.cart];
+                              updatedCart[cartIndex].price = newPrice;
+                              const updatedList = list.map((listItem) =>
+                                listItem.id === item.id
+                                  ? { ...listItem, cart: updatedCart }
+                                  : listItem
+                              );
+                              setList(updatedList);
+                            }}
+                          />
+                        </InputGroup>
+                      </td>
+                    </tr>
+                  ))}
 								</tbody>
-                <div className="">
-                      {/* <ConfirmItemIconRes
-                        //value={props.value}
-                        id={item.id}
-                        item={item}
-                      /> */}
-                  </div>
+                <tfoot>
+                  <tr>
+                    <td colSpan="2">
+                      {/* Conditionally render the ConfirmItemIconFarm button */}
+                      {item.status !== "ACCEPTED" && isDateEntered &&  (
+                        <ConfirmItemIconSup
+                          item={item.cart}
+                          supplierRef={item.id}
+                          companyID={item.companyID}
+                          receiversID={item.receiversID}
+                          deliveryDueDate={item.deliveryDueDate}
+                          delivery_code={item.delivery_code}
+                          currency={userCurrency}
+                        />
+                      )}
+                    </td>
+                    <td colSpan="6">
+                    <td colSpan="3">
+                    <h5>Delivery Address: {item.address}</h5>
+                    </td>
+                    <td colSpan="3">
+                    <h5>Add Delivery Date</h5>
+                      <Form.Control
+                        type="date"
+                        value={list[0].deliveryDueDate || ""}
+                        onChange={(e) => {
+                          const newDueDate = e.target.value;
+                          const updatedList = list.map((listItem) => ({
+                            ...listItem,
+                            deliveryDueDate: newDueDate,
+                          }));
+                          setList(updatedList);
+                          setIsDateEntered(newDueDate !== "");
+                        }}
+                      />
+                    </td>
+                    </td>
+                    
+                  </tr>
+                </tfoot>
 								
 								
 							</Table>
@@ -120,6 +185,7 @@ useEffect(() => {
 const mapStateToProps = (state) => {
   return {
     infoSupply: state.supplier.orderSupply,
+    profile: state.firebase.profile,
   };
 };
 

@@ -1186,7 +1186,7 @@ export const addToSupplyItems = (data) => {
 					.doc(data.upload.companyID)
 					.collection("messages")
 					.doc(docRef.id)
-					.set({ id: docRef.id, uid: uid }, { merge: true });
+					.set({ id: docRef.id, receiversID: uid }, { merge: true });
 				dispatch({ type: "ADD_SUPPLY_PURCHASE_ITEM", data });
 			})
 			.catch((err) => {
