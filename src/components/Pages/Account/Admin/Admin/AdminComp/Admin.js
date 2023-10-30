@@ -25,6 +25,7 @@ function Admin(props) {
 
 	const [list, setList] = useState([]);
 	const [update, setUpdate] = useState(0);
+	const [filterValue, setFilterValue] = useState("all");
 
 	//trigger this when updating items
 	const forceUpdate = () => {
@@ -93,7 +94,113 @@ function Admin(props) {
 		<>
 			<div>
 				<main>
-					{list.length === 0 ? (
+
+				<select
+					value={filterValue}
+					onChange={(e) => setFilterValue(e.target.value)}
+				>
+					<option value="all">All</option>
+					<option value="pickup">Pickup</option>
+					<option value="delivery">Delivery</option>
+				</select>
+
+				{list.length === 0 ? (
+            <p>There is no purchase request from your location.</p>
+          ) : (
+            list.map((item, index) => {
+              // Filter the items based on the selected filter value
+              if (
+                filterValue === "all" ||
+                (filterValue === "pickup" && item.delivery_option === "pickup") ||
+                (filterValue === "delivery" && item.delivery_option === "delivery")
+              ) {
+                return (
+					<Accordion key={`item${index}`}>
+					<Card>
+						<Accordion.Toggle as={Card.Header} eventKey="0">
+							<p>{item.date}</p>
+							<p>{item.delivery_option}</p>
+							<span>{item.phone_number}</span>
+							<p>
+								{item.profile.firstName} {item.profile.city},{" "}
+								{item.profile.country}
+							</p>
+							<p>
+								{item.delivery_code &&
+									`Order code: ${item.delivery_code}`}
+							</p>
+						</Accordion.Toggle>
+						<Accordion.Collapse eventKey="0">
+							<Card.Body>
+								<Table striped bordered hover>
+									<thead>
+										<tr>
+											<th>{t("description.product")}</th>
+											<th>{t("description.quantity")}</th>
+											<th>{t("description.measure")}</th>
+											<th>{t("description.price")}</th>
+											<th>{t("description.supplier")}</th>
+										</tr>
+									</thead>
+									<tbody>
+										{item.cartList.map((cart) => (
+											<tr key={`cart${index}`}>
+												<td>{cart.data}</td>
+												<td>{cart.quantity}</td>
+												<td>{cart.measure}</td>
+												{cart.price ? <td>{cart.price}</td> : <td>0</td>}
+												{cart.supplier ? (
+													<td>{cart.supplier}</td>
+												) : (
+													<td></td>
+												)}
+											</tr>
+										))}
+									</tbody>
+								</Table>
+
+								<div>
+									<p>
+										<SendItemIcon
+											refID={item.id}
+											uid={item.uid}
+											cart={item.cartList}
+										/>
+										<EditPurchaseIcon
+											id={item.id}
+											uid={item.uid}
+											cart={item.cartList}
+										/>
+										<FarmerListIcon
+											id={item.id}
+											uid={item.uid}
+											receiversID={item.profile.uid}
+											cart={item.cartList}
+											address={item.address}
+											delivery_code={item.delivery_code}
+											city={item.profile.city}
+										/>
+									</p>
+									<ListGroup className="list-group-flush">
+										<ListGroupItem>
+											{t("description.status")}: {item.status}
+										</ListGroupItem>
+										<ListGroupItem>
+											{t("description.ref_num")}: {item.id}
+										</ListGroupItem>
+									</ListGroup>
+								</div>
+							</Card.Body>
+						</Accordion.Collapse>
+					</Card>
+				</Accordion>
+                );
+              }
+              return null; // If the item doesn't match the filter, return null to hide it
+            })
+          )}
+
+					{/* {list.length === 0 ? (
 						<p>There is no purchase request from your location.</p>
 					) : (
 						list.map((item, index) => (
@@ -109,7 +216,7 @@ function Admin(props) {
 										</p>
 										<p>
 											{item.delivery_code &&
-												`pickup code: ${item.delivery_code}`}
+												`Order code: ${item.delivery_code}`}
 										</p>
 									</Accordion.Toggle>
 									<Accordion.Collapse eventKey="0">
@@ -179,7 +286,7 @@ function Admin(props) {
 								</Card>
 							</Accordion>
 						))
-					)}
+					)} */}
 					{/* <div className="admin_paginator">
 					<Paginator />
 				</div> */}

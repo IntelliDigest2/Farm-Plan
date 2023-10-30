@@ -727,6 +727,103 @@ export const sendToUser = (data) => {
 	};
 };
 
+export const sendOrderToFarmerFromSupplier = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+
+		console.log("db call here", data);
+
+		const batch = db.batch();
+
+		let notification = {
+			notification_type: "shopping",
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
+		};
+
+		// TODO NOTIFICATION
+		// this function changes the state of the messages collection in the marketplace
+		// for the place where the admin send this to the user which is buying the notification is not supposed to show
+		let userCollection = setUsersCollection(data.buyers_account_type);
+
+		let notificationRef = getFirestore()
+			.collection(userCollection)
+			.doc(data.receiversID)
+			.collection("notifications");
+
+		let marketPlaceMessagesRef = getFirestore()
+			.collection("farm_users")
+			.doc(data.receiversID)
+			.collection("supplyOrders");
+
+		batch.set(marketPlaceMessagesRef, data);
+		batch.set(notificationRef, notification);
+
+		return batch.commit();
+		// .add(data)
+		// .then((docRef) => {
+		// 	// make the docId easily accessible so that we can delete it later if we want.
+		// 	getFirestore()
+		// 		.collection("marketplace")
+		// 		.doc(data.receiversID)
+		// 		.collection("messages")
+		// 		.doc(docRef.id)
+		// 		.set({ id: docRef.id }, { merge: true });
+		// 	dispatch({ type: "SEND_TO_USER" });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "SEND_TO_USER_ERROR", err });
+		// });
+	};
+};
+
+export const sendOrderToFarmerFromSupplier = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+
+		console.log("db call here", data);
+
+		const batch = db.batch();
+
+		let notification = {
+			notification_type: "shopping_response",
+			created_at: new Date(),
+		};
+
+		// TODO NOTIFICATION
+		// this function changes the state of the messages collection in the marketplace
+		let userCollection = setUsersCollection(data.receiversBuildingFunction);
+
+		let notificationRef = getFirestore()
+			.collection(userCollection)
+			.doc(data.receiversID)
+			.collection("notifications");
+
+		let marketPlaceMessagesRef = getFirestore()
+			.collection("farm_users")
+			.doc(data.receiversID)
+			.collection("supplyOrders");
+
+		batch.set(marketPlaceMessagesRef, data);
+		batch.set(notificationRef, notification);
+
+		return batch.commit();
+		// .add(data)
+		// .then((docRef) => {
+		// 	// make the docId easily accessible so that we can delete it later if we want.
+		// 	getFirestore()
+		// 		.collection("marketplace")
+		// 		.doc(data.receiversID)
+		// 		.collection("messages")
+		// 		.doc(docRef.id)
+		// 		.set({ id: docRef.id }, { merge: true });
+		// 	dispatch({ type: "SEND_TO_USER" });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "SEND_TO_USER_ERROR", err });
+		// });
+	};
+};
+
 export const sendToRes = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database

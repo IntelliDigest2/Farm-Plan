@@ -198,17 +198,11 @@ function ShopItems(props) {
 			},
 		};
 
-		props
-			.addToPurchaseItems(data)
-			.then((resp) => {
-				submitNotification(
-					"Success",
-					"Thanks for placing your order with us. We will contact local sustainable farmers and grocery shops and get back to you shortly with prices and delivery time"
-				);
-			})
-			.catch((err) => {
-				submitNotification("Error", "Someting went wrong, pls try again");
-			});
+		props.addToPurchaseItems(data);
+		submitNotification(
+			"Thanks for placing your order with us",
+			"We will contact local sustainable farmers and grocery shops and get back to you shortly with prices and delivery time"
+		);
 	};
 
 	const AllPurchaseItem = () => {
@@ -462,7 +456,7 @@ function ShopItems(props) {
 			</Button>
 			<Refresh />
 
-			{newList.length ? (
+			{allList.length || newList.length ? (
 				<>
 					<List>
 						{allList.map((ingr, index) => (

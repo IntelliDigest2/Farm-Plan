@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import emailjs, { init } from "@emailjs/browser";
 
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import EmailIcon from '@mui/icons-material/Email';
 import IconButton from "@mui/material/IconButton";
@@ -21,6 +24,23 @@ function UserVerify(props) {
 const baseUrlDev="http://localhost:5000"
 const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
+const fetchUserExpertise = async (uid) => {
+  try {
+    const expertiseRef = firebase.firestore().collection('consultants'); 
+    const doc = await expertiseRef.doc(uid).get();
+    
+    if (doc.exists) {
+      return doc.data().expertise;
+    } else {
+      return 'Expertise not found'; // Or handle the case when expertise is not found
+    }
+  } catch (error) {
+    console.error('Error fetching expertise:', error);
+    return 'Error fetching expertise'; // Handle the error as needed
+  }
+};
+
+
   const [list, setList] = useState([]);
   const [message, setMessage] = useState(null);
   const [copySuccess, setCopySuccess] = useState(null);
@@ -29,6 +49,8 @@ const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
   const [emailMessage, setEmailMessage] = useState("");
   const [selectedEmail, setSelectedEmail] = useState(""); 
   const [emailSentStatus, setEmailSentStatus] = useState({});
+
+  const [filterOption, setFilterOption] = useState("All");
 
   const handleCopyClick = (uid) => {
     const textArea = document.createElement('textarea');
@@ -52,26 +74,44 @@ const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
     //clears the items array before each update- IMPORTANT
     setList([]);
 
-    //sets a new item object in the array for every document
-    props.data.forEach((doc) => {
-      // id is the docref for deletion
-      var uid = doc.uid;
-	  var firstName = doc.firstName;
-	  var lastName = doc.lastName;
-	  var email = doc.email;
-      var buildingFunction = doc.buildingFunction;
-
-      setList((list) => [
-        ...list,
-        {
-          uid: uid,
-		  firstName: firstName,
-		  lastName: lastName,
-		  email: email,
-          buildingFunction: buildingFunction,
-        },
-      ]);
+    const userPromises = props.data.map(async (doc) => {
+      const uid = doc.uid;
+      const firstName = doc.firstName;
+      const lastName = doc.lastName;
+      const email = doc.email;
+      const buildingFunction = doc.buildingFunction;
+  
+      if (buildingFunction === "Consultant") {
+        const expertise = await fetchUserExpertise(uid);
+  
+        setList((list) => [
+          ...list,
+          {
+            uid: uid,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            buildingFunction: buildingFunction,
+            expertise: expertise,
+          },
+        ]);
+      } else {
+        // If buildingFunction is not "Consultant," add the user to the list without expertise
+        setList((list) => [
+          ...list,
+          {
+            uid: uid,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            buildingFunction: buildingFunction,
+          },
+        ]);
+      }
     });
+  
+    await Promise.all(userPromises);
+  
   };
 
   useEffect(() => {
@@ -125,13 +165,83 @@ const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
     <>
       {list.length ? (
         <>
-			<table  style={{ margin: '0 auto', width: '80%', textAlign: 'center' }}> 
+
+      <select
+        value={filterOption}
+        onChange={(e) => setFilterOption(e.target.value)}
+      >
+        <option value="All">All</option>
+        <option value="Admin">Admin</option>
+        <option value="Consultant">Consultant</option>
+        <option value="`Restaurant`">Restaurant</option>
+
+      </select>
+
+      <table style={{ margin: '0 auto', width: '80%', textAlign: 'center' }}>
+      <thead>
+  `         <tr>
+            <th>Name</th>
+            <th>Expertise</th>
+            <th>UID</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list
+            .filter((item) => {
+              if (filterOption === "All") {
+                return true; // Show all users when "All" is selected
+              }
+              return item.buildingFunction === filterOption;
+            })
+            .map((item, index) => (
+              <tr key={`item${index}`}>
+                <td>
+                {item.firstName} {item.lastName} 
+                </td>
+                {/* <td>{item.buildingFunction}</td> */}
+                <td>{item.expertise}</td>
+                <td>{item.uid}</td>
+                <td>
+                <IconButton
+                  onClick={() => handleCopyClick(item.uid)}						
+                  color="primary"
+                  aria-label="Copy"
+                  style={{ borderRadius: '0', paddingLeft: '10px', width: 'auto' }} // Add or adjust styles here
+                >
+                  <FileCopyIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    handleOpenEmailModal(); // Pass the email to open the email modal
+                    setSelectedEmail(item.email)
+                  }}
+                  color="primary"
+                  aria-label="Email"
+                  style={{ borderRadius: '0', paddingLeft: '10px', width: 'auto' }} // Add or adjust styles here
+                >
+                  <EmailIcon />
+                </IconButton>
+                {emailSentStatus[item.email] && (
+                            <span style={{ color: 'green', marginLeft: '5px' }}>Email Sent</span>
+                          )}
+                {copySuccess === item.uid && (
+                  <span style={{ color: 'green', marginLeft: '5px' }}>Copied!</span>
+                )}
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>`
+
+			{/* <table  style={{ margin: '0 auto', width: '80%', textAlign: 'center' }}> 
 			<tbody>
 				{list.map((item, index) => (
 				<tr key={`item${index}`}>
 					<td>
-					{item.firstName} {item.lastName}
+					{item.firstName} {item.lastName} 
 					</td>
+          <td>{item.buildingFunction}</td>
 					<td>{item.uid}</td>
 					<td>
 					<IconButton
@@ -163,7 +273,7 @@ const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 				</tr>
 				))}
 			</tbody>
-			</table>
+			</table> */}
 
 			{/* Email modal */}
 			<Dialog open={openEmailModal} onClose={handleCloseEmailModal}>

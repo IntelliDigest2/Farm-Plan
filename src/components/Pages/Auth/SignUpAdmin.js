@@ -1266,7 +1266,7 @@ const Stage6 = (props) => {
 							items={[
 								"Int'l Passport",
 								"Voters Card",
-								"Driver's License",
+								"Driving License",
 								"National Identity Card",
 							]}
 						/>
