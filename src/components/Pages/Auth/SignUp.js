@@ -1264,7 +1264,7 @@ const Stage6 = (props) => {
 							}}
 							value={props.adminType}
 							placeholder="select admin type"
-							items={["Restaurant", "Purchase Admin"]}
+							items={["Purchase Admin"]}
 						/>
 					</Form.Group>
 					<Form.Group className="mb-3">
