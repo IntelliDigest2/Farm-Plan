@@ -7,6 +7,10 @@ import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
+import {sendPaymentNotificationToSeller} from './notificationData.js';
+import Swal from 'sweetalert2';
+
+
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
@@ -18,13 +22,16 @@ function PayIcon(props) {
   console.log("check userId and orderId  ", props.uid, props.id)
 
   const [showModal, setShow] = useState(false);
+  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
+  const otherUrl = 'https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction/create-payment-intent'
+
 
   const handlePay = async () => {
     // console.log(props.payType, `this is the payment type`)
 
     
           //  await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
-      await fetch('https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction/create-payment-intent', {
+      await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {
   
          method: 'POST',
          body: JSON.stringify({
@@ -39,8 +46,15 @@ function PayIcon(props) {
          .then((response) => response.json())
          .then((data) => {
             // console.log("this is the data returned", data)
-            history.push('/payment-process',{params: {sec: `${data.clientSecret}`,
-          consultInfo : [props.consultantPaymentInfo]}})
+            sendPaymentNotificationToSeller(props.payType,props.consultantPaymentInfo.consultantId)
+          //   history.push('/payment-process',{params: {sec: `${data.clientSecret}`,
+          // consultInfo : [props.consultantPaymentInfo]}})
+
+          Swal.fire({
+            title: 'Success!',
+            text: 'Payment was successful',
+            icon: 'success',
+          });
          })
          .catch((err) => {
             console.log(err.message);

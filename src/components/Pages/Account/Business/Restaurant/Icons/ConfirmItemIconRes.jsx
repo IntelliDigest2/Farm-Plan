@@ -7,7 +7,7 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../lib/Notifications";
-import { editMenuStatusOnRes, sendOrderToUser } from "../../../../../../store/actions/marketplaceActions/restaurantData";
+import { editMenuStatusOnRes, sendOrderToUserRes } from "../../../../../../store/actions/marketplaceActions/restaurantData";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function ConfirmItemIconRes(props) {
@@ -83,7 +83,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editMenuStatusOnRes: (data) => dispatch(editMenuStatusOnRes(data)),
-    sendOrderToUser: (data) => dispatch(sendOrderToUser(data))
+    sendOrderToUser: (data) => dispatch(sendOrderToUserRes(data))
   };
 };
 

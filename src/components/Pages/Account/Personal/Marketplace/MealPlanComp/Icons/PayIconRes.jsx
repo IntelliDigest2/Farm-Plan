@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
+import {sendPaymentNotification} from './notificationData.js';
+
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
@@ -35,8 +37,11 @@ function PayIconRes(props) {
        .then((response) => response.json())
        .then((data) => {
           console.log("payment done", data)
+          // props.sendPaymentNotification(props.receiversAccountType,props.receiversID)
+
           history.push('/payment-process',{params: `${data.clientSecret}`})
        })
+       
        .catch((err) => {
           console.log(err.message);
        });

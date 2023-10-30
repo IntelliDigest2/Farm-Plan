@@ -98,8 +98,8 @@ function Notification(props) {
 
 
   const turnOffNotification =()=>{
-    props.setNotificationStat(false)
-    if(props.notifications !== null || props.notifications?.length > 0){
+    if((props.notifications !== null || props.notifications?.length > 0) && props.notificationStatus === true ){
+      props.setNotificationStat(false)
    
     
       const latestNotificationJSON = JSON.stringify(props.notifications[0])

@@ -3,6 +3,40 @@
 import firebase from "firebase";
 const db = firebase.firestore();
 
+const setUsersCollection = (buildingFunction) => {
+	let userCollection;
+	switch (buildingFunction) {
+		case buildingFunction === "Farm":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Households":
+			userCollection = "household_users";
+			break;
+		case buildingFunction === "Restaurants":
+			userCollection = "restaurant_users";
+			break;
+		case buildingFunction === "Consultant":
+			userCollection = "consultants";
+			break;
+		case buildingFunction === "Offices":
+			userCollection = "office_users";
+			break;
+		case buildingFunction === "Hotels":
+			userCollection = "hotel_users";
+			break;
+		case buildingFunction === "Shop":
+			userCollection = "shop_users";
+			break;
+
+		default:
+			// userCollection = "Machinery/Supplier";
+			userCollection = "supply_users";
+			break;
+	}
+
+	return userCollection;
+};
+
 export const startData = (data) => {
 	return (dispatch, getState, { getFirebase }) => {
 		getFirebase()
@@ -544,11 +578,30 @@ export const getPurchaseData = (data) => {
 			// .collection("purchases")
 			.collection("purchases")
 			.where("profile.region", "==", data)
+			// .onSnapshot(
+			// 	(doc) => {
+			// 		dispatch({
+			// 			type: "SET_FETCHING",
+			// 			payload: true,
+			// 		});
+			// 		let data = [];
+			// 		doc.forEach((doc) => {
+			// 			data.push({ ...doc.data(), id: doc.id });
+			// 			// console.log(doc.id, " => ", doc.data());
+			// 		});
+			// 		// console.log("Current data: ", consultants);
+			// 		dispatch({ type: "GET_PURCHASE_DATA", payload: data });
+			// 	},
+			// 	(err) => {
+			// 		console.log(err);
+			// 		dispatch({ type: "GET_PURCHASE_DATA_ERROR", err });
+			// 	}
+			// );
 			.get()
 			.then((snapshot) => {
 				const data = [];
 				snapshot.forEach((doc) => {
-					data.push(doc.data());
+					data.push({ ...doc.data(), id: doc.id });
 				});
 				dispatch({ type: "GET_PURCHASE_DATA", payload: data });
 			})
@@ -634,13 +687,14 @@ export const sendToUser = (data) => {
 		const batch = db.batch();
 
 		let notification = {
-			notification_type: "shopping_response",
-			created_at: new Date(),
+			notification_type: "shopping",
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
 		};
 
 		// TODO NOTIFICATION
 		// this function changes the state of the messages collection in the marketplace
-		let userCollection = setUsersCollection(data.receiversBuildingFunction);
+		// for the place where the admin send this to the user which is buying the notification is not supposed to show
+		let userCollection = setUsersCollection(data.buyers_account_type);
 
 		let notificationRef = getFirestore()
 			.collection(userCollection)
@@ -651,6 +705,55 @@ export const sendToUser = (data) => {
 			.collection("marketplace")
 			.doc(data.receiversID)
 			.collection("messages");
+
+		batch.set(marketPlaceMessagesRef, data);
+		batch.set(notificationRef, notification);
+
+		return batch.commit();
+		// .add(data)
+		// .then((docRef) => {
+		// 	// make the docId easily accessible so that we can delete it later if we want.
+		// 	getFirestore()
+		// 		.collection("marketplace")
+		// 		.doc(data.receiversID)
+		// 		.collection("messages")
+		// 		.doc(docRef.id)
+		// 		.set({ id: docRef.id }, { merge: true });
+		// 	dispatch({ type: "SEND_TO_USER" });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "SEND_TO_USER_ERROR", err });
+		// });
+	};
+};
+
+export const sendOrderToFarmerFromSupplier = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+
+		console.log("db call here", data);
+
+		const batch = db.batch();
+
+		let notification = {
+			notification_type: "shopping",
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
+		};
+
+		// TODO NOTIFICATION
+		// this function changes the state of the messages collection in the marketplace
+		// for the place where the admin send this to the user which is buying the notification is not supposed to show
+		let userCollection = setUsersCollection(data.buyers_account_type);
+
+		let notificationRef = getFirestore()
+			.collection(userCollection)
+			.doc(data.receiversID)
+			.collection("notifications");
+
+		let marketPlaceMessagesRef = getFirestore()
+			.collection("farm_users")
+			.doc(data.receiversID)
+			.collection("supplyOrders");
 
 		batch.set(marketPlaceMessagesRef, data);
 		batch.set(notificationRef, notification);
@@ -721,7 +824,6 @@ export const sendOrderToFarmerFromSupplier = (data) => {
 	};
 };
 
-
 export const sendToRes = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
@@ -746,39 +848,6 @@ export const sendToRes = (data) => {
 			});
 	};
 };
-
-const setUsersCollection = (buildingFunction) => {
-	let userCollection;
-	switch (buildingFunction) {
-		case buildingFunction === "Farm":
-			userCollection = "farm_user";
-			break;
-		case buildingFunction === "Households":
-			userCollection = "farm_user";
-			break;
-		case buildingFunction === "Restaurants":
-			userCollection = "farm_user";
-			break;
-		case buildingFunction === "Consultant":
-			userCollection = "farm_user";
-			break;
-		case buildingFunction === "Offices":
-			userCollection = "farm_user";
-			break;
-		case buildingFunction === "Hotels":
-			userCollection = "farm_user";
-			break;
-		case buildingFunction === "Shop":
-			userCollection = "farm_user";
-			break;
-
-		default:
-			userCollection = "Machinery_Supplier";
-			break;
-	}
-
-	return userCollection;
-};
 export const sendToFarmer = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
@@ -788,7 +857,7 @@ export const sendToFarmer = (data) => {
 		let farmUserDocRef = getFirestore()
 			.collection("farm_users")
 			.doc(data.farmerId);
-
+		//messages in the farm user collection helps the farmer to see requests from the admin
 		let farmUserMessages = farmUserDocRef.collection("messages");
 		let farmUserNotifications = farmUserDocRef.collection("notifications");
 
@@ -809,11 +878,11 @@ export const sendToFarmer = (data) => {
 		// });
 
 		// TODO NOTIFICATION
-		// this is the notification sent to a farmer by the admin to show that a purchase request as been made and the status is changed to 'IN PROGRESS'
+		// this is the notification sent to a farmer to ashk if he has the following products
 
 		let notification = {
 			notification_type: "admin_request",
-			created_at: new Date(),
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
 		};
 
 		batch.set(farmUserMessages, data);

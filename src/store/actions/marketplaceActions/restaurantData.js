@@ -47,6 +47,40 @@ export const getRestaurantData = (data) => {
 	};
 };
 
+const setUsersCollection = (buildingFunction) => {
+	let userCollection;
+	switch (buildingFunction) {
+		case buildingFunction === "Farm":
+			userCollection = "farm_user";
+			break;
+		case buildingFunction === "Households":
+			userCollection = "household_users";
+			break;
+		case buildingFunction === "Restaurants":
+			userCollection = "restaurant_users";
+			break;
+		case buildingFunction === "Consultant":
+			userCollection = "consultants";
+			break;
+		case buildingFunction === "Offices":
+			userCollection = "office_users";
+			break;
+		case buildingFunction === "Hotels":
+			userCollection = "hotel_users";
+			break;
+		case buildingFunction === "Shop":
+			userCollection = "shop_users";
+			break;
+
+		default:
+			// userCollection = "Machinery/Supplier";
+			userCollection = "supply_users";
+			break;
+	}
+
+	return userCollection;
+};
+
 export const getRestaurantExpenseForDuration = (duration, period) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		const profile = getState().firebase.profile;
@@ -1008,11 +1042,11 @@ export const sendToRes = (data) => {
 			.doc(data.restaurantID);
 
 		let restaurantNotificationCollection =
-			getFirestore().collection("notifications");
+			restaurantCollection.collection("notifications");
 
 		let notification = {
-			notification_type: "admin_request",
-			created_at: new Date(),
+			notification_type: "eatingOut_request",
+			created_at: getFirestore.Timestamp.fromDate(new Date()),
 		};
 
 		let restaurantMessagesCollection =
@@ -1041,7 +1075,7 @@ export const sendToRes = (data) => {
 	};
 };
 
-export const sendOrderToUser = (data) => {
+export const sendOrderToUserRes = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
 		const profile = getState().firebase.profile;

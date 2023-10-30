@@ -109,7 +109,7 @@ export const bookEvent = (
 				let data = sfDoc.data();
 				let notification = {
 					notification_type: "consulting_request",
-					created_at: new Date(),
+					created_at: getFirestore.Timestamp.fromDate(new Date()),
 				};
 
 				if (data.status.requesterId !== null) {
