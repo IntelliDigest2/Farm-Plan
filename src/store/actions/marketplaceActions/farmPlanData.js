@@ -1747,8 +1747,8 @@ export const getPurchaseInfoFarm = (info) => {
 			.collection("farm_users")
 			.doc(uid)
 			.collection("messages")
-			.where("status", "!=", "COMPLETED")
-			.where("status", "!=", "ACCEPTED")
+			.where("status", "==", "IN PROGRESS")
+			// .where("status", "!=", "ACCEPTED")
 			.onSnapshot(
 				(querySnapshot) => {
 					let orderInfo = [];

@@ -14,6 +14,36 @@ import NotificationIcon from "./../Pages/Account/Personal/Marketplace/MealPlanCo
 
 export function Profile(props) {
 	// if (props.profile.buildingFunction !== "Restaurants") {
+
+	let content = props.profile.isLoaded ? (
+		<>
+			<div style={{ display: "flex", alignItems: "center" }}>
+				<Avatar initials={props.profile.initials} />
+				<span>{props.profile.firstName + " " + props.profile.lastName}</span>
+			</div>
+			<div>
+				<p>{props.profile.email}</p>
+			</div>
+			<div>
+				<p style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+					{props.profile.buildingFunction} Account
+				</p>
+			</div>
+		</>
+	) : (
+		<div
+		// style={{
+		// 	margin: "auto",
+		// 	position: "absolute",
+		// 	top: "0",
+		// 	bottom: "0",
+		// 	left: "0",
+		// 	right: "0",
+		// }}
+		>
+			...
+		</div>
+	);
 	return (
 		// <div className=" ">
 		<div className="web-center">
@@ -26,24 +56,15 @@ export function Profile(props) {
 				}}
 			>
 				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-					}}
+				// style={{
+				// 	width: "180px",
+				// 	height: "124px",
+				// 	position: "relative",
+				// }}
 				>
-					{/* <span className="avatar-name-container"> */}
-					<Avatar initials={props.profile.initials} />
-					{/* </span> */}
-					<span>{props.profile.firstName + " " + props.profile.lastName}</span>
+					{content}
 				</div>
-				<div>
-					<p>{props.profile.email}</p>
-				</div>
-				<div>
-					<p style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
-						{props.profile.buildingFunction} Account
-					</p>
-				</div>
+
 				<div style={{ display: "flex" }}>
 					<div>
 						<NotificationIcon />

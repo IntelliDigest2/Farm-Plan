@@ -1,5 +1,5 @@
 const initState = {
-	bookingPurchase: [],
+	bookingPurchase: null,
 	bookingPurchaseError: null,
 	purchaseStatusChangeError: null,
 	purchaseStatusChangeLoading: false,

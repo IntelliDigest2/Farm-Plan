@@ -162,6 +162,7 @@ export const getConsultingBookingsForPurchase = (data) => {
 				break;
 		}
 
+		console.log(uid, `this is the uid`);
 		getFirestore()
 			.collection("marketplace")
 			.doc(uid)
@@ -177,6 +178,8 @@ export const getConsultingBookingsForPurchase = (data) => {
 					doc.forEach((doc) => {
 						bookings.push({ booking: doc.data(), bookingId: doc.id });
 					});
+
+					console.log(bookings, `these are the bookings from the bookingData`);
 
 					dispatch({
 						type: "FETCH_PURCHASE_BOOKING_SUCCESS",

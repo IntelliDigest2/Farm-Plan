@@ -87,18 +87,18 @@ function ViewAppNotifications(props) {
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
-		console.log(props.infoRes, `this is the infor Restaurant`);
+		// console.log(props.infoRes, `this is the infor Restaurant`);
 	}, [props.infoRes]);
 
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
-		console.log(props.infoFarm, `this is the infor Farm`);
+		// console.log(props.infoFarm, `this is the infor Farm`);
 	}, [props.infoFarm]);
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
-		console.log(props.infoOrder, `this is the infor Farm`);
+		// console.log(props.infoOrder, `this is the infor Farm`);
 	}, [props.infoOrder]);
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
@@ -109,13 +109,14 @@ function ViewAppNotifications(props) {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
 		console.log(props.bookingsInfo, `this is the infor booking`);
+		console.log(`this is the part i want to check`);
 	}, [props.bookingsInfo]);
 
 	//this sends data request
 	useEffect(() => {
 		getPurchaseInfoList();
 		//console.log("getting inv ==>", props.data)
-		console.log(props.infoPurchase, `this is the infor infoPurchase`);
+		// console.log(props.infoPurchase, `this is the infor infoPurchase`);
 	}, [props.infoPurchase]);
 
 	// useEffect(() => {}, [props.bookingsInfo]);
@@ -153,9 +154,9 @@ function ViewAppNotifications(props) {
 	useEffect(() => {
 		if (userType1) {
 			// fetch shopping notifications (notifications from farmers)
-			props.getConsultingBookingNotifFromConsultants();
+			// props.getConsultingBookingNotifFromConsultants();
+			props.getConsultingBookings(); //this is to get the consulting booking for a non consultant
 			props.getPurchaseInfoForMealPlanFromFarmers();
-			props.getBookingsForPurchase();
 			console.log(`here my bro`);
 		}
 		if (otherUsersRestaurantNotification) {
@@ -166,16 +167,17 @@ function ViewAppNotifications(props) {
 		if (farmOnlyNotif) {
 			// fetch notifications for farmer for when a shopping order comes in
 			// when a supplier order comes in
-			getPurchaseInfoFarm();
+			props.getPurchaseInfoFarm();
+			props.getConsultingBookings();
 		}
 		if (consultantOnlyNotif) {
 			// fetch notifications for when a consultation request comes in
-			props.getBookingsForPurchase();
+			// props.getBookingsForPurchase();
 		}
 		if (restaurantOnlyNotif) {
 			// fetch notifications for farmer alone//
 			props.getPurchaseInfoForRes();
-			console.log(`here my bro`);
+			// console.log(`here my bro`);
 		}
 		if (machinerysupplierOnlyNotif) {
 			// fetch notifications for farmer alone
@@ -672,11 +674,13 @@ function ViewAppNotifications(props) {
 												</thead>
 												<tbody>
 													<tr key={`cart${index}`}>
-														<td>{eventType}</td>
+														<td style={{ width: "100px" }}>{eventType}</td>
 														<td>{date}</td>
 														<td>{startTime}</td>
 														<td>{endTime}</td>
-														<td>{booking.event.description}</td>
+														<td style={{ maxWidth: "300px" }}>
+															{booking.event.description}
+														</td>
 														<td>{booking.event.price}</td>
 													</tr>
 												</tbody>
@@ -708,20 +712,23 @@ function ViewAppNotifications(props) {
 												{booking.status === "completed" ? (
 													"PAID"
 												) : (
-													<PayIcon
-														payType="consultant"
-														//value={props.value}
-														// refID={item.refID}
-														consultantPaymentInfo={[
-															bookingId,
-															consultantId,
-															consultantName,
-															eventType,
-															booking.event.start,
-														]}
-														id={bookingId}
-														uid={props.auth.uid}
-													/>
+													<div>
+														<PayIcon
+															payType="consultant"
+															//value={props.value}
+															// refID={item.refID}
+															consultantPaymentInfo={[
+																bookingId,
+																consultantId,
+																consultantName,
+																eventType,
+																booking.event.start,
+															]}
+															id={bookingId}
+															uid={props.auth.uid}
+														/>
+													</div>
+
 													// <PayIconWallet
 													// 		paytype="supplier"
 													// 		uid={cart.receiversID}
@@ -1339,10 +1346,10 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getPurchaseInfoForMealPlanFromFarmers: (data) =>
 			dispatch(getPurchaseInfo(data)),
-		getConsultingBookingNotifFromConsultants: () =>
-			dispatch(getConsultingBookingsForPurchase()),
+		// getConsultingBookingNotifFromConsultants: () =>
+		// 	dispatch(getConsultingBookingsForPurchase()),
 		getUsersRestaurantNotif: () => dispatch(getOrderInfo()),
-		getBookingsForPurchase: () => dispatch(getConsultingBookingsForPurchase()),
+		getConsultingBookings: () => dispatch(getConsultingBookingsForPurchase()),
 
 		purchaseBooking: (
 			bookingPurchaseId,
