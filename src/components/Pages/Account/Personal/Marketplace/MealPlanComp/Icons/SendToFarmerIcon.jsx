@@ -13,13 +13,14 @@ function SendToFarmerIcon(props) {
  // console.log("to inventory ==> ", props.food)
   const handleSelect = async () => {
     const data = {
-      farmerId: props.farmerId,
+      farmerID: props.farmerID,
       receiversID: props.receiversID,
-      buyers_account_type: props.buyers_account_type,
+      // buyers_account_type: props.buyers_account_type,
       status: "IN PROGRESS",
       cart: props.cart,
       address: props.address,
       delivery_code: props.delivery_code,
+      buyers_account_type: props.buyers_account_type,
       admin_id: props.admin_id
     };
     props.sendToFarmer(data).then((resp)=>{

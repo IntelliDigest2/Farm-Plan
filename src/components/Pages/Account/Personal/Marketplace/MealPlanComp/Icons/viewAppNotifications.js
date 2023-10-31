@@ -31,6 +31,7 @@ import ConfirmItemIconFarm from "./ConfirmItemIconFarm";
 
 function ViewAppNotifications(props) {
 	const { t } = useTranslation();
+
 	const [list, setList] = useState([]);
 	// const [userPurchaseList, setUserPurchaseList] = useState(null);
 	// const [otherUserPurchaselist, setOtherUserPurchaseList] = useState(null);
@@ -41,6 +42,7 @@ function ViewAppNotifications(props) {
 	const [otherUsersRestaurantOrderList, setOtherUsersRestaurantOrderList] =
 		useState(null);
 	const [farmersShoppingList, setFarmersShoppingList] = useState(null);
+	const [farmersPurchaseList, setFarmersPurchaseList] = useState(null);
 	const [otherUsersShoppingList, setOtherUsersShoppingList] = useState(null);
 	const [supplylist, setSupplyList] = useState([]);
 	// const [restaurantList, setRestaurantList] = useState([]);
@@ -49,6 +51,8 @@ function ViewAppNotifications(props) {
 
 	// const [list, setList] = useState([]);
 	const [isDateEntered, setIsDateEntered] = useState(false);
+	const [isLoading, setisLoading] = useState(false);
+	const [conversion, setConversion] = useState("");
 
 	const userCountryCode = props.profile.country;
 	const userCurrency = getCurrencySymbol(userCountryCode);
@@ -93,7 +97,8 @@ function ViewAppNotifications(props) {
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
-		// console.log(props.infoFarm, `this is the infor Farm`);
+		// console.log(props.infoFarm, `==============> this is the infor Farm`);
+		setFarmersPurchaseList(props.infoFarm)
 	}, [props.infoFarm]);
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
@@ -114,10 +119,53 @@ function ViewAppNotifications(props) {
 
 	//this sends data request
 	useEffect(() => {
-		getPurchaseInfoList();
-		//console.log("getting inv ==>", props.data)
-		// console.log(props.infoPurchase, `this is the infor infoPurchase`);
-	}, [props.infoPurchase]);
+		async function convertPrices() {
+			// Iterate through cart items and convert prices
+			const convertedPrices = await Promise.all(
+				props.infoPurchase.map(async (cart) => {
+					const convertedItemPrices = await Promise.all(
+						cart.item.map(async (cartItem) => {
+							if (cartItem.price) {
+								try {
+									const response = await fetch(
+										`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${cart.currency}/${userCurrency}/${cartItem.price}`,
+										{
+											method: "GET",
+											headers: {
+												"Content-type": "application/json; charset=UTF-8",
+											},
+										}
+									);
+									const data = await response.json();
+									console.log("rate conv", data.conversion_result);
+									return data.conversion_result;
+								} catch (err) {
+									console.error(err);
+									return 0; // Handle cases where price conversion fails
+								}
+							}
+							return 0; // Handle cases where price is not available
+						})
+					);
+
+					console.log("convertedItemPrices", convertedItemPrices);
+
+					return {
+						...cart,
+						item: cart.item.map((cartItems, index) => ({
+							...cartItems,
+							convertedPrice: convertedItemPrices[index],
+						})),
+					};
+				})
+			);
+			setConversion(convertedPrices);
+			setisLoading(false); // Once all conversions are done
+		}
+
+		convertPrices();
+		setOtherUsersShoppingList(props.infoPurchase)
+	}, [props.infoPurchase, userCurrency]);
 
 	// useEffect(() => {}, [props.bookingsInfo]);
 
@@ -271,6 +319,7 @@ function ViewAppNotifications(props) {
 		});
 	};
 
+
 	const pay = (e, bookingId, consultantId, consultantName, eventType, date) => {
 		e.preventDefault();
 
@@ -306,10 +355,10 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Shopping Notifications
 					</h2>
-					{otherUsersShoppingList?.length ? (
+					{conversion?.length ? (
 						<>
 							<List>
-								{otherUsersShoppingList.map((cart, index) => (
+								{conversion.map((cart, index) => (
 									<ListItem
 										key={`item${index}`}
 										style={{ alignItems: "flex-end" }}
@@ -319,7 +368,7 @@ function ViewAppNotifications(props) {
 												<tr>
 													<h6>
 														<b>{t("description.order_id")} </b>
-														{cart.refID}
+														{cart.id}
 													</h6>
 													<h6>
 														<b>{t("description.order_status")} </b>
@@ -349,7 +398,7 @@ function ViewAppNotifications(props) {
 														<td>{cartItems.measure}</td>
 														{cartItems.price ? (
 															<td>
-																{cartItems.currency}
+																{cart.currency}
 																{cartItems.price}
 															</td>
 														) : (
@@ -360,30 +409,27 @@ function ViewAppNotifications(props) {
 												))}
 											</tbody>
 											<div className="">
-												{cart.status === "CONFIRMED" ? (
-													<>
-														<PayIconWallet
-															paytype="supplier"
-															uid={cart.receiversID}
-															order={cart}
-															refID={cart.refID}
-														/>
-														{/* <PayIcon
-                        paytype="supplier"
-                        //value={props.value}
-                        refID={cart.refID}
-                        // id={item.id}
-                        // uid={item.uid}
-                      /> */}
-													</>
+											{cart.status !== "COMPLETED" ? (
+												cart.status === "CONFIRMED" ? (
+												<PayIconWallet
+													paytype="supplier"
+													uid={cart.receiversID}
+													order={cart}
+													refID={cart.id}
+													farmerRef={cart.farmerRef}
+													farmerID={cart.farmerID}
+													currency={cart.currency}
+												/>
 												) : (
-													<ConfirmItemIcon
-														//value={props.value}
-														refID={cart.refID}
-														// id={item.id}
-													/>
-												)}
+												<ConfirmItemIcon
+													//value={props.value}
+													refID={cart.id}
+													// id={item.id}
+												/>
+												)
+											) : null}
 											</div>
+
 										</Table>
 									</ListItem>
 								))}
@@ -407,7 +453,7 @@ function ViewAppNotifications(props) {
 					{farmersShoppingList?.length ? (
 						<>
 							<List>
-								{farmersShoppingList.map((cart, index) => (
+								{farmersShoppingList.map((item, index) => (
 									<ListItem
 										key={`item${index}`}
 										style={{ alignItems: "flex-end" }}
@@ -417,11 +463,11 @@ function ViewAppNotifications(props) {
 												<tr>
 													<h6>
 														<b>{t("description.order_id")} </b>
-														{cart.refID}
+														{item.refID}
 													</h6>
 													<h6>
 														<b>{t("description.order_status")} </b>
-														{cart.status}
+														{item.status}
 													</h6>
 												</tr>
 												<tr>
@@ -440,48 +486,78 @@ function ViewAppNotifications(props) {
 												</tr>
 											</thead>
 											<tbody>
-												{cart.item.map((cartItems) => (
+												{item.cart.map((cartItems, cartIndex) => (
 													<tr key={`cart${index}`}>
 														<td>{cartItems.data}</td>
 														<td>{cartItems.quantity}</td>
 														<td>{cartItems.measure}</td>
-														{cartItems.price ? (
-															<td>
-																{cartItems.currency}
-																{cartItems.price}
-															</td>
-														) : (
-															<td>0</td>
-														)}
+														<td>
+													<InputGroup>
+														<InputGroup.Text>{userCurrency}</InputGroup.Text>
+														<Form.Control
+															type="number"
+															min="0"
+															step="1"
+															value={cartItems.price}
+															onChange={(e) => {
+																const newPrice = parseFloat(e.target.value);
+																const updatedCart = [...item.cart];
+																updatedCart[cartIndex].price = newPrice;
+																const updatedList = props.infoFarm.map((listItem) =>
+																	listItem.id === item.id
+																		? { ...listItem, cart: updatedCart }
+																		: listItem
+																);
+																setFarmersShoppingList(updatedList);
+															}}
+														/>
+													</InputGroup>
+												</td>
 														{/* {cartItems.supplier ? <td>{cartItems.supplier}</td> : <td></td>} */}
 													</tr>
 												))}
 											</tbody>
-											<div className="">
-												{cart.status === "CONFIRMED" ? (
-													<>
-														<PayIconWallet
-															paytype="supplier"
-															uid={cart.receiversID}
-															order={cart}
-															refID={cart.refID}
-														/>
-														{/* <PayIcon
-                        paytype="supplier"
-                        //value={props.value}
-                        refID={cart.refID}
-                        // id={item.id}
-                        // uid={item.uid}
-                      /> */}
-													</>
-												) : (
-													<ConfirmItemIcon
-														//value={props.value}
-														refID={cart.refID}
-														// id={item.id}
+											<tfoot>
+										<tr>
+											<td colSpan="2">
+												{/* Conditionally render the ConfirmItemIconFarm button */}
+												{item.status !== "ACCEPTED" && isDateEntered && (
+													<ConfirmItemIconFarm
+														id={item.id}
+														item={item.cart}
+														farmerID={item.farmerID}
+														farmerRef={item.id}
+														receiversID={item.receiversID}
+														deliveryDueDate={item.deliveryDueDate}
+														delivery_code={item.delivery_code}
+														currency={userCurrency}
+														buyers_account_type={item.buyers_account_type}
 													/>
 												)}
-											</div>
+											</td>
+											<td colSpan="6">
+												<td colSpan="3">
+													<h5>Delivery Address: {item.address}</h5>
+												</td>
+												<td colSpan="3">
+													<h5>Add Delivery Date</h5>
+													<Form.Control
+														type="date"
+														value={list[0].deliveryDueDate || ""}
+														onChange={(e) => {
+															const newDueDate = e.target.value;
+															const updatedList = list.map((listItem) => ({
+																...listItem,
+																deliveryDueDate: newDueDate,
+															}));
+															setList(updatedList);
+															setIsDateEntered(newDueDate !== "");
+														}}
+													/>
+												</td>
+											</td>
+										</tr>
+									</tfoot>
 										</Table>
 									</ListItem>
 								))}
@@ -502,10 +578,10 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Purchase Notifications
 					</h2>
-					{farmersShoppingList?.length ? (
+					{farmersPurchaseList?.length ? (
 						<>
 							<List>
-								{farmersShoppingList.map((item, index) => (
+								{farmersPurchaseList.map((item, index) => (
 									<ListItem
 										key={`item${index}`}
 										// className="list"
@@ -551,12 +627,12 @@ function ViewAppNotifications(props) {
 																		const newPrice = parseFloat(e.target.value);
 																		const updatedCart = [...item.cart];
 																		updatedCart[cartIndex].price = newPrice;
-																		const updatedList = list.map((listItem) =>
+																		const updatedList = farmersPurchaseList.map((listItem) =>
 																			listItem.id === item.id
 																				? { ...listItem, cart: updatedCart }
 																				: listItem
 																		);
-																		setList(updatedList);
+																		setFarmersPurchaseList(updatedList);
 																	}}
 																/>
 															</InputGroup>
@@ -591,14 +667,14 @@ function ViewAppNotifications(props) {
 															<h5>Add Delivery Date</h5>
 															<Form.Control
 																type="date"
-																value={list[0].deliveryDueDate || ""}
+																value={farmersPurchaseList[0].deliveryDueDate || ""}
 																onChange={(e) => {
 																	const newDueDate = e.target.value;
-																	const updatedList = list.map((listItem) => ({
+																	const updatedList = farmersPurchaseList.map((listItem) => ({
 																		...listItem,
 																		deliveryDueDate: newDueDate,
 																	}));
-																	setList(updatedList);
+																	setFarmersPurchaseList(updatedList);
 																	setIsDateEntered(newDueDate !== "");
 																}}
 															/>

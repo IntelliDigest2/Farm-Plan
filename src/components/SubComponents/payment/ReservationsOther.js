@@ -62,7 +62,7 @@ const ReservationsOther = (props) => {
                       <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
                         {item.status || "pending"}
                       </span>
-                      <span className="item-amount">${item.totalAmount}</span>
+                      <span className="item-amount">{item.convertedCurrency}{item.totalAmount}</span>
                     </div>
                     <div className="cart-items">
                       {item.cartItems.map((cartItem, cartIndex) => (

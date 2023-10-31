@@ -3,7 +3,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
-import { editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { editPurchaseStatusOnUser, editPurchaseStatusOnFarmer } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
@@ -49,12 +49,15 @@ function PayIconWallet(props) {
       console.log("reservation ===>", res)
       const data = {
         refID: props.refID,
+        farmerRef: props.farmerRef,
+        farmerID: props.farmerID,
         status: "COMPLETED",
       };
       props.editPurchaseStatusOnUser(data);
+      // props.editPurchaseStatusOnFarmer(data)
 
 
-      props.sendPaymentNotificationToSeller(props.personReceivingPaymentAccountType.personReceivingPaymentID)
+      // props.sendPaymentNotificationToSeller(props.personReceivingPaymentAccountType.personReceivingPaymentID)
 
       // history.push('/payment-success')
       Swal.fire({
@@ -134,6 +137,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editPurchaseStatusOnUser: (data) => dispatch(editPurchaseStatusOnUser(data)),
+    editPurchaseStatusOnFarmer: (data) => dispatch(editPurchaseStatusOnFarmer(data))
 
   };
 };

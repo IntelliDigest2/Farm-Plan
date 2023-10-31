@@ -504,20 +504,42 @@ export const getPurchaseInfo = (info) => {
       .collection("marketplace")
       .doc(uid)
       .collection("messages")
-      .get()
-      .then((snapshot) => {
-        const orderInfo = [];
-        snapshot.forEach((doc) => {
-          // orderInfo.push(doc.data());
-          const data = doc.data();
-					if (data.status !== "COMPLETED") {
-					  orderInfo.push(data);
-					}
-        });
-        dispatch({ type: "GET_PURCHASE_INFO", payload: orderInfo });
-      })
-      .catch((err) => {
-        dispatch({ type: "GET_PURCHASE_INFO_ERROR", err });
-      });
+      .onSnapshot(
+				(querySnapshot) => {
+					let orderInfo = [];
+					querySnapshot.forEach((doc) => {
+						// console.log(doc.id, " => ", doc.data()); // Log the document ID and data
+            const data = doc.data();
+            if (data.status !== "COMPLETED" || data.status === "CONFIRMED") {
+              orderInfo.push({ eventId: doc.id, ...data });
+            }
+						orderInfo.push({ eventId: doc.id, ...doc.data() });
+					});
+
+					dispatch({
+						type: "GET_PURCHASE_INFO",
+						payload: orderInfo,
+					});
+				},
+				(err) => {
+					console.log(err);
+					dispatch({ type: "GET_PURCHASE_INFO_ERROR", err });
+				}
+			);
+      // .get()
+      // .then((snapshot) => {
+      //   const orderInfo = [];
+      //   snapshot.forEach((doc) => {
+      //     // orderInfo.push(doc.data());
+      //     const data = doc.data();
+			// 		if (data.status !== "COMPLETED") {
+			// 		  orderInfo.push(data);
+			// 		}
+      //   });
+      //   dispatch({ type: "GET_PURCHASE_INFO", payload: orderInfo });
+      // })
+      // .catch((err) => {
+      //   dispatch({ type: "GET_PURCHASE_INFO_ERROR", err });
+      // });
   };
 };

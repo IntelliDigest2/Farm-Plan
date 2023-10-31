@@ -1,30 +1,70 @@
 //startData has been moved to happen within authActions/signup but has been left here for now as some accounts still need to use it currently.
 //Feel free to delete in the future
 import firebase from "firebase";
+require('firebase/firestore'); 
+
 const db = firebase.firestore();
+
+// const setUsersCollection = (buildingFunction) => {
+// 	let userCollection;
+// 	switch (buildingFunction) {
+// 		case buildingFunction === "Farm":
+// 			userCollection = "farm_user";
+// 			break;
+// 		case buildingFunction === "Households":
+// 			userCollection = "household_users";
+// 			break;
+// 		case buildingFunction === "Personal":
+// 			userCollection = "household_users";
+// 			break;
+// 		case buildingFunction === "Restaurants":
+// 			userCollection = "restaurant_users";
+// 			break;
+// 		case buildingFunction === "Consultant":
+// 			userCollection = "consultants";
+// 			break;
+// 		case buildingFunction === "Offices":
+// 			userCollection = "office_users";
+// 			break;
+// 		case buildingFunction === "Hotels":
+// 			userCollection = "hotel_users";
+// 			break;
+// 		case buildingFunction === "Shop":
+// 			userCollection = "shop_users";
+// 			break;
+
+// 		default:
+// 			// userCollection = "Machinery/Supplier";
+// 			userCollection = "supply_users";
+// 			break;
+// 	}
+
+// 	return userCollection;
+// };
 
 const setUsersCollection = (buildingFunction) => {
 	let userCollection;
 	switch (buildingFunction) {
-		case buildingFunction === "Farm":
+		case "Farm":
 			userCollection = "farm_user";
 			break;
-		case buildingFunction === "Households":
+		case "Households":
+		case "Personal":
 			userCollection = "household_users";
 			break;
-		case buildingFunction === "Restaurants":
+		case "Restaurants":
 			userCollection = "restaurant_users";
 			break;
-		case buildingFunction === "Consultant":
+		case "Consultant":
 			userCollection = "consultants";
 			break;
-		case buildingFunction === "Offices":
+		case "Offices":
 			userCollection = "office_users";
 			break;
-		case buildingFunction === "Hotels":
+		case "Hotels":
 			userCollection = "hotel_users";
 			break;
-		case buildingFunction === "Shop":
+		case "Shop":
 			userCollection = "shop_users";
 			break;
 
@@ -36,6 +76,7 @@ const setUsersCollection = (buildingFunction) => {
 
 	return userCollection;
 };
+
 
 export const startData = (data) => {
 	return (dispatch, getState, { getFirebase }) => {
@@ -688,13 +729,18 @@ export const sendToUser = (data) => {
 
 		let notification = {
 			notification_type: "shopping",
-			created_at: getFirestore.Timestamp.fromDate(new Date()),
+			created_at: new Date()
 		};
 
 		// TODO NOTIFICATION
 		// this function changes the state of the messages collection in the marketplace
 		// for the place where the admin send this to the user which is buying the notification is not supposed to show
+
+
 		let userCollection = setUsersCollection(data.buyers_account_type);
+
+		console.log("user collection", userCollection)
+
 
 		let notificationRef = getFirestore()
 			.collection(userCollection)
@@ -706,8 +752,15 @@ export const sendToUser = (data) => {
 			.doc(data.receiversID)
 			.collection("messages");
 
-		batch.set(marketPlaceMessagesRef, data);
-		batch.set(notificationRef, notification);
+			const newMessageRef = marketPlaceMessagesRef.doc();
+
+			// Set the 'id' field in the data object to the document ID
+			data.id = newMessageRef.id
+
+			const newNotificationRef = notificationRef.doc()
+
+		batch.set(newMessageRef, data);
+		batch.set(newNotificationRef, notification);
 
 		return batch.commit();
 		// .add(data)
@@ -727,54 +780,54 @@ export const sendToUser = (data) => {
 	};
 };
 
-export const sendOrderToFarmerFromSupplier = (data) => {
-	return (dispatch, getState, { getFirestore }) => {
-		//make async call to database
+// export const sendOrderToFarmerFromSupplier = (data) => {
+// 	return (dispatch, getState, { getFirestore }) => {
+// 		//make async call to database
 
-		console.log("db call here", data);
+// 		console.log("db call here", data);
 
-		const batch = db.batch();
+// 		const batch = db.batch();
 
-		let notification = {
-			notification_type: "shopping",
-			created_at: getFirestore.Timestamp.fromDate(new Date()),
-		};
+// 		let notification = {
+// 			notification_type: "shopping",
+// 			created_at: getFirestore.Timestamp.fromDate(new Date()),
+// 		};
 
-		// TODO NOTIFICATION
-		// this function changes the state of the messages collection in the marketplace
-		// for the place where the admin send this to the user which is buying the notification is not supposed to show
-		let userCollection = setUsersCollection(data.buyers_account_type);
+// 		// TODO NOTIFICATION
+// 		// this function changes the state of the messages collection in the marketplace
+// 		// for the place where the admin send this to the user which is buying the notification is not supposed to show
+// 		let userCollection = setUsersCollection(data.buyers_account_type);
 
-		let notificationRef = getFirestore()
-			.collection(userCollection)
-			.doc(data.receiversID)
-			.collection("notifications");
+// 		let notificationRef = getFirestore()
+// 			.collection(userCollection)
+// 			.doc(data.receiversID)
+// 			.collection("notifications");
 
-		let marketPlaceMessagesRef = getFirestore()
-			.collection("farm_users")
-			.doc(data.receiversID)
-			.collection("supplyOrders");
+// 		let marketPlaceMessagesRef = getFirestore()
+// 			.collection("farm_users")
+// 			.doc(data.receiversID)
+// 			.collection("supplyOrders");
 
-		batch.set(marketPlaceMessagesRef, data);
-		batch.set(notificationRef, notification);
+// 		batch.set(marketPlaceMessagesRef, data);
+// 		batch.set(notificationRef, notification);
 
-		return batch.commit();
-		// .add(data)
-		// .then((docRef) => {
-		// 	// make the docId easily accessible so that we can delete it later if we want.
-		// 	getFirestore()
-		// 		.collection("marketplace")
-		// 		.doc(data.receiversID)
-		// 		.collection("messages")
-		// 		.doc(docRef.id)
-		// 		.set({ id: docRef.id }, { merge: true });
-		// 	dispatch({ type: "SEND_TO_USER" });
-		// })
-		// .catch((err) => {
-		// 	dispatch({ type: "SEND_TO_USER_ERROR", err });
-		// });
-	};
-};
+// 		return batch.commit();
+// 		// .add(data)
+// 		// .then((docRef) => {
+// 		// 	// make the docId easily accessible so that we can delete it later if we want.
+// 		// 	getFirestore()
+// 		// 		.collection("marketplace")
+// 		// 		.doc(data.receiversID)
+// 		// 		.collection("messages")
+// 		// 		.doc(docRef.id)
+// 		// 		.set({ id: docRef.id }, { merge: true });
+// 		// 	dispatch({ type: "SEND_TO_USER" });
+// 		// })
+// 		// .catch((err) => {
+// 		// 	dispatch({ type: "SEND_TO_USER_ERROR", err });
+// 		// });
+// 	};
+// };
 
 export const sendOrderToFarmerFromSupplier = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
@@ -856,7 +909,7 @@ export const sendToFarmer = (data) => {
 
 		let farmUserDocRef = getFirestore()
 			.collection("farm_users")
-			.doc(data.farmerId);
+			.doc(data.farmerID);
 		//messages in the farm user collection helps the farmer to see requests from the admin
 		let farmUserMessages = farmUserDocRef.collection("messages");
 		let farmUserNotifications = farmUserDocRef.collection("notifications");
@@ -880,13 +933,22 @@ export const sendToFarmer = (data) => {
 		// TODO NOTIFICATION
 		// this is the notification sent to a farmer to ashk if he has the following products
 
+		const newMessageRef = farmUserMessages.doc();
+
+		// Set the 'id' field in the data object to the document ID
+		data.id = newMessageRef.id;
+
+		const newNotificationRef = farmUserNotifications.doc()
+
 		let notification = {
 			notification_type: "admin_request",
-			created_at: getFirestore.Timestamp.fromDate(new Date()),
+			created_at: firebase.firestore.Timestamp.fromDate(new Date()),
 		};
 
-		batch.set(farmUserMessages, data);
-		batch.set(farmUserNotifications, notification);
+		console.log("date:", notification)
+
+		batch.set(newMessageRef, data);
+		batch.set(newNotificationRef, notification);
 
 		return batch.commit();
 	};

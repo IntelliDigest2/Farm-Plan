@@ -16,7 +16,7 @@ function FarmerListInfo(props) {
 
 	const [farmers, setFarmers] = useState(props.list);
 
-	// console.log("this is farmers", farmers)
+	console.log("this is farmers", farmers)
 
 	return (
 		<>
@@ -50,7 +50,7 @@ function FarmerListInfo(props) {
 								</>
 
 								<SendToFarmerIcon
-									farmerId={item.farmerId}
+									farmerID={item.farmerId}
 									uid={item.uid}
 									cart={props.cart}
 									address={props.address}
