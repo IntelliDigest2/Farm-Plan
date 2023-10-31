@@ -37,7 +37,8 @@ function PayIcon(props) {
          body: JSON.stringify({
             userId: props.uid,
             orderId: props.refID,
-            paymentType: props.payType
+            paymentType: props.payType,
+            // currency: 
          }),
          headers: {
             'Content-type': 'application/json; charset=UTF-8',

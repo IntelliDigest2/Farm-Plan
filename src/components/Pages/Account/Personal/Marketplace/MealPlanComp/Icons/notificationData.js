@@ -103,35 +103,35 @@ export const getNotificationData = (lastDate) => {
 };
 
 const setUsersCollection = (buildingFunction) => {
+	// console.log(buildingFunction === "Farm", `checks if this is true`);
 	let userCollection;
 	switch (buildingFunction) {
-		case buildingFunction === "Farm":
-			userCollection = "farm_user";
+		case "Farm":
+			userCollection = "farm_users";
 			break;
-		case buildingFunction === "Households":
+		case "Households":
 			userCollection = "household_users";
 			break;
-		case buildingFunction === "Restaurants":
+		case "Restaurants":
 			userCollection = "restaurant_users";
 			break;
-		case buildingFunction === "Consultant":
+		case "Consultant":
 			userCollection = "consultants";
 			break;
-		case buildingFunction === "Offices":
+		case "Offices":
 			userCollection = "office_users";
 			break;
-		case buildingFunction === "Hotels":
+		case "Hotels":
 			userCollection = "hotel_users";
 			break;
-		case buildingFunction === "Shop":
+		case "Shop":
 			userCollection = "shop_users";
 			break;
 
 		default:
-			// userCollection = "Machinery/Supplier";
 			userCollection = "supply_users";
-			break;
 	}
+	// console.log(userCollection, `the bottom side`);
 
 	return userCollection;
 };

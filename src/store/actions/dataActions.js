@@ -1,7 +1,7 @@
 //startData has been moved to happen within authActions/signup but has been left here for now as some accounts still need to use it currently.
 //Feel free to delete in the future
 import firebase from "firebase";
-require('firebase/firestore'); 
+require("firebase/firestore");
 
 const db = firebase.firestore();
 
@@ -46,7 +46,7 @@ const setUsersCollection = (buildingFunction) => {
 	let userCollection;
 	switch (buildingFunction) {
 		case "Farm":
-			userCollection = "farm_user";
+			userCollection = "farm_users";
 			break;
 		case "Households":
 		case "Personal":
@@ -76,7 +76,6 @@ const setUsersCollection = (buildingFunction) => {
 
 	return userCollection;
 };
-
 
 export const startData = (data) => {
 	return (dispatch, getState, { getFirebase }) => {
@@ -729,18 +728,16 @@ export const sendToUser = (data) => {
 
 		let notification = {
 			notification_type: "shopping",
-			created_at: new Date()
+			created_at: new Date(),
 		};
 
 		// TODO NOTIFICATION
 		// this function changes the state of the messages collection in the marketplace
 		// for the place where the admin send this to the user which is buying the notification is not supposed to show
 
-
 		let userCollection = setUsersCollection(data.buyers_account_type);
 
-		console.log("user collection", userCollection)
-
+		console.log("user collection", userCollection);
 
 		let notificationRef = getFirestore()
 			.collection(userCollection)
@@ -752,12 +749,12 @@ export const sendToUser = (data) => {
 			.doc(data.receiversID)
 			.collection("messages");
 
-			const newMessageRef = marketPlaceMessagesRef.doc();
+		const newMessageRef = marketPlaceMessagesRef.doc();
 
-			// Set the 'id' field in the data object to the document ID
-			data.id = newMessageRef.id
+		// Set the 'id' field in the data object to the document ID
+		data.id = newMessageRef.id;
 
-			const newNotificationRef = notificationRef.doc()
+		const newNotificationRef = notificationRef.doc();
 
 		batch.set(newMessageRef, data);
 		batch.set(newNotificationRef, notification);
@@ -938,14 +935,14 @@ export const sendToFarmer = (data) => {
 		// Set the 'id' field in the data object to the document ID
 		data.id = newMessageRef.id;
 
-		const newNotificationRef = farmUserNotifications.doc()
+		const newNotificationRef = farmUserNotifications.doc();
 
 		let notification = {
 			notification_type: "admin_request",
 			created_at: firebase.firestore.Timestamp.fromDate(new Date()),
 		};
 
-		console.log("date:", notification)
+		console.log("date:", notification);
 
 		batch.set(newMessageRef, data);
 		batch.set(newNotificationRef, notification);

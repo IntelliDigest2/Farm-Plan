@@ -77,13 +77,76 @@ export const fetchConsultantForDate = (
 	};
 };
 
-export const bookEvent = (
-	event,
+// export const bookEvent = (
+// 	event,
 
-	userId
-) => {
-	return (dispatch, getState, { getFirebase, getFirestore }) => {
-		const profile = getState().firebase.profile;
+// 	userId
+// ) => {
+// 	return (dispatch, getState, { getFirebase, getFirestore }) => {
+// 		const profile = getState().firebase.profile;
+// 		let consultantRef = db
+// 			.collection("consultants")
+// 			.doc(event.consultant.id)
+// 			.collection("calendarEvents")
+// 			.doc(event.eventId);
+
+// 		let consultantNotification = db
+// 			.collection("consultants")
+// 			.doc(event.consultant.id)
+// 			.collection("notifications")
+// 			.doc();
+
+// 		// dispatch({
+// 		// 	type: "BOOKING_CONSULTANT",
+// 		// 	payload: true,
+// 		// });
+
+// 		return db.runTransaction(async (transaction) => {
+// 			// This code may get re-run multiple times if there are conflicts.
+
+// 			// TODO NOTIFICATION
+// 			// this is the notification sent to the consultant to show that a consultation has been requested
+// 			return transaction.get(consultantRef).then((sfDoc) => {
+// 				let data = sfDoc.data();
+// 				let notification = {
+// 					notification_type: "consulting_request",
+// 					created_at: getFirestore.Timestamp.fromDate(new Date()),
+// 				};
+
+// 				if (data.status.requesterId !== null) {
+// 					throw new Error("opening has been booked");
+// 				}
+
+// 				transaction.update(consultantRef, {
+// 					status: {
+// 						...event.status,
+// 						requesterId: userId,
+// 						requesterAccountType: profile.buildingFunction,
+// 					},
+// 				});
+
+// 				transaction.set(consultantNotification, notification);
+// 			});
+// 		});
+// 		// 		// .then((result) => {
+// 		// 		// 	dispatch({
+// 		// 		// 		type: "BOOKING_CONSULTANT_SUCCESS",
+// 		// 		// 		payload: result,
+// 		// 		// 	});
+// 		// 		// })
+// 		// 		// .catch((error) => {
+// 		// 		// 	console.log("Transaction failed: ", error);
+// 		// 		// 	dispatch({
+// 		// 		// 		type: "BOOKING_CONSULTANT_FAILED",
+// 		// 		// 	});
+// 		// 		// });
+// 	};
+// };
+
+export const bookEvent = (event, userId, profile) => {
+	return new Promise((resolve, reject) => {
+		// Assuming getFirestore returns your Firestore instance
+
 		let consultantRef = db
 			.collection("consultants")
 			.doc(event.consultant.id)
@@ -93,23 +156,16 @@ export const bookEvent = (
 		let consultantNotification = db
 			.collection("consultants")
 			.doc(event.consultant.id)
-			.collection("notifications");
+			.collection("notifications")
+			.doc();
 
-		// dispatch({
-		// 	type: "BOOKING_CONSULTANT",
-		// 	payload: true,
-		// });
-
-		return db.runTransaction(async (transaction) => {
-			// This code may get re-run multiple times if there are conflicts.
-
-			// TODO NOTIFICATION
-			// this is the notification sent to the consultant to show that a consultation has been requested
+		db.runTransaction(async (transaction) => {
+			// Your transaction code here
 			return transaction.get(consultantRef).then((sfDoc) => {
 				let data = sfDoc.data();
 				let notification = {
 					notification_type: "consulting_request",
-					created_at: getFirestore.Timestamp.fromDate(new Date()),
+					created_at: new Date(),
 				};
 
 				if (data.status.requesterId !== null) {
@@ -126,20 +182,15 @@ export const bookEvent = (
 
 				transaction.set(consultantNotification, notification);
 			});
-		});
-		// .then((result) => {
-		// 	dispatch({
-		// 		type: "BOOKING_CONSULTANT_SUCCESS",
-		// 		payload: result,
-		// 	});
-		// })
-		// .catch((error) => {
-		// 	console.log("Transaction failed: ", error);
-		// 	dispatch({
-		// 		type: "BOOKING_CONSULTANT_FAILED",
-		// 	});
-		// });
-	};
+		})
+
+			.then((result) => {
+				resolve(result); // Resolve the Promise with the result if successful
+			})
+			.catch((error) => {
+				reject(error); // Reject the Promise with the error if the transaction fails
+			});
+	});
 };
 
 export const fetchOtherConsultingBookings = (userId) => {

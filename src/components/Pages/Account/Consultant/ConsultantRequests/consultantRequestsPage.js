@@ -7,7 +7,9 @@ import {
 	getBookingRequest,
 } from "../../../../../store/actions/consultantActions/consultantActions";
 import { PageWrapPayment } from "./../../../../SubComponents/PageWrapPayment";
+
 import classes from "./consultantRequest.module.css";
+import { PageWrap } from "./../../../../SubComponents/PageWrap";
 
 function ConsultantRequestsPage(props) {
 	const {
@@ -73,7 +75,7 @@ function ConsultantRequestsPage(props) {
 		);
 
 	return (
-		<PageWrapPayment goTo="/consultant" header="Requests">
+		<PageWrap goTo="/consultant" header="Requests">
 			<div className={classes.cont}>
 				<h2>Consultant Requests</h2>
 				{/* <Modal show={show} onHide={handleClose}>
@@ -97,7 +99,7 @@ function ConsultantRequestsPage(props) {
 					<li>{requestContent}</li>
 				</div>
 			</div>
-		</PageWrapPayment>
+		</PageWrap>
 	);
 }
 

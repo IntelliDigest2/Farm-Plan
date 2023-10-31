@@ -34,7 +34,8 @@ export const BookingConsultingEvent = (props) => {
 
 	const bookConsultantEvent = (e, event, consultantId) => {
 		setisBookingLoading(true);
-		bookEvent(event, auth.uid)
+		console.log(event, `this is the event `);
+		bookEvent(event, auth.uid, profile)
 			.then((result) => {
 				setisBookingLoading(false);
 				submitNotification("Success", "Consultation request has been sent");

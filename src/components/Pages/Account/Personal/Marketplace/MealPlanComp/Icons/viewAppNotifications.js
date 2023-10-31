@@ -28,6 +28,7 @@ import { getOrderInfo } from "./../../../../../../../store/actions/marketplaceAc
 import { getPurchaseInfoFarm } from "./../../../../../../../store/actions/marketplaceActions/farmPlanData";
 import { getCurrencySymbol } from "./../../../../../../../config/CurrerncyUtils";
 import ConfirmItemIconFarm from "./ConfirmItemIconFarm";
+import { getBookingRequest } from "./../../../../../../../store/actions/consultantActions/consultantActions";
 
 function ViewAppNotifications(props) {
 	const { t } = useTranslation();
@@ -98,7 +99,7 @@ function ViewAppNotifications(props) {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
 		// console.log(props.infoFarm, `==============> this is the infor Farm`);
-		setFarmersPurchaseList(props.infoFarm)
+		setFarmersPurchaseList(props.infoFarm);
 	}, [props.infoFarm]);
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
@@ -116,6 +117,15 @@ function ViewAppNotifications(props) {
 		console.log(props.bookingsInfo, `this is the infor booking`);
 		console.log(`this is the part i want to check`);
 	}, [props.bookingsInfo]);
+	useEffect(() => {
+		// props.getPurchaseInfoForRes();
+		//console.log("getting inv ==>", props.data)
+		console.log(
+			props.consultantRequests,
+			`this are the  requests the  consultant got`
+		);
+		console.log(`this is the part i want to check`);
+	}, [props.consultantRequests]);
 
 	//this sends data request
 	useEffect(() => {
@@ -164,7 +174,7 @@ function ViewAppNotifications(props) {
 		}
 
 		convertPrices();
-		setOtherUsersShoppingList(props.infoPurchase)
+		setOtherUsersShoppingList(props.infoPurchase);
 	}, [props.infoPurchase, userCurrency]);
 
 	// useEffect(() => {}, [props.bookingsInfo]);
@@ -205,7 +215,7 @@ function ViewAppNotifications(props) {
 			// props.getConsultingBookingNotifFromConsultants();
 			props.getConsultingBookings(); //this is to get the consulting booking for a non consultant
 			props.getPurchaseInfoForMealPlanFromFarmers();
-			console.log(`here my bro`);
+			// console.log(`here my bro`);
 		}
 		if (otherUsersRestaurantNotification) {
 			// fetch notifications from restaurants
@@ -221,6 +231,8 @@ function ViewAppNotifications(props) {
 		if (consultantOnlyNotif) {
 			// fetch notifications for when a consultation request comes in
 			// props.getBookingsForPurchase();
+			props.getConsultingBookings();
+			props.getConsultantRequests(props.profile.uid);
 		}
 		if (restaurantOnlyNotif) {
 			// fetch notifications for farmer alone//
@@ -319,7 +331,6 @@ function ViewAppNotifications(props) {
 		});
 	};
 
-
 	const pay = (e, bookingId, consultantId, consultantName, eventType, date) => {
 		e.preventDefault();
 
@@ -409,27 +420,26 @@ function ViewAppNotifications(props) {
 												))}
 											</tbody>
 											<div className="">
-											{cart.status !== "COMPLETED" ? (
-												cart.status === "CONFIRMED" ? (
-												<PayIconWallet
-													paytype="supplier"
-													uid={cart.receiversID}
-													order={cart}
-													refID={cart.id}
-													farmerRef={cart.farmerRef}
-													farmerID={cart.farmerID}
-													currency={cart.currency}
-												/>
-												) : (
-												<ConfirmItemIcon
-													//value={props.value}
-													refID={cart.id}
-													// id={item.id}
-												/>
-												)
-											) : null}
+												{cart.status !== "COMPLETED" ? (
+													cart.status === "CONFIRMED" ? (
+														<PayIconWallet
+															paytype="supplier"
+															uid={cart.receiversID}
+															order={cart}
+															refID={cart.id}
+															farmerRef={cart.farmerRef}
+															farmerID={cart.farmerID}
+															currency={cart.currency}
+														/>
+													) : (
+														<ConfirmItemIcon
+															//value={props.value}
+															refID={cart.id}
+															// id={item.id}
+														/>
+													)
+												) : null}
 											</div>
-
 										</Table>
 									</ListItem>
 								))}
@@ -492,72 +502,75 @@ function ViewAppNotifications(props) {
 														<td>{cartItems.quantity}</td>
 														<td>{cartItems.measure}</td>
 														<td>
-													<InputGroup>
-														<InputGroup.Text>{userCurrency}</InputGroup.Text>
-														<Form.Control
-															type="number"
-															min="0"
-															step="1"
-															value={cartItems.price}
-															onChange={(e) => {
-																const newPrice = parseFloat(e.target.value);
-																const updatedCart = [...item.cart];
-																updatedCart[cartIndex].price = newPrice;
-																const updatedList = props.infoFarm.map((listItem) =>
-																	listItem.id === item.id
-																		? { ...listItem, cart: updatedCart }
-																		: listItem
-																);
-																setFarmersShoppingList(updatedList);
-															}}
-														/>
-													</InputGroup>
-												</td>
+															<InputGroup>
+																<InputGroup.Text>
+																	{userCurrency}
+																</InputGroup.Text>
+																<Form.Control
+																	type="number"
+																	min="0"
+																	step="1"
+																	value={cartItems.price}
+																	onChange={(e) => {
+																		const newPrice = parseFloat(e.target.value);
+																		const updatedCart = [...item.cart];
+																		updatedCart[cartIndex].price = newPrice;
+																		const updatedList = props.infoFarm.map(
+																			(listItem) =>
+																				listItem.id === item.id
+																					? { ...listItem, cart: updatedCart }
+																					: listItem
+																		);
+																		setFarmersShoppingList(updatedList);
+																	}}
+																/>
+															</InputGroup>
+														</td>
 														{/* {cartItems.supplier ? <td>{cartItems.supplier}</td> : <td></td>} */}
 													</tr>
 												))}
 											</tbody>
 											<tfoot>
-										<tr>
-											<td colSpan="2">
-												{/* Conditionally render the ConfirmItemIconFarm button */}
-												{item.status !== "ACCEPTED" && isDateEntered && (
-													<ConfirmItemIconFarm
-														id={item.id}
-														item={item.cart}
-														farmerID={item.farmerID}
-														farmerRef={item.id}
-														receiversID={item.receiversID}
-														deliveryDueDate={item.deliveryDueDate}
-														delivery_code={item.delivery_code}
-														currency={userCurrency}
-														buyers_account_type={item.buyers_account_type}
-													/>
-												)}
-											</td>
-											<td colSpan="6">
-												<td colSpan="3">
-													<h5>Delivery Address: {item.address}</h5>
-												</td>
-												<td colSpan="3">
-													<h5>Add Delivery Date</h5>
-													<Form.Control
-														type="date"
-														value={list[0].deliveryDueDate || ""}
-														onChange={(e) => {
-															const newDueDate = e.target.value;
-															const updatedList = list.map((listItem) => ({
-																...listItem,
-																deliveryDueDate: newDueDate,
-															}));
-															setList(updatedList);
-															setIsDateEntered(newDueDate !== "");
-														}}
-													/>
-												</td>
-											</td>
-										</tr>
-									</tfoot>
+												<tr>
+													<td colSpan="2">
+														{/* Conditionally render the ConfirmItemIconFarm button */}
+														{item.status !== "ACCEPTED" && isDateEntered && (
+															<ConfirmItemIconFarm
+																id={item.id}
+																item={item.cart}
+																farmerID={item.farmerID}
+																farmerRef={item.id}
+																receiversID={item.receiversID}
+																deliveryDueDate={item.deliveryDueDate}
+																delivery_code={item.delivery_code}
+																currency={userCurrency}
+																buyers_account_type={item.buyers_account_type}
+															/>
+														)}
+													</td>
+													<td colSpan="6">
+														<td colSpan="3">
+															<h5>Delivery Address: {item.address}</h5>
+														</td>
+														<td colSpan="3">
+															<h5>Add Delivery Date</h5>
+															<Form.Control
+																type="date"
+																value={list[0].deliveryDueDate || ""}
+																onChange={(e) => {
+																	const newDueDate = e.target.value;
+																	const updatedList = list.map((listItem) => ({
+																		...listItem,
+																		deliveryDueDate: newDueDate,
+																	}));
+																	setList(updatedList);
+																	setIsDateEntered(newDueDate !== "");
+																}}
+															/>
+														</td>
+													</td>
+												</tr>
+											</tfoot>
 										</Table>
 									</ListItem>
 								))}
@@ -627,10 +640,11 @@ function ViewAppNotifications(props) {
 																		const newPrice = parseFloat(e.target.value);
 																		const updatedCart = [...item.cart];
 																		updatedCart[cartIndex].price = newPrice;
-																		const updatedList = farmersPurchaseList.map((listItem) =>
-																			listItem.id === item.id
-																				? { ...listItem, cart: updatedCart }
-																				: listItem
+																		const updatedList = farmersPurchaseList.map(
+																			(listItem) =>
+																				listItem.id === item.id
+																					? { ...listItem, cart: updatedCart }
+																					: listItem
 																		);
 																		setFarmersPurchaseList(updatedList);
 																	}}
@@ -667,13 +681,17 @@ function ViewAppNotifications(props) {
 															<h5>Add Delivery Date</h5>
 															<Form.Control
 																type="date"
-																value={farmersPurchaseList[0].deliveryDueDate || ""}
+																value={
+																	farmersPurchaseList[0].deliveryDueDate || ""
+																}
 																onChange={(e) => {
 																	const newDueDate = e.target.value;
-																	const updatedList = farmersPurchaseList.map((listItem) => ({
-																		...listItem,
-																		deliveryDueDate: newDueDate,
-																	}));
+																	const updatedList = farmersPurchaseList.map(
+																		(listItem) => ({
+																			...listItem,
+																			deliveryDueDate: newDueDate,
+																		})
+																	);
 																	setFarmersPurchaseList(updatedList);
 																	setIsDateEntered(newDueDate !== "");
 																}}
@@ -744,7 +762,7 @@ function ViewAppNotifications(props) {
 														<th className="table-header">Date</th>
 														<th className="table-header">Start time</th>
 														<th className="table-header">End Time</th>
-														<th className="table-header">Description</th>
+														{/* <th className="table-header">Description</th> */}
 														<th className="table-header">Price</th>
 													</tr>
 												</thead>
@@ -754,9 +772,9 @@ function ViewAppNotifications(props) {
 														<td>{date}</td>
 														<td>{startTime}</td>
 														<td>{endTime}</td>
-														<td style={{ maxWidth: "300px" }}>
+														{/* <td style={{ maxWidth: "300px" }}>
 															{booking.event.description}
-														</td>
+														</td> */}
 														<td>{booking.event.price}</td>
 													</tr>
 												</tbody>
@@ -799,6 +817,7 @@ function ViewAppNotifications(props) {
 																consultantName,
 																eventType,
 																booking.event.start,
+																booking.event.price,
 															]}
 															id={bookingId}
 															uid={props.auth.uid}
@@ -1415,6 +1434,7 @@ const mapStateToProps = (state) => {
 		infoForRes: state.restaurant.orderRes,
 		infoForSupplier: state.supplier.orderSupply,
 		infoFarm: state.farmData.purchaseInfoFarm,
+		consultantRequests: state.consultantState.consultantRequests,
 	};
 };
 
@@ -1450,6 +1470,7 @@ const mapDispatchToProps = (dispatch) => {
 		getPurchaseInfoForRes: (data) => dispatch(getPurchaseInfoRes(data)),
 		getPurchaseInfoForSupplier: (data) => dispatch(getPurchaseInfoSupply(data)),
 		getPurchaseInfoFarm: (data) => dispatch(getPurchaseInfoFarm(data)),
+		getConsultantRequests: (data) => dispatch(getBookingRequest(data)),
 	};
 };
 
