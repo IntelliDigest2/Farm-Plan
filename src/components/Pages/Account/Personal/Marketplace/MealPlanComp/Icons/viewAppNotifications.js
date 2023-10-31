@@ -29,6 +29,9 @@ import { getPurchaseInfoFarm } from "./../../../../../../../store/actions/market
 import { getCurrencySymbol } from "./../../../../../../../config/CurrerncyUtils";
 import ConfirmItemIconFarm from "./ConfirmItemIconFarm";
 import { getBookingRequest } from "./../../../../../../../store/actions/consultantActions/consultantActions";
+import ConsultantRequest from "./../../../../Consultant/ConsultantRequests/consultantRequest";
+import { Modal, ListGroup, ListGroupItem } from "react-bootstrap";
+import { fetchConsultantInfo } from "./../../../../../../../store/actions/consultantActions/consultantActions";
 
 function ViewAppNotifications(props) {
 	const { t } = useTranslation();
@@ -209,6 +212,8 @@ function ViewAppNotifications(props) {
 	const machinerysupplierOnlyNotif =
 		props.profile.buildingFunction === "Machinery/Supply";
 
+	console.log(props.consultantRequests, "this is the request returned");
+
 	useEffect(() => {
 		if (userType1) {
 			// fetch shopping notifications (notifications from farmers)
@@ -233,6 +238,7 @@ function ViewAppNotifications(props) {
 			// props.getBookingsForPurchase();
 			props.getConsultingBookings();
 			props.getConsultantRequests(props.profile.uid);
+			props.getConsultantInfo(props.profile.uid);
 		}
 		if (restaurantOnlyNotif) {
 			// fetch notifications for farmer alone//
@@ -300,6 +306,7 @@ function ViewAppNotifications(props) {
 			]);
 		});
 	};
+	console.log(props.consultantData, "this is the consultantData");
 
 	const getPurchaseInfoList = async () => {
 		//clears the items array before each update- IMPORTANT
@@ -864,115 +871,33 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Consultant Booking Notifications
 					</h2>
-					{props.bookingsInfo?.length ? (
+					{props.consultantRequests?.length && props.consultantData ? (
 						<>
+							{/* consultantOnlyNotif */}
 							<List>
-								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
-									let eventType = booking.event.eventType;
-									let consultantId = booking.consultant.consultantId;
-									let consultantName = booking.consultant.consultantName;
+								{props.consultantRequests?.map((request, index) => {
+									// let eventType = booking.event.eventType;
+									// let consultantId = booking.consultant.consultantId;
+									// let consultantName = booking.consultant.consultantName;
 
-									let date = format(
-										parseISO(booking.event.start),
-										"yyyy-MM-dd"
-									);
-									let startTime = format(
-										parseISO(booking.event.start),
-										"hh:mm a"
-									);
-									let endTime = format(parseISO(booking.event.end), "hh:mm a");
+									// let date = format(
+									// 	parseISO(booking.event.start),
+									// 	"yyyy-MM-dd"
+									// );
+									// let startTime = format(
+									// 	parseISO(booking.event.start),
+									// 	"hh:mm a"
+									// );
+									// let endTime = format(parseISO(booking.event.end), "hh:mm a");
+									console.log(request, "this is the request");
 									return (
-										<ListItem
-											key={`item${index}`}
-											style={{ alignItems: "flex-end" }}
-										>
-											<Table striped bordered hover>
-												<thead>
-													<tr>
-														<h6>
-															<b>Order ID: </b>
-															{bookingId}
-														</h6>
-
-														<h6>
-															<b>Status: {booking.status} </b>
-															{}
-														</h6>
-													</tr>
-													<tr>
-														<th className="table-header">Event Type</th>
-														<th className="table-header">Date</th>
-														<th className="table-header">Start time</th>
-														<th className="table-header">End Time</th>
-														<th className="table-header">Description</th>
-														<th className="table-header">Price</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr key={`cart${index}`}>
-														<td>{eventType}</td>
-														<td>{date}</td>
-														<td>{startTime}</td>
-														<td>{endTime}</td>
-														<td>{booking.event.description}</td>
-														<td>{booking.event.price}</td>
-													</tr>
-												</tbody>
-											</Table>
-											<div className="">
-												{/* <ConfirmItemIcon
-                    //value={props.value}
-                    id={item.id}
-                  /> */}
-												{/* <Button
-                    disabled={booking.status === "completed"}
-                    // onClick={(e) =>
-                    //   pay(
-                    //     e,
-                    //     bookingId,
-                    //     consultantId,
-                    //     consultantName,
-                    //     eventType,
-                    //     booking.event.start
-                    //   )
-                    // }
-                  >
-                    {isLoading
-                      ? "loading"
-                      : booking.status === "completed"
-                      ? "payment made"
-                      : "pay"}
-                  </Button> */}
-												{booking.status === "completed" ? (
-													"PAID"
-												) : (
-													<PayIcon
-														payType="consultant"
-														//value={props.value}
-														// refID={item.refID}
-														consultantPaymentInfo={[
-															bookingId,
-															consultantId,
-															consultantName,
-															eventType,
-															booking.event.start,
-														]}
-														id={bookingId}
-														uid={props.auth.uid}
-													/>
-												)}
-
-												{/* {item.status == "CONFIRMED" ? (
-                      <PayIcon
-                        //value={props.value}
-                        refID={item.refID}
-                        id={item.id}
-                        uid={item.uid}
-                      />
-                    ) : (
-                      ""
-                    )} */}
-											</div>
+										<ListItem>
+											<ConsultantRequest
+												// showDialog={handleShow}
+												key={`request-${index}`}
+												event={request}
+												consultantData={props.consultantData}
+											/>
 										</ListItem>
 									);
 								})}
@@ -1435,6 +1360,7 @@ const mapStateToProps = (state) => {
 		infoForSupplier: state.supplier.orderSupply,
 		infoFarm: state.farmData.purchaseInfoFarm,
 		consultantRequests: state.consultantState.consultantRequests,
+		consultantData: state.consultantState.consultantData,
 	};
 };
 
@@ -1471,6 +1397,7 @@ const mapDispatchToProps = (dispatch) => {
 		getPurchaseInfoForSupplier: (data) => dispatch(getPurchaseInfoSupply(data)),
 		getPurchaseInfoFarm: (data) => dispatch(getPurchaseInfoFarm(data)),
 		getConsultantRequests: (data) => dispatch(getBookingRequest(data)),
+		getConsultantInfo: (uid) => dispatch(fetchConsultantInfo(uid)),
 	};
 };
 

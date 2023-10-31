@@ -6,7 +6,7 @@ const initState = {
 	chatError: null,
 	produce: [],
 	purchaseInfoFarm: [],
-	consultantData: "",
+	consultantData: null,
 	consultantCalendar: null,
 	consultantCalendarError: null,
 	consultantDataError: null,
