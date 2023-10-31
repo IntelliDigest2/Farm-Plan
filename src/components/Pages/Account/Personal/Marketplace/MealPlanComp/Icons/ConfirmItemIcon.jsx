@@ -26,7 +26,7 @@ function ConfirmItemIcon(props) {
     props.editPurchaseStatusOnUser(data);
     // console.log("what id", data.id)
 
-    submitNotification("Success", "You will be contacted shortly");
+    submitNotification("Success", "Please complete payment");
   };
 
   const handleClose = () => setShow(false);

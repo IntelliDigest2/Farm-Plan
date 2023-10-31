@@ -57,11 +57,11 @@ function ConfirmDelivery(props) {
           productType: 'Horticulture',
           price: {
             amount: cartItem.price,
-            currency: cartItem.currency
+            currency: props.currency
           },
           quantity: cartItem.quantity,
           unit: cartItem.measure,
-          currency: cartItem.currency,
+          currency: props.currency,
         };
         // Dispatch addToSales action for each item
         props.addToSales(salesData);

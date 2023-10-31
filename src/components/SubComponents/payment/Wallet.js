@@ -37,7 +37,7 @@ const WalletComponent = (props) => {
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
-  const publicKeyPaystack = "pk_live_6ebca5ec3370c215ded414dc7b70d568416e4c1a"
+  const publicKey = "pk_live_6ebca5ec3370c215ded414dc7b70d568416e4c1a"
   const amount = amountDeposit * 100
   const email = props.profile.email
   const name = props.profile.firstName
@@ -64,11 +64,16 @@ const WalletComponent = (props) => {
             icon: 'success',
           });
 
-          const currentHost = window.location.origin;
-          const successUrl = `${currentHost}/payment-success`;
+          // const currentHost = window.location.origin;
+          // const successUrl = `${currentHost}/payment-success`;
+          const newPage = window.open('/payment-success', '_blank');
   
+          // Optionally, you can focus on the new window/tab
+          if (newPage) {
+            newPage.focus();
+          }
           // Redirect to the return_url after the API call is successful
-          window.location.href = successUrl;
+          // window.location.href = successUrl;
         } else {
           setMessage("Payment succeeded, but balance update failed.");
           Swal.fire({
@@ -93,15 +98,13 @@ const WalletComponent = (props) => {
     metadata: {
       name,
     },
-    publicKeyPaystack,
+    publicKey,
     text: "Pay Now",
     onSuccess: () => {
       handleSuccess()
     },
     onClose: () => alert("Wait! Don't leave :("),
   }
-
-
 
 
   // Fetch the user's wallet balance from the backend

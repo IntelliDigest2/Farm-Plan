@@ -93,6 +93,7 @@ const Reservations = (props) => {
                           cartItems={item.cartItems}
                           receiversID={item.receiversID}
                           receiversName={item.receiversName}
+                          currency={item.convertedCurrency}
                         />
                       ) : (
                         <></>

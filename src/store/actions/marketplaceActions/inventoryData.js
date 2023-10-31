@@ -87,18 +87,20 @@ export const addToPurchaseItems = (data) => {
 				uid = authUID;
 				break;
 		}
-		let adminRef = getFirestore()
-			.collection("admin_users")
-			.where("city", "==", profile.city);
+		// let adminRef = getFirestore()
+		// 	.collection("admin_users")
+		// 	.where("city", "==", profile.city);
 
-		let notification = {
-			notification_type: "adminPurchase_request",
-			created_at: getFirestore.Timestamp.fromDate(new Date()),
-		};
+		// let notification = {
+		// 	notification_type: "adminPurchase_request",
+		// 	created_at: firebase.firestore.Timestamp.fromDate(new Date()),
+		// };
 		const batch = db.batch();
 
 		let purchasesRef = getFirestore().collection("purchases");
 		let newData = { ...data.upload, uid: uid };
+
+		const newPurchaseRef = purchasesRef.doc()
 
 		// .add({ ...data.upload, uid: uid })
 		// .then((docRef) => {
@@ -112,8 +114,8 @@ export const addToPurchaseItems = (data) => {
 
 		// i will have to update this because multiple admins can be in the same city meaning that we will have to loop through does
 		//  admins and use batch.set to send notifications to for each of them
-		batch.set(adminRef, notification);
-		batch.set(purchasesRef, newData);
+		// batch.set(adminRef, notification);
+		batch.set(newPurchaseRef, newData);
 		return batch.commit();
 
 		// .catch((err) => {

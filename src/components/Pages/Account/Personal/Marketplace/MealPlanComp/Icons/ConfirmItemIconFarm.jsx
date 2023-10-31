@@ -43,6 +43,7 @@ function ConfirmItemIconFarm(props) {
 
     }).catch((err)=>{
     submitNotification("Error", "Something went wrong, try again")
+    console.log("error", err)
 
 
     });

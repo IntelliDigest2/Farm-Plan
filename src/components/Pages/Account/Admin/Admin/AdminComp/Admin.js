@@ -175,10 +175,12 @@ function Admin(props) {
 											id={item.id}
 											uid={item.uid}
 											receiversID={item.profile.uid}
+											buyers_account_type={item.profile.buildingFunction}
 											cart={item.cartList}
 											address={item.address}
 											delivery_code={item.delivery_code}
 											city={item.profile.city}
+											admin_id={props.profile.uid}
 										/>
 									</p>
 									<ListGroup className="list-group-flush">

@@ -28,6 +28,7 @@ function Notification(props) {
         const notif = JSON.parse(lastNotif).created_at;
        const jsDate=   new Date(notif.seconds * 1000 + notif.nanoseconds / 1e6)
 
+
         date= jsDate
       }
      
@@ -112,8 +113,7 @@ function Notification(props) {
   const notificationBulb = props.notificationStatus ?  <div ref={notificationNotif} style={{position: 'absolute', width: '8px',height: '8px',backgroundColor: 'green',borderRadius: '50%',right: '2px',bottom: '2px'}}></div>
    : '';
 
-
-  
+   
 
   return (
     <>
