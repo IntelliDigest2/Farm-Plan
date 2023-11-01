@@ -871,42 +871,50 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Consultant Booking Notifications
 					</h2>
-					{props.consultantRequests?.length && props.consultantData ? (
-						<>
-							{/* consultantOnlyNotif */}
-							<List>
-								{props.consultantRequests?.map((request, index) => {
-									// let eventType = booking.event.eventType;
-									// let consultantId = booking.consultant.consultantId;
-									// let consultantName = booking.consultant.consultantName;
+					<div>Booking Requests</div>
 
-									// let date = format(
-									// 	parseISO(booking.event.start),
-									// 	"yyyy-MM-dd"
-									// );
-									// let startTime = format(
-									// 	parseISO(booking.event.start),
-									// 	"hh:mm a"
-									// );
-									// let endTime = format(parseISO(booking.event.end), "hh:mm a");
-									console.log(request, "this is the request");
-									return (
-										<ListItem>
-											<ConsultantRequest
-												// showDialog={handleShow}
-												key={`request-${index}`}
-												event={request}
-												consultantData={props.consultantData}
-											/>
-										</ListItem>
-									);
-								})}
-							</List>
-						</>
+					{props.profile.isLoaded &&
+					props.consultantRequests?.length &&
+					props.consultantData ? (
+						props.consultantRequests?.length && props.consultantData ? (
+							<>
+								{/* consultantOnlyNotif */}
+								<List>
+									{props.consultantRequests?.map((request, index) => {
+										// let eventType = booking.event.eventType;
+										// let consultantId = booking.consultant.consultantId;
+										// let consultantName = booking.consultant.consultantName;
+
+										// let date = format(
+										// 	parseISO(booking.event.start),
+										// 	"yyyy-MM-dd"
+										// );
+										// let startTime = format(
+										// 	parseISO(booking.event.start),
+										// 	"hh:mm a"
+										// );
+										// let endTime = format(parseISO(booking.event.end), "hh:mm a");
+										console.log(request, "this is the request");
+										return (
+											<ListItem>
+												<ConsultantRequest
+													// showDialog={handleShow}
+													key={`request-${index}`}
+													event={request}
+													consultantData={props.consultantData}
+												/>
+											</ListItem>
+										);
+									})}
+								</List>
+							</>
+						) : (
+							<div className="empty basic-title-left">
+								<p>You don't have any booking Notifications </p>
+							</div>
+						)
 					) : (
-						<div className="empty basic-title-left">
-							<p>You don't have any booking Notifications </p>
-						</div>
+						""
 					)}
 				</div>
 			) : (
