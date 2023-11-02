@@ -28,7 +28,11 @@ function PayIcon(props) {
 
   const handlePay = async () => {
     // console.log(props.payType, `this is the payment type`)
-
+const transferData = {
+      user: props.uid,
+      order: props.order, 
+      currency: props.currency,
+    };
     
           //  await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
       await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {

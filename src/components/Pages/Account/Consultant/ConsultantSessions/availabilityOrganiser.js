@@ -6,6 +6,11 @@ import { addConsultantEventToDatabase } from "../../../../../store/actions/consu
 import { connect } from "react-redux";
 import { format, add } from "date-fns";
 import { generateId } from "../utils/utils";
+import {
+	countryNames,
+	countries,
+} from "./../../../../../config/countries.json";
+import { submitNotification } from "./../../../../lib/Notifications";
 
 function AvailabilityOrganiser(props) {
 	let initialState = {
@@ -24,6 +29,7 @@ function AvailabilityOrganiser(props) {
 	};
 	const [newEvent, setNewEvent] = useState(initialState);
 	const [showModal, setShowModal] = useState();
+	const [currency, setCurrency] = useState(null);
 	const formRef = useRef(null);
 
 	const {
@@ -118,10 +124,45 @@ function AvailabilityOrganiser(props) {
 
 		// const newEventDay = newEvent.start.split("T")[0];
 
-		addEventToDB({ ...newEvent, end: endDate }, auth.uid, consultantInfo);
+		// console.log(currency, `this is the currency`);
+		setIsLoading(true);
+		addEventToDB(
+			{ ...newEvent, end: endDate },
+			auth.uid,
+			consultantInfo,
+			currency
+		)
+			.then((resp) => {
+				submitNotification(
+					"Success",
+					"Event opening successfully added to calendar"
+				);
+				setIsLoading(false);
+			})
+			.catch((err) => {
+				submitNotification(
+					"Error",
+					"Something went wrong, check your inputs and try again"
+				);
+				setIsLoading(false);
+			});
 
 		formRef.current.reset();
 	}
+
+	console.log(props.profile, `this is the user profile`);
+	const getCountryCurrency = (country) => {
+		let cc = countries.country.find((c) => c.countryName === country);
+		return cc;
+	};
+
+	useEffect(() => {
+		if (props.profile.isLoaded) {
+			let countryObject = getCountryCurrency(props.profile.country);
+			setCurrency(countryObject.currencyCode);
+			console.log(countryObject.currencyCode, `this is the currency code`);
+		}
+	}, [props.profile]);
 
 	// console.log(`availabilty Second`);
 
@@ -234,7 +275,7 @@ function AvailabilityOrganiser(props) {
 									<Form.Label>Start Time</Form.Label>
 									<Form.Control
 										type="time"
-										placeholder="Password"
+										// placeholder="Password"
 										onChange={(e) => setStartTime(e)}
 										required
 									/>
@@ -367,15 +408,21 @@ const mapStateToProps = (state) => {
 		isSubmitting: state.consultantState.eventAddLoading,
 		auth: state.firebase.auth,
 		consultantInfo: state.consultantState.consultantData,
+		profile: state.firebase.profile,
 		// consultantCalendar: state.consultantState.consultantCalendar,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addEventToDB: (newEvent, consultantId, consultantInfo) =>
+		addEventToDB: (newEvent, consultantId, consultantInfo, currency) =>
 			dispatch(
-				addConsultantEventToDatabase(newEvent, consultantId, consultantInfo)
+				addConsultantEventToDatabase(
+					newEvent,
+					consultantId,
+					consultantInfo,
+					currency
+				)
 			),
 	};
 };

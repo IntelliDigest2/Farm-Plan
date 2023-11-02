@@ -4,6 +4,7 @@ import { Button, Row, Col } from "react-bootstrap";
 import { bookEvent } from "../../../store/actions/consultingActions";
 import { format, parseISO } from "date-fns";
 import { submitNotification } from "./../../lib/Notifications";
+import { countryNames, countries } from "./../../../config/countries.json";
 
 export const BookingConsultingEvent = (props) => {
 	const [isBookingLoading, setisBookingLoading] = useState(false);
@@ -22,6 +23,7 @@ export const BookingConsultingEvent = (props) => {
 
 	let startTime = format(parseISO(event.start), "hh:mm a");
 	let endTime = format(parseISO(event.end), "hh:mm a");
+	const [userCurrency, setUserCurrency] = useState(null);
 
 	// console.log(event);
 
@@ -31,6 +33,39 @@ export const BookingConsultingEvent = (props) => {
 	// 	}
 	// 	// setisBookingLoading(bookingLoading);
 	// }, [bookingLoading]);
+
+	const convertPrice = (currency, userCurrency, price) => {
+		// Iterate through cart items and convert prices
+		const convertedPrice = fetch(
+			`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${currency}/${userCurrency}/${price}`,
+			{
+				method: "GET",
+				headers: {
+					"Content-type": "application/json; charset=UTF-8",
+				},
+			}
+		)
+			.then((resp) => {
+				return resp;
+			})
+			.catch((err) => {
+				return "unavailable";
+			}); // Handle cases where price conversion fails
+		// console.log("convertedItemPrices", convertedItemPrices);
+
+		return convertedPrice;
+	};
+
+	const getCountryCurrency = (country) => {
+		let cc = countries.country.find((c) => c.countryName === country);
+		return cc;
+	};
+
+	useEffect(() => {
+		if (props.profile.isLoaded) {
+			getCountryCurrency;
+		}
+	}, [props.profile]);
 
 	const bookConsultantEvent = (e, event, consultantId) => {
 		setisBookingLoading(true);
@@ -61,7 +96,12 @@ export const BookingConsultingEvent = (props) => {
 					<p>Years of experience: {event.consultant.experience}</p>
 				</div>
 				<div> Additional information: {event.description}</div>
-				<div>{`Price : $${event.price}`}</div>
+				<div>{`Price : ${event.currency} ${event.price}`}</div>
+				<div>{`Local price : ${convertPrice(
+					event.currency,
+					userCurrency,
+					event.price
+				)}`}</div>
 
 				<Row>
 					<Col>

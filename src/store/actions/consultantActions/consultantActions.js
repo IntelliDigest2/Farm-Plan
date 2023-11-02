@@ -187,18 +187,20 @@ export const fetchConsultantCalendarInfo = (consultantId) => {
 export const addConsultantEventToDatabase = (
 	newEvent,
 	consultantId,
-	consultantInfo
+	consultantInfo,
+	currency
 ) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		let date = newEvent.start.split("T")[0];
+
 		// // let industry = industry;
 
 		let arr = consultantInfo.services.filter(({ price, service }) => {
 			return service === newEvent.eventType;
 		});
 
-		dispatch({ type: "EVENT_ADD_LOADING", payload: true });
-		getFirestore()
+		// dispatch({ type: "EVENT_ADD_LOADING", payload: true });
+		return getFirestore()
 			.collection("consultants")
 			.doc(consultantId)
 			.collection("calendarEvents")
@@ -214,17 +216,18 @@ export const addConsultantEventToDatabase = (
 					summary: consultantInfo.summary,
 				},
 				eventCompleted: false,
-			})
-			// 	// .update({
-			// 	// 	calendarEvents: firebase.firestore.FieldValue.arrayUnion(newEvent),
-			// 	// 	eventDaysArray: firebase.firestore.FieldValue.arrayUnion(newEventDay),
-			// 	// })
-			.then((result) => {
-				dispatch({ type: "EVENT_ADD_SUCCESS", payload: result });
-			})
-			.catch((err) => {
-				dispatch({ type: "EVENT_ADD_ERROR", payload: err });
+				currency,
 			});
+		// .update({
+		// 	calendarEvents: firebase.firestore.FieldValue.arrayUnion(newEvent),
+		// 	eventDaysArray: firebase.firestore.FieldValue.arrayUnion(newEventDay),
+		// })
+		// .then((result) => {
+		// 	dispatch({ type: "EVENT_ADD_SUCCESS", payload: result });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "EVENT_ADD_ERROR", payload: err });
+		// });
 	};
 };
 

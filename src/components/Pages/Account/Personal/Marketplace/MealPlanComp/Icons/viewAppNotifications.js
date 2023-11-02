@@ -180,6 +180,8 @@ function ViewAppNotifications(props) {
 		setOtherUsersShoppingList(props.infoPurchase);
 	}, [props.infoPurchase, userCurrency]);
 
+	// const getUserCurrency
+
 	// useEffect(() => {}, [props.bookingsInfo]);
 
 	// useEffect(() => {
@@ -212,7 +214,7 @@ function ViewAppNotifications(props) {
 	const machinerysupplierOnlyNotif =
 		props.profile.buildingFunction === "Machinery/Supply";
 
-	console.log(props.consultantRequests, "this is the request returned");
+	// console.log(props.consultantRequests, "this is the request returned");
 
 	useEffect(() => {
 		if (userType1) {
@@ -818,14 +820,23 @@ function ViewAppNotifications(props) {
 															payType="consultant"
 															//value={props.value}
 															// refID={item.refID}
-															consultantPaymentInfo={[
-																bookingId,
-																consultantId,
-																consultantName,
-																eventType,
-																booking.event.start,
-																booking.event.price,
-															]}
+															order={{
+																price: booking.event.price,
+																quantity: 1,
+																bookingId: bookingId,
+																type: "consultant",
+																receiversID: consultantId,
+																eventType: eventType,
+															}}
+															// currency: {}
+															// consultantPaymentInfo={[
+															// 	bookingId,
+															// 	consultantId,
+															// 	consultantName,
+															// 	eventType,
+															// 	booking.event.start,
+															// 	booking.event.price,
+															// ]}
 															id={bookingId}
 															uid={props.auth.uid}
 														/>
