@@ -5,6 +5,7 @@ import { bookEvent } from "../../../store/actions/consultingActions";
 import { format, parseISO } from "date-fns";
 import { submitNotification } from "./../../lib/Notifications";
 import { countryNames, countries } from "./../../../config/countries.json";
+import axios from "axios";
 
 export const BookingConsultingEvent = (props) => {
 	const [isBookingLoading, setisBookingLoading] = useState(false);
@@ -36,6 +37,7 @@ export const BookingConsultingEvent = (props) => {
 
 	const convertPrice = (currency, userCurrency, price) => {
 		// Iterate through cart items and convert prices
+		let v;
 		const convertedPrice = fetch(
 			`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${currency}/${userCurrency}/${price}`,
 			{
@@ -46,9 +48,12 @@ export const BookingConsultingEvent = (props) => {
 			}
 		)
 			.then((resp) => {
+				console.log(resp);
+				v = resp;
 				return resp;
 			})
 			.catch((err) => {
+				v = "unavailable";
 				return "unavailable";
 			}); // Handle cases where price conversion fails
 		// console.log("convertedItemPrices", convertedItemPrices);
@@ -63,7 +68,8 @@ export const BookingConsultingEvent = (props) => {
 
 	useEffect(() => {
 		if (props.profile.isLoaded) {
-			getCountryCurrency;
+			let currency = getCountryCurrency(props.profile.country);
+			setUserCurrency(currency);
 		}
 	}, [props.profile]);
 
