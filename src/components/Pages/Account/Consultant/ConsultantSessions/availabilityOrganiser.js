@@ -150,7 +150,7 @@ function AvailabilityOrganiser(props) {
 		formRef.current.reset();
 	}
 
-	console.log(props.profile, `this is the user profile`);
+	// console.log(props.profile, `this is the user profile`);
 	const getCountryCurrency = (country) => {
 		let cc = countries.country.find((c) => c.countryName === country);
 		return cc;
@@ -160,7 +160,7 @@ function AvailabilityOrganiser(props) {
 		if (props.profile.isLoaded) {
 			let countryObject = getCountryCurrency(props.profile.country);
 			setCurrency(countryObject.currencyCode);
-			console.log(countryObject.currencyCode, `this is the currency code`);
+			// console.log(countryObject.currencyCode, `this is the currency code`);
 		}
 	}, [props.profile]);
 

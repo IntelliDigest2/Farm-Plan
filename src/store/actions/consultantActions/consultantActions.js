@@ -193,8 +193,6 @@ export const addConsultantEventToDatabase = (
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		let date = newEvent.start.split("T")[0];
 
-		// // let industry = industry;
-
 		let arr = consultantInfo.services.filter(({ price, service }) => {
 			return service === newEvent.eventType;
 		});
@@ -352,6 +350,7 @@ export const acceptBookingRequest = (event) => {
 			price: event.price,
 			eventType: event.eventType,
 			industry: event.industry,
+			currency: event.currency,
 		},
 		eventCompleted: false,
 	});
@@ -464,6 +463,9 @@ export const getBookingRequest = (consultantId) => {
 			.collection("calendarEvents")
 			.where("status.requestAccepted", "==", false)
 			.where("status.requesterId", "!=", null)
+			.orderBy("status.requesterId", "desc")
+			.orderBy("date", "desc")
+
 			.onSnapshot(
 				(querySnapshot) => {
 					let docArray = [];

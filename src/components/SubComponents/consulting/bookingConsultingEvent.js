@@ -5,17 +5,13 @@ import { bookEvent } from "../../../store/actions/consultingActions";
 import { format, parseISO } from "date-fns";
 import { submitNotification } from "./../../lib/Notifications";
 import { countryNames, countries } from "./../../../config/countries.json";
-import axios from "axios";
+import { LocalPriceComponent } from "./LocalPriceComponent";
+import { getCurrencySymbol } from "./../../../config/CurrerncyUtils";
 
 export const BookingConsultingEvent = (props) => {
 	const [isBookingLoading, setisBookingLoading] = useState(false);
 	const {
-		openEvent,
-		index,
-		// bookEvent,
-		bookingLoading,
 		consultantId,
-		// consultantName,
 		event,
 
 		auth,
@@ -24,54 +20,22 @@ export const BookingConsultingEvent = (props) => {
 
 	let startTime = format(parseISO(event.start), "hh:mm a");
 	let endTime = format(parseISO(event.end), "hh:mm a");
-	const [userCurrency, setUserCurrency] = useState(null);
+	// const [userCurrency, setUserCurrency] = useState(null);
+	const userCountryCode = props.profile.country;
 
-	// console.log(event);
+	const userCurrency = getCurrencySymbol(userCountryCode);
+
+	// const getCountryCurrency = (country) => {
+	// 	let cc = countries.country.find((c) => c.countryName === country);
+	// 	return cc;
+	// };
 
 	// useEffect(() => {
-	// 	if (!bookingLoading) {
-	// 		setisBookingLoading(false);
+	// 	if (props.profile.isLoaded) {
+	// 		let currency = getCountryCurrency(props.profile.country);
+	// 		setUserCurrency(currency);
 	// 	}
-	// 	// setisBookingLoading(bookingLoading);
-	// }, [bookingLoading]);
-
-	const convertPrice = (currency, userCurrency, price) => {
-		// Iterate through cart items and convert prices
-		let v;
-		const convertedPrice = fetch(
-			`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${currency}/${userCurrency}/${price}`,
-			{
-				method: "GET",
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-				},
-			}
-		)
-			.then((resp) => {
-				console.log(resp);
-				v = resp;
-				return resp;
-			})
-			.catch((err) => {
-				v = "unavailable";
-				return "unavailable";
-			}); // Handle cases where price conversion fails
-		// console.log("convertedItemPrices", convertedItemPrices);
-
-		return convertedPrice;
-	};
-
-	const getCountryCurrency = (country) => {
-		let cc = countries.country.find((c) => c.countryName === country);
-		return cc;
-	};
-
-	useEffect(() => {
-		if (props.profile.isLoaded) {
-			let currency = getCountryCurrency(props.profile.country);
-			setUserCurrency(currency);
-		}
-	}, [props.profile]);
+	// }, [props.profile]);
 
 	const bookConsultantEvent = (e, event, consultantId) => {
 		setisBookingLoading(true);
@@ -103,11 +67,16 @@ export const BookingConsultingEvent = (props) => {
 				</div>
 				<div> Additional information: {event.description}</div>
 				<div>{`Price : ${event.currency} ${event.price}`}</div>
-				<div>{`Local price : ${convertPrice(
-					event.currency,
-					userCurrency,
-					event.price
-				)}`}</div>
+				<div>
+					Local price :{" "}
+					<span>
+						<LocalPriceComponent
+							currency={event.currency}
+							userCurrency={userCurrency}
+							price={event.price}
+						/>
+					</span>
+				</div>
 
 				<Row>
 					<Col>

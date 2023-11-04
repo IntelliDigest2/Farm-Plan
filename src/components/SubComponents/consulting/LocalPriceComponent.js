@@ -1,0 +1,54 @@
+import React, { useState, useEffect, useRef, forwardRef } from "react";
+import axios from "axios";
+
+export const LocalPriceComponent = forwardRef(
+	({ currency, userCurrency, price, setPrice }, ref) => {
+		const [localPrice, setLocalPrice] = useState(null);
+		const localPriceRef = useRef(localPrice);
+
+		useEffect(() => {}, [localPrice]);
+
+		const convertPrice = async (currency, userCurrency, price) => {
+			let convertedPrice;
+			try {
+				convertedPrice = await axios.get(
+					`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${currency}/${userCurrency}/${price}`
+				);
+
+				return convertedPrice;
+			} catch (err) {
+				convertedPrice = "unavailable";
+			}
+
+			return convertedPrice;
+		};
+
+		useEffect(() => {
+			async function fetchLocalPrice() {
+				try {
+					const response = await convertPrice(currency, userCurrency, price);
+					if (response.data.result === "success") {
+						setLocalPrice(response.data.conversion_result);
+						localPriceRef.current = response.data.conversion_result;
+					} else {
+						setLocalPrice("unavailable");
+					}
+				} catch (error) {
+					setLocalPrice("unavailable");
+				}
+			}
+
+			fetchLocalPrice();
+		}, [currency, userCurrency, price]);
+
+		return (
+			<>
+				{localPrice === null ? (
+					<>...</>
+				) : (
+					<>{`${userCurrency} ${localPrice}`}</>
+				)}
+			</>
+		);
+	}
+);

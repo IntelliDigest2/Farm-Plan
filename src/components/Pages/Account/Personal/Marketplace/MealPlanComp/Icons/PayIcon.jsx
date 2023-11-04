@@ -19,7 +19,7 @@ function PayIcon(props) {
 
   let history = useHistory();
 
-  console.log("check userId and orderId  ", props.uid, props.id)
+  // console.log("check userId and orderId  ", props.uid, props.id)
 
   const [showModal, setShow] = useState(false);
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"

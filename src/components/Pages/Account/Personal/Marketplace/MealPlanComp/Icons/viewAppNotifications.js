@@ -32,6 +32,7 @@ import { getBookingRequest } from "./../../../../../../../store/actions/consulta
 import ConsultantRequest from "./../../../../Consultant/ConsultantRequests/consultantRequest";
 import { Modal, ListGroup, ListGroupItem } from "react-bootstrap";
 import { fetchConsultantInfo } from "./../../../../../../../store/actions/consultantActions/consultantActions";
+import { LocalPriceComponent } from "../../../../../../SubComponents/consulting/LocalPriceComponent";
 
 function ViewAppNotifications(props) {
 	const { t } = useTranslation();
@@ -308,7 +309,7 @@ function ViewAppNotifications(props) {
 			]);
 		});
 	};
-	console.log(props.consultantData, "this is the consultantData");
+	// console.log(props.consultantData, "this is the consultantData");
 
 	const getPurchaseInfoList = async () => {
 		//clears the items array before each update- IMPORTANT
@@ -735,6 +736,22 @@ function ViewAppNotifications(props) {
 						<>
 							<List>
 								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
+									const localPriceRef = useRef(null);
+									let price;
+
+									const handleSetPrice = (receivedPrice) => {
+										// Access and manipulate the LocalPriceComponent
+										//   if (localPriceRef.current) {
+										// 	// Access the localPriceRef.current to get the localPrice
+										// 	console.log('Local Price:', localPriceRef.current);
+										//   }
+										price = receivedPrice;
+									};
+									// console.log(
+									// 	booking.event,
+									// 	`this is the booking event object`
+									// );
+									let convertedPrice;
 									let eventType = booking.event.eventType;
 									let consultantId = booking.consultant.consultantId;
 									let consultantName = booking.consultant.consultantName;
@@ -748,6 +765,7 @@ function ViewAppNotifications(props) {
 										"hh:mm a"
 									);
 									let endTime = format(parseISO(booking.event.end), "hh:mm a");
+
 									return (
 										<ListItem
 											key={`item${index}`}
@@ -784,34 +802,23 @@ function ViewAppNotifications(props) {
 														{/* <td style={{ maxWidth: "300px" }}>
 															{booking.event.description}
 														</td> */}
-														<td>{booking.event.price}</td>
+														<td>
+															{booking.event.currency}
+															{booking.event.price}(
+															<LocalPriceComponent
+																currency={booking.event.currency}
+																userCurrency={userCurrency}
+																price={booking.event.price}
+																localPrice={convertedPrice}
+																ref={localPriceRef}
+																setPrice={handleSetPrice}
+															/>
+															)
+														</td>
 													</tr>
 												</tbody>
 											</Table>
 											<div className="">
-												{/* <ConfirmItemIcon
-                    //value={props.value}
-                    id={item.id}
-                  /> */}
-												{/* <Button
-                    disabled={booking.status === "completed"}
-                    // onClick={(e) =>
-                    //   pay(
-                    //     e,
-                    //     bookingId,
-                    //     consultantId,
-                    //     consultantName,
-                    //     eventType,
-                    //     booking.event.start
-                    //   )
-                    // }
-                  >
-                    {isLoading
-                      ? "loading"
-                      : booking.status === "completed"
-                      ? "payment made"
-                      : "pay"}
-                  </Button> */}
 												{booking.status === "completed" ? (
 													"PAID"
 												) : (
@@ -821,14 +828,14 @@ function ViewAppNotifications(props) {
 															//value={props.value}
 															// refID={item.refID}
 															order={{
-																price: booking.event.price,
+																price: price,
 																quantity: 1,
 																bookingId: bookingId,
 																type: "consultant",
 																receiversID: consultantId,
 																eventType: eventType,
 															}}
-															// currency: {}
+															currency={userCurrency}
 															// consultantPaymentInfo={[
 															// 	bookingId,
 															// 	consultantId,
@@ -837,6 +844,7 @@ function ViewAppNotifications(props) {
 															// 	booking.event.start,
 															// 	booking.event.price,
 															// ]}
+
 															id={bookingId}
 															uid={props.auth.uid}
 														/>
@@ -849,17 +857,6 @@ function ViewAppNotifications(props) {
 													// 		refID={cart.refID}
 													// 	/>
 												)}
-
-												{/* {item.status == "CONFIRMED" ? (
-                      <PayIcon
-                        //value={props.value}
-                        refID={item.refID}
-                        id={item.id}
-                        uid={item.uid}
-                      />
-                    ) : (
-                      ""
-                    )} */}
 											</div>
 										</ListItem>
 									);

@@ -54,13 +54,13 @@ export const ConsultantRequest = (props) => {
 		if (actionType === "accept") {
 			setAcceptLoading(true);
 
-			console.log(
-				event,
-				auth.uid,
-				`${profile.firstName} ${profile.lastName}`,
-				serviceCost,
-				`these are all the parameters needed`
-			);
+			// console.log(
+			// 	event,
+			// 	auth.uid,
+			// 	`${profile.firstName} ${profile.lastName}`,
+			// 	serviceCost,
+			// 	`these are all the parameters needed`
+			// );
 			acceptBookingRequest(
 				event,
 				auth.uid,

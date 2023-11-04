@@ -162,11 +162,12 @@ export const getConsultingBookingsForPurchase = (data) => {
 				break;
 		}
 
-		console.log(uid, `this is the uid`);
+		// console.log(uid, `this is the uid`);
 		getFirestore()
 			.collection("marketplace")
 			.doc(uid)
 			.collection("bookings")
+			.orderBy("created_at", "desc")
 			// .where("status", "==", "pending")
 			.onSnapshot(
 				(doc) => {

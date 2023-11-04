@@ -114,39 +114,6 @@ function BookConsulting(props) {
 			return (
 				<div key={index}>
 					<BookingConsultingEvent event={event} key={`event-${index}`} />
-					{/* <div>{consultant.fullName}</div> */}
-					{/* <div>{consultant.summary}</div> */}
-					{/* <div>years of experience : {consultant.experience}</div> */}
-					<hr></hr>
-					{/* <div className={classes.consultant_calendar}>
-						<Fullcalendar
-							// ref={calendarRef}
-							plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-							initialView={"dayGridMonth"}
-							headerToolbar={{
-								start: "today prev,next",
-								center: "title",
-								end: "dayGridMonth timeGridDay",
-							}}
-							// selectMirror={true}
-							// selectHelper={true}
-							selectable={true}
-							events={formatedEvents}
-							select={(start, end, allDays) => {
-								listAllDateEvent(start, end, allDays);
-							}}
-						></Fullcalendar>
-					</div> */}
-					{/* {showEventsForSelectedDay && displayDayEvents.length > 0 ? (
-						<div>
-							<div>date : {clickedDay}</div>
-							<div>
-								<div>{displayDayEvents}</div>
-							</div>
-						</div>
-					) : (
-						`click day on calendar to see booking Openings`
-					)} */}
 				</div>
 			);
 		});
