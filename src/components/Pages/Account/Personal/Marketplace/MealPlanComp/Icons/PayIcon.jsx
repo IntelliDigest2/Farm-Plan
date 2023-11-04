@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect,forwardRef} from "react";
 import Tooltip from "@mui/material/Tooltip";
 import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
@@ -14,25 +14,45 @@ import Swal from 'sweetalert2';
 
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
-function PayIcon(props) {
+const  PayIcon =
+// forwardRef(
+  ({setPrice,price,index,disabled,newRef,...props}) =>{
   const { t } = useTranslation();
 
   let history = useHistory();
 
-  // console.log("check userId and orderId  ", props.uid, props.id)
+  
+
+  useEffect(() => {
+    if(newRef.length > 0){
+    console.log(newRef  , `this is the current ref ${index}`)
+    }
+
+
+  }, [newRef])
+  
 
   const [showModal, setShow] = useState(false);
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
   const otherUrl = 'https://us-central1-itracker-development.cloudfunctions.net/itrackerPaymentFunction/create-payment-intent'
 
 
+
+  
+  
   const handlePay = async () => {
-    // console.log(props.payType, `this is the payment type`)
+
+    
 const transferData = {
       user: props.uid,
       order: props.order, 
       currency: props.currency,
     };
+    transferData.order.price = newRef.current[index]
+
+    // console.log(transferData,`this is the transfer data`)
+
+
     
           //  await fetch('http://localhost:5001/itracker-development/us-central1/itrackerPaymentFunction/create-payment-intent', {
       await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {
@@ -75,13 +95,16 @@ const transferData = {
   return (
     <>
       <Tooltip title="Pay">
+        <span>
         <IconButton
+        disabled={disabled}
           aria-label="Pay"
           sx={{ ml: 2 }}
           onClick={handleShow}
         >
             <CreditScoreIcon fontSize="inherit" />
-        </IconButton>
+        </IconButton></span>
+        
       </Tooltip>
 
       <Modal show={showModal} onHide={handleClose}>
@@ -89,10 +112,11 @@ const transferData = {
             <Modal.Title>{t('description.payment')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            <p><h5>{t('description.continue_to_payment')}</h5></p>
+            <h5>{t('description.continue_to_payment')}</h5>
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"
+        
         onClick={() => {
           handlePay()
           handleClose()
@@ -110,6 +134,7 @@ const transferData = {
     </>
   );
 }
+// )
 
 const mapStateToProps = (state) => {
   return {

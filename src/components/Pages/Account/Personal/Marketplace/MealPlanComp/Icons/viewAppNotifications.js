@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Table } from "react-bootstrap";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.css";
@@ -61,6 +61,9 @@ function ViewAppNotifications(props) {
 
 	const userCountryCode = props.profile.country;
 	const userCurrency = getCurrencySymbol(userCountryCode);
+	// console.log(userCurrency, "this is the user currency");
+
+	const consultationPriceRef = useRef([]);
 
 	//this sends data request
 	// useEffect(() => {
@@ -78,12 +81,12 @@ function ViewAppNotifications(props) {
 	useEffect(() => {
 		// getOrderInfoList();
 		//console.log("getting list ==>", list)
-		console.log(props.infoSupply, `this is the infor Supply`);
+		// console.log(props.infoSupply, `this is the infor Supply`);
 	}, [props.infoSupply]);
 	useEffect(() => {
 		// getOrderInfoList();
 		//console.log("getting list ==>", list)
-		console.log(props.infoForSupplier, `this is the infor Supplier`);
+		// console.log(props.infoForSupplier, `this is the infor Supplier`);
 	}, [props.infoForSupplier]);
 
 	//this sends data request
@@ -113,22 +116,21 @@ function ViewAppNotifications(props) {
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
-		console.log(props.profile, `this is the infor profile`);
+		// console.log(props.profile, `this is the infor profile`);
 	}, [props.profile]);
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
-		console.log(props.bookingsInfo, `this is the infor booking`);
-		console.log(`this is the part i want to check`);
+		// console.log(props.bookingsInfo, `this is the infor booking`);
 	}, [props.bookingsInfo]);
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
-		console.log(
-			props.consultantRequests,
-			`this are the  requests the  consultant got`
-		);
-		console.log(`this is the part i want to check`);
+		// console.log(
+		// 	props.consultantRequests,
+		// 	`this are the  requests the  consultant got`
+		// );
+		// console.log(`this is the part i want to check`);
 	}, [props.consultantRequests]);
 
 	//this sends data request
@@ -162,7 +164,7 @@ function ViewAppNotifications(props) {
 						})
 					);
 
-					console.log("convertedItemPrices", convertedItemPrices);
+					// console.log("convertedItemPrices", convertedItemPrices);
 
 					return {
 						...cart,
@@ -736,16 +738,19 @@ function ViewAppNotifications(props) {
 						<>
 							<List>
 								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
-									const localPriceRef = useRef(null);
+									// const localPriceRef = useRef(null);
 									let price;
 
 									const handleSetPrice = (receivedPrice) => {
 										// Access and manipulate the LocalPriceComponent
 										//   if (localPriceRef.current) {
 										// 	// Access the localPriceRef.current to get the localPrice
-										// 	console.log('Local Price:', localPriceRef.current);
-										//   }
-										price = receivedPrice;
+										console.log("Local Price:", receivedPrice);
+
+										// price = receivedPrice;
+										consultationPriceRef.current.push(receivedPrice);
+										// console.log(price, "this is the price");
+										return receivedPrice;
 									};
 									// console.log(
 									// 	booking.event,
@@ -806,11 +811,12 @@ function ViewAppNotifications(props) {
 															{booking.event.currency}
 															{booking.event.price}(
 															<LocalPriceComponent
-																currency={booking.event.currency}
+																index={index}
+																bookingCurrency={booking.event.currency}
 																userCurrency={userCurrency}
 																price={booking.event.price}
-																localPrice={convertedPrice}
-																ref={localPriceRef}
+																// localPrice={convertedPrice}
+																// ref={localPriceRef}
 																setPrice={handleSetPrice}
 															/>
 															)
@@ -827,8 +833,13 @@ function ViewAppNotifications(props) {
 															payType="consultant"
 															//value={props.value}
 															// refID={item.refID}
+															newRef={consultationPriceRef}
+															disabled={
+																consultationPriceRef.length > 0 ? true : false
+															}
+															price={consultationPriceRef}
+															index={index}
 															order={{
-																price: price,
 																quantity: 1,
 																bookingId: bookingId,
 																type: "consultant",

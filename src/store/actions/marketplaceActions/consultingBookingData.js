@@ -180,7 +180,7 @@ export const getConsultingBookingsForPurchase = (data) => {
 						bookings.push({ booking: doc.data(), bookingId: doc.id });
 					});
 
-					console.log(bookings, `these are the bookings from the bookingData`);
+					// console.log(bookings, `these are the bookings from the bookingData`);
 
 					dispatch({
 						type: "FETCH_PURCHASE_BOOKING_SUCCESS",

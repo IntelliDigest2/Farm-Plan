@@ -55,7 +55,7 @@ export const getNotificationData = (lastDate) => {
 		}
 		// console.log(uid, `this is the user id`);
 
-		let date = getFirebase().firestore.Timestamp.fromDate(new Date());
+		// let date = getFirebase().firestore.Timestamp.fromDate(new Date());
 
 		const collectionRef = getFirestore()
 			.collection(collection)

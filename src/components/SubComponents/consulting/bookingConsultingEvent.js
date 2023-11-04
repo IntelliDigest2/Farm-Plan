@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Button, Row, Col } from "react-bootstrap";
 import { bookEvent } from "../../../store/actions/consultingActions";
 import { format, parseISO } from "date-fns";
 import { submitNotification } from "./../../lib/Notifications";
-import { countryNames, countries } from "./../../../config/countries.json";
+// import { countryNames, countries } from "./../../../config/countries.json";
 import { LocalPriceComponent } from "./LocalPriceComponent";
 import { getCurrencySymbol } from "./../../../config/CurrerncyUtils";
 
