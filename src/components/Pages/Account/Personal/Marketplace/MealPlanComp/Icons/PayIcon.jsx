@@ -9,6 +9,7 @@ import { useHistory } from 'react-router'
 import { useTranslation, Trans } from 'react-i18next';
 import {sendPaymentNotificationToSeller} from './notificationData.js';
 import Swal from 'sweetalert2';
+import {changePurchaseStatus} from './../../../../../../../store/actions/marketplaceActions/consultingBookingData'
 
 
 
@@ -20,6 +21,7 @@ const  PayIcon =
   const { t } = useTranslation();
 
   let history = useHistory();
+  // console.log(props,`these are all the variables in props`)
 
   
 
@@ -48,7 +50,7 @@ const transferData = {
       order: props.order, 
       currency: props.currency,
     };
-    transferData.order.price = newRef.current[index]
+    transferData.order.price = parseFloat(newRef.current[index])
 
     // console.log(transferData,`this is the transfer data`)
 
@@ -59,10 +61,9 @@ const transferData = {
   
          method: 'POST',
          body: JSON.stringify({
-            userId: props.uid,
-            orderId: props.refID,
-            paymentType: props.payType,
-            // currency: 
+            user: transferData.user,
+            order: transferData.order,
+           
          }),
          headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -72,8 +73,12 @@ const transferData = {
          .then((data) => {
             // console.log("this is the data returned", data)
             sendPaymentNotificationToSeller(props.payType,props.consultantPaymentInfo.consultantId)
-          //   history.push('/payment-process',{params: {sec: `${data.clientSecret}`,
-          // consultInfo : [props.consultantPaymentInfo]}})
+            changePurchaseStatus(props.consultantPaymentInfo.bookingId,
+              props.consultantPaymentInfo.consultantId,
+              props.consultantPaymentInfo.consultantName,
+              props.consultantPaymentInfo.eventType,
+              props.consultantPaymentInfo.date)
+          
 
           Swal.fire({
             title: 'Success!',

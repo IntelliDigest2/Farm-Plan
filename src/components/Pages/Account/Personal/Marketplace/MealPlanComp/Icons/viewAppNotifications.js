@@ -740,12 +740,13 @@ function ViewAppNotifications(props) {
 								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
 									// const localPriceRef = useRef(null);
 									let price;
+									console.log(booking, `these are all the booking information`);
 
 									const handleSetPrice = (receivedPrice) => {
 										// Access and manipulate the LocalPriceComponent
 										//   if (localPriceRef.current) {
 										// 	// Access the localPriceRef.current to get the localPrice
-										console.log("Local Price:", receivedPrice);
+										// console.log("Local Price:", receivedPrice);
 
 										// price = receivedPrice;
 										consultationPriceRef.current.push(receivedPrice);
@@ -847,15 +848,13 @@ function ViewAppNotifications(props) {
 																eventType: eventType,
 															}}
 															currency={userCurrency}
-															// consultantPaymentInfo={[
-															// 	bookingId,
-															// 	consultantId,
-															// 	consultantName,
-															// 	eventType,
-															// 	booking.event.start,
-															// 	booking.event.price,
-															// ]}
-
+															consultantPaymentInfo={{
+																bookingId,
+																consultantId,
+																consultantName,
+																eventType,
+																date: booking.event.start,
+															}}
 															id={bookingId}
 															uid={props.auth.uid}
 														/>
@@ -1395,8 +1394,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getPurchaseInfoForMealPlanFromFarmers: (data) =>
 			dispatch(getPurchaseInfo(data)),
-		// getConsultingBookingNotifFromConsultants: () =>
-		// 	dispatch(getConsultingBookingsForPurchase()),
+
 		getUsersRestaurantNotif: () => dispatch(getOrderInfo()),
 		getConsultingBookings: () => dispatch(getConsultingBookingsForPurchase()),
 
@@ -1416,9 +1414,6 @@ const mapDispatchToProps = (dispatch) => {
 					date
 				)
 			),
-		//getPurchaseRequestInfoForFarmers
-		//getConsultationRequestForConsultants
-		//getPurchaseRequestInfoForFarmers
 
 		getPurchaseInfoForRes: (data) => dispatch(getPurchaseInfoRes(data)),
 		getPurchaseInfoForSupplier: (data) => dispatch(getPurchaseInfoSupply(data)),
