@@ -74,6 +74,18 @@ const dataReducer = (state = initState, action) => {
         purchaseData: action.payload,
         authError: null,
       };
+      case "EDIT_FARMER_SUPPLIER_STATUS":
+        console.log("succesfully editted farmer supplier status", action.payload);
+        return {
+          ...state,
+          authError: null,
+        };
+      case "EDIT_FARMER_SUPPLIER_STATUS_ERROR":
+        console.log("error, couldn't edit farmer supplier status", action.err);
+        return {
+          ...state,
+          authError: "edit status failed",
+        };
       case "GET_SALES_DATA_ERROR":
       console.log("get sales item error " + action.err.message);
       return {

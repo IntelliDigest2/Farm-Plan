@@ -1186,7 +1186,7 @@ export const addToSupplyItems = (data) => {
 					.doc(data.upload.companyID)
 					.collection("messages")
 					.doc(docRef.id)
-					.set({ id: docRef.id, receiversID: uid }, { merge: true });
+					.set({ farmerRef: docRef.id, receiversID: uid }, { merge: true });
 				dispatch({ type: "ADD_SUPPLY_PURCHASE_ITEM", data });
 			})
 			.catch((err) => {
@@ -1224,24 +1224,42 @@ export const getPurchaseInfoSupply = (info) => {
 			default:
 				uid = authUID;
 				break;
-		}
+		} 
 
 		getFirebase()
 			.firestore()
 			.collection("supply_users")
 			.doc(uid)
 			.collection("messages")
-			.get()
-			.then((snapshot) => {
-				const orderInfo = [];
-				snapshot.forEach((doc) => {
-					orderInfo.push(doc.data());
-				});
-				dispatch({ type: "GET_ORDER_INFO_SUPPLY", payload: orderInfo });
-			})
-			.catch((err) => {
-				dispatch({ type: "GET_ORDER_INFO_SUPPLY_ERROR", err });
-			});
+			.onSnapshot(
+				(querySnapshot) => {
+					let orderInfo = [];
+					querySnapshot.forEach((doc) => {
+						// console.log(doc.id, " => ", doc.data()); // Log the document ID and data
+						orderInfo.push({ eventId: doc.id, ...doc.data() });
+					});
+
+					dispatch({
+						type: "GET_ORDER_INFO_SUPPLY",
+						payload: orderInfo,
+					});
+				},
+				(err) => {
+					console.log(err);
+					dispatch({ type: "GET_ORDER_INFO_SUPPLY_ERROR", err });
+				}
+			);
+			//.get()
+			// .then((snapshot) => {
+			// 	const orderInfo = [];
+			// 	snapshot.forEach((doc) => {
+			// 		orderInfo.push(doc.data());
+			// 	});
+			// 	dispatch({ type: "GET_ORDER_INFO_SUPPLY", payload: orderInfo });
+			// })
+			// .catch((err) => {
+			// 	dispatch({ type: "GET_ORDER_INFO_SUPPLY_ERROR", err });
+			// });
 	};
 };
 
@@ -1377,5 +1395,63 @@ export const getExpenseForDuration = (duration, period) => {
 				});
 			}
 		);
+	};
+};
+
+
+export const editPurchaseStatusOnSupplier = (data) => {
+	return (dispatch, getState, { getFirestore, getFirebase }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+
+		let date = getFirebase().firestore.Timestamp.fromDate(new Date());
+
+		getFirestore()
+			.collection("supply_users")
+			.doc(uid)
+			.collection("messages")
+			.doc(data.farmerRef)
+			.set(
+				{
+					cart: data.item,
+					companyID: data.farmerID,
+					receiversID: data.receiversID,
+					status: data.status,
+					deliveryDueDate: data.deliveryDueDate,
+					delivery_code: data.delivery_code,
+					date: date,
+				},
+				{ merge: true }
+			)
+			.then(() => dispatch({ type: "EDIT_PURCHASE_STATUS", payload: data }))
+			.catch((err) => {
+				dispatch({ type: "EDIT_PURCHASE_STATUS_ERROR", err });
+			});
 	};
 };

@@ -25,7 +25,7 @@ import ConfirmItemIconRes from "../../../../Business/Restaurant/Icons/ConfirmIte
 import { getPurchaseInfoRes } from "../../../../../../../store/actions/marketplaceActions/restaurantData";
 import { getPurchaseInfoSupply } from "../../../../../../../store/actions/supplierActions/supplierData";
 import { getOrderInfo } from "./../../../../../../../store/actions/marketplaceActions/mealPlanData";
-import { getPurchaseInfoFarm } from "./../../../../../../../store/actions/marketplaceActions/farmPlanData";
+import { getFarmMessagesFromSupplier, getPurchaseInfoFarm } from "./../../../../../../../store/actions/marketplaceActions/farmPlanData";
 import { getCurrencySymbol } from "./../../../../../../../config/CurrerncyUtils";
 import ConfirmItemIconFarm from "./ConfirmItemIconFarm";
 
@@ -36,7 +36,7 @@ function ViewAppNotifications(props) {
 	// const [userPurchaseList, setUserPurchaseList] = useState(null);
 	// const [otherUserPurchaselist, setOtherUserPurchaseList] = useState(null);
 	const [suppliersOrderlist, setSuppliersOrderList] = useState(null);
-	const [otherUsersSupplyOrderList, setOtherUsersSupplyOrderList] =
+	const [farmerSupplierOrderList, setFarmerSupplierOrderList] =
 		useState(null);
 	const [restaurantsOrderList, setRestaurantsOrderList] = useState(null);
 	const [otherUsersRestaurantOrderList, setOtherUsersRestaurantOrderList] =
@@ -51,8 +51,10 @@ function ViewAppNotifications(props) {
 
 	// const [list, setList] = useState([]);
 	const [isDateEntered, setIsDateEntered] = useState(false);
+
 	const [isLoading, setisLoading] = useState(false);
 	const [conversion, setConversion] = useState("");
+	const [conversionFarmerSupplier, setConversionFarmerSupplier] = useState("");
 
 	const userCountryCode = props.profile.country;
 	const userCurrency = getCurrencySymbol(userCountryCode);
@@ -73,12 +75,66 @@ function ViewAppNotifications(props) {
 	useEffect(() => {
 		// getOrderInfoList();
 		//console.log("getting list ==>", list)
-		console.log(props.infoSupply, `this is the infor Supply`);
+		console.log("info supply", props.infoSupply)
 	}, [props.infoSupply]);
+
+	useEffect(() => {
+		async function convertPrices() {
+			// Iterate through cart items and convert prices
+			const convertedPrices = await Promise.all(
+				props.farmerSupplierMessage.map(async (cart) => {
+					const convertedItemPrices = await Promise.all(
+						cart.item.map(async (cartItem) => {
+							if (cartItem.price) {
+								try {
+									const response = await fetch(
+										`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${cart.currency}/${userCurrency}/${cartItem.price}`,
+										{
+											method: "GET",
+											headers: {
+												"Content-type": "application/json; charset=UTF-8",
+											},
+										}
+									);
+									const data = await response.json();
+									console.log("rate conv", data.conversion_result);
+									return data.conversion_result;
+								} catch (err) {
+									console.error(err);
+									return 0; // Handle cases where price conversion fails
+								}
+							}
+							return 0; // Handle cases where price is not available
+						})
+					);
+
+					console.log("convertedItemPrices", convertedItemPrices);
+
+					return {
+						...cart,
+						item: cart.item.map((cartItems, index) => ({
+							...cartItems,
+							convertedPrice: convertedItemPrices[index],
+						})),
+					};
+				})
+			);
+			setConversionFarmerSupplier(convertedPrices);
+			setisLoading(false); // Once all conversions are done
+		}
+
+		convertPrices();
+		setOtherUsersShoppingList(props.infoPurchase)
+
+		setFarmerSupplierOrderList(props.farmerSupplierMessage)
+	}, [props.farmerSupplierMessage, userCurrency]);
+
 	useEffect(() => {
 		// getOrderInfoList();
 		//console.log("getting list ==>", list)
-		console.log(props.infoForSupplier, `this is the infor Supplier`);
+		// console.log(props.infoForSupplier, `this is the infor Supplier`);
+		setSuppliersOrderList(props.infoForSupplier)
+		console.log("info for supplier", props.infoForSupplier)
 	}, [props.infoForSupplier]);
 
 	//this sends data request
@@ -216,6 +272,7 @@ function ViewAppNotifications(props) {
 			// fetch notifications for farmer for when a shopping order comes in
 			// when a supplier order comes in
 			props.getPurchaseInfoFarm();
+			props.getFarmMessagesFromSupplier();
 			props.getConsultingBookings();
 		}
 		if (consultantOnlyNotif) {
@@ -261,64 +318,7 @@ function ViewAppNotifications(props) {
 		});
 	};
 
-	const getOrderInfoList = async () => {
-		//clears the items array before each update- IMPORTANT
-		setList([]);
-
-		//sets a new item object in the array for every document
-		props.infoRes.forEach((doc) => {
-			// id is the docref for deletion
-			var id = doc.id;
-			var uid = doc.uid;
-			var order = doc.order;
-			var seat = doc.seat;
-			var fullname = doc.fullname;
-			var status = doc.status;
-
-			setList((restaurantList) => [
-				...restaurantList,
-				{
-					order: order,
-					seat: seat,
-					id: id,
-					uid: uid,
-					fullname: fullname,
-					status: status,
-				},
-			]);
-		});
-	};
-
-	const getPurchaseInfoList = async () => {
-		//clears the items array before each update- IMPORTANT
-		setList([]);
-
-		//sets a new item object in the array for every document
-		props.infoPurchase.forEach((doc) => {
-			// id is the docref for deletion
-			var refID = doc.id;
-			var item = doc.item;
-			var farmerID = doc.farmerID;
-			var farmerRef = doc.farmerRef;
-			var receiversID = doc.receiversID;
-			var status = doc.status;
-			var deliveryDueDate = doc.deliveryDueDate;
-
-			setList((list) => [
-				...list,
-				{
-					item: item,
-					refID: refID,
-					farmerID: farmerID,
-					farmerRef: farmerRef,
-					receiversID: receiversID,
-					status: status,
-					deliveryDueDate: deliveryDueDate,
-				},
-			]);
-		});
-	};
-
+	
 
 	const pay = (e, bookingId, consultantId, consultantName, eventType, date) => {
 		e.preventDefault();
@@ -412,7 +412,7 @@ function ViewAppNotifications(props) {
 											{cart.status !== "COMPLETED" ? (
 												cart.status === "CONFIRMED" ? (
 												<PayIconWallet
-													paytype="supplier"
+													payType="user"
 													uid={cart.receiversID}
 													order={cart}
 													refID={cart.id}
@@ -422,6 +422,7 @@ function ViewAppNotifications(props) {
 												/>
 												) : (
 												<ConfirmItemIcon
+												confirmType="user"
 													//value={props.value}
 													refID={cart.id}
 													// id={item.id}
@@ -523,10 +524,11 @@ function ViewAppNotifications(props) {
 												{/* Conditionally render the ConfirmItemIconFarm button */}
 												{item.status !== "ACCEPTED" && isDateEntered && (
 													<ConfirmItemIconFarm
+														confirmType="farmer"
 														id={item.id}
 														item={item.cart}
-														farmerID={item.farmerID}
-														farmerRef={item.id}
+														senderID={item.farmerID}
+														senderRef={item.id}
 														receiversID={item.receiversID}
 														deliveryDueDate={item.deliveryDueDate}
 														delivery_code={item.delivery_code}
@@ -647,6 +649,7 @@ function ViewAppNotifications(props) {
 														{/* Conditionally render the ConfirmItemIconFarm button */}
 														{item.status !== "ACCEPTED" && isDateEntered && (
 															<ConfirmItemIconFarm
+																confirmType="farmer"
 																id={item.id}
 																item={item.cart}
 																farmerID={item.farmerID}
@@ -978,10 +981,10 @@ function ViewAppNotifications(props) {
 					</h2>
 
 					<>
-						{otherUsersSupplyOrderList?.length ? (
+						{conversionFarmerSupplier?.length ? (
 							<>
 								<List>
-									{otherUsersSupplyOrderList.map((item, index) => (
+									{conversionFarmerSupplier.map((item, index) => (
 										<ListItem
 											key={`item${index}`}
 											// className="list"
@@ -997,29 +1000,49 @@ function ViewAppNotifications(props) {
 													</tr>
 													<tr>
 														<th className="table-header">Name</th>
+														<th className="table-header">Qty</th>
 														<th className="table-header">Price</th>
+
 													</tr>
 												</thead>
 												<tbody>
-													{/* {item.order.map((order) => (
-														  <tr key={`order${index}`}>
-														  <td>{order.meal}</td>
-														  <td>{order.price}</td>
-													  </tr>
-													  ))} */}
-													<td>{item.productName}</td>
-													<td>
-														{item.productCurrency}
-														{item.productPrice}
-													</td>
-												</tbody>
-												<div className="">
-													{/* <ConfirmItemIconRes
-										  //value={props.value}
-										  id={item.id}
-										  item={item}
-										/> */}
-												</div>
+												{item.item.map((cartItems, cartIndex) => (
+													<tr key={`cart${index}`}>
+														<td>{cartItems.productName}</td>
+														<td>{cartItems.quantity}</td>
+														{cartItems.price ? (
+															<td>
+																{item.currency}
+																{cartItems.price}
+															</td>
+														) : (
+															<td>0</td>
+														)}
+													</tr>
+												))}
+											</tbody>
+											<div className="">
+											{item.status !== "COMPLETED" ? (
+												item.status === "CONFIRMED" ? (
+												<PayIconWallet
+													payType="farmer"
+													uid={item.receiversID}
+													order={item}
+													refID={item.farmerRef}
+													farmerRef={item.farmerRef}
+													farmerID={item.farmerID}
+													currency={item.currency}
+												/>
+												) : (
+												<ConfirmItemIcon
+													confirmType="farmer"
+													//value={props.value}
+													refID={item.farmerRef}
+													// id={item.id}
+												/>
+												)
+											) : null}
+											</div>
 											</Table>
 										</ListItem>
 									))}
@@ -1044,7 +1067,7 @@ function ViewAppNotifications(props) {
 					</h2>
 
 					<>
-						{suppliersOrderlist?.length ? (
+						{suppliersOrderlist?.filter(item => item.status !== "ACCEPTED").length ? (
 							<>
 								<List>
 									{suppliersOrderlist.map((item, index) => (
@@ -1053,7 +1076,7 @@ function ViewAppNotifications(props) {
 											// className="list"
 											style={{ alignItems: "flex-end" }}
 										>
-											<Table striped bordered hover>
+									<Table striped bordered hover>
 												<thead>
 													<tr>
 														<h6>
@@ -1063,29 +1086,85 @@ function ViewAppNotifications(props) {
 													</tr>
 													<tr>
 														<th className="table-header">Name</th>
+														<th className="table-header">Qty</th>
 														<th className="table-header">Price</th>
+
 													</tr>
 												</thead>
 												<tbody>
-													{/* {item.order.map((order) => (
-														  <tr key={`order${index}`}>
-														  <td>{order.meal}</td>
-														  <td>{order.price}</td>
-													  </tr>
-													  ))} */}
-													<td>{item.productName}</td>
-													<td>
-														{item.productCurrency}
-														{item.productPrice}
+												{item.cart.map((cartItems, cartIndex) => (
+													<tr key={`cart${index}`}>
+														<td>{cartItems.productName}</td>
+														<td>{cartItems.quantity}</td>
+														<td>
+															<InputGroup>
+																<InputGroup.Text>
+																	{userCurrency}
+																</InputGroup.Text>
+																<Form.Control
+																	type="number"
+																	min="0"
+																	step="1"
+																	value={cartItems.price}
+																	onChange={(e) => {
+																		const newPrice = parseFloat(e.target.value);
+																		const updatedCart = [...item.cart];
+																		updatedCart[cartIndex].price = newPrice;
+																		const updatedList = suppliersOrderlist.map((listItem) =>
+																			listItem.id === item.id
+																				? { ...listItem, cart: updatedCart }
+																				: listItem
+																		);
+																		setSuppliersOrderList(updatedList);
+																	}}
+																/>
+															</InputGroup>
+														</td>														
+													</tr>
+												))}
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colSpan="2">
+														{/* Conditionally render the ConfirmItemIconFarm button */}
+														{item.status !== "ACCEPTED" && isDateEntered && (
+															<ConfirmItemIconFarm
+																confirmType="supplier"
+																id={item.id}
+																item={item.cart}
+																companyID={item.companyID}
+																farmerRef={item.farmerRef}
+																receiversID={item.receiversID}
+																deliveryDueDate={item.deliveryDueDate}
+																delivery_code={item.delivery_code}
+																currency={userCurrency}
+																buyers_account_type={item.profile.buildingFunction}
+															/>
+														)}
 													</td>
-												</tbody>
-												<div className="">
-													{/* <ConfirmItemIconRes
-										  //value={props.value}
-										  id={item.id}
-										  item={item}
-										/> */}
-												</div>
+													<td colSpan="6">
+														<td colSpan="3">
+															<h5>Delivery Address: {item.address}</h5>
+														</td>
+														<td colSpan="3">
+															<h5>Add Delivery Date</h5>
+															<Form.Control
+																type="date"
+																value={suppliersOrderlist[0].deliveryDueDate || ""}
+																onChange={(e) => {
+																	const newDueDate = e.target.value;
+																	const updatedList = suppliersOrderlist.map((listItem) => ({
+																		...listItem,
+																		deliveryDueDate: newDueDate,
+																	}));
+																	setSuppliersOrderList(updatedList);
+																	setIsDateEntered(newDueDate !== "");
+																}}
+															/>
+														</td>
+													</td>
+												</tr>
+											</tfoot>
 											</Table>
 										</ListItem>
 									))}
@@ -1415,6 +1494,7 @@ const mapStateToProps = (state) => {
 		infoForRes: state.restaurant.orderRes,
 		infoForSupplier: state.supplier.orderSupply,
 		infoFarm: state.farmData.purchaseInfoFarm,
+		farmerSupplierMessage: state.farmData.farmerSupplierMessage
 	};
 };
 
@@ -1450,7 +1530,8 @@ const mapDispatchToProps = (dispatch) => {
 		getPurchaseInfoForRes: (data) => dispatch(getPurchaseInfoRes(data)),
 		getPurchaseInfoForSupplier: (data) => dispatch(getPurchaseInfoSupply(data)),
 		getPurchaseInfoFarm: (data) => dispatch(getPurchaseInfoFarm(data)),
-	};
+		getFarmMessagesFromSupplier: (data) => dispatch(getFarmMessagesFromSupplier(data)),
+	};	
 };
 
 export default connect(
