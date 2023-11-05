@@ -35,8 +35,10 @@ export const LocalPriceComponent =
 					// if (response.data.result === "success") {
 					setLocalPrice(response.data.conversion_result);
 					// localPriceRef.current = response.data.conversion_result;
+					if (setPrice) {
+						setPrice(response.data.conversion_result);
+					}
 
-					setPrice(response.data.conversion_result);
 					// }
 					// else {
 					// 	setLocalPrice("unavailable");

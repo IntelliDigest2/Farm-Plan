@@ -71,7 +71,7 @@ export const BookingConsultingEvent = (props) => {
 					Local price :{" "}
 					<span>
 						<LocalPriceComponent
-							currency={event.currency}
+							bookingCurrency={event.currency}
 							userCurrency={userCurrency}
 							price={event.price}
 						/>
