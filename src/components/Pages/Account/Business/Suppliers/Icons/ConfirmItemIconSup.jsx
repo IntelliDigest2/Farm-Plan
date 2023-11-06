@@ -3,7 +3,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import { editPurchaseStatusOnSupplier } from "../../../../../../store/actions/marketplaceActions/farmPlanData";
+// import { editPurchaseStatusOnSupplier } from "../../../../../../store/actions/marketplaceActions/farmPlanData";
 import { sendOrderToFarmerFromSupplier } from "../../../../../../store/actions/dataActions";
 
 import { useTranslation, Trans } from 'react-i18next';
@@ -32,7 +32,7 @@ function ConfirmItemIconSup(props) {
       deliveryDueDate: props.deliveryDueDate,
       delivery_code: props.delivery_code,
     };
-    props.editPurchaseStatusOnSupplier(data);
+    // props.editPurchaseStatusOnSupplier(data);
     props.sendOrderToFarmerFromSupplier(data).then((resp)=>{
     // submitNotification("Success", "You will be contacted shortly")
     submitNotification("Success", "You will receive a notification when users completes payment");
@@ -98,7 +98,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editPurchaseStatusOnSupplier: (data) => dispatch(editPurchaseStatusOnSupplier(data)),
+    // editPurchaseStatusOnSupplier: (data) => dispatch(editPurchaseStatusOnSupplier(data)),
     sendOrderToFarmerFromSupplier: (data) => dispatch(sendOrderToFarmerFromSupplier(data)),
   };
 };

@@ -13,6 +13,13 @@ export function Items({ setShow, setChooseModal }) {
 			/>
 
 			<IconButton
+				icon="delivery"
+				label="Check Deliveries"
+				color="cyan"
+				goTo="/track-reservations-other"
+			/>
+
+			<IconButton
 				icon="chart"
 				label="Revenue"
 				color="yellow"

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Badge, ListGroup, Button, Card, Modal, Spinner } from "react-bootstrap";
-import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Reservations.css"
 
@@ -9,7 +8,7 @@ import moment from 'moment';
 import { connect } from "react-redux";
 import ConfirmDeliveryFarmer from '../../Pages/Account/Farm/Marketplace/ProduceComp/Icons/ConfirmDeliveryFarmer';
 
-const ReservationsOther = (props) => {
+export const ReservationsOther = (props) => {
   const [reservations, setReservations] = useState([]);
 
   console.log("profile", props.profile)
@@ -29,8 +28,11 @@ const ReservationsOther = (props) => {
     })
       .then(response => response.json())
       .then(data => {
+        console.log("Data received from backend:", data.userReservations);
+
         if (Array.isArray(data.userReservations)) {
           setReservations(data.userReservations);
+          console.log("get reservation list", reservations)
         } else {
           console.error('Invalid data format for reservations:', data);
         }
@@ -48,67 +50,70 @@ const ReservationsOther = (props) => {
   };
 
   return (
-    <PageWrap goTo="/account" header="Wallet">
 
       <div className="page-container">
         <div className="list-container">
-          {reservations.map((item, index) => (
-            <div key={index} className={`list-item ${index !== 0 ? 'list-separator' : ''}`}>
-              <ListGroup variant="flush">
-                <ListGroup.Item className="d-flex justify-content-between align-items-start">
-                  <div className="ms-2 me-auto">
-                  <div className="fw-bold">
-                    <div className="d-flex align-items-center">
-                      <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
-                        {item.status || "pending"}
-                      </span>
-                      <span className="item-amount">{item.convertedCurrency}{item.totalAmount}</span>
-                    </div>
-                    <div className="cart-items">
-                      {item.cartItems.map((cartItem, cartIndex) => (
-                        <div key={cartIndex}>
-                          {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - ${cartItem.price * cartItem.quantity}
-                        </div>
-                      ))}
-                    </div>
 
-                    <div className="date">
-                      {`Delivery due in ${moment(item.deliveryDueDate).fromNow(true)}`}
+          {reservations.length === 0 ? (
+            <div className="no-reservations-message">No delivery available</div>
+          ) : (
+            reservations.map((item, index) => (
+              <div key={index} className={`list-item ${index !== 0 ? 'list-separator' : ''}`}>
+                <ListGroup variant="flush">
+                  <ListGroup.Item className="d-flex justify-content-between align-items-start">
+                    <div className="ms-2 me-auto">
+                    <div className="fw-bold">
+                      <div className="d-flex align-items-center">
+                        <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
+                          {item.status || "pending"}
+                        </span>
+                        <span className="item-amount">{item.convertedCurrency}{item.convertedTotalAmount}{' '}</span>
+                      </div>
+                      <div className="cart-items">
+                        {item.cartItems.map((cartItem, cartIndex) => (
+                          <div key={cartIndex}>
+                            {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - {cartItem.convertedPrice * cartItem.quantity}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="date">
+                        {`Delivery due in ${moment(item.deliveryDueDate).fromNow(true)}`}
+                      </div>
                     </div>
+                    </div>
+                    <Badge bg="primary" pill className="transaction-id">
+                      <div className="transaction-id-content">
+                        <span className="operation">{moment(item.createdAt).format("D MMM YYYY")}</span>
+                        <span className="transaction-id">{item.trackingID}</span>
+                        {(item.status == "PENDING") ? (
+                          <ConfirmDeliveryFarmer
+                            trackingID={item.trackingID}
+                            deliveryDuration={item.deliveryDuration}
+                          />
+                        ) : (
+                          <></>
+                        )}
+
+
+                      </div>
+                    </Badge>
+                  </ListGroup.Item>
+                </ListGroup>
+              </div>
+            ))
+          )}
+
+                    
                   </div>
-                  </div>
-                  <Badge bg="primary" pill className="transaction-id">
-                    <div className="transaction-id-content">
-                      <span className="operation">{moment(item.createdAt).format("D MMM YYYY")}</span>
-                      <span className="transaction-id">{item.trackingID}</span>
-                      {(item.status == "PENDING") ? (
-                        <ConfirmDeliveryFarmer
-                          trackingID={item.trackingID}
-                          deliveryDuration={item.deliveryDuration}
-                        />
-                      ) : (
-                        <></>
-                      )}
+                </div>
+            );
+          };
 
-    
-                    </div>
-                  </Badge>
-                </ListGroup.Item>
-              </ListGroup>
-            </div>
-          ))}
-        </div>
-      </div>
-
-
-		</PageWrap>
-  );
-};
-
-const mapStateToProps = (state) => {
-    return {
-      profile: state.firebase.profile,
-    };
-  };
+// const mapStateToProps = (state) => {
+//     return {
+//       profile: state.firebase.profile,
+//     };
+//   };
  
-export default connect(mapStateToProps)(ReservationsOther);
+export default ReservationsOther;
