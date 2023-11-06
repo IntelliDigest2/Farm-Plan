@@ -50,6 +50,8 @@ function ViewAppNotifications(props) {
 	const [farmersPurchaseList, setFarmersPurchaseList] = useState(null);
 	const [otherUsersShoppingList, setOtherUsersShoppingList] = useState(null);
 	const [supplylist, setSupplyList] = useState([]);
+	const [presentPaymentNotification, setPresentPaymentNotification] =
+		useState(null);
 	// const [restaurantList, setRestaurantList] = useState([]);
 	// const [isLoading, setisLoading] = useState(false);
 	// const [paymentType, setPaymentType] = useState("");
@@ -76,6 +78,18 @@ function ViewAppNotifications(props) {
 	// 		setisLoading(false);
 	// 	}
 	// }, [props.loadingPay]);
+
+	useEffect(() => {
+		const containsPayment = (notifications) => {
+			return notifications.notification_type === "payment notification";
+		};
+
+		if (props.notification?.length > 0) {
+			if (props.notification.some(containsPayment)) {
+				setPresentPaymentNotification(true);
+			}
+		}
+	}, [props.notifications]);
 
 	// //this sends data request
 	useEffect(() => {
@@ -372,6 +386,14 @@ function ViewAppNotifications(props) {
 
 	return (
 		<>
+			{/* {props.not} */}
+			{presentPaymentNotification ? (
+				<div>
+					You have received a new payment please visit your transactions page
+				</div>
+			) : (
+				""
+			)}
 			{/* Shopping Notification */}
 			{userType1 ? (
 				<div>
@@ -739,8 +761,8 @@ function ViewAppNotifications(props) {
 							<List>
 								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
 									// const localPriceRef = useRef(null);
-									let price;
-									console.log(booking, `these are all the booking information`);
+
+									// console.log(booking, `these are all the booking information`);
 
 									const handleSetPrice = (receivedPrice) => {
 										// Access and manipulate the LocalPriceComponent
@@ -845,6 +867,7 @@ function ViewAppNotifications(props) {
 																bookingId: bookingId,
 																type: "consultant",
 																receiversID: consultantId,
+																receiversName: consultantName,
 																eventType: eventType,
 															}}
 															currency={userCurrency}
@@ -1387,6 +1410,7 @@ const mapStateToProps = (state) => {
 		infoFarm: state.farmData.purchaseInfoFarm,
 		consultantRequests: state.consultantState.consultantRequests,
 		consultantData: state.consultantState.consultantData,
+		notifications: state.notificationState.notifications,
 	};
 };
 

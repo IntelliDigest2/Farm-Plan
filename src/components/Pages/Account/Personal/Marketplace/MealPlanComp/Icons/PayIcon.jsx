@@ -88,6 +88,7 @@ const transferData = {
          })
          .catch((err) => {
             console.log(err.message);
+            submitNotification('Error','Something went wrong, pls try again.')
          })
   
  };
