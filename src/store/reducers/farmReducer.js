@@ -32,6 +32,8 @@ const initState = {
 	expenseError: false,
 	expenseLoader: false,
 	purcaseAdminMessages: null,
+	farmerSupplierMessage: [],
+	farmerSupplierMessageError: false
 };
 
 const farmReducer = (state = initState, action) => {
@@ -303,6 +305,18 @@ const farmReducer = (state = initState, action) => {
 			return {
 				...state,
 				purcaseAdminMessagesError: "Get produce items failed",
+			};
+		case "GET_FARMERSUPPLIER_MESSAGES_SUCCESS":
+			console.log("get items success", action.payload);
+			return {
+				...state,
+				farmerSupplierMessage: action.payload,
+			};
+		case "GET_FARMERSUPPLIER_MESSAGES__ERROR":
+			console.log("error, couldn't fetch farmer supplier messages", action.err);
+			return {
+				...state,
+				farmerSupplierMessageError: "Get produce items failed",
 			};
 		case "EDIT_PRODUCE":
 			// console.log("successfully edited", action.produce);

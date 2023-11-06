@@ -853,8 +853,11 @@ export const sendOrderToFarmerFromSupplier = (data) => {
 			.doc(data.receiversID)
 			.collection("supplyOrders");
 
-		batch.set(marketPlaceMessagesRef, data);
-		batch.set(notificationRef, notification);
+		let newMarketPlaceMessagesRef = marketPlaceMessagesRef.doc(data.farmerRef)
+		let newNotificationRef = notificationRef.doc()
+
+		batch.set(newMarketPlaceMessagesRef, data);
+		batch.set(newNotificationRef, notification);
 
 		return batch.commit();
 		// .add(data)

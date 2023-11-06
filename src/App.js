@@ -122,6 +122,7 @@ import WithdrawalSuccess from "./components/Pages/WithdrawalSuccess";
 
 import Withdraw from "./components/SubComponents/payment/Withdraw";
 import SignUpAdmin from "./components/Pages/Auth/SignUpAdmin";
+import CombinedReservations from "./components/SubComponents/payment/CombinedReservations";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -362,10 +363,10 @@ const App = (props) => {
 						<Route path="/redeem-coupon" component={RedeemCoupon} />
 						<Route path="/transactions" component={Transactions} />
 						<Route path="/coupon-transactions" component={CouponTransactions} />
-						<Route path="/track-reservations" component={Reservations} />
+						<Route path="/track-reservations" component={CombinedReservations} />
 						<Route
 							path="/track-reservations-other"
-							component={ReservationsOther}
+							component={CombinedReservations}
 						/>
 
 						<Route

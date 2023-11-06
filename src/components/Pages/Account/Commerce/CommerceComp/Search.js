@@ -33,6 +33,7 @@ const Search = (props) => {
   const [deliveryOption, setDeliveryOption] = useState('delivery'); 
   const [address, setAddress] = useState(''); 
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [quantity, setQuantity] = useState(1); // Initialize quantity to 1
 
   // Function to generate a random code using uuid
 function generateRandomCode() {
@@ -40,9 +41,12 @@ function generateRandomCode() {
   return nanoid(6);
 }
 
-  const addToCart = (hit) => {
-    setCart([...cart, hit]);
-  };
+const addToCart = (hit) => {
+  const cartItem = { ...hit, quantity }; // Include the quantity in the cart item
+  setCart([...cart, cartItem]);
+  setQuantity(1); // Reset the quantity input field
+};
+
 
   const removeFromCart = (item) => {
     let hardCopy = [...cart];
@@ -94,7 +98,7 @@ function generateRandomCode() {
         const cartList = {
           productName: item.productName,
           productMeasure: item.productMeasure,
-          productQty: item.productQty,
+          quantity: item.quantity,
           productPrice: item.productPrice,
           productCurrency: item.productCurrency,
         }
@@ -141,6 +145,8 @@ function generateRandomCode() {
           cart={cart} 
           setCart={setCart} 
           addToCart={addToCart} 
+          quantity={quantity}
+          setQuantity={setQuantity}
           notify={notify} 
           profile={props.profile} 
           PurchaseItem={PurchaseItem}
@@ -164,7 +170,9 @@ const Hit = ({
   hit, 
   cart, 
   setCart, 
-  addToCart, 
+  addToCart,
+  quantity,
+  setQuantity, 
   notify, 
   PurchaseItem,
   deliveryOption,
@@ -176,6 +184,7 @@ const Hit = ({
 }) => {
   // const [cart, setCart] = useState([])
   const [showModal, setShow] = useState(false);
+
 
   const removeFromCart = (item) => {
     let hardCopy = [...cart];
@@ -190,14 +199,32 @@ const Hit = ({
           className="list"
           style={{ alignItems: "flex-end" }}
         >      
-        <b>{`${item.productName}: `}  </b> &nbsp; {`${item.productCurrency} ${item.productPrice}`} &nbsp;
+        <b>{`${item.productName} (Qty: ${item.quantity}): `}</b> &nbsp; {`${item.productCurrency} ${item.productPrice}`} &nbsp;
         {/* <input type="text" value={ingr.data} /> */}
         {/* <input type="submit" value="remove" onClick={() => removeFromCart(ingr)} /> */}
+        <input
+        type="number"
+        value={item.quantity}
+        onChange={(e) => {
+          // Update the quantity of the item when the input changes
+          const newQuantity = parseInt(e.target.value);
+          if (!isNaN(newQuantity)) {
+            const updatedCart = cart.map((cartItem, i) => {
+              if (i === index) {
+                return { ...cartItem, quantity: newQuantity };
+              }
+              return cartItem;
+            });
+            setCart(updatedCart);
+          }
+        }}
+      />
         <Tooltip title="Remove">
                     <IconButton
                       aria-label="Remove"
                       sx={{ ml: 2 }}
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation(); // Stop event propagation
                         removeFromCart(item)
                       }}
                     >

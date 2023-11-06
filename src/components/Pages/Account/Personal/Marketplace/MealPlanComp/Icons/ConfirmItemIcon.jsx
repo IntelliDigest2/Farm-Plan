@@ -3,7 +3,10 @@ import Tooltip from "@mui/material/Tooltip";
 import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import { editPurchaseStatusFromUser, editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { 
+  editPurchaseStatusFromUser, 
+  editPurchaseStatusOnFarmerSupplier, 
+  editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useTranslation, Trans } from 'react-i18next';
@@ -16,17 +19,38 @@ function ConfirmItemIcon(props) {
 
  // console.log("to inventory ==> ", props.food)
   const handleSelect = async () => {
-    const data = {
-      //need to send shopping list data to be bough the previous week from the day it is made
-      refID: props.refID,
-      // id: props.id,
-      status: "CONFIRMED",
-    };
-    // props.editPurchaseStatusFromUser(data);
-    props.editPurchaseStatusOnUser(data);
-    // console.log("what id", data.id)
 
-    submitNotification("Success", "Please complete payment");
+    switch(props.confirmType) {
+      case "user":
+        const dataUser = {
+          //need to send shopping list data to be bough the previous week from the day it is made
+          refID: props.refID,
+          // id: props.id,
+          status: "CONFIRMED",
+        };
+        // props.editPurchaseStatusFromUser(data);
+        props.editPurchaseStatusOnUser(dataUser);
+        // console.log("what id", data.id)
+    
+        submitNotification("Success", "Please complete payment");
+        break;
+      
+      case "farmer":
+        const dataFarmer = {
+          //need to send shopping list data to be bough the previous week from the day it is made
+          refID: props.refID,
+          // id: props.id,
+          status: "CONFIRMED",
+        };
+        // props.editPurchaseStatusFromUser(data);
+        props.editPurchaseStatusOnFarmerSupplier(dataFarmer);
+        // console.log("what id", dataFarmer)
+    
+        submitNotification("Success", "complete payment");
+        break;
+      
+    }
+   
   };
 
   const handleClose = () => setShow(false);
@@ -82,6 +106,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // editPurchaseStatusFromUser: (data) => dispatch(editPurchaseStatusFromUser(data)),
     editPurchaseStatusOnUser: (data) => dispatch(editPurchaseStatusOnUser(data)),
+    editPurchaseStatusOnFarmerSupplier: (data) => dispatch(editPurchaseStatusOnFarmerSupplier(data))
 
   };
 };

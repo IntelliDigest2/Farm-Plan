@@ -1,0 +1,7 @@
+/* CombinedReservations.css */
+.combined-reservations {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+  }
+  
