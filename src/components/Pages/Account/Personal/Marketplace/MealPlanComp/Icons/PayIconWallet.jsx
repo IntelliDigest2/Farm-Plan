@@ -97,7 +97,17 @@ function PayIconWallet(props) {
             farmerID: props.order.farmerID,
             farmerRef: props.order.farmerRef,
             id: props.order.id,
-            item: props.order.item,
+            item: Array.isArray(props.order.item)
+              ? props.order.item.map(item => ({
+                  currency: item.currency,
+                  data: item.productName, // Rename the property to 'data'
+                  price: item.price,
+                  measure: item.productMeasure,
+                  convertedPrice: item.convertedPrice,
+                  quantity: item.quantity,
+                }))
+              : [], // Make sure it's an array or default to an empty array
+            // item: props.order.item,
             receiversID: props.order.receiversID,
             status: "COMPLETED"
           }, 
@@ -107,7 +117,7 @@ function PayIconWallet(props) {
         console.log("transfer data ===>", transferDataFarmer)
     
         
-        await fetch(`${baseUrlDev}/v1/payment/initiate-payment`, {
+        await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {
     
           method: 'POST', 
           body: JSON.stringify(transferDataFarmer),

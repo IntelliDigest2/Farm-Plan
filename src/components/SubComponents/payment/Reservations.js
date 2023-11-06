@@ -9,7 +9,7 @@ import moment from 'moment';
 import { connect } from "react-redux";
 import ConfirmDelivery from '../../Pages/Account/Personal/Marketplace/MealPlanComp/Icons/ConfirmDelivery';
 
-const Reservations = (props) => {
+export const Reservations = (props) => {
   const [reservations, setReservations] = useState([]);
 
   console.log("profile", props.profile)
@@ -50,74 +50,77 @@ const Reservations = (props) => {
   console.log("reservationa", reservations)
 
   return (
-    <PageWrap goTo="/account" header="Wallet">
-
+    
       <div className="page-container">
         <div className="list-container">
-          {reservations.map((item, index) => (
-            <div key={index} className={`list-item ${index !== 0 ? 'list-separator' : ''}`}>
-              <ListGroup variant="flush">
-                <ListGroup.Item className="d-flex justify-content-between align-items-start">
-                  <div className="ms-2 me-auto">
-                  <div className="fw-bold">
-                    <div className="d-flex align-items-center">
-                      <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
-                        {item.status || "pending"}
-                      </span>
-                      <span className="item-amount">
-                        {item.currency}{item.convertedTotalAmount}{' '}
-                      </span>
+          {reservations.length === 0 ? (
+            <div className="no-reservations-message">No delivery available</div>
+          ) : (
+            reservations.map((item, index) => (
+              <div key={index} className={`list-item ${index !== 0 ? 'list-separator' : ''}`}>
+                <ListGroup variant="flush">
+                  <ListGroup.Item className="d-flex justify-content-between align-items-start">
+                    <div className="ms-2 me-auto">
+                    <div className="fw-bold">
+                      <div className="d-flex align-items-center">
+                        <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
+                          {item.status || "pending"}
+                        </span>
+                        <span className="item-amount">
+                          {item.convertedCurrency}{item.convertedTotalAmount}{' '}
+                        </span>
+                      </div>
+                      <div className="cart-items">
+                        {item.cartItems.map((cartItem, cartIndex) => (
+                          <div key={cartIndex}>
+                            {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - {cartItem.convertedPrice * cartItem.quantity}
+                          </div>
+                        ))}
+                      </div>
+  
+                      <div className="date">
+                        {`Estimated Delivery is in ${moment(item.deliveryDueDate).fromNow(true)}`}
+                      </div>
                     </div>
-                    <div className="cart-items">
-                      {item.cartItems.map((cartItem, cartIndex) => (
-                        <div key={cartIndex}>
-                          {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - {item.currency}{cartItem.convertedPrice * cartItem.quantity}
-                        </div>
-                      ))}
                     </div>
+                    <Badge bg="primary" pill className="transaction-id">
+                      <div className="transaction-id-content">
+                        <span className="operation">{moment(item.createdAt).format("D MMM YYYY")}</span>
+                        <span className="transaction-id">{item.trackingID}</span>
+                        {item.status !== "completed" ? (
+                          <ConfirmDelivery
+                            trackingID={item.trackingID}
+                            farmerID={item.farmerID}
+                            farmerRef={item.farmerRef}
+                            cartItems={item.cartItems}
+                            receiversID={item.receiversID}
+                            receiversName={item.receiversName}
+                            currency={item.convertedCurrency}
+                          />
+                        ) : (
+                          <></>
+                        )}
+  
+                        
+                      </div>
+                    </Badge>
+                  </ListGroup.Item>
+                </ListGroup>
+              </div>
+            ))
+  
+          )}
 
-                    <div className="date">
-                      {`Estimated Delivery is in ${moment(item.deliveryDueDate).fromNow(true)}`}
-                    </div>
                   </div>
-                  </div>
-                  <Badge bg="primary" pill className="transaction-id">
-                    <div className="transaction-id-content">
-                      <span className="operation">{moment(item.createdAt).format("D MMM YYYY")}</span>
-                      <span className="transaction-id">{item.trackingID}</span>
-                      {item.status !== "completed" ? (
-                        <ConfirmDelivery
-                          trackingID={item.trackingID}
-                          farmerID={item.farmerID}
-                          farmerRef={item.farmerRef}
-                          cartItems={item.cartItems}
-                          receiversID={item.receiversID}
-                          receiversName={item.receiversName}
-                          currency={item.convertedCurrency}
-                        />
-                      ) : (
-                        <></>
-                      )}
-
-                      
-                    </div>
-                  </Badge>
-                </ListGroup.Item>
-              </ListGroup>
-            </div>
-          ))}
-        </div>
       </div>
 
-
-		</PageWrap>
   );
 };
 
-const mapStateToProps = (state) => {
-    return {
-      profile: state.firebase.profile,
-    };
-  };
+// const mapStateToProps = (state) => {
+//     return {
+//       profile: state.firebase.profile,
+//     };
+//   };
  
-export default connect(mapStateToProps)(Reservations);
+export default Reservations;
