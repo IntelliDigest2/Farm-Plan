@@ -58,6 +58,7 @@ function MyMeals(props) {
     };
     props.getMealDiary(data);
     props.getMealPlannerData(data)
+
   }, [props.value, update]);
 
 
@@ -108,7 +109,7 @@ function MyMeals(props) {
     //sets a new meal object in the array for every document with this date attached
     props.mealDiary.forEach((doc) => {
       var meal_name = doc.meal_name;
-      var ingredients = doc.ingredients;
+      var ingredients = doc.ingredient;
       var id = doc.id;
       var meal_type = doc.meal_type;
       let url;
