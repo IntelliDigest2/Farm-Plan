@@ -4,6 +4,8 @@ import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Transactions.css"
 
+import { getCurrencySymbol } from '../../../config/CurrerncyUtils';
+
 import moment from 'moment';
 
 import { connect } from "react-redux";
@@ -22,6 +24,10 @@ const CouponTransaction = (props) => {
 
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
+
+
+  const userCountryCode = props.profile.country;
+	const userCurrency = getCurrencySymbol(userCountryCode);
 
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
@@ -68,7 +74,7 @@ const CouponTransaction = (props) => {
                       
                     </div>
                     <div style={{ display: "block", color: "green" }}>
-                        <span className="item-amount">£{item.amount}</span>
+                        <span className="item-amount">{userCurrency}{item.amount}</span>
                       </div>
                     <div className="date">
                       {moment(item.createdAt).format("D MMM YYYY [at] HH:mm")}

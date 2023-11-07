@@ -4,7 +4,7 @@ import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Wallet.css"
 import Swal from 'sweetalert2';
-
+import { getCurrencySymbol } from '../../../config/CurrerncyUtils';
 import logo from "../../../images/Revolut-logo-1.gif"
 
 import RevolutPay from "./RevolutPay"
@@ -30,6 +30,8 @@ const CouponComponent = (props) => {
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
+  const userCountryCode = props.profile.country;
+	const userCurrency = getCurrencySymbol(userCountryCode);
 
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
@@ -45,7 +47,9 @@ const CouponComponent = (props) => {
     })
       .then(response => response.json())
       .then(data => {
-        setBalance(data.userBalance);
+        const formattedBalance = data.userBalance.toLocaleString();
+
+        setBalance(formattedBalance);
       })
       .catch(error => {
         console.error('Error fetching balance:', error);
@@ -110,7 +114,7 @@ const CouponComponent = (props) => {
         <Card className=" custom-card mb-3">
         <div className="card-overlay"></div>
           <Card.Body>
-            <h2 className='wallet-balance'>£{balance}</h2>
+            <h2 className='wallet-balance'>{userCurrency}{balance}</h2>
             <h5>Coupon Balance</h5>
           </Card.Body>
         </Card>
