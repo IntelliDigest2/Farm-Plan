@@ -1487,13 +1487,10 @@ const mapStateToProps = (state) => {
 		infoForRes: state.restaurant.orderRes,
 		infoForSupplier: state.supplier.orderSupply,
 		infoFarm: state.farmData.purchaseInfoFarm,
-<<<<<<< HEAD
 		consultantRequests: state.consultantState.consultantRequests,
 		consultantData: state.consultantState.consultantData,
 		notifications: state.notificationState.notifications,
-=======
 		farmerSupplierMessage: state.farmData.farmerSupplierMessage
->>>>>>> 71f5d7019867dedfdd5a544c0ab8b41e1f019dfd
 	};
 };
 
@@ -1525,15 +1522,12 @@ const mapDispatchToProps = (dispatch) => {
 		getPurchaseInfoForRes: (data) => dispatch(getPurchaseInfoRes(data)),
 		getPurchaseInfoForSupplier: (data) => dispatch(getPurchaseInfoSupply(data)),
 		getPurchaseInfoFarm: (data) => dispatch(getPurchaseInfoFarm(data)),
-<<<<<<< HEAD
 		getConsultantRequests: (data) => dispatch(getBookingRequest(data)),
 		getConsultantInfo: (uid) => dispatch(fetchConsultantInfo(uid)),
-	};
-=======
 		getFarmMessagesFromSupplier: (data) => dispatch(getFarmMessagesFromSupplier(data)),
+
+	};
 	};	
->>>>>>> 71f5d7019867dedfdd5a544c0ab8b41e1f019dfd
-};
 
 export default connect(
 	mapStateToProps,

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap";
 import { PaystackButton } from "react-paystack"
+import { getCurrencySymbol } from '../../../config/CurrerncyUtils';
 
 import Swal from 'sweetalert2';
 
@@ -43,6 +44,8 @@ const WalletComponent = (props) => {
   const name = props.profile.firstName
   const userID = props.profile.uid
 
+  const userCountryCode = props.profile.country;
+	const userCurrency = getCurrencySymbol(userCountryCode);
 
   const handleSuccess = () => {
     try {
@@ -121,7 +124,9 @@ const WalletComponent = (props) => {
     })
       .then(response => response.json())
       .then(data => {
-        setBalance(data.userBalance);
+        const formattedBalance = data.userBalance.toLocaleString();
+
+        setBalance(formattedBalance);
       })
       .catch(error => {
         console.error('Error fetching balance:', error);
@@ -202,25 +207,13 @@ const WalletComponent = (props) => {
         <Card className=" custom-card mb-3">
         <div className="card-overlay"></div>
           <Card.Body>
-          {props.profile.region === 'Africa' ? (
-                    <>
-                    <h2 className="wallet-balance">
-                      <span className="currency">NGN</span>
-                      <h3 className="balance">{balance}</h3>
-                    </h2>
-                    <h5>Current Balance</h5>
-
-                    </>
-                    
-                  ) : (
-                    <>
-                    <h2 className="wallet-balance">
-                      <span className="currency">GBP</span>
-                      <h3 className="balance">{balance}</h3>
-                    </h2>
-                    <h5>Current Balance</h5>
-                    </>
-                  )} 
+            <>
+              <h2 className="wallet-balance">
+                <span className="currency">{userCurrency}</span>
+                <h3 className="balance">{balance}</h3>
+              </h2>
+              <h5>Current Balance</h5>
+            </>
             
           </Card.Body>
         </Card>

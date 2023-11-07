@@ -3,6 +3,7 @@ import { Form, InputGroup, Button, Card, Modal, Spinner } from "react-bootstrap"
 import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Wallet.css"
+import { getCurrencySymbol } from '../../../config/CurrerncyUtils';
 
 import logo from "../../../images/Revolut-logo-1.gif"
 import Swal from 'sweetalert2';
@@ -31,6 +32,9 @@ const CouponComponent = (props) => {
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
 
+  const userCountryCode = props.profile.country;
+	const userCurrency = getCurrencySymbol(userCountryCode);
+
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
@@ -45,7 +49,9 @@ const CouponComponent = (props) => {
     })
       .then(response => response.json())
       .then(data => {
-        setBalance(data.userBalance);
+        const formattedBalance = data.userBalance.toLocaleString();
+
+        setBalance(formattedBalance);
       })
       .catch(error => {
         console.error('Error fetching balance:', error);
@@ -151,7 +157,7 @@ const CouponComponent = (props) => {
         <Card className=" custom-card mb-3">
         <div className="card-overlay"></div>
           <Card.Body>
-            <h2 className='wallet-balance'>£{balance}</h2>
+            <h2 className='wallet-balance'>{userCurrency}{balance}</h2>
             <h5>Current Balance</h5>
           </Card.Body>
         </Card>
@@ -212,7 +218,7 @@ const CouponComponent = (props) => {
               <Modal.Title>Create</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p>Are you sure you want to create coupon worth £{amount} for {recipient} person?</p>
+              <p>Are you sure you want to create coupon worth {userCurrency}{amount} for {recipient} person?</p>
               <p>A service fee of 15% would be deducted from your account</p>
             </Modal.Body>
             <Modal.Footer>
