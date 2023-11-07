@@ -54,13 +54,13 @@ export const ConsultantRequest = (props) => {
 		if (actionType === "accept") {
 			setAcceptLoading(true);
 
-			console.log(
-				event,
-				auth.uid,
-				`${profile.firstName} ${profile.lastName}`,
-				serviceCost,
-				`these are all the parameters needed`
-			);
+			// console.log(
+			// 	event,
+			// 	auth.uid,
+			// 	`${profile.firstName} ${profile.lastName}`,
+			// 	serviceCost,
+			// 	`these are all the parameters needed`
+			// );
 			acceptBookingRequest(
 				event,
 				auth.uid,
@@ -155,10 +155,10 @@ export const ConsultantRequest = (props) => {
 				</Modal>
 			</div>
 			<div className={classes.cont}>
-				<div>request type: {event.eventType}</div>
-				<div>request date: {date}</div>
-				<div>start time: {startTime}</div>
-				<div>end time: {endTime}</div>
+				<div>Request type: {event.eventType}</div>
+				<div>Request date: {date}</div>
+				<div>Start time: {startTime}</div>
+				<div>End time: {endTime}</div>
 
 				<Button
 					disabled={

@@ -68,35 +68,35 @@ export const createExample = (data) => {
 };
 
 const setUsersCollection = (buildingFunction) => {
+	console.log(buildingFunction === "Farm", `checks if this is true`);
 	let userCollection;
 	switch (buildingFunction) {
-		case buildingFunction === "Farm":
-			userCollection = "farm_user";
+		case "Farm":
+			userCollection = "farm_users";
 			break;
-		case buildingFunction === "Households":
+		case "Households":
 			userCollection = "household_users";
 			break;
-		case buildingFunction === "Restaurants":
+		case "Restaurants":
 			userCollection = "restaurant_users";
 			break;
-		case buildingFunction === "Consultant":
+		case "Consultant":
 			userCollection = "consultants";
 			break;
-		case buildingFunction === "Offices":
+		case "Offices":
 			userCollection = "office_users";
 			break;
-		case buildingFunction === "Hotels":
+		case "Hotels":
 			userCollection = "hotel_users";
 			break;
-		case buildingFunction === "Shop":
+		case "Shop":
 			userCollection = "shop_users";
 			break;
 
 		default:
-			// userCollection = "Machinery/Supplier";
 			userCollection = "supply_users";
-			break;
 	}
+	console.log(userCollection, `the bottom side`);
 
 	return userCollection;
 };
@@ -187,18 +187,18 @@ export const fetchConsultantCalendarInfo = (consultantId) => {
 export const addConsultantEventToDatabase = (
 	newEvent,
 	consultantId,
-	consultantInfo
+	consultantInfo,
+	currency
 ) => {
 	return (dispatch, getState, { getFirebase, getFirestore }) => {
 		let date = newEvent.start.split("T")[0];
-		// // let industry = industry;
 
 		let arr = consultantInfo.services.filter(({ price, service }) => {
 			return service === newEvent.eventType;
 		});
 
-		dispatch({ type: "EVENT_ADD_LOADING", payload: true });
-		getFirestore()
+		// dispatch({ type: "EVENT_ADD_LOADING", payload: true });
+		return getFirestore()
 			.collection("consultants")
 			.doc(consultantId)
 			.collection("calendarEvents")
@@ -214,17 +214,18 @@ export const addConsultantEventToDatabase = (
 					summary: consultantInfo.summary,
 				},
 				eventCompleted: false,
-			})
-			// 	// .update({
-			// 	// 	calendarEvents: firebase.firestore.FieldValue.arrayUnion(newEvent),
-			// 	// 	eventDaysArray: firebase.firestore.FieldValue.arrayUnion(newEventDay),
-			// 	// })
-			.then((result) => {
-				dispatch({ type: "EVENT_ADD_SUCCESS", payload: result });
-			})
-			.catch((err) => {
-				dispatch({ type: "EVENT_ADD_ERROR", payload: err });
+				currency,
 			});
+		// .update({
+		// 	calendarEvents: firebase.firestore.FieldValue.arrayUnion(newEvent),
+		// 	eventDaysArray: firebase.firestore.FieldValue.arrayUnion(newEventDay),
+		// })
+		// .then((result) => {
+		// 	dispatch({ type: "EVENT_ADD_SUCCESS", payload: result });
+		// })
+		// .catch((err) => {
+		// 	dispatch({ type: "EVENT_ADD_ERROR", payload: err });
+		// });
 	};
 };
 
@@ -319,7 +320,16 @@ export const acceptBookingRequest = (event) => {
 	let consulteeNotificationRef = db
 		.collection(consulteeCollection)
 		.doc(event.status.requesterId)
-		.collection("notifications");
+		.collection("notifications")
+		.doc();
+
+	console.log(
+		event.status.requesterAccountType,
+		`this is the account it is comming from`
+	);
+
+	console.log(consulteeCollection, `this is the consultee collection`);
+	console.log(event.status.requesterId, `this is the requester Id `);
 
 	batch.update(consultantRef, {
 		status: { ...event.status, requestAccepted: true },
@@ -328,6 +338,7 @@ export const acceptBookingRequest = (event) => {
 	//this will set the consultation booking in the "booking" collection  for the person  who requested the consultation
 	batch.set(consultRef, {
 		status: "pending",
+		created_at: new Date(),
 		consultant: {
 			consultantId: event.consultant.id,
 			consultantName: event.consultant.name,
@@ -339,6 +350,7 @@ export const acceptBookingRequest = (event) => {
 			price: event.price,
 			eventType: event.eventType,
 			industry: event.industry,
+			currency: event.currency,
 		},
 		eventCompleted: false,
 	});
@@ -409,16 +421,13 @@ export const cancelBookingRequest = (event) => {
 
 		let consulteeCollection;
 
-		if (event.status.requesterAccountType === "Farm") {
-			consulteeCollection = "farm_user";
-		} else if (event.status.requesterAccountType === "Restaurant") {
-			consulteeCollection = "restaurant_user";
-		}
+		consulteeCollection = setUsersCollection(event.status.requesterAccountType);
 
 		let consulteeNotificationRef = db
 			.collection(consulteeCollection)
 			.doc(event.status.requesterId)
-			.collection("notifications");
+			.collection("notifications")
+			.doc();
 
 		// consultantRef
 		batch.update(consultantRef, {
@@ -454,6 +463,9 @@ export const getBookingRequest = (consultantId) => {
 			.collection("calendarEvents")
 			.where("status.requestAccepted", "==", false)
 			.where("status.requesterId", "!=", null)
+			.orderBy("status.requesterId", "desc")
+			.orderBy("date", "desc")
+
 			.onSnapshot(
 				(querySnapshot) => {
 					let docArray = [];

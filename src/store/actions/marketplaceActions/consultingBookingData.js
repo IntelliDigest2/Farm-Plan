@@ -1,5 +1,9 @@
 import axios from "axios";
 import { generateId } from "../../../components/Pages/Account/Consultant/utils/utils";
+import firebase from "firebase";
+require("firebase/firestore");
+
+const db = firebase.firestore();
 
 function createChat(uid, userName, consultantId, consultantName, eventDate) {
 	// console.log(
@@ -39,97 +43,84 @@ export const changePurchaseStatus = (
 	date
 ) => {
 	console.log(`i have been clicked o`);
-	// console.log(
-	// 	date,
-	// 	`this is the date value of the function in consultingBookingData`
-	// );
 
-	// if (date instanceof Date) {
-	// 	console.log("myDate is an instance of Date");
-	// } else {
-	// 	console.log("myDate is not an instance of Date");
-	// }
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+		// dispatch({ type: "CHANGE_PURCHASE_STATUS_LOADING" });
+		// console.log(bookingId, consultantId, consultantName, eventType);
+		//i didnt use a batch write her because it does not allow a merge operation
+		if (eventType === "Video call" || eventType === "Phone call") {
+			const channelId = generateVideoCallId();
 
-	// return (dispatch, getState, { getFirestore }) => {
-	// 	//make async call to database
-	// 	const profile = getState().firebase.profile;
-	// 	const authUID = getState().firebase.auth.uid;
-	// 	var uid;
-	// 	switch (profile.type) {
-	// 		case "business_admin":
-	// 			uid = authUID;
-	// 			break;
-	// 		case "business_sub":
-	// 			uid = profile.admin;
-	// 			break;
-	// 		case "academic_admin":
-	// 			uid = authUID;
-	// 			break;
-	// 		case "academic_sub":
-	// 			uid = profile.admin;
-	// 			break;
-	// 		case "household_admin":
-	// 			uid = authUID;
-	// 			break;
-	// 		case "household_sub":
-	// 			uid = profile.admin;
-	// 			break;
-	// 		default:
-	// 			uid = authUID;
-	// 			break;
-	// 	}
-	// 	dispatch({ type: "CHANGE_PURCHASE_STATUS_LOADING" });
-	// 	// console.log(bookingId, consultantId, consultantName, eventType);
-	// 	//i didnt use a batch write her because it does not allow a merge operation
-	// 	if (eventType === "Video call" || eventType === "Phone call") {
-	// 		const channelId = generateVideoCallId();
-	// 		getFirestore()
-	// 			.collection("marketplace")
-	// 			.doc(uid)
-	// 			.collection("bookings")
-	// 			.doc(bookingId)
-	// 			.set(
-	// 				{ status: "completed", event: { callId: channelId } },
-	// 				{ merge: true }
-	// 			)
-	// 			.then(() => {
-	// 				// getFirestore()
-	// 				// 	.collection("consultant")
-	// 				// 	.doc(uid)
-	// 				// 	.set({ channelId: channelId })
-	// 				getFirestore()
-	// 					.collection("consultants")
-	// 					.doc(consultantId)
-	// 					.collection("calendarEvents")
-	// 					.doc(bookingId)
-	// 					.set({ callId: channelId, booked: true }, { merge: true });
-	// 			});
-	// 	} else {
-	// 		// console.log(`layer 2 triggered`);
-	// 		getFirestore()
-	// 			.collection("marketplace")
-	// 			.doc(uid)
-	// 			.collection("bookings")
-	// 			.doc(bookingId)
-	// 			.set({ status: "completed" }, { merge: true })
-	// 			.then((result) => {
-	// 				dispatch({ type: "CHANGE_PURCHASE_STATUS_SUCCESS", payload: result });
-	// 				if (eventType === "Chat") {
-	// 					createChat(
-	// 						uid,
-	// 						`${profile.firstName} ${profile.lastName}`,
-	// 						consultantId,
-	// 						consultantName,
-	// 						date
-	// 					);
-	// 				}
-	// 			})
-	// 			.catch((err) => {
-	// 				console.log(err);
-	// 				dispatch({ type: "CHANGE_PURCHASE_STATUS_ERROR", err });
-	// 			});
-	// 	}
-	// };
+			getFirestore()
+				.collection("marketplace")
+				.doc(uid)
+				.collection("bookings")
+				.doc(bookingId)
+				.set(
+					{ status: "completed", event: { callId: channelId } },
+					{ merge: true }
+				)
+				.then(() => {
+					getFirestore()
+						.collection("consultants")
+						.doc(consultantId)
+						.collection("calendarEvents")
+						.doc(bookingId)
+						.set({ callId: channelId, booked: true }, { merge: true });
+				});
+		} else {
+			// console.log(`layer 2 triggered`);
+			getFirestore()
+				.collection("marketplace")
+				.doc(uid)
+				.collection("bookings")
+				.doc(bookingId)
+				.set({ status: "completed" }, { merge: true })
+				.then((result) => {
+					// dispatch({ type: "CHANGE_PURCHASE_STATUS_SUCCESS", payload: result });
+					if (eventType === "Chat") {
+						createChat(
+							uid,
+							`${profile.firstName} ${profile.lastName}`,
+							consultantId,
+							consultantName,
+							date
+						);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					// dispatch({ type: "CHANGE_PURCHASE_STATUS_ERROR", err });
+				});
+		}
+	};
 };
 
 export const getConsultingBookingsForPurchase = (data) => {
@@ -162,11 +153,12 @@ export const getConsultingBookingsForPurchase = (data) => {
 				break;
 		}
 
-		console.log(uid, `this is the uid`);
+		// console.log(uid, `this is the uid`);
 		getFirestore()
 			.collection("marketplace")
 			.doc(uid)
 			.collection("bookings")
+			.orderBy("created_at", "desc")
 			// .where("status", "==", "pending")
 			.onSnapshot(
 				(doc) => {
@@ -179,7 +171,7 @@ export const getConsultingBookingsForPurchase = (data) => {
 						bookings.push({ booking: doc.data(), bookingId: doc.id });
 					});
 
-					console.log(bookings, `these are the bookings from the bookingData`);
+					// console.log(bookings, `these are the bookings from the bookingData`);
 
 					dispatch({
 						type: "FETCH_PURCHASE_BOOKING_SUCCESS",

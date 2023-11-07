@@ -20,6 +20,7 @@ import {
 } from "../../../../../store/actions/consultantActions/consultantActions";
 import { Form, Row, Col, Container, Modal, Button } from "react-bootstrap";
 import { PageWrapPayment } from "../../../../SubComponents/PageWrapPayment";
+import { PageWrap } from "./../../../../SubComponents/PageWrap";
 
 function ConsultantSessionsPage(props) {
 	let { path, url } = useRouteMatch();
@@ -57,7 +58,7 @@ function ConsultantSessionsPage(props) {
 	};
 
 	return (
-		<PageWrapPayment goTo="/consultant" header="Sessions">
+		<PageWrap goTo="/consultant" header="Sessions">
 			<div className={classes.session_cont}>
 				{/* <Button onClick={goBack}>Back</Button> */}
 				<Router>
@@ -125,7 +126,7 @@ function ConsultantSessionsPage(props) {
 					</section>
 				</Router>
 			</div>
-		</PageWrapPayment>
+		</PageWrap>
 	);
 }
 

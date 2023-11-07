@@ -22,7 +22,8 @@
 } */
 
 .chat_cont{
-    padding: 8px
+    padding: 8px;
+    width: 100%;
 }
 
 

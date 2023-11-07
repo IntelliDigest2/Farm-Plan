@@ -43,7 +43,7 @@ function Notification(props) {
   }, [props.profile.isLoaded])
 
   useEffect(() => {
-    console.log(props.notificationStatus,`this is the notification status`)
+    // console.log(props.notificationStatus,`this is the notification status`)
   }, [props.notificationStatus])
   
 

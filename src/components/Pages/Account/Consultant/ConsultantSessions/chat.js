@@ -253,11 +253,29 @@ function Chat(props) {
 			</div>
 
 			<Form ref={formRef} className={classes.chat_input}>
-				<Row>
-					<Col>
-						<ImageUploadIcon />
-					</Col>
-					<Col md="9">
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						height: "48px",
+						justifyContent: "space-evenly",
+						width: "100%",
+					}}
+				>
+					<div style={{ width: "10%" }} md="1">
+						<button
+							style={{
+								width: "10px",
+								height: "10px",
+								borderRadius: "50%",
+								backgroundColor: "white",
+								border: "1px solid black",
+							}}
+						>
+							<ImageUploadIcon />
+						</button>
+					</div>
+					<div style={{ width: "76%" }}>
 						<Form.Control
 							size="sm"
 							type="text"
@@ -269,20 +287,27 @@ function Chat(props) {
 							onKeyPress={(e) => {
 								submitWithKey(e);
 							}}
+							style={{ marginBottom: "0px" }}
 						/>
-					</Col>
-					<Col>
+					</div>
+					<div style={{ width: "10%" }}>
 						<button
 							type="button"
 							onClick={(e) => {
 								e.preventDefault();
 								sendMessage();
 							}}
+							style={{
+								width: "10px",
+								height: "10px",
+								borderRadius: "50%",
+								backgroundColor: "0066cc",
+							}}
 						>
 							<SendIcon />
 						</button>
-					</Col>
-				</Row>
+					</div>
+				</div>
 			</Form>
 		</div>
 	);
