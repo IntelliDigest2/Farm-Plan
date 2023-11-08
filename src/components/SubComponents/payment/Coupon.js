@@ -63,6 +63,7 @@ const CouponComponent = (props) => {
       
     const transferData = {
       amount: parseFloat(amount),
+      currency: userCurrency,
       numberOfRecipients: recipient,
       userID: props.profile.uid,
     };

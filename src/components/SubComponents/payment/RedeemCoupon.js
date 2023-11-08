@@ -62,6 +62,7 @@ const CouponComponent = (props) => {
       
     const transferData = {
       code: couponCode,
+      currency: userCurrency,
       userID: props.profile.uid,
     };
 
