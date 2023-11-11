@@ -25,6 +25,7 @@ const CouponComponent = (props) => {
   const [recipient, setRecipient] = useState('');
   const [couponCode, setCouponCode] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
   const [showModalRedeem, setShowModalRedeem] = useState(false);
   const [isLoadingBalance, setIsLoadingBalance] = useState(true); 
 
@@ -66,6 +67,7 @@ const CouponComponent = (props) => {
       currency: userCurrency,
       numberOfRecipients: recipient,
       userID: props.profile.uid,
+      promoCode: promoCode,
     };
 
     // Make a POST request to the backend to initiate the transfer
@@ -204,9 +206,23 @@ const CouponComponent = (props) => {
                     />
                   </InputGroup>
                 </Form.Group>
+
+                <Form.Group>
+                  <InputGroup>
+                    <Form.Control
+                      className="signup-input-meal-name"
+                      id="quantity"
+                      type="text"
+                      placeholder='Enter Referral Code'
+                      onChange={(e) => setPromoCode(e.target.value)}
+                      value={promoCode}
+                    />
+                  </InputGroup>
+                </Form.Group>
+
                 <div style={{ alignItems: "center" }}>
                   <Button className="blue-btn shadow-none mt-3" type="submit">
-                    Send
+                    Create
                   </Button>
                 </div>
               </Form>

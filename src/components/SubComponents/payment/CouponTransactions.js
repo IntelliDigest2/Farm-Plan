@@ -3,6 +3,7 @@ import { Badge, ListGroup, Button, Card, Modal, Spinner } from "react-bootstrap"
 import { PageWrap } from '../PageWrap';
 import "../Button.css";
 import "./Transactions.css"
+import Swal from 'sweetalert2';
 
 import { getCurrencySymbol } from '../../../config/CurrerncyUtils';
 
@@ -19,8 +20,11 @@ const SpinnerComponent = () => {
 
 const CouponTransaction = (props) => {
   const [transactions, setTransactions] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [emailList, setEmailList] = useState([]);
+  const [emailInput, setEmailInput] = useState('');
+  const [message, setMessage] = useState("Congratulations 🎉 , you have been gifted a World Food Tracker Coupon worth GBP0. Coupon Code: xxxxxxx");
 
-  console.log("profile", props.profile)
 
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
@@ -55,6 +59,94 @@ const CouponTransaction = (props) => {
 
   //console.log("transactions", transactions)
 
+   // Function to open the modal for a specific coupon
+   const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+// Function to add emails to the emailList
+const handleAddEmail = () => {
+  // Split the input value by commas and trim whitespaces
+  const newEmails = emailInput.split(',').map(email => email.trim());
+
+  // Filter out empty strings and duplicate emails
+  const uniqueEmails = Array.from(new Set(newEmails.filter(email => email !== '')));
+
+  // Filter out emails already in the list
+  const filteredUniqueEmails = uniqueEmails.filter(email => !emailList.includes(email));
+
+  // Update the emailList state
+  setEmailList(prevEmailList => [...prevEmailList, ...filteredUniqueEmails]);
+
+  // Clear the email input
+  setEmailInput('');
+};
+
+// Function to remove an email from the emailList
+const handleRemoveEmail = (email) => {
+  // Update the emailList state by filtering out the removed email
+  setEmailList(prevEmailList => prevEmailList.filter(item => item !== email));
+};
+
+
+
+    // Function to update the email input value
+    const handleEmailInputChange = (e) => {
+      setEmailInput(e.target.value);
+    };
+
+      // Function to update the message input value
+  const handleMessageInputChange = (e) => {
+    setMessage(e.target.value);
+  };
+
+
+    const sendEmail = async (email, message) => {
+      try {
+        const response = await fetch(`${baseUrlProd}/v1/auth/send-email-voucher`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: email, message: message }),
+        });
+    
+        if (response.ok) {
+          console.log(`Email sent to ${email}`);
+          Swal.fire({
+            title: 'Success!',
+            text: 'Email has been sent',
+            icon: 'success',
+          });
+        } else {
+          console.error(`Failed to send email to ${email}`);
+          Swal.fire({
+            title: 'Error!',
+            text: 'Something went wrong. Please contact us at info@intellidigest.com',
+            icon: 'error',
+          });
+        }
+      } catch (err) {
+        console.error(`Error sending email to ${email}: ${err.message}`);
+      }
+    };
+
+  // Function to handle sending email to multiple addresses
+const handleSendEmails = async () => {
+  const emailsArray = emailList;
+
+  for (const email of emailsArray) {
+    await sendEmail(email, message); // Assuming emailMessage is defined elsewhere
+  }
+
+  handleCloseModal(); // Close the modal after sending
+};  
+
   return (
     <PageWrap goTo="/account" header="Wallet">
 
@@ -65,6 +157,9 @@ const CouponTransaction = (props) => {
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-flex justify-content-between align-items-start">
                   <div className="ms-2 me-auto">
+                  <Button variant="primary" onClick={handleOpenModal}>
+                      Share Coupon
+                    </Button>
                   <div className="fw-bold">
                     <div className="d-flex align-items-center">
                       {/* <span className={`item-operation ${item.type === "Debit" ? "debit" : "credit"}`}>
@@ -94,6 +189,60 @@ const CouponTransaction = (props) => {
         </div>
       </div>
 
+     
+<Modal show={showModal} onHide={handleCloseModal}>
+  <Modal.Header closeButton>
+    <Modal.Title>Share Coupon</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <p>Enter a list of emails separated by commas:</p>
+    <div className="d-flex">
+            <input 
+              type="text" 
+              value={emailInput}
+              onChange={handleEmailInputChange} // Add this line to handle input changes
+            />
+            <Button variant="primary" onClick={handleAddEmail}>
+              Add
+            </Button>
+            {/* Display added emails */}
+          
+          </div>
+
+          {emailList.length > 0 && (
+            <div>
+              <p>Added Emails:</p>
+              <ul>
+                {emailList.map((email, index) => (
+                  <li key={index}>{email}
+                    <span 
+                      className="remove-icon" 
+                      onClick={() => handleRemoveEmail(email)}
+                    >
+                      &times;
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+           {/* Message input */}
+           <p>Enter a message:</p>
+          <textarea
+            rows="4"
+            value={message}
+            onChange={handleMessageInputChange}
+          />
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleCloseModal}>
+      Close
+    </Button>
+    <Button variant="primary" onClick={handleSendEmails}>
+      Send Emails
+    </Button>
+  </Modal.Footer>
+</Modal>
 
 		</PageWrap>
   );
