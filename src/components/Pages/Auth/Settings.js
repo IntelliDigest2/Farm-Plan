@@ -6,9 +6,12 @@ import { SubButton } from "../../SubComponents/Button";
 import { LogOutPopUp } from "../../SubComponents/PopUp";
 import { PageWrap } from "../../SubComponents/PageWrap";
 import { Heading } from "../../SubComponents/Heading";
+import "../../SubComponents/Button.css"
 import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
+import Swal from 'sweetalert2';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
-import { Form, Col, ListGroup, Badge, FormGroup } from "react-bootstrap";
+import { Form, Col, ListGroup, Badge, Button, FormGroup } from "react-bootstrap";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -1068,6 +1071,7 @@ function Settings(props) {
 						firstName={props.profile.firstName}
 						lastName={props.profile.lastName}
 						email={props.auth.email}
+						userID={props.profile.uid}
 						town={props.profile.city}
 						region={props.profile.region}
 						country={props.profile.country}
@@ -1108,6 +1112,24 @@ function ButtonList(props) {
 }
 
 const ProfileList = (props) => {
+
+	const [promoCode, setPromoCode] = useState('');
+	const [copySuccess, setCopySuccess] = useState('');
+
+	const baseUrlDev="http://localhost:5000"
+	const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
+
+	const handleCopyClick = (promoCode) => {
+		const textArea = document.createElement('textarea');
+		textArea.value = promoCode;
+		document.body.appendChild(textArea);
+		textArea.select();
+		document.execCommand('copy');
+		document.body.removeChild(textArea);
+		setCopySuccess(promoCode);
+		setTimeout(() => setCopySuccess(null), 1500); // Reset copy success message after 1.5 seconds
+	  };
+	
 	const items = [
 		{
 			key: "name",
@@ -1134,33 +1156,74 @@ const ProfileList = (props) => {
 			icon: <EditLocationAltIcon />,
 		},
 
-		// {
-		//   key: "restaurantName",
-		//   item: props.restaurantName,
-		//   change: "changeRestaurantName",
-		//   icon: <DriveFileRenameOutlineIcon />,
-		// },{
-		//   key: "regulatoryBody",
-		//   item:props.regulatoryBody,
-		//   change: "changeRegulatoryBody",
-		//   icon: <BadgeIcon />,
-		// },{
-		//   key: "regulatoryBodyID",
-		//   item: props.regulatoryBodyID,
-		//   change: "changeRegulatoryBodyID",
-		//   icon: <BadgeIcon />,
-		// },{
-		//   key: "cuisine",
-		//   item: props.cuisine,
-		//   change: "changeCuisine",
-		//   icon: <RestaurantIcon />,
-		// },{
-		//   key: "restaurantDescription",
-		//   item: props.restaurantDescription,
-		//   change: "changeRestaurantDescription",
-		//   icon: <DescriptionIcon />,
-		// },
 	];
+
+	  // ...
+
+useEffect(() => {
+	console.log("Promo code updated:", promoCode);
+  }, [promoCode]);
+  
+  // Fetch the user's wallet balance from the backend
+  useEffect(() => {
+	fetch(`${baseUrlProd}/v1/coupon/get-promo-code`, {
+	  method: 'POST',
+	  headers: {
+		'Content-Type': 'application/json',
+	  },
+	  body: JSON.stringify({ userID: props.userID }),
+	})
+	  .then(response => response.json())
+	  .then(data => {
+		const userPromoCode = data.promoCode.code;
+		setPromoCode(userPromoCode);
+	  })
+	  .catch(error => {
+		console.error('Error fetching code:', error);
+	  });
+  }, [props.userID]);
+  
+  // ...
+  
+
+	const handleGeneratePromoCode = async () => {
+
+		try {
+		  // Replace 'your-api-endpoint' with the actual endpoint to generate promo codes
+		  const response = await fetch(`${baseUrlProd}/v1/coupon/generate-promo-code`, {
+			method: 'POST',
+			headers: {
+			  'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				userID: props.userID, 
+				email: props.email
+			}),
+		  });
+	
+		  if (response.ok) {
+			// referral code generated successfully
+			const promoCodeData = await response.json();
+			console.log('Generated Promo Code:', promoCodeData);
+			Swal.fire({
+				title: 'Success!',
+				text: 'referral code created successfully',
+				icon: 'success',
+			  });
+			// Handle any further actions if needed
+		  } else {
+			// Handle error response
+			console.error('Failed to generate promo code');
+			Swal.fire({
+				title: 'Error!',
+				text: 'Something went wrong; Failed to create code',
+				icon: 'error',
+			  });
+		  }
+		} catch (error) {
+		  console.error('Error generating promo code:', error);
+		}
+	  };
 
 	return (
 		<>
@@ -1211,6 +1274,46 @@ const ProfileList = (props) => {
 					</ListItemIcon>
 					<ListItemText>Contact Us</ListItemText>
 				</ListItemButton>
+			</ListItem>
+			<Divider variant="middle" />
+			<ListItem>
+				<ListItemButton component="a">
+					<ListItemIcon>
+						<ContactSupportIcon />
+					</ListItemIcon>
+					<ListItemText>Earn referal bonus from our coupon feature</ListItemText>
+				</ListItemButton>
+				{promoCode ? (
+					<>
+					<ListItemButton>
+					<ListItemText>{promoCode}</ListItemText>
+						<ListItemIcon>
+						{/* Replace 'CopyIcon' with your actual copy icon component */}
+						<IconButton
+						onClick={() => handleCopyClick(promoCode)}						
+						color="primary"
+						aria-label="Copy"
+						style={{ borderRadius: '0', paddingLeft: '10px', width: 'auto' }} // Add or adjust styles here
+						>
+						<FileCopyIcon />
+						</IconButton>
+						{copySuccess === promoCode && (
+							<span style={{ color: 'green', marginLeft: '5px' }}>Copied!</span>
+						)}
+						</ListItemIcon>
+					</ListItemButton>
+					</>
+				) : (
+					<div style={{ alignItems: "center" }}>
+					<Button
+						className="blue-btn shadow-none mt-3"
+						type="submit"
+						onClick={handleGeneratePromoCode}
+					>
+						Create
+					</Button>
+					</div>
+				)}
 			</ListItem>
 			<Divider variant="middle" />
 			<LogOutPopUp handleSignOut={props.HandleSignOut} to="/landing" />

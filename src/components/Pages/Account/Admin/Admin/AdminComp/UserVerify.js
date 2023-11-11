@@ -129,7 +129,7 @@ const fetchUserExpertise = async (uid) => {
         });
   
         // Handle the response from your backend
-        if (response) {
+        if (response.ok) {
           setMessage("Email Sent!");
 
         } else {
