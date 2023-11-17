@@ -1275,7 +1275,7 @@ const Stage6 = (props) => {
 								props.setIDType(e.target.value);
 							}}
 							value={props.IDType}
-							placeholder="Please an Identity Type"
+							placeholder="Please add Identity Type"
 							items={[
 								"Int'l Passport",
 								"Voters Card",
