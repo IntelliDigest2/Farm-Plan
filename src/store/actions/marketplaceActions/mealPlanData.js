@@ -543,3 +543,80 @@ export const getPurchaseInfo = (info) => {
       // });
   };
 };
+
+
+export const getOrderInfoFromRes = (info) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("restaurantOrders")
+      .onSnapshot(
+				(querySnapshot) => {
+					let orderInfo = [];
+					querySnapshot.forEach((doc) => {
+						// console.log(doc.id, " => ", doc.data()); // Log the document ID and data
+            const data = doc.data();
+            if (data.status !== "COMPLETED" || data.status === "CONFIRMED") {
+              orderInfo.push({ eventId: doc.id, ...data });
+            }
+						orderInfo.push({ eventId: doc.id, ...doc.data() });
+					});
+
+					dispatch({
+						type: "GET_ORDER_INFO_FROM_RES",
+						payload: orderInfo,
+					});
+				},
+				(err) => {
+					console.log(err);
+					dispatch({ type: "GET_ORDER_INFO_FROM_RES_ERROR", err });
+				}
+			);
+      // .get()
+      // .then((snapshot) => {
+      //   const orderInfo = [];
+      //   snapshot.forEach((doc) => {
+      //     // orderInfo.push(doc.data());
+      //     const data = doc.data();
+			// 		if (data.status !== "COMPLETED") {
+			// 		  orderInfo.push(data);
+			// 		}
+      //   });
+      //   dispatch({ type: "GET_PURCHASE_INFO", payload: orderInfo });
+      // })
+      // .catch((err) => {
+      //   dispatch({ type: "GET_PURCHASE_INFO_ERROR", err });
+      // });
+  };
+};

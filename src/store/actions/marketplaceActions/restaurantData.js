@@ -1,3 +1,6 @@
+import firebase from "firebase";
+require("firebase/firestore");
+
 export const getRestaurantData = (data) => {
 	return (dispatch, getState, { getFirebase }) => {
 		//make async call to database
@@ -1046,15 +1049,18 @@ export const sendToRes = (data) => {
 
 		let notification = {
 			notification_type: "eatingOut_request",
-			created_at: getFirestore.Timestamp.fromDate(new Date()),
+			created_at: firebase.firestore.Timestamp.fromDate(new Date()),
 		};
 
 		let restaurantMessagesCollection =
 			restaurantCollection.collection("messages");
 
-		batch.set(restaurantMessagesCollection, data.upload);
+		const restaurantMessagesCollectionRef = restaurantMessagesCollection.doc()
+		const restaurantNotificationCollectionRef = restaurantNotificationCollection.doc()
 
-		batch.set(restaurantNotificationCollection, notification);
+		batch.set(restaurantMessagesCollectionRef, data.upload);
+
+		batch.set(restaurantNotificationCollectionRef, notification);
 
 		return batch.commit();
 
@@ -1108,7 +1114,7 @@ export const sendOrderToUserRes = (data) => {
 
 		getFirestore()
 			.collection("marketplace")
-			.doc(data.item.uid)
+			.doc(data.item.userID)
 			.collection("restaurantOrders")
 			.add(data.item)
 			.then((docRef) => {
@@ -1574,7 +1580,7 @@ export const getShoppingListRes = (data) => {
 			.collection("restaurant_users")
 			.doc(uid)
 			.collection("shoppingList")
-			.where("item.week", "==", data.week)
+			.where("item.week", "==", data.week) 
 			.get()
 			.then((snapshot) => {
 				const data = [];
