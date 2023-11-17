@@ -336,7 +336,7 @@ const handlePhoneFileUpload = (e) => {
   const sendEmail = async (email, message) => {
     try {
       // ... (existing code for sending email)
-      const response = await fetch(`${baseUrlDev}/v1/auth/send-email-voucher`, {
+      const response = await fetch(`${baseUrlProd}/v1/auth/send-email-voucher`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -355,7 +355,7 @@ const handlePhoneFileUpload = (e) => {
   const sendSMS = async (phoneNumber, message) => {
     try {
       // ... (existing code for sending SMS)
-      const response = await fetch(`${baseUrlDev}/v1/auth/send-sms-voucher`, {
+      const response = await fetch(`${baseUrlProd}/v1/auth/send-sms-voucher`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
