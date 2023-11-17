@@ -13,12 +13,12 @@ function SendToRes(props) {
   const handleSelect = async () => {
     const data = {
       restaurantID: props.order.restaurantID,
-      status: "IN PROGRESS",
       upload: {
         order: props.order,
         seat: props.seat,
         fullname: props.fullname,
         status: "IN PROGRESS",
+        userID: props.profile.uid,
         userRequestAccountType: props.profile.buildingFunction
       },
     };

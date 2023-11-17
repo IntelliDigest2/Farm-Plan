@@ -169,7 +169,8 @@ function ViewAppNotifications(props) {
 	useEffect(() => {
 		// props.getPurchaseInfoForRes();
 		//console.log("getting inv ==>", props.data)
-		// console.log(props.infoRes, `this is the infor Restaurant`);
+		console.log(props.infoForRes, `this is the infor Restaurant`);
+		setRestaurantsOrderList(props.infoForRes)
 	}, [props.infoRes]);
 
 	useEffect(() => {
@@ -295,6 +296,7 @@ function ViewAppNotifications(props) {
 			// props.getConsultingBookingNotifFromConsultants();
 			props.getConsultingBookings(); //this is to get the consulting booking for a non consultant
 			props.getPurchaseInfoForMealPlanFromFarmers();
+
 			// console.log(`here my bro`);
 		}
 		if (otherUsersRestaurantNotification) {
@@ -1300,6 +1302,7 @@ function ViewAppNotifications(props) {
 													<td>{item.fullname}</td>
 													<td>{item.seat}</td>
 												</tbody>
+												<div>Mobile: {item.order.mobile}</div>
 												<div className="">
 													<ConfirmItemIconRes
 														//value={props.value}
