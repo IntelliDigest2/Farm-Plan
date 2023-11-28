@@ -9,7 +9,8 @@ const initState = {
   inventory: [],
   giftedFood: [], 
   purchaseInfo: [],
-  OrderInfo: [],
+  OrderInfoFromRes: [],
+  OrderList: [],
 };
 
 const mealPlanReducer = (state = initState, action) => {
@@ -106,6 +107,21 @@ const mealPlanReducer = (state = initState, action) => {
       };
       
     // #endregion
+
+    //$region Order List
+    case "GET_ORDER_LIST":
+      console.log("get restaurant order list success", action.payload);
+      return {
+        ...state,
+        OrderList: action.payload,
+        authError: null,
+      };
+    case "GET_ORDER_LIST_ERROR":
+      console.log("error, couldn't get restaurant order list", action.err);
+      return {
+        ...state,
+        authError: "Get restaurant order list failed",
+      };
 
     //#region recipes
     case "CREATE_RECIPE":
@@ -240,10 +256,10 @@ const mealPlanReducer = (state = initState, action) => {
           };
 
           case "GET_PURCHASE_ORDER_RES":
-            console.log("order for restautant", action.payload);
+            console.log("order from restautant", action.payload);
             return {
               ...state,
-              OrderInfo: action.payload,
+              OrderInfoFromRes: action.payload,
               authError: null,
             };
           case "GET_PURCHASE_ORDER_RES_ERROR":
@@ -334,6 +350,20 @@ const mealPlanReducer = (state = initState, action) => {
         ...state,
         authError: "Get shoppiung list failed",
       };
+
+    //   case "GET_ORDER_INFO_FROM_RES":
+    //   console.log("get order from restaurant success", action.payload);
+    //   return {
+    //     ...state,
+    //     orderFromRes: action.payload,
+    //     authError: null,
+    //   };
+    // case "GET_ORDER_INFO_FROM_RES_ERROR":
+    //   console.log("error, couldn't order from restaurant", action.err);
+    //   return {
+    //     ...state,
+    //     authError: "Get order from restaurant failed",
+    //   };
     case "CREATE_RESTAURANT_SHOP":
       console.log("added to shop", action.ingr);
       return {

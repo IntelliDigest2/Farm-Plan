@@ -460,10 +460,10 @@ export const getOrderInfo = (info) => {
         snapshot.forEach((doc) => {
           orderInfo.push(doc.data());
         });
-        dispatch({ type: "GET_PURCHASE_ORDER_RES", payload: orderInfo });
+        dispatch({ type: "GET_PURCHASE_ORDER_RS", payload: orderInfo });
       })
       .catch((err) => {
-        dispatch({ type: "GET_PURCHASE_ORDER_RES_ERROR", err });
+        dispatch({ type: "GET_PURCHASE_ORDER_RS_ERROR", err });
       });
   };
 };
@@ -591,16 +591,16 @@ export const getOrderInfoFromRes = (info) => {
               orderInfo.push({ eventId: doc.id, ...data });
             }
 						orderInfo.push({ eventId: doc.id, ...doc.data() });
-					});
+					}); 
 
 					dispatch({
-						type: "GET_ORDER_INFO_FROM_RES",
+						type: "GET_PURCHASE_ORDER_RES",
 						payload: orderInfo,
 					});
 				},
 				(err) => {
 					console.log(err);
-					dispatch({ type: "GET_ORDER_INFO_FROM_RES_ERROR", err });
+					dispatch({ type: "GET_PURCHASE_ORDER_RES_ERROR", err });
 				}
 			);
       // .get()

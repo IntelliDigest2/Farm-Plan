@@ -6,7 +6,8 @@ import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { 
   editPurchaseStatusFromUser, 
   editPurchaseStatusOnFarmerSupplier, 
-  editPurchaseStatusOnUser } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+  editPurchaseStatusOnUser, 
+  editPurchaseStatusOnUserRes} from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useTranslation, Trans } from 'react-i18next';
@@ -34,6 +35,20 @@ function ConfirmItemIcon(props) {
     
         submitNotification("Success", "Please complete payment");
         break;
+
+        case "user-restaurant":
+          const dataUserRes = {
+            //need to send shopping list data to be bough the previous week from the day it is made
+            refID: props.refID,
+            // id: props.id,
+            status: "CONFIRMED",
+          };
+          // props.editPurchaseStatusFromUser(data);
+          props.editPurchaseStatusOnUserRes(dataUserRes);
+          // console.log("what id", data.id)
+      
+          submitNotification("Success", "Please complete payment");
+          break;
       
       case "farmer":
         const dataFarmer = {
@@ -106,7 +121,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // editPurchaseStatusFromUser: (data) => dispatch(editPurchaseStatusFromUser(data)),
     editPurchaseStatusOnUser: (data) => dispatch(editPurchaseStatusOnUser(data)),
-    editPurchaseStatusOnFarmerSupplier: (data) => dispatch(editPurchaseStatusOnFarmerSupplier(data))
+    editPurchaseStatusOnFarmerSupplier: (data) => dispatch(editPurchaseStatusOnFarmerSupplier(data)),
+    editPurchaseStatusOnUserRes: (data) => dispatch(editPurchaseStatusOnUserRes(data))
 
   };
 };

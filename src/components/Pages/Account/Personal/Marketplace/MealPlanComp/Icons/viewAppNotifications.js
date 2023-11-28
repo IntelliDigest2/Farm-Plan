@@ -3,7 +3,7 @@ import { Table } from "react-bootstrap";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.css";
 import { connect } from "react-redux";
-import { getPurchaseInfo } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
+import { getOrderInfoFromRes, getPurchaseInfo } from "../../../../../../../store/actions/marketplaceActions/mealPlanData";
 import ConfirmItemIcon from "./ConfirmItemIcon";
 
 import { useTranslation, Trans } from "react-i18next";
@@ -62,6 +62,7 @@ function ViewAppNotifications(props) {
 	const [isLoading, setisLoading] = useState(false);
 	const [conversion, setConversion] = useState("");
 	const [conversionFarmerSupplier, setConversionFarmerSupplier] = useState("");
+	const [conversionUserRes, setConversionUserRes] = useState("")
 
 	const userCountryCode = props.profile.country;
 	const userCurrency = getCurrencySymbol(userCountryCode);
@@ -99,6 +100,59 @@ function ViewAppNotifications(props) {
 		//console.log("getting list ==>", list)
 		console.log("info supply", props.infoSupply)
 	}, [props.infoSupply]);
+
+	// //this sends data request
+	useEffect(() => {
+
+		async function convertPrices() {
+			// Iterate through cart items and convert prices
+			const convertedPrices = await Promise.all(
+				props.OrderInfoFromRes.map(async (cart) => {
+					const convertedItemPrices = await Promise.all(
+						cart.item.map(async (cartItem) => {
+							if (cartItem.price) {
+								try {
+									const response = await fetch(
+										`https://v6.exchangerate-api.com/v6/e286ca59c055230262d2aa60/pair/${cart.currency}/${userCurrency}/${cartItem.price}`,
+										{
+											method: "GET",
+											headers: {
+												"Content-type": "application/json; charset=UTF-8",
+											},
+										}
+									);
+									const data = await response.json();
+									// console.log("rate conv", data.conversion_result);
+									return data.conversion_result;
+								} catch (err) {
+									console.error(err);
+									return 0; // Handle cases where price conversion fails
+								}
+							}
+							return 0; // Handle cases where price is not available
+						})
+					);
+
+					// console.log("convertedItemPrices", convertedItemPrices);
+
+					return {
+						...cart,
+						item: cart.item.map((cartItems, index) => ({
+							...cartItems,
+							convertedPrice: convertedItemPrices[index],
+							quantity: 1
+						})),
+					};
+				})
+			);
+			setConversionUserRes(convertedPrices);
+			setisLoading(false); // Once all conversions are done
+		}
+
+		convertPrices();
+		
+		setOtherUsersRestaurantOrderList(props.OrderInfoFromRes)
+	}, [props.OrderInfoFromRes]);
 
 	useEffect(() => {
 		async function convertPrices() {
@@ -1285,29 +1339,60 @@ function ViewAppNotifications(props) {
 													</tr>
 													<tr>
 														<th className="table-header">Meal</th>
-														<th className="table-header">Price</th>
 														<th className="table-header">Name</th>
 														<th className="table-header">Seat</th>
 													</tr>
 												</thead>
 												<tbody>
-													{/* {item.order.map((order) => (
-										<tr key={`order${index}`}>
-										<td>{order.meal}</td>
-										<td>{order.price}</td>
-									</tr>
-									))} */}
-													<td>{item.order.meal}</td>
-													<td>{item.order.mealPrice}</td>
-													<td>{item.fullname}</td>
-													<td>{item.seat}</td>
+													{item.order.map((order, index) => (
+													<tr key={`order${index}`}>
+														<td>{order.meal_name}</td>
+														<td>{item.fullname}</td>
+														<td>{item.seat}</td>
+														<td>
+															<InputGroup>
+																<InputGroup.Text>
+																	{userCurrency}
+																</InputGroup.Text>
+																<Form.Control
+																	type="number"
+																	min="0"
+																	step="1"
+																	value={order.price}
+																	onChange={(e) => {
+																		const newPrice = parseFloat(e.target.value);
+																		const updatedCart = [...item.order];
+																		updatedCart[index].price = newPrice;
+																		const updatedList = restaurantsOrderList.map(
+																			(listItem) =>
+																				listItem.id === item.id
+																					? { ...listItem, cart: updatedCart }
+																					: listItem
+																		);
+																		setRestaurantsOrderList(updatedList);
+																	}}
+																/>
+															</InputGroup>
+														</td>
+													</tr>
+													))}
 												</tbody>
 												<div>Mobile: {item.order.mobile}</div>
 												<div className="">
 													<ConfirmItemIconRes
 														//value={props.value}
 														id={item.id}
-														item={item}
+														item={item.order}
+														confirmType="personal"
+														companyID={props.profile.uid}
+														fullname={item.fullname}
+														seat={item.seat}
+														// farmerRef={item.farmerRef}
+														receiversID={item.userID}
+														// deliveryDueDate={item.deliveryDueDate}
+														// delivery_code={item.delivery_code}
+														currency={userCurrency}
+														buyers_account_type={item.userRequestAccountType}
 													/>
 												</div>
 											</Table>
@@ -1417,10 +1502,10 @@ function ViewAppNotifications(props) {
 						</div>
 					)} */}
 					<>
-						{otherUsersRestaurantOrderList?.length ? (
+						{conversionUserRes?.length ? (
 							<>
 								<List>
-									{otherUsersRestaurantOrderList.map((item, index) => (
+									{conversionUserRes.map((order, index) => (
 										<ListItem
 											key={`item${index}`}
 											// className="list"
@@ -1431,7 +1516,7 @@ function ViewAppNotifications(props) {
 													<tr>
 														<h6>
 															<b>Status: </b>
-															{item.status}
+															{order.status}
 														</h6>
 													</tr>
 													<tr>
@@ -1442,24 +1527,38 @@ function ViewAppNotifications(props) {
 													</tr>
 												</thead>
 												<tbody>
-													{/* {item.order.map((order) => (
-										<tr key={`order${index}`}>
-										<td>{order.meal}</td>
-										<td>{order.price}</td>
-									</tr>
-									))} */}
-													<td>{item.order.meal}</td>
-													<td>{item.order.mealPrice}</td>
-													<td>{item.fullname}</td>
-													<td>{item.seat}</td>
+													{order.item.map((item) => (
+														<tr key={`order${index}`}>
+														<td>{item.meal_name}</td>
+														<td>{item.price}</td>
+														<td>{order.fullname}</td>
+														<td>{order.seat}</td>
+													</tr>
+													))}
+													
 												</tbody>
 												<div className="">
-													<ConfirmItemIconRes
-														//value={props.value}
-														id={item.id}
-														item={item}
-													/>
-												</div>
+											{order.status !== "COMPLETED" ? (
+												order.status === "CONFIRMED" ? (
+												<PayIconWallet
+													payType="user-restaurant"
+													uid={order.receiversID}
+													order={order}
+													refID={order.farmerRef}
+													farmerRef={order.farmerRef}
+													farmerID={order.farmerID}
+													currency={order.currency}
+												/>
+												) : (
+												<ConfirmItemIcon
+													confirmType="user-restaurant"
+													//value={props.value}
+													refID={order.id}
+													// id={item.id}
+												/>
+												)
+											) : null}
+											</div>
 											</Table>
 										</ListItem>
 									))}
@@ -1486,8 +1585,8 @@ const mapStateToProps = (state) => {
 		auth: state.firebase.auth,
 		loadingPay: state.bookingPurchaseState.purchaseStatusChangeLoading,
 		profile: state.firebase.profile,
-		infoOrder: state.mealPlan.OrderInfo,
 		infoForRes: state.restaurant.orderRes,
+		OrderInfoFromRes: state.mealPlan.OrderInfoFromRes,
 		infoForSupplier: state.supplier.orderSupply,
 		infoFarm: state.farmData.purchaseInfoFarm,
 		consultantRequests: state.consultantState.consultantRequests,
@@ -1502,7 +1601,7 @@ const mapDispatchToProps = (dispatch) => {
 		getPurchaseInfoForMealPlanFromFarmers: (data) =>
 			dispatch(getPurchaseInfo(data)),
 
-		getUsersRestaurantNotif: () => dispatch(getOrderInfo()),
+		getUsersRestaurantNotif: () => dispatch(getOrderInfoFromRes()),
 		getConsultingBookings: () => dispatch(getConsultingBookingsForPurchase()),
 
 		purchaseBooking: (
@@ -1528,7 +1627,6 @@ const mapDispatchToProps = (dispatch) => {
 		getConsultantRequests: (data) => dispatch(getBookingRequest(data)),
 		getConsultantInfo: (uid) => dispatch(fetchConsultantInfo(uid)),
 		getFarmMessagesFromSupplier: (data) => dispatch(getFarmMessagesFromSupplier(data)),
-
 	};
 	};	
 

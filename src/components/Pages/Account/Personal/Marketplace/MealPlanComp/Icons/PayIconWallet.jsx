@@ -3,7 +3,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
-import { editPurchaseStatusOnUser, editPurchaseStatusOnFarmerSupplier } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import { editPurchaseStatusOnUser, editPurchaseStatusOnFarmerSupplier, editPurchaseStatusOnUserRes } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
 import { useHistory } from 'react-router'
@@ -55,6 +55,62 @@ function PayIconWallet(props) {
             status: "COMPLETED",
           };
           props.editPurchaseStatusOnUser(data);
+          // props.editPurchaseStatusOnFarmer(data)
+    
+    
+          // props.sendPaymentNotificationToSeller(props.personReceivingPaymentAccountType.personReceivingPaymentID)
+    
+          // history.push('/payment-success')
+          Swal.fire({
+            title: 'Success!',
+            text: 'Payment was successful',
+            icon: 'success',
+          });
+          const newPage = window.open('/payment-success', '_blank');
+      
+          // Optionally, you can focus on the new window/tab
+          if (newPage) {
+            newPage.focus();
+          }
+          handleClose()
+        })
+        .catch((err) => {
+          console.log(err.message);
+          Swal.fire({
+            title: 'Error!',
+            text: 'Please check your wallet balance and try again',
+            icon: 'error',
+          });
+        })
+        break;
+
+        case "user-restaurant":
+        const transferDataUserRes = {
+          user: props.uid,
+          order: props.order, 
+          currency: props.currency,
+        };
+    
+        console.log("transfer data user-res ===>", transferDataUserRes)
+        
+        await fetch(`${baseUrlDev}/v1/payment/initiate-payment`, {
+    
+          method: 'POST', 
+          body: JSON.stringify(transferDataUserRes),
+          headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
+        .then((response) => response.json())
+        .then((res) => {
+          console.log("reservation ===>", res)
+          const data = {
+            refID: props.refID,
+            farmerRef: props.farmerRef,
+            farmerID: props.farmerID,
+            status: "COMPLETED",
+          };
+          props.editPurchaseStatusOnUserRes(data);
           // props.editPurchaseStatusOnFarmer(data)
     
     
@@ -219,7 +275,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     editPurchaseStatusOnUser: (data) => dispatch(editPurchaseStatusOnUser(data)),
-    editPurchaseStatusOnFarmerSupplier: (data) => dispatch(editPurchaseStatusOnFarmerSupplier(data))
+    editPurchaseStatusOnFarmerSupplier: (data) => dispatch(editPurchaseStatusOnFarmerSupplier(data)),
+    editPurchaseStatusOnUserRes: (data) => dispatch(editPurchaseStatusOnUserRes(data))
 
   };
 };
