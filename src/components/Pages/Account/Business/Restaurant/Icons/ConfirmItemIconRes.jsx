@@ -19,16 +19,29 @@ function ConfirmItemIconRes(props) {
 
  // console.log("to inventory ==> ", props.food)
   const handleSelect = async () => {
-    const data = {
-      //need to send shopping list data to be bough the previous week from the day it is made
-      id: props.id,
-      item: props.item,
-      status: "CONFIRMED",
-    };
-    props.editMenuStatusOnRes(data);
-    props.sendOrderToUser(data)
 
-    submitNotification("Success", "User will be notified");
+    switch(props.confirmType) {
+      case "personal":
+        const dataUser = {
+          //need to send shopping list data to be bough the previous week from the day it is made
+          id: props.id,
+          item: props.item,
+          farmerRef: props.id,
+          status: "ACCEPTED",
+          item: props.item,
+          fullname: props.fullname,
+          seat: props.seat,
+          currency: props.currency,
+          farmerID: props.companyID,
+          receiversID: props.receiversID,
+          buyers_account_type: props.buyers_account_type,
+        };
+        props.editMenuStatusOnRes(dataUser);
+        props.sendOrderToUser(dataUser)
+    
+        submitNotification("Success", "User will be notified");
+
+    }
   };
 
   const handleClose = () => setShow(false);
@@ -52,7 +65,7 @@ function ConfirmItemIconRes(props) {
             <Modal.Title>{t('description.button_confirm')}</Modal.Title>
           </Modal.Header>
         <Modal.Body>
-            <p><h5>{t('description.accept_to_deliver')}</h5></p>
+            <p><h5>Reserve seat for this order?</h5></p>
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"

@@ -194,6 +194,50 @@ export const editPurchaseStatusOnUser = (data) => {
 	};
 };
 
+export const editPurchaseStatusOnUserRes = (data) => {
+	return (dispatch, getState, { getFirestore }) => {
+		//make async call to database
+		const profile = getState().firebase.profile;
+		const authUID = getState().firebase.auth.uid;
+
+		var uid;
+		switch (profile.type) {
+			case "business_admin":
+				uid = authUID;
+				break;
+			case "business_sub":
+				uid = profile.admin;
+				break;
+			case "academic_admin":
+				uid = authUID;
+				break;
+			case "academic_sub":
+				uid = profile.admin;
+				break;
+			case "household_admin":
+				uid = authUID;
+				break;
+			case "household_sub":
+				uid = profile.admin;
+				break;
+			default:
+				uid = authUID;
+				break;
+		}
+
+		getFirestore()
+			.collection("marketplace")
+			.doc(uid)
+			.collection("restaurantOrders")
+			.doc(data.refID)
+			.set({ status: data.status }, { merge: true })
+			.then(() => dispatch({ type: "EDIT_PURCHASE_STATUS", payload: data }))
+			.catch((err) => {
+				dispatch({ type: "EDIT_PURCHASE_STATUS_ERROR", err });
+			});
+	};
+};
+
 export const editPurchaseStatusOnFarmer = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database

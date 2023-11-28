@@ -1058,78 +1058,76 @@ export const sendToRes = (data) => {
 		const restaurantMessagesCollectionRef = restaurantMessagesCollection.doc()
 		const restaurantNotificationCollectionRef = restaurantNotificationCollection.doc()
 
-		batch.set(restaurantMessagesCollectionRef, data.upload);
+		batch.set(restaurantMessagesCollectionRef, {
+			...data.upload,
+			id: restaurantMessagesCollectionRef.id,
+		  });
 
 		batch.set(restaurantNotificationCollectionRef, notification);
 
 		return batch.commit();
-
-		// .add(data.upload)
-		// .then((docRef) => {
-		// 	// make the docId easily accessible so that we can delete it later if we want.
-		// 	getFirestore()
-		// 		.collection("restaurant_users")
-		// 		.doc(data.restaurantID)
-		// 		.collection("messages")
-		// 		.doc(docRef.id)
-		// 		.set({ id: docRef.id, uid: uid }, { merge: true });
-		// 	dispatch({ type: "SEND_TO_RESTAURANT" });
-		// })
-		// .catch((err) => {
-		// 	dispatch({ type: "SEND_TO_RESTAURANT_ERROR", err });
-		// });
 	};
 };
 
 export const sendOrderToUserRes = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database
-		const profile = getState().firebase.profile;
-		const authUID = getState().firebase.auth.uid;
 
-		let uid;
-		switch (profile.type) {
-			case "business_admin":
-				uid = authUID;
-				break;
-			case "business_sub":
-				uid = profile.admin;
-				break;
-			case "academic_admin":
-				uid = authUID;
-				break;
-			case "academic_sub":
-				uid = profile.admin;
-				break;
-			case "household_admin":
-				uid = authUID;
-				break;
-			case "household_sub":
-				uid = profile.admin;
-				break;
-			default:
-				uid = authUID;
-				break;
-		}
+		const firestore = getFirestore();
+		const batch = firestore.batch();
 
-		getFirestore()
+		let notification = {
+			notification_type: "eatingOut_request",
+			created_at: new Date(),
+		};
+
+		// TODO NOTIFICATION
+		// this function changes the state of the messages collection in the marketplace
+		// for the place where the admin send this to the user which is buying the notification is not supposed to show
+
+		let userCollection = setUsersCollection(data.buyers_account_type);
+
+		let notificationRef = getFirestore()
+			.collection(userCollection)
+			.doc(data.receiversID)
+			.collection("notifications");
+
+		let marketPlaceMessagesRef = getFirestore()
 			.collection("marketplace")
-			.doc(data.item.userID)
-			.collection("restaurantOrders")
-			.add(data.item)
-			.then((docRef) => {
-				// make the docId easily accessible so that we can delete it later if we want.
-				getFirestore()
-					.collection("marketplace")
-					.doc(data.item.uid)
-					.collection("restaurantOrders")
-					.doc(docRef.id)
-					.set({ id: docRef.id, status: data.status }, { merge: true });
-				dispatch({ type: "SEND_ORDER_TO_USER" });
-			})
-			.catch((err) => {
-				dispatch({ type: "SEND_ORDER_TO_USER_ERROR", err });
-			});
+			.doc(data.receiversID)
+			.collection("restaurantOrders");
+
+		const newMessageRef = marketPlaceMessagesRef.doc();
+
+		const newNotificationRef = notificationRef.doc();
+
+		batch.set(newMessageRef, {
+			...data,
+			id: newMessageRef.id,
+		  });
+		batch.set(newNotificationRef, notification);
+
+		return batch.commit();
+
+
+		// getFirestore()
+		// 	.collection("marketplace")
+		// 	.doc(data.receiverID)
+		// 	.collection("restaurantOrders")
+		// 	.add(data.item)
+		// 	.then((docRef) => {
+		// 		// make the docId easily accessible so that we can delete it later if we want.
+		// 		getFirestore()
+		// 			.collection("marketplace")
+		// 			.doc(data.receiverID)
+		// 			.collection("restaurantOrders")
+		// 			.doc(docRef.id)
+		// 			.set({ id: docRef.id, status: data.status }, { merge: true });
+		// 		dispatch({ type: "SEND_ORDER_TO_USER" });
+		// 	})
+		// 	.catch((err) => {
+		// 		dispatch({ type: "SEND_ORDER_TO_USER_ERROR", err });
+		// 	});
 	};
 };
 
@@ -1847,3 +1845,36 @@ export const addToPurchaseItemsRes = (data) => {
 			});
 	};
 };
+
+
+export const getRestaurantList = (data) => {
+	return (dispatch, getState, { getFirebase }) => {
+
+		console.log("checkkkk data", data)
+  
+	  getFirebase()
+		.firestore()
+		.collection("users")
+		.where("city", "==", data.city)
+		.where("buildingFunction", "==", "Restaurants")
+		.onSnapshot(
+			(querySnapshot) => {
+				let orderInfo = [];
+				querySnapshot.forEach((doc) => {
+					// console.log(doc.id, " => ", doc.data()); // Log the document ID and data
+					orderInfo.push({ eventId: doc.id, ...doc.data() });
+				}); 
+
+				dispatch({
+					type: "GET_RESTAURANT_LIST",
+					payload: orderInfo,
+				});
+			},
+			(err) => {
+				console.log(err);
+				dispatch({ type: "GET_RESTAURANT_LIST_ERROR", err });
+			}
+		);
+	};
+  };
+  

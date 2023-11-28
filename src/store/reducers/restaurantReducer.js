@@ -17,6 +17,7 @@ const initState = {
 	turnoverSales: null,
 	turnoverProduce: null,
 	turnoverError: false,
+	restaurantList: [],
 };
 
 const restaurantReducer = (state = initState, action) => {
@@ -31,6 +32,20 @@ const restaurantReducer = (state = initState, action) => {
 			};
 		case "GET_RESTAURANT_ERROR":
 			console.log("error, restaurant data not fetched", action.err);
+			return {
+				...state,
+				authError: "get restaurant failed",
+			};
+
+			case "GET_RESTAURANT_LIST":
+			console.log("restaurant list in region", action.payload);
+			return {
+				...state,
+				restaurantList: action.payload,
+				authError: null,
+			};
+		case "GET_RESTAURANT_LIST_ERROR":
+			console.log("error, restaurant list not fetched", action.err);
 			return {
 				...state,
 				authError: "get restaurant failed",
