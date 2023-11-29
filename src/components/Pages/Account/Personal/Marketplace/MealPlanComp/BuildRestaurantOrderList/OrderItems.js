@@ -86,6 +86,8 @@ function OrderItems(props) {
 		);
 	}
 
+	
+
 	const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 	const [cart, setCart] = useState([]);
@@ -292,7 +294,7 @@ function OrderItems(props) {
 										</IconButton>
 									</Tooltip>
 
-									<BoughtItemIcon
+									{/* <BoughtItemIcon
 										value={props.value}
 										// food={ingr.food}
 										// item={ingr.data}
@@ -301,9 +303,9 @@ function OrderItems(props) {
 										// quantity={ingr.quantity}
 										update={update}
 										setUpdate={setUpdate}
-									/>
+									/> */}
 
-									<EditAddedItems
+									{/* <EditAddedItems
 										value={props.value}
 										// food={ingr.food}
 										// data={ingr.data}
@@ -313,7 +315,7 @@ function OrderItems(props) {
 										// quantity={ingr.quantity}
 										update={update}
 										setUpdate={setUpdate}
-									/>
+									/> */}
 
 								</div>
 							</ListItem>

@@ -73,14 +73,20 @@ export const Reservations = (props) => {
                       <div className="cart-items">
                         {item.cartItems.map((cartItem, cartIndex) => (
                           <div key={cartIndex}>
-                            {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - {cartItem.convertedPrice * cartItem.quantity}
+                            {cartItem.data} {cartItem.quantity} ({item.orderID || measurementUnits[cartItem.measure] || cartItem.measure}) - {item.convertedCurrency} {cartItem.convertedPrice * cartItem.quantity}
                           </div>
                         ))}
                       </div>
   
                       <div className="date">
-                        {`Estimated Delivery is in ${moment(item.deliveryDueDate).fromNow(true)}`}
-                      </div>
+                      {item.cartItems.some(cartItem => cartItem.day_of_week) ? (
+                        // Display cartItem.day_of_week if any cartItem has the day_of_week property
+                        item.cartItems.map(cartItem => cartItem.day_of_week).join(', ')
+                      ) : (
+                        // Display estimated delivery if there is no cartItem with the day_of_week property
+                        `Estimated Delivery is in ${moment(item.deliveryDueDate).fromNow(true)}`
+                      )}
+                    </div>
                     </div>
                     </div>
                     <Badge bg="primary" pill className="transaction-id">
