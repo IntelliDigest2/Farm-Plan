@@ -194,6 +194,8 @@ export const editPurchaseStatusOnUser = (data) => {
 	};
 };
 
+
+
 export const editPurchaseStatusOnUserRes = (data) => {
 	return (dispatch, getState, { getFirestore }) => {
 		//make async call to database

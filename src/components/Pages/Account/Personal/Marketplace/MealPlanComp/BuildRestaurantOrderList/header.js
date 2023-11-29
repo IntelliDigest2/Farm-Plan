@@ -18,7 +18,7 @@ export default function ShoppingListHeader({ value, setValue }) {
         {String.fromCharCode(171)}
       </div>
       <div className="current">
-        Shopping list for {startDay.format("DD MMMM")} -{" "}
+        Order list for {startDay.format("DD MMMM")} -{" "}
         {endDay.format("DD MMMM")}
       </div>
       <div className="next" onClick={() => setValue(nextWeek())}>

@@ -32,6 +32,7 @@ function PayIconWallet(props) {
           user: props.uid,
           order: props.order, 
           currency: props.currency,
+          paymentType: "FARMER"
         };
     
         console.log("transfer data ===>", transferData)
@@ -87,8 +88,30 @@ function PayIconWallet(props) {
         case "user-restaurant":
         const transferDataUserRes = {
           user: props.uid,
-          order: props.order, 
+          order: {
+            buyers_account_type: props.order.buyers_account_type,
+            currency: props.order.currency,
+            eventId: props.order.id,
+            farmerID: props.order.farmerID,
+            farmerRef: props.order.farmerRef,
+            id: props.order.id,
+            item: Array.isArray(props.order.item)
+              ? props.order.item.map(item => ({
+                  currency: item.currency,
+                  data: item.meal_name, // Rename the property to 'data'
+                  restaurant: item.restaurant_name,
+                  day_of_week: item.day_of_week,
+                  price: item.price,
+                  convertedPrice: item.convertedPrice,
+                  quantity: item.quantity,
+                }))
+              : [], // Make sure it's an array or default to an empty array
+            // item: props.order.item,
+            receiversID: props.order.receiversID,
+            status: "COMPLETED"
+          },  
           currency: props.currency,
+          paymentType: "RESTAURANT",
         };
     
         console.log("transfer data user-res ===>", transferDataUserRes)
@@ -110,13 +133,9 @@ function PayIconWallet(props) {
             farmerID: props.farmerID,
             status: "COMPLETED",
           };
-          props.editPurchaseStatusOnUserRes(data);
+          // props.editPurchaseStatusOnUserRes(data);
           // props.editPurchaseStatusOnFarmer(data)
     
-    
-          // props.sendPaymentNotificationToSeller(props.personReceivingPaymentAccountType.personReceivingPaymentID)
-    
-          // history.push('/payment-success')
           Swal.fire({
             title: 'Success!',
             text: 'Payment was successful',
@@ -168,6 +187,7 @@ function PayIconWallet(props) {
             status: "COMPLETED"
           }, 
           currency: props.currency,
+          paymentType: "SUPPLIER",
         };
     
         console.log("transfer data ===>", transferDataFarmer)
@@ -192,11 +212,7 @@ function PayIconWallet(props) {
           };
           // props.editPurchaseStatusOnUser(data);
           props.editPurchaseStatusOnFarmerSupplier(data)
-    
-    
-          // props.sendPaymentNotificationToSeller(props.personReceivingPaymentAccountType.personReceivingPaymentID)
-    
-          // history.push('/payment-success')
+      
           Swal.fire({
             title: 'Success!',
             text: 'Payment was successful',
