@@ -253,7 +253,7 @@ function OrderItems(props) {
 	return (
 		<>
 		
-		<div className="col-4" style={{textAlign: "right"}}><AddMealModalRestaurant show={show} setShow={setShow} /></div>
+		<div className="" style={{textAlign: "right"}}><AddMealModalRestaurant show={show} setShow={setShow} /></div>
 
 
 			{allList.length ? (
