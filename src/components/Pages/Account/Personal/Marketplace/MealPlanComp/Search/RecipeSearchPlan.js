@@ -117,13 +117,13 @@ export default function RecipeSearchPlan(props) {
               </div>
             </Grid>
             <Grid item xs={12} md={6}>
-              <p>{t('description.origin')}</p>
+              <p>{t('description.requirements')}</p>
               <div>
-                <CuisineType setCuisineType={setCuisineType} />
+                <Requirements setRequirements={setRequirements} />
               </div>
             </Grid>
           </Grid>
-          <Grid container spacing={2}>
+          {/* <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <p>{t('description.requirements')}</p>
               <div>
@@ -131,7 +131,7 @@ export default function RecipeSearchPlan(props) {
               </div>
             </Grid>
             <Grid item xs={12} md={6}></Grid>
-          </Grid>
+          </Grid> */}
         </Box>
       </Form>
       <div className="meals">

@@ -48,6 +48,10 @@ function FullCalendarApp(props) {
 
   const [dayOfWeek, setDayOfWeek] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
+  const [restaurantAddress, setRestaurantAddress] = useState("");
+  const [restaurantEmail, setRestaurantEmail] = useState("");
+  const [restaurantMobile, setRestaurantMobile] = useState("");
+  const [restaurantWebsite, setRestaurantWebsite] = useState("");
 
 
 
@@ -355,6 +359,10 @@ function FullCalendarApp(props) {
           upload: {
             day_of_week: dayOfWeek,
             restaurant_name: restaurantName,
+            restaurant_address: restaurantAddress,
+            restaurant_email: restaurantEmail,
+            restaurant_mobile: restaurantMobile,
+            restaurant_website: restaurantWebsite,
             recipe: props.SelectedRecipe,
           }        
         };
@@ -363,6 +371,11 @@ function FullCalendarApp(props) {
   
       props.addOtherMeals(data);
       submitNotificationPlan("Success", "Your meal has been saved!");
+      setRestaurantName("")
+      setRestaurantAddress("")
+      setRestaurantEmail("")
+      setRestaurantMobile("")
+      setRestaurantWebsite("")
   
     };
 
@@ -540,7 +553,7 @@ function FullCalendarApp(props) {
 
     <div>
     <Box sx={{ flexGrow: 1 }}>
-  <Grid container spacing={2}>
+    <Grid container spacing={2}>
     <Grid item xs={12} md={3}>
       <div>
         <DayOfWeek setDayOfWeek={setDayOfWeek} />
@@ -548,20 +561,63 @@ function FullCalendarApp(props) {
     </Grid>
 
     <Grid item xs={12} md={7}>
+      <p>Enter Restaurant details</p>
       <div>
         <input
           type="text"
           value={restaurantName}
           onChange={(e) => setRestaurantName(e.target.value)}
           className="inputField"
-          placeholder="Enter name of restaurant"
+          placeholder="Name of restaurant"
         />
       </div>
+      <div>
+        <input
+          type="text"
+          value={restaurantAddress}
+          onChange={(e) => setRestaurantAddress(e.target.value)}
+          className="inputField"
+          placeholder="Address of restaurant"
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          value={restaurantWebsite}
+          onChange={(e) => setRestaurantWebsite(e.target.value)}
+          className="inputField"
+          placeholder="Website URL"
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          value={restaurantEmail}
+          onChange={(e) => setRestaurantEmail(e.target.value)}
+          className="inputField"
+          placeholder="Email Address"
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          value={restaurantMobile}
+          onChange={(e) => setRestaurantMobile(e.target.value)}
+          className="inputField"
+          placeholder="Mobile number"
+        />
+      </div>
+      {/* Conditional message for incomplete form */}
+      {(!restaurantAddress || !restaurantName) && (
+        <p style={{ color: 'red' }}>{'Name and address required.'}</p>
+      )}
     </Grid>
 
     <Grid item xs={12} md={2}>
       <div className="button">
-        <AddButton onClick={handleShowAdd} />
+        <AddButton 
+          onClick={handleShowAdd} 
+          isDisabled={!restaurantAddress || !restaurantName}        />
       </div>
       <Modal show={showModalAdd} onHide={handleCloseAdd}>
         <Modal.Header closeButton>
@@ -585,12 +641,12 @@ function FullCalendarApp(props) {
             No
           </Button> */}
         </Modal.Footer>
-      </Modal>
-    </Grid>
-  </Grid>
-</Box>
+        </Modal>
+          </Grid>
+        </Grid>
+        </Box>
 
-    </div>
+ </div>
     <div>
       {otherMeals.map((meal) => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>

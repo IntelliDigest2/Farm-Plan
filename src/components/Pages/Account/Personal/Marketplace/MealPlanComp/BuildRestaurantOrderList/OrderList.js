@@ -5,6 +5,7 @@ import OrderItemsHeader from "./header";
 import OrderItems from "./OrderItems";
 
 import moment from "moment";
+import { PageWrapSupply } from "../../../../../../SubComponents/PageWrapSupply";
 
 //When inputting items to the calendar, also send them to shopping list along with
 // ingredients, mealName and  timestamp. (sent to file with week of year, year tag)
@@ -17,9 +18,11 @@ import moment from "moment";
 export const OrderList = ({ tab, update, forceUpdate }) => {
   const [value, setValue] = useState(moment());
   return (
+    <PageWrapSupply goTo="/account" header="Restaurant Order">
     <div className="calendar">
       <OrderItemsHeader value={value} setValue={setValue} />
       <OrderItems value={value} />
     </div>
+    </PageWrapSupply>
   );
 };

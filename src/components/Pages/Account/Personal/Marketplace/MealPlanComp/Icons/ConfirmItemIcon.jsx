@@ -39,7 +39,7 @@ function ConfirmItemIcon(props) {
         case "user-restaurant":
           const dataUserRes = {
             //need to send shopping list data to be bough the previous week from the day it is made
-            refID: props.refID,
+            id: props.refID,
             // id: props.id,
             status: "CONFIRMED",
           };

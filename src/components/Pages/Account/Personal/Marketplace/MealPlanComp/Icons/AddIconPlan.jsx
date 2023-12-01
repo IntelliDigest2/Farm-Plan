@@ -5,6 +5,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import { connect } from "react-redux";
 import { setSelectedRecipe } from "../../../../../../../store/actions/dataActions";
+import { submitNotification } from "../../../../../../lib/Notifications";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function AddIconPlan(props) {
@@ -20,6 +21,8 @@ function AddIconPlan(props) {
     }
 
     props.setSelectedRecipe(upload)
+    submitNotification("Success", "Meal selected");
+
   }
 
   return (

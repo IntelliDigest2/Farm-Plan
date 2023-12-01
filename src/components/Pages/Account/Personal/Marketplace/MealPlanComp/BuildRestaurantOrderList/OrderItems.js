@@ -11,7 +11,7 @@ import {
 
 // import { addToPurchaseItems } from "../../../../../../../store/actions/dataActions";
 import { useTranslation, Trans } from "react-i18next";
-
+import { AddMealModalRestaurant } from "../Icons/AddMealModalRestaurant";
 import BoughtItemIcon from "../Icons/BoughtItemIcon";
 import AddToCartIcon from "../Icons/AddToCartIcon";
 import Edit from "../Icons/EditIconShop";
@@ -43,13 +43,14 @@ function OrderItems(props) {
 	}
 
 	const [allList, setAllList] = useState([]);
-	const [showModal, setShow] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 	const [deliveryOption, setDeliveryOption] = useState("delivery");
 	const [address, setAddress] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [cartIsEmpty, setCartIsEmpty] = useState(true);
 	const [restaurantList, setRestaurantList] = useState([])
 	const [selectedRestaurant, setSelectedRestaurant] = useState("");
+	const [show, setShow] = useState(false);
 
 	useEffect(() => {
 		forceUpdate();
@@ -85,8 +86,6 @@ function OrderItems(props) {
 			</>
 		);
 	}
-
-	
 
 	const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -179,11 +178,14 @@ function OrderItems(props) {
 
 	useEffect(() => {
 		const data = {
-			city: "Abuja",
+			city: props.profile?.city, // Replace 'defaultCity' with a default value if needed
 		};
-  
-		props.getRestaurantList(data);
-	}, [props.value]);
+	
+		if (data.city) {
+			props.getRestaurantList(data);
+		}
+	}, [props.profile]);
+	
 
 	// shopping list added by user using the add button
 	const RestaurantList = async () => {
@@ -206,12 +208,12 @@ function OrderItems(props) {
 				},
 			]);
 		});
-	}; 
+	};  
 	
 	useEffect(() => {
 		RestaurantList();
 		console.log("res list", restaurantList)
-	}, [props.retaurantList]);
+	}, [props.restaurantList]);
 
 	// shopping list added by user using the add button
 	const OrderList = async () => {
@@ -220,7 +222,6 @@ function OrderItems(props) {
 
 		//sets a new meal object in the array for every document with this date attached
 		props.OrderList.forEach((doc) => {
-			//id is the docref for deletion
 			var id = doc.id;
 			var day_of_week = doc.day_of_week;
 			var restaurant_name = doc.restaurant_name;
@@ -245,14 +246,15 @@ function OrderItems(props) {
 		console.log("res orders", allList)
 	}, [props.OrderList]);
 
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleClose = () => setShowModal(false);
+	const handleShow = () => setShowModal(true);
 
 
 	return (
 		<>
 		
-			<Refresh />
+		<div className="col-4" style={{textAlign: "right"}}><AddMealModalRestaurant show={show} setShow={setShow} /></div>
+
 
 			{allList.length ? (
 				<>
@@ -270,6 +272,8 @@ function OrderItems(props) {
 									<br />
 									<p>
 										{meal.restaurant_name}
+									</p>
+									<p>
 										{meal.day_of_week}
 									</p>
 								</div>

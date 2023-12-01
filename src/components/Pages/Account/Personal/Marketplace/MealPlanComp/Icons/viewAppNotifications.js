@@ -1236,89 +1236,7 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Restaurant Order Notifications
 					</h2>
-					{/* {props.bookingsInfo.length ? (
-						<>
-							<List>
-								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
-									let eventType = booking.event.eventType;
-									let consultantId = booking.consultant.consultantId;
-									let consultantName = booking.consultant.consultantName;
-
-									let date = format(
-										parseISO(booking.event.start),
-										"yyyy-MM-dd"
-									);
-									let startTime = format(
-										parseISO(booking.event.start),
-										"hh:mm a"
-									);
-									let endTime = format(parseISO(booking.event.end), "hh:mm a");
-									return (
-										<ListItem
-											key={`item${index}`}
-											style={{ alignItems: "flex-end" }}
-										>
-											<Table striped bordered hover>
-												<thead>
-													<tr>
-														<h6>
-															<b>Order ID: </b>
-															{bookingId}
-														</h6>
-
-														<h6>
-															<b>Status: {booking.status} </b>
-															{}
-														</h6>
-													</tr>
-													<tr>
-														<th className="table-header">Event Type</th>
-														<th className="table-header">Date</th>
-														<th className="table-header">Start time</th>
-														<th className="table-header">End Time</th>
-														<th className="table-header">Description</th>
-														<th className="table-header">Price</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr key={`cart${index}`}>
-														<td>{eventType}</td>
-														<td>{date}</td>
-														<td>{startTime}</td>
-														<td>{endTime}</td>
-														<td>{booking.event.description}</td>
-														<td>{booking.event.price}</td>
-													</tr>
-												</tbody>
-											</Table>
-											<div className="">
-												{booking.status === "completed" ? (
-													"PAID"
-												) : (
-													<PayIcon
-														payType="consultant"
-														consultantPaymentInfo={[
-															bookingId,
-															consultantId,
-															consultantName,
-															eventType,
-															booking.event.start,
-														]}
-														id={bookingId}
-														uid={props.auth.uid}
-													/>
-												)}
-											</div>
-										</ListItem>
-									);
-								})}
-							</List>
-						</>
-					) : (
-						<div className="empty basic-title-left">
-							<p>You don't have any booking Notifications</p>
-						</div>
-					)} */}
+					
 					<>
 						{restaurantsOrderList?.length ? (
 							<>
@@ -1379,21 +1297,19 @@ function ViewAppNotifications(props) {
 												</tbody>
 												<div>Mobile: {item.order.mobile}</div>
 												<div className="">
-													<ConfirmItemIconRes
-														//value={props.value}
-														id={item.id}
-														item={item.order}
-														confirmType="personal"
-														companyID={props.profile.uid}
-														fullname={item.fullname}
-														seat={item.seat}
-														// farmerRef={item.farmerRef}
-														receiversID={item.userID}
-														// deliveryDueDate={item.deliveryDueDate}
-														// delivery_code={item.delivery_code}
-														currency={userCurrency}
-														buyers_account_type={item.userRequestAccountType}
-													/>
+													{item.order.every((order) => order.price > 0) && (
+														<ConfirmItemIconRes
+															id={item.id}
+															item={item.order}
+															confirmType="personal"
+															companyID={props.profile.uid}
+															fullname={item.fullname}
+															seat={item.seat}
+															receiversID={item.userID}
+															currency={userCurrency}
+															buyers_account_type={item.userRequestAccountType}
+														/>
+													)}
 												</div>
 											</Table>
 										</ListItem>
@@ -1418,89 +1334,6 @@ function ViewAppNotifications(props) {
 					<h2 style={{ fontSize: "14px", fontWeight: "600", color: "#0c0847" }}>
 						Restaurant Notifications
 					</h2>
-					{/* {props.bookingsInfo.length ? (
-						<>
-							<List>
-								{props.bookingsInfo.map(({ bookingId, booking }, index) => {
-									let eventType = booking.event.eventType;
-									let consultantId = booking.consultant.consultantId;
-									let consultantName = booking.consultant.consultantName;
-
-									let date = format(
-										parseISO(booking.event.start),
-										"yyyy-MM-dd"
-									);
-									let startTime = format(
-										parseISO(booking.event.start),
-										"hh:mm a"
-									);
-									let endTime = format(parseISO(booking.event.end), "hh:mm a");
-									return (
-										<ListItem
-											key={`item${index}`}
-											style={{ alignItems: "flex-end" }}
-										>
-											<Table striped bordered hover>
-												<thead>
-													<tr>
-														<h6>
-															<b>Order ID: </b>
-															{bookingId}
-														</h6>
-
-														<h6>
-															<b>Status: {booking.status} </b>
-															{}
-														</h6>
-													</tr>
-													<tr>
-														<th className="table-header">Event Type</th>
-														<th className="table-header">Date</th>
-														<th className="table-header">Start time</th>
-														<th className="table-header">End Time</th>
-														<th className="table-header">Description</th>
-														<th className="table-header">Price</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr key={`cart${index}`}>
-														<td>{eventType}</td>
-														<td>{date}</td>
-														<td>{startTime}</td>
-														<td>{endTime}</td>
-														<td>{booking.event.description}</td>
-														<td>{booking.event.price}</td>
-													</tr>
-												</tbody>
-											</Table>
-											<div className="">
-												{booking.status === "completed" ? (
-													"PAID"
-												) : (
-													<PayIcon
-														payType="consultant"
-														consultantPaymentInfo={[
-															bookingId,
-															consultantId,
-															consultantName,
-															eventType,
-															booking.event.start,
-														]}
-														id={bookingId}
-														uid={props.auth.uid}
-													/>
-												)}
-											</div>
-										</ListItem>
-									);
-								})}
-							</List>
-						</>
-					) : (
-						<div className="empty basic-title-left">
-							<p>You don't have any booking Notifications</p>
-						</div>
-					)} */}
 					<>
 						{conversionUserRes?.length ? (
 							<>
@@ -1527,8 +1360,8 @@ function ViewAppNotifications(props) {
 													</tr>
 												</thead>
 												<tbody>
-													{order.item.map((item) => (
-														<tr key={`order${index}`}>
+													{order.item.map((item, itemIndex) => (
+														<tr key={`order${index}_item${itemIndex}`}>
 														<td>{item.meal_name}</td>
 														<td>{item.price}</td>
 														<td>{order.fullname}</td>
@@ -1543,6 +1376,7 @@ function ViewAppNotifications(props) {
 												<PayIconWallet
 													payType="user-restaurant"
 													uid={order.receiversID}
+													id={order.id}
 													order={order}
 													refID={order.farmerRef}
 													farmerRef={order.farmerRef}

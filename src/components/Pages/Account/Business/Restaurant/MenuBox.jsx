@@ -7,7 +7,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 // import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { Form, InputGroup } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import SendToRes from "./Icons/SendToResIcon";
+import SendToRes from "./Icons/SendToResIconOther";
 // import Edit from "./Icons/EditIcon";
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -19,6 +19,20 @@ export default function MenuBox(props) {
   const [seat, setSeat] = useState("0");
   const [reservationDate, setReservationDate] = useState(Date.now());
   const [fullname, setFullname] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // New state for error message
+
+
+  // const handleSendToResClick = () => {
+  //   // Check if fullname and reservationDate are empty
+  //   if (fullname.trim() === "" || !reservationDate) {
+  //     setErrorMessage("Please enter fullname and reservation date");
+  //   } else {
+  //     // Clear any previous error messages
+  //     setErrorMessage("");
+  //     // Proceed with the logic for sending to reservation
+  //     // You may want to update the state or perform other actions here
+  //   }
+  // };
 
   return (
     <>
@@ -30,9 +44,9 @@ export default function MenuBox(props) {
               styles={{ paddingTop: 0, paddingBottom: 0, margin: 0 }}
             >
               <ListSubheader className="heading">
-                <div className="meal-name">{newMenu.meal}</div>
+                <div className="meal-name">{newMenu.meal_name}</div>
                 {newMenu.restaurantName ? (
-                  <div className="meal-type">{newMenu.restaurantName}</div>
+                  <div className="meal-type">{newMenu.restaurant_name}</div>
                 ) : null}
 
                 <div className="icons">
@@ -42,6 +56,8 @@ export default function MenuBox(props) {
                     seat={seat}
                     fullname={fullname}
                     reservationDate={reservationDate}
+                    // onSendToResClick={handleSendToResClick} // Pass the function to handle click
+
                   />
                   {/* {newMeal.nonNativeData ? null : (
                     <Edit
@@ -76,7 +92,13 @@ export default function MenuBox(props) {
               <ListItem>
                 Price: <div className="meal-name"> {newMenu.mealPrice}{newMenu.mealCurrency}</div>
               </ListItem>
-              <ListItem>
+            </List>
+            </div>
+        </div>
+      ))}
+
+<List>
+            <ListItem>
                 <Form>
                 <Form.Group>
                   <Form.Label>Seat Reservation</Form.Label>
@@ -119,9 +141,6 @@ export default function MenuBox(props) {
                 </Form>
               </ListItem>
             </List>
-          </div>
-        </div>
-      ))}
     </>
   );
 }

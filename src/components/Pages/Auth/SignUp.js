@@ -66,6 +66,7 @@ const SignUp = (props) => {
 	//Stage5
 	const [cuisine, setCuisine] = useState("");
 	const [restaurantDescription, setRestaurantDescription] = useState("");
+	const [restaurantAddress, setRestaurantAddress] = useState("")
 
 	const [stage, setStage] = useState(1);
 
@@ -156,6 +157,7 @@ const SignUp = (props) => {
 			IDUrl: IDUrl,
 			cuisine: cuisine,
 			restaurantDescription: restaurantDescription,
+			restaurantAddress: restaurantAddress,
 			type: "user",
 			adminType: adminType,
 		};
@@ -505,6 +507,8 @@ const SignUp = (props) => {
 								regulatoryBodyID={regulatoryBodyID}
 								setRestaurantDescription={setRestaurantDescription}
 								restaurantDescription={restaurantDescription}
+								restaurantAddress={restaurantAddress}
+								setRestaurantAddress={setRestaurantAddress}
 							/>
 							<div className="signup-center">
 								<div className="auth-error">
@@ -607,6 +611,8 @@ const SignUp = (props) => {
 								cuisine={cuisine}
 								setRestaurantDescription={setRestaurantDescription}
 								restaurantDescription={restaurantDescription}
+								restaurantAddress={restaurantAddress}
+								setRestaurantAddress={setRestaurantAddress}
 							/>
 						</Title>
 					</div>
@@ -649,6 +655,8 @@ const SignUp = (props) => {
 								cuisine={cuisine}
 								setRestaurantDescription={setRestaurantDescription}
 								restaurantDescription={restaurantDescription}
+								restaurantAddress={restaurantAddress}
+								setRestaurantAddress={setRestaurantAddress}
 							/>
 						</Title>
 					</div>
@@ -870,7 +878,6 @@ const Stage2 = (props) => {
 								"Farm",
 								"Recreational Centers",
 								"Consultant",
-								"Other",
 							]}
 						/>
 					</Form.Group>
@@ -1486,7 +1493,19 @@ const Stage5 = (props) => {
 								props.setRestaurantDescription(e.target.value);
 							}}
 						/>
+
+						<Form.Control
+							type="text"
+							placeholder="Where are you located?"
+							defaultValue={props.restaurantAddress}
+							required
+							className="signup-input placeholder-input"
+							onChange={(e) => {
+								props.setRestaurantAddress(e.target.value);
+							}}
+						/>
 					</Form.Group>
+
 
 					<div className="signup-center">
 						<div className="row">
@@ -1595,6 +1614,7 @@ const Stage3 = (props) => {
 								<HomeWorkIcon />
 							</ListItemIcon>
 							<ListItemText>{props.restaurantDescription}</ListItemText>
+							<ListItemText>{props.restaurantAddress}</ListItemText>
 						</ListItem>
 					</List>
 				</div>

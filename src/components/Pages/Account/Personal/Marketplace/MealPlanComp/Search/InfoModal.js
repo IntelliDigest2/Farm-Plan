@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, ModalBody } from "react-bootstrap";
 import EdamamBadge from "../../../../../../../images/Edamam_Badge_White.svg";
 
 export default function InfoModal({ show, setShow }) {
@@ -20,9 +20,12 @@ export default function InfoModal({ show, setShow }) {
         aria-labelledby="info"
         centered
       >
-        <a href="https://www.edamam.com/">
+        {/* <a href="https://www.edamam.com/">
           <img src={EdamamBadge} alt="powered by edamam" />
-        </a>
+        </a> */}
+        <ModalBody>
+        <p>If you cannot find your preferred meal, please select a meal closest to the your preferred meal, to help us track the appropriate nutrient</p>
+        </ModalBody>
       </Modal>
     </>
   );
