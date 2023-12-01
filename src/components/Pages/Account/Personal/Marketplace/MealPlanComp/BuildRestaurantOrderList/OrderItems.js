@@ -12,11 +12,7 @@ import {
 // import { addToPurchaseItems } from "../../../../../../../store/actions/dataActions";
 import { useTranslation, Trans } from "react-i18next";
 import { AddMealModalRestaurant } from "../Icons/AddMealModalRestaurant";
-import BoughtItemIcon from "../Icons/BoughtItemIcon";
-import AddToCartIcon from "../Icons/AddToCartIcon";
-import Edit from "../Icons/EditIconShop";
-import EditAddedItems from "../Icons/EditIconShopAddedItems";
-import Checkbox from "@mui/material/Checkbox";
+
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import Stack from "@mui/material/Stack";
 import moment from "moment";
@@ -111,18 +107,7 @@ function OrderItems(props) {
 			>
 				<b>{`${meal.meal_name}: `} </b>{" "}
 				&nbsp;
-				{/* Input for the number of seat reservations */}
-                {/* <label htmlFor={`seatsInput${index}`}>Seats:</label>
-                <input
-                    type="number"
-                    id={`seatsInput${index}`}
-                    value={meal.seatReservations || 0}
-                    onChange={(e) => {
-                        const value = parseInt(e.target.value, 10);
-                        const updatedCart = cart.map((item, i) => (i === index ? { ...item, seatReservations: value } : item));
-                        setCart(updatedCart);
-                    }}
-                /> */}
+				
 				<Tooltip title="Remove">
 					<IconButton
 						aria-label="Remove"
@@ -253,7 +238,7 @@ function OrderItems(props) {
 	return (
 		<>
 		
-		<div className="col-4" style={{textAlign: "right"}}><AddMealModalRestaurant show={show} setShow={setShow} /></div>
+		<div className="" style={{textAlign: "right"}}><AddMealModalRestaurant show={show} setShow={setShow} /></div>
 
 
 			{allList.length ? (
