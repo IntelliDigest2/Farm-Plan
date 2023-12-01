@@ -20,11 +20,14 @@ function PayIconWallet(props) {
   let history = useHistory();
 
   const [showModal, setShow] = useState(false);
+  const [payWithWallet, setPayWithWallet] = useState("balance");
+  const [payWithVoucher, setPayWithVoucher] = useState("voucherBalance");
+
 
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
 
-  const handlePay = async () => {
+  const handlePay = async (chosenPayment) => {
 
     switch(props.payType) {
       case "user":
@@ -32,7 +35,8 @@ function PayIconWallet(props) {
           user: props.uid,
           order: props.order, 
           currency: props.currency,
-          paymentType: "FARMER"
+          paymentType: "FARMER",
+          paymentMethod: chosenPayment,
         };
     
         console.log("transfer data ===>", transferData)
@@ -112,6 +116,8 @@ function PayIconWallet(props) {
           },  
           currency: props.currency,
           paymentType: "RESTAURANT",
+          paymentMethod: chosenPayment,
+
         };
     
         console.log("transfer data user-res ===>", transferDataUserRes)
@@ -129,11 +135,14 @@ function PayIconWallet(props) {
           console.log("reservation ===>", res)
           const data = {
             refID: props.refID,
-            farmerRef: props.farmerRef,
-            farmerID: props.farmerID,
+            farmerRef: props.order.farmerRef,
+            farmerID: props.order.farmerID,
+            id: props.order.id,
             status: "COMPLETED",
           };
-          // props.editPurchaseStatusOnUserRes(data);
+
+          console.log("editing data", data)
+          props.editPurchaseStatusOnUserRes(data);
           // props.editPurchaseStatusOnFarmer(data)
     
           Swal.fire({
@@ -188,6 +197,7 @@ function PayIconWallet(props) {
           }, 
           currency: props.currency,
           paymentType: "SUPPLIER",
+          paymentMethod: chosenPayment,
         };
     
         console.log("transfer data ===>", transferDataFarmer)
@@ -219,7 +229,6 @@ function PayIconWallet(props) {
             icon: 'success',
           });
           const newPage = window.open('/payment-success', '_blank');
-      
           // Optionally, you can focus on the new window/tab
           if (newPage) {
             newPage.focus();
@@ -261,14 +270,24 @@ function PayIconWallet(props) {
           </Modal.Header>
         <Modal.Body>
             <p><h5>{t('description.continue_to_payment')}</h5></p>
+            <p><h5>Please choose a payment method</h5></p>
+
           </Modal.Body>
         <Modal.Footer>
         <Button variant="secondary"
         onClick={() => {
-          handlePay()
+          handlePay(payWithWallet)
           handleClose()
         }}>
-            {t('description.button_yes')}
+            Wallet
+          </Button>
+          <Button variant="secondary" 
+            onClick={() => {
+              handlePay(payWithVoucher)
+              handleClose()
+            }}
+          >
+            Coupon
           </Button>
           <Button variant="secondary" 
             onClick={handleClose}

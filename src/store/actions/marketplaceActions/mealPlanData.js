@@ -590,7 +590,7 @@ export const getOrderInfoFromRes = (info) => {
             if (data.status !== "COMPLETED" || data.status === "CONFIRMED") {
               orderInfo.push({ eventId: doc.id, ...data });
             }
-						orderInfo.push({ eventId: doc.id, ...doc.data() });
+						// orderInfo.push({ eventId: doc.id, ...doc.data() });
 					}); 
 
 					dispatch({

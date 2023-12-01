@@ -1167,17 +1167,38 @@ export const getPurchaseInfoRes = (info) => {
 			.collection("restaurant_users")
 			.doc(uid)
 			.collection("messages")
-			.get()
-			.then((snapshot) => {
-				const orderInfo = [];
-				snapshot.forEach((doc) => {
-					orderInfo.push(doc.data());
-				});
-				dispatch({ type: "GET_ORDER_INFO_RES", payload: orderInfo });
-			})
-			.catch((err) => {
-				dispatch({ type: "GET_ORDER_INFO_RES_ERROR", err });
-			});
+			.onSnapshot(
+				(querySnapshot) => {
+					let orderInfo = [];
+					querySnapshot.forEach((doc) => {
+						// console.log(doc.id, " => ", doc.data()); // Log the document ID and data
+					const data = doc.data();
+					if (data.status !== "ACCEPTED") {
+					orderInfo.push({ eventId: doc.id, ...data });
+					}
+								// orderInfo.push({ eventId: doc.id, ...doc.data() });
+					}); 
+
+					dispatch({
+						type: "GET_ORDER_INFO_RES",
+						payload: orderInfo,
+					});
+				},
+				(err) => {
+					console.log(err);
+					dispatch({ type: "GET_ORDER_INFO_RES_ERROR", err });
+				}
+			)
+			// .then((snapshot) => {
+			// 	const orderInfo = [];
+			// 	snapshot.forEach((doc) => {
+			// 		orderInfo.push(doc.data());
+			// 	});
+			// 	dispatch({ type: "GET_ORDER_INFO_RES", payload: orderInfo });
+			// })
+			// .catch((err) => {
+			// 	dispatch({ type: "GET_ORDER_INFO_RES_ERROR", err });
+			// });
 	};
 };
 

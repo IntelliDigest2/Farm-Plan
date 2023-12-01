@@ -304,6 +304,7 @@ export const signUp = (newUser, image) => {
 					IDType: newUser.IDType,
 					cuisine: newUser.cuisine,
 					restaurantDescription: newUser.restaurantDescription,
+					address: newUser.restaurantAddress,
 					type: type,
 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};

@@ -113,12 +113,13 @@ export function SubButtonInventory(props) {
 	);
 }
 
-export function AddButton({ onClick, title }) {
+export function AddButton({ onClick, isDisabled, title }) {
 	return (
 		<BootstrapButton
 			variant="default"
 			className={["add-btn", "green-btn", "shadow-none"]}
 			onClick={onClick}
+			disabled={isDisabled}
 		>
 			<div>
 				<AddIcon sx={{ fontSize: 24 }} />

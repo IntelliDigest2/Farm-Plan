@@ -243,7 +243,25 @@ const Hit = ({
 
    
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+      // Check if the cart is not empty or if delivery information is incomplete
+      const isCartNotEmpty = cart.length > 0;
+      const isDeliveryOptionSelected = deliveryOption === 'delivery';
+      const isAddressProvided = isDeliveryOptionSelected && address.trim() !== '';
+      const isPhoneNumberProvided = phoneNumber.trim() !== '';
+    
+      // Check if any condition is met, then show a warning or close the modal
+      if (isCartNotEmpty && (!isDeliveryOptionSelected || (isDeliveryOptionSelected && isAddressProvided)) && isPhoneNumberProvided) {
+        // Conditions are met, close the modal
+        setShow(false);
+      } else {
+        // Conditions are not met, show a warning or handle it in a way you prefer
+        alert('Please provide all required information before confirming the purchase.');
+        // You can also add additional logic to display specific warnings for incomplete information
+      }
+    };
+    
+    
     const handleShow = () => setShow(true);
 
   return (

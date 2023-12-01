@@ -490,7 +490,6 @@ function AddMealForm_restaurant(props) {
 		<Form
 			onSubmit={(e) => {
 				e.preventDefault();
-				handleSubmit();
 				// props.handleFormClose();
 			}}
 		>
@@ -711,30 +710,26 @@ function AddMealForm_restaurant(props) {
 				<Button
 					className="blue-btn shadow-none"
 					type="submit"
-					onClick={() => handleSave()}
-					disabled={
-						mealPrice === "" ||
-						mealPrice === "0" ||
-						mealPrice === 0 ||
-						costPrice === "" ||
-						costPrice === "0" ||
-						costPrice === 0 ||
-						metric === "" ||
-						metric === "0" ||
-						metric === 0 ||
-						// local.quantity === "0" ||
-						// local.quantity === 0 ||
-						// local.quantity === "" ||
-						// local.quantity === "0" ||
-						// local.quantity === 0 ||
-						// local.quantity === "" ||
-						// ingredientName: "", ingredientQuantity: ""
-						!metricValidity ||
-						!validity ||
-						mealName.trim() === "" ||
-						mealDescription.trim() === "" ||
-						image === null
-					}
+					onClick={() => {
+						handleSave()
+						handleSubmit()
+					}}
+					// disabled={
+					// 	mealPrice === "" ||
+					// 	mealPrice === "0" ||
+					// 	mealPrice === 0 ||
+					// 	costPrice === "" ||
+					// 	costPrice === "0" ||
+					// 	costPrice === 0 ||
+					// 	metric === "" ||
+					// 	metric === "0" ||
+					// 	metric === 0 ||
+					// 	// !metricValidity ||
+					// 	// !validity ||
+					// 	mealName.trim() === "" ||
+					// 	mealDescription.trim() === "" ||
+					// 	image === null
+					// }
 				>
 					{/* <Button className="blue-btn shadow-none" type="submit"> */}
 					{createMenuLoading ? "...loading" : "Submit"}

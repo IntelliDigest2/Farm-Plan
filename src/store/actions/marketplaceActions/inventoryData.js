@@ -231,7 +231,7 @@ export const editPurchaseStatusOnUserRes = (data) => {
 			.collection("marketplace")
 			.doc(uid)
 			.collection("restaurantOrders")
-			.doc(data.refID)
+			.doc(data.id)
 			.set({ status: data.status }, { merge: true })
 			.then(() => dispatch({ type: "EDIT_PURCHASE_STATUS", payload: data }))
 			.catch((err) => {
