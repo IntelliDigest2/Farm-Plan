@@ -5,6 +5,7 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import Swal from 'sweetalert2';
 
 export default function CheckoutForm( props ) {
   const stripe = useStripe();
@@ -64,16 +65,38 @@ export default function CheckoutForm( props ) {
         if (response) {
           setMessage("Payment succeeded!");
   
-          const currentHost = window.location.origin;
-          const successUrl = `${currentHost}/payment-success`;
+          // const currentHost = window.location.origin;
+          // const successUrl = `${currentHost}/payment-success`; 
+
+          Swal.fire({
+            title: 'Success!',
+            text: 'Payment was successful',
+            icon: 'success',
+          });
+          const newPage = window.open('/payment-success', '_blank');
+      
+          // Optionally, you can focus on the new window/tab
+          if (newPage) {
+            newPage.focus();
+          }
   
           // Redirect to the return_url after the API call is successful
-          window.location.href = successUrl;
+          // window.location.href = successUrl;
         } else {
           setMessage("Payment succeeded, but balance update failed.");
+          Swal.fire({
+            title: 'Error!',
+            text: 'Payment succeeded, but balance update failed.',
+            icon: 'error',
+          });
         }
       } catch (err) {
         setMessage("An error occurred while updating the balance.");
+        Swal.fire({
+          title: 'Error!',
+          text: 'An error occurred while updating the balance.',
+          icon: 'error',
+        });
       }
   }
 
