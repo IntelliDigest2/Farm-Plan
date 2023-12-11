@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Landing.css";
 import { Container } from "react-bootstrap";
 import { SubButton } from "../../SubComponents/Button";
 import { connect } from "react-redux";
 import logo from "../../../images/WFTLogo.png";
+import GoogleLoginButton from "./GoogleLogin";
+import { Redirect, Link } from 'react-router-dom';
+
 
 function LandingPage(props) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [profile, setProfile] = useState(null);
+
+  const handleGoogleLoginSuccess = (profile) => {
+    // Handle successful login
+    console.log("returned profile", profile);
+    setProfile(profile); // Update the profile state
+    setIsLoggedIn(true)
+
+  };
+
+  const handleGoogleLoginFailure = (error) => {
+    // Handle login failure
+    console.error("returned error",error);
+  };
+
+  useEffect(() => {
+    // Check if the profile is available and not logged in
+    if (profile && isLoggedIn) {
+      // Perform actions based on the profile
+      console.log("check isLoggedIn", profile);
+    }
+  }, [profile, isLoggedIn]);
+
+  if (isLoggedIn) {
+    return <Redirect to='/account' />;
+  }
+
   return (
     <Container>
       <div className="white-background">
@@ -17,10 +48,15 @@ function LandingPage(props) {
           />
         </div>
         <div className="buttons">
+          <GoogleLoginButton 
+            onLoginSuccess={handleGoogleLoginSuccess}
+            onLoginFailure={handleGoogleLoginFailure}
+          />
           <SubButton styling="blue" goTo="/login" text="Log In" />
           <SubButton styling="blue" goTo="/signup" text="Sign Up" />
           <SubButton styling="green" goTo="/about-us" text="About Us" />
         </div>
+       
       </div>
     </Container>
   );

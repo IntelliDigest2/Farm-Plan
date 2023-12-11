@@ -17,6 +17,8 @@ import {
 import { createFirestoreInstance, reduxFirestore } from "redux-firestore";
 import { getFirestore } from "redux-firestore";
 import fbConfig from "./config/fbConfig";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 
 import './i18n';
 
@@ -60,14 +62,15 @@ const AuthIsLoaded = ({ children }) => {
 };
 
 ReactDOM.render(
+  <GoogleOAuthProvider clientId="57163396396-28drcqe0cvcs3lqd1i8v82pot6ubkmji.apps.googleusercontent.com">
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...fbProps}>
       <AuthIsLoaded>
         <App />
       </AuthIsLoaded>
     </ReactReduxFirebaseProvider>
-  </Provider>,
-
+  </Provider>
+</GoogleOAuthProvider>,
   document.getElementById("root")
 );
 

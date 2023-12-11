@@ -28,6 +28,7 @@ function Login(props) {
   //make sure the user isn't already logged in
   useEffect(() => {
     if (props.auth.uid) setIsLoggedIn(true);
+    console.log("check isLoggedIn", props.auth)
   }, [props.auth.uid]);
 
   if (isLoggedIn) {
