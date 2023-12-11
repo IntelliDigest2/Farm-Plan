@@ -547,7 +547,7 @@ function FullCalendarApp(props) {
 
     <div className="info-text">
     <Alert variant="info" className="info-text">
-    Do you eat out at work? You can choose the day(s) and meal, and it will be added to your plan.
+    Do you eat out regularly? You can choose the day(s) and meal, and it will be added to your plan.
   </Alert>    
   </div>
 
@@ -586,7 +586,7 @@ function FullCalendarApp(props) {
           value={restaurantWebsite}
           onChange={(e) => setRestaurantWebsite(e.target.value)}
           className="inputField"
-          placeholder="Website URL"
+          placeholder="Website URL (Optional)"
         />
       </div>
       <div>
@@ -595,7 +595,7 @@ function FullCalendarApp(props) {
           value={restaurantEmail}
           onChange={(e) => setRestaurantEmail(e.target.value)}
           className="inputField"
-          placeholder="Email Address"
+          placeholder="Email Address (Optional)"
         />
       </div>
       <div>
@@ -604,13 +604,13 @@ function FullCalendarApp(props) {
           value={restaurantMobile}
           onChange={(e) => setRestaurantMobile(e.target.value)}
           className="inputField"
-          placeholder="Mobile number"
+          placeholder="Mobile number (Optional)"
         />
       </div>
       {/* Conditional message for incomplete form */}
-      {(!restaurantAddress || !restaurantName) && (
+      {/* {(!restaurantAddress || !restaurantName) && (
         <p style={{ color: 'red' }}>{'Name and address required.'}</p>
-      )}
+      )} */}
     </Grid>
 
     <Grid item xs={12} md={2}>
