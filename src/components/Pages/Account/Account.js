@@ -95,6 +95,9 @@ const NewAccount = (props) => {
 	//   return <LoadingScreen />;
 	// }
 
+	 // Check if props.type is null or empty
+	 const isTypeEmpty = !props.profile.type;
+
 	return (
 		<>
 			{modal &&
@@ -139,6 +142,8 @@ const NewAccount = (props) => {
 									</Dropdown.Item>
 								))}
 							</DropdownButton>
+							{/* Display message under the settings icon if props.type is null or empty */}
+                            <span style={{ color: "red" }}>{isTypeEmpty && "Please use the settings icon to choose your account type"}</span>
 						</>
 					</div>
 

@@ -81,12 +81,14 @@ function Settings(props) {
 	const [lastName, setLastName] = useState(props.profile.lastName);
 	const [email, setEmail] = useState(props.auth.email);
 	const [password, setPassword] = useState("");
+	const [accountType, setAccountType] = useState("Household")
 
 	//sub
 	const [subFirstName, setSubFirstName] = useState("");
 	const [subLastName, setSubLastName] = useState("");
 	const [subEmail, setSubEmail] = useState("");
 	const [subPassword, setSubPassword] = useState("");
+	const [subAccountType, setSubAccountType] = useState("Household");
 	const [subRole, setSubRole] = useState("");
 	const [subAccountsList, setSubAccountsList] = useState();
 
@@ -151,6 +153,7 @@ function Settings(props) {
 	useEffect(() => {
 		setFirstName(props.profile.firstName);
 		setLastName(props.profile.lastName);
+		setAccountType(accountType)
 		setEmail(props.profile.email);
 		setTown(props.profile.city);
 		setCountry(props.profile.country);
@@ -202,12 +205,56 @@ function Settings(props) {
 	}
 
 	function HandleName() {
+		var buildFunction = "";
+
+		switch (accountType) {
+		  case "household_admin":
+			buildFunction = "Households";
+			break;
+		  case "farm_admin":
+			buildFunction = "Farm";
+			break;
+		  case "restaurant_admin":
+			buildFunction = "Restaurants";
+			break;
+		  case "supply_admin":
+			buildFunction = "Machinery/Supply";
+			break;
+		  case "admin_admin":
+			buildFunction = "Admin";
+			break;
+		  case "academic_admin":
+			buildFunction = "Schools";
+			break;
+		  case "shop_admin":
+			buildFunction = "Shop/Supermarket";
+			break;
+		  case "hospital_admin":
+			buildFunction = "Hospitals";
+			break;
+		  case "offices_admin":
+			buildFunction = "Offices";
+			break;
+		  case "Hotels_admin":
+			buildFunction = "Hotels";
+			break;
+		  // Add more cases for other account types if needed
+		  // case "another_account_type":
+		  //   buildFunction = "another_value";
+		  //   break;
+		  default:
+			// Default case, if accountType doesn't match any specific case
+			break;
+		}
+		
 		var data = {
 			uid: props.auth.uid,
 			profile: {
 				firstName: firstName,
 				lastName: lastName,
 				initials: firstName[0] + lastName[0],
+				type: accountType,
+				buildingFunction: buildFunction
 			},
 		};
 		props.updateProfile(data);
@@ -282,6 +329,7 @@ function Settings(props) {
 			password: subPassword,
 			firstName: subFirstName,
 			lastName: subLastName,
+			accountType: subAccountType,
 			role: subRole,
 
 			function: props.profile.buildingFunction,
@@ -293,6 +341,7 @@ function Settings(props) {
 		if (
 			subFirstName !== "" &&
 			subLastName !== "" &&
+			subAccountType !== "" &&
 			subEmail != "" &&
 			subPassword !== "" &&
 			subRole !== ""
@@ -303,6 +352,7 @@ function Settings(props) {
 				submitNotification("Success", "Sub Account Sucessfully Created!");
 				setSubFirstName("");
 				setSubLastName("");
+				setSubAccountType("");
 				setSubEmail("");
 				setSubPassword("");
 				setSubRole("");
@@ -563,6 +613,7 @@ function Settings(props) {
 					<ProfileList
 						firstName={props.profile.firstName}
 						lastName={props.profile.lastName}
+						accountType={accountType}
 						email={props.auth.email}
 						town={props.profile.city}
 						region={props.profile.region}
@@ -578,6 +629,8 @@ function Settings(props) {
 							setFirstName={setFirstName}
 							lastName={lastName}
 							setLastName={setLastName}
+							accountType={accountType}
+							setAccountType={setAccountType}
 							setForm={setForm}
 						/>
 						<div className="center">
@@ -761,6 +814,7 @@ function Settings(props) {
 					<ProfileList
 						firstName={props.profile.firstName}
 						lastName={props.profile.lastName}
+						subAccountType={subAccountType}
 						email={props.auth.email}
 						town={props.profile.city}
 						region={props.profile.region}
@@ -779,12 +833,14 @@ function Settings(props) {
 						<SubAccounts
 							setSubFirstName={setSubFirstName}
 							setSubLastName={setSubLastName}
+							setSubAccountType={setSubAccountType}
 							setSubEmail={setSubEmail}
 							setSubPassword={setSubPassword}
 							setSubRole={setSubRole}
 							subAccounts={subAccountsList}
 							subFirstName={subFirstName}
 							subLastName={subLastName}
+							subAccountType={subAccountType}	
 							subEmail={subEmail}
 							subPassword={subPassword}
 							subRole={subRole}
@@ -871,6 +927,7 @@ function Settings(props) {
 					<ProfileList
 						firstName={props.profile.firstName}
 						lastName={props.profile.lastName}
+						accountType={accountType}
 						email={props.auth.email}
 						town={props.profile.city}
 						region={props.profile.region}
@@ -921,6 +978,7 @@ function Settings(props) {
 					<ProfileList
 						firstName={props.profile.firstName}
 						lastName={props.profile.lastName}
+						accountType={accountType}
 						email={props.auth.email}
 						town={props.profile.city}
 						region={props.profile.region}
@@ -971,6 +1029,7 @@ function Settings(props) {
 					<ProfileList
 						firstName={props.profile.firstName}
 						lastName={props.profile.lastName}
+						accountType={accountType}
 						email={props.auth.email}
 						town={props.profile.city}
 						region={props.profile.region}
@@ -1021,6 +1080,7 @@ function Settings(props) {
 					<ProfileList
 						firstName={props.profile.firstName}
 						lastName={props.profile.lastName}
+						accountType={accountType}
 						email={props.auth.email}
 						town={props.profile.city}
 						region={props.profile.region}
@@ -1070,6 +1130,7 @@ function Settings(props) {
 					<ProfileList
 						firstName={props.profile.firstName}
 						lastName={props.profile.lastName}
+						accountType={accountType}
 						email={props.auth.email}
 						userID={props.profile.uid}
 						town={props.profile.city}
@@ -1322,6 +1383,7 @@ useEffect(() => {
 };
 
 const Name = (props) => {
+	console.log("printing props", props.accountType)
 	return (
 		<div>
 			<Form>
@@ -1355,6 +1417,26 @@ const Name = (props) => {
 							onChange={(e) => props.setLastName(e.target.value)}
 						/>
 					</Form.Group>
+					<Form.Group className="mb-3" style={{ backgroundColor: "white" }} as={Col}>
+						<Form.Label style={{ backgroundColor: "white" }}>Account Type</Form.Label>
+						<select
+							defaultValue={props.accountType}
+							onChange={(e) => props.setAccountType(e.target.value)}
+						>
+							<option value="household_admin">Household</option>
+							<option value="farm_admin">Farm</option>
+							<option value="restaurant_admin">Restaurant</option>
+							<option value="supply_admin">Supplier/Machinery</option>
+							<option value="admin_admin">Purchase Admin</option>
+							<option value="academic_admin">Academic</option>
+							<option value="hotels_admin">Hotel</option>
+							<option value="offices_admin">Office</option>
+							<option value="hospital_admin">Hospital</option>
+							<option value="shop_admin">Shop/Supermarket</option>
+
+						</select>
+					</Form.Group>
+
 				</Form.Row>
 			</Form>
 		</div>
@@ -1691,7 +1773,19 @@ const SubAccounts = (props) => {
 								onChange={(e) => props.setSubLastName(e.target.value)}
 							/>
 						</Form.Group>
+
 					</Form.Row>
+					<Form.Group className="mb-3" style={{ backgroundColor: "white" }} as={Col}>
+						<Form.Label style={{ backgroundColor: "white" }}>Account Type</Form.Label>
+						<Form.Select
+							defaultValue={props.subAccountType}
+							onChange={(e) => props.setSubAccountType(e.target.value)}
+						>
+							<option value="option1">Option 1</option>
+							<option value="option2">Option 2</option>
+							<option value="option3">Option 3</option>
+						</Form.Select>
+						</Form.Group>
 					<Form.Group className="mb-3">
 						<Form.Label>Email address</Form.Label>
 						<Form.Control
