@@ -124,6 +124,7 @@ import Withdraw from "./components/SubComponents/payment/Withdraw";
 import SignUpAdmin from "./components/Pages/Auth/SignUpAdmin";
 import CombinedReservations from "./components/SubComponents/payment/CombinedReservations";
 import { OrderList } from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/BuildRestaurantOrderList/OrderList";
+import UpdateSignup from "./components/Pages/Auth/UpdateSignup";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -242,6 +243,7 @@ const App = (props) => {
 						<Route path="/landing" exact component={LandingPage} />
 						<Route path="/about-us" exact component={AboutUs} />
 						<Route path="/signup" exact component={SignUp} />
+						<Route path="/complete-signup" exact component={UpdateSignup} />
 						<Route path="/reveal" exact component={SignUpAdmin} />
 						<Route path="/settings" exact component={Settings} />
 						<Route path="/questionnaire" exact component={Questionnaire} />

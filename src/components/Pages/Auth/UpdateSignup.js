@@ -21,7 +21,7 @@ import HomeWorkIcon from "@mui/icons-material/HomeWork";
 
 import { connect } from "react-redux";
 import { Redirect, Link, useLocation, useHistory } from "react-router-dom";
-import { signUp } from "../../../store/actions/authActions";
+import { updateSignup } from "../../../store/actions/authActions";
 
 import { createMapData } from "../../../store/actions/dataActions";
 import Geocode from "react-geocode";
@@ -37,6 +37,7 @@ const SignUp = (props) => {
 
 	const location = useLocation();
 	const history = useHistory();
+
 
 	//Stage1
 	const [firstName, setFirstName] = useState("");
@@ -73,6 +74,7 @@ const SignUp = (props) => {
 	const [restaurantAddress, setRestaurantAddress] = useState("")
 
 	const [stage, setStage] = useState(1);
+	const [userUID, setUserUID] = useState("")
 
 	const [errorNotification, setErrorNotification] = useState();
 
@@ -129,6 +131,23 @@ const SignUp = (props) => {
 
 		console.log("show stage", stage)
 	  }, [location.search, setStage]);
+
+
+	  useEffect(() => {
+		const searchParams = new URLSearchParams(location.search);
+		const UIDFromUrl = searchParams.get('uid');
+		console.log("uid", UIDFromUrl);
+	  
+		if (UIDFromUrl) {
+		  // setUserUID is likely asynchronous
+		  setUserUID(UIDFromUrl);
+		}
+	  }, [location.search, setUserUID]);
+	  
+	  useEffect(() => {
+		// This useEffect runs after the state has been updated
+		console.log("show uid", userUID);
+	  }, [userUID]);	  
 	
 
 	let certificateImg1 = certificateImg ? (
@@ -154,14 +173,8 @@ const SignUp = (props) => {
 		""
 	);
 
-	async function handleSubmit() {
+	function handleSubmit() {
 		let data = {
-			firstName: firstName,
-			lastName: lastName,
-			mobile: mobile,
-			initials: firstName[0] + lastName[0],
-			email: email,
-			password: password,
 			function: buildingFunction,
 			city: town,
 			country: country,
@@ -179,8 +192,10 @@ const SignUp = (props) => {
 			restaurantAddress: restaurantAddress,
 			type: "user",
 			adminType: adminType,
+			uid: userUID,
 		};
 
+	  
 		switch (data.function) {
 			case "Consultant":
 				data.consultantInfo = consultant;
@@ -197,23 +212,17 @@ const SignUp = (props) => {
 				break;
 			default:
 				// Handle the default case if necessary
-		}		
-
-		
+		}	
+	  
 		if (validation()) {
-			try {
-			  // Assuming props.signUp returns a promise
-			  await props.signUp(data, image);
-			  console.log("Signup successful");
-			//   history.push('/account');
-			} catch (error) {
-			  console.error("Signup failed", error);
-			  // Handle the error, e.g., show an error message to the user
-			}
-		  } else {
-			console.log("Validation error");
-		  }
-	}  
+		  props.updateSignup(data, image)
+			  // Redirect the user to /account.js if the updateSignup is successful
+			  history.push('/account');
+		} else {
+		  console.log("error");
+		}
+	  }
+
 
 	useEffect(() => {
 		// console.log(
@@ -349,33 +358,26 @@ const SignUp = (props) => {
 		const em =
 			/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-		var s1 =
-			firstName !== "" && lastName !== "" && email !== "" && password !== "";
+		// var s1 =
+		// 	firstName !== "" && lastName !== "" && email !== "" && password !== "";
 
 		var s2 =
 			town !== "" && country !== "" && region !== "" && buildingFunction !== "";
 
-		var s3 = em.test(email);
+		// var s3 = em.test(email);
 
-		var s4 = !no.test(lastName) && !no.test(firstName);
+		// var s4 = !no.test(lastName) && !no.test(firstName);
 
 		var s5 = !no.test(town);
 
-		if (s1 && s2 && s3 && s4 && s5) {
+		if (s2 && s5) {
 			return true;
 		} else {
-			if (!s1) {
+			if (!s2) {
 				setErrorNotification("Please enter a valid name, email, and password.");
-			} else if (!s2) {
-				setErrorNotification(
-					"Please enter a valid town, country, region, and account type."
-				);
-			} else if (!s3) {
-				setErrorNotification("Please enter a valid email address.");
-			} else if (!s4) {
+			}
+			else if (!s5) {
 				setErrorNotification("Please enter a valid name.");
-			} else if (!s5) {
-				setErrorNotification("Please enter a valid town.");
 			} else {
 				setErrorNotification("Please enter valid information.");
 			}
@@ -395,7 +397,7 @@ const SignUp = (props) => {
 	//make sure the user isn't already logged in and if they are a new account, createMapData document for them.
 	useEffect(() => {
 		if (props.auth.uid) {
-			setIsLoggedIn(true);
+			// setIsLoggedIn(true);
 			if (town !== "" && country !== "") {
 				Geocode.fromAddress(town + " " + country).then((response) => {
 					var upload = {
@@ -427,7 +429,6 @@ const SignUp = (props) => {
 			setIDImg(undefined);
 			return;
 		} else {
-			
 		}
 
 		// I've kept this example simple by using the first image instead of multiple
@@ -469,6 +470,7 @@ const SignUp = (props) => {
 			setBusinessCert({ ...businessCert, images: newArray });
 		}
 	};
+
 
 	if (isLoggedIn) {
 		return <Redirect to="/account" />;
@@ -743,12 +745,6 @@ const SignUp = (props) => {
 								<p>First, create your account.</p>
 							</div>
 							<Stage7
-								setIDType={setIDType}
-								IDType={IDType}
-								setIDNumber={setIDNumber}
-								IDNumber={IDNumber}
-								IDUrl={IDUrl}
-								setUrl={setUrl}
 								IDImg1={IDImg1}
 								certificateImg1={certificateImg1}
 								handleSelectedImageOthers={handleSelectedImageOthers}
@@ -1027,7 +1023,6 @@ const Stage2 = (props) => {
 								  props.setStage(3);
 								  break;
 							  }
-							  
 						}}
 					>
 						Next
@@ -1978,7 +1973,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		signUp: (newUser, image) => dispatch(signUp(newUser, image)), //r: cmd+click on signUp takes you to where the signUp event's props are defined
+		updateSignup: (newUser, image) => dispatch(updateSignup(newUser, image)), //r: cmd+click on signUp takes you to where the signUp event's props are defined
 		createMapData: (mapdata) => dispatch(createMapData(mapdata)),
 	};
 };

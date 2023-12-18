@@ -51,7 +51,9 @@ const GoogleLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
                         userData: res.data,
                         user: user,
                         function: "Personal",
-                        type: "household_admin"
+                        type: "household_admin",
+                        isSocialLogin: true,
+                        verification: "pending"
                     }
                     signUp(data)
                     onLoginSuccess(res);
@@ -88,7 +90,7 @@ const GoogleLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
             <img 
             src={googleLogoUrl} 
             alt="Google Logo" 
- s            style={{ width: '25px', height: '25px', marginRight: '8px' }}
+             style={{ width: '25px', height: '25px', marginRight: '8px' }}
  
             />
         </button>

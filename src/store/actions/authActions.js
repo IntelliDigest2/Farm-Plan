@@ -194,7 +194,10 @@ function uploadImgs(files, userId) {
 		);
 	});
 
+	console.log("image upload", uploaders)
+
 	return uploaders;
+
 }
 
 const uploadIdImage = (image) => {
@@ -212,7 +215,6 @@ const uploadIdImage = (image) => {
 	);
 
 	return result;
-	console.log(result.data.secure_url);
 };
 
 export const signUp = (newUser, image) => {
@@ -266,6 +268,7 @@ export const signUp = (newUser, image) => {
 		const firestore = getFirebase().firestore();
 		const firebase = getFirebase();
 		let newUserId;
+		let urls;
 		// let imageUrl = "";
 
 		firebase
@@ -278,9 +281,25 @@ export const signUp = (newUser, image) => {
 				}
 			})
 			.then((resp) => {
+				// console.log(resp, `this is the response`);
+				if (newUser.certImg) {
+					let userSubString = newUserId.substring(0, 7);
+
+					return Promise.all(
+						uploadImgs(newUser.certImg.images, userSubString)
+					);
+				}
+			})
+			.then((resp) => {
 				// newUserId = resp.user.uid;
 				// console.log("createUserWithEmailAndPassword", newUserId);
 				// resp
+				if (newUser.certImg) {
+					urls = resp.map((result) => {
+						return result.data.secure_url;
+					});
+				}
+				
 				let val = {
 					// ...newUser,
 					firstName: newUser.firstName,
@@ -308,6 +327,10 @@ export const signUp = (newUser, image) => {
 					restaurantDescription: newUser.restaurantDescription,
 					address: newUser.restaurantAddress,
 					type: type,
+					imgsLinks: {
+						certificateImg: urls[0],
+						identificationImg: urls[1],
+					},
 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};
 				if (image) {
@@ -316,11 +339,11 @@ export const signUp = (newUser, image) => {
 					val.IDUrl = newUser.IDUrl;
 				}
 
-				if (resp) {
-					val.IDUrl = resp.data.secure_url;
-				} else {
-					val.IDUrl = newUser.IDUrl;
-				}
+				// if (resp) {
+				// 	val.IDUrl = resp.data.secure_url;
+				// } else {
+				// 	val.IDUrl = newUser.IDUrl;
+				// }
 
 				if (newUser.consultantInfo) {
 					val.verification = "pending";
@@ -329,7 +352,32 @@ export const signUp = (newUser, image) => {
 					val.adminType = newUser.adminType;
 					val.verification = "pending";
 				}
-				firestore.collection("users").doc(newUserId).set(val);
+				if (newUser.function === "Hospitals") {
+					val.verification = "pending";
+				}
+				if (newUser.function === "Farm") {
+					val.verification = "pending";
+				}
+				if (newUser.function === "Hotels") {
+					val.verification = "pending";
+				}
+				if (newUser.function === "Schools") {
+					val.verification = "pending";
+				}
+				if (newUser.function === "Offices") {
+					val.verification = "pending";
+				}
+				if (newUser.function === "Restaurants") {
+					val.verification = "pending";
+				}
+				if (newUser.function === "Machinery/Supply") {
+					val.verification = "pending";
+				}
+				if (newUser.function === "Shop/Supermarket") {
+					val.verification = "pending";
+				}
+
+				firestore.collection("users").doc(newUserId).set(val, { merge: true });
 
 				//Setup Admin account in relevent users collection
 				var adminCollection;
@@ -419,6 +467,448 @@ export const signUp = (newUser, image) => {
 	};
 };
 
+
+// export const updateSignup = (newUser, image) => {
+// 	// console.log(newUser, `this is the new user`);
+// 	// console.log(image, `this is the image i want to upload`);
+
+// 	// console.log(newUser.consultantInfo, `thes are the consultantInfo`);
+// 	return (dispatch, getState, { getFirebase }) => {
+// 		// let result = uploadIdImage(image).then((resp) => {
+// 		// 	console.log(resp.data.secure_url);
+// 		// 	console.log(resp.data.url);
+// 		// });
+// 		// 	//Determine account type
+// 		var type;
+// 		switch (newUser.function) {
+// 			case "Hospitals":
+// 			case "Hotels":
+// 			case "Offices":
+// 			case "Shop/Supermarket":
+// 				type = "shop_admin";
+// 				break;
+// 			case "Recreational Centers":
+// 			case "Consultant":
+// 			case "Business":
+// 				type = "business_admin";
+// 				break;
+// 			case "Restaurants":
+// 				type = "restaurant_admin";
+// 				break;
+// 			case "Machinery/Supply":
+// 				type = "supply_admin";
+// 				break;
+// 			case "Admin":
+// 				type = "admin_admin";
+// 				break;
+// 			case "Schools":
+// 				type = "academic_admin";
+// 				break;
+// 			case "Farm":
+// 				type = "farm_admin";
+// 				break;
+// 			case "Households":
+// 			case "Personal":
+// 				type = "household_admin";
+// 				break;
+// 			default:
+// 				type = "user";
+// 				break;
+// 		}
+
+// 		const firestore = getFirebase().firestore();
+// 		const firebase = getFirebase();
+// 		let newUserId;
+// 		// let imageUrl = "";
+
+// 		firebase
+// 			.auth()
+// 			.createUserWithEmailAndPassword(newUser.email, newUser.password)
+// 			.then((resp) => {
+// 				newUserId = newUser.uid;
+// 				if (image) {
+// 					return uploadIdImage(image);
+// 				}
+// 			})
+// 			.then((resp) => {
+// 				// newUserId = resp.user.uid;
+// 				// console.log("createUserWithEmailAndPassword", newUserId);
+// 				// resp
+// 				let val = {
+// 					// ...newUser,
+// 					firstName: newUser.firstName,
+// 					lastName: newUser.lastName,
+// 					mobile: newUser.mobile,
+// 					initials: newUser.firstName[0] + newUser.lastName[0],
+// 					email: newUser.email,
+// 					buildingFunction: newUser.function,
+// 					city: newUser.city,
+// 					country: newUser.country,
+// 					region: newUser.region,
+// 					uid: newUserId,
+// 					balance: 0,
+// 					voucherBalance: 0,
+// 					//restaurant-specific user data:
+// 					restaurantName: newUser.restaurantName,
+// 					companyName: newUser.companyName,
+// 					companyDescription: newUser.companyDescription,
+// 					regulatoryBody: newUser.regulatoryBody,
+// 					regulatoryBodyID: newUser.regulatoryBodyID,
+// 					// IDUrl: resp.data.secure_url,
+// 					IDNumber: newUser.IDNumber,
+// 					IDType: newUser.IDType,
+// 					cuisine: newUser.cuisine,
+// 					restaurantDescription: newUser.restaurantDescription,
+// 					address: newUser.restaurantAddress,
+// 					type: type,
+// 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
+// 				};
+// 				if (image) {
+// 					val.IDUrl = resp.data.secure_url;
+// 				} else {
+// 					val.IDUrl = newUser.IDUrl;
+// 				}
+
+// 				if (resp) {
+// 					val.IDUrl = resp.data.secure_url;
+// 				} else {
+// 					val.IDUrl = newUser.IDUrl;
+// 				}
+
+// 				if (newUser.consultantInfo) {
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Admin") {
+// 					val.adminType = newUser.adminType;
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Hospitals") {
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Farm") {
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Hotels") {
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Schools") {
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Offices") {
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Restaurants") {
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Machinery/Supply") {
+// 					val.verification = "pending";
+// 				}
+// 				if (newUser.function === "Shop/Supermarket") {
+// 					val.verification = "pending";
+// 				}
+
+// 				firestore.collection("users").doc(newUserId).set(val, { merge: true });
+
+// 				//Setup Admin account in relevent users collection
+// 				var adminCollection;
+// 				if (type === "business_admin") {
+// 					adminCollection = "business_users";
+// 				} else if (type === "academic_admin") {
+// 					adminCollection = "academic_users";
+// 				} else if (type === "farm_admin") {
+// 					adminCollection = "farm_users";
+// 				} else if (type === "household_admin") {
+// 					adminCollection = "household_users";
+// 				} else if (type === "supply_admin") {
+// 					adminCollection = "supply_users";
+// 				} else if (type === "shop_admin") {
+// 					adminCollection = "shop_users";
+// 				} else {
+// 					adminCollection = "user";
+// 				}
+
+// 				if (adminCollection !== "user") {
+// 					firestore
+// 						.collection(adminCollection)
+// 						.doc(newUserId)
+// 						.set({
+// 							name: newUser.firstName + " " + newUser.lastName,
+// 							email: newUser.email,
+// 						});
+// 				}
+
+// 				return resp;
+// 			})
+// 			.then((resp) => {
+// 				// console.log(resp, `this is the response`);
+// 				if (newUser.consultantInfo) {
+// 					let userSubString = newUserId.substring(0, 7);
+
+// 					return Promise.all(
+// 						uploadImgs(newUser.consultantInfo.images, userSubString)
+// 					);
+// 				}
+// 			})
+// 			.then((resp) => {
+// 				// console.log(resp);
+// 				// console.log(newUserId, `this is the new userInfo stored earlier`);
+// 				// console.log(newUser);
+
+// 				if (newUser.consultantInfo) {
+// 					// let { user, imageUrls } = resp;
+// 					let urls = resp.map((result) => {
+// 						return result.data.secure_url;
+// 					});
+// 					// let data= resp.
+// 					// console.log(urls, `these are the urls`);
+// 					let fullName = `${newUser.firstName} ${newUser.lastName}`;
+// 					firestore
+// 						.collection("consultants")
+// 						.doc(newUserId)
+// 						.set({
+// 							fullName: fullName,
+// 							email: newUser.email,
+// 							urlLink: newUser.consultantInfo.urlLink,
+// 							experience: newUser.consultantInfo.experience,
+// 							expertise: newUser.consultantInfo.expertise,
+// 							createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+// 							services: newUser.consultantInfo.services,
+// 							summary: newUser.consultantInfo.summary,
+// 							isActive: true,
+// 							imgsLinks: {
+// 								certificateImg: urls[0],
+// 								identificationImg: urls[1],
+// 							},
+
+// 							// calendarEvents: [],
+// 							// eventDaysArray: [],
+// 						});
+// 				}
+
+// 				firebase.auth().currentUser.sendEmailVerification();
+// 			})
+// 			.then(() => {
+// 				dispatch({ type: "SIGNUP_SUCCESS" });
+// 			})
+// 			.catch((err) => {
+// 				console.log(err, `this is the error generated`);
+// 				dispatch({ type: "SIGNUP_ERROR", err });
+// 			});
+// 	};
+// };
+
+export const updateSignup = (newUser, image) => {
+	return (dispatch, getState, { getFirebase }) => {
+	  const firestore = getFirebase().firestore();
+	  const firebase = getFirebase();
+	  let newUserId;
+	  let urls;
+  
+	  // Determine account type
+	  var type;
+	  switch (newUser.function) {
+		case "Hospitals":
+		case "Hotels":
+		case "Offices":
+		case "Shop/Supermarket":
+			type = "shop_admin";
+			break;
+		case "Recreational Centers":
+		case "Consultant":
+		case "Business":
+			type = "business_admin";
+			break;
+		case "Restaurants":
+			type = "restaurant_admin";
+			break;
+		case "Machinery/Supply":
+			type = "supply_admin";
+			break;
+		case "Admin":
+			type = "admin_admin";
+			break;
+		case "Schools":
+			type = "academic_admin";
+			break;
+		case "Farm":
+			type = "farm_admin";
+			break;
+		case "Households":
+		case "Personal":
+			type = "household_admin";
+			break;
+		default:
+			type = "user";
+			break;
+	}
+  
+	  // Skip email and password signup, directly generate a user ID
+	  newUserId = newUser.uid;
+  
+	  // Upload image if provided
+	  let imageUrl = "";
+	  if (image) {
+		imageUrl = uploadIdImage(image).then((resp) => resp.data.secure_url);
+	  }
+  
+	  let val = {
+		buildingFunction: newUser.function,
+		city: newUser.city,
+		country: newUser.country,
+		region: newUser.region,
+		uid: newUserId,
+		restaurantName: newUser.restaurantName,
+		companyName: newUser.companyName,
+		companyDescription: newUser.companyDescription,
+		regulatoryBody: newUser.regulatoryBody,
+		regulatoryBodyID: newUser.regulatoryBodyID,
+		// IDUrl: resp.data.secure_url,
+		IDNumber: newUser.IDNumber,
+		IDType: newUser.IDType,
+		cuisine: newUser.cuisine,
+		restaurantDescription: newUser.restaurantDescription,
+		address: newUser.restaurantAddress,
+		type: type,
+  
+		// Set IDUrl based on image upload result or existing URL
+		IDUrl: imageUrl || newUser.IDUrl,
+	  };
+
+	  console.log("print value", newUser)
+  
+	  if (newUser.consultantInfo) {
+		val.verification = "pending";
+	  }
+  
+	  if (newUser.function === "Admin") {
+		val.adminType = newUser.adminType;
+		val.verification = "pending";
+	  }
+  
+	  if (newUser.function === "Hospitals") {
+		val.verification = "pending";
+	}
+	if (newUser.function === "Farm") {
+		val.verification = "pending";
+	}
+	if (newUser.function === "Hotels") {
+		val.verification = "pending";
+	}
+	if (newUser.function === "Schools") {
+		val.verification = "pending";
+	}
+	if (newUser.function === "Offices") {
+		val.verification = "pending";
+	}
+	if (newUser.function === "Restaurants") {
+		val.verification = "pending";
+	}
+	if (newUser.function === "Machinery/Supply") {
+		val.verification = "pending";
+	}
+	if (newUser.function === "Shop/Supermarket") {
+		val.verification = "pending";
+	}
+  
+	  // Save user data to Firestore
+	  firestore
+		.collection("users")
+		.doc(newUserId)
+		.set(val, { merge: true })
+		.then(() => {
+		  // Setup Admin account in relevant users collection
+		  var adminCollection;
+		  if (type === "business_admin") {
+			adminCollection = "business_users";
+		  } else if (type === "academic_admin") {
+			adminCollection = "academic_users";
+		  } else if (type === "farm_admin") {
+			adminCollection = "farm_users";
+		} else if (type === "household_admin") {
+			adminCollection = "household_users";
+		} else if (type === "supply_admin") {
+			adminCollection = "supply_users";
+		} else if (type === "shop_admin") {
+			adminCollection = "shop_users";
+		} else {
+			adminCollection = "user";
+		} 
+  
+		//   if (adminCollection !== "user") {
+		// 	return firestore
+		// 	  .collection(adminCollection)
+		// 	  .doc(newUserId)
+		// 	  .set({
+		// 		name: newUser.firstName + " " + newUser.lastName,
+		// 		email: newUser.email,
+		// 	  });
+		//   }
+		})
+		.then((resp) => {
+			// console.log(resp, `this is the response`);
+			if (newUser.certImg) {
+				let userSubString = newUserId.substring(0, 7);
+
+				return Promise.all(
+					uploadImgs(newUser.certImg.images, userSubString)
+				);
+			}
+		})
+		.then((resp) => {
+			if(resp) {
+				urls = resp.map((result) => result.data.secure_url);
+				return firestore.collection("users").doc(newUserId).set({
+					imgsLinks: {
+					  certificateImg: urls[0],
+					  identificationImg: urls[1],
+					},
+				  },{ merge: true });
+			}
+		})
+		.then(() => {
+		  // If consultant info provided, upload images and save consultant data
+		  if (newUser.consultantInfo) {
+			let userSubString = newUserId.substring(0, 7);
+			return uploadImgs(newUser.consultantInfo.images, userSubString);
+		  }
+		})
+		.then((resp) => {
+		  // If images were uploaded, save consultant data
+		  if (resp) {
+			let urls = resp.map((result) => result.data.secure_url);
+			let fullName = `${newUser.firstName} ${newUser.lastName}`;
+  
+			return firestore.collection("consultants").doc(newUserId).set({
+			  fullName: fullName,
+			  email: newUser.email,
+			  urlLink: newUser.consultantInfo.urlLink,
+			  experience: newUser.consultantInfo.experience,
+			  expertise: newUser.consultantInfo.expertise,
+			  createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+			  services: newUser.consultantInfo.services,
+			  summary: newUser.consultantInfo.summary,
+			  isActive: true,
+			  imgsLinks: {
+				certificateImg: urls[0],
+				identificationImg: urls[1],
+			  },
+			});
+		  }
+		})
+		.then(() => {
+		  // Send email verification
+		  firebase.auth().currentUser.sendEmailVerification();
+		  dispatch({ type: "SIGNUP_SUCCESS" });
+		})
+		.catch((err) => {
+		  console.error(err, "Error during signup");
+		  dispatch({ type: "SIGNUP_ERROR", err });
+		});
+	};
+  };
+  
+  
+
 export const signUpWithSocial = (newUser) => {
 	// console.log(newUser, `this is the new user`);
 	// console.log(image, `this is the image i want to upload`);
@@ -491,12 +981,14 @@ export const signUpWithSocial = (newUser) => {
 					lastName: newUser.userData.family_name,
 					initials: newUser.userData.given_name[0] + newUser.userData.family_name[0],
 					email: newUser.userData.email,
-					buildingFunction: newUser.function,
+					// buildingFunction: newUser.function,
 					uid: newUserId,
 					balance: 0,
 					voucherBalance: 0,
+					isSocialLogin: newUser.isSocialLogin,
+					verification: newUser.verification
 				};
-				firestore.collection("users").doc(newUserId).set(val);
+				firestore.collection("users").doc(newUserId).set(val, { merge: true });
 
 				//Setup Admin account in relevent users collection
 				var adminCollection;

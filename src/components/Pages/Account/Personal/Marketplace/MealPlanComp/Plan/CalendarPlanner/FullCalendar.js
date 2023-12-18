@@ -617,7 +617,8 @@ function FullCalendarApp(props) {
       <div className="button">
         <AddButton 
           onClick={handleShowAdd} 
-          isDisabled={!restaurantAddress || !restaurantName}        />
+          isDisabled={!restaurantAddress || !restaurantName}        
+        />
       </div>
       <Modal show={showModalAdd} onHide={handleCloseAdd}>
         <Modal.Header closeButton>

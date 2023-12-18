@@ -19,6 +19,13 @@ export function Food({ setShow, setChooseModal }) {
 				goTo="/restaurant-meal-plan"
 			/>
 
+			<IconButton
+				icon="delivery"
+				label="Check Deliveries"
+				color="cyan"
+				goTo="/track-reservations-other"
+			/>
+
 			{/* 
       <IconButton
         icon="notes"

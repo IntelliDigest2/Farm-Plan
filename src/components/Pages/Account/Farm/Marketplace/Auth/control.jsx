@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 
 //controls the form for farm plan auth
 function Control(props) {
-  const [form, setForm] = useState(0);
+  const [form, setForm] = useState(1);
 
   const handleSubmit = (e) => {
     let data;

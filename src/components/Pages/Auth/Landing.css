@@ -30,10 +30,11 @@
 .buttons {
   position: absolute;
   text-align: center;
-  justify-content: center;
-  width: 80%;
-  left: 10%;
+  width: 100%;
   bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -151,3 +152,20 @@
 .title img {
   height: 50vh;
 }} */
+
+.login-buttons-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; /* Adjust the margin as needed */
+}
+
+/* Optional: Add styles for individual login buttons if needed */
+.login-buttons-container button {
+  /* Add your styles here */
+}
+
+.horizontal-buttons {
+  display: flex;
+  align-items: center; /* Align buttons at the center vertically */
+}
+

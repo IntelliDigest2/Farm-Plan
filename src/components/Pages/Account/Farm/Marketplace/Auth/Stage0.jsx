@@ -10,7 +10,7 @@ export default function Stage0({ setForm, existing, setExisting }) {
           <Row>
             <Col>
               <Form.Check
-                required
+                // required
                 type="radio"
                 name="register"
                 label="Yes"
@@ -22,7 +22,7 @@ export default function Stage0({ setForm, existing, setExisting }) {
             </Col>
             <Col>
               <Form.Check
-                required
+                // required
                 type="radio"
                 name="register"
                 label="No"

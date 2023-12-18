@@ -401,7 +401,7 @@ function FormStart(props) {
             name="register"
             label="Yes"
             onClick={() => props.setRegistered(true)}
-            onBlur={props.validate}
+            // onBlur={props.validate}
           />
           <Form.Check
             required
@@ -409,7 +409,7 @@ function FormStart(props) {
             name="register"
             label="No"
             onClick={() => props.setRegistered(false)}
-            onBlur={props.validate}
+            // onBlur={props.validate}
           />
           <Form.Control.Feedback type="invalid">
             Please answer yes or no.
