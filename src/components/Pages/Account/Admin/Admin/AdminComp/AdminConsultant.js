@@ -222,7 +222,7 @@ export const AdminConsultant = (props) => {
 
 		const sendVerificationEmail = (email) => {
 			try {
-				const response = fetch(`${baseUrlDev}/v1/auth/send-verification-email`, {
+				const response = fetch(`${baseUrlProd}/v1/auth/send-verification-email`, {
 				  method: "POST",
 				  headers: {
 					"Content-Type": "application/json",
