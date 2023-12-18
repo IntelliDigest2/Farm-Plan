@@ -21,7 +21,7 @@ import HomeWorkIcon from "@mui/icons-material/HomeWork";
 
 import { connect } from "react-redux";
 import { Redirect, Link, useLocation, useHistory } from "react-router-dom";
-import { signUp } from "../../../store/actions/authActions";
+import { updateSignup } from "../../../store/actions/authActions";
 
 import { createMapData } from "../../../store/actions/dataActions";
 import Geocode from "react-geocode";
@@ -37,6 +37,7 @@ const SignUp = (props) => {
 
 	const location = useLocation();
 	const history = useHistory();
+
 
 	//Stage1
 	const [firstName, setFirstName] = useState("");
@@ -73,6 +74,7 @@ const SignUp = (props) => {
 	const [restaurantAddress, setRestaurantAddress] = useState("")
 
 	const [stage, setStage] = useState(1);
+	const [userUID, setUserUID] = useState("")
 
 	const [errorNotification, setErrorNotification] = useState();
 
@@ -88,9 +90,6 @@ const SignUp = (props) => {
 		services: [{ service: "", price: "" }],
 		summary: "",
 		isActive: true,
-		images: [{ certificateImg: null }, { identificationImg: null }],
-	});
-	const [businessCert, setBusinessCert] = useState({
 		images: [{ certificateImg: null }, { identificationImg: null }],
 	});
 
@@ -129,6 +128,23 @@ const SignUp = (props) => {
 
 		console.log("show stage", stage)
 	  }, [location.search, setStage]);
+
+
+	  useEffect(() => {
+		const searchParams = new URLSearchParams(location.search);
+		const UIDFromUrl = searchParams.get('uid');
+		console.log("uid", UIDFromUrl);
+	  
+		if (UIDFromUrl) {
+		  // setUserUID is likely asynchronous
+		  setUserUID(UIDFromUrl);
+		}
+	  }, [location.search, setUserUID]);
+	  
+	  useEffect(() => {
+		// This useEffect runs after the state has been updated
+		console.log("show uid", userUID);
+	  }, [userUID]);	  
 	
 
 	let certificateImg1 = certificateImg ? (
@@ -154,14 +170,8 @@ const SignUp = (props) => {
 		""
 	);
 
-	async function handleSubmit() {
+	function handleSubmit() {
 		let data = {
-			firstName: firstName,
-			lastName: lastName,
-			mobile: mobile,
-			initials: firstName[0] + lastName[0],
-			email: email,
-			password: password,
 			function: buildingFunction,
 			city: town,
 			country: country,
@@ -179,41 +189,23 @@ const SignUp = (props) => {
 			restaurantAddress: restaurantAddress,
 			type: "user",
 			adminType: adminType,
+			uid: userUID,
 		};
 
-		switch (data.function) {
-			case "Consultant":
-				data.consultantInfo = consultant;
-				break;
-			case "Restaurants":
-			case "Hotels":
-			case "Schools":
-			case "Offices":
-			case "Recreational Centers":
-			case "Machinery/Supply":
-			case "Shop/Supermarket":
-			case "Hospitals":
-				data.certImg = businessCert;
-				break;
-			default:
-				// Handle the default case if necessary
-		}		
-
-		
+	  
+		if (data.function === "Consultant") {
+		  data.consultantInfo = consultant;
+		}
+	  
 		if (validation()) {
-			try {
-			  // Assuming props.signUp returns a promise
-			  await props.signUp(data, image);
-			  console.log("Signup successful");
-			//   history.push('/account');
-			} catch (error) {
-			  console.error("Signup failed", error);
-			  // Handle the error, e.g., show an error message to the user
-			}
-		  } else {
-			console.log("Validation error");
-		  }
-	}  
+		  props.updateSignup(data, image)
+			  // Redirect the user to /account.js if the updateSignup is successful
+			  history.push('/account');
+		} else {
+		  console.log("error");
+		}
+	  }
+
 
 	useEffect(() => {
 		// console.log(
@@ -349,33 +341,26 @@ const SignUp = (props) => {
 		const em =
 			/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-		var s1 =
-			firstName !== "" && lastName !== "" && email !== "" && password !== "";
+		// var s1 =
+		// 	firstName !== "" && lastName !== "" && email !== "" && password !== "";
 
 		var s2 =
 			town !== "" && country !== "" && region !== "" && buildingFunction !== "";
 
-		var s3 = em.test(email);
+		// var s3 = em.test(email);
 
-		var s4 = !no.test(lastName) && !no.test(firstName);
+		// var s4 = !no.test(lastName) && !no.test(firstName);
 
 		var s5 = !no.test(town);
 
-		if (s1 && s2 && s3 && s4 && s5) {
+		if (s2 && s5) {
 			return true;
 		} else {
-			if (!s1) {
+			if (!s2) {
 				setErrorNotification("Please enter a valid name, email, and password.");
-			} else if (!s2) {
-				setErrorNotification(
-					"Please enter a valid town, country, region, and account type."
-				);
-			} else if (!s3) {
-				setErrorNotification("Please enter a valid email address.");
-			} else if (!s4) {
+			}
+			else if (!s5) {
 				setErrorNotification("Please enter a valid name.");
-			} else if (!s5) {
-				setErrorNotification("Please enter a valid town.");
 			} else {
 				setErrorNotification("Please enter valid information.");
 			}
@@ -395,7 +380,7 @@ const SignUp = (props) => {
 	//make sure the user isn't already logged in and if they are a new account, createMapData document for them.
 	useEffect(() => {
 		if (props.auth.uid) {
-			setIsLoggedIn(true);
+			// setIsLoggedIn(true);
 			if (town !== "" && country !== "") {
 				Geocode.fromAddress(town + " " + country).then((response) => {
 					var upload = {
@@ -427,7 +412,6 @@ const SignUp = (props) => {
 			setIDImg(undefined);
 			return;
 		} else {
-			
 		}
 
 		// I've kept this example simple by using the first image instead of multiple
@@ -443,30 +427,6 @@ const SignUp = (props) => {
 			setIDImg(imageFile);
 			newArray.splice(1, 1, { identificationImg: imageFile });
 			setConsultant({ ...consultant, images: newArray });
-		}
-	};
-
-	const handleSelectedImageOthers = (e) => {
-		if (!e.target.files || e.target.files.length === 0) {
-			setCertificateImg(undefined);
-			setIDImg(undefined);
-			return;
-		} else {
-		}
-
-		// I've kept this example simple by using the first image instead of multiple
-		if (e.target.id === "img1") {
-			let imageFile = e.target.files[0];
-			setCertificateImg(imageFile);
-			let newArray = businessCert.images.slice();
-			newArray.splice(0, 1, { certificateImg: imageFile });
-			setBusinessCert({ ...businessCert, images: newArray });
-		} else {
-			let imageFile = e.target.files[0];
-			let newArray = businessCert.images.slice();
-			setIDImg(imageFile);
-			newArray.splice(1, 1, { identificationImg: imageFile });
-			setBusinessCert({ ...businessCert, images: newArray });
 		}
 	};
 
@@ -623,11 +583,6 @@ const SignUp = (props) => {
 								IDNumber={IDNumber}
 								IDUrl={IDUrl}
 								setUrl={setUrl}
-								IDImg1={IDImg1}
-								certificateImg1={certificateImg1}
-								handleSelectedImageOthers={handleSelectedImageOthers}
-								setBusinessCert={setBusinessCert}
-								businessCert={businessCert}
 								setTown={setTown}
 								town={town}
 								setCountry={setCountry}
@@ -743,17 +698,6 @@ const SignUp = (props) => {
 								<p>First, create your account.</p>
 							</div>
 							<Stage7
-								setIDType={setIDType}
-								IDType={IDType}
-								setIDNumber={setIDNumber}
-								IDNumber={IDNumber}
-								IDUrl={IDUrl}
-								setUrl={setUrl}
-								IDImg1={IDImg1}
-								certificateImg1={certificateImg1}
-								handleSelectedImageOthers={handleSelectedImageOthers}
-								setBusinessCert={setBusinessCert}
-								businessCert={businessCert}
 								setTown={setTown}
 								town={town}
 								setCountry={setCountry}
@@ -1004,30 +948,17 @@ const Stage2 = (props) => {
 							//     props.setStage(3)
 							// }
 
-							switch (props.buildingFunction) {
-								case "Restaurants":
-								  props.setStage(4); // stage for restaurant-specific questions
-								  break;
-								case "Admin":
-								  props.setStage(6); // stage for admin-specific questions
-								  break;
-								case "Machinery/Supply":
-								case "Hotels":
-								case "Hospitals":
-								case "Schools":
-								case "Offices":
-								case "Recreational Centers":
-								case "Shop/Supermarket":
-								  props.setStage(7); // stage for supplier/machinery-specific questions
-								  break;
-								case "Consultant":
-								  props.setStage(8); // stage for consultant-specific questions
-								  break;
-								default:
-								  props.setStage(3);
-								  break;
-							  }
-							  
+							if (props.buildingFunction == "Restaurants") {
+								props.setStage(4); //stage for restaurant-specific questions
+							} else if (props.buildingFunction == "Admin") {
+								props.setStage(6); //stage for admin-specific questions
+							} else if (props.buildingFunction == "Machinery/Supply") {
+								props.setStage(7); //stage for supplier/machinery-specific questions
+							} else if (props.buildingFunction === "Consultant") {
+								props.setStage(8); //stage for consultant-specific questions
+							} else {
+								props.setStage(3);
+							}
 						}}
 					>
 						Next
@@ -1089,53 +1020,6 @@ const Stage4 = (props) => {
 								props.setRegulatoryBodyID(e.target.value);
 							}}
 						/>
-					</Form.Group>
-
-					<Form.Group>
-						<Form.Label style={{ width: "100%" }} className="form-label">
-							Upload certificate of incorporation and Identity card.
-							<span style={{ color: "red" }}>*</span>
-						</Form.Label>
-						<Row className="mb-3">
-							<Col>
-								Certificate
-								<Form.Control
-									id="img1"
-									onChange={props.handleSelectedImageOthers}
-									label="upload certificate"
-									type="file"
-									required
-								/>
-							</Col>
-							<Col>
-								Identification
-								<Form.Control
-									id="img2"
-									onChange={props.handleSelectedImageOthers}
-									className="mb-3"
-									label="upload Identification document"
-									type="file"
-									required
-								/>
-							</Col>
-						</Row>
-						<Row className="mb-3">
-							<Col>
-								Cert with Professional body
-								<Form.Control
-									id="img2"
-									// onChange={props.handleSelectedImageOthers}
-									className="mb-3"
-									label="upload Identification document"
-									type="file"
-									// required
-								/>
-							</Col>
-						</Row>
-						<Row>
-							<Col>{props.certificateImg1}</Col>
-							<Col>{props.IDImg1}</Col>
-						</Row>
 					</Form.Group>
 
 					<div className="signup-center">
@@ -1557,53 +1441,6 @@ const Stage7 = (props) => {
 						/>
 					</Form.Group>
 
-					<Form.Group>
-						<Form.Label style={{ width: "100%" }} className="form-label">
-							Upload certificate of incorporation and Identity card.
-							<span style={{ color: "red" }}>*</span>
-						</Form.Label>
-						<Row className="mb-3">
-							<Col>
-								Certificate
-								<Form.Control
-									id="img1"
-									onChange={props.handleSelectedImageOthers}
-									label="upload certificate"
-									type="file"
-									required
-								/>
-							</Col>
-							<Col>
-								Identification
-								<Form.Control
-									id="img2"
-									onChange={props.handleSelectedImageOthers}
-									className="mb-3"
-									label="upload Identification document"
-									type="file"
-									required
-								/>
-							</Col>
-						</Row>
-						<Row className="mb-3">
-							<Col>
-								Cert with Professional body
-								<Form.Control
-									id="img3"
-									// onChange={props.handleSelectedImageOthers}
-									className="mb-3"
-									label="upload Identification document"
-									type="file"
-									// required
-								/>
-							</Col>
-						</Row>
-						<Row>
-							<Col>{props.certificateImg1}</Col>
-							<Col>{props.IDImg1}</Col>
-						</Row>
-					</Form.Group>
-
 					<div className="signup-center">
 						<div className="row">
 							<Button
@@ -1978,7 +1815,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		signUp: (newUser, image) => dispatch(signUp(newUser, image)), //r: cmd+click on signUp takes you to where the signUp event's props are defined
+		updateSignup: (newUser, image) => dispatch(updateSignup(newUser, image)), //r: cmd+click on signUp takes you to where the signUp event's props are defined
 		createMapData: (mapdata) => dispatch(createMapData(mapdata)),
 	};
 };

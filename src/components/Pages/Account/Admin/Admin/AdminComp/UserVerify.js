@@ -173,7 +173,16 @@ const fetchUserExpertise = async (uid) => {
         <option value="All">All</option>
         <option value="Admin">Admin</option>
         <option value="Consultant">Consultant</option>
-        <option value="`Restaurant`">Restaurant</option>
+        <option value="Restaurants">Restaurant</option>
+        <option value="`Hotels">Hotels</option>
+        <option value="Offices">Offices</option>
+        <option value="Schools">Schools</option>
+        <option value="Hospitals">Hospitals</option>
+        <option value="Shop/Supermarket">Shop/Supermarket</option>
+        <option value="Recreational Centers">Recreational Centers</option>
+        <option value="Machinery/Supply">Machinery/Supply</option>
+
+
 
       </select>
 

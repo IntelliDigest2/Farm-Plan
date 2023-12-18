@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import logo from "../../../images/WFTLogo.png";
 import GoogleLoginButton from "./GoogleLogin";
 import { Redirect, Link } from 'react-router-dom';
+import FacebookLogin from "./FacebookLogin";
 
 
 function LandingPage(props) {
@@ -21,6 +22,19 @@ function LandingPage(props) {
   };
 
   const handleGoogleLoginFailure = (error) => {
+    // Handle login failure
+    console.error("returned error",error);
+  };
+
+  const handleFacebookLoginSuccess = (profile) => {
+    // Handle successful login
+    console.log("returned profile", profile);
+    setProfile(profile); // Update the profile state
+    setIsLoggedIn(true)
+
+  };
+
+  const handleFacebookLoginFailure = (error) => {
     // Handle login failure
     console.error("returned error",error);
   };
@@ -48,10 +62,17 @@ function LandingPage(props) {
           />
         </div>
         <div className="buttons">
+          
+          <div className="horizontal-buttons">
           <GoogleLoginButton 
             onLoginSuccess={handleGoogleLoginSuccess}
             onLoginFailure={handleGoogleLoginFailure}
           />
+          <FacebookLogin 
+            onLoginSuccess={handleFacebookLoginSuccess}
+            onLoginFailure={handleFacebookLoginFailure}
+          />
+          </div>
           <SubButton styling="blue" goTo="/login" text="Log In" />
           <SubButton styling="blue" goTo="/signup" text="Sign Up" />
           <SubButton styling="green" goTo="/about-us" text="About Us" />

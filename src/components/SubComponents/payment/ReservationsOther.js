@@ -19,7 +19,7 @@ export const ReservationsOther = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlProd}/v1/payment/track-reservations-other`, {
+    fetch(`${baseUrlDev}/v1/payment/track-reservations-other`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,14 +28,15 @@ export const ReservationsOther = (props) => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("Data received from backend:", data.userReservations);
+        console.log("Data received from others:", data.userReservations);
+          if (data.userReservations) {
+            setReservations(data.userReservations);
+            console.log("print reservations:", reservations);
 
-        if (Array.isArray(data.userReservations)) {
-          setReservations(data.userReservations);
-          console.log("get reservation list", reservations)
-        } else {
-          console.error('Invalid data format for reservations:', data);
-        }
+          } else {
+            setReservations([]);
+          }
+       
       })
 
       .catch(error => {
@@ -50,65 +51,66 @@ export const ReservationsOther = (props) => {
   };
 
   return (
-
+      <>
+      <p>Orders to be received</p>
       <div className="page-container">
-        <div className="list-container">
+              <div className="list-container">
+              {reservations && reservations.length > 0 ? (
+                    reservations.map((item, index) => (
+                      <div key={index} className={`list-item ${index !== 0 ? 'list-separator' : ''}`}>
+                        <ListGroup variant="flush">
+                          <ListGroup.Item className="d-flex justify-content-between align-items-start">
+                            <div className="ms-2 me-auto">
+                            <div className="fw-bold">
+                              <div className="d-flex align-items-center">
+                                <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
+                                  {item.status || "pending"}
+                                </span>
+                                <span className="item-amount">{item.convertedCurrency}{item.convertedTotalAmount}{' '}</span>
+                              </div>
+                              <div className="cart-items">
+                                {item.cartItems.map((cartItem, cartIndex) => (
+                                  <div key={cartIndex}>
+                                    {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - {cartItem.convertedPrice * cartItem.quantity}
+                                  </div>
+                                ))}
+                              </div>
 
-          {reservations.length === 0 ? (
-            <div className="no-reservations-message">No delivery available</div>
-          ) : (
-            reservations.map((item, index) => (
-              <div key={index} className={`list-item ${index !== 0 ? 'list-separator' : ''}`}>
-                <ListGroup variant="flush">
-                  <ListGroup.Item className="d-flex justify-content-between align-items-start">
-                    <div className="ms-2 me-auto">
-                    <div className="fw-bold">
-                      <div className="d-flex align-items-center">
-                        <span className={`item-operation ${item.status === "completed" ? "completed" : "pending"}`}>
-                          {item.status || "pending"}
-                        </span>
-                        <span className="item-amount">{item.convertedCurrency}{item.convertedTotalAmount}{' '}</span>
+                              <div className="date">
+                                {`Delivery due in ${moment(item.deliveryDueDate).fromNow(true)}`}
+                              </div>
+                            </div>
+                            </div>
+                            <Badge bg="primary" pill className="transaction-id">
+                              <div className="transaction-id-content">
+                                <span className="operation">{moment(item.createdAt).format("D MMM YYYY")}</span>
+                                <span className="transaction-id">{item.trackingID}</span>
+                                {(item.status == "PENDING") ? (
+                                  <ConfirmDeliveryFarmer
+                                    trackingID={item.trackingID}
+                                    deliveryDuration={item.deliveryDuration}
+                                  />
+                                ) : (
+                                  <></>
+                                )}
+
+
+                              </div>
+                            </Badge>
+                          </ListGroup.Item>
+                        </ListGroup>
                       </div>
-                      <div className="cart-items">
-                        {item.cartItems.map((cartItem, cartIndex) => (
-                          <div key={cartIndex}>
-                            {cartItem.data} {cartItem.quantity} ({measurementUnits[cartItem.measure] || cartItem.measure}) - {cartItem.convertedPrice * cartItem.quantity}
-                          </div>
-                        ))}
+                    ))
+                  ) : (
+                    <div className="no-reservations-message">No Item available</div>
+                  )}
+                          
+                        </div>
                       </div>
-
-                      <div className="date">
-                        {`Delivery due in ${moment(item.deliveryDueDate).fromNow(true)}`}
-                      </div>
-                    </div>
-                    </div>
-                    <Badge bg="primary" pill className="transaction-id">
-                      <div className="transaction-id-content">
-                        <span className="operation">{moment(item.createdAt).format("D MMM YYYY")}</span>
-                        <span className="transaction-id">{item.trackingID}</span>
-                        {(item.status == "PENDING") ? (
-                          <ConfirmDeliveryFarmer
-                            trackingID={item.trackingID}
-                            deliveryDuration={item.deliveryDuration}
-                          />
-                        ) : (
-                          <></>
-                        )}
-
-
-                      </div>
-                    </Badge>
-                  </ListGroup.Item>
-                </ListGroup>
-              </div>
-            ))
-          )}
-
-                    
-                  </div>
-                </div>
-            );
-          };
+      </>
+            
+                  );
+                };
 
 // const mapStateToProps = (state) => {
 //     return {

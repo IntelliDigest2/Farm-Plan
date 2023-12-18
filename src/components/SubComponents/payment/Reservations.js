@@ -20,7 +20,7 @@ export const Reservations = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlProd}/v1/payment/track-reservations`, {
+    fetch(`${baseUrlDev}/v1/payment/track-reservations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,10 +29,13 @@ export const Reservations = (props) => {
     })
       .then(response => response.json())
       .then(data => {
-        if (Array.isArray(data.userReservations)) {
+        console.log("Data received from res:", data.userReservations);
+        if (data.userReservations) {
           setReservations(data.userReservations);
+          console.log("print reservations:", reservations);
+
         } else {
-          console.error('Invalid data format for reservations:', data);
+          setReservations([]);
         }
       })
 
@@ -47,14 +50,17 @@ export const Reservations = (props) => {
     '&lt;unit>': 'unit', // Add other mappings as needed
   };
 
-  console.log("reservationa", reservations)
+  console.log("xxreservations", reservations)
+  console.log("xxreservations.length", reservations.length);
+  console.log("xxxreservations", reservations);
 
   return (
-    
+   <>
+    <p>Orders to be Sent</p>
       <div className="page-container">
         <div className="list-container">
           {reservations.length === 0 ? (
-            <div className="no-reservations-message">No delivery available</div>
+            <div className="no-reservations-message">No Item available</div>
           ) : (
             reservations.map((item, index) => (
               <div key={index} className={`list-item ${index !== 0 ? 'list-separator' : ''}`}>
@@ -120,6 +126,7 @@ export const Reservations = (props) => {
                   </div>
       </div>
 
+   </>
   );
 };
 

@@ -101,50 +101,96 @@ export const AdminConsultant = (props) => {
 			</div>
 		);
 
-	let display =
-		accountResultType === "admin" ? (
-			<>
+		let display;
+
+		switch (accountResultType) {
+		  case "admin":
+			display = (
+			  <>
 				<Col>
-					<div>
-						<h3>{idType}</h3>
-						<div style={{ maxWidth: "400px" }}>
-							<img alt={`${idType}`} src={images?.[idType]} width={"400px"} />
-						</div>
+				  <div>
+					<h3>{idType}</h3>
+					<div style={{ maxWidth: "400px" }}>
+					  <img alt={`${idType}`} src={images?.[idType]} width={"400px"} />
 					</div>
+				  </div>
 				</Col>
-			</>
-		) : (
-			<>
+			  </>
+			);
+			break;
+		
+		  case "Hotels":
+		  case "Hospitals":
+		  case "Schools":
+		  case "Offices":
+		  case "Recreational Centers":
+		  case "Shop/Supermarket":
+		  case "Restaurants":
+			display = (
+			  <>
 				<Col>
-					<div>
-						<h3>Certification Image</h3>
-						<div style={{ maxWidth: "400px" }}>
-							<img
-								alt={`certification for consultant`}
-								src={images?.certificateImg}
-								width={"400px"}
-							/>
-						</div>
+				  <div>
+					<h3>Certification Image</h3>
+					<div style={{ maxWidth: "400px" }}>
+					  <img
+						alt={`certification for consultant`}
+						src={images?.certificateImg}
+						width={"400px"}
+					  />
 					</div>
+				  </div>
 				</Col>
 				<Col>
-					<div>
-						<h3>Identification Image</h3>
-						<div style={{ maxWidth: "400px" }}>
-							<img
-								alt={`identificatin for consultant`}
-								src={images?.identificationImg}
-								width={"400px"}
-							/>
-						</div>
+				  <div>
+					<h3>Identification Image</h3>
+					<div style={{ maxWidth: "400px" }}>
+					  <img
+						alt={`identification for consultant`}
+						src={images?.identificationImg}
+						width={"400px"}
+					  />
 					</div>
+				  </div>
 				</Col>
-			</>
-		);
+			  </>
+			);
+			break;
+		
+		  default:
+			display = (
+			  <>
+				<Col>
+				  <div>
+					<h3>Certification Image</h3>
+					<div style={{ maxWidth: "400px" }}>
+					  <img
+						alt={`certification for consultant`}
+						src={images?.certificateImg}
+						width={"400px"}
+					  />
+					</div>
+				  </div>
+				</Col>
+				<Col>
+				  <div>
+					<h3>Identification Image</h3>
+					<div style={{ maxWidth: "400px" }}>
+					  <img
+						alt={`identification for consultant`}
+						src={images?.identificationImg}
+						width={"400px"}
+					  />
+					</div>
+				  </div>
+				</Col>
+			  </>
+			);
+			break;
+		}
 
 	let content =
 		images === null ? (
-			"Consultant certifications images will appear here"
+			"Certifications images will appear here"
 		) : images && images.length === 0 ? (
 			"theres isnt any image with this user information"
 		) : (
@@ -186,7 +232,17 @@ export const AdminConsultant = (props) => {
 							<option value={"consultants"}>consultant</option>
 							{/* <option value={"farm_users"}>farmer</option> */}
 							<option value={"User Admin"}>User Admin</option>
-							<option value={"Restaurant Admin"}>Restaurant Admin</option>
+							<option value={"Restaurants"}>Restaurant</option>
+							<option value={"Hospitals"}>Hospitals</option>
+							<option value={"Schools"}>Schools</option>
+							<option value={"Offices"}>Offices</option>
+							<option value={"Hotels"}>Hotels</option>
+							<option value={"Recreational Centers"}>Recreational Centers</option>
+							<option value={"Shop/Supermarket"}>Shop/Supermarket</option>
+							<option value={"Machinery/Supply"}>Machinery/Supply</option>
+
+
+
 						</Form.Control>
 					</Form.Group>
 				</Col>

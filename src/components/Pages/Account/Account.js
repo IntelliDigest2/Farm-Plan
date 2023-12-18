@@ -1,18 +1,19 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useTranslation, Trans } from "react-i18next";
 
-import { Container, Dropdown, DropdownButton } from "react-bootstrap";
+import { Container, Row, Col, Dropdown, Button, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "../../SubComponents/Profile";
 import "../Pages.css";
 import { PageWrapMini } from "../../SubComponents/PageWrap";
 
 import logo from "../../../images/WFTLogo.png";
+import "../../SubComponents/Button.css"
 
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { Tab } from "@material-ui/core";
@@ -61,6 +62,8 @@ const NewAccount = (props) => {
 	const [modal, setModal] = useState(false);
 	const [chooseModal, setChooseModal] = useState(false);
 
+	const [stage, setStage] = useState(2);
+
 	useEffect(() => {
 		setType(props.profile.type);
 	}, [props.profile.type]);
@@ -97,6 +100,9 @@ const NewAccount = (props) => {
 
 	 // Check if props.type is null or empty
 	 const isTypeEmpty = !props.profile.type;
+	 const isVerificationPending = props.profile.verification === "pending";
+
+	 console.log("Before Link:", window.location.pathname);
 
 	return (
 		<>
@@ -142,8 +148,17 @@ const NewAccount = (props) => {
 									</Dropdown.Item>
 								))}
 							</DropdownButton>
+							 {/* Conditional rendering of the Link button */}
+							{!props.profile.buildingFunction ? (
+							<Link to={`/complete-signup?stage=${stage}&uid=${props.profile.uid}`}>
+								<Button>Go to Stage 2</Button>
+							</Link>
+							) : null}
+
 							{/* Display message under the settings icon if props.type is null or empty */}
                             <span style={{ color: "red" }}>{isTypeEmpty && "Please use the settings icon to choose your account type"}</span>
+							<span style={{ color: "purple" }}>{isVerificationPending && "⚠️ Your account under is review, to learn more about WFT, please watch the video below"}</span>
+
 						</>
 					</div>
 
@@ -168,6 +183,17 @@ const NewAccount = (props) => {
 };
 
 const AccountType = (props) => {
+
+	const isVerificationPending = props.profile.verification === "pending";
+
+	const buildingFunctionVideos = {
+		Farm: "https://youtu.be/K3KlKuERJJk?si=iWoDc3UThCVbyG_Q",
+		restaurant: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		consultant: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		// Add more build functions and their corresponding video links as needed
+	  };
+	  const buildingFunction = props.profile.buildingFunction;
+
 	const useStyles = makeStyles({
 		tabListContainer: {
 			width: "100%", // Set the desired width for the container
@@ -196,6 +222,30 @@ const AccountType = (props) => {
 	const isMobile = useMediaQuery("(max-width: 600px)"); // Adjust the screen width breakpoint as needed
 
 	const { t } = useTranslation();
+
+	// Render only the "Funds" tab if verification is pending
+	if (isVerificationPending) {
+		return (
+		  <>
+			<Container>
+			<Row>
+			<Col xs={12} sm={6} md={4} className="mb-4">
+			<iframe
+				width="560"
+				height="315"
+				// src={buildingFunctionVideos[buildingFunction]}
+				src="https://youtube.com/embed/K3KlKuERJJk?si=iWoDc3UThCVbyG_Q"
+				title="YouTube video player"
+				frameBorder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowFullScreen
+			></iframe>
+			</Col>
+			</Row>
+   		 </Container>
+		  </>
+		);
+	  }
 
 	switch (props.type) {
 		case "farm_admin":
