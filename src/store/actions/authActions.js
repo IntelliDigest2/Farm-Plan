@@ -702,6 +702,7 @@ export const updateSignup = (newUser, image) => {
 	  const firestore = getFirebase().firestore();
 	  const firebase = getFirebase();
 	  let newUserId;
+	  let urls;
   
 	  // Determine account type
 	  var type;
@@ -843,6 +844,27 @@ export const updateSignup = (newUser, image) => {
 		// 	  });
 		//   }
 		})
+		.then((resp) => {
+			// console.log(resp, `this is the response`);
+			if (newUser.certImg) {
+				let userSubString = newUserId.substring(0, 7);
+
+				return Promise.all(
+					uploadImgs(newUser.certImg.images, userSubString)
+				);
+			}
+		})
+		.then((resp) => {
+			if(resp) {
+				urls = resp.map((result) => result.data.secure_url);
+				return firestore.collection("users").doc(newUserId).set({
+					imgsLinks: {
+					  certificateImg: urls[0],
+					  identificationImg: urls[1],
+					},
+				  },{ merge: true });
+			}
+		})
 		.then(() => {
 		  // If consultant info provided, upload images and save consultant data
 		  if (newUser.consultantInfo) {
@@ -964,6 +986,7 @@ export const signUpWithSocial = (newUser) => {
 					balance: 0,
 					voucherBalance: 0,
 					isSocialLogin: newUser.isSocialLogin,
+					verification: newUser.verification
 				};
 				firestore.collection("users").doc(newUserId).set(val, { merge: true });
 

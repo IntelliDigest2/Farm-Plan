@@ -14,11 +14,12 @@ export const getConsultantImages = async (userId, accountType) => {
 	case "Recreational Centers":
 	case "Shop/Supermarket":
 	case "Machinery/Supply":
-		result = (await db.collection("users").doc(userId).get()).data().imgsLinks;
+		result = (await db.collection("users").doc(userId).get()).data();
 		ver = (await db.collection("users").doc(userId).get()).data().verification;
       return {
-        images: result,
+        images: result.imgsLinks,
         verificationStatus: result.verification,
+		email: result.email,
       };
     case "User Admin":
       result = (await db.collection("users").doc(userId).get()).data();
@@ -27,14 +28,16 @@ export const getConsultantImages = async (userId, accountType) => {
         images: { [`${result.IDType}`]: result.IDUrl },
         verificationStatus: result.verification,
         idType: result.IDType,
+		email: result.email,
       };
 
     default:
-      result = (await db.collection(`${accountType}`).doc(userId).get()).data().imgsLinks;
+      result = (await db.collection(`${accountType}`).doc(userId).get()).data();
       ver = (await db.collection("users").doc(userId).get()).data().verification;
       return {
-        images: result,
+        images: result.imgsLinks,
         verificationStatus: ver,
+		email: result.email,
       };
   }
 };

@@ -92,6 +92,9 @@ const SignUp = (props) => {
 		isActive: true,
 		images: [{ certificateImg: null }, { identificationImg: null }],
 	});
+	const [businessCert, setBusinessCert] = useState({
+		images: [{ certificateImg: null }, { identificationImg: null }],
+	});
 
 	//This block of code is used to preview uploaded image
 	useEffect(() => {
@@ -193,9 +196,23 @@ const SignUp = (props) => {
 		};
 
 	  
-		if (data.function === "Consultant") {
-		  data.consultantInfo = consultant;
-		}
+		switch (data.function) {
+			case "Consultant":
+				data.consultantInfo = consultant;
+				break;
+			case "Restaurants":
+			case "Hotels":
+			case "Schools":
+			case "Offices":
+			case "Recreational Centers":
+			case "Machinery/Supply":
+			case "Shop/Supermarket":
+			case "Hospitals":
+				data.certImg = businessCert;
+				break;
+			default:
+				// Handle the default case if necessary
+		}	
 	  
 		if (validation()) {
 		  props.updateSignup(data, image)
@@ -430,6 +447,31 @@ const SignUp = (props) => {
 		}
 	};
 
+	const handleSelectedImageOthers = (e) => {
+		if (!e.target.files || e.target.files.length === 0) {
+			setCertificateImg(undefined);
+			setIDImg(undefined);
+			return;
+		} else {
+		}
+
+		// I've kept this example simple by using the first image instead of multiple
+		if (e.target.id === "img1") {
+			let imageFile = e.target.files[0];
+			setCertificateImg(imageFile);
+			let newArray = businessCert.images.slice();
+			newArray.splice(0, 1, { certificateImg: imageFile });
+			setBusinessCert({ ...businessCert, images: newArray });
+		} else {
+			let imageFile = e.target.files[0];
+			let newArray = businessCert.images.slice();
+			setIDImg(imageFile);
+			newArray.splice(1, 1, { identificationImg: imageFile });
+			setBusinessCert({ ...businessCert, images: newArray });
+		}
+	};
+
+
 	if (isLoggedIn) {
 		return <Redirect to="/account" />;
 	}
@@ -583,6 +625,11 @@ const SignUp = (props) => {
 								IDNumber={IDNumber}
 								IDUrl={IDUrl}
 								setUrl={setUrl}
+								IDImg1={IDImg1}
+								certificateImg1={certificateImg1}
+								handleSelectedImageOthers={handleSelectedImageOthers}
+								setBusinessCert={setBusinessCert}
+								businessCert={businessCert}
 								setTown={setTown}
 								town={town}
 								setCountry={setCountry}
@@ -698,6 +745,11 @@ const SignUp = (props) => {
 								<p>First, create your account.</p>
 							</div>
 							<Stage7
+								IDImg1={IDImg1}
+								certificateImg1={certificateImg1}
+								handleSelectedImageOthers={handleSelectedImageOthers}
+								setBusinessCert={setBusinessCert}
+								businessCert={businessCert}
 								setTown={setTown}
 								town={town}
 								setCountry={setCountry}
@@ -948,17 +1000,29 @@ const Stage2 = (props) => {
 							//     props.setStage(3)
 							// }
 
-							if (props.buildingFunction == "Restaurants") {
-								props.setStage(4); //stage for restaurant-specific questions
-							} else if (props.buildingFunction == "Admin") {
-								props.setStage(6); //stage for admin-specific questions
-							} else if (props.buildingFunction == "Machinery/Supply") {
-								props.setStage(7); //stage for supplier/machinery-specific questions
-							} else if (props.buildingFunction === "Consultant") {
-								props.setStage(8); //stage for consultant-specific questions
-							} else {
-								props.setStage(3);
-							}
+							switch (props.buildingFunction) {
+								case "Restaurants":
+								  props.setStage(4); // stage for restaurant-specific questions
+								  break;
+								case "Admin":
+								  props.setStage(6); // stage for admin-specific questions
+								  break;
+								case "Machinery/Supply":
+								case "Hotels":
+								case "Hospitals":
+								case "Schools":
+								case "Offices":
+								case "Recreational Centers":
+								case "Shop/Supermarket":
+								  props.setStage(7); // stage for supplier/machinery-specific questions
+								  break;
+								case "Consultant":
+								  props.setStage(8); // stage for consultant-specific questions
+								  break;
+								default:
+								  props.setStage(3);
+								  break;
+							  }
 						}}
 					>
 						Next
@@ -1020,6 +1084,53 @@ const Stage4 = (props) => {
 								props.setRegulatoryBodyID(e.target.value);
 							}}
 						/>
+					</Form.Group>
+
+					<Form.Group>
+						<Form.Label style={{ width: "100%" }} className="form-label">
+							Upload certificate of incorporation and Identity card.
+							<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<Row className="mb-3">
+							<Col>
+								Certificate
+								<Form.Control
+									id="img1"
+									onChange={props.handleSelectedImageOthers}
+									label="upload certificate"
+									type="file"
+									required
+								/>
+							</Col>
+							<Col>
+								Identification
+								<Form.Control
+									id="img2"
+									onChange={props.handleSelectedImageOthers}
+									className="mb-3"
+									label="upload Identification document"
+									type="file"
+									required
+								/>
+							</Col>
+						</Row>
+						<Row className="mb-3">
+							<Col>
+								Cert with Professional body
+								<Form.Control
+									id="img2"
+									// onChange={props.handleSelectedImageOthers}
+									className="mb-3"
+									label="upload Identification document"
+									type="file"
+									// required
+								/>
+							</Col>
+						</Row>
+						<Row>
+							<Col>{props.certificateImg1}</Col>
+							<Col>{props.IDImg1}</Col>
+						</Row>
 					</Form.Group>
 
 					<div className="signup-center">
@@ -1439,6 +1550,53 @@ const Stage7 = (props) => {
 								props.setCompanyDescription(e.target.value);
 							}}
 						/>
+					</Form.Group>
+
+					<Form.Group>
+						<Form.Label style={{ width: "100%" }} className="form-label">
+							Upload certificate of incorporation and Identity card.
+							<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<Row className="mb-3">
+							<Col>
+								Certificate
+								<Form.Control
+									id="img1"
+									onChange={props.handleSelectedImageOthers}
+									label="upload certificate"
+									type="file"
+									required
+								/>
+							</Col>
+							<Col>
+								Identification
+								<Form.Control
+									id="img2"
+									onChange={props.handleSelectedImageOthers}
+									className="mb-3"
+									label="upload Identification document"
+									type="file"
+									required
+								/>
+							</Col>
+						</Row>
+						<Row className="mb-3">
+							<Col>
+								Cert with Professional body
+								<Form.Control
+									id="img3"
+									// onChange={props.handleSelectedImageOthers}
+									className="mb-3"
+									label="upload Identification document"
+									type="file"
+									// required
+								/>
+							</Col>
+						</Row>
+						<Row>
+							<Col>{props.certificateImg1}</Col>
+							<Col>{props.IDImg1}</Col>
+						</Row>
 					</Form.Group>
 
 					<div className="signup-center">

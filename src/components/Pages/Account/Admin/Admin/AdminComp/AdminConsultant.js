@@ -14,6 +14,10 @@ export const AdminConsultant = (props) => {
 	const [accountResultType, setAccountResultType] = useState("");
 	const [idType, setIdType] = useState("");
 	const [result, setResult] = useState("");
+	const [email, setEmail] = useState("");
+
+	const baseUrlDev="http://localhost:5000"
+  	const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"	
 
 	function SearchConsultantImages(e) {
 		e.preventDefault();
@@ -27,7 +31,7 @@ export const AdminConsultant = (props) => {
 					setResult();
 					setActiveState(result.verificationStatus);
 					setAccountResultType(result.accountType);
-
+					setEmail(result.email)
 					setImages(result.images);
 					setIdType(result.idType);
 
@@ -66,6 +70,7 @@ export const AdminConsultant = (props) => {
 				//Notification
 				submitNotification("Success", "Account status changed to active");
 				setActiveState("verified");
+				sendVerificationEmail(email)
 			})
 			.catch((err) => {
 				console.log(err);
@@ -214,6 +219,26 @@ export const AdminConsultant = (props) => {
 				{loadingActiveConsultant ? "...loading" : "Verify user account"}
 			</Button>
 		);
+
+		const sendVerificationEmail = (email) => {
+			try {
+				const response = fetch(`${baseUrlDev}/v1/auth/send-verification-email`, {
+				  method: "POST",
+				  headers: {
+					"Content-Type": "application/json",
+				  },
+				  body: JSON.stringify({email: email}),
+				});
+		  
+				// Handle the response from your backend
+				if (response.ok) {
+					console.log("Success", "verification email sent");
+				}
+			  } catch (err) {
+				console.log("An error occurred sending Email.");
+			  }
+		  }
+		
 
 	return (
 		<div>

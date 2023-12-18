@@ -149,16 +149,17 @@ const NewAccount = (props) => {
 								))}
 							</DropdownButton>
 							 {/* Conditional rendering of the Link button */}
-							{!props.profile.buildingFunction ? (
-							<Link to={`/complete-signup?stage=${stage}&uid=${props.profile.uid}`}>
-								<Button>Go to Stage 2</Button>
-							</Link>
-							) : null}
+							
 
 							{/* Display message under the settings icon if props.type is null or empty */}
-                            <span style={{ color: "red" }}>{isTypeEmpty && "Please use the settings icon to choose your account type"}</span>
 							<span style={{ color: "purple" }}>{isVerificationPending && "⚠️ Your account under is review, to learn more about WFT, please watch the video below"}</span>
-
+							<div>
+							{!props.profile.buildingFunction ? (
+							<Link to={`/complete-signup?stage=${stage}&uid=${props.profile.uid}`}>
+								<Button>Complete Signup</Button>
+							</Link>
+							) : null}
+							</div>
 						</>
 					</div>
 
@@ -188,8 +189,16 @@ const AccountType = (props) => {
 
 	const buildingFunctionVideos = {
 		Farm: "https://youtu.be/K3KlKuERJJk?si=iWoDc3UThCVbyG_Q",
-		restaurant: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
-		consultant: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		Restaurants: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		Schools: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		Hospitals: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		Hotels: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		Offices: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		MachinerySupply: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		RecreationalCenters: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		ShopSupermarket: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF"
+
+
 		// Add more build functions and their corresponding video links as needed
 	  };
 	  const buildingFunction = props.profile.buildingFunction;
