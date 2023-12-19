@@ -15,6 +15,7 @@ export default function Stage6({ handleSubmit }) {
           <Form.Check
             type="checkbox"
             label="I accept the terms and conditions."
+            id="terms"
             required
           />
           <Button className="blue-btn shadow-none mt-3" type="submit">
