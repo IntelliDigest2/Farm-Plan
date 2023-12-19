@@ -11,6 +11,7 @@ export default function Stage52({ setForm, setEffective }) {
           required
           type="radio"
           name="effective"
+          id="effective"
           label="Now"
           onClick={() => setEffective("Now")}
         />
@@ -18,6 +19,7 @@ export default function Stage52({ setForm, setEffective }) {
           required
           type="radio"
           name="effective"
+          id="effective"
           label="3 months time"
           onClick={() => setEffective("3months")}
         />
@@ -25,6 +27,7 @@ export default function Stage52({ setForm, setEffective }) {
           required
           type="radio"
           name="effective"
+          id="effective"
           label="6 months time"
           onClick={() => setEffective("6months")}
         />
@@ -32,6 +35,7 @@ export default function Stage52({ setForm, setEffective }) {
           required
           type="radio"
           name="effective"
+          id="effective"
           label="12 months time"
           onClick={() => setEffective("12months")}
         />

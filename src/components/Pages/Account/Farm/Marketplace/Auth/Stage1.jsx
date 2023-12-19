@@ -17,6 +17,7 @@ export default function Stage1({ setForm, association, setAssociation }) {
               required
               type="radio"
               name="member"
+              id="member"
               label="Yes"
               onClick={() => {
                 setAssociation(true);
@@ -29,6 +30,7 @@ export default function Stage1({ setForm, association, setAssociation }) {
               required
               type="radio"
               name="member"
+              id="member"
               label="No"
               onClick={() => {
                 setAssociation(false);

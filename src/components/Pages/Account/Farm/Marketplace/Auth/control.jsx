@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 
 //controls the form for farm plan auth
 function Control(props) {
-  const [form, setForm] = useState(1);
+  const [form, setForm] = useState(0);
 
   const handleSubmit = (e) => {
     let data;
@@ -69,7 +69,9 @@ function Control(props) {
   };
 
   //make component rerender every time form stage switches
-  useEffect(() => {}, [form]);
+  useEffect(() => {
+    console.log("Form:", form);
+  }, [form]);
 
   switch (form) {
     case 0:

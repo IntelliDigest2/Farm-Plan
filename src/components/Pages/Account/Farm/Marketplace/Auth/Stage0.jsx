@@ -13,6 +13,7 @@ export default function Stage0({ setForm, existing, setExisting }) {
                 // required
                 type="radio"
                 name="register"
+                id="register"
                 label="Yes"
                 onClick={() => {
                   setForm(1);
@@ -25,6 +26,7 @@ export default function Stage0({ setForm, existing, setExisting }) {
                 // required
                 type="radio"
                 name="register"
+                id="register"
                 label="No"
                 onClick={() => {
                   setForm(3);
