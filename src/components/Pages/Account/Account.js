@@ -189,33 +189,27 @@ const AccountType = (props) => {
 
 	const buildingFunctionVideos = {
 		Restaurants: {
-		  title: "Restaurant Video",
+		  title: "Overview",
 		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
 		},
 		Schools: {
-		  title: "Schools Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		  title: "Eating Out",
+		  link: "https://www.youtube.com/embed/CHm_Cg2IVZA?si=kwFeIOV2x95Z01-0",
 		},
 		Hospitals: {
-		  title: "Hospitals Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		  title: "Eating In",
+		  link: "https://www.youtube.com/embed/ItG9MsFP1EU?si=tR4AMjSuU0hHUrNI",
 		},
 		Hotels: {
-		  title: "Hotels Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		  title: "Deposit funds",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=5GS3I0d9LnLekimx",
 		},
 		Offices: {
-		  title: "Offices Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
-		},
-		MachinerySupply: {
-		  title: "Machinery Supply Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		  title: "Coupon",
+		  link: "https://www.youtube.com/embed/nZwsTHSoZqE?si=Oq79mjhaMs1ELSN0",
 		},
 		// Add more build functions and their corresponding video links as needed
 	  };
-	  
-	  const buildingFunction = props.profile.buildingFunction;
 
 	const useStyles = makeStyles({
 		tabListContainer: {
