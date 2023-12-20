@@ -909,126 +909,53 @@ export const updateSignup = (newUser, image) => {
   
   
 
-export const signUpWithSocial = (newUser) => {
-	// console.log(newUser, `this is the new user`);
-	// console.log(image, `this is the image i want to upload`);
-
-	// console.log(newUser.consultantInfo, `thes are the consultantInfo`);
+  export const signUpWithSocial = (newUser) => {
 	return (dispatch, getState, { getFirebase }) => {
-		// let result = uploadIdImage(image).then((resp) => {
-		// 	console.log(resp.data.secure_url);
-		// 	console.log(resp.data.url);
-		// });
-		// 	//Determine account type
-		var type;
-		switch (newUser.function) {
-			case "Hospitals":
-			case "Hotels":
-			case "Offices":
-			case "Shop/Supermarket":
-				type = "shop_admin";
-				break;
-			case "Recreational Centers":
-			case "Consultant":
-			case "Business":
-				type = "business_admin";
-				break;
-			case "Restaurants":
-				type = "restaurant_admin";
-				break;
-			case "Machinery/Supply":
-				type = "supply_admin";
-				break;
-			case "Admin":
-				type = "admin_admin";
-				break;
-			case "Schools":
-				type = "academic_admin";
-				break;
-			case "Farm":
-				type = "farm_admin";
-				break;
-			case "Households":
-			case "Personal":
-				type = "household_admin";
-				break;
-			default:
-				type = "user";
-				break;
-		}
-
-		const firestore = getFirebase().firestore();
-		const firebase = getFirebase();
-		let newUserId;
-		// let imageUrl = "";
-
-		const credential = auth.GoogleAuthProvider.credential(null, newUser.user.access_token);
-		console.log("you hit authActions", newUser)
-		firebase
-			.auth()
-			.signInWithCredential(credential)
-			.then((res) => {
-
-				newUserId = res.user.uid;
-			})
-			.then((resp) => {
-				// newUserId = resp.user.uid;
-				// console.log("createUserWithEmailAndPassword", newUserId);
-				// resp
-				let val = {
-					// ...newUser,
-					firstName: newUser.userData.given_name,
-					lastName: newUser.userData.family_name,
-					initials: newUser.userData.given_name[0] + newUser.userData.family_name[0],
-					email: newUser.userData.email,
-					// buildingFunction: newUser.function,
-					uid: newUserId,
-					balance: 0,
-					voucherBalance: 0,
-					isSocialLogin: newUser.isSocialLogin,
-					verification: newUser.verification
-				};
-				firestore.collection("users").doc(newUserId).set(val, { merge: true });
-
-				//Setup Admin account in relevent users collection
-				var adminCollection;
-				if (type === "business_admin") {
-					adminCollection = "business_users";
-				} else if (type === "academic_admin") {
-					adminCollection = "academic_users";
-				} else if (type === "farm_admin") {
-					adminCollection = "farm_users";
-				} else if (type === "household_admin") {
-					adminCollection = "household_users";
-				} else if (type === "supply_admin") {
-					adminCollection = "supply_users";
-				} else if (type === "shop_admin") {
-					adminCollection = "shop_users";
-				} else {
-					adminCollection = "user";
-				}
-
-				if (adminCollection !== "user") {
-					firestore
-						.collection(adminCollection)
-						.doc(newUserId)
-						.set({
-							name: newUser.userData.given_name + " " + newUser.userData.family_name,
-							email: newUser.userData.email,
-						});
-				}
-
-				return resp;
-			})
-			.then(() => {
-				dispatch({ type: "SIGNUP_SUCCESS" });
-			})
-			.catch((err) => {
-				console.log(err, `this is the error generated`);
-				dispatch({ type: "SIGNUP_ERROR", err });
-			});
+	  const firestore = getFirebase().firestore();
+	  const firebase = getFirebase();
+	  let newUserId;
+  
+	  const credential = auth.GoogleAuthProvider.credential(null, newUser.user.access_token);
+  
+	  firebase
+		.auth()
+		.signInWithCredential(credential)
+		.then((res) => {
+		  newUserId = res.user.uid;
+		  return firestore.collection("users").doc(newUserId).get(); // Check if user already exists
+		})
+		.then((userDoc) => {
+		  if (userDoc.exists) {
+			// User is already registered, no need to create a new user
+			console.log("User is already registered:", userDoc.data());
+			dispatch({ type: "SIGNIN_SUCCESS" });
+			return null; // Skip the next then block
+		  } else {
+			// User is not registered, create a new user
+			let val = {
+			  firstName: newUser.userData.given_name,
+			  lastName: newUser.userData.family_name,
+			  initials: newUser.userData.given_name[0] + newUser.userData.family_name[0],
+			  email: newUser.userData.email,
+			  uid: newUserId,
+			  balance: 0,
+			  voucherBalance: 0,
+			  isSocialLogin: newUser.isSocialLogin,
+			  verification: newUser.verification,
+			};
+			return firestore.collection("users").doc(newUserId).set(val, { merge: true });
+		  }
+		})
+		.then(() => {
+		  dispatch({ type: "SIGNUP_SUCCESS" });
+		})
+		.catch((err) => {
+		  console.log(err, `this is the error generated`);
+		  dispatch({ type: "SIGNUP_ERROR", err });
+		});
 	};
-};
+  };
+  
 
 
 export const getUserData = (data) => {
