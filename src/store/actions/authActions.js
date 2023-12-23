@@ -909,7 +909,7 @@ export const updateSignup = (newUser, image) => {
   
   
 
-  export const signUpWithSocial = (newUser) => {
+  export const signUpWithGoogle = (newUser) => {
 	return (dispatch, getState, { getFirebase }) => {
 	  const firestore = getFirebase().firestore();
 	  const firebase = getFirebase();
@@ -936,6 +936,64 @@ export const updateSignup = (newUser, image) => {
 			  firstName: newUser.userData.given_name,
 			  lastName: newUser.userData.family_name,
 			  initials: newUser.userData.given_name[0] + newUser.userData.family_name[0],
+			  email: newUser.userData.email,
+			  uid: newUserId,
+			  balance: 0,
+			  voucherBalance: 0,
+			  isSocialLogin: newUser.isSocialLogin,
+			  verification: newUser.verification,
+			};
+			return firestore.collection("users").doc(newUserId).set(val, { merge: true });
+		  }
+		})
+		.then(() => {
+		  dispatch({ type: "SIGNUP_SUCCESS" });
+		})
+		.catch((err) => {
+		  console.log(err, `this is the error generated`);
+		  dispatch({ type: "SIGNUP_ERROR", err });
+		});
+	};
+  };
+
+
+  export const signUpWithFacebook = (newUser) => {
+	return (dispatch, getState, { getFirebase }) => {
+	  const firestore = getFirebase().firestore();
+	  const firebase = getFirebase();
+	  let newUserId;
+  
+	  const credential = auth.FacebookAuthProvider.credential(newUser.user.accessToken);
+  
+	  firebase
+		.auth()
+		.signInWithCredential(credential)
+		.then((res) => {
+		  newUserId = res.user.uid;
+		  return firestore.collection("users").doc(newUserId).get(); // Check if user already exists
+		})
+		.then((userDoc) => {
+		  if (userDoc.exists) {
+			// User is already registered, no need to create a new user
+			console.log("User is already registered:", userDoc.data());
+			dispatch({ type: "SIGNIN_SUCCESS" });
+			return null; // Skip the next then block
+		  } else {
+
+			const fullName = newUser.userData.name;
+
+			// Split the full name into an array of words
+			const nameArray = fullName.split(' ');
+
+			// Extract the given_name and family_name from the array
+			const given_name = nameArray[0];
+			const family_name = nameArray.slice(1).join(' ');
+
+			// User is not registered, create a new user
+			let val = {
+			  firstName: given_name,
+			  lastName: family_name,
+			  initials: given_name[0] + family_name[0],
 			  email: newUser.userData.email,
 			  uid: newUserId,
 			  balance: 0,

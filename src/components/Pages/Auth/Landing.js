@@ -15,7 +15,7 @@ function LandingPage(props) {
 
   const handleGoogleLoginSuccess = (profile) => {
     // Handle successful login
-    console.log("returned profile", profile);
+    console.log("returned profile from google", profile);
     setProfile(profile); // Update the profile state
     setIsLoggedIn(true)
 
@@ -27,9 +27,9 @@ function LandingPage(props) {
   };
 
   const handleFacebookLoginSuccess = (profile) => {
-    // Handle successful login
-    console.log("returned profile", profile);
-    setProfile(profile); // Update the profile state
+   // Handle successful login
+  setProfile(profile);
+  console.log("returned profile from facebook", profile);
     setIsLoggedIn(true)
 
   };
