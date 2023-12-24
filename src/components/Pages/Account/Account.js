@@ -6,7 +6,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useTranslation, Trans } from "react-i18next";
 
-import { Container, Row, Col, Dropdown, Button, DropdownButton, Carousel } from "react-bootstrap";
+import { Container, Modal, Row, Col, Dropdown, Button, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "../../SubComponents/Profile";
 import "../Pages.css";
@@ -152,7 +152,8 @@ const NewAccount = (props) => {
 							
 
 							{/* Display message under the settings icon if props.type is null or empty */}
-							<span style={{ color: "purple" }}>{isVerificationPending && "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features"}</span>
+							<span style={{ color: "purple" }}>{isVerificationPending && "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "}</span>
+
 							<div>
 							{!props.profile.buildingFunction ? (
 							<Link to={`/complete-signup?stage=${stage}&uid=${props.profile.uid}`}>
@@ -189,27 +190,33 @@ const AccountType = (props) => {
 
 	const buildingFunctionVideos = {
 		Restaurants: {
-		  title: "Overview",
+		  title: "Restaurant Video",
 		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
 		},
 		Schools: {
-		  title: "Eating Out",
-		  link: "https://www.youtube.com/embed/CHm_Cg2IVZA?si=kwFeIOV2x95Z01-0",
+		  title: "Schools Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
 		},
 		Hospitals: {
-		  title: "Eating In",
-		  link: "https://www.youtube.com/embed/ItG9MsFP1EU?si=tR4AMjSuU0hHUrNI",
+		  title: "Hospitals Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
 		},
 		Hotels: {
-		  title: "Deposit funds",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=5GS3I0d9LnLekimx",
+		  title: "Hotels Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
 		},
 		Offices: {
-		  title: "Coupon",
-		  link: "https://www.youtube.com/embed/nZwsTHSoZqE?si=Oq79mjhaMs1ELSN0",
+		  title: "Offices Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		},
+		MachinerySupply: {
+		  title: "Machinery Supply Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
 		},
 		// Add more build functions and their corresponding video links as needed
 	  };
+	  
+	  const buildingFunction = props.profile.buildingFunction;
 
 	const useStyles = makeStyles({
 		tabListContainer: {
@@ -245,25 +252,21 @@ const AccountType = (props) => {
 		return (
 		  <>
  <Container>
-      <Row className="justify-content-center">
-        <Col xs={12} md={8}>
-          <Carousel>
-            {Object.entries(buildingFunctionVideos).map(([functionName, { title, link }]) => (
-              <Carousel.Item key={functionName}>
-                {/* <h3>{title}</h3> */}
-                <iframe
-                  width="100%"
-                  height="315"
-                  src={link}
-                  title={`${functionName} Video`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        </Col>
+      <Row>
+        {Object.entries(buildingFunctionVideos).map(([functionName, { title, link }]) => (
+          <Col key={functionName} xs={12} sm={6} md={4} className="mb-4">
+            <iframe
+              width="100%"
+              height="200"
+              src={link}
+              title={`${functionName} Video`}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+			{/* <h6>{title}</h6> */}
+          </Col>
+        ))}
       </Row>
     </Container>
 		  </>

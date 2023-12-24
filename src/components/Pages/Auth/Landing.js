@@ -15,7 +15,7 @@ function LandingPage(props) {
 
   const handleGoogleLoginSuccess = (profile) => {
     // Handle successful login
-    console.log("returned profile", profile);
+    console.log("returned profile from google", profile);
     setProfile(profile); // Update the profile state
     setIsLoggedIn(true)
 
@@ -27,9 +27,9 @@ function LandingPage(props) {
   };
 
   const handleFacebookLoginSuccess = (profile) => {
-    // Handle successful login
-    console.log("returned profile", profile);
-    setProfile(profile); // Update the profile state
+   // Handle successful login
+  setProfile(profile);
+  console.log("returned profile from facebook", profile);
     setIsLoggedIn(true)
 
   };
@@ -75,7 +75,7 @@ function LandingPage(props) {
           </div>
           <SubButton styling="blue" goTo="/login" text="Log In" />
           <SubButton styling="blue" goTo="/signup" text="Sign Up" />
-          <SubButton styling="green" goTo="/about-us" text="About Us" />
+          <SubButton styling="green" goTo="/about-us" text="About The World Food Tracker" />
         </div>
        
       </div>

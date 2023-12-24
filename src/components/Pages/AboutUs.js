@@ -8,20 +8,61 @@ import environment from "../../images/Environment.jpg";
 // import logo from "../../images/WFTLogo.png";
 import { Row, Col } from "react-bootstrap";
 import { SubButton } from "../SubComponents/Button";
+import { Container } from "react-bootstrap";
 
 export default function AboutUs() {
+
+	const bannerURL = "https://res.cloudinary.com/dghm4xm7k/image/upload/v1703380760/static%20images/pxfuel_ubzeof.jpg";
+
+	const buildingFunctionVideos = {
+		Restaurants: {
+		  title: "Restaurant Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		},
+		Schools: {
+		  title: "Schools Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		},
+		Hospitals: {
+		  title: "Hospitals Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		},
+		Hotels: {
+		  title: "Hotels Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		},
+		Offices: {
+		  title: "Offices Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		},
+		MachinerySupply: {
+		  title: "Machinery Supply Video",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		},
+		// Add more build functions and their corresponding video links as needed
+	  };
+
 	return (
 		<PageWrap header="About Us" goTo="/landing">
-			<div className="no-contrast">
-				<h1 className="mt-2">About the World Food Tracker</h1>
-				<h5 style={{ fontWeight: "600" }}>
+			
+
+			<div
+				className="banner"
+				style={{ backgroundImage: `url(${bannerURL})` }}
+			>
+				<span>
+					<h1 className="banner-text">About the World Food Tracker</h1>	
+				</span>
+				<p className="banner-list">
+					<span>
 					END FOOD WASTE | END HUNGER | END MALNUTRITION | IMPROVE LOCAL FOOD
 					PRODUCTION
-				</h5>
-				<p>
-					The World Food Tracker is a comprehensive application designed with
-					the food system as a whole in mind, from farm to fork.
+					</span>
 				</p>
+				
+			</div>
+
+			<div className="no-contrast">				
 				<p>
 					As a circular food platform, the World Food Tracker is supporting
 					individuals, households and businesses to develop a more sustainable
@@ -126,32 +167,51 @@ export default function AboutUs() {
 					today to help plan your food production with sustainability in mind
 					while tracking and reducing your avoidable food loss.
 				</p>
+
+				<p>
+				<b>The World Food Tracker is a multi-stakeholder online platform that:</b>
+				<p>Assist households/Individuals to plan their meals, monitor their nutritional consumption, monitor, and prevent edible food waste, and source their food from local producers.</p>
+				<p>Assist farmers in adopting sustainable practices throughout the food production process, while connecting them with local consumers and food establishments to supply fresh and highly nutritious produce.</p>
+				<p>Assist hotels and restaurants in meal planning, fostering engagement with local consumers, and facilitating the sourcing of ingredients from sustainable local farmers and producers.</p>
+				<p>Support material and equipment suppliers connecting with various stakeholders in the food system, ranging from farmers to households and individuals. Enabling the recovery of bio-nutrient from food waste to be supplied to local food producers while bio-chemicals, mostly carbohydrates by products recovered from the food waste, are made available to local packaging manufacturing companies to produce sustainable packaging for the safe distribution of local produce.</p>
+				<p>Enable Consultants (Agronomists, Horticulturist, veterinary doctors, dieticians, nutritionists)  to expand their network while providing expert support to the different stakeholders across the food system from farmers to householders/Individuals.</p>
+				<p>Aid local authorities and member states in reinforcing the food system and ensuring equitable access to quality food for all members of their communities. The positive impact in local economic activities through the World Food Tracker is a key advantage for adoption by the government as all activities are focused on enhancing the health/well being of the local populace while restoring the environment.</p>
+
+				</p>
 			</div>
 
 			<div className="no-contrast">
 				<h1 className="mt-3">About IntelliDigest Ltd</h1>
+
 				<p>
-					Drawing on cutting edge research, training and consulting, our mission
-					at IntelliDigest is to develop new, sustainable technologies, and
-					create innovative solutions to address the sustainability challenges
-					faced by food producers and governments globally.
+				IntelliDigest is a purpose driven company on a mission to empower global food 
+				sustainability through technology innovation and capacity building. Engaging with 
+				national and international organisations, we draw on our cutting edge research, 
+				technology innovation, and capacity building capabilities to address the 
+				sustainability challenges faced by stakeholders across the food system from 
+				farm to fork
 				</p>
-				<p>
-					Eliminating edible food waste and repurposing inedible waste to
-					climate friendly chemicals is at the core of everything we do. We
-					believe that reducing food waste at food production, retail, and
-					household level can provide numerous benefits for both the planet and
-					our communities.
-				</p>
-				<p>
-					Through our research and consulting facilities, IntelliDigest is
-					continuously working on helping governments and the public understand
-					the true scale of the food waste issue and the consequences of
-					inadequate food waste handling. Advocating for increased awareness
-					about measuring food waste inspired our Global Food Loss & Waste
-					Tracker system, designed to allow households to monitor their efforts
-					and save money through reducing food waste.
-				</p>
+
+				<>
+				<Container>
+					<Row>
+						{Object.entries(buildingFunctionVideos).map(([functionName, { title, link }]) => (
+						<Col key={functionName} xs={12} sm={6} md={4} className="mb-4">
+							<iframe
+							width="100%"
+							height="200"
+							src={link}
+							title={`${functionName} Video`}
+							frameBorder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowFullScreen
+							></iframe>
+							{/* <h6>{title}</h6> */}
+						</Col>
+						))}
+					</Row>
+					</Container>
+				</>
 			</div>
 			{/* <div className="contrast"> */}
 			<Row style={{ justifyContent: "center" }} className="mt-3">

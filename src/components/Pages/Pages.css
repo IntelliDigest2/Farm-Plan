@@ -565,6 +565,28 @@ body {
 } */
 
 
+.banner {
+  height: 300px; /* Adjust the height based on your design */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff; /* Text color */
+  font-family: 'Poppins', sans-serif; /* Use your preferred font */
+}
+
+.banner-text {
+  font-size: 2.5rem; /* Adjust the font size */
+  font-weight: bold;
+}
+
+.banner-list {
+  margin-top: 10px; /* Adjust the spacing between heading and list */
+}
+
 
 
 /*=============================================

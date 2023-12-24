@@ -6,7 +6,7 @@ import { auth } from '../../../config/fbConfig'; // Import your Firebase authent
 import { connect, useSelector } from 'react-redux';
 
 import axios from 'axios';
-import { signUpWithSocial } from "../../../store/actions/authActions";
+import { signUpWithGoogle } from "../../../store/actions/authActions";
 
 const GoogleLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
     const [user, setUser] = useState([]);
@@ -105,7 +105,7 @@ const GoogleLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
 //   };
   const mapDispatchToProps = (dispatch) => {
     return {
-      signUp: (creds) => dispatch(signUpWithSocial(creds)),
+      signUp: (creds) => dispatch(signUpWithGoogle(creds)),
     };
   };
   
