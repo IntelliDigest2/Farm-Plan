@@ -75,7 +75,7 @@ function LandingPage(props) {
           </div>
           <SubButton styling="blue" goTo="/login" text="Log In" />
           <SubButton styling="blue" goTo="/signup" text="Sign Up" />
-          <SubButton styling="green" goTo="/about-us" text="About Us" />
+          <SubButton styling="green" goTo="/about-us" text="About The World Food Tracker" />
         </div>
        
       </div>

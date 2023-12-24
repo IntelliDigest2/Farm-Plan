@@ -24,7 +24,6 @@ const FacebookLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
         };
     
         signUp(data);
-        console.log("responce from facebook", res);
 
         onLoginSuccess(res);
       } catch (err) {

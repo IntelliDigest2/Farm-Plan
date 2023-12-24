@@ -6,7 +6,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import { useTranslation, Trans } from "react-i18next";
 
-import { Container, Row, Col, Dropdown, Button, DropdownButton } from "react-bootstrap";
+import { Container, Modal, Row, Col, Dropdown, Button, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "../../SubComponents/Profile";
 import "../Pages.css";
@@ -152,7 +152,8 @@ const NewAccount = (props) => {
 							
 
 							{/* Display message under the settings icon if props.type is null or empty */}
-							<span style={{ color: "purple" }}>{isVerificationPending && "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features"}</span>
+							<span style={{ color: "purple" }}>{isVerificationPending && "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "}</span>
+
 							<div>
 							{!props.profile.buildingFunction ? (
 							<Link to={`/complete-signup?stage=${stage}&uid=${props.profile.uid}`}>
