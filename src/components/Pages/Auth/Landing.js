@@ -73,6 +73,7 @@ function LandingPage(props) {
             onLoginFailure={handleFacebookLoginFailure}
           />
           </div>
+
           <SubButton styling="blue" goTo="/login" text="Log In" />
           <SubButton styling="blue" goTo="/signup" text="Sign Up" />
           <SubButton styling="green" goTo="/about-us" text="About The World Food Tracker" />
