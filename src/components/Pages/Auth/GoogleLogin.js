@@ -92,6 +92,7 @@ const GoogleLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
             alt="Google Logo" 
              style={{ width: '25px', height: '25px', marginRight: '8px' }}
  
+             Login with Google
             />
         </button>
     </div>

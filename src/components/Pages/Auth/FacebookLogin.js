@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import FacebookLoginWithButton from 'react-facebook-login';
+// import FacebookLoginWithButton from 'react-facebook-login';
+import FacebookLoginWithButton from 'react-facebook-login/dist/facebook-login-render-props' 
+
 import { connect, useSelector } from 'react-redux';
 import axios from 'axios';
 import { signUpWithFacebook } from '../../../store/actions/authActions';
@@ -8,6 +10,9 @@ const FacebookLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
   
   const [profile, setProfile] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const facebookLogoUrl = 'https://res.cloudinary.com/dghm4xm7k/image/upload/v1702457899/static%20images/Facebook_logo_meq3wa.png';
+
 
   const responseFacebook = async (response) => {
     if (response.status !== 'unknown') {
@@ -42,6 +47,15 @@ const FacebookLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
           autoLoad={false}
           fields="name,email,picture"
           callback={responseFacebook}
+          render={renderProps => (
+            <button onClick={renderProps.onClick} style={{ background: 'transparent', border: 'none' }}>
+              <img 
+                src={facebookLogoUrl} 
+                alt="Facebook Logo" 
+                style={{ width: '25px', height: '25px', marginRight: '8px' }}
+              />
+            </button>
+          )}
         />
   );
 };
