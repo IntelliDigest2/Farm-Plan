@@ -327,9 +327,14 @@ export const signUp = (newUser, image) => {
 					restaurantDescription: newUser.restaurantDescription,
 					address: newUser.restaurantAddress,
 					type: type,
+					isFreelancer: newUser.isFreelancer,
 					imgsLinks: {
-						certificateImg: urls[0],
-						identificationImg: urls[1],
+						certificateImg1: urls[0],
+						certificateImg2: urls[1],
+						certificateImg3: urls[2],
+						identificationImg: urls[3],
+						profImg: urls[4],
+						addressImg: urls[5],
 					},
 					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};
@@ -378,7 +383,7 @@ export const signUp = (newUser, image) => {
 				}
 
 				firestore.collection("users").doc(newUserId).set(val, { merge: true });
-
+				console.log("val", val)
 				//Setup Admin account in relevent users collection
 				var adminCollection;
 				if (type === "business_admin") {
@@ -769,6 +774,7 @@ export const updateSignup = (newUser, image) => {
 		restaurantDescription: newUser.restaurantDescription,
 		address: newUser.restaurantAddress,
 		type: type,
+		isFreelancer: newUser.isFreelancer,
   
 		// Set IDUrl based on image upload result or existing URL
 		IDUrl: imageUrl || newUser.IDUrl,
@@ -859,8 +865,12 @@ export const updateSignup = (newUser, image) => {
 				urls = resp.map((result) => result.data.secure_url);
 				return firestore.collection("users").doc(newUserId).set({
 					imgsLinks: {
-					  certificateImg: urls[0],
-					  identificationImg: urls[1],
+						certificateImg1: urls[0],
+						certificateImg2: urls[1],
+						certificateImg3: urls[2],
+						identificationImg: urls[3],
+						profImg: urls[4],
+						addressImg: urls[5],
 					},
 				  },{ merge: true });
 			}

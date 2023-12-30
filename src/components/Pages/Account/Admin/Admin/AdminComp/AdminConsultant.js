@@ -262,6 +262,7 @@ export const AdminConsultant = (props) => {
 							<option value={"Schools"}>Schools</option>
 							<option value={"Offices"}>Offices</option>
 							<option value={"Hotels"}>Hotels</option>
+							<option value={"farm"}>Farm</option>
 							<option value={"Recreational Centers"}>Recreational Centers</option>
 							<option value={"Shop/Supermarket"}>Shop/Supermarket</option>
 							<option value={"Machinery/Supply"}>Machinery/Supply</option>
