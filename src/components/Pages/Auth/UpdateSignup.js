@@ -78,11 +78,31 @@ const SignUp = (props) => {
 
 	const [errorNotification, setErrorNotification] = useState();
 
-	//stage8
+	//stage9
+	//stage9
 	const [certificateImg, setCertificateImg] = useState();
+	const [certificateImgOne, setCertificateImgOne] = useState();
+	const [certificateImgTwo, setCertificateImgTwo] = useState();
+	const [certificateImgThree, setCertificateImgThree] = useState();
+
 	const [IDImg, setIDImg] = useState();
+	const [profImg, setProfImg] = useState();
+	const [addressImg, setAddressImg] = useState();
+	const [idDesc, setIDDesc] = useState("");
+	const [certificateDescOne, setCertificateDescOne] = useState("");
+	const [certificateDescTwo, setCertificateDescTwo] = useState("");
+	const [certificateDescThree, setCertificateDescThree] = useState("");
+
+	const [profDesc, setProfDesc] = useState("");
+	const [addressDesc, setAddressDesc] = useState("")
+	
+	const [isFreelancer, setIsFreelancer] = useState("")
+
 	const [imgPreview1, setImgPreview1] = useState();
 	const [imgPreview2, setImgPreview2] = useState();
+	const [imgPreview3, setImgPreview3] = useState();
+	const [imgPreview4, setImgPreview4] = useState();
+
 	const [consultant, setConsultant] = useState({
 		urlLink: "",
 		experience: "",
@@ -93,21 +113,27 @@ const SignUp = (props) => {
 		images: [{ certificateImg: null }, { identificationImg: null }],
 	});
 	const [businessCert, setBusinessCert] = useState({
-		images: [{ certificateImg: null }, { identificationImg: null }],
+		images: [
+			{ certificateImgOne: null }, 			
+			{ certificateImgTwo: null }, 
+			{ certificateImgThree: null }, 
+			{ identificationImg: null }, 
+			{ profImg: null }, 
+			{addressImg: null}],
 	});
 
 	//This block of code is used to preview uploaded image
 	useEffect(() => {
-		if (!certificateImg) {
+		if (!certificateImgOne) {
 			setImgPreview1(undefined);
 			return;
 		}
 
-		const objectUrl = URL.createObjectURL(certificateImg);
+		const objectUrl = URL.createObjectURL(certificateImgOne);
 		setImgPreview1(objectUrl);
 
 		return () => URL.revokeObjectURL(objectUrl);
-	}, [certificateImg]);
+	}, [certificateImgOne]);
 
 	useEffect(() => {
 		if (!IDImg) {
@@ -120,6 +146,31 @@ const SignUp = (props) => {
 
 		return () => URL.revokeObjectURL(objectUrl);
 	}, [IDImg]);
+
+	useEffect(() => {
+		if (!profImg) {
+			setImgPreview3(undefined);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(profImg);
+		setImgPreview3(objectUrl);
+
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [profImg]);
+
+	useEffect(() => {
+		if (!addressImg) {
+			setImgPreview4(undefined);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(addressImg);
+		setImgPreview4(objectUrl);
+
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [addressImg]);
+
 
 	useEffect(() => {
 		const searchParams = new URLSearchParams(location.search);
@@ -150,7 +201,7 @@ const SignUp = (props) => {
 	  }, [userUID]);	  
 	
 
-	let certificateImg1 = certificateImg ? (
+	  let certificateImg1 = certificateImg ? (
 		<img
 			className="consultant_previewImg"
 			alt="certificate preview"
@@ -162,6 +213,18 @@ const SignUp = (props) => {
 		""
 	);
 
+	// let certificateImg1 = certificateImgOne ? (
+	// 	<img
+	// 		className="consultant_previewImg"
+	// 		alt="certificate preview"
+	// 		height="120px"
+	// 		width="70%"
+	// 		src={imgPreview1}
+	// 	/>
+	// ) : (
+	// 	""
+	// );
+
 	let IDImg1 = IDImg ? (
 		<img
 			alt="certificate preview"
@@ -172,6 +235,29 @@ const SignUp = (props) => {
 	) : (
 		""
 	);
+
+	let profImg1 = profImg ? (
+		<img
+			alt="certificate preview"
+			height="120px"
+			width="70%"
+			src={imgPreview3}
+		/>
+	) : (
+		""
+	);
+
+	let addressImg1 = addressImg ? (
+		<img
+			alt="certificate preview"
+			height="120px"
+			width="70%"
+			src={imgPreview4}
+		/>
+	) : (
+		""
+	);
+
 
 	function handleSubmit() {
 		let data = {
@@ -193,6 +279,7 @@ const SignUp = (props) => {
 			type: "user",
 			adminType: adminType,
 			uid: userUID,
+			isFreelancer: isFreelancer,
 		};
 
 	  
@@ -216,6 +303,7 @@ const SignUp = (props) => {
 	  
 		if (validation()) {
 		  props.updateSignup(data, image)
+		// console.log("sign up data", data)
 			  // Redirect the user to /account.js if the updateSignup is successful
 			  history.push('/account');
 		} else {
@@ -447,27 +535,108 @@ const SignUp = (props) => {
 		}
 	};
 
+
 	const handleSelectedImageOthers = (e) => {
 		if (!e.target.files || e.target.files.length === 0) {
-			setCertificateImg(undefined);
+			setCertificateImgOne(undefined);
+			setCertificateImgTwo(undefined)
+			setCertificateImgThree(undefined)
 			setIDImg(undefined);
+			profImg(undefined);
+			addressImg(undefined)
 			return;
 		} else {
 		}
 
 		// I've kept this example simple by using the first image instead of multiple
-		if (e.target.id === "img1") {
+		if (e.target.id === "img11") {
 			let imageFile = e.target.files[0];
-			setCertificateImg(imageFile);
+			setCertificateImgOne(imageFile);
 			let newArray = businessCert.images.slice();
-			newArray.splice(0, 1, { certificateImg: imageFile });
+			newArray.splice(0, 1, { certificateImgOne: imageFile, description: certificateDescOne });
 			setBusinessCert({ ...businessCert, images: newArray });
-		} else {
+		} else if (e.target.id === "img12") {
+			let imageFile = e.target.files[0];
+			let newArray = businessCert.images.slice();
+			setCertificateImgTwo(imageFile);
+			newArray.splice(1, 1, { certificateImgTwo: imageFile, description: certificateDescTwo });
+			setBusinessCert({ ...businessCert, images: newArray });
+		} else if (e.target.id === "img13") {
+			let imageFile = e.target.files[0];
+			let newArray = businessCert.images.slice();
+			setCertificateImgThree(imageFile);
+			newArray.splice(2, 1, { certificateImgThree: imageFile, description: certificateDescThree });
+			setBusinessCert({ ...businessCert, images: newArray });
+		}
+		else if (e.target.id === "img2") {
 			let imageFile = e.target.files[0];
 			let newArray = businessCert.images.slice();
 			setIDImg(imageFile);
-			newArray.splice(1, 1, { identificationImg: imageFile });
+			newArray.splice(3, 1, { identificationImg: imageFile, description: idDesc });
 			setBusinessCert({ ...businessCert, images: newArray });
+		}
+		 else if(e.target.id === "img3") {
+			let imageFile = e.target.files[0];
+			let newArray = businessCert.images.slice();
+			setProfImg(imageFile);
+			newArray.splice(4, 1, { profImg: imageFile, description: profDesc });
+			setBusinessCert({ ...businessCert, images: newArray });	
+		} else {
+			let imageFile = e.target.files[0];
+			let newArray = businessCert.images.slice();
+			setAddressImg(imageFile);
+			newArray.splice(5, 1, { addressImg: imageFile, description: addressDesc });
+			setBusinessCert({ ...businessCert, images: newArray });	
+		}
+
+		// switch(e.target.id){
+		// 	case "img1":
+		// 		let imageFile = e.target.files[0];
+		// 		console.log("image file 1", imageFile)
+		// 		setCertificateImg(imageFile);
+		// 		let newArray = businessCert.images.slice();
+		// 		newArray.splice(0, 1, { certificateImg: imageFile });
+		// 		setBusinessCert({ ...businessCert, images: newArray });
+		// 	case "img2":
+		// 		let imageFile = e.target.files[0];
+		// 		console.log("image file 2", imageFile1)
+		// 		let newArray = businessCert.images.slice();
+		// 		setIDImg(imageFile);
+		// 		newArray.splice(1, 1, { identificationImg: imageFile });
+		// 		setBusinessCert({ ...businessCert, images: newArray });
+		// 	case "img3":
+		// 		let imageFile = e.target.files[0];
+		// 		console.log("image file 3", imageFile1)
+		// 		setProfImg(imageFile);
+		// 		let newArray = businessCert.images.slice();
+		// 		newArray.splice(0, 1, { ProfImg: imageFile });
+		// 		setBusinessCert({ ...businessCert, images: newArray });
+		// }
+	};
+
+	const handleImageNameChange = (e, imageId) => {
+		const newName = e.target.value;
+	
+		if (imageId === "img111Name") {
+			setCertificateDescOne(newName);
+			console.log("cert", certificateDescOne)
+		} 
+		else if (imageId === "img12Name") {
+			setCertificateDescTwo(newName);
+			console.log("cert", certificateDescTwo)
+		}
+		else if (imageId === "img13Name") {
+			setCertificateDescThree(newName);
+			console.log("cert", certificateDescThree)
+		}else if (imageId === "img2Name") {
+			setIDDesc(newName);
+			console.log("cert", idDesc)
+		} else if (imageId === "img3Name") {
+			setProfDesc(newName);
+			console.log("cert", profDesc)
+		} else {
+			setAddressDesc(newName);
+			console.log("cert", addressDesc)
 		}
 	};
 
@@ -800,6 +969,58 @@ const SignUp = (props) => {
 					</div>
 				</div>
 			);
+			case 9:
+			return (
+				<div className="signup-page">
+					<div className="signup-content">
+						<Title subtitle="Sign Up">
+							<div className="signup-center subtitles">
+								<p>First, create your account.</p>
+							</div>
+							<Stage9
+								setIDType={setIDType}
+								IDType={IDType}
+								setIDNumber={setIDNumber}
+								IDNumber={IDNumber}
+								IDUrl={IDUrl}
+								setUrl={setUrl}
+								IDImg1={IDImg1}
+								certificateImg1={certificateImg1}
+								profImg1={profImg1}
+								addressImg1={addressImg1}
+								setIDDesc={setIDDesc}
+								setCertificateDescOne={setCertificateDescOne}
+								setCertificateDescTwo={setCertificateDescTwo}
+								setCertificateDescThree={setCertificateDescThree}
+								setProfDesc={setProfDesc}
+								setAddressDesc={setAddressDesc}
+								handleSelectedImageOthers={handleSelectedImageOthers}
+								handleImageNameChange={handleImageNameChange}
+								setBusinessCert={setBusinessCert}
+								businessCert={businessCert}
+								setTown={setTown}
+								town={town}
+								setCountry={setCountry}
+								country={country}
+								setRegion={setRegion}
+								region={region}
+								setBuildingFunction={setBuildingFunction}
+								buildingFunction={buildingFunction}
+								setStage={setStage}
+								countries={countryNames}
+								setRestaurantName={setRestaurantName}
+								restaurantName={restaurantName}
+								setRegulatoryBody={setRegulatoryBody}
+								regulatoryBody={regulatoryBody}
+								setRegulatoryBodyID={setRegulatoryBodyID}
+								regulatoryBodyID={regulatoryBodyID}
+								isFreelancer={isFreelancer}
+								setIsFreelancer={setIsFreelancer}
+							/>
+						</Title>
+					</div>
+				</div>
+			);
 	}
 };
 
@@ -1004,6 +1225,9 @@ const Stage2 = (props) => {
 								case "Restaurants":
 								  props.setStage(4); // stage for restaurant-specific questions
 								  break;
+								case "Farm":
+									props.setStage(9); // stage for restaurant-specific questions
+									break;
 								case "Admin":
 								  props.setStage(6); // stage for admin-specific questions
 								  break;
@@ -1023,6 +1247,7 @@ const Stage2 = (props) => {
 								  props.setStage(3);
 								  break;
 							  }
+							  
 						}}
 					>
 						Next
@@ -1086,7 +1311,7 @@ const Stage4 = (props) => {
 						/>
 					</Form.Group>
 
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Label style={{ width: "100%" }} className="form-label">
 							Upload certificate of incorporation and Identity card.
 							<span style={{ color: "red" }}>*</span>
@@ -1131,7 +1356,7 @@ const Stage4 = (props) => {
 							<Col>{props.certificateImg1}</Col>
 							<Col>{props.IDImg1}</Col>
 						</Row>
-					</Form.Group>
+					</Form.Group> */}
 
 					<div className="signup-center">
 						<div className="row">
@@ -1162,7 +1387,7 @@ const Stage4 = (props) => {
 									//Next Stage
 
 									if (props.buildingFunction == "Restaurants") {
-										props.setStage(5); //stage for restaurant-specific questions
+										props.setStage(9); //stage for restaurant-specific questions
 									} else {
 										props.setStage(2);
 									}
@@ -1369,6 +1594,213 @@ const Stage8 = (props) => {
 	);
 };
 
+//If account type == restaurant, this routes
+const Stage9 = (props) => {
+	return (
+		<div>
+			<FormStyle>
+				<Form>
+					<Form.Group>
+						<Form.Label style={{ width: "100%" }} className="form-label">
+							Upload certificate of incorporation and Identity card.
+							<span style={{ color: "red" }}>*</span>
+						</Form.Label>
+						<Row className="mb-3">
+							<Col>
+								Identification
+								<Form.Control
+									id="img2"
+									onChange={props.handleSelectedImageOthers}
+									className="mb-3"
+									label="upload Identification document"
+									type="file"
+									// required
+								/>
+							</Col>
+							<Col>
+								<Form.Control
+									id="img2Name"
+									// onChange={(e) => {
+									// 	props.setIDDesc(e.target.value);
+									//   }}
+									  onChange={(e) => props.handleImageNameChange(e, "img2Name")}
+									
+									type="text"
+									placeholder="Enter description"
+								/>
+							</Col>
+						</Row>
+						<Row className="mb-3">
+							<Col>
+								Incoporation
+								<Form.Control
+									id="img11"
+									onChange={props.handleSelectedImageOthers}
+									label="upload certificate"
+									type="file"
+									// required
+								/>
+								<Form.Control
+									id="img12"
+									onChange={props.handleSelectedImageOthers}
+									label="upload certificate"
+									type="file"
+									// required
+								/>
+								<Form.Control
+									id="img13"
+									onChange={props.handleSelectedImageOthers}
+									label="upload certificate"
+									type="file"
+									// required
+								/>
+							</Col>
+							<Col>
+								<Form.Control
+									id="img1Name"
+									// onChange={(e) => {
+									// 	props.setCertificateDesc(e.target.value);
+									//   }}
+									  onChange={(e) => props.handleImageNameChange(e, "img1Name")}
+
+									type="text"
+									placeholder="Enter description"
+								/>
+							</Col>
+						</Row>
+						<p>Cert with Professional body</p>
+						<Row className="mb-3">
+							<Col>
+								<Form.Control
+									id="img3"
+									onChange={props.handleSelectedImageOthers}
+									className="mb-3"
+									label="upload Identification document"
+									type="file"
+									// required
+								/>
+							</Col>
+							<Col>
+								<Form.Control
+									id="img3Name"
+									// onChange={(e) => {
+									// 	props.setProfDesc(e.target.value);
+									//   }}
+									  onChange={(e) => props.handleImageNameChange(e, "img3Name")}
+									
+									type="text"
+									placeholder="Enter description"
+								/>
+							</Col>
+						</Row>
+						<p>Please upload a means of addrress verification like utility bills </p>
+
+						<Row className="mb-3">
+							<Col>
+								<Form.Control
+									id="img4"
+									onChange={props.handleSelectedImageOthers}
+									className="mb-3"
+									label="upload Address verification document"
+									type="file"
+									// required
+								/>
+							</Col>
+							<Col>
+								<Form.Control
+									id="img4Name"
+									onChange={(e) => props.handleImageNameChange(e, "img4Name")}
+									type="text"
+									placeholder="Enter description"
+								/>
+							</Col>
+						</Row>
+						
+						<Row>
+							<Col>{props.IDImg1}</Col>
+							<Col>{props.certificateImg1}</Col>
+							<Col>{props.profImg1}</Col>
+
+						</Row>
+						<Row>
+							<Col>{props.addressImg1}</Col>
+						</Row>
+					</Form.Group>
+
+					<Form.Group className="mb-3">
+						<Form.Label>Are you a Freelancer?</Form.Label>
+						<Select
+							id="freelancer"
+							function={(e) => {
+								props.setIsFreelancer(e.target.value);
+							}}
+							value={props.isFreelancer}
+							placeholder="Select an option"
+							items={[
+								"Yes",
+								"No",
+							]}
+						/>
+					</Form.Group>
+
+					<div className="signup-center">
+						<div className="row">
+							<Button
+								variant="default"
+								className="signup-confirm"
+								onClick={(e) => {
+									e.preventDefault();
+									//Previous Stage
+									props.setStage(2);
+								}}
+							>
+								Back
+							</Button>
+
+							<Button
+								variant="default"
+								className="signup-confirm"
+							
+								onClick={(e) => {
+									e.preventDefault();
+									//Next Stage
+
+									// if (props.buildingFunction == "Restaurants") {
+									// 	props.setStage(5); //stage for restaurant-specific questions
+									// } else {
+									// 	props.setStage(2);
+									// }
+
+									switch (props.buildingFunction) {
+										case "Restaurants":
+											props.setStage(5)
+										case "Machinery/Supply":
+										case "Farm":
+										case "Hotels":
+										case "Hospitals":
+										case "Schools":
+										case "Offices":
+										case "Recreational Centers":
+										case "Shop/Supermarket":
+										  props.setStage(3); // stage for supplier/machinery-specific questions
+										  break;
+										
+										default:
+										  props.setStage(3);
+										  break;
+									  }
+								}}
+							>
+								Next
+							</Button>
+						</div>
+					</div>
+				</Form>
+			</FormStyle>
+		</div>
+	);
+};
+
 //If account type == admin, this routes
 const Stage6 = (props) => {
 	//upload immage to cloudinary
@@ -1552,53 +1984,6 @@ const Stage7 = (props) => {
 						/>
 					</Form.Group>
 
-					<Form.Group>
-						<Form.Label style={{ width: "100%" }} className="form-label">
-							Upload certificate of incorporation and Identity card.
-							<span style={{ color: "red" }}>*</span>
-						</Form.Label>
-						<Row className="mb-3">
-							<Col>
-								Certificate
-								<Form.Control
-									id="img1"
-									onChange={props.handleSelectedImageOthers}
-									label="upload certificate"
-									type="file"
-									required
-								/>
-							</Col>
-							<Col>
-								Identification
-								<Form.Control
-									id="img2"
-									onChange={props.handleSelectedImageOthers}
-									className="mb-3"
-									label="upload Identification document"
-									type="file"
-									required
-								/>
-							</Col>
-						</Row>
-						<Row className="mb-3">
-							<Col>
-								Cert with Professional body
-								<Form.Control
-									id="img3"
-									// onChange={props.handleSelectedImageOthers}
-									className="mb-3"
-									label="upload Identification document"
-									type="file"
-									// required
-								/>
-							</Col>
-						</Row>
-						<Row>
-							<Col>{props.certificateImg1}</Col>
-							<Col>{props.IDImg1}</Col>
-						</Row>
-					</Form.Group>
-
 					<div className="signup-center">
 						<div className="row">
 							<Button
@@ -1626,11 +2011,21 @@ const Stage7 = (props) => {
 									e.preventDefault();
 									//Next Stage
 
-									if (props.buildingFunction == "Restaurants") {
-										props.setStage(5); //stage for restaurant-specific questions
-									} else {
-										props.setStage(3);
-									}
+									switch (props.buildingFunction) {
+										case "Machinery/Supply":
+										case "Hotels":
+										case "Hospitals":
+										case "Schools":
+										case "Offices":
+										case "Recreational Centers":
+										case "Shop/Supermarket":
+										  props.setStage(9); // stage for supplier/machinery-specific questions
+										  break;
+										
+										default:
+										  props.setStage(3);
+										  break;
+									  }
 								}}
 							>
 								Next
