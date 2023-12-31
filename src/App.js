@@ -125,6 +125,8 @@ import SignUpAdmin from "./components/Pages/Auth/SignUpAdmin";
 import CombinedReservations from "./components/SubComponents/payment/CombinedReservations";
 import { OrderList } from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/BuildRestaurantOrderList/OrderList";
 import UpdateSignup from "./components/Pages/Auth/UpdateSignup";
+import ResAuth from "./components/Pages/Account/Business/Restaurant/Auth/Res-Auth";
+import SupAuth from "./components/Pages/Account/Business/Suppliers/Auth/Sup-Auth";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -259,7 +261,7 @@ const App = (props) => {
 							component={ConsultAdminTest}
 						/>
 
-						{/* <Route exact path="/consultant" component={Homepage} /> */}
+						{/* <Route exact path="/consultanft" component={Homepage} /> */}
 						{/* <Route path="/consultant/register" component={ConsultantRegister} /> */}
 						{/* <Route
 							path="/consultant/onboard"
@@ -317,6 +319,15 @@ const App = (props) => {
 							{!props.profile.isSeller && <Redirect to="/farm-plan" />}
 						</Route>
 						<Route path="/farm-auth" component={FarmerAuth}>
+							{props.profile.isSeller && <Redirect to="/farm-plan" />}
+						</Route>
+						<Route path="/res-auth" component={ResAuth}>
+							{props.profile.isSeller && <Redirect to="/res-plan" />}
+						</Route>
+						<Route path="/sup-auth" component={SupAuth}>
+							{props.profile.isSeller && <Redirect to="/sup-plan" />}
+						</Route>
+						<Route path="/machinery-auth" component={FarmerAuth}>
 							{props.profile.isSeller && <Redirect to="/farm-plan" />}
 						</Route>
 						<Route path="/cons-auth" component={ConsumerAuth} />

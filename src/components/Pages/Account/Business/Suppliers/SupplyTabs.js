@@ -2,14 +2,32 @@ import React from "react";
 import { IconButton } from "../../../../SubComponents/Button";
 import "../../UserAccount.css";
 
-export function Items({ setShow, setChooseModal }) {
+export function Items({ setShow, setChooseModal, isSeller }) {
+
+	console.log("isSeller", isSeller)
 	return (
 		<>
+		{/* {isSeller ? (
 			<IconButton
-				icon="kitchen"
+			icon="kitchen"
+			label="Items"
+			color="turquoise"
+			goTo="/supply-plan"
+		/>
+		):(
+			<IconButton
+				icon="Kitchen"
 				label="Items"
 				color="turquoise"
-				goTo="/supply-plan"
+				goTo="/sup-auth"
+			/>	
+		)} */}
+			
+			<IconButton
+			icon="kitchen"
+			label="Items"
+			color="turquoise"
+			goTo="/supply-plan"
 			/>
 
 			<IconButton
