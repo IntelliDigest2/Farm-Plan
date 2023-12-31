@@ -7,7 +7,7 @@ export function Items({ setShow, setChooseModal, isSeller }) {
 	console.log("isSeller", isSeller)
 	return (
 		<>
-		{/* {isSeller ? (
+		{isSeller ? (
 			<IconButton
 			icon="kitchen"
 			label="Items"
@@ -21,14 +21,14 @@ export function Items({ setShow, setChooseModal, isSeller }) {
 				color="turquoise"
 				goTo="/sup-auth"
 			/>	
-		)} */}
+		)}
 			
-			<IconButton
+			{/* <IconButton
 			icon="kitchen"
 			label="Items"
 			color="turquoise"
 			goTo="/supply-plan"
-			/>
+			/> */}
 
 			<IconButton
 				icon="delivery"
