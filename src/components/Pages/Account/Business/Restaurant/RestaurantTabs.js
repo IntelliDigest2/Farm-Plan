@@ -2,9 +2,10 @@ import React from "react";
 import { IconButton } from "../../../../SubComponents/Button";
 import "../../UserAccount.css";
 
-export function Food({ setShow, setChooseModal }) {
+export function Food({ setShow, setChooseModal, isSeller }) {
 	return (
 		<>
+		{ isSeller ? (
 			<IconButton
 				icon="notes"
 				label="Meal Plan"
@@ -12,6 +13,15 @@ export function Food({ setShow, setChooseModal }) {
 				goTo="/restaurant-meal-plan"
 			/>
 
+		):(
+			<IconButton
+					icon="notes"
+					label="Meal Plan"
+					color="turquoise"
+					goTo="/res-auth"
+				/>
+		)}
+			
 			<IconButton
 				icon="notes"
 				label="Restaurant details"
