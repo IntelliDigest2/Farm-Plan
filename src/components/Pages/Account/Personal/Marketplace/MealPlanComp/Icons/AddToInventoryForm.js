@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, InputGroup, Button } from "react-bootstrap";
+import { Form, InputGroup, Button, Modal } from "react-bootstrap";
 import "../../../../../../SubComponents/Button.css";
 import ScannerInventory from "../../../../../../SubComponents/QRCode/ScannerInventory";
 import FoodItemSearch from "./InputRecipe/FoodItemSearch";
@@ -11,6 +11,7 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import { connect } from "react-redux";
 import { addToInventory } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import MeasurementConverter from "../Converter";
 
 const AddToInventoryForm = (props) => {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ const AddToInventoryForm = (props) => {
   const [expand, setExpand] = useState(<span className="scan-text">+ scan from barcode</span>);
   const [show, setShow] = useState(true);
   const [startDate, setStartDate] = useState(new Date());
+  const [showConverterModal, setShowConverterModal] = useState(false);
 
   const defaultLocal = {
     food: "",
@@ -92,6 +94,15 @@ const AddToInventoryForm = (props) => {
     console.log("item", local.food);
   }, [local.food]);
 
+  const handleConverterButtonClick = () => {
+    setShowConverterModal(true);
+  };
+
+  const closeConverterModal = () => {
+    setShowConverterModal(false);
+  };
+
+
   return (
     <div>
       <button
@@ -114,9 +125,32 @@ const AddToInventoryForm = (props) => {
         >
           
         <FoodItemSearch handleFoodSearch={handleFoodSearch} />
-        <Form.Group>
-        
-      </Form.Group>
+       
+
+      {/* "Use Converter" Button */}
+      <Button
+        className="blue-btn shadow-none mt-3"
+        onClick={handleConverterButtonClick}
+      >
+        Use Converter
+      </Button>
+
+          {/* Measurement Converter Modal */}
+          <Modal show={showConverterModal} onHide={closeConverterModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Measurement Converter</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {/* The MeasurementConverter component */}
+              <MeasurementConverter />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeConverterModal}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
       <Form.Group>
         <Form.Label>{t('description.amount')}</Form.Label>
         <InputGroup>
@@ -161,6 +195,7 @@ const AddToInventoryForm = (props) => {
           </div>
         </Form>
       )}
+
     </div>
   );
 };
