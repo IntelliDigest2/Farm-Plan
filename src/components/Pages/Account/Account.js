@@ -101,6 +101,8 @@ const NewAccount = (props) => {
 	 // Check if props.type is null or empty
 	 const isTypeEmpty = !props.profile.type;
 	 const isVerificationPending = props.profile.verification === "pending";
+	 const isFreelancer = props.profile.isFreelancer
+
 
 	 console.log("Before Link:", window.location.pathname);
 
@@ -152,7 +154,7 @@ const NewAccount = (props) => {
 							
 
 							{/* Display message under the settings icon if props.type is null or empty */}
-							<span style={{ color: "purple" }}>{isVerificationPending && "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "}</span>
+							<span style={{ color: "purple" }}>{isVerificationPending && isFreelancer === "No" && "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "}</span>
 
 							<div>
 							{!props.profile.buildingFunction ? (
@@ -187,6 +189,7 @@ const NewAccount = (props) => {
 const AccountType = (props) => {
 
 	const isVerificationPending = props.profile.verification === "pending";
+	const isFreelancer = props.profile.isFreelancer;
 
 	const buildingFunctionVideos = {
 		Restaurants: {
@@ -248,7 +251,7 @@ const AccountType = (props) => {
 	const { t } = useTranslation();
 
 	// Render only the "Funds" tab if verification is pending
-	if (isVerificationPending) {
+	if (isVerificationPending && isFreelancer === "No") {
 		return (
 		  <>
  <Container>
