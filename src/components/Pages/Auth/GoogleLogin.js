@@ -53,7 +53,8 @@ const GoogleLoginButton = ({ onLoginSuccess, onLoginFailure, signUp }) => {
                         function: "Personal",
                         type: "household_admin",
                         isSocialLogin: true,
-                        verification: "pending"
+                        verification: "pending",
+                        isFreelancer: false,
                     }
                     signUp(data)
                     onLoginSuccess(res);

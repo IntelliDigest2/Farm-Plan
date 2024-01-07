@@ -220,6 +220,7 @@ const AccountType = (props) => {
 	  };
 	  
 	  const buildingFunction = props.profile.buildingFunction;
+	  const isSeller = props.profile.isSeller
 
 	const useStyles = makeStyles({
 		tabListContainer: {
@@ -251,7 +252,7 @@ const AccountType = (props) => {
 	const { t } = useTranslation();
 
 	// Render only the "Funds" tab if verification is pending
-	if (isVerificationPending && isFreelancer === "No") {
+	if (isVerificationPending && !isFreelancer) {
 		return (
 		  <>
  <Container>
@@ -332,7 +333,7 @@ const AccountType = (props) => {
 					>
 						<TabPanel value={props.value} index={0} dir={props.theme.direction}>
 							<Farm.Food
-								isSeller={props.profile.isSeller}
+								isSeller={isSeller}
 								profile={props.profile}
 							/>
 						</TabPanel>
@@ -541,6 +542,7 @@ const AccountType = (props) => {
 							<Supply.Items
 								setShow={props.setShow}
 								setChooseModal={props.setChooseModal}
+								isSeller={isSeller}
 							/>
 						</TabPanel>
 						<TabPanel value={props.value} index={1} dir={props.theme.direction}>

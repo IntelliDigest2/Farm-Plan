@@ -74,6 +74,7 @@ exports.sendCollectionToAlgolia = functions.https.onRequest(
 				productDescription: doc.productDescription,
 				productPrice: doc.productPrice,
 				companyID: doc.companyID,
+				isFreelancer: doc.isFreelancer,
 				companyName: doc.companyName,
 				city: doc.city,
 				region: doc.region,

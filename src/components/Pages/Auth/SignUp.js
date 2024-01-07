@@ -1550,9 +1550,11 @@ const Stage9 = (props) => {
 						<Select
 							id="freelancer"
 							function={(e) => {
-								props.setIsFreelancer(e.target.value);
+								// Convert the selected value to a boolean
+								const isFreelancer = e.target.value === "Yes";
+								props.setIsFreelancer(isFreelancer);
 							}}
-							value={props.isFreelancer}
+							value={props.isFreelancer ? "Yes" : "No"} // Convert boolean to string for the initial value
 							placeholder="Select an option"
 							items={[
 								"Yes",
@@ -1560,6 +1562,7 @@ const Stage9 = (props) => {
 							]}
 						/>
 					</Form.Group>
+
 
 					<div className="signup-center">
 						<div className="row">

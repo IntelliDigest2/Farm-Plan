@@ -265,6 +265,7 @@ const SignUp = (props) => {
 			city: town,
 			country: country,
 			region: region,
+			mobile: mobile,
 			restaurantName: restaurantName,
 			companyName: companyName,
 			companyDescription: companyDescription,
@@ -688,6 +689,8 @@ const SignUp = (props) => {
 								<p>First, create your account.</p>
 							</div>
 							<Stage2
+								mobile={mobile}
+								setMobile={setMobile}
 								setIDType={setIDType}
 								IDType={IDType}
 								setIDNumber={setIDNumber}
@@ -1179,6 +1182,10 @@ const Stage2 = (props) => {
 								"Consultant",
 							]}
 						/>
+					</Form.Group>
+
+					<Form.Group className="mb-3" >
+						<PhoneInput value={props.mobile} onChange={props.setMobile}  />
 					</Form.Group>
 				</Form>
 			</FormStyle>
@@ -1732,9 +1739,11 @@ const Stage9 = (props) => {
 						<Select
 							id="freelancer"
 							function={(e) => {
-								props.setIsFreelancer(e.target.value);
+								// Convert the selected value to a boolean
+								const isFreelancer = e.target.value === "Yes";
+								props.setIsFreelancer(isFreelancer);
 							}}
-							value={props.isFreelancer}
+							value={props.isFreelancer ? "Yes" : "No"} // Convert boolean to string for the initial value
 							placeholder="Select an option"
 							items={[
 								"Yes",
@@ -1742,6 +1751,7 @@ const Stage9 = (props) => {
 							]}
 						/>
 					</Form.Group>
+
 
 					<div className="signup-center">
 						<div className="row">

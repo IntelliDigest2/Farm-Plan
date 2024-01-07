@@ -17,7 +17,7 @@ import { submitNotification } from "../../../../lib/Notifications";
 import {Button, Modal } from "react-bootstrap";
 import Stack from '@mui/material/Stack';
 import { addToSupplyItems } from '../../../../../store/actions/supplierActions/supplierData';
-
+import "./Search.css"
 const { nanoid } = require('nanoid');
 
 
@@ -101,6 +101,7 @@ const addToCart = (hit) => {
           quantity: item.quantity,
           productPrice: item.productPrice,
           productCurrency: item.productCurrency,
+          isFreelancer: item.isFreelancer,
         }
 
         cartItems.push(cartList); // Add the cart item to the array
@@ -111,6 +112,7 @@ const addToCart = (hit) => {
             cart: cartItems, 
             profile: props.profile,
             companyID: item.companyID,
+            isFreelancer: item.isFreelancer,
             // FirstName: props.profile.firstName, 
             // LastName: props.profile.lastName,
             // Country: props.profile.country,
@@ -269,6 +271,9 @@ const Hit = ({
       <Accordion>
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey="0">
+                {hit.isFreelancer && (
+                  <div className="freelancer-tag">Freelancer</div>
+                )}                
                 <p>{hit.dateCreated}</p>
                 {hit.productName}
             </Accordion.Toggle>
