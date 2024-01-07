@@ -74,6 +74,7 @@ exports.sendCollectionToAlgolia = functions.https.onRequest(
 				productDescription: doc.productDescription,
 				productPrice: doc.productPrice,
 				companyID: doc.companyID,
+				isFreelancer: doc.isFreelancer,
 				companyName: doc.companyName,
 				city: doc.city,
 				region: doc.region,
@@ -475,7 +476,7 @@ getFarmersInLocationWithProducts.use(
 	})
 );
 
-const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
+const farmersProduce = async (id, farmerName, isFreelancer, arrayOfNamesOfObjectInCart) => {
 	try {
 		let result = await fireStoreDB
 			.collection("marketplace")
@@ -484,7 +485,7 @@ const farmersProduce = async (id, farmerName, arrayOfNamesOfObjectInCart) => {
 			.where("item", "in", arrayOfNamesOfObjectInCart)
 			.get();
 
-		return { farmerId: id, farmerName: farmerName, result: result };
+		return { farmerId: id, farmerName: farmerName, isFreelancer, result: result };
 	} catch (err) {
 		return err;
 	}
@@ -503,9 +504,11 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 
 		farmers.forEach(async (farmer) => {
 			let farmerName = farmer.data().firstName;
+			let isFreelancer = farmer.data().isFreelancer;
 			let producePromises = farmersProduce(
 				farmer.id,
 				farmerName,
+				isFreelancer,
 				arrayOfNamesOfObjectInCart
 			);
 			promises.push(producePromises);
@@ -516,7 +519,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 		const getAllInfo = (values) => {
 			return new Promise((resolve, reject) => {
 				let results = values.map((value) => {
-					const { farmerId, farmerName, result } = value;
+					const { farmerId, farmerName, isFreelancer, result } = value;
 					let arr = [];
 
 					result.forEach((doc) => {
@@ -531,6 +534,7 @@ getFarmersInLocationWithProducts.post("/farmers", async (req, res) => {
 					return {
 						farmerId: farmerId,
 						farmerName: farmerName,
+						isFreelancer: isFreelancer,
 						farmerProducts: arr,
 					};
 				});

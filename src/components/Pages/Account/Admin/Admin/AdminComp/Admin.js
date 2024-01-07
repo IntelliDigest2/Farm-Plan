@@ -61,6 +61,7 @@ function Admin(props) {
 			var delivery_option = doc.delivery_option;
 			var phone_number = doc.phone_number;
 			var delivery_code = doc.delivery_code;
+			var userChoice = doc.userChoice;
 
 			if (address === null) {
 				address = props.profile.address !== null ? props.profile.address : null;
@@ -186,6 +187,9 @@ function Admin(props) {
 									<ListGroup className="list-group-flush">
 										<ListGroupItem>
 											{t("description.status")}: {item.status}
+										</ListGroupItem>
+										<ListGroupItem>
+											Vendor Choice: {item.userChoice}
 										</ListGroupItem>
 										<ListGroupItem>
 											{t("description.ref_num")}: {item.id}

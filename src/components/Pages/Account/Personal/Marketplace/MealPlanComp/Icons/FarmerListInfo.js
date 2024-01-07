@@ -32,6 +32,9 @@ function FarmerListInfo(props) {
 										style={{ alignItems: "flex-end" }}
 									>
 										<p>{item.farmerName}</p>
+										<p style={{ marginLeft: "auto", alignSelf: "flex-end" }}>
+											{item.isFreelancer ? "Freelancer" : "Registered Farmer"}
+										</p>									
 									</ListItem>
 									{item.farmerProducts.map((res) => (
 										<ListItem key={`res${index}`} className="list">

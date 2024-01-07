@@ -64,13 +64,17 @@ export default function AboutUs() {
 
 			<div className="no-contrast">				
 				<p>
-					As a circular food platform, the World Food Tracker is supporting
-					individuals, households and businesses to develop a more sustainable
-					relationship with food through a practical insight on the impact of
-					food on health and environment.
+				<b>The World Food Tracker is a multi-stakeholder online platform that:</b>
+				<p>Assist households/Individuals to plan their meals, monitor their nutritional consumption, monitor, and prevent edible food waste, and source their food from local producers.</p>
+				<p>Assist farmers in adopting sustainable practices throughout the food production process, while connecting them with local consumers and food establishments to supply fresh and highly nutritious produce.</p>
+				<p>Assist hotels and restaurants in meal planning, fostering engagement with local consumers, and facilitating the sourcing of ingredients from sustainable local farmers and producers.</p>
+				<p>Support material and equipment suppliers connecting with various stakeholders in the food system, ranging from farmers to households and individuals. Enabling the recovery of bio-nutrient from food waste to be supplied to local food producers while bio-chemicals, mostly carbohydrates by products recovered from the food waste, are made available to local packaging manufacturing companies to produce sustainable packaging for the safe distribution of local produce.</p>
+				<p>Enable Consultants (Agronomists, Horticulturist, veterinary doctors, dieticians, nutritionists)  to expand their network while providing expert support to the different stakeholders across the food system from farmers to householders/Individuals.</p>
+				<p>Aid local authorities and member states in reinforcing the food system and ensuring equitable access to quality food for all members of their communities. The positive impact in local economic activities through the World Food Tracker is a key advantage for adoption by the government as all activities are focused on enhancing the health/well being of the local populace while restoring the environment.</p>
+
 				</p>
 				<p>
-					Let's help you plan to save our food, save our health, save our wealth
+					Together, we can plan to save our food, save our health, save our wealth
 					and save our earth.
 				</p>
 			</div>
@@ -137,13 +141,6 @@ export default function AboutUs() {
 					restaurants that source their food ingredients only from sustainable
 					farmers to meet your needs and seamlessly update your meal plan.
 				</p>
-				<p>
-					<b>
-						Are you an organisation recognised for leading the way in
-						sustainable farming and food production practices?
-					</b>{" "}
-					Let us help you connect to the right customers.
-				</p>
 			</div>
 
 			<div className="breaker">
@@ -162,22 +159,8 @@ export default function AboutUs() {
 					reduce inedible food waste. The World Food Tracker will also provide
 					extra information about the greenhouse gas emissions of yor waste.
 				</p>
-				<p>
-					<b>Are you a food producer?</b> Sign up to the World Food Tracker
-					today to help plan your food production with sustainability in mind
-					while tracking and reducing your avoidable food loss.
-				</p>
 
-				<p>
-				<b>The World Food Tracker is a multi-stakeholder online platform that:</b>
-				<p>Assist households/Individuals to plan their meals, monitor their nutritional consumption, monitor, and prevent edible food waste, and source their food from local producers.</p>
-				<p>Assist farmers in adopting sustainable practices throughout the food production process, while connecting them with local consumers and food establishments to supply fresh and highly nutritious produce.</p>
-				<p>Assist hotels and restaurants in meal planning, fostering engagement with local consumers, and facilitating the sourcing of ingredients from sustainable local farmers and producers.</p>
-				<p>Support material and equipment suppliers connecting with various stakeholders in the food system, ranging from farmers to households and individuals. Enabling the recovery of bio-nutrient from food waste to be supplied to local food producers while bio-chemicals, mostly carbohydrates by products recovered from the food waste, are made available to local packaging manufacturing companies to produce sustainable packaging for the safe distribution of local produce.</p>
-				<p>Enable Consultants (Agronomists, Horticulturist, veterinary doctors, dieticians, nutritionists)  to expand their network while providing expert support to the different stakeholders across the food system from farmers to householders/Individuals.</p>
-				<p>Aid local authorities and member states in reinforcing the food system and ensuring equitable access to quality food for all members of their communities. The positive impact in local economic activities through the World Food Tracker is a key advantage for adoption by the government as all activities are focused on enhancing the health/well being of the local populace while restoring the environment.</p>
-
-				</p>
+				
 			</div>
 
 			<div className="no-contrast">

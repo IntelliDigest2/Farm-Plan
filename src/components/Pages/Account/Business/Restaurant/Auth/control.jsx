@@ -26,12 +26,24 @@ function Control(props) {
         profile: { isSeller: true },
         info: {
           usesOMS: props.OMS,
-          averageCost: props.cost,
+          averageCost: {
+            cost: props.cost,
+            period: props.period
+          },
           averageTurnover: props.turnover,
           purchaseLocation: props.purchase,
           nutritionalInfo: props.nutritionalInfo,
-          MeasureFoodwaste: props.foodWaste,
-          carbonFootPrint: props.carbonPrint,
+          MeasureFoodwaste: {
+            foodWaste: props.foodWaste,
+            foodWasteWeight: props.foodWasteWeight,
+            foodWasteUnit: props.foodWasteUnit,
+
+          },
+          carbonFootPrint: {
+            carbonPrint: props.carbonPrint,
+            carbonPrintWeight: props.carbonPrintWeight,
+            carbonPrintUnit: props.carbonPrintUnit,
+          },
           interest: props.interest,
         },
       };
@@ -56,13 +68,21 @@ function Control(props) {
       <Stage0 setForm={setForm} OMS={props.OMS} setOMS={props.setOMS} />
     )}
     {form === 1 && (
-      <Stage1 setForm={setForm} setCost={props.setCost} cost={props.cost} />
+      <Stage1 
+        setForm={setForm} 
+        setCost={props.setCost} 
+        cost={props.cost} 
+        period={props.period}
+        setPeriod={props.setPeriod}
+      />
     )}
     {form === 2 && (
           <Stage2
            setForm={setForm}
            turnover={props.turnover}
            setTurnover={props.setTurnover}
+           turnoverPeriod={props.turnoverPeriod}
+           setTurnoverPeriod={props.setTurnoverPeriod}
          />    
     )}
     {form === 3 && (
@@ -84,6 +104,10 @@ function Control(props) {
         setForm={setForm}
         foodWaste={props.foodWaste}
         setFoodWaste={props.setFoodWaste}
+        foodWasteWeight={props.foodWasteWeight}
+        setFoodWasteWeight={props.setFoodWasteWeight}
+        foodWasteUnit={props.foodWasteUnit}
+        setFoodWasteUnit={props.setFoodWasteUnit}
       />
     )}
     {form === 6 && (
@@ -91,6 +115,10 @@ function Control(props) {
        setForm={setForm}
        carbonPrint={props.carbonPrint}
        setCarbonPrint={props.setCarbonPrint}
+       carbonPrintUnit={props.carbonPrintUnit}
+       carbonPrintWeight={props.carbonPrintWeight}
+       setCarbonPrintUnit={props.setCarbonPrintUnit}
+       setCarbonPrintWeight={props.setCarbonPrintWeight}
      />
     )}
     {form === 7 && (

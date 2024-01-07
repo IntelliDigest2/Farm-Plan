@@ -219,6 +219,7 @@ function AddProductForm_supply(props) {
 				// mealType: mealType,
 				productMeasure: productMeasure,
 				companyID: props.profile.uid,
+				isFreelancer: props.profile.isFreelancer,
 				companyName: props.profile.companyName,
 				city: props.profile.city,
 				region: props.profile.region,

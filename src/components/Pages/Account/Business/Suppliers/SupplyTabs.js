@@ -4,7 +4,6 @@ import "../../UserAccount.css";
 
 export function Items({ setShow, setChooseModal, isSeller }) {
 
-	console.log("isSeller", isSeller)
 	return (
 		<>
 		{isSeller ? (

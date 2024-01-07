@@ -7,7 +7,7 @@ export default function Stage7({setForm, setInterest, interest}) {
   return (
     <>
       <Form>
-        What is the key interest for using the Workd Food Tracker?
+        What is the key interest for using the World Food Tracker?
         <Form.Group>
         <Form.Control
           type="text"

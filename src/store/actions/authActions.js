@@ -761,6 +761,7 @@ export const updateSignup = (newUser, image) => {
 		city: newUser.city,
 		country: newUser.country,
 		region: newUser.region,
+		mobile: newUser.mobile,
 		uid: newUserId,
 		restaurantName: newUser.restaurantName,
 		companyName: newUser.companyName,
@@ -952,6 +953,7 @@ export const updateSignup = (newUser, image) => {
 			  voucherBalance: 0,
 			  isSocialLogin: newUser.isSocialLogin,
 			  verification: newUser.verification,
+			  isFreelancer: newUser.isFreelancer,
 			};
 			return firestore.collection("users").doc(newUserId).set(val, { merge: true });
 		  }
@@ -1010,6 +1012,7 @@ export const updateSignup = (newUser, image) => {
 			  voucherBalance: 0,
 			  isSocialLogin: newUser.isSocialLogin,
 			  verification: newUser.verification,
+			  isFreelancer: newUser.isFreelancer,
 			};
 			return firestore.collection("users").doc(newUserId).set(val, { merge: true });
 		  }

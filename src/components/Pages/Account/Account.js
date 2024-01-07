@@ -101,6 +101,8 @@ const NewAccount = (props) => {
 	 // Check if props.type is null or empty
 	 const isTypeEmpty = !props.profile.type;
 	 const isVerificationPending = props.profile.verification === "pending";
+	 const isFreelancer = props.profile.isFreelancer
+
 
 	 console.log("Before Link:", window.location.pathname);
 
@@ -152,7 +154,7 @@ const NewAccount = (props) => {
 							
 
 							{/* Display message under the settings icon if props.type is null or empty */}
-							<span style={{ color: "purple" }}>{isVerificationPending && "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "}</span>
+							<span style={{ color: "purple" }}>{isVerificationPending && isFreelancer === "No" && "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "}</span>
 
 							<div>
 							{!props.profile.buildingFunction ? (
@@ -187,6 +189,7 @@ const NewAccount = (props) => {
 const AccountType = (props) => {
 
 	const isVerificationPending = props.profile.verification === "pending";
+	const isFreelancer = props.profile.isFreelancer;
 
 	const buildingFunctionVideos = {
 		Restaurants: {
@@ -217,6 +220,7 @@ const AccountType = (props) => {
 	  };
 	  
 	  const buildingFunction = props.profile.buildingFunction;
+	  const isSeller = props.profile.isSeller
 
 	const useStyles = makeStyles({
 		tabListContainer: {
@@ -248,7 +252,7 @@ const AccountType = (props) => {
 	const { t } = useTranslation();
 
 	// Render only the "Funds" tab if verification is pending
-	if (isVerificationPending) {
+	if (isVerificationPending && !isFreelancer) {
 		return (
 		  <>
  <Container>
@@ -329,7 +333,7 @@ const AccountType = (props) => {
 					>
 						<TabPanel value={props.value} index={0} dir={props.theme.direction}>
 							<Farm.Food
-								isSeller={props.profile.isSeller}
+								isSeller={isSeller}
 								profile={props.profile}
 							/>
 						</TabPanel>
@@ -538,6 +542,7 @@ const AccountType = (props) => {
 							<Supply.Items
 								setShow={props.setShow}
 								setChooseModal={props.setChooseModal}
+								isSeller={isSeller}
 							/>
 						</TabPanel>
 						<TabPanel value={props.value} index={1} dir={props.theme.direction}>

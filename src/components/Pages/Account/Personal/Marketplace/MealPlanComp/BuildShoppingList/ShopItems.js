@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, InputGroup, Button, Alert, Table, Modal } from "react-bootstrap";
+import { Form, InputGroup, Button, Alert, Table, Modal, Dropdown } from "react-bootstrap";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -68,6 +68,7 @@ function ShopItems(props) {
 	const [address, setAddress] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [cartIsEmpty, setCartIsEmpty] = useState(true);
+	const [userChoice, setUserChoice] = useState("Freelancers")
 
 	//this sends data request
 	useEffect(() => {
@@ -195,6 +196,7 @@ function ShopItems(props) {
 				address: deliveryOption === "delivery" ? address : "", // Add address if delivery is chosen
 				phone_number: phoneNumber,
 				delivery_code: generateRandomCode(),
+				userChoice: userChoice,
 			},
 		};
 
@@ -651,6 +653,21 @@ function ShopItems(props) {
 											onChange={(e) => setPhoneNumber(e.target.value)}
 											required // Add the required attribute
 										/>
+									</div>
+
+									<div>
+										<label>Choose Vendor Type</label>
+									<Dropdown onSelect={(e) => setUserChoice(e)}>
+										<Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+										{userChoice}
+										</Dropdown.Toggle>
+
+										<Dropdown.Menu>
+										<Dropdown.Item eventKey="Freelancers">Freelancers</Dropdown.Item>
+										<Dropdown.Item eventKey="VerifiedFarmers">Verified Farmers</Dropdown.Item>
+										<Dropdown.Item eventKey="Retailers">Retailers</Dropdown.Item>
+										</Dropdown.Menu>
+									</Dropdown>
 									</div>
 
 									{deliveryOption === "delivery" && (
