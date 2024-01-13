@@ -28,14 +28,14 @@ const NutrientsBox = (props) => {
 
     //sets a new meal object in the array for every document with this date attached
     props.mealPlan.forEach((doc) => {
-      var mealName = doc.meal;
+      var mealName = doc.meal_name;
       var ingredients = doc.ingredients;
       var id = doc.id;
       var mealType = doc.mealType;
       var url = doc.url;
-      var totalNutrients = doc.totalNutrients;
-      var totalDaily = doc.totalDaily;
-      var recipeYield = doc.recipeYield;
+      var totalNutrients = doc.total_nutrients;
+      var totalDaily = doc.total_daily;
+      var recipeYield = doc.recipe_yield;
       var eaten = doc.eaten;
       let nn;
       if (doc.nonNativeData) {

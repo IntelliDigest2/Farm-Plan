@@ -227,7 +227,7 @@ function FullCalendarApp(props) {
     var T = 'T0' + H + MS
     for (let i = 0; i < newObjects.length; i++) {
       var e = {}
-      //e['id'] = allMeals[count].id
+      e['id'] = allMeals[count].id
       e['title'] = allMeals[count].meal_name;
       e['start'] = newObjects[i].start + T;
       e['end'] = newObjects[i].end + T;
