@@ -277,6 +277,7 @@ const SignUp = (props) => {
 			case "Offices":
 			case "Recreational Centers":
 			case "Machinery/Supply":
+			case "Material/Supply":
 			case "Shop/Supermarket":
 			case "Hospitals":
 				data.certImg = businessCert;
@@ -1182,6 +1183,7 @@ const Stage2 = (props) => {
 								"Restaurants",
 								"Shop/Supermarket",
 								"Machinery/Supply",
+								"Material/Supply",
 								"Farm",
 								"Recreational Centers",
 								"Consultant",
@@ -1240,6 +1242,7 @@ const Stage2 = (props) => {
 								  props.setStage(6); // stage for admin-specific questions
 								  break;
 								case "Machinery/Supply":
+								case "Material/Supply":
 								case "Hotels":
 								case "Hospitals":
 								case "Schools":
@@ -1596,6 +1599,7 @@ const Stage9 = (props) => {
 										case "Restaurants":
 											props.setStage(5)
 										case "Machinery/Supply":
+										case "Material/Supply":
 										case "Farm":
 										case "Hotels":
 										case "Hospitals":
@@ -2032,6 +2036,7 @@ const Stage7 = (props) => {
 
 									switch (props.buildingFunction) {
 										case "Machinery/Supply":
+										case "Material/Supply":
 										case "Hotels":
 										case "Hospitals":
 										case "Schools":
@@ -2219,6 +2224,53 @@ const Stage3 = (props) => {
 				</div>
 			);
 		case "Machinery/Supply":
+			return (
+				<div>
+					<List>
+						<ListItem>
+							<ListItemIcon>
+								<DriveFileRenameOutlineIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.firstName} {props.lastName}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<EmailIcon />
+							</ListItemIcon>
+							<ListItemText>{props.email}</ListItemText>
+						</ListItem>
+						<ListItem className="space-between">
+							<ListItemIcon>
+								<EditLocationAltIcon />
+							</ListItemIcon>
+							<ListItemText>
+								{props.town}, {props.country}, {props.region}
+							</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.buildingFunction}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.companyName}</ListItemText>
+						</ListItem>
+						<ListItem>
+							<ListItemIcon>
+								<HomeWorkIcon />
+							</ListItemIcon>
+							<ListItemText>{props.companyDescription}</ListItemText>
+						</ListItem>
+					</List>
+				</div>
+			);
+			case "Material/Supply":
 			return (
 				<div>
 					<List>

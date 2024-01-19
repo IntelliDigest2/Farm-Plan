@@ -294,6 +294,7 @@ const SignUp = (props) => {
 			case "Offices":
 			case "Recreational Centers":
 			case "Machinery/Supply":
+			case "Material/Supply":
 			case "Shop/Supermarket":
 			case "Hospitals":
 				data.certImg = businessCert;
@@ -1177,6 +1178,7 @@ const Stage2 = (props) => {
 								"Restaurants",
 								"Shop/Supermarket",
 								"Machinery/Supply",
+								"Material/Supply",
 								"Farm",
 								"Recreational Centers",
 								"Consultant",
@@ -1239,6 +1241,7 @@ const Stage2 = (props) => {
 								  props.setStage(6); // stage for admin-specific questions
 								  break;
 								case "Machinery/Supply":
+								case "Material/Supply":
 								case "Hotels":
 								case "Hospitals":
 								case "Schools":
@@ -1785,6 +1788,7 @@ const Stage9 = (props) => {
 										case "Restaurants":
 											props.setStage(5)
 										case "Machinery/Supply":
+										case "Material/Supply":
 										case "Farm":
 										case "Hotels":
 										case "Hospitals":
@@ -2023,6 +2027,7 @@ const Stage7 = (props) => {
 
 									switch (props.buildingFunction) {
 										case "Machinery/Supply":
+										case "Material/Supply":
 										case "Hotels":
 										case "Hospitals":
 										case "Schools":
@@ -2209,6 +2214,7 @@ const Stage3 = (props) => {
 				</div>
 			);
 		case "Machinery/Supply":
+		case "Material/Supply":
 			return (
 				<div>
 					<List>
