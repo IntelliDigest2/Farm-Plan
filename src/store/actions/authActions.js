@@ -247,6 +247,9 @@ export const signUp = (newUser, image) => {
 			case "Machinery/Supply":
 				type = "supply_admin";
 				break;
+			case "Material/Supply":
+				type = "material_admin";
+				break;
 			case "Admin":
 				type = "admin_admin";
 				break;
@@ -378,6 +381,9 @@ export const signUp = (newUser, image) => {
 				if (newUser.function === "Machinery/Supply") {
 					val.verification = "pending";
 				}
+				if (newUser.function === "Material/Supply") {
+					val.verification = "pending";
+				}
 				if (newUser.function === "Shop/Supermarket") {
 					val.verification = "pending";
 				}
@@ -396,6 +402,8 @@ export const signUp = (newUser, image) => {
 					adminCollection = "household_users";
 				} else if (type === "supply_admin") {
 					adminCollection = "supply_users";
+				} else if (type === "material_admin") {
+					adminCollection = "material_users";
 				} else if (type === "shop_admin") {
 					adminCollection = "shop_users";
 				} else {
@@ -729,6 +737,9 @@ export const updateSignup = (newUser, image) => {
 		case "Machinery/Supply":
 			type = "supply_admin";
 			break;
+		case "Material/Supply":
+			type = "material_admin";
+			break;
 		case "Admin":
 			type = "admin_admin";
 			break;
@@ -813,6 +824,9 @@ export const updateSignup = (newUser, image) => {
 	if (newUser.function === "Machinery/Supply") {
 		val.verification = "pending";
 	}
+	if (newUser.function === "Material/Supply") {
+		val.verification = "pending";
+	}
 	if (newUser.function === "Shop/Supermarket") {
 		val.verification = "pending";
 	}
@@ -835,6 +849,8 @@ export const updateSignup = (newUser, image) => {
 			adminCollection = "household_users";
 		} else if (type === "supply_admin") {
 			adminCollection = "supply_users";
+		} else if (type === "material_admin") {
+			adminCollection = "material_users";
 		} else if (type === "shop_admin") {
 			adminCollection = "shop_users";
 		} else {

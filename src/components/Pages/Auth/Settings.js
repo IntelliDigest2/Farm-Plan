@@ -220,6 +220,9 @@ function Settings(props) {
 		  case "supply_admin":
 			buildFunction = "Machinery/Supply";
 			break;
+		case "material_admin":
+			buildFunction = "Material/Supply";
+			break;
 		  case "admin_admin":
 			buildFunction = "Admin";
 			break;
@@ -1426,7 +1429,8 @@ const Name = (props) => {
 							<option value="household_admin">Household</option>
 							<option value="farm_admin">Farm</option>
 							<option value="restaurant_admin">Restaurant</option>
-							<option value="supply_admin">Supplier/Machinery</option>
+							<option value="supply_admin">Machinery/Supply</option>
+							<option value="material_admin">Material/Supply</option>
 							<option value="admin_admin">Purchase Admin</option>
 							<option value="academic_admin">Academic</option>
 							<option value="hotels_admin">Hotel</option>

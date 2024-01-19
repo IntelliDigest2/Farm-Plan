@@ -27,6 +27,7 @@ import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Academic/AcademicTabs";
 import * as Restaurant from "./Business/Restaurant/RestaurantTabs";
 import * as Supply from "./Business/Suppliers/SupplyTabs";
+import * as Material from "./Business/Material/SupplyTabs";
 import * as Shops from "./Shop/ShopTabs";
 
 import * as Admin from "./Admin/Admin/AdminTabs";
@@ -540,6 +541,56 @@ const AccountType = (props) => {
 					>
 						<TabPanel value={props.value} index={0} dir={props.theme.direction}>
 							<Supply.Items
+								setShow={props.setShow}
+								setChooseModal={props.setChooseModal}
+								isSeller={isSeller}
+							/>
+						</TabPanel>
+						<TabPanel value={props.value} index={1} dir={props.theme.direction}>
+							<Farm.Funds />
+						</TabPanel>
+					</SwipeableViews>
+				</>
+			);
+		case "material_admin":
+		case "material_sub":
+			return (
+				<>
+					<TabList
+						className={isMobile ? classes.scrollableTabList : classes.tabList}
+						TabIndicatorProps={{
+							style: {
+								backgroundColor: Colors.brandGreen,
+							},
+						}}
+						variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
+						onChange={props.handleChange}
+						centered={!isMobile} // Centered tabs on larger screens
+					>
+						<Tab
+							disableRipple
+							label="Items"
+							value="0"
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
+						<Tab
+							disableRipple
+							label="Funds"
+							value="1"
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
+					</TabList>
+					<SwipeableViews
+						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
+						index={parseInt(props.value)}
+						onChangeIndex={props.handleChangeIndex}
+					>
+						<TabPanel value={props.value} index={0} dir={props.theme.direction}>
+							<Material.Items
 								setShow={props.setShow}
 								setChooseModal={props.setChooseModal}
 								isSeller={isSeller}
