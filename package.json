@@ -64,7 +64,7 @@
 		"react-bootstrap-typeahead": "^6.0.0-alpha.9",
 		"react-chartjs-2": "^5.2.0",
 		"react-countdown": "^2.3.2",
-		"react-datepicker": "^4.8.0",
+		"react-datepicker": "^4.25.0",
 		"react-device-detect": "^1.17.0",
 		"react-dom": "^17.0.1",
 		"react-dropzone": "^14.2.1",

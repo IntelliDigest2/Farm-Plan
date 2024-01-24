@@ -4,23 +4,31 @@ import { connect } from "react-redux";
 import { updateNutrientData } from "../../../../../../store/actions/dataActions";
 import { getMealData } from "../../../../../../store/actions/marketplaceActions/mealPlanData";
 import NutrientsBoxHeader from "./NutrientsBoxHeader";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const NutrientsBox = (props) => {
   const [meals, setMeals] = useState([]);
   const [eatenMeal, setEatenMeal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   //this sends data request
   useEffect(() => {
     const data = {
       //decided to group year and month together, should this be changed?
-      month: props.value.format("YYYYMM"),
-      day: props.value.format("DD"),
+      month: selectedDate.getFullYear() + "" + (selectedDate.getMonth() + 1).toString().padStart(2, '0'),
+      day: selectedDate.getDate().toString().padStart(2, '0'),
+
+      // month: props.value.format("YYYYMM"),
+      //  day: props.value.format("DD"),
     };
+
+    console.log("date data ===>", data)
 
     // if (props.tab === 0) 
     props.getMealData(data);
     // console.log(props.data);
-  }, [props.value, /*props.update, props.tab*/]);
+  }, [props.value, selectedDate]);
 
   const updateMeals = async () => {
     //clears the meals array before each update- IMPORTANT
@@ -60,6 +68,10 @@ const NutrientsBox = (props) => {
         },
       ]);
     });
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
   };
 
   useEffect(() => {
@@ -172,7 +184,7 @@ const NutrientsBox = (props) => {
           eventKey="0"
           // onClick={() => setIsExpanded(!isExpanded)}
         > */}
-        <NutrientsBoxHeader value={props.value} setValue={props.setValue}/>
+        {/* <NutrientsBoxHeader value={props.value} setValue={props.setValue}/> */}
           {/* Nutritional Information
           <div
             className="header"
@@ -182,7 +194,10 @@ const NutrientsBox = (props) => {
           </div> */}
         {/* </Accordion.Toggle> */}
         <Card>
-          <Card.Header></Card.Header>
+        <Card.Header className="text-center">
+        <p><b>Choose a date to view nutritional info</b></p>
+            <DatePicker className="header" selected={selectedDate} onChange={handleDateChange} />
+          </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               {(meals.length && eatenMeal) ? (
@@ -230,7 +245,7 @@ const NutrientsBox = (props) => {
                   </tbody>
                 </Table> 
               ) : (
-                <div className="empty basic-title-left">
+                <div className="empty basic-title-left" style={{ height: '200px'}}>
                   <p>
                     Nutritional information will be shown once a meal is added
                     to your plan and is marked as eaten.
