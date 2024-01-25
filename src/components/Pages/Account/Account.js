@@ -29,6 +29,7 @@ import * as Restaurant from "./Business/Restaurant/RestaurantTabs";
 import * as Supply from "./Business/Suppliers/SupplyTabs";
 import * as Material from "./Business/Material/SupplyTabs";
 import * as Shops from "./Shop/ShopTabs";
+import * as Office from "./Offices/OfficesTabs"
 
 import * as Admin from "./Admin/Admin/AdminTabs";
 
@@ -199,11 +200,11 @@ const AccountType = (props) => {
 		},
 		Schools: {
 		  title: "Schools Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		  link: "https://www.youtube.com/embed/CHm_Cg2IVZA?si=kwFeIOV2x95Z01-0",
 		},
 		Hospitals: {
 		  title: "Hospitals Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		  link: "https://www.youtube.com/embed/ItG9MsFP1EU?si=tR4AMjSuU0hHUrNI",
 		},
 		Hotels: {
 		  title: "Hotels Video",
@@ -211,11 +212,11 @@ const AccountType = (props) => {
 		},
 		Offices: {
 		  title: "Offices Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=5GS3I0d9LnLekimx",
 		},
 		MachinerySupply: {
 		  title: "Machinery Supply Video",
-		  link: "https://www.youtube.com/embed/_Y2mWfK0RT8?si=rsC0rkIFr8IxyvHF",
+		  link: "https://www.youtube.com/embed/nZwsTHSoZqE?si=Oq79mjhaMs1ELSN0",
 		},
 		// Add more build functions and their corresponding video links as needed
 	  };
@@ -350,6 +351,99 @@ const AccountType = (props) => {
 					</SwipeableViews>
 				</>
 			);
+			case "office_admin":
+			case "office_sub":
+			case "hotel_admin":
+			case "hotel_sub":
+			case "hospital_admin":
+			case "hosptal_sub":
+					return (
+						<>
+					<TabList
+						className={isMobile ? classes.scrollableTabList : classes.tabList}
+						TabIndicatorProps={{
+							style: {
+								backgroundColor: Colors.brandGreen,
+							},
+						}}
+						variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
+						onChange={props.handleChange}
+						centered={!isMobile} // Centered tabs on larger screens
+					>
+						<Tab
+							disableRipple
+							label="Food Business"
+							value="0"
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
+						<Tab
+							disableRipple
+							label="Research"
+							value="1"
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
+						<Tab
+							disableRipple
+							label="Environment"
+							value="2"
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
+						<Tab
+							disableRipple
+							label="Funds"
+							value="3"
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
+						<Tab
+							disableRipple
+							label="FSSP"
+							value="4"
+							className={
+								isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+							}
+						/>
+					</TabList>
+					<SwipeableViews
+						axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
+						index={parseInt(props.value)}
+						onChangeIndex={props.handleChangeIndex}
+					>
+						<TabPanel value={props.value} index={0} dir={props.theme.direction}>
+							<Office.Food
+								setShow={props.setShow}
+								setChooseModal={props.setChooseModal}
+								profile={props.profile}
+							/>
+						</TabPanel>
+						<TabPanel value={props.value} index={1} dir={props.theme.direction}>
+							<Office.Research
+								setShow={props.setShow}
+								setChooseModal={props.setChooseModal}
+							/>
+						</TabPanel>
+						<TabPanel value={props.value} index={2} dir={props.theme.direction}>
+							<Office.Environment
+								setShow={props.setShow}
+								setChooseModal={props.setChooseModal}
+							/>
+						</TabPanel>
+						<TabPanel value={props.value} index={3} dir={props.theme.direction}>
+							<Farm.Funds />
+						</TabPanel>
+						<TabPanel value={props.value} index={4} dir={props.theme.direction}>
+							<Office.FSSP />
+						</TabPanel>
+					</SwipeableViews>
+				</>
+					);
 		case "business_admin":
 		case "business_sub":
 			return (
