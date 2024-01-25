@@ -127,10 +127,14 @@ import { OrderList } from "./components/Pages/Account/Personal/Marketplace/MealP
 import UpdateSignup from "./components/Pages/Auth/UpdateSignup";
 import ResAuth from "./components/Pages/Account/Business/Restaurant/Auth/Res-Auth";
 import SupAuth from "./components/Pages/Account/Business/Suppliers/Auth/Sup-Auth";
+import CalendarPlannerHealth from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Plan/CalendarPlanner/CalendarPlannerHealth";
+import moment from "moment";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [value, setValue] = useState(moment());
+
 
 	useEffect(() => {
 		if (props.auth.uid) setIsLoggedIn(true);
@@ -334,6 +338,11 @@ const App = (props) => {
 						<Route path="/meal-plan" component={MealPlan} />
 						<Route path="/items" component={ItemTab} />
 						<Route path="/nutrient-gap" component={NutrientGap} />
+						<Route 
+							path="/meal-plan-health" 
+							render={(props) => <CalendarPlannerHealth {...props} value={value} />}
+							/>
+
 						<Route path="/view-products" component={ViewProducts} />
 
 						<Route path="/food-wasteAcademic" component={FoodWasteAcademic} />

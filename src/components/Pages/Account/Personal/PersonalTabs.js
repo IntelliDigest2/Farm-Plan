@@ -121,9 +121,9 @@ export function Health({ setShow, setChooseModal }) {
 
 			<IconButton
 				icon="plant"
-				label="Composition"
+				label="View Meal Plan"
 				color="green"
-				goTo="/nutrient-composition"
+				goTo="/meal-plan-health"
 				// disabled="true"
 			/>
 			{/* <Accordion

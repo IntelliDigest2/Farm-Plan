@@ -216,23 +216,240 @@ const uploadIdImage = (image) => {
 
 	return result;
 };
+//  A test of using async await for sign up
+// export const signUp = (newUser, image) => {
+// 	return async (dispatch, getState, { getFirebase }) => {
+// 	  try {
+
+// 		var type;
+// 		switch (newUser.function) {
+// 			case "Hospitals":
+// 				type = "hospital_admin";
+// 				break;
+// 			case "Hotels":
+// 				type = "hotel_admin";
+// 				break;
+// 			case "Offices":
+// 				type = "office_admin";
+// 				break;
+// 			case "Shop/Supermarket":
+// 				type = "shop_admin";
+// 				break;
+// 			case "Recreational Centers":
+// 			case "Consultant":
+// 			case "Business":
+// 				type = "business_admin";
+// 				break;
+// 			case "Restaurants":
+// 				type = "restaurant_admin";
+// 				break;
+// 			case "Machinery/Supply":
+// 				type = "supply_admin";
+// 				break;
+// 			case "Material/Supply":
+// 				type = "material_admin";
+// 				break;
+// 			case "Admin":
+// 				type = "admin_admin";
+// 				break;
+// 			case "Schools":
+// 				type = "academic_admin";
+// 				break;
+// 			case "Farm":
+// 				type = "farm_admin";
+// 				break;
+// 			case "Households":
+// 			case "Personal":
+// 				type = "household_admin";
+// 				break;
+// 			default:
+// 				type = "user";
+// 				break;
+// 		}
+
+// 		const firestore = getFirebase().firestore();
+// 		const firebase = getFirebase();
+  
+// 		const resp = await firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password);
+// 		const newUserId = resp.user.uid;
+  
+// 		let urls = [];
+  
+// 		if (image) {
+// 		  const idImageResp = await uploadIdImage(image);
+// 		  urls.push(idImageResp.data.secure_url);
+// 		}
+  
+// 		if (newUser.certImg) {
+// 		  let userSubString = newUserId.substring(0, 7);
+// 		  const certImgUrls = await Promise.all(uploadImgs(newUser.certImg.images, userSubString));
+// 		  urls = urls.concat(certImgUrls.map(result => result.data.secure_url));
+// 		}
+  
+// 		let val = {
+// 		  firstName: newUser.firstName,
+// 		  lastName: newUser.lastName,
+// 		  mobile: newUser.mobile,
+// 		  initials: newUser.firstName[0] + newUser.lastName[0],
+// 		  email: newUser.email,
+// 		  buildingFunction: newUser.function,
+// 		  city: newUser.city,
+// 		  country: newUser.country,
+// 		  region: newUser.region,
+// 		  uid: newUserId,
+// 		  balance: 0,
+// 		  voucherBalance: 0,
+// 		  restaurantName: newUser.restaurantName,
+// 		  companyName: newUser.companyName,
+// 		  companyDescription: newUser.companyDescription,
+// 		  regulatoryBody: newUser.regulatoryBody,
+// 		  regulatoryBodyID: newUser.regulatoryBodyID,
+// 		  IDNumber: newUser.IDNumber,
+// 		  IDType: newUser.IDType,
+// 		  cuisine: newUser.cuisine,
+// 		  restaurantDescription: newUser.restaurantDescription,
+// 		  address: newUser.restaurantAddress,
+// 		  type: "user",
+// 		  isFreelancer: newUser.isFreelancer,
+// 		  imgsLinks: {
+// 			certificateImg1: urls[0],
+// 			certificateImg2: urls[1],
+// 			certificateImg3: urls[2],
+// 			identificationImg: urls[3],
+// 			profImg: urls[4],
+// 			addressImg: urls[5],
+// 		  },
+// 		};
+  
+// 		if (image) {
+// 		  val.IDUrl = urls[0];
+// 		} else {
+// 		  val.IDUrl = newUser.IDUrl;
+// 		}
+  
+// 		if (newUser.consultantInfo) {
+// 		  val.verification = "pending";
+// 		}
+  
+// 		if (newUser.function === "Admin") {
+// 		  val.adminType = newUser.adminType;
+// 		  val.verification = "pending";
+// 		}
+
+// 		if (newUser.function === "Hospitals") {
+// 			val.verification = "pending";
+// 		}
+// 		if (newUser.function === "Farm") {
+// 			val.verification = "pending";
+// 		}
+// 		if (newUser.function === "Hotels") {
+// 			val.verification = "pending";
+// 		}
+// 		if (newUser.function === "Schools") {
+// 			val.verification = "pending";
+// 		}
+// 		if (newUser.function === "Offices") {
+// 			val.verification = "pending";
+// 		}
+// 		if (newUser.function === "Restaurants") {
+// 			val.verification = "pending";
+// 		}
+// 		if (newUser.function === "Machinery/Supply") {
+// 			val.verification = "pending";
+// 		}
+// 		if (newUser.function === "Material/Supply") {
+// 			val.verification = "pending";
+// 		}
+// 		if (newUser.function === "Shop/Supermarket") {
+// 			val.verification = "pending";
+// 		}
+    
+// 		firestore.collection("users").doc(newUserId).set(val, { merge: true });
+  
+// 		let adminCollection;
+// 				if (type === "business_admin") {
+// 					adminCollection = "business_users";
+// 				} else if (type === "academic_admin") {
+// 					adminCollection = "academic_users";
+// 				} else if (type === "farm_admin") {
+// 					adminCollection = "farm_users";
+// 				} else if (type === "household_admin") {
+// 					adminCollection = "household_users";
+// 				} else if (type === "supply_admin") {
+// 					adminCollection = "supply_users";
+// 				} else if (type === "material_admin") {
+// 					adminCollection = "material_users";
+// 				} else if (type === "shop_admin") {
+// 					adminCollection = "shop_users";
+// 				} else if (type === "office_admin") {
+// 					adminCollection = "office_users";
+// 				} else if (type === "hotel_admin") {
+// 						adminCollection = "hotel_users";
+// 				} else if (type === "hospital_admin") {
+// 					adminCollection = "hospital_users";}
+// 				else {
+// 					adminCollection = "user";
+// 				}
+
+  
+// 		if (adminCollection !== "user") {
+// 		  firestore.collection(adminCollection).doc(newUserId).set({
+// 			name: newUser.firstName + " " + newUser.lastName,
+// 			email: newUser.email,
+// 		  });
+// 		}
+  
+// 		if (newUser.consultantInfo) {
+// 		  let userSubString = newUserId.substring(0, 7);
+// 		  const consultantImgUrls = await Promise.all(uploadImgs(newUser.consultantInfo.images, userSubString));
+// 		  let fullName = `${newUser.firstName} ${newUser.lastName}`;
+// 		  firestore.collection("consultants").doc(newUserId).set({
+// 			fullName: fullName,
+// 			email: newUser.email,
+// 			urlLink: newUser.consultantInfo.urlLink,
+// 			experience: newUser.consultantInfo.experience,
+// 			expertise: newUser.consultantInfo.expertise,
+// 			createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+// 			services: newUser.consultantInfo.services,
+// 			summary: newUser.consultantInfo.summary,
+// 			isActive: true,
+// 			imgsLinks: {
+// 			  certificateImg: consultantImgUrls[0].data.secure_url,
+// 			  identificationImg: consultantImgUrls[1].data.secure_url,
+// 			},
+// 		  });
+// 		}
+  
+// 		firebase.auth().currentUser.sendEmailVerification();
+// 		dispatch({ type: "SIGNUP_SUCCESS" });
+// 	  } catch (error) {
+// 		console.error("Signup failed", error);
+// 		dispatch({ type: "SIGNUP_ERROR", error });
+// 	  }
+// 	};
+//   };
+  
+
 
 export const signUp = (newUser, image) => {
 	// console.log(newUser, `this is the new user`);
 	// console.log(image, `this is the image i want to upload`);
 
 	// console.log(newUser.consultantInfo, `thes are the consultantInfo`);
-	return (dispatch, getState, { getFirebase }) => {
-		// let result = uploadIdImage(image).then((resp) => {
-		// 	console.log(resp.data.secure_url);
-		// 	console.log(resp.data.url);
-		// });
-		// 	//Determine account type
-		var type;
+	return async (dispatch, getState, { getFirebase }) => {
+		try {
+
+			var type;
 		switch (newUser.function) {
 			case "Hospitals":
+				type = "hospital_admin";
+				break;
 			case "Hotels":
+				type = "hotel_admin";
+				break;
 			case "Offices":
+				type = "office_admin";
+				break;
 			case "Shop/Supermarket":
 				type = "shop_admin";
 				break;
@@ -406,7 +623,13 @@ export const signUp = (newUser, image) => {
 					adminCollection = "material_users";
 				} else if (type === "shop_admin") {
 					adminCollection = "shop_users";
-				} else {
+				} else if (type === "office_admin") {
+					adminCollection = "office_users";
+				} else if (type === "hotel_admin") {
+						adminCollection = "hotel_users";
+				} else if (type === "hospital_admin") {
+					adminCollection = "hospital_users";}
+				else {
 					adminCollection = "user";
 				}
 
@@ -477,6 +700,18 @@ export const signUp = (newUser, image) => {
 				console.log(err, `this is the error generated`);
 				dispatch({ type: "SIGNUP_ERROR", err });
 			});
+
+		} catch (error) {
+			console.error("Signup failed", error);
+			// Dispatch error action
+			dispatch({ type: "SIGNUP_ERROR", error });
+		  }
+		// let result = uploadIdImage(image).then((resp) => {
+		// 	console.log(resp.data.secure_url);
+		// 	console.log(resp.data.url);
+		// });
+		// 	//Determine account type
+		
 	};
 };
 
@@ -721,8 +956,14 @@ export const updateSignup = (newUser, image) => {
 	  var type;
 	  switch (newUser.function) {
 		case "Hospitals":
+			type = "hospital_admin";
+			break;
 		case "Hotels":
+			type = "hotel_admin";
+			break;
 		case "Offices":
+			type = "office_admin";
+			break;
 		case "Shop/Supermarket":
 			type = "shop_admin";
 			break;
@@ -853,6 +1094,12 @@ export const updateSignup = (newUser, image) => {
 			adminCollection = "material_users";
 		} else if (type === "shop_admin") {
 			adminCollection = "shop_users";
+		} else if (type === "office_admin") {
+			adminCollection = "office_users";
+		} else if (type === "hotel_admin") {
+				adminCollection = "hotel_users";
+		} else if (type === "hospital_admin") {
+			adminCollection = "hospital_users";
 		} else {
 			adminCollection = "user";
 		} 

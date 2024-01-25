@@ -102,6 +102,8 @@ const SignUp = (props) => {
 	const [imgPreview2, setImgPreview2] = useState();
 	const [imgPreview3, setImgPreview3] = useState();
 	const [imgPreview4, setImgPreview4] = useState();
+	const [imgPreview5, setImgPreview5] = useState();
+	const [imgPreview6, setImgPreview6] = useState();
 
 	const [consultant, setConsultant] = useState({
 		urlLink: "",
@@ -122,7 +124,6 @@ const SignUp = (props) => {
 			{addressImg: null}],
 	});
 
-	//This block of code is used to preview uploaded image
 	useEffect(() => {
 		if (!certificateImgOne) {
 			setImgPreview1(undefined);
@@ -135,42 +136,67 @@ const SignUp = (props) => {
 		return () => URL.revokeObjectURL(objectUrl);
 	}, [certificateImgOne]);
 
+	//This block of code is used to preview uploaded image
+	useEffect(() => {
+		if (!certificateImgTwo) {
+			setImgPreview1(undefined);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(certificateImgTwo);
+		setImgPreview2(objectUrl);
+
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [certificateImgTwo]);
+
+	//This block of code is used to preview uploaded image
+	useEffect(() => {
+		if (!certificateImgThree) {
+			setImgPreview3(undefined);
+			return;
+		}
+
+		const objectUrl = URL.createObjectURL(certificateImgThree);
+		setImgPreview3(objectUrl);
+
+		return () => URL.revokeObjectURL(objectUrl);
+	}, [certificateImgThree]);
+
 	useEffect(() => {
 		if (!IDImg) {
-			setImgPreview2(undefined);
+			setImgPreview4(undefined);
 			return;
 		}
 
 		const objectUrl = URL.createObjectURL(IDImg);
-		setImgPreview2(objectUrl);
+		setImgPreview4(objectUrl);
 
 		return () => URL.revokeObjectURL(objectUrl);
 	}, [IDImg]);
 
 	useEffect(() => {
 		if (!profImg) {
-			setImgPreview3(undefined);
+			setImgPreview5(undefined);
 			return;
 		}
 
 		const objectUrl = URL.createObjectURL(profImg);
-		setImgPreview3(objectUrl);
+		setImgPreview5(objectUrl);
 
 		return () => URL.revokeObjectURL(objectUrl);
 	}, [profImg]);
 
 	useEffect(() => {
 		if (!addressImg) {
-			setImgPreview4(undefined);
+			setImgPreview6(undefined);
 			return;
 		}
 
 		const objectUrl = URL.createObjectURL(addressImg);
-		setImgPreview4(objectUrl);
+		setImgPreview6(objectUrl);
 
 		return () => URL.revokeObjectURL(objectUrl);
 	}, [addressImg]);
-
 
 	useEffect(() => {
 		const searchParams = new URLSearchParams(location.search);
@@ -201,7 +227,7 @@ const SignUp = (props) => {
 	  }, [userUID]);	  
 	
 
-	  let certificateImg1 = certificateImg ? (
+	  let certificateImg1 = certificateImgOne ? (
 		<img
 			className="consultant_previewImg"
 			alt="certificate preview"
@@ -213,24 +239,36 @@ const SignUp = (props) => {
 		""
 	);
 
-	// let certificateImg1 = certificateImgOne ? (
-	// 	<img
-	// 		className="consultant_previewImg"
-	// 		alt="certificate preview"
-	// 		height="120px"
-	// 		width="70%"
-	// 		src={imgPreview1}
-	// 	/>
-	// ) : (
-	// 	""
-	// );
+	let certificateImg2 = certificateImgTwo ? (
+		<img
+			className="consultant_previewImg"
+			alt="certificate preview"
+			height="120px"
+			width="70%"
+			src={imgPreview2}
+		/>
+	) : (
+		""
+	);
+
+	let certificateImg3 = certificateImgThree ? (
+		<img
+			className="consultant_previewImg"
+			alt="certificate preview"
+			height="120px"
+			width="70%"
+			src={imgPreview3}
+		/>
+	) : (
+		""
+	);
 
 	let IDImg1 = IDImg ? (
 		<img
 			alt="certificate preview"
 			height="120px"
 			width="70%"
-			src={imgPreview2}
+			src={imgPreview4}
 		/>
 	) : (
 		""
@@ -241,7 +279,7 @@ const SignUp = (props) => {
 			alt="certificate preview"
 			height="120px"
 			width="70%"
-			src={imgPreview3}
+			src={imgPreview5}
 		/>
 	) : (
 		""
@@ -252,7 +290,7 @@ const SignUp = (props) => {
 			alt="certificate preview"
 			height="120px"
 			width="70%"
-			src={imgPreview4}
+			src={imgPreview6}
 		/>
 	) : (
 		""
@@ -990,6 +1028,8 @@ const SignUp = (props) => {
 								setUrl={setUrl}
 								IDImg1={IDImg1}
 								certificateImg1={certificateImg1}
+								certificateImg2={certificateImg2}
+								certificateImg3={certificateImg3}								
 								profImg1={profImg1}
 								addressImg1={addressImg1}
 								setIDDesc={setIDDesc}
@@ -1621,7 +1661,7 @@ const Stage9 = (props) => {
 								<Form.Control
 									id="img2"
 									onChange={props.handleSelectedImageOthers}
-									className="mb-3"
+									className="mb-3 rounded-5"
 									label="upload Identification document"
 									type="file"
 									// required
@@ -1637,6 +1677,7 @@ const Stage9 = (props) => {
 									
 									type="text"
 									placeholder="Enter description"
+									className="mt-4 rounded-2"
 								/>
 							</Col>
 						</Row>
@@ -1648,6 +1689,8 @@ const Stage9 = (props) => {
 									onChange={props.handleSelectedImageOthers}
 									label="upload certificate"
 									type="file"
+									className="mb-3" // Add margin-bottom class
+
 									// required
 								/>
 								<Form.Control
@@ -1655,6 +1698,8 @@ const Stage9 = (props) => {
 									onChange={props.handleSelectedImageOthers}
 									label="upload certificate"
 									type="file"
+									className="mb-3" // Add margin-bottom class
+
 									// required
 								/>
 								<Form.Control
@@ -1662,6 +1707,8 @@ const Stage9 = (props) => {
 									onChange={props.handleSelectedImageOthers}
 									label="upload certificate"
 									type="file"
+									className="mb-3" // Add margin-bottom class
+
 									// required
 								/>
 							</Col>
@@ -1675,6 +1722,7 @@ const Stage9 = (props) => {
 
 									type="text"
 									placeholder="Enter description"
+									className="mt-4"
 								/>
 							</Col>
 						</Row>
@@ -1726,13 +1774,14 @@ const Stage9 = (props) => {
 							</Col>
 						</Row>
 						
-						<Row>
+						<Row style={{ marginBottom: '20px' }}> 
 							<Col>{props.IDImg1}</Col>
 							<Col>{props.certificateImg1}</Col>
-							<Col>{props.profImg1}</Col>
-
+							<Col>{props.certificateImg2}</Col>
 						</Row>
 						<Row>
+							<Col>{props.certificateImg3}</Col>
+							<Col>{props.profImg1}</Col>
 							<Col>{props.addressImg1}</Col>
 						</Row>
 					</Form.Group>
