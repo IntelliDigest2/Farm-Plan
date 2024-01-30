@@ -118,6 +118,7 @@ function FullCalendarHealthApp(props) {
       var total_nutrients = doc.total_nutrients;
       var total_daily = doc.total_daily;
       var recipe_yield = doc.recipe_yield;
+      var eaten = doc.eaten
       let nn;
       if (doc.non_native_data) {
         nn = doc.non_native_data;
@@ -138,6 +139,7 @@ function FullCalendarHealthApp(props) {
             total_nutrients: total_nutrients,
             total_daily: total_daily,
             recipe_yield: recipe_yield,
+            eaten: eaten,
           },
         ]);
       } else {
@@ -153,6 +155,7 @@ function FullCalendarHealthApp(props) {
             total_nutrients: total_nutrients,
             total_daily: total_daily,
             recipe_yield: recipe_yield,
+            eaten: eaten
           },
         ]);
       }
@@ -238,6 +241,7 @@ function FullCalendarHealthApp(props) {
       e['meal_type'] = allMeals[count].meal_type[0];
       e['nn'] = allMeals[count].nn;
       e['url'] = allMeals[count].url;
+      e['backgroundColor'] = allMeals[count].eaten ? 'green' : 'red';
 
 
       //e['qty'] = 3
@@ -292,7 +296,8 @@ function FullCalendarHealthApp(props) {
           start: item.start,
           end: item.end,
           day: moment(item.start).format("DD-MM-yyyy"),
-          dayOfWeek: dayOfWeek
+          dayOfWeek: dayOfWeek,
+          eaten: false,
         }
       };
   
@@ -323,6 +328,7 @@ function FullCalendarHealthApp(props) {
         var url = doc.url;
         var start = doc.start;
         var end = doc.end;
+        var eaten = doc.eaten
       
         setNewPlan((meals) => [
           ...meals,
@@ -337,6 +343,7 @@ function FullCalendarHealthApp(props) {
           url: url,
           start: start,
           end: end,
+          eaten: eaten
           },
         ]);
         
@@ -416,7 +423,8 @@ function FullCalendarHealthApp(props) {
       const total_nutrients = doc.recipe.total_nutrients;
       const recipe_yield = doc.recipe.recipe_yield;
       const meal_type = doc.recipe.meal_type[0];
-      const isEatOut = true
+      const isEatOut = true;
+      const eaten = false;
       // let mealType; 
 
       // if (doc.recipe.mealType && doc.recipe.mealType[0]) {
@@ -434,7 +442,8 @@ function FullCalendarHealthApp(props) {
           total_nutrients: total_nutrients,
           recipe_yield: recipe_yield,
           meal_type: meal_type,
-          isEatOut: isEatOut
+          isEatOut: isEatOut,
+          eaten: eaten,
           // nn: nn
         },
       ]);
@@ -462,6 +471,14 @@ function FullCalendarHealthApp(props) {
   const handleShowDel = () => setShowDel(true);
   const handleButton = () => setDisabled(true);
 
+  const eventContent = (eventInfo) => {
+    const backgroundColor = eventInfo.event.extendedProps.eaten ? '#B71C1C' : '#5C6BC0';
+
+    return {
+      html: `<div style="background-color: ${backgroundColor};">${eventInfo.timeText} ${eventInfo.event.title}</div>`,
+    };
+  };
+
   return (
     <>
     {newPlan.length ? (
@@ -479,6 +496,7 @@ function FullCalendarHealthApp(props) {
         display="background"
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
+        eventContent={eventContent}
         // eventClick={(e) => {
         //   setMealTitle(e.event.title);
         //   console.log("chhhh",e.event.ingredients);
