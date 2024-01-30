@@ -78,6 +78,7 @@ function MyMeals(props) {
       var total_daily = doc.total_daily;
       var recipe_yield = doc.recipe_yield;
       let nn = doc.nn
+      var eaten = doc.eaten
       // if (doc.nonNativeData) {
       //   nn = doc.nonNativeData;
       // } else {
@@ -96,6 +97,7 @@ function MyMeals(props) {
           total_nutrients: total_nutrients,
           total_daily: total_daily,
           recipe_yield: recipe_yield,
+          eaten: eaten
         },
       ]);
     });

@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 
 import { connect } from "react-redux";
-import { editNewPlanData, getPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
+import { editNewPlanData, getPlanData, updateNewPlanData } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { editMealData, getSingleMealPlan } from "../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import {
   getInventory,
@@ -19,6 +19,12 @@ import { submitNotification } from "../../../../../../lib/Notifications";
 function AteMealIconPlan(props) {
 
   const [eaten, setEaten] = useState(false);
+
+    //trigger this when editing/deleting items
+    const [update, setUpdate] = useState(0);
+    const forceUpdate = () => {
+      setUpdate(update + 1);
+    };
 
   //needs id passed to it from onClick
   const handleEat = (id) => {
@@ -62,25 +68,26 @@ function AteMealIconPlan(props) {
     };
 
     props.editMealData(data);
-    // props.forceUpdate();
+    props.updateNewPlanData(data)
+    forceUpdate();
   };
 
-  // to add eaten value to meal plan to manage button activity. could be done better?
-  const handleEatIcon = (id) => {
+  // // to add eaten value to meal plan to manage button activity. could be done better?
+  // const handleEatIcon = (id) => {
 
-    var getMeal = props.meal
+  //   var getMeal = props.meal
 
-    const data = {
-      id: props.id,
-      upload: {
-        eaten: true,
-      },
-    };
+  //   const data = {
+  //     id: props.id,
+  //     upload: {
+  //       eaten: true,
+  //     },
+  //   };
     
-    props.editNewPlanData(data);
+  //   props.editNewPlanData(data);
 
-    // props.forceUpdate();
-  };
+  //   // props.forceUpdate();
+  // };
 
   const getEatenState = (id) => {
 
@@ -102,7 +109,7 @@ function AteMealIconPlan(props) {
     //   setEaten(true)
     // }
 
-  }, [props.editMealData]);
+  }, [props.editMealData, update]);
 
 
   useEffect(() => {
@@ -132,12 +139,12 @@ function AteMealIconPlan(props) {
           onClick={() => {
             // handleDelete(props.id);
             handleEat();
-            handleEatIcon();
+            // handleEatIcon();
             getEatenState()
 
           }}
         >
-          { props.singleMealPlan.eaten == true ? (
+          { props.meal.eaten == true ? (
                     <><RestaurantIcon fontSize="inherit" color="secondary" /></>
                   ):(<><RestaurantIcon fontSize="inherit" /></>)}
                   {/* <RestaurantIcon fontSize="inherit" color="secondary" /> */}
@@ -167,6 +174,7 @@ const mapDispatchToProps = (dispatch) => {
     updateQuantity: (data) => dispatch(updateQuantity(data)),
     getSingleMealPlan: (data) => dispatch(getSingleMealPlan(data)),
     getPlanData: (data) => dispatch(getPlanData(data)),
+    updateNewPlanData: (data) => dispatch(updateNewPlanData(data))
 
   };
 };
