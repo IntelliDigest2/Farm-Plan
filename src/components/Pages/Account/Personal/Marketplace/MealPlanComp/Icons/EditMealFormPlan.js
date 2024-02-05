@@ -14,19 +14,95 @@ function EditMealFormPlan(props) {
   const [mealName, setMealName] = useState(props.meal_name);
   const [ingredients, setIngredients] = useState(props.ingredient);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    // Transform the ingredients array into the desired format
+    const formattedIngredients = ingredients.map(
+      (ingredient) => `${ingredient.quantity} ${ingredient.measure} ${ingredient.food}`
+    );
+  
+    // Initialize variables to accumulate totalDaily and totalNutrient
+    let accumulatedTotalDaily = {};
+    let accumulatedTotalNutrient = {};
+  
+    // Loop through each formatted ingredient
+    for (const formattedIngredient of formattedIngredients) {
+      try {
+        // Make POST request to the nutrition API for each ingredient
+        const response = await fetch(
+          "https://api.edamam.com/api/nutrition-details?app_id=362eaa63&app_key=bf05af0257204c0cc1b0d14e082713d1",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ingr: [formattedIngredient] }),
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error("Failed to fetch nutrition details");
+        }
+  
+        const nutritionData = await response.json();
+  
+        // Assuming nutritionData contains the required details (totalDaily and totalNutrient),
+        // accumulate the values
+        accumulatedTotalDaily = addTotalDailyValues(accumulatedTotalDaily, nutritionData.totalDaily);
+        accumulatedTotalNutrient = addTotalNutrientValues(accumulatedTotalNutrient, nutritionData.totalNutrients);
+      } catch (error) {
+        console.error("Error fetching nutrition details:", error.message);
+        // Handle error appropriately
+        submitNotification("Error", "Failed to fetch nutrition details");
+        return;
+      }
+    }
+  
+    // Update the data object with accumulated totalDaily and totalNutrient
     const data = {
       id: props.id,
       upload: {
         meal_name: mealName,
         ingredients: ingredients,
         id: props.id,
+        // Include other fields as needed
+        totalDaily: accumulatedTotalDaily,
+        totalNutrient: accumulatedTotalNutrient,
       },
     };
-      props.editMealDataPlan(data);
+  
+    try {
+      // Continue with your existing logic
+      // props.editMealDataPlan(data);
+      console.error("log edited data ===>:", data);
       submitNotification("Success", " Item has been updated!");
       props.forceUpdate();
+    } catch (error) {
+      console.error("Error updating database:", error.message);
+      // Handle error appropriately
+      submitNotification("Error", "Failed to update database");
+    }
   };
+  
+  // Helper function to accumulate totalDaily values
+  const addTotalDailyValues = (accumulated, current) => {
+    // Implement logic to add up the values, e.g., summing up the values for each nutrient
+    // Example: (You may need to customize this based on the structure of your data)
+    for (const key in current) {
+      if (accumulated[key]) {
+        accumulated[key] += current[key];
+      } else {
+        accumulated[key] = current[key];
+      }
+    }
+    return accumulated;
+  };
+  
+  // Helper function to accumulate totalNutrient values
+  const addTotalNutrientValues = (accumulated, current) => {
+    // Implement logic to add up the values, similar to addTotalDailyValues
+    return accumulated;
+  };
+  
 
   return (
     <Form
@@ -125,6 +201,7 @@ const mapStateToProps = (state) => {
     data: state.data.getData,
   };
 };
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
