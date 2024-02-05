@@ -111,7 +111,8 @@ export default function MealsBox(props) {
                 >
                   {newMeal.nn ? (
                     <>
-                      <p>{ingredient.text}</p>
+                      {ingredient.food}: {ingredient.quantity}
+                        {ingredient.measure}
                     </>
                   ) : (
                     <>
