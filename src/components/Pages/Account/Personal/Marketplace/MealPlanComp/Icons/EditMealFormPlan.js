@@ -26,10 +26,12 @@ function EditMealFormPlan(props) {
   
     // Loop through each formatted ingredient
     for (const formattedIngredient of formattedIngredients) {
+
+      console.log("formatted ingr", formattedIngredient)
       try {
         // Make POST request to the nutrition API for each ingredient
         const response = await fetch(
-          "https://api.edamam.com/api/nutrition-details?app_id=362eaa63&app_key=bf05af0257204c0cc1b0d14e082713d1",
+          "https://api.edamam.com/api/nutrition-details?app_id=e829a97b&app_key=3f00720bbf8143e0021ec2853a0f1dcd",
           {
             method: "POST",
             headers: {
@@ -40,7 +42,12 @@ function EditMealFormPlan(props) {
         );
   
         if (!response.ok) {
-          throw new Error("Failed to fetch nutrition details");
+          if (response.status === 555) {
+            console.warn("HTTP 555 error. Skipping to the next iteration.");
+            continue; // Skip to the next iteration of the loop
+          } else {
+            throw new Error("Failed to fetch nutrition details");
+          }
         }
   
         const nutritionData = await response.json();
@@ -51,6 +58,8 @@ function EditMealFormPlan(props) {
         accumulatedTotalNutrient = addTotalNutrientValues(accumulatedTotalNutrient, nutritionData.totalNutrients);
       } catch (error) {
         console.error("Error fetching nutrition details:", error.message);
+
+    
         // Handle error appropriately
         submitNotification("Error", "Failed to fetch nutrition details");
         return;
@@ -65,15 +74,15 @@ function EditMealFormPlan(props) {
         ingredients: ingredients,
         id: props.id,
         // Include other fields as needed
-        totalDaily: accumulatedTotalDaily,
-        totalNutrient: accumulatedTotalNutrient,
+        total_daily: accumulatedTotalDaily,
+        total_nutrients: accumulatedTotalNutrient,
       },
     };
   
     try {
       // Continue with your existing logic
-      // props.editMealDataPlan(data);
-      console.error("log edited data ===>:", data);
+      props.editMealDataPlan(data);
+      // console.log("log edited data ===>:", data);
       submitNotification("Success", " Item has been updated!");
       props.forceUpdate();
     } catch (error) {
@@ -100,6 +109,13 @@ function EditMealFormPlan(props) {
   // Helper function to accumulate totalNutrient values
   const addTotalNutrientValues = (accumulated, current) => {
     // Implement logic to add up the values, similar to addTotalDailyValues
+    for (const key in current) {
+      if (accumulated[key]) {
+        accumulated[key] += current[key];
+      } else {
+        accumulated[key] = current[key];
+      }
+    }
     return accumulated;
   };
   
