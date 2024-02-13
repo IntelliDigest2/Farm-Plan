@@ -432,12 +432,19 @@ const uploadIdImage = (image) => {
 
 
 export const signUp = (newUser, image) => {
-	// console.log(newUser, `this is the new user`);
-	// console.log(image, `this is the image i want to upload`);
 
-	// console.log(newUser.consultantInfo, `thes are the consultantInfo`);
 	return async (dispatch, getState, { getFirebase }) => {
 		try {
+
+			// Function to generate random alphanumeric code
+            const generateRandomCode = () => {
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let code = '';
+                for (let i = 0; i < 7; i++) {
+                    code += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                return code;
+            };
 
 			var type;
 		switch (newUser.function) {
@@ -472,6 +479,8 @@ export const signUp = (newUser, image) => {
 				break;
 			case "Schools":
 				type = "academic_admin";
+				newUser.schoolCode = generateRandomCode(); // Generate and assign random code
+
 				break;
 			case "Farm":
 				type = "farm_admin";
@@ -548,6 +557,7 @@ export const signUp = (newUser, image) => {
 					address: newUser.restaurantAddress,
 					type: type,
 					isFreelancer: newUser.isFreelancer,
+					school_code: newUser.schoolCode,
 					imgsLinks: {
 						certificateImg1: urls[0],
 						certificateImg2: urls[1],
