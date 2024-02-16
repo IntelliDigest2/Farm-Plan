@@ -22,6 +22,8 @@ const SpinnerComponent = () => {
 };
 
 const PinComponent = (userID) => {
+
+
   const uid = userID.userID
   const baseUrlDev="http://localhost:5000"
   const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
@@ -85,6 +87,9 @@ const PinComponent = (userID) => {
 };
 
 const WithdrawComponent = (props) => {
+
+  console.log(">>>>>>>>region", props.profile.region)
+
   const [cardInfo, setCardInfo] = useState('');
   const [hasPin, setHasPin] = useState(false);
 
@@ -103,9 +108,10 @@ const formatCardInfo = (cardNumber, bankName) => {
 
 useEffect(() => {
   const fetchData = async () => {
+    console.log(">>>>>>>>region", props.profile.region)
     const endpoint = props.profile.region === 'Africa'
-      ? `${baseUrlProd}/v1/payment/transfer-recipient-info`
-      : `${baseUrlProd}/v1/payment/connected-account-info`;
+      ? `${baseUrlDev}/v1/payment/transfer-recipient-info`
+      : `${baseUrlDev}/v1/payment/connected-account-info`;
 
     try {
       const response = await fetch(endpoint, {
@@ -129,7 +135,7 @@ useEffect(() => {
   };
 
   fetchData();
-}, [props.profile]);
+}, [props.profile.uid]);
   
   
   // Fetch the user's PIN status from the backend

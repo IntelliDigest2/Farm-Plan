@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import {
   createFoodWasteData,
   createMapData,
-} from "./../../../../store/actions/dataActions";
+} from "../../../../../store/actions/dataActions";
 import { Redirect } from "react-router-dom";
 import { getFirebase } from "react-redux-firebase";
-import { PageWrap } from "../../../SubComponents/PageWrap";
-import { Dropdown } from "../../../SubComponents/Dropdown";
-import { DefaultButton } from "../../../SubComponents/Button";
+import { PageWrap } from "../../../../SubComponents/PageWrap";
+import { Dropdown } from "../../../../SubComponents/Dropdown";
+import { DefaultButton } from "../../../../SubComponents/Button";
 import { Divider } from "@mui/material";
-import { submitNotification } from "../../../lib/Notifications";
+import { submitNotification } from "../../../../lib/Notifications";
 
 const FoodWaste = (props) => {
   const [redirectTo, setRedirectTo] = useState(false);

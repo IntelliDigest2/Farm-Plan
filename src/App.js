@@ -64,14 +64,20 @@ import ItemTab from "./components/Pages/Account/Shop/Marketplace/ItemComp/ItemTa
 import NutrientGap from "./components/Pages/Account/Personal/NutrientGap";
 import ViewProducts from "./components/Pages/Account/Farm/ViewProducts";
 
-import FoodWasteAcademic from "./components/Pages/Account/Academic/FoodWaste";
-import FoodIntakeAcademic from "./components/Pages/Account/Academic/FoodIntakeAcademic";
-import FoodSurplusAcademic from "./components/Pages/Account/Academic/FoodSurplusAcademic";
+import FoodWasteAcademic from "./components/Pages/Account/Business/Academic/FoodWaste";
+import FoodIntakeAcademic from "./components/Pages/Account/Business/Academic/FoodIntakeAcademic";
+import FoodSurplusAcademic from "./components/Pages/Account/Business/Academic/FoodSurplusAcademic";
 
 import RestaurantShoppingListPlanner from "./components/Pages/Account/Business/Restaurant/RestaurantShoppingListPlanner";
 import RestaurantInventory from "./components/Pages/Account/Business/Restaurant/RestaurantInventory";
 import RestaurantDashboard from "./components/Pages/Account/Business/Restaurant/RestaurantDashboard";
 import RestaurantMealPlan from "./components/Pages/Account/Business/Restaurant/RestaurantMealPlan";
+
+
+import SchoolShoppingListPlanner from "./components/Pages/Account/Business/Academic/RestaurantShoppingListPlanner";
+import SchoolInventory from "./components/Pages/Account/Business/Academic/RestaurantInventory";
+import SchoolDashboard from "./components/Pages/Account/Business/Academic/RestaurantDashboard";
+import SchoolMealPlan from "./components/Pages/Account/Business/Academic/RestaurantMealPlan";
 
 import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan";
 
@@ -129,6 +135,8 @@ import ResAuth from "./components/Pages/Account/Business/Restaurant/Auth/Res-Aut
 import SupAuth from "./components/Pages/Account/Business/Suppliers/Auth/Sup-Auth";
 import CalendarPlannerHealth from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Plan/CalendarPlanner/CalendarPlannerHealth";
 import moment from "moment";
+import CreateCode from "./components/Pages/Account/Business/Academic/CreateCode";
+import ConnectSchool from "./components/Pages/Account/Personal/ConnectSchool";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -367,6 +375,31 @@ const App = (props) => {
 						<Route
 							path="/restaurant-meal-plan"
 							component={RestaurantMealPlan}
+						/>
+
+						<Route
+							path="/school-shopping-list"
+							component={SchoolShoppingListPlanner}
+						/>
+						<Route
+							path="/school-inventory"
+							component={SchoolInventory}
+						/>
+						<Route
+							path="/school-dashboard"
+							component={SchoolDashboard}
+						/>
+						<Route
+							path="/school-meal-plan"
+							component={SchoolMealPlan}
+						/>
+						<Route
+							path="/create-school-code"
+							component={CreateCode}
+						/>
+						<Route
+							path="/add-student-to-school"
+							component={ConnectSchool}
 						/>
 						<Route path="/restaurant-sale" component={RestaurantSale} />
 						<Route path="/restaurant-turnover" component={RestaurantTurnover} />

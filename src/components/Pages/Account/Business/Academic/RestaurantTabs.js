@@ -1,62 +1,11 @@
 import React from "react";
-import { IconButton } from "../../../SubComponents/Button";
-import "../UserAccount.css";
-// import { Colors } from "../../../lib/Colors";
+import { IconButton } from "../../../../SubComponents/Button";
+import "../../UserAccount.css";
 
-export function Food({ setShow, setChooseModal }) {
+export function Food({ setShow, setChooseModal, isSeller }) {
 	return (
-		// <>
-		//   <IconButton
-		//     icon="notes"
-		//     label="Meal Plan"
-		//     color="turquoise"
-		//     goTo="/meal-plan"
-		//   />
-		//   <IconButton
-		//     icon="my-products"
-		//     label="Meal Sold"
-		//     color="turquoise"
-		//     goTo="/view-products"
-		//   />
-		//   <IconButton
-		//     icon="my-products"
-		//     label="Meal Returned"
-		//     color="turquoise"
-		//     goTo="/view-products"
-		//     disabled
-		//   />
-		//   <IconButton
-		//     icon="chart"
-		//     label="Meal Chart"
-		//     color="yellow"
-		//     goTo="/"
-		//     disabled
-		//   />
-		//   <IconButton
-		//     icon="notes"
-		//     label="Turnover"
-		//     color="turquoise"
-		//     goTo="/"
-		//     disabled
-		//   />
-		//   <IconButton
-		//     icon="notes"
-		//     label="Profit"
-		//     color="turquoise"
-		//     goTo="/"
-		//     disabled
-		//   />
-		//   <IconButton
-		//     icon="kitchen"
-		//     label="Plan to Save"
-		//     color="turquoise"
-		//     onClick={() => {
-		//       setShow(true);
-		//       setChooseModal(true);
-		//     }}
-		//   />
-		// </>
 		<>
+		{ isSeller ? (
 			<IconButton
 				icon="notes"
 				label="Meal Plan"
@@ -64,11 +13,27 @@ export function Food({ setShow, setChooseModal }) {
 				goTo="/restaurant-meal-plan"
 			/>
 
+		):(
+			<IconButton
+					icon="notes"
+					label="Meal Plan"
+					color="turquoise"
+					goTo="/res-auth"
+				/>
+		)}
+			
 			<IconButton
 				icon="notes"
 				label="Restaurant details"
 				color="yellow"
 				goTo="/restaurant-meal-plan"
+			/>
+
+			<IconButton
+				icon="delivery"
+				label="Check Deliveries"
+				color="cyan"
+				goTo="/track-reservations-other"
 			/>
 
 			{/* 
@@ -143,79 +108,39 @@ export function Food({ setShow, setChooseModal }) {
 	);
 }
 
-export function Research({ setShow, setChooseModal }) {
-	return (
-		<>
-			<IconButton
-				icon="notes"
-				label="Research Plan"
-				color="turquoise"
-				goTo="/"
-				disabled
-			/>
-			<IconButton
-				icon="my-products"
-				label="Food Items Used"
-				color="turquoise"
-				goTo="/"
-				disabled
-			/>
-			<IconButton
-				icon="my-products"
-				label="Food Items Not Used"
-				color="turquoise"
-				goTo="/"
-				disabled
-			/>
-			<IconButton icon="chart" label="Chart" color="yellow" goTo="/" disabled />
-			<IconButton
-				icon="notes"
-				label="Research Cost"
-				color="turquoise"
-				goTo="/"
-				disabled
-			/>
-			<IconButton
-				icon="kitchen"
-				label="Plan to Save"
-				color="turquoise"
-				onClick={() => {
-					setShow(true);
-					setChooseModal(true);
-				}}
-			/>
-		</>
-	);
-}
-
 export function Environment({ setShow, setChooseModal }) {
 	return (
 		<>
 			<IconButton
+				title="Record your food waste."
 				icon="waste"
 				label="Food Waste"
 				color="turquoise"
-				goTo="/food-wasteAcademic"
+				goTo="/food-wasteBusiness"
 			/>
 			<IconButton
+				title="View your food waste data."
 				icon="chart"
 				label="Waste Chart"
 				color="yellow"
 				goTo="/chart"
 			/>
 			<IconButton
+				title="Useful tips on how to reduce food waste in your home."
 				icon="info"
 				label="Food Waste Reduction Tips"
 				color="green"
 				goTo="/food-reduction"
 			/>
 			<IconButton
+				title="View the world map of WFT users!"
 				icon="world"
 				label="Users Map"
-				color="yellow"
+				color="purple"
 				goTo="/view-map"
 			/>
 			<IconButton
+				title="Find out more about the Plan to Save campaign, and what you can do to help."
 				icon="kitchen"
 				label="Plan to Save"
 				color="turquoise"
@@ -281,18 +206,28 @@ export function FSSP() {
 	return (
 		<>
 			<IconButton
+				title="Find out about our Agrifood TechPreneur program."
 				icon="plant"
 				label="Agrifood Technpreneur"
 				color="turquoise"
 				goTo="https://intellidigest.com/services/food-system-sustainability/agrifood-techpreneur-club/"
 			/>
 			<IconButton
+				title="Buff up the sustainability of your business with our online masterclasses."
+				icon="mind"
+				label="Mastermind"
+				color="purple"
+				goTo="https://intellidigest.com/mastermind-sessions/"
+			/>
+			<IconButton
+				title="Buff up the sustainability of your business with our online masterclasses."
 				icon="book"
 				label="Masterclasses"
-				color="turquoise"
+				color="blue"
 				goTo="https://intellidigest.com/masterclasses-overview/"
 			/>
 			<IconButton
+				title="Calculate the Food Industry Sustainability Index (FISI) of your business."
 				icon="info"
 				label="FISI"
 				color="green"
@@ -301,5 +236,3 @@ export function FSSP() {
 		</>
 	);
 }
-
-export default { Food, Research, Environment, FSSP };

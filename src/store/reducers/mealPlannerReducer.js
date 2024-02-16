@@ -10,8 +10,9 @@ const initState = {
   weekPlans: [],
   allItems:[],
   singleMealPlan:[],
-
-
+  schoolMeals: [],
+  parentNewPlan: [],
+  newSchoolPlan: [],
 };
 
 const mealPlannerReducer = (state = initState, action) => {
@@ -66,6 +67,19 @@ const mealPlannerReducer = (state = initState, action) => {
           ...state,
           authError: "Get meals failed",
         };
+        case "GET_SCHOOL_MEAL_PLANS":
+          console.log("get school meals plans success", action.payload);
+          return {
+            ...state,
+            schoolMeals: action.payload,
+            authError: null,
+          };
+        case "GET_SCHOOL_MEAL_PLANS_ERROR":
+          console.log("error, couldn't fetch school meals", action.err);
+          return {
+            ...state,
+            authError: "Get schol meals failed",
+          };
         case "GET_WEEK_PLANS":
         console.log("get week plans success", action.payload);
         return {
@@ -88,6 +102,35 @@ const mealPlannerReducer = (state = initState, action) => {
       };
     case "GET_NEW_PLANS_ERROR":
       console.log("error, couldn't fetch new plan", action.err);
+      return {
+        ...state,
+        authError: "Get meals failed",
+      };
+
+      case "GET_NEW_SCHOOL_PLANS":
+        console.log("get meal new school plan success", action.payload);
+        return {
+          ...state,
+          newSchoolPlan: action.payload,
+          authError: null,
+        };
+      case "GET_NEW_SCHOOL_PLANS_ERROR":
+        console.log("error, couldn't fetch new school plan", action.err);
+        return {
+          ...state,
+          authError: "Get meals failed",
+        };
+  
+
+      case "GET_PARENT_NEW_PLANS":
+      console.log("get parent new plan success", action.payload);
+      return {
+        ...state,
+        parentNewPlan: action.payload,
+        authError: null,
+      };
+    case "GET_PARENT_NEW_PLANS_ERROR":
+      console.log("error, couldn't fetch parent new plan", action.err);
       return {
         ...state,
         authError: "Get meals failed",

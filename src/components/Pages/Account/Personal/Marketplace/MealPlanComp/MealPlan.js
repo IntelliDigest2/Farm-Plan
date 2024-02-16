@@ -8,17 +8,21 @@ import { Tab, Tabs } from "react-bootstrap";
 import { Calendar } from "./Calendar";
 import { CalendarPlan } from "./CalendarPlan";
 import CalendarPlanner from "./Plan/CalendarPlanner/CalendarPlanner";
+import CalendarPlannerSchool from "./Plan/CalendarPlanner/CalendarPlannerSchool";
+
 
 import { useTranslation, Trans } from "react-i18next";
+import { connect } from "react-redux";
 
 import SavedMeals from "./SavedMeals";
 import RecipeSearch from "./Search/RecipeSearch";
 import { ShoppingList } from "./BuildShoppingList/ShoppingList";
 import moment from "moment";
 import { Inventory } from "./Inventory";
+import SchoolMeals from "./SchoolMeals";
 // import WaveLoader from "../../../../../SubComponents/Loading/WaveLoader";
 
-export default function MealPlan() {
+function MealPlan(props) {
 	const { t } = useTranslation();
 
 	const [loading, setLoading] = useState(false);
@@ -71,23 +75,42 @@ export default function MealPlan() {
 				>
 					<Inventory value={value} />
 				</Tab>
-				<Tab
-					eventKey="mealplanner"
-					title={t("description.meal_planner")}
+				{ props.profile.isSubAccount ? (
+					<Tab
+					eventKey="schoolmeals"
+					title="SCHOOL MEALS"
 					className="mealtab"
 				>
-					<CalendarPlan value={value} onChange={setValue} />
+					<SchoolMeals 
+						value={value} 
+						onChange={setValue} 
+					/>
 				</Tab>
+				):(
+					<CalendarPlan 
+						value={value} 
+						onChange={setValue} 
+					/>
+				)}
 				<Tab
 					eventKey="plan"
 					title={t("description.view_plan")}
 					className="mealtab"
 				>
-					<CalendarPlanner
-						value={value}
-						getItems={getItems}
-						setGetItems={setGetItems}
-					/>
+					
+					{ props.profile.isSubAccount ? (
+						<CalendarPlannerSchool
+							value={value}
+							getItems={getItems}
+							setGetItems={setGetItems}
+						/>
+					):(
+						<CalendarPlanner
+							value={value}
+							getItems={getItems}
+							setGetItems={setGetItems}
+						/>
+					)}
 				</Tab>
 			</Tabs>
 
@@ -96,3 +119,13 @@ export default function MealPlan() {
 		</PageWrap>
 	);
 }
+
+const mapStateToProps = (state) => {
+	return {
+	  profile: state.firebase.profile,
+	};
+  };
+  
+
+  export default connect(mapStateToProps, null)(MealPlan);
+

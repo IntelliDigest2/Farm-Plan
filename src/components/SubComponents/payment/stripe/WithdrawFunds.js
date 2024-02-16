@@ -43,13 +43,13 @@ const WithdrawFunds = ( props ) => {
         let requestBody;
   
         if (props.profile.region === 'Africa') {
-          endpoint = `${baseUrlProd}/v1/payment/withdrawal-paystack`;
+          endpoint = `${baseUrlDev}/v1/payment/withdrawal-paystack`;
           requestBody = {
             userID: userID,
             amount: amountWithdraw,
           };
         } else {
-          endpoint = `${baseUrlProd}/v1/payment/pay-out-fund`;
+          endpoint = `${baseUrlDev}/v1/payment/pay-out-fund`;
           requestBody = {
             userID: userID,
             accountID: accountID,
@@ -89,7 +89,7 @@ const WithdrawFunds = ( props ) => {
                 icon: 'error',
               });
             } else {
-              console.error("Failed to fetch account id");
+              console.error("Failed to fetch account id", errorData);
               // Show an error alert for other withdrawal error
               Swal.fire({
                 title: 'Error!',

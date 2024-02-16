@@ -1,0 +1,24 @@
+.meals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust item width based on available space */
+  gap: 1rem;
+}
+
+.meal-item {
+  border: solid #95a11f;
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 12px;
+}
+
+@media (max-width: 768px) {
+  .meals {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns for screens smaller than 768px */
+  }
+}
+
+@media (max-width: 480px) {
+  .meals {
+      grid-template-columns: repeat(1, 1fr); /* 1 column for screens smaller than 480px */
+  }
+}

@@ -24,7 +24,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import * as Households from "./Personal/PersonalTabs";
 import * as Farm from "./Farm/FarmTabs";
 import * as Business from "./Business/BusinessTabs";
-import * as Schools from "./Academic/AcademicTabs";
+import * as Schools from "./Business/Academic/AcademicTabs";
 import * as Restaurant from "./Business/Restaurant/RestaurantTabs";
 import * as Supply from "./Business/Suppliers/SupplyTabs";
 import * as Material from "./Business/Material/SupplyTabs";

@@ -1230,7 +1230,7 @@ useEffect(() => {
   
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
-	fetch(`${baseUrlProd}/v1/coupon/get-promo-code`, {
+	fetch(`${baseUrlDev}/v1/coupon/get-promo-code`, {
 	  method: 'POST',
 	  headers: {
 		'Content-Type': 'application/json',
@@ -1779,7 +1779,7 @@ const SubAccounts = (props) => {
 						</Form.Group>
 
 					</Form.Row>
-					<Form.Group className="mb-3" style={{ backgroundColor: "white" }} as={Col}>
+					{/* <Form.Group className="mb-3" style={{ backgroundColor: "white" }} as={Col}>
 						<Form.Label style={{ backgroundColor: "white" }}>Account Type</Form.Label>
 						<Form.Select
 							defaultValue={props.subAccountType}
@@ -1789,7 +1789,7 @@ const SubAccounts = (props) => {
 							<option value="option2">Option 2</option>
 							<option value="option3">Option 3</option>
 						</Form.Select>
-						</Form.Group>
+						</Form.Group> */}
 					<Form.Group className="mb-3">
 						<Form.Label>Email address</Form.Label>
 						<Form.Control

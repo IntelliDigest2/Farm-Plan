@@ -1375,6 +1375,7 @@ export const createSubAccount = (data) => {
 					.collection("users")
 					.doc(subUid)
 					.set({
+						uid: subUid,
 						firstName: data.firstName,
 						lastName: data.lastName,
 						initials: data.firstName[0] + data.lastName[0],
@@ -1385,7 +1386,7 @@ export const createSubAccount = (data) => {
 						region: data.region,
 						admin: data.uid,
 						type: data.type,
-						restaurantName: data.restaurantName,
+						isSubAccount: true
 					});
 			})
 			.then(() => {
