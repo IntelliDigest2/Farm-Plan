@@ -80,6 +80,14 @@ export function Food({ setShow, setChooseModal, profile }) {
 				goTo="/restaurant-order-list"
 			/>
 
+			<IconButton
+				title="Connect School"
+				icon="delivery"
+				label="Connect School"
+				color="purple"
+				goTo="/add-student-to-school"
+			/>
+
 
 			<IconButton
 				title="Find out more about the Plan to Save campaign, and what you can do to help."

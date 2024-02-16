@@ -102,6 +102,56 @@ export const getMealPlannerData = () => {
   };
 };
 
+export const getSchoolMealData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirebase()
+      .firestore()
+      .collection("restaurant_users")
+      .doc(data.school_uid)
+      .collection("mealPlannerData")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_SCHOOL_MEAL_PLANS", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_SCHOOL_MEAL_PLANS_ERROR", err });
+      });
+  };
+};
+
 export const getWeeklyPlan = (data) => {
   return (dispatch, getState, { getFirebase }) => {
     //make async call to database
@@ -204,6 +254,100 @@ export const getPlanData = () => {
       });
   }; 
 }; 
+
+export const getSchoolPlanData = () => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+      case "business_sub":
+        uid = authUID;
+        break;
+      case "academic_admin":
+      case "academic_sub":
+        uid = authUID;
+        break;
+      case "household_admin":
+      case "household_sub":
+        uid = authUID;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("newPlan")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_NEW_SCHOOL_PLANS", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_NEW_SCHOOL_PLANS_ERROR", err });
+      });
+  }; 
+}; 
+
+export const getParentSchoolPlan = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(data.admin_uid)
+      .collection("newPlan")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+        dispatch({ type: "GET_PARENT_NEW_PLANS", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_PARENT_NEW_PLANS_ERROR", err });
+      });
+  }; 
+}; 
+
 
 export const getSingleMealPlan = (data) => {
   return (dispatch, getState, { getFirebase }) => {
@@ -407,22 +551,16 @@ export const deleteMealPlannerData = (mealPlanner) => {
     var uid;
     switch (profile.type) {
       case "business_admin":
-        uid = authUID;
-        break;
       case "business_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       case "academic_admin":
-        uid = authUID;
-        break;
       case "academic_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       case "household_admin":
-        uid = authUID;
-        break;
       case "household_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       default:
         uid = authUID;
@@ -452,22 +590,65 @@ export const generateNewPlan = (plan) => {
     var uid;
     switch (profile.type) {
       case "business_admin":
-        uid = authUID;
-        break;
       case "business_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       case "academic_admin":
-        uid = authUID;
-        break;
       case "academic_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       case "household_admin":
+      case "household_sub":
         uid = authUID;
         break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    getFirebase()
+      .firestore()
+      .collection("marketplace")
+      .doc(uid)
+      .collection("newPlan")
+      .add(plan.upload)
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+        // make the docId easily accessible so that we can delete it later if we want.
+        getFirebase()
+          .firestore()
+          .collection("marketplace")
+          .doc(uid)
+          .collection("newPlan")
+          .doc(docRef.id)
+          .set({ id: docRef.id }, { merge: true });
+        dispatch({ type: "GENERATE_MEAL_PLANNER", plan });
+      })
+      .catch((err) => {
+        dispatch({ type: "GENERATE_MEAL_PLANNER_ERROR", err });
+      });
+  };
+};
+
+export const generateNewSchoolPlan = (plan) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+      case "business_sub":
+        uid = authUID;
+        break;
+      case "academic_admin":
+      case "academic_sub":
+        uid = authUID;
+        break;
+      case "household_admin":
       case "household_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       default:
         uid = authUID;
@@ -508,22 +689,16 @@ export const removeAllMealPlan = (plan) => {
     var uid;
     switch (profile.type) {
       case "business_admin":
-        uid = authUID;
-        break;
       case "business_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       case "academic_admin":
-        uid = authUID;
-        break;
       case "academic_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       case "household_admin":
-        uid = authUID;
-        break;
       case "household_sub":
-        uid = profile.admin;
+        uid = authUID;
         break;
       default:
         uid = authUID;
@@ -602,5 +777,67 @@ export const editMealDataPlan = (mealPlan) => {
       .catch((err) => {
         dispatch({ type: "EDIT_MEAL_ERROR", err });
       });
+  };
+};
+
+
+export const addToMealPlannerData = (data) => {
+  return (dispatch, getState, { getFirebase }) => {
+    //make async call to database
+    const profile = getState().firebase.profile;
+    const authUID = getState().firebase.auth.uid;
+
+    var uid;
+    switch (profile.type) {
+      case "business_admin":
+        uid = authUID;
+        break;
+      case "business_sub":
+        uid = profile.admin;
+        break;
+      case "academic_admin":
+        uid = authUID;
+        break;
+      case "academic_sub":
+        uid = profile.admin;
+        break;
+      case "household_admin":
+        uid = authUID;
+        break;
+      case "household_sub":
+        uid = profile.admin;
+        break;
+      default:
+        uid = authUID;
+        break;
+    }
+
+    const firestore = getFirebase().firestore();
+    
+    console.log("addToMealPlannerData", data);
+
+    const mealList = data.upload.mealList
+
+    // Iterate over each item and add them to the mealPlannerData collection
+    mealList.forEach(item => {
+      firestore
+        .collection("marketplace")
+        .doc(data.uid)
+        .collection("mealPlannerData")
+        .add(item)
+        .then((docRef) => {
+          // make the docId easily accessible so that we can delete it later if we want.
+          firestore
+            .collection("marketplace")
+            .doc(data.uid)
+            .collection("mealPlannerData")
+            .doc(docRef.id)
+            .set({ id: docRef.id }, { merge: true });
+          dispatch({ type: "CREATE_MEAL_PLANNER", item });
+        })
+        .catch((err) => {
+          dispatch({ type: "CREATE_MEAL_PLANNER_ERROR", err });
+        });
+    });
   };
 };

@@ -139,13 +139,14 @@ const WalletComponent = (props) => {
     const transferData = {
       user: props.profile.uid,
       amount: parseFloat(amountTransfer),
+      currency: userCurrency,
       email: recipientEmail,
     };
 
     console.log("transferrData", transferData)
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlProd}/v1/transaction/transfer`, {
+    fetch(`${baseUrlDev}/v1/transaction/transfer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

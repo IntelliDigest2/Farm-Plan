@@ -1,0 +1,19 @@
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .step {
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .step.active {
+    background-color: #007bff;
+  }
+  
