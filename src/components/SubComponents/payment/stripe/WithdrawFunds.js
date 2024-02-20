@@ -92,7 +92,7 @@ const WithdrawFunds = ( props ) => {
               // Show an error alert for other withdrawal error
               Swal.fire({
                 title: 'Error!',
-                text: "Something went wrong, please contact the admin",
+                text: "Something went wrong, please contact the admin at WorldFoodTrackerCoupon@gmail.com",
                 icon: 'error',
               });
             }
