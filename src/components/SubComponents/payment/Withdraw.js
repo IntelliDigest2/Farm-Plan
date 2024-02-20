@@ -115,7 +115,7 @@ useEffect(() => {
     // console.log(">>>>>region", props.profile.region)
     const endpoint = props.profile.region === 'Africa'
       ? `${baseUrlProd}/v1/payment/transfer-recipient-info`
-      : `${baseUrlProd}/v1/payment/transfer-recipient-info`;
+      : `${baseUrlProd}/v1/payment/connected-account-info`;
 
     try {
 
