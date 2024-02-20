@@ -146,7 +146,7 @@ const WalletComponent = (props) => {
     console.log("transferrData", transferData)
 
     // Make a POST request to the backend to initiate the transfer
-    fetch(`${baseUrlDev}/v1/transaction/transfer`, {
+    fetch(`${baseUrlProd}/v1/transaction/transfer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

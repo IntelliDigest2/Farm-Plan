@@ -19,7 +19,7 @@ export const ReservationsOther = (props) => {
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
 
-    fetch(`${baseUrlDev}/v1/payment/track-reservations-other`, {
+    fetch(`${baseUrlProd}/v1/payment/track-reservations-other`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

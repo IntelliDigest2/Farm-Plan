@@ -196,7 +196,7 @@ const handlePhoneFileUpload = (e) => {
 
   // const sendEmail = async (email, message) => {
   //   try {
-  //     const response = await fetch(`${baseUrlDev}/v1/auth/send-email-voucher`, {
+  //     const response = await fetch(`${baseUrlProd}/v1/auth/send-email-voucher`, {
   //       method: "POST",
   //       headers: {
   //         "Content-Type": "application/json",

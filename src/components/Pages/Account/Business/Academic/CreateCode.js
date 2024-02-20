@@ -14,7 +14,7 @@ const CreateSchoolCode = (props) => {
   const sendEmail = async (email, schoolCode) => {
     try {
       // ... (existing code for sending email)
-      const response = await fetch(`${baseUrlDev}/v1/auth/send-school-code`, {
+      const response = await fetch(`${baseUrlProd}/v1/auth/send-school-code`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +34,7 @@ const CreateSchoolCode = (props) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${baseUrlDev}/v1/auth/create-school-code`, {
+      const response = await fetch(`${baseUrlProd}/v1/auth/create-school-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

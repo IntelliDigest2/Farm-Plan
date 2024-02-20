@@ -14,7 +14,7 @@ const ConnectSchool = (props) => {
   // const sendEmail = async (email, schoolCode) => {
   //   try {
   //     // ... (existing code for sending email)
-  //     const response = await fetch(`${baseUrlDev}/v1/auth/send-school-code`, {
+  //     const response = await fetch(`${baseUrlProd}/v1/auth/send-school-code`, {
   //       method: "POST",
   //       headers: {
   //         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const ConnectSchool = (props) => {
     console.log("userID", props.profile, "school code", schoolCode)
 
     try {
-      const response = await fetch(`${baseUrlDev}/v1/auth/add-student-to-school`, {
+      const response = await fetch(`${baseUrlProd}/v1/auth/add-student-to-school`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

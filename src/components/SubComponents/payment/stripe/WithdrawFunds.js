@@ -43,13 +43,14 @@ const WithdrawFunds = ( props ) => {
         let requestBody;
   
         if (props.profile.region === 'Africa') {
-          endpoint = `${baseUrlDev}/v1/payment/withdrawal-paystack`;
+          endpoint = `${baseUrlProd}/v1/payment/withdrawal-paystack`;
           requestBody = {
             userID: userID,
             amount: amountWithdraw,
           };
+
         } else {
-          endpoint = `${baseUrlDev}/v1/payment/pay-out-fund`;
+          endpoint = `${baseUrlProd}/v1/payment/pay-out-fund`;
           requestBody = {
             userID: userID,
             accountID: accountID,
@@ -69,7 +70,6 @@ const WithdrawFunds = ( props ) => {
           if (response.ok) {
             const data = await response.json();
             const accountID = data.accountID;
-            console.log("account id:", accountID);
   
             // Show a success alert
             Swal.fire({
@@ -81,25 +81,23 @@ const WithdrawFunds = ( props ) => {
             });
           } else {
             const errorData = await response.json();
-            if (errorData.error === 'InsufficientFunds') {
+            if (errorData.code === 'insufficient_balance') {
               // Show an error alert for insufficient funds
               Swal.fire({
                 title: 'Error!',
-                text: 'Insufficient funds in your wallet',
+                text: errorData.message,
                 icon: 'error',
               });
             } else {
-              console.error("Failed to fetch account id", errorData);
               // Show an error alert for other withdrawal error
               Swal.fire({
                 title: 'Error!',
-                text: 'Something went wrong!',
+                text: "Something went wrong, please contact the admin",
                 icon: 'error',
               });
             }
           }
         } catch (error) {
-          console.error("Error:", error);
           // Show a generic error alert for failed withdrawal
           Swal.fire({
             title: 'Error!',
@@ -108,7 +106,6 @@ const WithdrawFunds = ( props ) => {
           });
         }
       } else {
-        console.error("PIN verification failed");
         // Show an error alert for wrong PIN
         Swal.fire({
           title: 'Error!',
@@ -117,7 +114,6 @@ const WithdrawFunds = ( props ) => {
         });
       }
     } catch (error) {
-      console.error(error);
       // Show a generic error alert for PIN verification failure
       Swal.fire({
         title: 'Error!',
