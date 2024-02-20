@@ -46,6 +46,8 @@ const AddPayment = ( props ) => {
         currency: currency,
         userID: props.profile.uid,
       };
+
+      console.log("create recipient data", data)
   
       const response = await fetch(`${baseUrlProd}/v1/payment/create-transfer-recipient`, {
         method: "POST",
@@ -101,7 +103,7 @@ const AddPayment = ( props ) => {
           const account_name = bankInfo.account_name;
           const account_number = bankInfo.account_number;
           const bank_code = selectedBank;
-          console.log("account number", account_number, "account name:", account_name);
+          console.log("bank info", bankInfo);
   
           createRecipient(account_name, account_number, bank_code);
         } else {

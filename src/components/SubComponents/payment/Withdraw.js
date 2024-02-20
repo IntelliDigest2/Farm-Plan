@@ -88,8 +88,6 @@ const PinComponent = (userID) => {
 
 const WithdrawComponent = (props) => {
 
-  console.log(">>>>>>>>region", props.profile.region)
-
   const [cardInfo, setCardInfo] = useState('');
   const [hasPin, setHasPin] = useState(false);
 
@@ -107,13 +105,22 @@ const formatCardInfo = (cardNumber, bankName) => {
 }
 
 useEffect(() => {
+
+  // Check if props.profile.uid is available
+  if (!props.profile.uid) {
+    return; // Exit early if props.profile.uid is not available
+  }
+
   const fetchData = async () => {
-    console.log(">>>>>>>>region", props.profile.region)
+    // console.log(">>>>>region", props.profile.region)
     const endpoint = props.profile.region === 'Africa'
-      ? `${baseUrlDev}/v1/payment/transfer-recipient-info`
-      : `${baseUrlDev}/v1/payment/connected-account-info`;
+      ? `${baseUrlProd}/v1/payment/transfer-recipient-info`
+      : `${baseUrlProd}/v1/payment/transfer-recipient-info`;
 
     try {
+
+      const userID = props.profile.uid
+
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -127,15 +134,17 @@ useEffect(() => {
       }
 
       const data = await response.json();
+
       const formattedCardInfo = formatCardInfo(data.cardNumber, data.bankName);
         setCardInfo(formattedCardInfo);
+
     } catch (error) {
       console.error('Error fetching card number:', error);
     }
   };
 
   fetchData();
-}, [props.profile.uid]);
+}, [props.profile]);
   
   
   // Fetch the user's PIN status from the backend

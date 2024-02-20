@@ -1230,7 +1230,7 @@ useEffect(() => {
   
   // Fetch the user's wallet balance from the backend
   useEffect(() => {
-	fetch(`${baseUrlDev}/v1/coupon/get-promo-code`, {
+	fetch(`${baseUrlProd}/v1/coupon/get-promo-code`, {
 	  method: 'POST',
 	  headers: {
 		'Content-Type': 'application/json',
