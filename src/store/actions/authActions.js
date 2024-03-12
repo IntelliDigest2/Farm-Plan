@@ -1039,7 +1039,7 @@ export const updateSignup = (newUser, image) => {
 		address: newUser.restaurantAddress,
 		type: type,
 		isFreelancer: newUser.isFreelancer,
-  
+		school_code: newUser.schoolCode,
 		// Set IDUrl based on image upload result or existing URL
 		IDUrl: imageUrl || newUser.IDUrl,
 	  };
