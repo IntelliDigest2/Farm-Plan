@@ -558,15 +558,6 @@ export const signUp = (newUser, image) => {
 					type: type,
 					isFreelancer: newUser.isFreelancer,
 					school_code: newUser.schoolCode,
-					imgsLinks: {
-						certificateImg1: urls[0],
-						certificateImg2: urls[1],
-						certificateImg3: urls[2],
-						identificationImg: urls[3],
-						profImg: urls[4],
-						addressImg: urls[5],
-					},
-					// [newUser.consultantInfo ? "consultant" : ""]: "pending",
 				};
 				if (image) {
 					val.IDUrl = resp.data.secure_url;
@@ -574,13 +565,23 @@ export const signUp = (newUser, image) => {
 					val.IDUrl = newUser.IDUrl;
 				}
 
-				// if (resp) {
-				// 	val.IDUrl = resp.data.secure_url;
-				// } else {
-				// 	val.IDUrl = newUser.IDUrl;
-				// }
+				// Add imgsLinks only if newUser.certImg is present
+				if (newUser.certImg) {
+					val.imgsLinks = {
+						certificateImg1: urls[0],
+						certificateImg2: urls[1],
+						certificateImg3: urls[2],
+						identificationImg: urls[3],
+						profImg: urls[4],
+						addressImg: urls[5],
+					};
+				}
+
+				console.log("Constructed val object:", val); // Add this line for debugging
+
 
 				if (newUser.consultantInfo) {
+					val.consultant = "pending"
 					val.verification = "pending";
 				}
 				if (newUser.function === "Admin") {

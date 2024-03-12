@@ -305,6 +305,7 @@ const SignUp = (props) => {
 			type: "user",
 			adminType: adminType,
 			isFreelancer: isFreelancer,
+			schoolCode: null
 		};
 
 		switch (data.function) {
