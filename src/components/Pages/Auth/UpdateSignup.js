@@ -319,6 +319,7 @@ const SignUp = (props) => {
 			adminType: adminType,
 			uid: userUID,
 			isFreelancer: isFreelancer,
+			schoolCode: null
 		};
 
 	  

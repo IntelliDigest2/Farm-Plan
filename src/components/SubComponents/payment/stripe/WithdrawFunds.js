@@ -43,7 +43,7 @@ const WithdrawFunds = ( props ) => {
         let requestBody;
   
         if (props.profile.region === 'Africa') {
-          endpoint = `${baseUrlProd}/v1/payment/withdrawal-paystack`;
+          endpoint = `${baseUrlDev}/v1/payment/withdrawal-paystack`;
           requestBody = {
             userID: userID,
             amount: amountWithdraw,
