@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Redirect,
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
 } from "react-router-dom";
 import firebase, { auth, fs } from "./config/fbConfig";
 import "./App.css";
@@ -73,7 +73,6 @@ import RestaurantInventory from "./components/Pages/Account/Business/Restaurant/
 import RestaurantDashboard from "./components/Pages/Account/Business/Restaurant/RestaurantDashboard";
 import RestaurantMealPlan from "./components/Pages/Account/Business/Restaurant/RestaurantMealPlan";
 
-
 import SchoolShoppingListPlanner from "./components/Pages/Account/Business/Academic/RestaurantShoppingListPlanner";
 import SchoolInventory from "./components/Pages/Account/Business/Academic/RestaurantInventory";
 import SchoolDashboard from "./components/Pages/Account/Business/Academic/RestaurantDashboard";
@@ -93,10 +92,10 @@ import { Notifications } from "react-push-notification";
 
 import { connect } from "react-redux";
 import {
-	BrowserView,
-	MobileView,
-	//isMobile,
-	//isBrowser,
+  BrowserView,
+  MobileView,
+  //isMobile,
+  //isBrowser,
 } from "react-device-detect";
 
 //* Cloud Messaging
@@ -130,335 +129,307 @@ import Withdraw from "./components/SubComponents/payment/Withdraw";
 import SignUpAdmin from "./components/Pages/Auth/SignUpAdmin";
 import CombinedReservations from "./components/SubComponents/payment/CombinedReservations";
 import { OrderList } from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/BuildRestaurantOrderList/OrderList";
-import UpdateSignup from "./components/Pages/Auth/UpdateSignup";
 import ResAuth from "./components/Pages/Account/Business/Restaurant/Auth/Res-Auth";
 import SupAuth from "./components/Pages/Account/Business/Suppliers/Auth/Sup-Auth";
 import CalendarPlannerHealth from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Plan/CalendarPlanner/CalendarPlannerHealth";
 import moment from "moment";
 import CreateCode from "./components/Pages/Account/Business/Academic/CreateCode";
 import ConnectSchool from "./components/Pages/Account/Personal/ConnectSchool";
+import CompleteSignUp from "./components/Pages/Auth/CompleteSignUp";
+import { updateSignup } from "./store/actions/authActions";
+import UpdateSignup from "./components/Pages/Auth/UpdateSignup";
 
 const App = (props) => {
-	const [uid, setUid] = useState(props.auth.uid);
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [value, setValue] = useState(moment());
+  const [uid, setUid] = useState(props.auth.uid);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [value, setValue] = useState(moment());
 
+  useEffect(() => {
+    if (props.auth.uid) setIsLoggedIn(true);
+    if (!props.auth.uid) return <Redirect to="/landing" />;
+  }, [props.auth.uid]);
 
-	useEffect(() => {
-		if (props.auth.uid) setIsLoggedIn(true);
-		if (!props.auth.uid) return <Redirect to="/landing" />;
-	}, [props.auth.uid]);
+  //
+  //Google Cloud Messaging code
+  const [show, setShow] = useState(false);
+  const [notification, setNotification] = useState({
+    title: "",
+    body: "",
+    image: "",
+  });
+  const [isTokenFound, setTokenFound] = useState(false);
+  getToken(setTokenFound);
 
-	//
-	//Google Cloud Messaging code
-	const [show, setShow] = useState(false);
-	const [notification, setNotification] = useState({
-		title: "",
-		body: "",
-		image: "",
-	});
-	const [isTokenFound, setTokenFound] = useState(false);
-	getToken(setTokenFound);
+  onMessageListener()
+    .then((payload) => {
+      setShow(true);
+      setNotification({
+        image: payload.notification.image,
+        title: payload.notification.title,
+        body: payload.notification.body,
+      });
+    })
+    .catch((err) => console.log("failed: ", err));
 
-	onMessageListener()
-		.then((payload) => {
-			setShow(true);
-			setNotification({
-				image: payload.notification.image,
-				title: payload.notification.title,
-				body: payload.notification.body,
-			});
-		})
-		.catch((err) => console.log("failed: ", err));
+  const updateFirestore = async () => {
+    const collectionRef = fs.collection("users");
 
-	const updateFirestore = async () => {
-		const collectionRef = fs.collection("users");
+    try {
+      const snapshot = await collectionRef.get();
 
-		try {
-			const snapshot = await collectionRef.get();
+      const batch = fs.batch();
 
-			const batch = fs.batch();
+      snapshot.forEach((doc) => {
+        const documentRef = collectionRef.doc(doc.id);
+        const updatedData = {
+          ...doc.data(),
+          //   uid: doc.id.toString(),
+          voucherBalance: 0,
+        };
+        batch.update(documentRef, updatedData);
+      });
 
-			snapshot.forEach((doc) => {
-				const documentRef = collectionRef.doc(doc.id);
-				const updatedData = {
-					...doc.data(),
-					//   uid: doc.id.toString(),
-					voucherBalance: 0,
-				};
-				batch.update(documentRef, updatedData);
-			});
+      await batch.commit();
+      console.log("xxxxxxxxxxxx> Update successful");
+    } catch (error) {
+      console.error("Error updating documents:", error);
+    }
+  };
 
-			await batch.commit();
-			console.log("xxxxxxxxxxxx> Update successful");
-		} catch (error) {
-			console.error("Error updating documents:", error);
-		}
-	};
+  return (
+    <React.Fragment>
+      <Notifications position="top-right" />
 
-	return (
-		<React.Fragment>
-			<Notifications position="top-right" />
+      <Router>
+        <Toast
+          onClose={() => setShow(false)}
+          show={show}
+          delay={10000}
+          autohide
+          animation
+          style={{
+            position: "absolute",
+            top: 70,
+            right: 20,
+            width: 300,
+            zIndex: 1,
+          }}
+        >
+          <Toast.Header>
+            <img
+              src={notification.image}
+              className="rounded me-2"
+              alt=""
+              style={{ width: 20, height: 20, margin: 10 }}
+            />
+            <strong className="mr-auto">{notification.title}</strong>
+            <small>just now</small>
+          </Toast.Header>
+          <Toast.Body style={{ backgroundColor: "white" }}>
+            {notification.body}
+          </Toast.Body>
+        </Toast>
 
-			<Router>
-				<Toast
-					onClose={() => setShow(false)}
-					show={show}
-					delay={10000}
-					autohide
-					animation
-					style={{
-						position: "absolute",
-						top: 70,
-						right: 20,
-						width: 300,
-						zIndex: 1,
-					}}
-				>
-					<Toast.Header>
-						<img
-							src={notification.image}
-							className="rounded me-2"
-							alt=""
-							style={{ width: 20, height: 20, margin: 10 }}
-						/>
-						<strong className="mr-auto">{notification.title}</strong>
-						<small>just now</small>
-					</Toast.Header>
-					<Toast.Body style={{ backgroundColor: "white" }}>
-						{notification.body}
-					</Toast.Body>
-				</Toast>
+        <div>
+          <MobileView>
+            <Route
+              exact
+              path="/"
+              render={() =>
+                isLoggedIn ? (
+                  <Redirect to="/account" />
+                ) : (
+                  <Redirect to="/landing" />
+                )
+              }
+            />
+          </MobileView>
 
-				<div>
-					<MobileView>
-						<Route
-							exact
-							path="/"
-							render={() =>
-								isLoggedIn ? (
-									<Redirect to="/account" />
-								) : (
-									<Redirect to="/landing" />
-								)
-							}
-						/>
-					</MobileView>
+          <BrowserView>
+            <Route exact path="/" render={() => <Redirect to="/landing" />} />
+          </BrowserView>
 
-					<BrowserView>
-						<Route exact path="/" render={() => <Redirect to="/landing" />} />
-					</BrowserView>
-
-					<Switch>
-						{/* <Route path="/example" exact component={Example} /> */}
-						<Route path="/login" exact component={Login} />
-						<Route path="/admin" exact component={AdminTab} /> 
-						<Route path="/supply" exact component={CommerceTab} />;
-						<Route path="/landing" exact component={LandingPage} />
-						<Route path="/about-us" exact component={AboutUs} />
-						<Route path="/signup" exact component={SignUp} />
-						<Route path="/complete-signup" exact component={UpdateSignup} />
-						<Route path="/reveal" exact component={SignUpAdmin} />
-						<Route path="/settings" exact component={Settings} />
-						<Route path="/questionnaire" exact component={Questionnaire} />
-						<Route path="/contact" exact component={Contact} />
-						<Route path="/forgot-password" exact component={ForgotPassword} />
-						<Route path="/payment-process" exact component={Payment} />
-						<Route path="/search-shop" exact component={CommerceTabShop} />
-						<Route path="/restaurant-order-list" exact component={OrderList} />
-
-						<Route
-							path="/adminconsulttest"
-							exact
-							component={ConsultAdminTest}
-						/>
-
-						{/* <Route exact path="/consultanft" component={Homepage} /> */}
-						{/* <Route path="/consultant/register" component={ConsultantRegister} /> */}
-						{/* <Route
+          <Switch>
+            {/* <Route path="/example" exact component={Example} /> */}
+            <Route path="/login" exact component={Login} />
+            <Route path="/admin" exact component={AdminTab} />
+            <Route path="/supply" exact component={CommerceTab} />;
+            <Route path="/landing" exact component={LandingPage} />
+            <Route path="/about-us" exact component={AboutUs} />
+            <Route path="/signup" exact component={SignUp} />
+            <Route path="/complete-signup" exact component={UpdateSignup} />
+            <Route path="/reveal" exact component={SignUpAdmin} />
+            <Route path="/settings" exact component={Settings} />
+            <Route path="/questionnaire" exact component={Questionnaire} />
+            <Route path="/contact" exact component={Contact} />
+            <Route path="/forgot-password" exact component={ForgotPassword} />
+            <Route path="/payment-process" exact component={Payment} />
+            <Route path="/search-shop" exact component={CommerceTabShop} />
+            <Route path="/restaurant-order-list" exact component={OrderList} />
+            <Route
+              path="/adminconsulttest"
+              exact
+              component={ConsultAdminTest}
+            />
+            {/* <Route exact path="/consultanft" component={Homepage} /> */}
+            {/* <Route path="/consultant/register" component={ConsultantRegister} /> */}
+            {/* <Route
 							path="/consultant/onboard"
 							exact
 							component={OnboardMessage}
 						/> */}
-						<Route path="/consultant/login" exact component={ConsultantLogin} />
-						<Route path="/consultant" exact component={ConsultantAccount} />
-						<Route path="/consultant/settings" component={ConsultantSettings} />
-						<Route
-							path="/consultant/sessions"
-							component={ConsultantSessionPage}
-						/>
+            <Route path="/consultant/login" exact component={ConsultantLogin} />
+            <Route path="/consultant" exact component={ConsultantAccount} />
+            <Route path="/consultant/settings" component={ConsultantSettings} />
+            <Route
+              path="/consultant/sessions"
+              component={ConsultantSessionPage}
+            />
+            <Route
+              path="/consultant/requests"
+              component={ConsultantRequestsPage}
+            />
+            <Route
+              path="/consultant/records"
+              component={ConsultantRecordsPage}
+            />
+            <Route path="/call/:id" component={ConsultantVideo} />
+            <Route path="/consult" component={ConsultingPage} />
+            <Route path="/consult-video" exact component={ConsultantVideo} />
+            <Route path="/account" exact component={NewAccount} />
+            <Route path="/pts" exact component={PlanToSave} />
+            <Route path="/change-password" exact component={ChangePassword} />
+            <Route path="/view-map" exact component={Map} />
+            <Route path="/food-waste" exact component={FoodWaste} />
+            <Route path="/gift-food" exact component={GiftFood} />
+            <Route path="/food-loss" exact component={FoodLoss} />
+            <Route
+              path="/food-wasteBusiness"
+              exact
+              component={FoodWasteBusiness}
+            />
+            <Route path="/food-intake" exact component={FoodIntake} />
+            <Route path="/table" component={InfoTable} />
+            <Route path="/chart" exact component={ChartView} />
+            <Route path="/gift-chart" exact component={GiftFoodChart} />
+            <Route path="/food-reduction" component={FoodReduction} />
+            <Route path="/product-listing" component={ProductListing} />
+            <Route path="/reserve-items" component={ReserveItems} />
+            <Route path="/farm-plan" component={FarmPlan}>
+              {!props.profile.isSeller && <Redirect to="/farm-plan" />}
+            </Route>
+            <Route path="/farm-auth" component={FarmerAuth}>
+              {props.profile.isSeller && <Redirect to="/farm-plan" />}
+            </Route>
+            <Route path="/res-auth" component={ResAuth}>
+              {props.profile.isSeller && <Redirect to="/res-plan" />}
+            </Route>
+            <Route path="/sup-auth" component={SupAuth}>
+              {props.profile.isSeller && <Redirect to="/sup-plan" />}
+            </Route>
+            <Route path="/machinery-auth" component={FarmerAuth}>
+              {props.profile.isSeller && <Redirect to="/farm-plan" />}
+            </Route>
+            <Route path="/cons-auth" component={ConsumerAuth} />
+            <Route path="/meal-plan" component={MealPlan} />
+            <Route path="/items" component={ItemTab} />
+            <Route path="/nutrient-gap" component={NutrientGap} />
+            <Route
+              path="/meal-plan-health"
+              render={(props) => (
+                <CalendarPlannerHealth {...props} value={value} />
+              )}
+            />
+            <Route path="/view-products" component={ViewProducts} />
+            <Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
+            <Route path="/food-intakeAcademic" component={FoodIntakeAcademic} />
+            <Route
+              path="/food-surplusAcademic"
+              component={FoodSurplusAcademic}
+            />
+            <Route
+              path="/restaurant-shopping-list"
+              component={RestaurantShoppingListPlanner}
+            />
+            <Route
+              path="/restaurant-inventory"
+              component={RestaurantInventory}
+            />
+            <Route
+              path="/restaurant-dashboard"
+              component={RestaurantDashboard}
+            />
+            <Route
+              path="/restaurant-meal-plan"
+              component={RestaurantMealPlan}
+            />
+            <Route
+              path="/school-shopping-list"
+              component={SchoolShoppingListPlanner}
+            />
+            <Route path="/school-inventory" component={SchoolInventory} />
+            <Route path="/school-dashboard" component={SchoolDashboard} />
+            <Route path="/school-meal-plan" component={SchoolMealPlan} />
+            <Route path="/create-school-code" component={CreateCode} />
+            <Route path="/add-student-to-school" component={ConnectSchool} />
+            <Route path="/restaurant-sale" component={RestaurantSale} />
+            <Route path="/restaurant-turnover" component={RestaurantTurnover} />
+            <Route path="/restaurant-expense" component={RestaurantExpense} />
+            <Route path="/supply-plan" component={SupplyPlan} />
+            <Route path="/supply-revenue" component={SupplyRevenue} />
+            <Route path="/produce" component={ProduceTab} />
+            <Route path="/turnover" component={TurnOverPage} />
+            <Route path="/expense" component={ExpensePage} />
+            <Route path="/in-progress" component={InProgress} />
+            <Route path="/payment-success" component={PaymentSuccess} />
+            <Route path="/withdrawal-success" component={WithdrawalSuccess} />
+            <Route path="/payment" component={RevolutPay} />
+            <Route path="/wallet" component={Wallet} />
+            <Route path="/withdraw-funds" component={Withdraw} />
+            <Route path="/create-coupon" component={Coupon} />
+            <Route path="/redeem-coupon" component={RedeemCoupon} />
+            <Route path="/transactions" component={Transactions} />
+            <Route path="/coupon-transactions" component={CouponTransactions} />
+            <Route
+              path="/track-reservations"
+              component={CombinedReservations}
+            />
+            <Route
+              path="/track-reservations-other"
+              component={CombinedReservations}
+            />
+            <Route
+              path="/db"
+              render={() => {
+                updateFirestore();
+                return <Redirect to="/" />;
+              }}
+            />
+            <Route
+              path="/failed"
+              render={(props) => {
+                // Extract the query parameters from the location.search
+                const searchParams = new URLSearchParams(props.location.search);
+                const order = searchParams.get("order");
+                const reason = searchParams.get("reason");
 
-						<Route
-							path="/consultant/requests"
-							component={ConsultantRequestsPage}
-						/>
-						<Route
-							path="/consultant/records"
-							component={ConsultantRecordsPage}
-						/>
-						<Route path="/call/:id" component={ConsultantVideo} />
-
-						<Route path="/consult" component={ConsultingPage} />
-						<Route path="/consult-video" exact component={ConsultantVideo} />
-
-						<Route path="/account" exact component={NewAccount} />
-						<Route path="/pts" exact component={PlanToSave} />
-						<Route path="/change-password" exact component={ChangePassword} />
-						<Route path="/view-map" exact component={Map} />
-
-						<Route path="/food-waste" exact component={FoodWaste} />
-						<Route path="/gift-food" exact component={GiftFood} />
-						<Route path="/food-loss" exact component={FoodLoss} />
-						<Route
-							path="/food-wasteBusiness"
-							exact
-							component={FoodWasteBusiness}
-						/>
-						<Route path="/food-intake" exact component={FoodIntake} />
-						<Route path="/table" component={InfoTable} />
-
-						<Route path="/chart" exact component={ChartView} />
-
-						<Route path="/gift-chart" exact component={GiftFoodChart} />
-
-						<Route path="/food-reduction" component={FoodReduction} />
-
-						<Route path="/product-listing" component={ProductListing} />
-
-						<Route path="/reserve-items" component={ReserveItems} />
-
-						<Route path="/farm-plan" component={FarmPlan}>
-							{!props.profile.isSeller && <Redirect to="/farm-plan" />}
-						</Route>
-						<Route path="/farm-auth" component={FarmerAuth}>
-							{props.profile.isSeller && <Redirect to="/farm-plan" />}
-						</Route>
-						<Route path="/res-auth" component={ResAuth}>
-							{props.profile.isSeller && <Redirect to="/res-plan" />}
-						</Route>
-						<Route path="/sup-auth" component={SupAuth}>
-							{props.profile.isSeller && <Redirect to="/sup-plan" />}
-						</Route>
-						<Route path="/machinery-auth" component={FarmerAuth}>
-							{props.profile.isSeller && <Redirect to="/farm-plan" />}
-						</Route>
-						<Route path="/cons-auth" component={ConsumerAuth} />
-						<Route path="/meal-plan" component={MealPlan} />
-						<Route path="/items" component={ItemTab} />
-						<Route path="/nutrient-gap" component={NutrientGap} />
-						<Route 
-							path="/meal-plan-health" 
-							render={(props) => <CalendarPlannerHealth {...props} value={value} />}
-							/>
-
-						<Route path="/view-products" component={ViewProducts} />
-
-						<Route path="/food-wasteAcademic" component={FoodWasteAcademic} />
-						<Route path="/food-intakeAcademic" component={FoodIntakeAcademic} />
-						<Route
-							path="/food-surplusAcademic"
-							component={FoodSurplusAcademic}
-						/>
-
-						<Route
-							path="/restaurant-shopping-list"
-							component={RestaurantShoppingListPlanner}
-						/>
-						<Route
-							path="/restaurant-inventory"
-							component={RestaurantInventory}
-						/>
-						<Route
-							path="/restaurant-dashboard"
-							component={RestaurantDashboard}
-						/>
-						<Route
-							path="/restaurant-meal-plan"
-							component={RestaurantMealPlan}
-						/>
-
-						<Route
-							path="/school-shopping-list"
-							component={SchoolShoppingListPlanner}
-						/>
-						<Route
-							path="/school-inventory"
-							component={SchoolInventory}
-						/>
-						<Route
-							path="/school-dashboard"
-							component={SchoolDashboard}
-						/>
-						<Route
-							path="/school-meal-plan"
-							component={SchoolMealPlan}
-						/>
-						<Route
-							path="/create-school-code"
-							component={CreateCode}
-						/>
-						<Route
-							path="/add-student-to-school"
-							component={ConnectSchool}
-						/>
-						<Route path="/restaurant-sale" component={RestaurantSale} />
-						<Route path="/restaurant-turnover" component={RestaurantTurnover} />
-						<Route path="/restaurant-expense" component={RestaurantExpense} />
-						<Route path="/supply-plan" component={SupplyPlan} />
-						<Route path="/supply-revenue" component={SupplyRevenue} />
-						<Route path="/produce" component={ProduceTab} />
-						<Route path="/turnover" component={TurnOverPage} />
-						<Route path="/expense" component={ExpensePage} />
-						<Route path="/in-progress" component={InProgress} />
-						<Route path="/payment-success" component={PaymentSuccess} />
-						<Route path="/withdrawal-success" component={WithdrawalSuccess} />
-
-						<Route path="/payment" component={RevolutPay} />
-						<Route path="/wallet" component={Wallet} />
-						<Route path="/withdraw-funds" component={Withdraw} />
-						<Route path="/create-coupon" component={Coupon} />
-						<Route path="/redeem-coupon" component={RedeemCoupon} />
-						<Route path="/transactions" component={Transactions} />
-						<Route path="/coupon-transactions" component={CouponTransactions} />
-						<Route path="/track-reservations" component={CombinedReservations} />
-						<Route
-							path="/track-reservations-other"
-							component={CombinedReservations}
-						/>
-
-						<Route
-							path="/db"
-							render={() => {
-								updateFirestore();
-								return <Redirect to="/" />;
-							}}
-						/>
-						<Route
-							path="/failed"
-							render={(props) => {
-								// Extract the query parameters from the location.search
-								const searchParams = new URLSearchParams(props.location.search);
-								const order = searchParams.get("order");
-								const reason = searchParams.get("reason");
-
-								// Pass the extracted parameters to the FailedDeposit component
-								return <FailedDeposit orderId={order} reason={reason} />;
-							}}
-						/>
-
-						<Route component={NotFound} />
-					</Switch>
-				</div>
-			</Router>
-		</React.Fragment>
-	);
+                // Pass the extracted parameters to the FailedDeposit component
+                return <FailedDeposit orderId={order} reason={reason} />;
+              }}
+            />
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+      </Router>
+    </React.Fragment>
+  );
 };
 
 const mapStateToProps = (state) => {
-	return {
-		auth: state.firebase.auth,
-		profile: state.firebase.profile,
-	};
+  return {
+    auth: state.firebase.auth,
+    profile: state.firebase.profile,
+  };
 };
 
 export default connect(mapStateToProps, null)(App);
