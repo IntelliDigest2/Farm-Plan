@@ -22,7 +22,14 @@ export function Profile(props) {
   // Profile content when loaded
   return (
     <div className="web-center">
-      <div style={{ display: "flex", flexDirection: "column", textAlign: "center", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          textAlign: "center",
+          alignItems: "center",
+        }}
+      >
         <div>
           <Avatar initials={props.profile.initials} />
           <span>{props.profile.firstName + " " + props.profile.lastName}</span>
@@ -31,7 +38,9 @@ export function Profile(props) {
           <p>{props.profile.email}</p>
         </div>
         <div>
-          <p style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>{props.profile.buildingFunction} Account</p>
+          <p style={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+            {props.profile.buildingFunction} Account
+          </p>
         </div>
       </div>
       <div style={{ display: "flex" }}>

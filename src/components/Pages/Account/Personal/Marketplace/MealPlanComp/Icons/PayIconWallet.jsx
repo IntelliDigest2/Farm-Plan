@@ -1,20 +1,23 @@
-import React, {useState} from "react";
+/* eslint-disable default-case */
+import React, { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import { Modal, Alert, Button } from "react-bootstrap";
 import IconButton from "@mui/material/IconButton";
-import CreditScoreIcon from '@mui/icons-material/CreditScore';
-import { editPurchaseStatusOnUser, editPurchaseStatusOnFarmerSupplier, editPurchaseStatusOnUserRes } from "../../../../../../../store/actions/marketplaceActions/inventoryData";
+import CreditScoreIcon from "@mui/icons-material/CreditScore";
+import {
+  editPurchaseStatusOnUser,
+  editPurchaseStatusOnFarmerSupplier,
+  editPurchaseStatusOnUserRes,
+} from "../../../../../../../store/actions/marketplaceActions/inventoryData";
 import { connect } from "react-redux";
 import { submitNotification } from "../../../../../../lib/Notifications";
-import { useHistory } from 'react-router'
-import { useTranslation, Trans } from 'react-i18next';
-import Swal from 'sweetalert2';
-import {sendPaymentNotificationToSeller} from './notificationData.js';
-
+import { useHistory } from "react-router";
+import { useTranslation, Trans } from "react-i18next";
+import Swal from "sweetalert2";
+import { sendPaymentNotificationToSeller } from "./notificationData.js";
 
 //takes props value, meal(name), ingredients, id and onChange(change of value)
 function PayIconWallet(props) {
-
   const { t } = useTranslation();
 
   let history = useHistory();
@@ -23,73 +26,68 @@ function PayIconWallet(props) {
   const [payWithWallet, setPayWithWallet] = useState("balance");
   const [payWithVoucher, setPayWithVoucher] = useState("voucherBalance");
 
-
-  const baseUrlDev="http://localhost:5000"
-  const baseUrlProd="https://wallet-api-mbvca3fcma-ew.a.run.app"
+  const baseUrlDev = "http://localhost:5000";
+  const baseUrlProd = "https://wallet-api-mbvca3fcma-ew.a.run.app";
 
   const handlePay = async (chosenPayment) => {
-
-    switch(props.payType) {
+    switch (props.payType) {
       case "user":
         const transferData = {
           user: props.uid,
-          order: props.order, 
+          order: props.order,
           currency: props.currency,
           paymentType: "FARMER",
           paymentMethod: chosenPayment,
         };
-    
-        console.log("transfer data ===>", transferData)
-    
-        
-        await fetch(`${baseUrl}/v1/payment/initiate-payment`, {
-    
-          method: 'POST', 
+
+        console.log("transfer data ===>", transferData);
+
+        await fetch(`${baseUrlDev}/v1/payment/initiate-payment`, {
+          method: "POST",
           body: JSON.stringify(transferData),
           headers: {
-              'Content-type': 'application/json; charset=UTF-8',
+            "Content-type": "application/json; charset=UTF-8",
           },
         })
-        .then((response) => response.json())
-        .then((res) => {
-          console.log("reservation ===>", res)
-          const data = {
-            refID: props.refID,
-            farmerRef: props.farmerRef,
-            farmerID: props.farmerID,
-            status: "COMPLETED",
-          };
-          props.editPurchaseStatusOnUser(data);
-          // props.editPurchaseStatusOnFarmer(data)
-    
-    
-          // props.sendPaymentNotificationToSeller(props.personReceivingPaymentAccountType.personReceivingPaymentID)
-    
-          // history.push('/payment-success')
-          Swal.fire({
-            title: 'Success!',
-            text: 'Payment was successful',
-            icon: 'success',
+          .then((response) => response.json())
+          .then((res) => {
+            console.log("reservation ===>", res);
+            const data = {
+              refID: props.refID,
+              farmerRef: props.farmerRef,
+              farmerID: props.farmerID,
+              status: "COMPLETED",
+            };
+            props.editPurchaseStatusOnUser(data);
+            // props.editPurchaseStatusOnFarmer(data)
+
+            // props.sendPaymentNotificationToSeller(props.personReceivingPaymentAccountType.personReceivingPaymentID)
+
+            // history.push('/payment-success')
+            Swal.fire({
+              title: "Success!",
+              text: "Payment was successful",
+              icon: "success",
+            });
+            const newPage = window.open("/payment-success", "_blank");
+
+            // Optionally, you can focus on the new window/tab
+            if (newPage) {
+              newPage.focus();
+            }
+            handleClose();
+          })
+          .catch((err) => {
+            console.log(err.message);
+            Swal.fire({
+              title: "Error!",
+              text: "Please check your wallet balance and try again",
+              icon: "error",
+            });
           });
-          const newPage = window.open('/payment-success', '_blank');
-      
-          // Optionally, you can focus on the new window/tab
-          if (newPage) {
-            newPage.focus();
-          }
-          handleClose()
-        })
-        .catch((err) => {
-          console.log(err.message);
-          Swal.fire({
-            title: 'Error!',
-            text: 'Please check your wallet balance and try again',
-            icon: 'error',
-          });
-        })
         break;
 
-        case "user-restaurant":
+      case "user-restaurant":
         const transferDataUserRes = {
           user: props.uid,
           order: {
@@ -100,7 +98,7 @@ function PayIconWallet(props) {
             farmerRef: props.order.farmerRef,
             id: props.order.id,
             item: Array.isArray(props.order.item)
-              ? props.order.item.map(item => ({
+              ? props.order.item.map((item) => ({
                   currency: item.currency,
                   data: item.meal_name, // Rename the property to 'data'
                   restaurant: item.restaurant_name,
@@ -112,60 +110,58 @@ function PayIconWallet(props) {
               : [], // Make sure it's an array or default to an empty array
             // item: props.order.item,
             receiversID: props.order.receiversID,
-            status: "COMPLETED"
-          },  
+            status: "COMPLETED",
+          },
           currency: props.currency,
           paymentType: "RESTAURANT",
           paymentMethod: chosenPayment,
-
         };
-    
-        console.log("transfer data user-res ===>", transferDataUserRes)
-        
+
+        console.log("transfer data user-res ===>", transferDataUserRes);
+
         await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {
-    
-          method: 'POST', 
+          method: "POST",
           body: JSON.stringify(transferDataUserRes),
           headers: {
-              'Content-type': 'application/json; charset=UTF-8',
+            "Content-type": "application/json; charset=UTF-8",
           },
         })
-        .then((response) => response.json())
-        .then((res) => {
-          console.log("reservation ===>", res)
-          const data = {
-            refID: props.refID,
-            farmerRef: props.order.farmerRef,
-            farmerID: props.order.farmerID,
-            id: props.order.id,
-            status: "COMPLETED",
-          };
+          .then((response) => response.json())
+          .then((res) => {
+            console.log("reservation ===>", res);
+            const data = {
+              refID: props.refID,
+              farmerRef: props.order.farmerRef,
+              farmerID: props.order.farmerID,
+              id: props.order.id,
+              status: "COMPLETED",
+            };
 
-          console.log("editing data", data)
-          props.editPurchaseStatusOnUserRes(data);
-          // props.editPurchaseStatusOnFarmer(data)
-    
-          Swal.fire({
-            title: 'Success!',
-            text: 'Payment was successful',
-            icon: 'success',
+            console.log("editing data", data);
+            props.editPurchaseStatusOnUserRes(data);
+            // props.editPurchaseStatusOnFarmer(data)
+
+            Swal.fire({
+              title: "Success!",
+              text: "Payment was successful",
+              icon: "success",
+            });
+            const newPage = window.open("/payment-success", "_blank");
+
+            // Optionally, you can focus on the new window/tab
+            if (newPage) {
+              newPage.focus();
+            }
+            handleClose();
+          })
+          .catch((err) => {
+            console.log(err.message);
+            Swal.fire({
+              title: "Error!",
+              text: "Please check your wallet balance and try again",
+              icon: "error",
+            });
           });
-          const newPage = window.open('/payment-success', '_blank');
-      
-          // Optionally, you can focus on the new window/tab
-          if (newPage) {
-            newPage.focus();
-          }
-          handleClose()
-        })
-        .catch((err) => {
-          console.log(err.message);
-          Swal.fire({
-            title: 'Error!',
-            text: 'Please check your wallet balance and try again',
-            icon: 'error',
-          });
-        })
         break;
 
       case "farmer":
@@ -182,7 +178,7 @@ function PayIconWallet(props) {
             farmerRef: props.order.farmerRef,
             id: props.order.id,
             item: Array.isArray(props.order.item)
-              ? props.order.item.map(item => ({
+              ? props.order.item.map((item) => ({
                   currency: item.currency,
                   data: item.productName, // Rename the property to 'data'
                   price: item.price,
@@ -193,110 +189,104 @@ function PayIconWallet(props) {
               : [], // Make sure it's an array or default to an empty array
             // item: props.order.item,
             receiversID: props.order.receiversID,
-            status: "COMPLETED"
-          }, 
+            status: "COMPLETED",
+          },
           currency: props.currency,
           paymentType: "SUPPLIER",
           paymentMethod: chosenPayment,
         };
-    
-        console.log("transfer data ===>", transferDataFarmer)
-    
-        
+
+        console.log("transfer data ===>", transferDataFarmer);
+
         await fetch(`${baseUrlProd}/v1/payment/initiate-payment`, {
-    
-          method: 'POST', 
+          method: "POST",
           body: JSON.stringify(transferDataFarmer),
           headers: {
-              'Content-type': 'application/json; charset=UTF-8',
+            "Content-type": "application/json; charset=UTF-8",
           },
         })
-        .then((response) => response.json())
-        .then((res) => {
-          console.log("reservation ===>", res)
-          const data = {
-            refID: props.refID,
-            farmerRef: props.supplierRef,
-            farmerID: props.supplierID,
-            status: "COMPLETED",
-          };
-          // props.editPurchaseStatusOnUser(data);
-          props.editPurchaseStatusOnFarmerSupplier(data)
-      
-          Swal.fire({
-            title: 'Success!',
-            text: 'Payment was successful',
-            icon: 'success',
-          });
-          const newPage = window.open('/payment-success', '_blank');
-          // Optionally, you can focus on the new window/tab
-          if (newPage) {
-            newPage.focus();
-          }
-          handleClose()
-        })
-        .catch((err) => {
-          console.log(err.message);
-          Swal.fire({
-            title: 'Error!',
-            text: 'Please check your wallet balance and try again',
-            icon: 'error',
-          });
-        })
-      
-    }
- };
+          .then((response) => response.json())
+          .then((res) => {
+            console.log("reservation ===>", res);
+            const data = {
+              refID: props.refID,
+              farmerRef: props.supplierRef,
+              farmerID: props.supplierID,
+              status: "COMPLETED",
+            };
+            // props.editPurchaseStatusOnUser(data);
+            props.editPurchaseStatusOnFarmerSupplier(data);
 
+            Swal.fire({
+              title: "Success!",
+              text: "Payment was successful",
+              icon: "success",
+            });
+            const newPage = window.open("/payment-success", "_blank");
+            // Optionally, you can focus on the new window/tab
+            if (newPage) {
+              newPage.focus();
+            }
+            handleClose();
+          })
+          .catch((err) => {
+            console.log(err.message);
+            Swal.fire({
+              title: "Error!",
+              text: "Please check your wallet balance and try again",
+              icon: "error",
+            });
+          });
+    }
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
   return (
     <>
       <Tooltip title="pay with wallet">
-        <IconButton
-          aria-label="Pay"
-          sx={{ ml: 2 }}
-          onClick={handleShow}
-        >
-            Pay <CreditScoreIcon sx={{ fontSize: 32 }} />
+        <IconButton aria-label="Pay" sx={{ ml: 2 }} onClick={handleShow}>
+          Pay <CreditScoreIcon sx={{ fontSize: 32 }} />
         </IconButton>
       </Tooltip>
 
       <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{t('description.payment')}</Modal.Title>
-          </Modal.Header>
+        <Modal.Header closeButton>
+          <Modal.Title>{t("description.payment")}</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
-            <p><h5>{t('description.continue_to_payment')}</h5></p>
-            <p><h5>Please choose a payment method</h5></p>
-
-          </Modal.Body>
+          <p>
+            <h5>{t("description.continue_to_payment")}</h5>
+          </p>
+          <p>
+            <h5>Please choose a payment method</h5>
+          </p>
+        </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary"
-        onClick={() => {
-          handlePay(payWithWallet)
-          handleClose()
-        }}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              handlePay(payWithWallet);
+              handleClose();
+            }}
+          >
             Wallet
           </Button>
-          <Button variant="secondary" 
+          <Button
+            variant="secondary"
             onClick={() => {
-              handlePay(payWithVoucher)
-              handleClose()
+              handlePay(payWithVoucher);
+              handleClose();
             }}
           >
             Coupon
           </Button>
-          <Button variant="secondary" 
-            onClick={handleClose}
-          >
-            {t('description.button_cancel')}
+          <Button variant="secondary" onClick={handleClose}>
+            {t("description.button_cancel")}
           </Button>
         </Modal.Footer>
       </Modal>
-
     </>
   );
 }
@@ -309,10 +299,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editPurchaseStatusOnUser: (data) => dispatch(editPurchaseStatusOnUser(data)),
-    editPurchaseStatusOnFarmerSupplier: (data) => dispatch(editPurchaseStatusOnFarmerSupplier(data)),
-    editPurchaseStatusOnUserRes: (data) => dispatch(editPurchaseStatusOnUserRes(data))
-
+    editPurchaseStatusOnUser: (data) =>
+      dispatch(editPurchaseStatusOnUser(data)),
+    editPurchaseStatusOnFarmerSupplier: (data) =>
+      dispatch(editPurchaseStatusOnFarmerSupplier(data)),
+    editPurchaseStatusOnUserRes: (data) =>
+      dispatch(editPurchaseStatusOnUserRes(data)),
   };
 };
 

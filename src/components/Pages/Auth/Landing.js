@@ -5,9 +5,8 @@ import { SubButton } from "../../SubComponents/Button";
 import { connect } from "react-redux";
 import logo from "../../../images/WFTLogo.png";
 import GoogleLoginButton from "./GoogleLogin";
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link } from "react-router-dom";
 import FacebookLogin from "./FacebookLogin";
-
 
 function LandingPage(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,40 +14,38 @@ function LandingPage(props) {
 
   const handleGoogleLoginSuccess = (profile) => {
     // Handle successful login
-    console.log("returned profile from google", profile);
+    // console.log("returned profile from google", profile);
     setProfile(profile); // Update the profile state
-    setIsLoggedIn(true)
-
+    setIsLoggedIn(true);
   };
 
   const handleGoogleLoginFailure = (error) => {
     // Handle login failure
-    console.error("returned error",error);
+    console.error("returned error", error);
   };
 
   const handleFacebookLoginSuccess = (profile) => {
-   // Handle successful login
-  setProfile(profile);
-  console.log("returned profile from facebook", profile);
-    setIsLoggedIn(true)
-
+    // Handle successful login
+    setProfile(profile);
+    // console.log("returned profile from facebook", profile);
+    setIsLoggedIn(true);
   };
 
   const handleFacebookLoginFailure = (error) => {
     // Handle login failure
-    console.error("returned error",error);
+    console.error("returned error", error);
   };
 
   useEffect(() => {
     // Check if the profile is available and not logged in
     if (profile && isLoggedIn) {
       // Perform actions based on the profile
-      console.log("check isLoggedIn", profile);
+      // console.log("check isLoggedIn", profile);
     }
   }, [profile, isLoggedIn]);
 
   if (isLoggedIn) {
-    return <Redirect to='/account' />;
+    return <Redirect to="/account" />;
   }
 
   return (
@@ -62,23 +59,25 @@ function LandingPage(props) {
           />
         </div>
         <div className="buttons">
-          
           <div className="horizontal-buttons">
-          <GoogleLoginButton 
-            onLoginSuccess={handleGoogleLoginSuccess}
-            onLoginFailure={handleGoogleLoginFailure}
-          />
-          <FacebookLogin 
-            onLoginSuccess={handleFacebookLoginSuccess}
-            onLoginFailure={handleFacebookLoginFailure}
-          />
+            <GoogleLoginButton
+              onLoginSuccess={handleGoogleLoginSuccess}
+              onLoginFailure={handleGoogleLoginFailure}
+            />
+            <FacebookLogin
+              onLoginSuccess={handleFacebookLoginSuccess}
+              onLoginFailure={handleFacebookLoginFailure}
+            />
           </div>
 
           <SubButton styling="blue" goTo="/login" text="Log In" />
           <SubButton styling="blue" goTo="/signup" text="Sign Up" />
-          <SubButton styling="green" goTo="/about-us" text="About The World Food Tracker" />
+          <SubButton
+            styling="green"
+            goTo="/about-us"
+            text="About The World Food Tracker"
+          />
         </div>
-       
       </div>
     </Container>
   );

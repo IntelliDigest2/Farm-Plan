@@ -43,7 +43,7 @@ export function PopUp(props) {
   );
 }
 
-export function LogOutPopUp(props) {
+export function ModalPopUp(props) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -60,20 +60,20 @@ export function LogOutPopUp(props) {
         <ListItem className="space-between">
           <ListItemButton onClick={handleClickOpen}>
             <ListItemIcon>
-              <LogoutIcon />
+              {props.icon}
             </ListItemIcon>
-            <ListItemText>Logout</ListItemText>
+            <ListItemText>{props.text}</ListItemText>
           </ListItemButton>
         </ListItem>
       </List>
       <PopUp
         open={open}
         onClose={handleClose}
-        text="Log Out"
+        text={props.text}
         handleButtonClick={props.handleSignOut}
         to={props.to}
       >
-        Are you sure you want to log out?
+        {props.message}
       </PopUp>
     </>
   );
