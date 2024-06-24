@@ -48,7 +48,7 @@ import { PTSModal } from "./PlanToSave/PTSModal";
 import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
 const NewAccount = (props) => {
-  console.log(props);
+  // console.log(props);
   const { i18n } = useTranslation();
 
   const lngs = {
