@@ -11,7 +11,7 @@ import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 import Swal from "sweetalert2";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import LogoutIcon from "@mui/icons-material/Logout";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeletePopUp from "../../SubComponents/DeletePopUp";
 
 import {
   Form,
@@ -86,24 +86,6 @@ function Settings(props) {
   useEffect(() => {
     setTimeout(() => setLoading(false), 1500);
   });
-
-  async function handleAccountDelete() {
-    try {
-      var data = {
-        userId: props.profile.uid,
-        buildingFunction: props.profile.buildingFunction,
-        userType: props.profile.type,
-        email: props.auth.providerData[0].email,
-        password: props.auth.providerData[0].providerId,
-      };
-      setLoading(true);
-      await props.deleteAccount(data);
-      history.push("/landing");
-      console.log("Account deletion process completed.");
-    } catch (error) {
-      console.error("Account deletion failed:", error);
-    }
-  }
 
   //auth
   const [firstName, setFirstName] = useState(props.profile.firstName);
@@ -1177,7 +1159,6 @@ function Settings(props) {
             setForm={setForm}
             HandleButtonState={HandleButtonState}
             HandleSignOut={props.signOut}
-            HandleDeleteMainAccount={handleAccountDelete}
             type={props.profile.type}
           />
         </PageWrap>
@@ -1424,14 +1405,7 @@ const ProfileList = (props) => {
         handleSignOut={props.HandleSignOut}
         to="/landing"
       />
-      <button
-        style={{
-          backgroundColor: "#AFBA15",
-        }}
-        onClick={props.HandleDeleteMainAccount}
-      >
-        Delete Account
-      </button>
+      <DeletePopUp />
     </>
   );
 };
