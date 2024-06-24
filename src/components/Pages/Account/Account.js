@@ -48,7 +48,7 @@ import { PTSModal } from "./PlanToSave/PTSModal";
 import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
 const NewAccount = (props) => {
-  // console.log(props.profile);
+  // console.log(props);
   const { i18n } = useTranslation();
 
   const lngs = {
@@ -179,7 +179,8 @@ const NewAccount = (props) => {
               <div>
                 {/* TODO: Display this if its a business account */}
                 {!props.profile.imgsLinks &
-                (props.profile.buildingFunction !== "Personal") ? (
+                (props.profile.buildingFunction !== "Personal" &&
+                  props.profile.buildingFunction !== "Households") ? (
                   <Link
                     to={`/complete-signup?stage=${stage}&uid=${props.auth.uid}`}
                   >

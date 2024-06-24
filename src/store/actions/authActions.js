@@ -799,7 +799,7 @@ const determineAccountType = (buildingFunction) => {
     case "Personal":
       return "household_admin";
     default:
-      return "user";
+      return "users";
   }
 };
 // Helper function to determine AdminCollection
@@ -828,7 +828,7 @@ const getAdminCollection = (type) => {
     case "restaurant_admin":
       return "restaurant_users";
     default:
-      return "user";
+      return "users";
   }
 };
 
@@ -867,7 +867,7 @@ export const signUp = (newUser) => {
       // Generate school code only if the user function is "Schools"
       let schoolCode = "";
       if (newUser.function === "Schools") {
-        schoolCode = generateRandomCode();
+        schoolCode = await generateRandomCode();
       }
 
       let val = {
@@ -1719,6 +1719,26 @@ export const deleteAccount = (cred) => {
     } catch (err) {
       // console.error("Account deletion failed:", err);
       dispatch({ type: "DELETE_ACCOUNT_ERROR", err });
+    }
+  };
+};
+
+export const deleteFeedBack = (data) => {
+  return async (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    const firestore = firebase.firestore();
+
+    const feedback = {
+      text: data.text,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    console.log(feedback);
+    try {
+      await firestore.collection("feedback").add(feedback);
+      dispatch({ type: "DELETE_FEEDBACK_SUCCESS" });
+    } catch (error) {
+      dispatch({ type: "DELETE_FEEDBACK_ERROR", error });
     }
   };
 };
