@@ -48,7 +48,6 @@ import { PTSModal } from "./PlanToSave/PTSModal";
 import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
 const NewAccount = (props) => {
-  // console.log(props);
   const { i18n } = useTranslation();
 
   const lngs = {
@@ -171,16 +170,18 @@ const NewAccount = (props) => {
                   color: "purple",
                 }}
               >
-                {isVerificationPending &&
-                  isFreelancer === "" &&
-                  "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "}
+                {props.profile.imgsLinks &&
+                props.profile.verification !== "verified"
+                  ? "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "
+                  : null}
               </span>
 
               <div>
                 {/* TODO: Display this if its a business account */}
                 {!props.profile.imgsLinks &
                 (props.profile.buildingFunction !== "Personal" &&
-                  props.profile.buildingFunction !== "Households") ? (
+                  props.profile.buildingFunction !== "Households" &&
+                  props.profile.adminType !== "superAdmin") ? (
                   <Link
                     to={`/complete-signup?stage=${stage}&uid=${props.auth.uid}`}
                   >
@@ -303,7 +304,7 @@ const AccountType = (props) => {
     );
   }
 
-  switch (props.type) {
+  switch (props.profile.type) {
     case "farm_admin":
     case "farm_sub":
       return (

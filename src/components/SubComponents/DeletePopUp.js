@@ -212,10 +212,6 @@ function DeletePopUp(props) {
         >
           <DialogTitle>Delete</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Please could you give a short description on why you would like to
-              delete your account!
-            </DialogContentText>
             {feedBack === "Others (Provide Details)" ? (
               <>
                 <input
