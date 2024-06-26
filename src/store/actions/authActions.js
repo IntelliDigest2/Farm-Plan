@@ -471,7 +471,7 @@ const uploadIdImage = (image) => {
 // 	};
 //   };
 
-// PREV WAY OF SIGNING UP
+//////////////////////////////////////////////////TODO: PREV WAY OF SIGNING UP
 // export const signUp = (newUser, image) => {
 //   return async (dispatch, getState, { getFirebase }) => {
 //     try {
@@ -538,6 +538,7 @@ const uploadIdImage = (image) => {
 
 //       const firestore = getFirebase().firestore();
 //       const firebase = getFirebase();
+
 //       let newUserId;
 //       let urls;
 //       // let imageUrl = "";
@@ -847,7 +848,7 @@ const generateRandomCode = async () => {
   }
 };
 
-export const signUp = (newUser) => {
+export const signUp = (newUser, image) => {
   return async (dispatch, getState, { getFirebase }) => {
     try {
       const firebase = getFirebase();
@@ -870,6 +871,13 @@ export const signUp = (newUser) => {
         schoolCode = await generateRandomCode();
       }
 
+      // Upload image if provided
+      let imageUploadUrl = newUser.IDUrl;
+      if (image) {
+        const uploadResponse = await uploadIdImage(image);
+        imageUploadUrl = uploadResponse.data.secure_url;
+      }
+
       let val = {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
@@ -890,11 +898,12 @@ export const signUp = (newUser) => {
         regulatoryBodyID: newUser.regulatoryBodyID,
         IDNumber: newUser.IDNumber,
         IDType: newUser.IDType,
+        IDUrl: imageUploadUrl,
         cuisine: newUser.cuisine,
         restaurantDescription: newUser.restaurantDescription,
-        address: newUser.restaurantAddress,
+        // address: newUser.restaurantAddress,
         type: type,
-        isFreelancer: newUser.isFreelancer,
+        isFreelancer: newUser.isFreelancer ? newUser.isFreelancer : "",
         school_code: schoolCode,
       };
 
@@ -926,6 +935,8 @@ export const signUp = (newUser) => {
         val.adminType = newUser.adminType;
       }
 
+      // console.log(`Constructed User`, val);
+
       await firestore
         .collection("users")
         .doc(newUserId)
@@ -933,7 +944,7 @@ export const signUp = (newUser) => {
       // console.log("User data saved:", val);
 
       const adminCollection = getAdminCollection(type);
-      if (adminCollection !== "user") {
+      if (adminCollection !== "users") {
         // console.log("Saving admin user data to collection:", adminCollection);
         await firestore
           .collection(adminCollection)
@@ -1355,7 +1366,6 @@ export const updateSignup = (newUser, image) => {
         // console.log(resp, `this is the response`);
         if (newUser.certImg) {
           let userSubString = newUserId.substring(0, 7);
-
           return Promise.all(uploadImgs(newUser.certImg.images, userSubString));
         }
       })

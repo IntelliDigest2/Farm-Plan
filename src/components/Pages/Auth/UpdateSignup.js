@@ -334,6 +334,8 @@ const SignUp = (props) => {
       schoolCode: null,
     };
 
+    // console.log(data);
+
     switch (data.function) {
       case "Consultant":
         data.consultantInfo = consultant;
@@ -346,6 +348,7 @@ const SignUp = (props) => {
       case "Machinery/Supply":
       case "Material/Supply":
       case "Shop/Supermarket":
+      case "Farm":
       case "Hospitals":
         data.certImg = businessCert;
         break;
@@ -356,7 +359,7 @@ const SignUp = (props) => {
     if (validation()) {
       try {
         await props.updateSignup(data, image);
-        console.log("sign up data", data);
+        // console.log("sign up data", data);
         setIsLoggedIn(true);
         // history.push("/account");
         // navigate("/account")
@@ -686,22 +689,22 @@ const SignUp = (props) => {
 
     if (imageId === "img111Name") {
       setCertificateDescOne(newName);
-      console.log("cert", certificateDescOne);
+      // console.log("cert", certificateDescOne);
     } else if (imageId === "img12Name") {
       setCertificateDescTwo(newName);
-      console.log("cert", certificateDescTwo);
+      // console.log("cert", certificateDescTwo);
     } else if (imageId === "img13Name") {
       setCertificateDescThree(newName);
-      console.log("cert", certificateDescThree);
+      // console.log("cert", certificateDescThree);
     } else if (imageId === "img2Name") {
       setIDDesc(newName);
-      console.log("cert", idDesc);
+      // console.log("cert", idDesc);
     } else if (imageId === "img3Name") {
       setProfDesc(newName);
-      console.log("cert", profDesc);
+      // console.log("cert", profDesc);
     } else {
       setAddressDesc(newName);
-      console.log("cert", addressDesc);
+      // console.log("cert", addressDesc);
     }
   };
 
@@ -1951,6 +1954,7 @@ const Stage6 = (props) => {
               defaultValue={""}
               required
               onChange={(e) => {
+                // console.log(e.target.files[0]);
                 props.setImage(e.target.files[0]);
               }}
             />
