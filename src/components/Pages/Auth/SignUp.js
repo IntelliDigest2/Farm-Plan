@@ -537,6 +537,7 @@ const SignUp = (props) => {
                 response.results[0].geometry.location.lat,
                 response.results[0].geometry.location.lng,
               ],
+              buildingFunction: buildingFunction,
             },
           };
           props.createMapData(upload);
@@ -779,7 +780,7 @@ const SignUp = (props) => {
                 region={region}
                 country={country}
                 buildingFunction={buildingFunction}
-               />
+              />
               <div className="signup-center">
                 <div className="auth-error">
                   {authError ? <p> {authError}</p> : null}
@@ -1223,6 +1224,7 @@ const Stage2 = (props) => {
                 "Farm",
                 "Recreational Centers",
                 "Consultant",
+                "Public Sector"
               ]}
             />
           </Form.Group>
@@ -1257,10 +1259,9 @@ const Stage2 = (props) => {
             onClick={(e) => {
               e.preventDefault();
 
-
               //Next Stage : GO TO PREVIEW DETAILS INPUTTED
 
-              props.setStage(3)
+              props.setStage(3);
 
               // switch(props.buildingFunction){
               //   // case "Restaurants":
