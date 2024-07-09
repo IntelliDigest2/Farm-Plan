@@ -796,6 +796,8 @@ const determineAccountType = (buildingFunction) => {
       return "academic_admin";
     case "Farm":
       return "farm_admin";
+    case "Public Sector":
+      return "government_admin";
     case "Households":
     case "Personal":
       return "household_admin";
@@ -828,6 +830,8 @@ const getAdminCollection = (type) => {
       return "hospital_users";
     case "restaurant_admin":
       return "restaurant_users";
+    case "government_admin":
+      return "government_users";
     default:
       return "users";
   }

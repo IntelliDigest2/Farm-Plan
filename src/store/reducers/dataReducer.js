@@ -246,7 +246,6 @@ const dataReducer = (state = initState, action) => {
         unverifiedUsers: action.payload,
         authError: null,
       };
-
     default:
       return state;
   }

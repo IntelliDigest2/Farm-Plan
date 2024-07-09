@@ -1224,7 +1224,7 @@ const Stage2 = (props) => {
                 "Farm",
                 "Recreational Centers",
                 "Consultant",
-                "Public Sector"
+                "Public Sector",
               ]}
             />
           </Form.Group>

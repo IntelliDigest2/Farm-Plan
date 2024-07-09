@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import { PageWrap } from "../../SubComponents/PageWrap";
+import Select from "react-select";
 
 import {
   getMapData,
@@ -20,8 +21,7 @@ import { Button } from "react-bootstrap";
 
 //Map component
 const Map = (props) => {
-  const [locationstate, setLocation] = useState([]);
-
+  console.log(props);
   const categoryOptions = [
     " Recreational Centers",
     "Material/Supply",
@@ -47,6 +47,9 @@ const Map = (props) => {
   const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
 
+  const [locationstate, setLocation] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+
   useEffect(() => {
     setLocation([]);
     if (props.data !== null && props.data !== undefined) {
@@ -69,6 +72,15 @@ const Map = (props) => {
     setLocations([...locationSet]);
     setCategories([...categorySet]);
   };
+
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  // Filter locations based on search input
+  const filteredLocations = locations.filter((location) =>
+    location.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   const updateMap = async () => {
     var mapData = Object.values(props.data);
@@ -294,6 +306,7 @@ const Map = (props) => {
           }}
           className="mapContainer"
         >
+          {/* <SearchBar value={searchInput} onChange={handleSearchInputChange} /> */}
           <MultipleSelect
             name={"Location"}
             options={locations}
@@ -306,7 +319,31 @@ const Map = (props) => {
             selectedOptions={selectedCategory}
             onChange={setSelectedCategory}
           />
-
+          {/* <Select
+            styles={{
+              width: "100px",
+            }}
+            name="Location"
+            options={locations.map((location) => ({
+              value: location,
+              label: location,
+            }))}
+            value={selectedLocation}
+            onChange={setSelectedLocation}
+            placeholder="Search and select locations"
+            noOptionsMessage={() => "We cannot find WFT user in this city"}
+          /> */}
+          {/* <Select
+            isMulti
+            name="Category"
+            options={categoryOptions.map((category) => ({
+              value: category,
+              label: category,
+            }))}
+            value={selectedCategory}
+            onChange={setSelectedCategory}
+            placeholder="Search and select categories"
+          /> */}
           <Button
             style={{ backgroundColor: "#AFBA15", border: "none" }}
             onClick={resetFilters}
@@ -316,6 +353,18 @@ const Map = (props) => {
         </Container>
       </div>
     </PageWrap>
+  );
+};
+
+const SearchBar = ({ value, onChange }) => {
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={onChange}
+      placeholder="Search Location"
+      style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+    />
   );
 };
 
