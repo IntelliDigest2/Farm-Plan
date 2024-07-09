@@ -78,6 +78,13 @@ import SchoolInventory from "./components/Pages/Account/Business/Academic/Restau
 import SchoolDashboard from "./components/Pages/Account/Business/Academic/RestaurantDashboard";
 import SchoolMealPlan from "./components/Pages/Account/Business/Academic/RestaurantMealPlan";
 
+import MealManagement from "./components/Pages/Account/PublicSector/MealManagement";
+import SupplierManagement from "./components/Pages/Account/PublicSector/SupplierManagement";
+import ConsumpReport from "./components/Pages/Account/PublicSector/ConsumpReport";
+import Intervention from "./components/Pages/Account/PublicSector/Intervention";
+import TrackFoodWaste from "./components/Pages/Account/PublicSector/TrackFoodWaste";
+import MonitorCarbonFootPrint from "./components/Pages/Account/PublicSector/MonitorCarbonFootPrint";
+
 import SupplyPlan from "./components/Pages/Account/Business/Suppliers/SupplyPlan";
 
 import NewAccount from "./components/Pages/Account/Account";
@@ -134,6 +141,7 @@ import SupAuth from "./components/Pages/Account/Business/Suppliers/Auth/Sup-Auth
 import CalendarPlannerHealth from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/Plan/CalendarPlanner/CalendarPlannerHealth";
 import moment from "moment";
 import CreateCode from "./components/Pages/Account/Business/Academic/CreateCode";
+import CreateClass from "./components/Pages/Account/Business/Academic/CreateClass";
 import ConnectSchool from "./components/Pages/Account/Personal/ConnectSchool";
 import CompleteSignUp from "./components/Pages/Auth/CompleteSignUp";
 import { updateSignup } from "./store/actions/authActions";
@@ -371,6 +379,7 @@ const App = (props) => {
             <Route path="/school-dashboard" component={SchoolDashboard} />
             <Route path="/school-meal-plan" component={SchoolMealPlan} />
             <Route path="/create-school-code" component={CreateCode} />
+            <Route path="/create-classes" component={CreateClass} />
             <Route path="/add-student-to-school" component={ConnectSchool} />
             <Route path="/restaurant-sale" component={RestaurantSale} />
             <Route path="/restaurant-turnover" component={RestaurantTurnover} />
@@ -416,6 +425,15 @@ const App = (props) => {
                 // Pass the extracted parameters to the FailedDeposit component
                 return <FailedDeposit orderId={order} reason={reason} />;
               }}
+            />
+            <Route path="/meal-management" component={MealManagement} />
+            <Route path="/supplier-management" component={SupplierManagement} />
+            <Route path="/consumption-report" component={ConsumpReport} />
+            <Route path="/intervention" component={Intervention} />
+            <Route path="/track-food-waste" component={TrackFoodWaste} />
+            <Route
+              path="/monitor-carbon-footprint"
+              component={MonitorCarbonFootPrint}
             />
             <Route component={NotFound} />
           </Switch>

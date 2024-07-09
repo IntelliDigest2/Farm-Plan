@@ -19,19 +19,23 @@ import CategoryIcon from "@mui/icons-material/Category";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
 import CardGiftcardOutlined from "@mui/icons-material/CardGiftcardOutlined";
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import PsychologyIcon from "@mui/icons-material/Psychology";
+import AssessmentIcon from "@mui/icons-material/Assessment";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import AddIcon from "@mui/icons-material/Add";
+import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
 import Tooltip from "@mui/material/Tooltip";
 import ForumSharpIcon from "@mui/icons-material/ForumSharp";
 import PermContactCalendarSharpIcon from "@mui/icons-material/PermContactCalendarSharp";
 import PeopleIcon from "@mui/icons-material/People";
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import { Psychology } from "@mui/icons-material";
-import PaymentIcon from '@mui/icons-material/Payment';
-import MoneyIcon from '@mui/icons-material/Money';
-import RedeemIcon from '@mui/icons-material/Redeem';
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import PaymentIcon from "@mui/icons-material/Payment";
+import SchoolIcon from "@mui/icons-material/School";
+import MoneyIcon from "@mui/icons-material/Money";
+import RedeemIcon from "@mui/icons-material/Redeem";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 // import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 // import CalendarMonthSharpIcon from "@mui/icons-material/CalendarMonthSharp";
 
@@ -40,183 +44,193 @@ import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 // TODO sort out hover and selected colours (defaults to bootstrap primary)
 
 export function DefaultButton(props) {
-	if (props.disabled) {
-		return (
-			<BootstrapButton
-				variant="default"
-				className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
-				disabled
-			>
-				<div className="basic-title">{props.text}</div>
-			</BootstrapButton>
-		);
-	} else {
-		return (
-			<BootstrapButton
-				variant="default"
-				className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
-				href={props.goTo}
-				onClick={props.onClick}
-			>
-				<div className="basic-title">{props.text}</div>
-			</BootstrapButton>
-		);
-	}
+  if (props.disabled) {
+    return (
+      <BootstrapButton
+        variant="default"
+        className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
+        disabled
+      >
+        <div className="basic-title">{props.text}</div>
+      </BootstrapButton>
+    );
+  } else {
+    return (
+      <BootstrapButton
+        variant="default"
+        className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
+        href={props.goTo}
+        onClick={props.onClick}
+      >
+        <div className="basic-title">{props.text}</div>
+      </BootstrapButton>
+    );
+  }
 }
 
 export function SubButton(props) {
-	return (
-		<BootstrapButton
-			variant="default"
-			className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
-			href={props.goTo}
-			onClick={props.onClick}
-			disabled={props.disabled}
-		>
-			<div className="basic-title" style={{ color: "white" }}>
-				{props.text}
-			</div>
-		</BootstrapButton>
-	);
+  return (
+    <BootstrapButton
+      variant="default"
+      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+      href={props.goTo}
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      <div className="basic-title" style={{ color: "white" }}>
+        {props.text}
+      </div>
+    </BootstrapButton>
+  );
 }
 export function SubButtonM(props) {
-	return (
-		<BootstrapButton
-			variant="default"
-			className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
-			// href={props.goTo}
-			// onClick={props.onClick}
-			// disabled={props.disabled}
-		>
-			<Link to={props.goTo}>
-				<div className="basic-title" style={{ color: "white" }}>
-					<div>{props.text}</div>
-				</div>
-			</Link>
-		</BootstrapButton>
-	);
+  return (
+    <BootstrapButton
+      variant="default"
+      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+      // href={props.goTo}
+      // onClick={props.onClick}
+      // disabled={props.disabled}
+    >
+      <Link to={props.goTo}>
+        <div className="basic-title" style={{ color: "white" }}>
+          <div>{props.text}</div>
+        </div>
+      </Link>
+    </BootstrapButton>
+  );
 }
 
 export function SubButtonInventory(props) {
-	return (
-		<BootstrapButton
-			variant="default"
-			className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
-			href={props.goTo}
-			onClick={props.onClick}
-			disabled={props.disabled}
-		>
-			<div className="basic-title" style={{ color: "white" }}>
-				{props.text}
-			</div>
-		</BootstrapButton>
-	);
+  return (
+    <BootstrapButton
+      variant="default"
+      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+      href={props.goTo}
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      <div className="basic-title" style={{ color: "white" }}>
+        {props.text}
+      </div>
+    </BootstrapButton>
+  );
 }
 
 export function AddButton({ onClick, isDisabled, title }) {
-	return (
-		<BootstrapButton
-			variant="default"
-			className={["add-btn", "green-btn", "shadow-none"]}
-			onClick={onClick}
-			disabled={isDisabled}
-		>
-			<div>
-				<AddIcon sx={{ fontSize: 24 }} />
-			</div>
-		</BootstrapButton>
-	);
+  return (
+    <BootstrapButton
+      variant="default"
+      className={["add-btn", "green-btn", "shadow-none"]}
+      onClick={onClick}
+      disabled={isDisabled}
+    >
+      <div>
+        <AddIcon sx={{ fontSize: 24 }} />
+      </div>
+    </BootstrapButton>
+  );
 }
 
 export function IconButton(props) {
-	function IconType() {
-		switch (props.icon) {
-			default:
-			case "waste":
-				return <DeleteIconOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "chart":
-				return <BarChartOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "gift":
-				return <CardGiftcardOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "food":
-				return <RestaurantOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "surplus":
-				return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "buy":
-				return (
-					<ShoppingBasketOutlined sx={{ fontSize: 90, color: "#ffffff" }} />
-				);
-			case "info":
-				return <InfoOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "world":
-				return <PublicOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "book":
-				return <MenuBookOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "mind":
-				return <PsychologyIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "plant":
-				return <SpaOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "kitchen":
-				return <KitchenOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "product":
-				return <ShoppingBagOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "my-products":
-				return <CategoryIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "notes":
-				return <DescriptionOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "consult":
-				return <ForumSharpIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "consultant":
-				return (
-					<PermContactCalendarSharpIcon
-						sx={{ fontSize: 90, color: "#ffffff" }}
-					/>
-				);
-			case "sessions":
-				return <PeopleIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "requests":
-				return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "transactions":
-				return <ReceiptLongIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "wallet":
-				return <PaymentIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "coupon":
-				return <MoneyIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "redeem":
-				return <RedeemIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "delivery":
-			return <DeliveryDiningIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "list":
-				return <FormatListNumberedIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			// case "calendar":
-			// 	return <CalendarMonthSharpIcon sx={{ fontSize: 90 }} />;
-		}
-	}
+  function IconType() {
+    switch (props.icon) {
+      default:
+      case "waste":
+        return <DeleteIconOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "chart":
+        return <BarChartOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "gift":
+        return <CardGiftcardOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "food":
+        return <RestaurantOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "surplus":
+        return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "buy":
+        return (
+          <ShoppingBasketOutlined sx={{ fontSize: 90, color: "#ffffff" }} />
+        );
+      case "info":
+        return <InfoOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "report":
+        return <AssessmentIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "intervention":
+        return (
+          <SupervisedUserCircleIcon sx={{ fontSize: 90, color: "#ffffff" }} />
+        );
+      case "world":
+        return <PublicOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "book":
+        return <MenuBookOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "mind":
+        return <PsychologyIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "plant":
+        return <SpaOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "kitchen":
+        return <KitchenOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "product":
+        return <ShoppingBagOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "my-products":
+        return <CategoryIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "notes":
+        return <DescriptionOutlined sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "consult":
+        return <ForumSharpIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "consultant":
+        return (
+          <PermContactCalendarSharpIcon
+            sx={{ fontSize: 90, color: "#ffffff" }}
+          />
+        );
+      case "sessions":
+        return <PeopleIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "requests":
+        return <CalendarTodayIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "transactions":
+        return <ReceiptLongIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "wallet":
+        return <PaymentIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "coupon":
+        return <MoneyIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "redeem":
+        return <RedeemIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "delivery":
+        return <DeliveryDiningIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "meals":
+        return <DinnerDiningIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      case "list":
+        return (
+          <FormatListNumberedIcon sx={{ fontSize: 90, color: "#ffffff" }} />
+        );
+      case "class":
+        return <SchoolIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+      // case "calendar":
+      // 	return <CalendarMonthSharpIcon sx={{ fontSize: 90 }} />;
+    }
+  }
 
-	// var target;
-	// if (String(props.goTo).startsWith("/")) {
-	// 	target = "_self";
-	// } else {
-	// 	target = "_blank";
-	// }
+  // var target;
+  // if (String(props.goTo).startsWith("/")) {
+  // 	target = "_self";
+  // } else {
+  // 	target = "_blank";
+  // }
 
-	var target;
-	if (String(props.goTo).startsWith("/")) {
-		target = "_self";
-	} else {
-		target = "_blank";
-	}
+  var target;
+  if (String(props.goTo).startsWith("/")) {
+    target = "_self";
+  } else {
+    target = "_blank";
+  }
 
-	return (
-		<>
+  return (
+    <>
       {props.title ? (
         <Tooltip placement="bottom" arrow title={props.title}>
           <div
-            className={[
-              "icon-btn",
-              `${props.color}-btn`,
-              "shadow-none"
-            ].join(" ")}
+            className={["icon-btn", `${props.color}-btn`, "shadow-none"].join(
+              " "
+            )}
           >
             <a
               href={props.goTo}
@@ -247,5 +261,5 @@ export function IconButton(props) {
         </div>
       )}
     </>
-	);
+  );
 }

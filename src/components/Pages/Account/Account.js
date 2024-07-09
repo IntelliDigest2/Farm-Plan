@@ -30,6 +30,7 @@ import { useTheme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import * as Households from "./Personal/PersonalTabs";
+import * as PublicSector from "./PublicSector/PublicSectorTabs";
 import * as Farm from "./Farm/FarmTabs";
 import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Business/Academic/AcademicTabs";
@@ -181,6 +182,7 @@ const NewAccount = (props) => {
                 {!props.profile.imgsLinks &
                 (props.profile.buildingFunction !== "Personal" &&
                   props.profile.buildingFunction !== "Households" &&
+                  props.profile.buildingFunction !== "Public Sector" &&
                   props.profile.adminType !== "superAdmin") ? (
                   <Link
                     to={`/complete-signup?stage=${stage}&uid=${props.auth.uid}`}
@@ -897,6 +899,73 @@ const AccountType = (props) => {
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Shops.FSSP />
+            </TabPanel>
+          </SwipeableViews>
+        </>
+      );
+
+    case "government_admin":
+      return (
+        <>
+          <div className={classes.tabListContainer}>
+            <TabList
+              className={isMobile ? classes.scrollableTabList : classes.tabList}
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: Colors.brandGreen,
+                },
+              }}
+              variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
+              onChange={props.handleChange}
+              centered={!isMobile} // Centered tabs on larger screens
+            >
+              <Tab
+                disableRipple
+                label={t("description.tab_food")}
+                value="0"
+                className={
+                  isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+                }
+              />
+              <Tab
+                disableRipple
+                label={t("description.tab_health")}
+                value="1"
+                className={
+                  isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+                }
+              />
+              <Tab
+                disableRipple
+                label={t("description.tab_environment")}
+                value="2"
+                className={
+                  isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
+                }
+              />
+            </TabList>
+          </div>
+
+          <SwipeableViews
+            axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={parseInt(props.value)}
+            onChangeIndex={props.handleChangeIndex}
+          >
+            <TabPanel value={props.value} index={0} dir={props.theme.direction}>
+              <PublicSector.Food
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+                profile={props.profile}
+              />
+            </TabPanel>
+            <TabPanel value={props.value} index={1} dir={props.theme.direction}>
+              <PublicSector.Health
+                setShow={props.setShow}
+                setChooseModal={props.setChooseModal}
+              />
+            </TabPanel>
+            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
+              <PublicSector.Environment />
             </TabPanel>
           </SwipeableViews>
         </>
