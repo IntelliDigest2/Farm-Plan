@@ -18,11 +18,12 @@ import { connect, useSelector } from "react-redux";
 import { getMealPlannerData, removeAllMealPlan, getPlanData } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { generateNewPlan } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData";
 import { submitNotificationPlan } from "../../../../../../../lib/Notifications"
-import { addToShoppingList } from "../../../../../../../../store/actions/marketplaceActions/shoppingListData";
 import { getAllItems } from "../../../../../../../../store/actions/marketplaceActions/mealPlannerData"
 
 
 function FullCalendarApp(props) {
+
+  console.log(props);
 
   const [allItems, setAllItems ] = useState([])
   const [newPlan, setNewPlan] = useState([]);
@@ -50,7 +51,7 @@ function FullCalendarApp(props) {
 
     var d = new Date(props.value.format("YYYY-MM-DD"));
     d.setMonth(d.getMonth() + 6);
-    console.log("In six months", d.toISOString().slice(0,19));
+    // console.log("In six months", d.toISOString().slice(0,19));
 
 
 
@@ -87,61 +88,63 @@ function FullCalendarApp(props) {
     }, []);
 
   const updateMealPlanner = async () => {
-    //clears the items array before each update- IMPORTANT
-    setBreakfast([]);
-    setLunch([]);
-
-    //sets a new item object in the array for every document
-    props.data.forEach((doc) => {
-      // id is the docref for deletion
-      var mealName = doc.meal;
-      var ingredients = doc.ingredients;
-      var id = doc.id;
-      var mealType = doc.mealType;
-      var url = doc.url;
-      var totalNutrients = doc.totalNutrients;
-      var totalDaily = doc.totalDaily;
-      var recipeYield = doc.yield;
-      let nn;
-      if (doc.nonNativeData) {
-        nn = doc.nonNativeData;
-      } else {
-        nn = false;
-      }
-
-      if (mealType == 'breakfast') {
-        setBreakfast((meals) => [
-          ...meals,
-          {
-            meal: mealName,
-            mealType: mealType,
-            ingredients: ingredients,
-            id: id,
-            nn: nn,
-            url: url,
-            totalNutrients: totalNutrients,
-            totalDaily: totalDaily,
-            recipeYield: recipeYield,
-          },
-        ]);
-      } else {
-        setLunch((meals) => [
-          ...meals,
-          {
-            meal: mealName,
-            mealType: mealType,
-            ingredients: ingredients,
-            id: id,
-            nn: nn,
-            url: url,
-            totalNutrients: totalNutrients,
-            totalDaily: totalDaily,
-            recipeYield: recipeYield,
-          },
-        ]);
-      }
-      
-    });
+    if (props.data && props.data.length > 0) {
+      // Clear existing arrays
+      setBreakfast([]);
+      setLunch([]);
+  
+      props.data.forEach((doc) => {
+        // id is the docref for deletion
+        var mealName = doc.meal;
+        var ingredients = doc.ingredients;
+        var id = doc.id;
+        var mealType = doc.mealType;
+        var url = doc.url;
+        var totalNutrients = doc.totalNutrients;
+        var totalDaily = doc.totalDaily;
+        var recipeYield = doc.yield;
+        let nn;
+        if (doc.nonNativeData) {
+          nn = doc.nonNativeData;
+        } else {
+          nn = false;
+        }
+  
+        if (mealType == 'breakfast') {
+          setBreakfast((meals) => [
+            ...meals,
+            {
+              meal: mealName,
+              mealType: mealType,
+              ingredients: ingredients,
+              id: id,
+              nn: nn,
+              url: url,
+              totalNutrients: totalNutrients,
+              totalDaily: totalDaily,
+              recipeYield: recipeYield,
+            },
+          ]);
+        } else {
+          setLunch((meals) => [
+            ...meals,
+            {
+              meal: mealName,
+              mealType: mealType,
+              ingredients: ingredients,
+              id: id,
+              nn: nn,
+              url: url,
+              totalNutrients: totalNutrients,
+              totalDaily: totalDaily,
+              recipeYield: recipeYield,
+            },
+          ]);
+        }
+        
+      });
+    }
+ 
   };
 
   useEffect(() => {
@@ -162,7 +165,7 @@ function FullCalendarApp(props) {
       }, [breakfast, lunch]);
   
 
-  console.log("breakfast:", breakfast)
+  // console.log("breakfast:", breakfast)
   //console.log("lunch:", lunch)
   
 
@@ -241,7 +244,7 @@ function FullCalendarApp(props) {
 
     setAllItems(combinations);
 
-    console.log("All items is:",allItems);
+    // console.log("All items is:",allItems);
 
   }
 
@@ -275,11 +278,11 @@ function FullCalendarApp(props) {
 
 
     const getPlan = async () => {
-      //clears the items array before each update- IMPORTANT
-      setNewPlan([]);
-      
-      //sets a new item object in the array for every document
+      if (props.allPlan && props.allPlan.length > 0) {
+        setNewPlan([]);
+        //sets a new item object in the array for every document
       props.allPlan.forEach((doc) => {
+        console.log({doc});
         // id is the docref for deletion
         var meal = doc.meal;
         var ingredients = doc.ingredients;
@@ -308,6 +311,10 @@ function FullCalendarApp(props) {
         ]);
         
       });
+
+      }
+
+          
     };
 
     //this sends data request
@@ -424,8 +431,8 @@ const mapStateToProps = (state) => {
         getMealPlannerData: (meal) => dispatch(getMealPlannerData(meal)),
         getPlanData: (plan) => dispatch(getPlanData(plan)),
         generateNewPlan: (plan) => dispatch(generateNewPlan(plan)),
-        //removeAllMealPlan: (plan) => dispatch(removeAllMealPlan(plan)),
-        //addToShoppingList: (data) => dispatch(addToShoppingList(data))
+        removeAllMealPlan: (plan) => dispatch(removeAllMealPlan(plan)),
+        addToShoppingList: (data) => dispatch(addToShoppingList(data)),
         getAllItems: (plan) => dispatch(getAllItems(plan))
 
     };

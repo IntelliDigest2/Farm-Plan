@@ -1,39 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { PageWrap } from "../../../../../SubComponents/PageWrap";
-import LoadingScreen from "../../../../../SubComponents/Loading/LoadingScreen";
-import { Tab, Tabs } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import { connect } from "react-redux";
 import moment from "moment";
+import { PageWrap } from "../../../../../SubComponents/PageWrap";
+import { Tab, Tabs } from "react-bootstrap";
 
 import { Calendar } from "./Calendar";
 import { CalendarPlan } from "./CalendarPlan";
 import CalendarPlanner from "./Plan/CalendarPlanner/CalendarPlanner";
 import CalendarPlannerSchool from "./Plan/CalendarPlanner/CalendarPlannerSchool";
+
+import { useTranslation } from "react-i18next";
+import { connect } from "react-redux";
+
 import SavedMeals from "./SavedMeals";
 import RecipeSearch from "./Search/RecipeSearch";
-import { Inventory } from "./Inventory";
 import SchoolMeals from "./SchoolMeals";
 
-import "./Mealplan.css";
-
-function MealPlan({ profile }) {
+function MealPlan(props) {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(true); // Initial loading state is true
+
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(moment());
+  const [lunchType, setLunchType] = useState("school");
   const [getItems, setGetItems] = useState([]);
+  const [schoolLunchOptions, setSchoolLunchOptions] = useState([]);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer); // Clean up the timer on component unmount
+    setTimeout(() => setLoading(false), 1500);
   }, []);
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
+
+  const handleLunchTypeChange = (event) => {
+    setLunchType(event.target.value);
+  };
 
   return (
-    <PageWrap goTo="/account">
+    <PageWrap goTo="/account" header={t("description.my_plan_to_save")}>
       <Tabs
         defaultActiveKey="calendar"
         id="meal-plan-tabs"
@@ -55,37 +56,33 @@ function MealPlan({ profile }) {
           <SavedMeals value={value} onChange={setValue} />
           <RecipeSearch value={value} onChange={setValue} />
         </Tab>
-        <Tab
-          eventKey="inventory"
-          title={t("description.inventory")}
-          className="mealtab"
-        >
-          <Inventory value={value} />
-        </Tab>
-        {profile.isSubAccount ? (
+        {props.profile.isSubAccount ? (
           <Tab eventKey="schoolmeals" title="SCHOOL MEALS" className="mealtab">
-            <SchoolMeals value={value} onChange={setValue} />
+            <SchoolMeals
+              value={value}
+              onChange={setValue}
+              lunchType={lunchType}
+              onLunchTypeChange={handleLunchTypeChange}
+              schoolLunchOptions={schoolLunchOptions} 
+            />
           </Tab>
         ) : (
-          <CalendarPlan value={value} onChange={setValue} />
+          <Tab eventKey="calendarplan" title="CALENDAR PLAN" className="mealtab">
+            <CalendarPlan value={value} onChange={setValue} />
+          </Tab>
         )}
-        <Tab
-          eventKey="plan"
-          title={t("description.view_plan")}
-          className="mealtab"
-        >
-          {profile.isSubAccount ? (
+        <Tab eventKey="plan" title={t("description.view_plan")} className="mealtab">
+          {props.profile.isSubAccount ? (
             <CalendarPlannerSchool
               value={value}
               getItems={getItems}
               setGetItems={setGetItems}
+              lunchType={lunchType}
+              onLunchTypeChange={handleLunchTypeChange}
+              schoolLunchOptions={schoolLunchOptions} // Pass schoolLunchOptions to CalendarPlannerSchool
             />
           ) : (
-            <CalendarPlanner
-              value={value}
-              getItems={getItems}
-              setGetItems={setGetItems}
-            />
+            <CalendarPlanner value={value} getItems={getItems} setGetItems={setGetItems} />
           )}
         </Tab>
       </Tabs>
@@ -93,8 +90,10 @@ function MealPlan({ profile }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  profile: state.firebase.profile,
-});
+const mapStateToProps = (state) => {
+  return {
+    profile: state.firebase.profile,
+  };
+};
 
-export default connect(mapStateToProps)(MealPlan);
+export default connect(mapStateToProps, null)(MealPlan);

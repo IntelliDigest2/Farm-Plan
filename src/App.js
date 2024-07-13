@@ -137,6 +137,11 @@ import CalendarPlannerHealth from "./components/Pages/Account/Personal/Marketpla
 import moment from "moment";
 import CreateCode from "./components/Pages/Account/Business/Academic/CreateCode";
 import ConnectSchool from "./components/Pages/Account/Personal/ConnectSchool";
+import ChildMealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/ChildMealPlan";
+import AddChild from "./components/Pages/Account/Personal/AddChild";
+import AddClass from "./components/Pages/Account/Business/Academic/AddClass";
+import ManageChild from "./components/Pages/Account/Personal/ManageChild";
+import ManageSchool from "./components/Pages/Account/Business/Academic/ManageSchool";
 
 const App = (props) => {
 	const [uid, setUid] = useState(props.auth.uid);
@@ -344,6 +349,7 @@ const App = (props) => {
 						</Route>
 						<Route path="/cons-auth" component={ConsumerAuth} />
 						<Route path="/meal-plan" component={MealPlan} />
+						<Route path="/child-meals" component={ChildMealPlan} />
 						<Route path="/items" component={ItemTab} />
 						<Route path="/nutrient-gap" component={NutrientGap} />
 						<Route 
@@ -401,6 +407,9 @@ const App = (props) => {
 							path="/add-student-to-school"
 							component={ConnectSchool}
 						/>
+						<Route path="/manage-school" component={ManageSchool} />
+						<Route path="/manage-child" component={ManageChild} />
+						<Route path="/add-class" component={AddClass} />
 						<Route path="/restaurant-sale" component={RestaurantSale} />
 						<Route path="/restaurant-turnover" component={RestaurantTurnover} />
 						<Route path="/restaurant-expense" component={RestaurantExpense} />

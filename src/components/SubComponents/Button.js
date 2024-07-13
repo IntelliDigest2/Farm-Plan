@@ -31,6 +31,8 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import MoneyIcon from '@mui/icons-material/Money';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import ChildCareIcon from '@mui/icons-material/ChildCare';
+import SchoolIcon from '@mui/icons-material/School';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 // import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 // import CalendarMonthSharpIcon from "@mui/icons-material/CalendarMonthSharp";
@@ -185,7 +187,11 @@ export function IconButton(props) {
 			case "redeem":
 				return <RedeemIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "delivery":
-			return <DeliveryDiningIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+				return <DeliveryDiningIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "child":
+				return <ChildCareIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			case "school":
+				return <SchoolIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "list":
 				return <FormatListNumberedIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			// case "calendar":
