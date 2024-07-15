@@ -81,19 +81,11 @@ export function Food({ setShow, setChooseModal, profile }) {
 			/>
 
 			<IconButton
-				title="Edit and add a child's Meal Plan"
-				icon="child"
-				label="Child's Meal Plan"
-				color="orange"
-				goTo="/child-meals"
-			/>
-
-			<IconButton
-				title="Connect to School & Add a child"
-				icon="school"
-				label="View Child Details"
-				color="grey"
-				goTo="/manage-child"
+				title="Connect School"
+				icon="delivery"
+				label="Connect School"
+				color="purple"
+				goTo="/add-student-to-school"
 			/>
 
 

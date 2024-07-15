@@ -41,6 +41,27 @@ const authReducer = (state = initState, action) => {
         ...state,
         authError: action.err.message,
       };
+    case "DELETE_ACCOUNT":
+      console.log("delete account success");
+      return {
+        ...state,
+        authError: null,
+      };
+    case "DELETE_ACCOUNT_ERROR":
+      return {
+        ...state,
+        authError: action.err.message,
+      };
+    case "DELETE_FEEDBACK_SUCCESS":
+      return {
+        ...state,
+        authError: null,
+      };
+    case "DELETE_FEEDBACK_ERROR":
+      return {
+        ...state,
+        authError: null,
+      };
     case "DELETE_SUBACCOUNT":
       console.log("delete subaccount success");
       return {
