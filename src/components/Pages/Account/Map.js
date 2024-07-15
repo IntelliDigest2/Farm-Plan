@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import { PageWrap } from "../../SubComponents/PageWrap";
+import Select from "react-select";
 
 import {
   getMapData,
