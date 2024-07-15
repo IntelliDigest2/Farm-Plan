@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Form, Button, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
-import { PageWrap } from '../../../../SubComponents/PageWrap';
 import * as XLSX from 'xlsx';
 
 const CreateSchoolCode = (props) => {
@@ -251,7 +250,6 @@ const CreateSchoolCode = (props) => {
   };
 
   return (
-    <PageWrap goTo="/account" header="Create School Code">
       <div className="page-container">
         <div className="d-flex justify-content-center">
           <Form>
@@ -366,7 +364,6 @@ const CreateSchoolCode = (props) => {
           </Form>
         </div>
       </div>
-    </PageWrap>
   );
 };
 

@@ -122,6 +122,13 @@ export function Food({ setShow, setChooseModal }) {
 				goTo="/restaurant-turnover"
 				disabled
 			/>
+      <IconButton
+				title="Generate a code for parents & add Classes"
+				icon="school"
+				label="School Management"
+				color="green"
+				goTo="/manage-school"
+			/>
 			<IconButton
 				icon="notes"
 				label="Expense"
@@ -138,13 +145,6 @@ export function Food({ setShow, setChooseModal }) {
 					setShow(true);
 					setChooseModal(true);
 				}}
-			/>
-			<IconButton
-				icon="notes"
-				label="Add Student"
-				color="blue"
-				goTo="/create-school-code"
-				disabled
 			/>
 		</>
 	);

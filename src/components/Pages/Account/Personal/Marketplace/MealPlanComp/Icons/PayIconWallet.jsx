@@ -39,21 +39,11 @@ function PayIconWallet(props) {
           paymentType: "FARMER",
           paymentMethod: chosenPayment,
         };
-<<<<<<< HEAD
 
         console.log("transfer data ===>", transferData);
 
         await fetch(`${baseUrlDev}/v1/payment/initiate-payment`, {
           method: "POST",
-=======
-    
-        console.log("transfer data ===>", transferData)
-    
-        
-        await fetch(`${baseUrl}/v1/payment/initiate-payment`, {
-    
-          method: 'POST', 
->>>>>>> parent of 57bc6b3c (TJs changes)
           body: JSON.stringify(transferData),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
