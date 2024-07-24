@@ -10,7 +10,6 @@ export const getConsultantImages = async (userId, accountType) => {
     case "Hotels":
     case "Hospitals":
     case "Schools":
-    case "Farm":
     case "Offices":
     case "Recreational Centers":
     case "Shop/Supermarket":
@@ -34,7 +33,7 @@ export const getConsultantImages = async (userId, accountType) => {
       };
 
     default:
-      result = (await db.collection(`users`).doc(userId).get()).data();
+      result = (await db.collection(`${accountType}`).doc(userId).get()).data();
       ver = (await db.collection("users").doc(userId).get()).data()
         .verification;
       return {

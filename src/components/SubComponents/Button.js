@@ -19,24 +19,19 @@ import CategoryIcon from "@mui/icons-material/Category";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
 import CardGiftcardOutlined from "@mui/icons-material/CardGiftcardOutlined";
-import PsychologyIcon from "@mui/icons-material/Psychology";
-import AssessmentIcon from "@mui/icons-material/Assessment";
-import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import PsychologyIcon from '@mui/icons-material/Psychology';
 import AddIcon from "@mui/icons-material/Add";
-import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
 import Tooltip from "@mui/material/Tooltip";
 import ForumSharpIcon from "@mui/icons-material/ForumSharp";
 import PermContactCalendarSharpIcon from "@mui/icons-material/PermContactCalendarSharp";
 import PeopleIcon from "@mui/icons-material/People";
-import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { Psychology } from "@mui/icons-material";
 import PaymentIcon from '@mui/icons-material/Payment';
 import MoneyIcon from '@mui/icons-material/Money';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
-import ChildCareIcon from '@mui/icons-material/ChildCare';
-import SchoolIcon from '@mui/icons-material/School';
 // import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 // import CalendarMonthSharpIcon from "@mui/icons-material/CalendarMonthSharp";
 
@@ -45,92 +40,92 @@ import SchoolIcon from '@mui/icons-material/School';
 // TODO sort out hover and selected colours (defaults to bootstrap primary)
 
 export function DefaultButton(props) {
-  if (props.disabled) {
-    return (
-      <BootstrapButton
-        variant="default"
-        className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
-        disabled
-      >
-        <div className="basic-title">{props.text}</div>
-      </BootstrapButton>
-    );
-  } else {
-    return (
-      <BootstrapButton
-        variant="default"
-        className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
-        href={props.goTo}
-        onClick={props.onClick}
-      >
-        <div className="basic-title">{props.text}</div>
-      </BootstrapButton>
-    );
-  }
+	if (props.disabled) {
+		return (
+			<BootstrapButton
+				variant="default"
+				className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
+				disabled
+			>
+				<div className="basic-title">{props.text}</div>
+			</BootstrapButton>
+		);
+	} else {
+		return (
+			<BootstrapButton
+				variant="default"
+				className={["default-btn", `${props.styling}-btn`, "shadow-none"]}
+				href={props.goTo}
+				onClick={props.onClick}
+			>
+				<div className="basic-title">{props.text}</div>
+			</BootstrapButton>
+		);
+	}
 }
 
 export function SubButton(props) {
-  return (
-    <BootstrapButton
-      variant="default"
-      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
-      href={props.goTo}
-      onClick={props.onClick}
-      disabled={props.disabled}
-    >
-      <div className="basic-title" style={{ color: "white" }}>
-        {props.text}
-      </div>
-    </BootstrapButton>
-  );
+	return (
+		<BootstrapButton
+			variant="default"
+			className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+			href={props.goTo}
+			onClick={props.onClick}
+			disabled={props.disabled}
+		>
+			<div className="basic-title" style={{ color: "white" }}>
+				{props.text}
+			</div>
+		</BootstrapButton>
+	);
 }
 export function SubButtonM(props) {
-  return (
-    <BootstrapButton
-      variant="default"
-      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
-      // href={props.goTo}
-      // onClick={props.onClick}
-      // disabled={props.disabled}
-    >
-      <Link to={props.goTo}>
-        <div className="basic-title" style={{ color: "white" }}>
-          <div>{props.text}</div>
-        </div>
-      </Link>
-    </BootstrapButton>
-  );
+	return (
+		<BootstrapButton
+			variant="default"
+			className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+			// href={props.goTo}
+			// onClick={props.onClick}
+			// disabled={props.disabled}
+		>
+			<Link to={props.goTo}>
+				<div className="basic-title" style={{ color: "white" }}>
+					<div>{props.text}</div>
+				</div>
+			</Link>
+		</BootstrapButton>
+	);
 }
 
 export function SubButtonInventory(props) {
-  return (
-    <BootstrapButton
-      variant="default"
-      className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
-      href={props.goTo}
-      onClick={props.onClick}
-      disabled={props.disabled}
-    >
-      <div className="basic-title" style={{ color: "white" }}>
-        {props.text}
-      </div>
-    </BootstrapButton>
-  );
+	return (
+		<BootstrapButton
+			variant="default"
+			className={["sub-btn", `${props.styling}-btn`, "shadow-none"]}
+			href={props.goTo}
+			onClick={props.onClick}
+			disabled={props.disabled}
+		>
+			<div className="basic-title" style={{ color: "white" }}>
+				{props.text}
+			</div>
+		</BootstrapButton>
+	);
 }
 
 export function AddButton({ onClick, isDisabled, title }) {
-  return (
-    <BootstrapButton
-      variant="default"
-      className={["add-btn", "green-btn", "shadow-none"]}
-      onClick={onClick}
-      disabled={isDisabled}
-    >
-      <div>
-        <AddIcon sx={{ fontSize: 24 }} />
-      </div>
-    </BootstrapButton>
-  );
+	return (
+		<BootstrapButton
+			variant="default"
+			className={["add-btn", "green-btn", "shadow-none"]}
+			onClick={onClick}
+			disabled={isDisabled}
+		>
+			<div>
+				<AddIcon sx={{ fontSize: 24 }} />
+			</div>
+		</BootstrapButton>
+	);
 }
 
 export function IconButton(props) {
@@ -190,11 +185,7 @@ export function IconButton(props) {
 			case "redeem":
 				return <RedeemIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "delivery":
-				return <DeliveryDiningIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "child":
-				return <ChildCareIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
-			case "school":
-				return <SchoolIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
+			return <DeliveryDiningIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			case "list":
 				return <FormatListNumberedIcon sx={{ fontSize: 90, color: "#ffffff" }} />;
 			// case "calendar":
@@ -202,28 +193,30 @@ export function IconButton(props) {
 		}
 	}
 
-  // var target;
-  // if (String(props.goTo).startsWith("/")) {
-  // 	target = "_self";
-  // } else {
-  // 	target = "_blank";
-  // }
+	// var target;
+	// if (String(props.goTo).startsWith("/")) {
+	// 	target = "_self";
+	// } else {
+	// 	target = "_blank";
+	// }
 
-  var target;
-  if (String(props.goTo).startsWith("/")) {
-    target = "_self";
-  } else {
-    target = "_blank";
-  }
+	var target;
+	if (String(props.goTo).startsWith("/")) {
+		target = "_self";
+	} else {
+		target = "_blank";
+	}
 
-  return (
-    <>
+	return (
+		<>
       {props.title ? (
         <Tooltip placement="bottom" arrow title={props.title}>
           <div
-            className={["icon-btn", `${props.color}-btn`, "shadow-none"].join(
-              " "
-            )}
+            className={[
+              "icon-btn",
+              `${props.color}-btn`,
+              "shadow-none"
+            ].join(" ")}
           >
             <a
               href={props.goTo}
@@ -254,5 +247,5 @@ export function IconButton(props) {
         </div>
       )}
     </>
-  );
+	);
 }

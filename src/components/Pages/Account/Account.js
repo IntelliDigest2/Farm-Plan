@@ -30,7 +30,6 @@ import { useTheme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import * as Households from "./Personal/PersonalTabs";
-import * as PublicSector from "./PublicSector/PublicSectorTabs";
 import * as Farm from "./Farm/FarmTabs";
 import * as Business from "./Business/BusinessTabs";
 import * as Schools from "./Business/Academic/AcademicTabs";
@@ -49,6 +48,7 @@ import { PTSModal } from "./PlanToSave/PTSModal";
 import LoadingScreen from "../../SubComponents/Loading/LoadingScreen";
 
 const NewAccount = (props) => {
+  // console.log(props);
   const { i18n } = useTranslation();
 
   const lngs = {
@@ -171,19 +171,16 @@ const NewAccount = (props) => {
                   color: "purple",
                 }}
               >
-                {props.profile.imgsLinks &&
-                props.profile.verification !== "verified"
-                  ? "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "
-                  : null}
+                {isVerificationPending &&
+                  isFreelancer === "" &&
+                  "⚠️ You account is under review while waiting for approval please watch the videos to learn more  about the World Food Tracker features. "}
               </span>
 
               <div>
                 {/* TODO: Display this if its a business account */}
                 {!props.profile.imgsLinks &
                 (props.profile.buildingFunction !== "Personal" &&
-                  props.profile.buildingFunction !== "Households" &&
-                  props.profile.buildingFunction !== "Public Sector" &&
-                  props.profile.adminType !== "superAdmin") ? (
+                  props.profile.buildingFunction !== "Households") ? (
                   <Link
                     to={`/complete-signup?stage=${stage}&uid=${props.auth.uid}`}
                   >
@@ -306,7 +303,7 @@ const AccountType = (props) => {
     );
   }
 
-  switch (props.profile.type) {
+  switch (props.type) {
     case "farm_admin":
     case "farm_sub":
       return (
@@ -899,73 +896,6 @@ const AccountType = (props) => {
             </TabPanel>
             <TabPanel value={props.value} index={2} dir={props.theme.direction}>
               <Shops.FSSP />
-            </TabPanel>
-          </SwipeableViews>
-        </>
-      );
-
-    case "government_admin":
-      return (
-        <>
-          <div className={classes.tabListContainer}>
-            <TabList
-              className={isMobile ? classes.scrollableTabList : classes.tabList}
-              TabIndicatorProps={{
-                style: {
-                  backgroundColor: Colors.brandGreen,
-                },
-              }}
-              variant={isMobile ? "scrollable" : "standard"} // Use scrollable tabs on mobile
-              onChange={props.handleChange}
-              centered={!isMobile} // Centered tabs on larger screens
-            >
-              <Tab
-                disableRipple
-                label={t("description.tab_food")}
-                value="0"
-                className={
-                  isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
-                }
-              />
-              <Tab
-                disableRipple
-                label={t("description.tab_health")}
-                value="1"
-                className={
-                  isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
-                }
-              />
-              <Tab
-                disableRipple
-                label={t("description.tab_environment")}
-                value="2"
-                className={
-                  isMobile ? `${classes.tab} ${classes.mobileTab}` : classes.tab
-                }
-              />
-            </TabList>
-          </div>
-
-          <SwipeableViews
-            axis={props.theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={parseInt(props.value)}
-            onChangeIndex={props.handleChangeIndex}
-          >
-            <TabPanel value={props.value} index={0} dir={props.theme.direction}>
-              <PublicSector.Food
-                setShow={props.setShow}
-                setChooseModal={props.setChooseModal}
-                profile={props.profile}
-              />
-            </TabPanel>
-            <TabPanel value={props.value} index={1} dir={props.theme.direction}>
-              <PublicSector.Health
-                setShow={props.setShow}
-                setChooseModal={props.setChooseModal}
-              />
-            </TabPanel>
-            <TabPanel value={props.value} index={2} dir={props.theme.direction}>
-              <PublicSector.Environment />
             </TabPanel>
           </SwipeableViews>
         </>

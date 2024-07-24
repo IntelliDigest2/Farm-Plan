@@ -400,40 +400,54 @@ function FullCalendarApp(props) {
   }, [props.otherMeals]);
 
   const getOtherMeals = async () => {
-    if (!props.otherMeals) return; // Ensure props.otherMeals is defined
-    // Clear the items array before each update - IMPORTANT
+    // Array of days in the desired order starting from Monday
     const daysOfWeekOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  
+    // Clear the items array before each update - IMPORTANT
     setOtherMeals([]);
   
+    // Sort the otherMeals array based on the desired order
     const sortedMeals = props.otherMeals.sort((a, b) => {
-      return daysOfWeekOrder.indexOf(a.day_of_week) - daysOfWeekOrder.indexOf(b.day_of_week);
+      return daysOfWeekOrder.indexOf(a.dayOfWeek) - daysOfWeekOrder.indexOf(b.dayOfWeek);
     });
   
     // Set the sorted meals in the state
     sortedMeals.forEach((doc) => {
-      if (!doc.recipe || !doc.recipe.meal_type || !doc.recipe.meal_type[0]) {
-        console.error("Invalid data structure", doc);
-        return;
-      }
-  
+      const day_of_week = doc.day_of_week;
+      const meal_name = doc.recipe.meal_name;
+      const ingredients = doc.recipe.ingredients;
+      const total_daily = doc.recipe.total_daily;
+      const total_nutrients = doc.recipe.total_nutrients;
+      const recipe_yield = doc.recipe.recipe_yield;
       const meal_type = doc.recipe.meal_type[0];
+      const isEatOut = true
+      const eaten = false;
+      // let mealType; 
+
+      // if (doc.recipe.mealType && doc.recipe.mealType[0]) {
+      //   mealType = doc.recipe.mealType[0]; // Assign mealType only if it exists
+      // }
+      // const nn = nn;
+  
       setOtherMeals((meals) => [
         ...meals,
         {
-          day_of_week: doc.day_of_week,
-          meal_name: doc.recipe.meal_name,
-          ingredients: doc.recipe.ingredients,
-          total_daily: doc.recipe.total_daily,
-          total_nutrients: doc.recipe.total_nutrients,
-          recipe_yield: doc.recipe.recipe_yield,
+          day_of_week: day_of_week,
+          meal_name: meal_name,
+          ingredients: ingredients,
+          total_daily: total_daily,
+          total_nutrients: total_nutrients,
+          recipe_yield: recipe_yield,
           meal_type: meal_type,
-          isEatOut: true,
-          eaten: false,
+          isEatOut: isEatOut,
+          eaten: eaten,
+
+          // nn: nn
         },
       ]);
     });
   };
-
+  
   useEffect(() => {
     getOtherMeals();
     forceUpdate()

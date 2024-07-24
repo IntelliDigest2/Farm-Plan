@@ -10,6 +10,8 @@ var cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY1);
 
 const useEmulator = process.env.FIRESTORE_ENVIRONMENT;
+
+
 console.log(useEmulator, `this is the useEmulator env`);
 if (useEmulator === "development") {
 	admin.initializeApp({

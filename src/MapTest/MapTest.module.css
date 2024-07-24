@@ -1,0 +1,141 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid;
+}
+
+.header button {
+  padding: 10px 20px;
+  background-color: #a0c94f;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.header button:hover {
+  background-color: #8baf3d;
+}
+
+.tabs {
+  display: flex;
+  width: 40%;
+  margin: 15px;
+  justify-content: center;
+  background-color: #e0e0e0;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 10px; /* Adjusted padding */
+  border: none;
+  background-color: #a0c94f;
+  color: white;
+  font-size: 14px; /* Adjusted font-size */
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background-color: #8baf3d;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.map {
+  width: 65%;
+  height: 400px;
+  position: relative;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+.map button {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.map button img {
+  margin-right: 5px;
+}
+
+.coords {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.coords h3 {
+  text-align: center;
+}
+
+.coordPair {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.coordPair input {
+  width: 40%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.coordPair button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.coordPair button img {
+  width: 20px;
+  height: 20px;
+}
+
+.coords button {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #a0c94f;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.coords button:hover {
+  background-color: #8baf3d;
+}

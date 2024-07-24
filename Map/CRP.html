@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Rotation Planner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #d3d3d3;
+        }
+        .header button {
+            padding: 10px 20px;
+            background-color: #a0c94f;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .header button:hover {
+            background-color: #8baf3d;
+        }
+        .tabs {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            background-color: #e0e0e0;
+        }
+        .tabs button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background-color: #a0c94f;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .tabs button.active {
+            background-color: #8baf3d;
+        }
+        .main {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .map {
+            width: 65%;
+            height: 400px;
+            background-image: url('https://www.maptiler.com/img/maptiler-map.png');
+            background-size: cover;
+            position: relative;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        .map button {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .map button img {
+            margin-right: 5px;
+        }
+        .buttons {
+            width: 30%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .buttons button {
+            width: 48%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #a0c94f;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .buttons button.full-width {
+            width: 100%;
+        }
+        .buttons button:hover {
+            background-color: #8baf3d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button>Back</button>
+        </div>
+        <div class="tabs">
+            <button class="active">Farm Plan</button>
+            <button>Crop Rotation Planner</button>
+        </div>
+        <div class="main">
+            <div class="map">
+                <img src="path/to/your/image.png" alt="Map Image" style="width: 100%; height: 100%;">
+            </div>
+            <div class="buttons">
+                <button class="full-width" onclick="navigate('change-coordinates.html')">Change Coordinates</button>
+                <button class="full-width" onclick="navigate('save-coordinates.html')">Save Coordinates</button>
+                <button class="full-width" onclick="navigate('update-plan.html')">Update Plan</button>
+                <button onclick="navigate('crop-demand.html')">Crop Demand</button>
+                <button onclick="navigate('crop-nutrient-requirement.html')">Crop Nutrient Requirement</button>
+                <button onclick="navigate('soil-nutrient-composition.html')">Soil Nutrient Composition</button>
+                <button onclick="navigate('soil-nutrient-requirement.html')">Soil Nutrient Requirement</button>
+                <button onclick="navigate('pest.html')">Pest</button>
+                <button onclick="navigate('integrated-pest-management.html')">Integrated Pest Management</button>
+                <button onclick="navigate('weather-forecast.html')">Weather Forecast During Crop Season</button>
+                <button onclick="navigate('mitigations.html')">Mitigation's</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function navigate(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

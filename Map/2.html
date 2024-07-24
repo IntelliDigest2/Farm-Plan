@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid;
+        }
+        .header button {
+            padding: 10px 20px;
+            background-color: #a0c94f;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .header button:hover {
+            background-color: #8baf3d;
+        }
+        .tabs {
+            display: flex;
+            width: 40%;
+            margin : 15px;
+            justify-content: center;
+            background-color: #e0e0e0;
+        }
+        .tabs button {
+            flex: 1;
+            padding: 10px; /* Adjusted padding */
+            border: none;
+            background-color: #a0c94f;
+            color: white;
+            font-size: 14px; /* Adjusted font-size */
+            cursor: pointer;
+        }
+        .tabs button.active {
+            background-color: #8baf3d;
+        }
+        .main {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .map {
+            width: 65%;
+            height: 400px;
+            background-image: url('https://www.maptiler.com/img/maptiler-map.png');
+            background-size: cover;
+            position: relative;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        .map button {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .map button img {
+            margin-right: 5px;
+        }
+        .coords {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+        }
+        .coords h3 {
+            text-align: center;
+        }
+        .coord-pair {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .coord-pair input {
+            width: 48%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .coords button {
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #a0c94f;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .coords button:hover {
+            background-color: #8baf3d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button>BACK</button>
+        </div>
+        <div class="tabs">
+            <button class="active">Farm Plan</button>
+            <button>Map</button>
+        </div>
+        <div class="main">
+            <div class="map">
+                <iframe
+                width="100%"
+                height="100%"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d242118.1412942516!2d-74.0059728!3d40.7127753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDBswqA0MyczNi40IlMgNzTCsDAwJzIwLjIiVw!5e0!3m2!1sen!2sus!4v1588450950342!5m2!1sen!2sus"
+                allowfullscreen=""
+                aria-hidden="false"
+                tabindex="0"
+            ></iframe>
+                <button id="location-button">
+                    <img src="https://img.icons8.com/ios-glyphs/30/search.png" alt="Search Icon">
+                    Use your live location to set up your farm
+                </button>
+            </div>
+            <div class="coords">
+                <h3>Enter Location manually to set up your farm</h3>
+                <div class="coord-pair">
+                    <input type="text" placeholder="Lat : 9.0764785">
+                    <input type="text" placeholder="Long : 9.0764785">
+                </div>
+                <div class="coord-pair">
+                    <input type="text" placeholder="Lat : 9.0764785">
+                    <input type="text" placeholder="Long : 9.0764785">
+                </div>
+                <div class="coord-pair">
+                    <input type="text" placeholder="Lat : 9.0764785">
+                    <input type="text" placeholder="Long : 9.0764785">
+                </div>
+                <button id="new-coordinates-button">New Coordinates</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('new-coordinates-button').addEventListener('click', function() {
+            const coordsContainer = document.querySelector('.coords');
+
+            const newCoordPair = document.createElement('div');
+            newCoordPair.className = 'coord-pair';
+
+            const newLatInput = document.createElement('input');
+            newLatInput.type = 'text';
+            newLatInput.placeholder = 'Lat : 9.0764785';
+
+            const newLongInput = document.createElement('input');
+            newLongInput.type = 'text';
+            newLongInput.placeholder = 'Long : 9.0764785';
+
+            newCoordPair.appendChild(newLatInput);
+            newCoordPair.appendChild(newLongInput);
+
+            coordsContainer.insertBefore(newCoordPair, document.getElementById('new-coordinates-button'));
+        });
+
+        document.getElementById('location-button').addEventListener('click', function() {
+            alert('Searching location on the map...');
+            // This is a placeholder for the actual map searching logic.
+            // You would integrate with a map API like Google Maps or Mapbox here.
+        });
+
+    </script>
+</body>
+</html>
