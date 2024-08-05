@@ -10,6 +10,8 @@ import firebase, { auth, fs } from "./config/fbConfig";
 import "./App.css";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
+import MapComponent from "./MapTest/MapComponent";
 
 //* Pages
 import Login from "./components/Pages/Auth/LogIn";
@@ -56,7 +58,6 @@ import ProductListing from "./components/Pages/Account/products/ProductListing";
 
 import ReserveItems from "./components/Pages/Account/ReserveItems";
 
-import FarmPlan from "./components/Pages/Account/Farm/Marketplace/FarmPlan";
 import FarmerAuth from "./components/Pages/Account/Farm/Marketplace/Auth/Farmer-Auth";
 import ConsumerAuth from "./components/Pages/Account/Personal/Marketplace/ConsumerAuth";
 import MealPlan from "./components/Pages/Account/Personal/Marketplace/MealPlanComp/MealPlan";
@@ -316,7 +317,7 @@ const App = (props) => {
             <Route path="/food-reduction" component={FoodReduction} />
             <Route path="/product-listing" component={ProductListing} />
             <Route path="/reserve-items" component={ReserveItems} />
-            <Route path="/farm-plan" component={MapTest}>
+            <Route path="/farm-plan" component={MapComponent}>
               {!props.profile.isSeller && <Redirect to="/farm-plan" />}
             </Route>
             <Route path="/farm-auth" component={FarmerAuth}>
